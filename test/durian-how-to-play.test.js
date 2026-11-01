@@ -36,7 +36,7 @@ assert.ok(VI[0].lines[0][1].includes('2,5 lần'), 'tiếng Việt dùng dấu p
 
 // 2. Bản thẻ: nút, khung, thẻ ở màn mở đầu, cùng một hàm.
 const html2d = read('lab/ho-chieu-sau-rieng.html');
-assert.match(html2d, /<button class="tbtn" id="rulesBtn" type="button"><\/button>/);
+assert.match(html2d, /<button class="tbtn" id="rulesBtn" type="button">(…)?<\/button>/); // «…» giữ chỗ, JS điền chữ khi chạy
 assert.match(html2d, /<div id="rulesModal" class="rules-modal" hidden>/);
 assert.match(html2d, /DurianCore\.howToPlay\(D, L\)/);
 assert.match(html2d, /\$\('rulesBtn'\)\.onclick = openRules;/);

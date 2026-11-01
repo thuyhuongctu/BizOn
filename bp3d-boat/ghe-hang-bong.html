@@ -36,8 +36,7 @@ body::before{content:"";position:fixed;inset:0;background:linear-gradient(180deg
   <g fill="url(#bridgeFade)" stroke="url(#bridgeFade)">
     <path d="M0 236 Q300 228 520 214 L1080 214 Q1300 228 1600 236 L1600 240 Q1300 232 1080 219 L520 219 Q300 232 0 240 Z" stroke="none"></path>
     <g stroke-width="3">
-      <line x1="60" y1
-="236" x2="60" y2="252"></line><line x1="140" y1="234" x2="140" y2="252"></line><line x1="220" y1="231" x2="220" y2="252"></line><line x1="300" y1="228" x2="300" y2="252"></line><line x1="380" y1="224" x2="380" y2="252"></line><line x1="450" y1="219" x2="450" y2="252"></line>
+      <line x1="60" y1="236" x2="60" y2="252"></line><line x1="140" y1="234" x2="140" y2="252"></line><line x1="220" y1="231" x2="220" y2="252"></line><line x1="300" y1="228" x2="300" y2="252"></line><line x1="380" y1="224" x2="380" y2="252"></line><line x1="450" y1="219" x2="450" y2="252"></line>
       <line x1="1150" y1="219" x2="1150" y2="252"></line><line x1="1220" y1="224" x2="1220" y2="252"></line><line x1="1300" y1="228" x2="1300" y2="252"></line><line x1="1380" y1="231" x2="1380" y2="252"></line><line x1="1460" y1="234" x2="1460" y2="252"></line><line x1="1540" y1="236" x2="1540" y2="252"></line>
     </g>
     <path d="M548 252 L566 175 L575 70 L580 14 L586 14 L591 70 L600 175 L618 252 L610 252 L594 182 L566 182 L556 252 Z M570 168 L596 168 L590 76 L576 76 Z" fill-rule="evenodd" stroke="none"></path>
@@ -61,9 +60,9 @@ body::before{content:"";position:fixed;inset:0;background:linear-gradient(180deg
 </div>
 <div id="glow"></div>
 <div style="position:fixed;left:16px;top:16px;display:flex;gap:6px;z-index:5;font:700 13px/1 system-ui,sans-serif;white-space:nowrap">
-  <button id="mode-img" style="padding:9px 14px;border:0;border-radius:99px;cursor:pointer;background:#fda127;color:#033337;font:inherit">Nhân vật ảnh gốc</button>
-  <button id="mode-3d" style="padding:9px 14px;border:0;border-radius:99px;cursor:pointer;background:rgba(3,51,55,.78);color:#fff;font:inherit">Mô hình 3D</button>
-  <button id="song" style="padding:9px 14px;border:0;border-radius:99px;cursor:pointer;background:rgba(3,51,55,.78);color:#fff;font:inherit">Tiếng chim: tắt</button>
+  <button type="button" id="mode-img" style="padding:9px 14px;border:0;border-radius:99px;cursor:pointer;background:#fda127;color:#033337;font:inherit">Nhân vật ảnh gốc</button>
+  <button type="button" id="mode-3d" style="padding:9px 14px;border:0;border-radius:99px;cursor:pointer;background:rgba(3,51,55,.78);color:#fff;font:inherit">Mô hình 3D</button>
+  <button type="button" id="song" style="padding:9px 14px;border:0;border-radius:99px;cursor:pointer;background:rgba(3,51,55,.78);color:#fff;font:inherit">Tiếng chim: tắt</button>
 </div>
 <script src="three-d-stage.js"></script>
 <script type="module">

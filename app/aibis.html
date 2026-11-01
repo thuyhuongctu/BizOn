@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="vi" data-theme="dark" data-bizon-build="2026.08.02.2" data-default-lang="vi">
 <head>
   <meta charset="utf-8">
@@ -24,7 +24,7 @@
   <header class="aibis-topbar">
     <a class="brand" href="./release.html"><span class="brand-mark">B</span><span><strong>BIZON</strong><small>AIBIS GLOBAL</small></span></a>
     <div class="journey" aria-label="Tiến trình AIBIS" data-en-aria="AIBIS progress"><span class="done" data-en="0 Ready">0 Sẵn sàng</span><span class="active" data-en="1 Market">1 Thị trường</span><span data-en="2 Entry">2 Thâm nhập</span><span data-en="3 Adapt">3 Thích nghi</span><span data-en="4 Negotiate">4 Đàm phán</span><span data-en="5 Shock">5 Cú sốc</span><span data-en="6 Expand">6 Mở rộng</span><span data-en="7 Capability">7 Năng lực</span><span data-en="8 Board">8 Hội đồng</span></div>
-    <div class="topbar-actions"><a class="context-chip" href="./command-center.html">Command Center</a><button id="installBtn" hidden data-en="Install app">Cài ứng dụng</button><button id="themeBtn" aria-label="Đổi giao diện" data-en-aria="Switch theme">◐</button></div>
+    <div class="topbar-actions"><a class="context-chip" href="./command-center.html">Command Center</a><button type="button" id="installBtn" hidden data-en="Install app">Cài ứng dụng</button><button type="button" id="themeBtn" aria-label="Đổi giao diện" data-en-aria="Switch theme">◐</button></div>
   </header>
 
   <main id="aibisWorkspace" class="aibis-workspace" tabindex="-1">
@@ -44,7 +44,7 @@
         <div class="market-metrics" id="marketMetrics"></div>
       </article>
 
-      <aside class="aibis-panel firm-panel">
+      <aside class="aibis-panel firm-panel" aria-label="Doanh nghiệp">
         <header><div><p class="eyebrow" data-en="FIRM CAPABILITIES">NĂNG LỰC DOANH NGHIỆP</p><h2>Mekong Digital</h2></div><b id="readinessScore">—</b></header>
         <div id="capabilityBars" class="capability-bars"></div>
         <p class="model-note" data-en="These indicators are used for teaching; each model version is stored with its data sources and change history.">Các chỉ số hiện dùng cho hoạt động giảng dạy; mỗi phiên bản mô hình được lưu cùng nguồn dữ liệu và lịch sử thay đổi.</p>
@@ -55,7 +55,7 @@
         <div class="priority-controls" id="priorityControls"></div><div class="mode-grid" id="modeGrid" aria-live="polite"></div>
       </article>
 
-      <aside class="aibis-panel lumina-workspace">
+      <aside class="aibis-panel lumina-workspace" aria-label="Lumina">
         <header><div><p class="eyebrow" data-en="LUMINA · REFLECTION PROMPTS">LUMINA · GỢI Ý PHẢN TƯ</p><h2 data-en="Explained recommendation">Khuyến nghị có giải thích</h2></div><span data-en="From the model">Từ mô hình</span></header>
         <div id="luminaRecommendation" class="lumina-card"></div>
         <div class="counterfactual"><h3 data-en="Compare options">So sánh phương án</h3><label>Đối chiếu với <select id="compareMode"></select></label><div id="counterfactualResult"></div></div>

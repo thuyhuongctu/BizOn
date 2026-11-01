@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- [html-validate-disable element-name: cú pháp mẫu của bộ khung x-dc (support.js): onClick/onChange, <helmet>, {{ }}, nhiều <main> trong <sc-if>. Trình duyệt và support.js đọc đúng; đổi sẽ hỏng trang.] -->
 <html lang="vi">
 <head>
 <meta charset="utf-8">
@@ -54,7 +55,7 @@ td{padding:7px 9px;border-bottom:1px solid #d9e4e6;vertical-align:top}
 </div>
 <p style="margin:0 0 8px">Tổng thời gian <b>60 phút</b>. Game tự mở từng quý theo giờ, đồng hồ đếm ngược hiện ở cuối màn hình; chưa tới giờ thì chưa chốt quý được. Hết giờ quý mà chưa chốt, game tự chốt ưu tiên đang chọn (chưa chọn thì dùng «Củng cố nội lực») và chọn phương án đầu tiên của sự kiện.</p>
 <table style="margin-bottom:16px;font-size:10pt">
-  <thead><tr><th style="padding:7px 9px;text-align:left;background:#006687;color:#fff;width:20%">Thời điểm</th><th style="padding:7px 9px;text-align:left;background:#006687;color:#fff;width:16%">Thời lượng</th><th style="padding:7px 9px;text-align:left;background:#006687;color:#fff">Việc cần làm</th></tr></thead>
+  <thead><tr><th scope="col" style="padding:7px 9px;text-align:left;background:#006687;color:#fff;width:20%">Thời điểm</th><th scope="col" style="padding:7px 9px;text-align:left;background:#006687;color:#fff;width:16%">Thời lượng</th><th scope="col" style="padding:7px 9px;text-align:left;background:#006687;color:#fff">Việc cần làm</th></tr></thead>
   <tbody>
     <tr><td><b>Phút 0 – 10</b></td><td>10 phút</td><td>Mở game, nhập Mã lớp, đọc hồ sơ 4 doanh nghiệp và chọn một doanh nghiệp. Xem 📘 Sổ tay.</td></tr>
     <tr><td><b>Phút 10 – 58</b></td><td>6 quý × 8 phút</td><td>Mỗi quý:<br>• Phút 0–3: mua thông tin, so sánh nguồn tin.<br>• Phút 3–6: chọn ưu tiên, thị trường, phương thức thâm nhập, bấm chốt quý.<br>• Phút 6–8: xử lý sự kiện, xem kết quả quý.</td></tr>
@@ -64,7 +65,7 @@ td{padding:7px 9px;border-bottom:1px solid #d9e4e6;vertical-align:top}
 
 <h2 style="font:800 13pt 'Be Vietnam Pro';color:#006687;margin:0 0 8px">3. Cách tính 10 điểm</h2>
 <table style="margin-bottom:16px;font-size:10pt">
-  <thead><tr><th style="padding:7px 9px;text-align:left;background:#006687;color:#fff;width:26%">Tiêu chí</th><th style="padding:7px 9px;text-align:left;background:#006687;color:#fff">Cách đạt điểm</th><th style="padding:7px 9px;text-align:right;background:#006687;color:#fff;width:10%">Tối đa</th></tr></thead>
+  <thead><tr><th scope="col" style="padding:7px 9px;text-align:left;background:#006687;color:#fff;width:26%">Tiêu chí</th><th scope="col" style="padding:7px 9px;text-align:left;background:#006687;color:#fff">Cách đạt điểm</th><th scope="col" style="padding:7px 9px;text-align:right;background:#006687;color:#fff;width:10%">Tối đa</th></tr></thead>
   <tbody>
     <tr><td><b>A1. Điểm mô phỏng</b></td><td>Điểm tổng /100 của game × 0,05 (ví dụ 80 → 4,0). Kết thúc sớm vì cạn tiền 2 quý liên tiếp hoặc uy tín chạm đáy: tối đa 1,5.</td><td style="text-align:right">5,0</td></tr>
     <tr><td><b>A2. Thưởng kết quả</b></td><td>+0,6 danh hiệu «Thương hiệu Việt vươn khơi» (Điểm tổng ≥ 72 và cả 5 chiều ≥ 60).<br>+0,4 lợi nhuận tích lũy vượt đối thủ sau 6 quý.</td><td style="text-align:right">1,0</td></tr>
@@ -77,7 +78,7 @@ td{padding:7px 9px;border-bottom:1px solid #d9e4e6;vertical-align:top}
 
 <h2 style="font:800 13pt 'Be Vietnam Pro';color:#006687;margin:0 0 8px">4. Năm chiều điểm trong game (Điểm tổng /100)</h2>
 <table style="margin-bottom:16px;font-size:9.5pt">
-  <thead><tr><th style="padding:7px 9px;text-align:left;background:#006687;color:#fff;width:18%">Chiều</th><th style="padding:7px 9px;text-align:left;background:#006687;color:#fff;width:11%">Trọng số</th><th style="padding:7px 9px;text-align:left;background:#006687;color:#fff;width:30%">Đo bằng</th><th style="padding:7px 9px;text-align:left;background:#006687;color:#fff">Cách nâng</th></tr></thead>
+  <thead><tr><th scope="col" style="padding:7px 9px;text-align:left;background:#006687;color:#fff;width:18%">Chiều</th><th scope="col" style="padding:7px 9px;text-align:left;background:#006687;color:#fff;width:11%">Trọng số</th><th scope="col" style="padding:7px 9px;text-align:left;background:#006687;color:#fff;width:30%">Đo bằng</th><th scope="col" style="padding:7px 9px;text-align:left;background:#006687;color:#fff">Cách nâng</th></tr></thead>
   <tbody>
     <tr><td><b>💹 Lợi nhuận</b></td><td>30%</td><td>Lợi nhuận tích lũy so với mốc 6 tỷ ₫</td><td>Chọn thị trường và phương thức thâm nhập phù hợp, giữ giá, tránh chiến tranh giá</td></tr>
     <tr><td><b>⭐ Uy tín</b></td><td>20%</td><td>Chỉ số uy tín cuối game</td><td>«Xây thương hiệu», xử lý khủng hoảng minh bạch</td></tr>

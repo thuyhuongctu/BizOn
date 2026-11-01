@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- [html-validate-disable attr-case, attribute-allowed-values, attribute-boolean-style, element-name, void-content: cú pháp mẫu của bộ khung x-dc (support.js): onClick/onChange, <helmet>, {{ }}, nhiều <main> trong <sc-if>. Trình duyệt và support.js đọc đúng; đổi sẽ hỏng trang.] -->
 <html lang="vi">
 <head>
 <meta charset="utf-8">
@@ -99,10 +100,10 @@ button{font:inherit}
         <span style="font-size:12px;color:#4d6d71">{{ marketsPreview }}</span>
       </div>
       <label style="display:flex;flex-direction:column;gap:6px;font:800 14px 'Plus Jakarta Sans'">{{ t.team }}
-        <input value="{{ team }}" onChange="{{ onTeam }}" placeholder="{{ t.teamPh }}" style="font:500 15px Manrope;padding:11px 12px;border-radius:10px;border:1.5px solid #c9dade;outline:none"></input>
+        <input type="text" value="{{ team }}" onChange="{{ onTeam }}" placeholder="{{ t.teamPh }}" style="font:500 15px Manrope;padding:11px 12px;border-radius:10px;border:1.5px solid #c9dade;outline:none"></input>
       </label>
       <label style="display:flex;flex-direction:column;gap:6px;font:800 14px 'Plus Jakarta Sans'">{{ t.cls }}
-        <input value="{{ cls }}" onChange="{{ onCls }}" placeholder="VD: FDI01" style="font:500 15px Manrope;padding:11px 12px;border-radius:10px;border:1.5px solid {{ clsBd }};outline:none"></input>
+        <input type="text" value="{{ cls }}" onChange="{{ onCls }}" placeholder="VD: FDI01" style="font:500 15px Manrope;padding:11px 12px;border-radius:10px;border:1.5px solid {{ clsBd }};outline:none"></input>
         <sc-if value="{{ clsEmpty }}" hint-placeholder-val="{{ false }}">
           <span style="font-size:11.5px;color:#e8762d">⚠️ {{ t.clsWarn }}</span>
         </sc-if>
@@ -282,7 +283,7 @@ button{font:inherit}
     <span style="font:800 11px 'Plus Jakarta Sans';letter-spacing:.14em;text-transform:uppercase;color:#5f7d81">🎓 {{ cert.kind }}</span>
     <b style="font:800 clamp(20px,3vw,28px)/1.15 'Plus Jakarta Sans';color:#033337">{{ cert.kindEn }}</b>
     <span style="font-size:12px;font-style:italic;color:#5f7d81">{{ t.awardedTo }}</span>
-    <input value="{{ cert.name }}" onChange="{{ cert.onName }}" aria-label="{{ t.certName }}" style="font:800 clamp(20px,3vw,28px) 'Plus Jakarta Sans';color:#006687;text-align:center;border:0;border-bottom:2px solid rgba(253,161,39,.5);background:transparent;outline:none;width:min(100%,460px);padding:2px 6px"></input>
+    <input type="text" value="{{ cert.name }}" onChange="{{ cert.onName }}" aria-label="{{ t.certName }}" style="font:800 clamp(20px,3vw,28px) 'Plus Jakarta Sans';color:#006687;text-align:center;border:0;border-bottom:2px solid rgba(253,161,39,.5);background:transparent;outline:none;width:min(100%,460px);padding:2px 6px"></input>
     <span style="font-size:11px;color:#8aa0a3">✎ {{ t.certHint }}</span>
     <p style="margin:0;max-width:560px;font-size:13.5px;line-height:1.55;color:#335a5e;text-wrap:pretty">{{ cert.desc }}</p>
     <div style="display:grid;grid-template-columns:minmax(0,1fr) 76px minmax(0,1fr);gap:12px;align-items:end;width:min(100%,560px);margin-top:8px">

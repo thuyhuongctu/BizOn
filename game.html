@@ -202,8 +202,8 @@
       <div class="flex items-start justify-between gap-3">
         <h2 class="font-display text-2xl font-extrabold text-deep-teal">Chào mừng trở lại!</h2>
         <div class="flex gap-1.5 shrink-0">
-          <button onclick="toggleLang()" class="clay-sunken rounded-full h-8 px-3 text-[11px] font-extrabold text-deep-teal/70" title="Tiếng Việt / English">🌐 VI/EN</button>
-          <button onclick="toggleTheme()" class="clay-sunken rounded-full w-8 h-8 text-sm" title="Sáng/Tối">🌙</button>
+          <button type="button" onclick="toggleLang()" class="clay-sunken rounded-full h-8 px-3 text-[11px] font-extrabold text-deep-teal/70" title="Tiếng Việt / English">🌐 VI/EN</button>
+          <button type="button" onclick="toggleTheme()" class="clay-sunken rounded-full w-8 h-8 text-sm" title="Sáng/Tối">🌙</button>
         </div>
       </div>
       <p class="text-sm text-deep-teal/60 mb-2"><span class="font-display font-extrabold lumina-name">Lumina</span> – <span class="signature text-lg text-deep-teal">Je m'appelle Hương</span> <span>đang chờ đồng hành cùng đội của bạn.</span></p>
@@ -271,9 +271,9 @@
       <input id="login-sync" type="text" autocomplete="off" spellcheck="false" placeholder="48 ký tự" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-4 py-3 mb-4 outline-none focus:border-primary-container">
       <label class="block text-sm font-bold text-deep-teal mb-2">Vai trò của bạn</label>
       <div id="role-picker" class="grid grid-cols-5 gap-2 mb-6"></div>
-      <button onclick="doLogin()" class="clay-button-primary w-full text-white font-display font-bold py-4" style="background:#e8762d; box-shadow:0 6px 0 #b95618, 0 12px 24px rgba(184,86,24,.25)">Bắt đầu mô phỏng 🚀</button>
+      <button type="button" onclick="doLogin()" class="clay-button-primary w-full text-white font-display font-bold py-4" style="background:#e8762d; box-shadow:0 6px 0 #b95618, 0 12px 24px rgba(184,86,24,.25)">Bắt đầu mô phỏng 🚀</button>
       <div class="clay-card overflow-hidden p-0 mt-4"><img src="assets/character/csuite/lineup.webp" alt="Đội Demo 5 nhân vật đất sét: COO, CFO, CEO, CMO, Thư ký pháp chế" class="w-full" style="display:block" loading="lazy"></div>
-      <button onclick="doLoginDemo()" class="clay-button-secondary w-full text-deep-teal/80 font-display font-bold py-3.5 mt-3 rounded-clay">👥 Chơi thử với Đội Demo (5 nhân vật)</button>
+      <button type="button" onclick="doLoginDemo()" class="clay-button-secondary w-full text-deep-teal/80 font-display font-bold py-3.5 mt-3 rounded-clay">👥 Chơi thử với Đội Demo (5 nhân vật)</button>
       <a href="BizOn%20Game%203D.html" class="block text-center text-sm font-bold text-primary mt-4">🧊 Thử bản 3D (mới) →</a>
       </div>
     </div>
@@ -287,16 +287,16 @@
   <header class="sticky top-0 z-40 bg-surface-bright/90 backdrop-blur px-5 pt-4 pb-3 max-w-md sm:max-w-2xl mx-auto w-full">
     <div class="flex items-center justify-between gap-2">
       <div class="hdr-id flex items-center gap-2.5 min-w-0 flex-1">
-        <button onclick="showTab('profile')" class="hdr-ava w-11 h-11 shrink-0 rounded-clay bg-gradient-to-br from-primary to-primary-container flex items-center justify-center shadow-clay text-xl">👩‍💼</button>
+        <button type="button" onclick="showTab('profile')" class="hdr-ava w-11 h-11 shrink-0 rounded-clay bg-gradient-to-br from-primary to-primary-container flex items-center justify-center shadow-clay text-xl">👩‍💼</button>
         <div class="min-w-0">
           <p id="hdr-team" class="font-display font-bold text-deep-teal leading-tight truncate">–</p>
           <p class="text-xs text-primary font-semibold whitespace-nowrap"><span id="hdr-level">Lv.1</span> · <span id="hdr-xp">0 XP</span></p>
         </div>
       </div>
       <div class="hdr-tools flex items-center gap-1.5 shrink-0">
-        <button id="theme-btn" onclick="toggleTheme()" aria-label="Chuyển chế độ Sáng/Tối" class="hdr-toggle w-9 h-9 rounded-full clay-card !rounded-full text-sm" title="Chế độ Sáng/Tối · Light/Dark">🌙</button>
-        <button id="lang-btn" onclick="toggleLang()" aria-label="Chuyển ngôn ngữ Tiếng Việt / English" class="hdr-toggle w-9 h-9 rounded-full clay-card !rounded-full text-[10px] font-extrabold text-primary" title="Tiếng Việt / English">EN</button>
-        <button onclick="toggleMusic(); renderAll()" aria-label="Bật/tắt nhạc nền" class="hdr-toggle w-9 h-9 rounded-full clay-card !rounded-full text-sm" title="Nhạc nền BizOn">🎵</button>
+        <button type="button" id="theme-btn" onclick="toggleTheme()" aria-label="Chuyển chế độ Sáng/Tối" class="hdr-toggle w-9 h-9 rounded-full clay-card !rounded-full text-sm" title="Chế độ Sáng/Tối · Light/Dark">🌙</button>
+        <button type="button" id="lang-btn" onclick="toggleLang()" aria-label="Chuyển ngôn ngữ Tiếng Việt / English" class="hdr-toggle w-9 h-9 rounded-full clay-card !rounded-full text-[10px] font-extrabold text-primary" title="Tiếng Việt / English">EN</button>
+        <button type="button" onclick="toggleMusic(); renderAll()" aria-label="Bật/tắt nhạc nền" class="hdr-toggle w-9 h-9 rounded-full clay-card !rounded-full text-sm" title="Nhạc nền BizOn">🎵</button>
       </div>
       <div class="hdr-money clay-card shrink-0 px-2.5 sm:px-4 py-2 flex items-center gap-1">
         <span>💰</span><span id="hdr-balance" class="font-display font-bold text-deep-teal text-xs sm:text-sm whitespace-nowrap">0₫</span>
@@ -363,16 +363,16 @@
           </p>
           <p id="dash-lumina" class="text-xs text-deep-teal/70 mt-0.5">Xin chào! Hãy vào mục Cố vấn để nhận gợi ý chiến thuật nhé.</p>
         </div>
-        <button onclick="showTab('advisor')" class="clay-btn bg-primary-container/30 text-primary font-bold px-3 py-2 text-xs bz-explain">Hỏi</button>
+        <button type="button" onclick="showTab('advisor')" class="clay-btn bg-primary-container/30 text-primary font-bold px-3 py-2 text-xs bz-explain">Hỏi</button>
       </div>
       <h3 class="font-display font-bold text-deep-teal mb-3">Tiện ích</h3>
       <div class="grid grid-cols-4 gap-3 mb-4">
-        <button onclick="showManual()" class="clay-card p-3 text-center"><p class="text-2xl">📖</p><p class="text-[10px] font-bold text-deep-teal mt-1">Sổ tay</p></button>
-        <button onclick="BizonTour.start()" class="clay-card p-3 text-center"><p class="text-2xl">❓</p><p class="text-[10px] font-bold text-deep-teal mt-1">Hướng dẫn</p></button>
-        <button onclick="showIntro()" class="clay-card p-3 text-center"><p class="text-2xl">🎬</p><p class="text-[10px] font-bold text-deep-teal mt-1">Giới thiệu</p></button>
-        <button onclick="showTab('settings')" class="clay-card p-3 text-center"><p class="text-2xl">⚙️</p><p class="text-[10px] font-bold text-deep-teal mt-1">Cài đặt</p></button>
+        <button type="button" onclick="showManual()" class="clay-card p-3 text-center"><span class="block text-2xl">📖</span><span class="block text-[10px] font-bold text-deep-teal mt-1">Sổ tay</span></button>
+        <button type="button" onclick="BizonTour.start()" class="clay-card p-3 text-center"><span class="block text-2xl">❓</span><span class="block text-[10px] font-bold text-deep-teal mt-1">Hướng dẫn</span></button>
+        <button type="button" onclick="showIntro()" class="clay-card p-3 text-center"><span class="block text-2xl">🎬</span><span class="block text-[10px] font-bold text-deep-teal mt-1">Giới thiệu</span></button>
+        <button type="button" onclick="showTab('settings')" class="clay-card p-3 text-center"><span class="block text-2xl">⚙️</span><span class="block text-[10px] font-bold text-deep-teal mt-1">Cài đặt</span></button>
       </div>
-      <button id="btn-go-decisions" onclick="showTab('decisions')" class="clay-btn w-full bg-primary text-white font-display font-bold py-4">Nhập quyết định vòng này ➜</button>
+      <button type="button" id="btn-go-decisions" onclick="showTab('decisions')" class="clay-btn w-full bg-primary text-white font-display font-bold py-4">Nhập quyết định vòng này ➜</button>
     </section>
 
     <!-- ========== JOURNEY (Hành trình) ========== -->
@@ -381,15 +381,15 @@
       <p class="text-sm text-deep-teal/60 mb-4">Nhật ký, thành tích và tiến bộ của đội qua 6 vòng – tất cả ở một nơi.</p>
 
       <h3 class="font-display font-bold text-deep-teal mb-2">Tiến bộ &amp; thành tích</h3>
-      <button onclick="showTab('journal')" class="clay-card w-full p-4 mb-3 flex items-center gap-4 text-left">
+      <button type="button" onclick="showTab('journal')" class="clay-card w-full p-4 mb-3 flex items-center gap-4 text-left">
         <span class="w-12 h-12 shrink-0 rounded-clay flex items-center justify-center text-2xl" style="background:rgba(0,102,135,.1)">📔</span>
-        <div class="flex-1 min-w-0"><p class="font-display font-bold text-deep-teal text-sm">Nhật ký đội</p><p class="text-[11px] text-deep-teal/55">Timeline quyết định &amp; bài học do SEC ghi – tư liệu cho bài trình bày cuối kỳ</p></div>
+        <span class="block flex-1 min-w-0"><span class="block font-display font-bold text-deep-teal text-sm">Nhật ký đội</span><span class="block text-[11px] text-deep-teal/55">Timeline quyết định &amp; bài học do SEC ghi – tư liệu cho bài trình bày cuối kỳ</span></span>
         <span class="text-primary text-lg shrink-0">➜</span>
       </button>
       <div class="grid grid-cols-3 gap-3 mb-5">
-        <button onclick="showTab('achievements')" class="clay-card p-4 text-center"><p class="text-2xl">🎖️</p><p class="text-[10px] font-bold text-deep-teal mt-1">Thành tựu &amp; Chứng chỉ</p></button>
-        <button onclick="showTab('leaderboard')" class="clay-card p-4 text-center"><p class="text-2xl">🏆</p><p class="text-[10px] font-bold text-deep-teal mt-1">Xếp hạng</p></button>
-        <button onclick="showTab('missions')" class="clay-card p-4 text-center relative"><span id="missions-badge" class="hidden absolute top-1 right-1 w-5 h-5 rounded-full bg-orange-500 text-white text-[10px] font-bold flex items-center justify-center"></span><p class="text-2xl">📋</p><p class="text-[10px] font-bold text-deep-teal mt-1">Nhiệm vụ</p></button>
+        <button type="button" onclick="showTab('achievements')" class="clay-card p-4 text-center"><span class="block text-2xl">🎖️</span><span class="block text-[10px] font-bold text-deep-teal mt-1">Thành tựu &amp; Chứng chỉ</span></button>
+        <button type="button" onclick="showTab('leaderboard')" class="clay-card p-4 text-center"><span class="block text-2xl">🏆</span><span class="block text-[10px] font-bold text-deep-teal mt-1">Xếp hạng</span></button>
+        <button type="button" onclick="showTab('missions')" class="clay-card p-4 text-center relative"><span id="missions-badge" class="hidden absolute top-1 right-1 w-5 h-5 rounded-full bg-orange-500 text-white text-[10px] font-bold flex items-center justify-center"></span><span class="block text-2xl">📋</span><span class="block text-[10px] font-bold text-deep-teal mt-1">Nhiệm vụ</span></button>
       </div>
 
       <div class="flex items-center gap-2 mb-2">
@@ -397,9 +397,9 @@
         <span class="text-[10px] text-deep-teal/45 font-semibold">· tuỳ chọn, không tính điểm</span>
       </div>
       <div class="grid grid-cols-3 gap-3">
-        <button onclick="showTab('shop')" class="clay-card p-4 text-center"><p class="text-2xl">🛍️</p><p class="text-[10px] font-bold text-deep-teal mt-1">Cửa hàng</p></button>
-        <button onclick="showTab('minigame')" class="clay-card p-4 text-center"><p class="text-2xl">🏭</p><p class="text-[10px] font-bold text-deep-teal mt-1">Mini-game</p></button>
-        <button onclick="showTab('skills')" class="clay-card p-4 text-center"><p class="text-2xl">🌳</p><p class="text-[10px] font-bold text-deep-teal mt-1">Cây kỹ năng</p></button>
+        <button type="button" onclick="showTab('shop')" class="clay-card p-4 text-center"><span class="block text-2xl">🛍️</span><span class="block text-[10px] font-bold text-deep-teal mt-1">Cửa hàng</span></button>
+        <button type="button" onclick="showTab('minigame')" class="clay-card p-4 text-center"><span class="block text-2xl">🏭</span><span class="block text-[10px] font-bold text-deep-teal mt-1">Mini-game</span></button>
+        <button type="button" onclick="showTab('skills')" class="clay-card p-4 text-center"><span class="block text-2xl">🌳</span><span class="block text-[10px] font-bold text-deep-teal mt-1">Cây kỹ năng</span></button>
       </div>
     </section>
 
@@ -476,8 +476,8 @@
         <p class="font-bold text-sm text-deep-teal mb-3">🏦 Quản trị Tài chính</p>
         <label class="block text-[11px] font-bold text-deep-teal/60 uppercase mb-1.5">Cơ cấu nguồn vốn</label>
         <div class="grid grid-cols-2 gap-2 mb-1">
-          <button id="fund-equity" onclick="setFunding('equity')" class="clay-button-secondary text-primary text-xs font-bold py-2.5 ring-2 ring-primary-container">💼 Vốn tự có</button>
-          <button id="fund-loan" onclick="setFunding('loan')" class="clay-button-secondary text-deep-teal/60 text-xs font-bold py-2.5">🏦 Vay ngân hàng</button>
+          <button type="button" id="fund-equity" onclick="setFunding('equity')" class="clay-button-secondary text-primary text-xs font-bold py-2.5 ring-2 ring-primary-container">💼 Vốn tự có</button>
+          <button type="button" id="fund-loan" onclick="setFunding('loan')" class="clay-button-secondary text-deep-teal/60 text-xs font-bold py-2.5">🏦 Vay ngân hàng</button>
         </div>
         <p class="text-[11px] text-deep-teal/50 mb-3">Vay ngân hàng: được chi vượt ví, lãi suất 8.5%/vòng trên phần thấu chi.</p>
         <label class="block text-[11px] font-bold text-deep-teal/60 uppercase mb-1.5">Kỳ hạn thanh toán cho khách</label>
@@ -515,8 +515,8 @@
       <div class="clay-card p-5 mb-3">
         <p class="text-[11px] text-deep-teal/65 leading-relaxed mb-3"><span>Trước khi CEO khóa quyết định: kiểm tra</span> <b>biến cố thị trường</b> <span>vòng này trên Bảng điều khiển và ghi lại lý do chọn phương án của đội – tư liệu quý nhất cho bài trình bày cuối buổi.</span></p>
         <div class="grid grid-cols-2 gap-2">
-          <button onclick="showTab('journal')" class="clay-button-secondary text-primary text-xs font-bold py-2.5">📔 Mở Nhật ký đội</button>
-          <button onclick="showTab('home')" class="clay-button-secondary text-primary text-xs font-bold py-2.5">⚡ Xem biến cố vòng này</button>
+          <button type="button" onclick="showTab('journal')" class="clay-button-secondary text-primary text-xs font-bold py-2.5">📔 Mở Nhật ký đội</button>
+          <button type="button" onclick="showTab('home')" class="clay-button-secondary text-primary text-xs font-bold py-2.5">⚡ Xem biến cố vòng này</button>
         </div>
       </div>
       </div>
@@ -531,17 +531,17 @@
         <p class="font-bold text-sm text-deep-teal mb-1">🔮 Mô phỏng "Nếu – Thì" trước khi Commit</p>
         <p class="text-[11px] text-deep-teal/60 mb-3"><span>Lumina chạy thử kịch bản với thông số bạn đang chọn (</span><span id="whatif-quota">2</span><span> lượt/chu kỳ).</span></p>
         <div class="grid grid-cols-2 gap-2">
-          <button onclick="runWhatIf('CEO')" class="clay-button-secondary text-primary text-xs font-bold py-2.5">🧭 Chiến lược (CEO)</button>
-          <button onclick="runWhatIf('CFO')" class="clay-button-secondary text-primary text-xs font-bold py-2.5">💰 Tài chính (CFO)</button>
-          <button onclick="runWhatIf('CMO')" class="clay-button-secondary text-primary text-xs font-bold py-2.5">📣 Marketing (CMO)</button>
-          <button onclick="runWhatIf('COO')" class="clay-button-secondary text-primary text-xs font-bold py-2.5">🏭 Vận hành (COO)</button>
-          <button onclick="runWhatIf('SEC')" class="clay-button-secondary text-primary text-xs font-bold py-2.5">📔 Pháp chế (SEC)</button>
+          <button type="button" onclick="runWhatIf('CEO')" class="clay-button-secondary text-primary text-xs font-bold py-2.5">🧭 Chiến lược (CEO)</button>
+          <button type="button" onclick="runWhatIf('CFO')" class="clay-button-secondary text-primary text-xs font-bold py-2.5">💰 Tài chính (CFO)</button>
+          <button type="button" onclick="runWhatIf('CMO')" class="clay-button-secondary text-primary text-xs font-bold py-2.5">📣 Marketing (CMO)</button>
+          <button type="button" onclick="runWhatIf('COO')" class="clay-button-secondary text-primary text-xs font-bold py-2.5">🏭 Vận hành (COO)</button>
+          <button type="button" onclick="runWhatIf('SEC')" class="clay-button-secondary text-primary text-xs font-bold py-2.5">📔 Pháp chế (SEC)</button>
         </div>
         <div id="whatif-result" class="mt-3"></div>
       </div>
       <div id="commit-box">
         <div id="commit-recap" class="clay-sunken rounded-2xl p-3 mb-3 text-[11px] text-deep-teal/70 font-semibold leading-relaxed"></div>
-        <button id="btn-commit" onclick="commitDecisions()" class="clay-btn w-full bg-primary text-white font-display font-bold py-4">🔒 Commit – Khóa quyết định</button>
+        <button type="button" id="btn-commit" onclick="commitDecisions()" class="clay-btn w-full bg-primary text-white font-display font-bold py-4">🔒 Commit – Khóa quyết định</button>
         <p class="text-center text-[11px] text-deep-teal/50 mt-2">Sau khi commit, quyết định được đưa vào hàng chờ mô phỏng và không thể sửa (ERR_ROUND_LOCKED).</p>
       </div>
       </div>
@@ -571,7 +571,7 @@
               <span class="online-dot w-2 h-2 rounded-full bg-emerald-500 shrink-0"></span> <span>Online · Cố vấn chiến lược</span>
             </p>
           </div>
-          <button id="huong-voice-btn" onclick="playHuongIntro()" title="Nghe giọng thật của Lumina" class="clay-btn bg-white w-11 h-11 rounded-full text-xl shrink-0 self-start">🔊</button>
+          <button type="button" id="huong-voice-btn" onclick="playHuongIntro()" title="Nghe giọng thật của Lumina" class="clay-btn bg-white w-11 h-11 rounded-full text-xl shrink-0 self-start">🔊</button>
         </div>
         <div class="relative mt-3">
           <img id="advisor-hero" src="assets/character/lumina-vest.webp" alt="" class="w-full h-44 object-cover" style="object-position:50% 8%">
@@ -581,9 +581,9 @@
           </div>
         </div>
       </div>
-      <button onclick="showTab('advisorpro')" class="clay-card w-full p-4 mb-4 flex items-center gap-3 text-left">
+      <button type="button" onclick="showTab('advisorpro')" class="clay-card w-full p-4 mb-4 flex items-center gap-3 text-left">
         <span class="w-10 h-10 shrink-0 rounded-clay flex items-center justify-center text-xl" style="background:rgba(0,196,255,.15)">📈</span>
-        <div class="flex-1 min-w-0"><p class="font-display font-bold text-deep-teal text-sm">Lumina Advisor Pro</p><p class="text-[11px] text-deep-teal/55">Nhập số liệu kinh doanh thật → nhận kịch bản "Nếu – Thì"</p></div>
+        <span class="block flex-1 min-w-0"><span class="block font-display font-bold text-deep-teal text-sm">Lumina Advisor Pro</span><span class="block text-[11px] text-deep-teal/55">Nhập số liệu kinh doanh thật → nhận kịch bản "Nếu – Thì"</span></span>
         <span class="text-primary text-lg shrink-0">➜</span>
       </button>
       <div id="advisor-chat" class="space-y-3 mb-4"></div>
@@ -592,20 +592,20 @@
         <div class="flex items-center justify-between mb-2">
           <p class="font-bold text-sm text-deep-teal"><span>Hỏi Lumina (</span><span id="ai-quota">3</span><span> lượt/chu kỳ)</span></p>
           <div class="flex items-center gap-1.5 clay-input rounded-full p-1">
-            <button id="voice-female" onclick="setVoiceGender('female')" class="px-3 py-1 rounded-full text-[11px] font-bold bg-white shadow-md text-primary">👩 Nữ</button>
-            <button id="voice-male" onclick="setVoiceGender('male')" class="px-3 py-1 rounded-full text-[11px] font-bold text-deep-teal/50">👨 Nam</button>
-            <button id="voice-toggle" onclick="toggleVoice()" class="px-3 py-1 rounded-full text-[11px] font-bold text-deep-teal/50">🔇 Tắt</button>
+            <button type="button" id="voice-female" onclick="setVoiceGender('female')" class="px-3 py-1 rounded-full text-[11px] font-bold bg-white shadow-md text-primary">👩 Nữ</button>
+            <button type="button" id="voice-male" onclick="setVoiceGender('male')" class="px-3 py-1 rounded-full text-[11px] font-bold text-deep-teal/50">👨 Nam</button>
+            <button type="button" id="voice-toggle" onclick="toggleVoice()" class="px-3 py-1 rounded-full text-[11px] font-bold text-deep-teal/50">🔇 Tắt</button>
           </div>
         </div>
         <div class="grid grid-cols-1 gap-2 mb-3">
-          <button onclick="askLumina('pricing')" class="clay-btn bg-surface-bright text-deep-teal text-left font-semibold text-sm px-4 py-3">💲 Nếu tôi thay đổi giá bán thì sao?</button>
-          <button onclick="askLumina('marketing')" class="clay-btn bg-surface-bright text-deep-teal text-left font-semibold text-sm px-4 py-3">📣 Nếu tăng ngân sách Marketing 15%?</button>
-          <button onclick="askLumina('risk')" class="clay-btn bg-surface-bright text-deep-teal text-left font-semibold text-sm px-4 py-3">⚠️ Rủi ro lớn nhất vòng này là gì?</button>
+          <button type="button" onclick="askLumina('pricing')" class="clay-btn bg-surface-bright text-deep-teal text-left font-semibold text-sm px-4 py-3">💲 Nếu tôi thay đổi giá bán thì sao?</button>
+          <button type="button" onclick="askLumina('marketing')" class="clay-btn bg-surface-bright text-deep-teal text-left font-semibold text-sm px-4 py-3">📣 Nếu tăng ngân sách Marketing 15%?</button>
+          <button type="button" onclick="askLumina('risk')" class="clay-btn bg-surface-bright text-deep-teal text-left font-semibold text-sm px-4 py-3">⚠️ Rủi ro lớn nhất vòng này là gì?</button>
         </div>
         <div class="flex items-center gap-2">
           <input id="chat-input" type="text" placeholder="Trò chuyện với Lumina..." class="clay-input flex-1 rounded-full px-5 py-3 text-sm text-deep-teal" onkeydown="if(event.key==='Enter')sendChat()">
-          <button id="mic-btn" onclick="toggleMic()" aria-label="Nói với Lumina bằng micro" class="clay-button-secondary w-11 h-11 rounded-full flex items-center justify-center text-lg shrink-0">🎤</button>
-          <button onclick="sendChat()" aria-label="Gửi tin nhắn" class="clay-button-primary w-11 h-11 rounded-full flex items-center justify-center text-white text-lg shrink-0">➤</button>
+          <button type="button" id="mic-btn" onclick="toggleMic()" aria-label="Nói với Lumina bằng micro" class="clay-button-secondary w-11 h-11 rounded-full flex items-center justify-center text-lg shrink-0">🎤</button>
+          <button type="button" onclick="sendChat()" aria-label="Gửi tin nhắn" class="clay-button-primary w-11 h-11 rounded-full flex items-center justify-center text-white text-lg shrink-0">➤</button>
         </div>
         <div id="speaking-bar" class="hidden items-center gap-3 mt-3 clay-input rounded-2xl px-4 py-2.5">
           <span class="text-primary">🎵</span>
@@ -624,22 +624,22 @@
     <!-- ========== REPORTS ========== -->
     <section id="tab-reports" class="screen">
       <h2 class="font-display text-xl font-extrabold text-deep-teal mb-2">Báo cáo kết quả & Phân tích</h2>
-      <button onclick="showTab('market')" class="clay-card w-full p-3 mb-4 flex items-center gap-3 text-left">
+      <button type="button" onclick="showTab('market')" class="clay-card w-full p-3 mb-4 flex items-center gap-3 text-left">
         <span class="w-9 h-9 shrink-0 rounded-xl flex items-center justify-center text-lg" style="background:rgba(0,102,135,.1)">📡</span>
-        <div class="flex-1 min-w-0"><p class="font-display font-bold text-deep-teal text-sm"><span>Thị trường sống</span> <span class="text-[9px] font-extrabold text-red-500 align-middle">● LIVE</span></p><p class="text-[11px] text-deep-teal/55" data-bn-en="Real-time pulse of the market, rivals &amp; trends">Nhịp đập thị trường, đối thủ &amp; xu hướng thời gian thực</p></div>
+        <span class="block flex-1 min-w-0"><span class="block font-display font-bold text-deep-teal text-sm"><span>Thị trường sống</span> <span class="text-[9px] font-extrabold text-red-500 align-middle">● LIVE</span></span><span class="block text-[11px] text-deep-teal/55" data-bn-en="Real-time pulse of the market, rivals &amp; trends">Nhịp đập thị trường, đối thủ &amp; xu hướng thời gian thực</span></span>
         <span class="text-primary text-lg shrink-0">➜</span>
       </button>
       <div class="flex gap-2 mb-4 overflow-x-auto pb-1">
-        <button data-rep="pnl" class="rep-tab clay-btn bg-primary text-white text-xs font-bold px-4 py-2 whitespace-nowrap" onclick="showReport('pnl')">P&L</button>
-        <button data-rep="cash" class="rep-tab clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2 whitespace-nowrap" onclick="showReport('cash')">Dòng tiền</button>
-        <button data-rep="cvp" class="rep-tab clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2 whitespace-nowrap" onclick="showReport('cvp')">CVP & Chi phí</button>
-        <button data-rep="rival" class="rep-tab clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2 whitespace-nowrap" onclick="showReport('rival')">🕵️ Chi phí đối thủ</button>
-        <button data-rep="season" class="rep-tab clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2 whitespace-nowrap" onclick="showReport('season')">🏁 Tổng kết</button>
-        <button data-rep="members" class="rep-tab clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2 whitespace-nowrap" onclick="showReport('members')" data-bn-en="📈 Member performance">📈 Hiệu suất thành viên</button>
-        <button data-rep="hr" class="rep-tab clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2 whitespace-nowrap" onclick="showReport('hr')">👥 Nhân sự</button>
-        <button data-rep="bmc" class="rep-tab clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2 whitespace-nowrap" onclick="showReport('bmc')">🧩 BMC</button>
-        <button data-rep="dep" class="rep-tab clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2 whitespace-nowrap" onclick="showReport('dep')">Khấu hao</button>
-        <button data-rep="energy" class="rep-tab clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2 whitespace-nowrap" onclick="showReport('energy')">⚡ Năng lượng</button>
+        <button type="button" data-rep="pnl" class="rep-tab clay-btn bg-primary text-white text-xs font-bold px-4 py-2 whitespace-nowrap" onclick="showReport('pnl')">P&amp;L</button>
+        <button type="button" data-rep="cash" class="rep-tab clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2 whitespace-nowrap" onclick="showReport('cash')">Dòng tiền</button>
+        <button type="button" data-rep="cvp" class="rep-tab clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2 whitespace-nowrap" onclick="showReport('cvp')">CVP & Chi phí</button>
+        <button type="button" data-rep="rival" class="rep-tab clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2 whitespace-nowrap" onclick="showReport('rival')">🕵️ Chi phí đối thủ</button>
+        <button type="button" data-rep="season" class="rep-tab clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2 whitespace-nowrap" onclick="showReport('season')">🏁 Tổng kết</button>
+        <button type="button" data-rep="members" class="rep-tab clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2 whitespace-nowrap" onclick="showReport('members')" data-bn-en="📈 Member performance">📈 Hiệu suất thành viên</button>
+        <button type="button" data-rep="hr" class="rep-tab clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2 whitespace-nowrap" onclick="showReport('hr')">👥 Nhân sự</button>
+        <button type="button" data-rep="bmc" class="rep-tab clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2 whitespace-nowrap" onclick="showReport('bmc')">🧩 BMC</button>
+        <button type="button" data-rep="dep" class="rep-tab clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2 whitespace-nowrap" onclick="showReport('dep')">Khấu hao</button>
+        <button type="button" data-rep="energy" class="rep-tab clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2 whitespace-nowrap" onclick="showReport('energy')">⚡ Năng lượng</button>
       </div>
       <div id="report-body"></div>
     </section>
@@ -651,9 +651,9 @@
       <div id="shop-list" class="space-y-3 mb-6"></div>
       <h3 class="font-display font-bold text-deep-teal mb-3">🎒 Kho đồ của đội</h3>
       <div class="flex gap-2 mb-3 overflow-x-auto pb-1">
-        <button data-inv="all" onclick="setInvFilter('all')" class="inv-tab clay-btn bg-primary text-white text-xs font-bold px-4 py-2 whitespace-nowrap">Tất cả</button>
-        <button data-inv="item" onclick="setInvFilter('item')" class="inv-tab clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2 whitespace-nowrap">Vật phẩm</button>
-        <button data-inv="blueprint" onclick="setInvFilter('blueprint')" class="inv-tab clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2 whitespace-nowrap">Bản thiết kế</button>
+        <button type="button" data-inv="all" onclick="setInvFilter('all')" class="inv-tab clay-btn bg-primary text-white text-xs font-bold px-4 py-2 whitespace-nowrap">Tất cả</button>
+        <button type="button" data-inv="item" onclick="setInvFilter('item')" class="inv-tab clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2 whitespace-nowrap">Vật phẩm</button>
+        <button type="button" data-inv="blueprint" onclick="setInvFilter('blueprint')" class="inv-tab clay-btn bg-white text-deep-teal text-xs font-bold px-4 py-2 whitespace-nowrap">Bản thiết kế</button>
       </div>
       <div id="inventory-list" class="grid grid-cols-2 gap-3 mb-3"></div>
       <div id="inv-detail" class="clay-card p-5 bg-primary-container/10">
@@ -665,7 +665,7 @@
               <span id="invd-count" class="bg-primary-container/40 text-primary text-[10px] font-extrabold px-2.5 py-1 rounded-full">--</span>
             </div>
             <p id="invd-desc" class="text-xs text-deep-teal/60 mb-3">Chạm vào một vật phẩm trong kho để xem chi tiết và sử dụng sức mạnh của nó.</p>
-            <button id="invd-use" class="clay-button-primary w-full text-white text-sm font-display font-bold py-3 opacity-50" disabled>Sử dụng 🚀</button>
+            <button type="button" id="invd-use" class="clay-button-primary w-full text-white text-sm font-display font-bold py-3 opacity-50" disabled>Sử dụng 🚀</button>
           </div>
         </div>
       </div>
@@ -694,7 +694,7 @@
         <h3 class="font-display font-extrabold text-deep-teal text-lg">Chứng chỉ hoàn thành</h3>
         <p class="text-sm text-deep-teal/70 mt-1"><span>Chứng nhận đội</span> <span id="cert-team" class="font-bold text-primary">–</span> <span>đã hoàn thành 6 vòng mô phỏng kinh doanh Bật Nghiệp (Bậc 2 · Vận hành doanh nghiệp).</span></p>
         <p id="cert-result" class="font-display font-bold text-primary mt-3"></p>
-        <button onclick="bnDownloadCertOfficial()" class="clay-btn bg-primary text-white font-display font-extrabold px-4 py-2 text-[11px] mt-3">🎓 Chứng nhận chính thức</button>
+        <button type="button" onclick="bnDownloadCertOfficial()" class="clay-btn bg-primary text-white font-display font-extrabold px-4 py-2 text-[11px] mt-3">🎓 Chứng nhận chính thức</button>
       </div>
     </section>
 
@@ -717,21 +717,21 @@
       <div id="mg-belt" class="clay-card relative h-28 mb-3 overflow-hidden bg-gradient-to-b from-white to-surface-bright">
         <div class="absolute bottom-0 inset-x-0 h-6 bg-deep-teal/10"></div>
       </div>
-      <button id="mg-start" onclick="startMinigame()" class="clay-btn w-full bg-primary text-white font-display font-bold py-4 mb-3"><span>▶️ Bắt đầu (lượt</span> <span id="mg-plays">1</span><span>/3)</span></button>
+      <button type="button" id="mg-start" onclick="startMinigame()" class="clay-btn w-full bg-primary text-white font-display font-bold py-4 mb-3"><span>▶️ Bắt đầu (lượt</span> <span id="mg-plays">1</span><span>/3)</span></button>
       <div class="clay-card p-4 flex justify-between text-sm mb-3">
         <span class="font-bold text-deep-teal"><span>🏅 Điểm cao nhất:</span> <span id="mg-best">0</span></span>
         <span class="text-deep-teal/60">Thưởng: 2tr₫/điểm (tối đa 60tr₫/lượt)</span>
       </div>
       <div class="grid grid-cols-2 gap-3">
-        <button onclick="showRewardShop()" class="clay-btn bg-white text-deep-teal text-sm font-bold py-3.5"><span>🎁 Đổi thưởng (</span><span id="mg-points">0</span><span> điểm)</span></button>
-        <button onclick="showMgLeaderboard()" class="clay-btn bg-white text-deep-teal text-sm font-bold py-3.5">🏆 Xếp hạng</button>
+        <button type="button" onclick="showRewardShop()" class="clay-btn bg-white text-deep-teal text-sm font-bold py-3.5"><span>🎁 Đổi thưởng (</span><span id="mg-points">0</span><span> điểm)</span></button>
+        <button type="button" onclick="showMgLeaderboard()" class="clay-btn bg-white text-deep-teal text-sm font-bold py-3.5">🏆 Xếp hạng</button>
       </div>
     </section>
 
     <!-- ========== INSTRUCTOR ========== -->
     <!-- ========== LUMINA ADVISOR PRO ========== -->
     <section id="tab-advisorpro" class="screen">
-      <button onclick="showTab('advisor')" class="text-xs font-bold text-primary mb-3">← Lumina</button>
+      <button type="button" onclick="showTab('advisor')" class="text-xs font-bold text-primary mb-3">← Lumina</button>
       <div class="flex items-center gap-3 mb-4">
         <img src="assets/character/lumina-vest.webp" alt="Lumina" class="w-12 h-12 rounded-clay object-cover shadow-clay" style="object-position:50% 12%">
         <div>
@@ -748,7 +748,7 @@
           <input id="ap-marketing" type="number" value="50" min="0" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-4 py-3 outline-none focus:border-primary-container"></div>
         <div><label class="block text-sm font-bold text-deep-teal mb-1">🎯 Mục tiêu tăng trưởng (%/quý)</label>
           <input id="ap-growth" type="number" value="15" min="0" max="100" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-4 py-3 outline-none focus:border-primary-container"></div>
-        <button onclick="runAdvisorPro()" class="clay-btn w-full bg-primary text-white font-display font-bold py-4">🔮 Phân tích kịch bản</button>
+        <button type="button" onclick="runAdvisorPro()" class="clay-btn w-full bg-primary text-white font-display font-bold py-4">🔮 Phân tích kịch bản</button>
       </div>
       <div id="ap-result"></div>
     </section>
@@ -823,18 +823,18 @@
           <div class="flex items-center justify-between mb-2">
             <span class="font-bold text-sm text-deep-teal">🎚️ Độ khó đối thủ</span>
             <div class="clay-sunken rounded-full p-1 flex gap-1">
-              <button id="diff-easy" onclick="setDifficulty('easy')" class="px-3 py-1 rounded-full text-[11px] font-bold text-deep-teal/60">Dễ</button>
-              <button id="diff-normal" onclick="setDifficulty('normal')" class="px-3 py-1 rounded-full text-[11px] font-bold text-deep-teal/60">Thường</button>
-              <button id="diff-hard" onclick="setDifficulty('hard')" class="px-3 py-1 rounded-full text-[11px] font-bold text-deep-teal/60">Khó</button>
+              <button type="button" id="diff-easy" onclick="setDifficulty('easy')" class="px-3 py-1 rounded-full text-[11px] font-bold text-deep-teal/60">Dễ</button>
+              <button type="button" id="diff-normal" onclick="setDifficulty('normal')" class="px-3 py-1 rounded-full text-[11px] font-bold text-deep-teal/60">Thường</button>
+              <button type="button" id="diff-hard" onclick="setDifficulty('hard')" class="px-3 py-1 rounded-full text-[11px] font-bold text-deep-teal/60">Khó</button>
             </div>
           </div>
           <p id="diff-note" class="text-[11px] text-deep-teal/55 leading-snug"></p>
         </div>
-        <div class="p-5"><button onclick="showIntro()" class="font-bold text-sm text-deep-teal w-full text-left">🎬 Giới thiệu game (Intro)</button></div>
-        <div class="p-5"><button onclick="showManual()" class="font-bold text-sm text-deep-teal w-full text-left">📖 Sổ tay hướng dẫn (User Manual)</button></div>
+        <div class="p-5"><button type="button" onclick="showIntro()" class="font-bold text-sm text-deep-teal w-full text-left">🎬 Giới thiệu game (Intro)</button></div>
+        <div class="p-5"><button type="button" onclick="showManual()" class="font-bold text-sm text-deep-teal w-full text-left">📖 Sổ tay hướng dẫn (User Manual)</button></div>
         <div class="p-5"><a href="https://play.google.com/store/apps/details?id=io.github.thuyhuongctu.bizon" target="_blank" rel="noopener" class="font-bold text-sm text-primary block">📲 Tải BizOn trên CH Play (Google Play) <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full align-middle" style="background:#e6f7ff;color:#006687">APP</span></a></div>
         <div class="p-5"><a href="instructor-grading.html" class="font-bold text-sm text-primary block">📝 Chấm điểm &amp; quản lý lớp (màn GV riêng)</a></div>
-        <div class="p-5"><button onclick="showPremium()" class="font-bold text-sm text-deep-teal w-full text-left">👑 BizOn Premium <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full align-middle" style="background:#fff4d6;color:#946200">GIẢNG VIÊN</span></button></div>
+        <div class="p-5"><button type="button" onclick="showPremium()" class="font-bold text-sm text-deep-teal w-full text-left">👑 BizOn Premium <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full align-middle" style="background:#fff4d6;color:#946200">GIẢNG VIÊN</span></button></div>
         <div class="p-5"><a href="BizOn%20Game%203D.html" class="font-bold text-sm text-primary block">🧊 Thử bản 3D (mới) <span class="text-[10px] font-extrabold px-2 py-0.5 rounded-full align-middle" style="background:#e6f7ff;color:#006687">MỚI</span></a></div>
         <div class="p-5"><a href="gioi-thieu.html" class="font-bold text-sm text-primary block">🌐 Trang giới thiệu</a></div>
         <div class="p-5"><a href="games.html" class="font-bold text-sm text-primary block">🕹️ BizOn Arcade (trung tâm trò chơi)</a></div>
@@ -843,11 +843,11 @@
         <div class="p-5"><a href="am-nhac.html" class="font-bold text-sm text-primary block">🎶 Kho Âm nhạc BizOn</a></div>
         <div class="p-5"><a href="index.html" class="font-bold text-sm text-primary block">🏠 Trang chủ BizOn</a></div>
         <div class="p-5"><a href="https://github.com/thuyhuongctu/BizOn/tree/main" target="_blank" rel="noopener" class="font-bold text-sm text-primary block">⭐ Mã nguồn trên GitHub</a></div>
-        <div class="p-5"><button onclick="reportBug()" class="font-bold text-sm text-primary">🐞 Gửi báo cáo lỗi</button></div>
-        <div class="p-5"><button onclick="showSyncCode()" class="font-bold text-sm text-deep-teal w-full text-left">🔑 Mã đồng bộ đội (chơi trên máy khác)</button></div>
-        <div class="p-5"><button onclick="signOutStudent()" class="font-bold text-sm text-deep-teal w-full text-left">🔓 Đăng xuất (đổi sinh viên dùng máy này)</button>
+        <div class="p-5"><button type="button" onclick="reportBug()" class="font-bold text-sm text-primary">🐞 Gửi báo cáo lỗi</button></div>
+        <div class="p-5"><button type="button" onclick="showSyncCode()" class="font-bold text-sm text-deep-teal w-full text-left">🔑 Mã đồng bộ đội (chơi trên máy khác)</button></div>
+        <div class="p-5"><button type="button" onclick="signOutStudent()" class="font-bold text-sm text-deep-teal w-full text-left">🔓 Đăng xuất (đổi sinh viên dùng máy này)</button>
           <p class="text-[11px] text-deep-teal/50 mt-1 leading-snug">Dùng khi hết giờ, cần nhường máy dùng chung cho bạn khác. Tiến trình đã lưu trên máy chủ (nếu có Mã lớp) – đăng nhập lại là chơi tiếp được, không mất gì.</p></div>
-        <div class="p-5"><button onclick="resetGame()" class="font-bold text-sm text-orange-600 w-full text-left">♻️ Chơi lại từ đầu (Reset)</button>
+        <div class="p-5"><button type="button" onclick="resetGame()" class="font-bold text-sm text-orange-600 w-full text-left">♻️ Chơi lại từ đầu (Reset)</button>
           <p class="text-[11px] text-deep-teal/50 mt-1 leading-snug">Chỉ dùng khi vòng chơi thật sự gặp lỗi – không phải vì không hài lòng kết quả. Phiên thi có mã lớp: không thể Reset vì kết quả mỗi vòng đã gửi về giảng viên.</p></div>
       </div>
       <p class="text-center text-xs text-deep-teal/40 mt-6">BizOn Bật Nghiệp 2026 · v1.1.0 · © 2026 Đỗ Thùy Hương &amp; Phan Anh Tú – Bảo lưu mọi quyền · Chỉ phục vụ giáo dục, không đại diện cho tổ chức chính trị nào · ✉️ bricoleur@bizonland.com</p>
@@ -865,27 +865,27 @@
   <!-- Bottom Nav -->
   <nav aria-label="Điều hướng chính" class="fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur border-t border-primary/5 pb-[env(safe-area-inset-bottom)]">
     <div class="max-w-md mx-auto flex justify-around py-2">
-      <button class="nav-item flex flex-col items-center gap-0.5 text-deep-teal/50" data-tab="home" onclick="showTab('home')">
+      <button type="button" class="nav-item flex flex-col items-center gap-0.5 text-deep-teal/50" data-tab="home" onclick="showTab('home')">
         <span class="nav-ico flex items-center justify-center">
           <svg class="clay-ico w-6 h-6" viewBox="0 0 24 24"><defs><linearGradient id="gNavHome" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00c4ff"/><stop offset="1" stop-color="#006687"/></linearGradient></defs><path d="M12 3.1 3.7 9.9c-.4.3-.6.8-.6 1.2v8c0 1 .8 1.8 1.8 1.8h4.3v-4.7c0-1.5 1.3-2.8 2.8-2.8s2.8 1.3 2.8 2.8v4.7h4.3c1 0 1.8-.8 1.8-1.8v-8c0-.5-.2-.9-.6-1.2L12 3.1z" fill="url(#gNavHome)"/><ellipse cx="12" cy="6.6" rx="4" ry="1.3" fill="#fff" opacity=".3"/></svg>
         </span><span class="text-[10px] font-bold">Tổng quan</span>
       </button>
-      <button class="nav-item flex flex-col items-center gap-0.5 text-deep-teal/50" data-tab="decisions" onclick="showTab('decisions')">
+      <button type="button" class="nav-item flex flex-col items-center gap-0.5 text-deep-teal/50" data-tab="decisions" onclick="showTab('decisions')">
         <span class="nav-ico flex items-center justify-center">
           <svg class="clay-ico w-6 h-6" viewBox="0 0 24 24"><defs><linearGradient id="gNavTarget" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00c4ff"/><stop offset="1" stop-color="#006687"/></linearGradient></defs><circle cx="12" cy="12" r="9.2" fill="url(#gNavTarget)"/><circle cx="12" cy="12" r="5.8" fill="#f4faff"/><circle cx="12" cy="12" r="2.8" fill="url(#gNavTarget)"/><ellipse cx="9.4" cy="7.4" rx="3.4" ry="1.5" fill="#fff" opacity=".35" transform="rotate(-25 9.4 7.4)"/></svg>
         </span><span class="text-[10px] font-bold">Ra quyết định</span>
       </button>
-      <button class="nav-item flex flex-col items-center gap-0.5 text-deep-teal/50" data-tab="advisor" onclick="showTab('advisor')">
+      <button type="button" class="nav-item flex flex-col items-center gap-0.5 text-deep-teal/50" data-tab="advisor" onclick="showTab('advisor')">
         <span class="nav-ico flex items-center justify-center">
           <img src="assets/icons/icon-192.png" alt="Lumina" class="clay-ico w-6 h-6 rounded-full object-cover">
         </span><span class="text-[10px] font-bold">Lumina</span>
       </button>
-      <button class="nav-item flex flex-col items-center gap-0.5 text-deep-teal/50" data-tab="reports" onclick="showTab('reports')">
+      <button type="button" class="nav-item flex flex-col items-center gap-0.5 text-deep-teal/50" data-tab="reports" onclick="showTab('reports')">
         <span class="nav-ico flex items-center justify-center">
           <svg class="clay-ico w-6 h-6" viewBox="0 0 24 24"><defs><linearGradient id="gNavChart" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00c4ff"/><stop offset="1" stop-color="#006687"/></linearGradient></defs><rect x="3.2" y="12.5" width="4.6" height="8.3" rx="2.3" fill="url(#gNavChart)"/><rect x="9.7" y="7.5" width="4.6" height="13.3" rx="2.3" fill="url(#gNavChart)"/><rect x="16.2" y="3.2" width="4.6" height="17.6" rx="2.3" fill="url(#gNavChart)"/><ellipse cx="18.5" cy="4.8" rx="1.7" ry=".8" fill="#fff" opacity=".35"/></svg>
         </span><span class="text-[10px] font-bold">Báo cáo</span>
       </button>
-      <button class="nav-item flex flex-col items-center gap-0.5 text-deep-teal/50" data-tab="journey" onclick="showTab('journey')">
+      <button type="button" class="nav-item flex flex-col items-center gap-0.5 text-deep-teal/50" data-tab="journey" onclick="showTab('journey')">
         <span class="nav-ico flex items-center justify-center">
           <svg class="clay-ico w-6 h-6" viewBox="0 0 24 24"><defs><linearGradient id="gNavFlag" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#00c4ff"/><stop offset="1" stop-color="#006687"/></linearGradient></defs><path d="M6 3.2c0-.7.6-1.2 1.2-1.2.6 0 1.1.5 1.1 1.2V21a1 1 0 0 1-2 0V3.2z" fill="url(#gNavFlag)"/><path d="M8.3 4.1c3-.1 4.4 1.9 7.1 1.9 1.3 0 2.4-.4 3.2-.9.6-.4 1.4 0 1.4.8v6.3c0 .4-.2.7-.5.9-.9.6-2.2 1.1-3.8 1.1-2.7 0-4.1-2-7.1-1.9V4.1z" fill="url(#gNavFlag)"/><ellipse cx="12" cy="6.4" rx="2.6" ry="1" fill="#fff" opacity=".3"/></svg>
         </span><span class="text-[10px] font-bold">Hành trình</span>

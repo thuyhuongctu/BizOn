@@ -116,11 +116,11 @@
         </div>
         <div>
           <label class="block text-xs font-extrabold mb-1.5 opacity-70" for="ks-code">Mã tự đặt – 2 chữ cái + 2 số (nhớ dùng lại ở phiếu sau)</label>
-          <input id="ks-code" class="gv-input uppercase" placeholder="VD: HT25" maxlength="4" autocomplete="off">
+          <input type="text" id="ks-code" class="gv-input uppercase" placeholder="VD: HT25" maxlength="4" autocomplete="off">
         </div>
         <div>
           <label class="block text-xs font-extrabold mb-1.5 opacity-70" for="ks-class">Mã lớp học (giảng viên phát)</label>
-          <input id="ks-class" class="gv-input uppercase" placeholder="VD: QTKD-2026-A" autocomplete="off">
+          <input type="text" id="ks-class" class="gv-input uppercase" placeholder="VD: QTKD-2026-A" autocomplete="off">
           <p id="ks-class-lock" class="hidden text-[11px] font-bold mt-1 opacity-70">🔒 Mã lớp lấy từ link giảng viên gửi – không cần gõ.</p>
         </div>
         <div id="ks-post-meta" class="hidden grid grid-cols-2 gap-3">
@@ -171,7 +171,7 @@
 
     <div class="clay-card p-6 text-center">
       <p id="ks-status" class="text-sm font-bold opacity-70 mb-4">Kiểm tra kỹ rồi bấm nộp – mỗi phiếu chỉ nộp một lần.</p>
-      <button onclick="ksSubmit()" class="clay-btn bg-clay-gold text-deep-teal font-display font-extrabold px-10 py-4 text-base">📨 Nộp phiếu</button>
+      <button type="button" onclick="ksSubmit()" class="clay-btn bg-clay-gold text-deep-teal font-display font-extrabold px-10 py-4 text-base">📨 Nộp phiếu</button>
     </div>
   </section>
 

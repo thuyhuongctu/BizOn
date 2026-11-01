@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<!-- [html-validate-disable attr-case, element-name, element-permitted-parent, element-required-content, valid-id: cú pháp mẫu của bộ khung x-dc (support.js): onClick/onChange, <helmet>, {{ }}, nhiều <main> trong <sc-if>; id/thẻ do trình đóng gói tự sinh (__bundler_*). Trình duyệt và support.js đọc đúng; đổi sẽ hỏng trang.] -->
+<html lang="vi">
 <head>
 <meta charset="utf-8">
 <script src="js/bizon-lang.js"></script>
@@ -46,31 +47,31 @@ button,input{font-family:inherit;}
 </helmet>
 <div style="min-height:100vh;font-family:'Manrope',sans-serif;color:#033337;background:radial-gradient(120% 80% at 50% 0%,#f4faf6 0%,#e6f3f2 55%,#d7ecea 100%);">
 
-<button onClick="{{ toggleLang }}" style="position:fixed;right:{{ langRight }};bottom:14px;z-index:40;white-space:nowrap;min-height:44px;padding:0 14px;border:none;border-radius:14px;background:#033337;color:#fff;font-weight:800;font-size:13px;cursor:pointer;box-shadow:0 10px 20px -8px rgba(3,51,55,.6);">🌐 {{ langLabel }}</button>
+<button type="button" onClick="{{ toggleLang }}" style="position:fixed;right:{{ langRight }};bottom:14px;z-index:40;white-space:nowrap;min-height:44px;padding:0 14px;border:none;border-radius:14px;background:#033337;color:#fff;font-weight:800;font-size:13px;cursor:pointer;box-shadow:0 10px 20px -8px rgba(3,51,55,.6);">🌐 {{ langLabel }}</button>
 <sc-if value="{{ hasErr }}" hint-placeholder-val="{{ false }}">
-  <div style="position:fixed;left:50%;top:14px;transform:translateX(-50%);z-index:50;background:#c0392b;color:#fff;border-radius:16px;padding:10px 16px;font-size:14px;font-weight:700;box-shadow:0 12px 24px -10px rgba(0,0,0,.4);display:flex;gap:10px;align-items:center;max-width:92vw;"><span>{{ err }}</span><sc-if value="{{ hasRetry }}" hint-placeholder-val="{{ false }}"><button onClick="{{ retry }}" style="border:none;background:rgba(255,255,255,.28);color:#fff;border-radius:10px;padding:4px 10px;cursor:pointer;font-weight:800;white-space:nowrap;">{{ retryLabel }}</button></sc-if><button onClick="{{ clearErr }}" style="border:none;background:rgba(255,255,255,.2);color:#fff;border-radius:10px;padding:4px 10px;cursor:pointer;font-weight:800;">✕</button></div>
+  <div style="position:fixed;left:50%;top:14px;transform:translateX(-50%);z-index:50;background:#c0392b;color:#fff;border-radius:16px;padding:10px 16px;font-size:14px;font-weight:700;box-shadow:0 12px 24px -10px rgba(0,0,0,.4);display:flex;gap:10px;align-items:center;max-width:92vw;"><span>{{ err }}</span><sc-if value="{{ hasRetry }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ retry }}" style="border:none;background:rgba(255,255,255,.28);color:#fff;border-radius:10px;padding:4px 10px;cursor:pointer;font-weight:800;white-space:nowrap;">{{ retryLabel }}</button></sc-if><button type="button" onClick="{{ clearErr }}" style="border:none;background:rgba(255,255,255,.2);color:#fff;border-radius:10px;padding:4px 10px;cursor:pointer;font-weight:800;">✕</button></div>
 </sc-if>
 
 <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
 <div data-screen-label="Sảnh chính" style="max-width:1100px;margin:0 auto;padding:clamp(16px,4vw,40px);display:flex;flex-wrap:wrap;gap:28px;align-items:center;min-height:100vh;">
   <div style="flex:1 1 420px;min-width:0;display:flex;flex-direction:column;gap:18px;">
-    <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;"><span style="font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#006687;">{{ tx.brand }}</span><sc-if value="{{ embedded }}" hint-placeholder-val="{{ false }}"><button onClick="{{ goBack }}" style="border:none;background:transparent;padding:0;font-size:13px;font-weight:800;color:#006687;cursor:pointer;font-family:inherit;">{{ tx.back }}</button></sc-if><sc-if value="{{ standalone }}" hint-placeholder-val="{{ true }}"><a href="ben-phu-sa-v8.html" style="font-size:13px;font-weight:800;">{{ tx.back }}</a></sc-if></div>
+    <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center;"><span style="font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#006687;">{{ tx.brand }}</span><sc-if value="{{ embedded }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ goBack }}" style="border:none;background:transparent;padding:0;font-size:13px;font-weight:800;color:#006687;cursor:pointer;font-family:inherit;">{{ tx.back }}</button></sc-if><sc-if value="{{ standalone }}" hint-placeholder-val="{{ true }}"><a href="ben-phu-sa-v8.html" style="font-size:13px;font-weight:800;">{{ tx.back }}</a></sc-if></div>
     <h1 style="margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(36px,6vw,62px);line-height:.98;letter-spacing:-.02em;">{{ tx.h1a }}<br>{{ tx.h1b }}</h1>
     <p style="margin:0;font-size:16px;line-height:1.55;opacity:.8;max-width:520px;text-wrap:pretty;">{{ tx.lead }}</p>
     <div id="bps-nhom-name-wrap" style="display:flex;flex-direction:column;gap:6px;">
       <b style="font-size:13px;">{{ tx.yourName }}</b>
-      <input id="bps-nhom-name-input" value="{{ name }}" onChange="{{ onName }}" placeholder="{{ tx.phName }}" style="min-height:50px;border:none;border-radius:16px;padding:0 16px;font-size:16px;font-weight:700;color:#033337;background:#fff;box-shadow:inset 0 3px 6px rgba(3,51,55,.1);">
+      <input type="text" id="bps-nhom-name-input" value="{{ name }}" onChange="{{ onName }}" placeholder="{{ tx.phName }}" style="min-height:50px;border:none;border-radius:16px;padding:0 16px;font-size:16px;font-weight:700;color:#033337;background:#fff;box-shadow:inset 0 3px 6px rgba(3,51,55,.1);">
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;">
       <sc-for list="{{ nets }}" as="n" hint-placeholder-count="2">
-        <button onClick="{{ n.onClick }}" style="min-height:64px;text-align:left;padding:10px 14px;border-radius:18px;border:2px solid {{ n.bd }};background:{{ n.bg }};cursor:pointer;color:#033337;display:flex;flex-direction:column;gap:2px;"><b style="font-size:14px;">{{ n.name }}</b><span style="font-size:12px;opacity:.65;">{{ n.desc }}</span></button>
+        <button type="button" onClick="{{ n.onClick }}" style="min-height:64px;text-align:left;padding:10px 14px;border-radius:18px;border:2px solid {{ n.bd }};background:{{ n.bg }};cursor:pointer;color:#033337;display:flex;flex-direction:column;gap:2px;"><b style="font-size:14px;">{{ n.name }}</b><span style="font-size:12px;opacity:.65;">{{ n.desc }}</span></button>
       </sc-for>
     </div>
     <div style="display:flex;gap:10px;flex-wrap:wrap;">
-      <button onClick="{{ create }}" style="flex:1 1 200px;min-height:56px;border:none;border-radius:18px;background:#fda127;color:#033337;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 14px 24px -12px rgba(232,118,45,.8), inset 0 -5px 0 rgba(232,118,45,.6);">{{ tx.create }}</button>
+      <button type="button" onClick="{{ create }}" style="flex:1 1 200px;min-height:56px;border:none;border-radius:18px;background:#fda127;color:#033337;font-size:16px;font-weight:800;cursor:pointer;box-shadow:0 14px 24px -12px rgba(232,118,45,.8), inset 0 -5px 0 rgba(232,118,45,.6);">{{ tx.create }}</button>
       <div style="flex:1 1 260px;display:flex;gap:8px;">
-        <input id="bps-nhom-code-input" value="{{ joinCode }}" onChange="{{ onCode }}" placeholder="{{ tx.phCode }}" style="flex:1;min-width:0;min-height:56px;border:none;border-radius:18px;padding:0 16px;font-size:20px;font-weight:800;letter-spacing:.2em;text-align:center;color:#033337;background:#fff;box-shadow:inset 0 3px 6px rgba(3,51,55,.1);">
-        <button onClick="{{ join }}" style="min-height:56px;padding:0 20px;border:none;border-radius:18px;background:#033337;color:#fff;font-size:15px;font-weight:800;cursor:pointer;box-shadow:inset 0 -5px 0 rgba(0,0,0,.3);">{{ tx.join }}</button>
+        <input type="text" id="bps-nhom-code-input" value="{{ joinCode }}" onChange="{{ onCode }}" placeholder="{{ tx.phCode }}" style="flex:1;min-width:0;min-height:56px;border:none;border-radius:18px;padding:0 16px;font-size:20px;font-weight:800;letter-spacing:.2em;text-align:center;color:#033337;background:#fff;box-shadow:inset 0 3px 6px rgba(3,51,55,.1);">
+        <button type="button" onClick="{{ join }}" style="min-height:56px;padding:0 20px;border:none;border-radius:18px;background:#033337;color:#fff;font-size:15px;font-weight:800;cursor:pointer;box-shadow:inset 0 -5px 0 rgba(0,0,0,.3);">{{ tx.join }}</button>
       </div>
     </div>
     <span style="font-size:13px;opacity:.65;">{{ status }}</span>
@@ -86,7 +87,7 @@ button,input{font-family:inherit;}
   <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;background:#033337;color:#fff;border-radius:28px;padding:18px 22px;box-shadow:0 18px 30px -16px rgba(3,51,55,.7);">
     <div style="display:flex;flex-direction:column;gap:2px;"><span style="font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:#fda127;">{{ tx.roomCode }} · {{ netLabel }}</span><b style="font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(40px,7vw,64px);letter-spacing:.18em;line-height:1;">{{ code }}</b></div>
     <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-end;">
-      <button onClick="{{ copyCode }}" style="min-height:44px;padding:0 16px;border:none;border-radius:14px;background:rgba(255,255,255,.14);color:#fff;font-weight:800;cursor:pointer;">📋 {{ copyLabel }}</button>
+      <button type="button" onClick="{{ copyCode }}" style="min-height:44px;padding:0 16px;border:none;border-radius:14px;background:rgba(255,255,255,.14);color:#fff;font-weight:800;cursor:pointer;">📋 {{ copyLabel }}</button>
       <span style="font-size:12px;opacity:.75;max-width:320px;text-align:right;">{{ tx.lobbyHint }}</span>
     </div>
   </div>
@@ -96,10 +97,10 @@ button,input{font-family:inherit;}
         <div style="display:flex;justify-content:space-between;align-items:baseline;gap:8px;"><h2 style="margin:0;font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;color:{{ tc.color }};">{{ tc.icon }} {{ tc.name }}</h2><span style="font-size:12px;font-weight:800;opacity:.6;">{{ tc.count }}</span></div>
         <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;">
           <sc-for list="{{ tc.seats }}" as="s" hint-placeholder-count="2">
-            <button onClick="{{ s.onClick }}" style="border:2px solid {{ s.bd }};background:{{ s.bg }};border-radius:20px;padding:10px;cursor:pointer;color:#033337;display:flex;flex-direction:column;gap:6px;align-items:stretch;text-align:left;">
-              <div style="height:120px;border-radius:14px;background:#f4faf6;display:flex;align-items:flex-end;justify-content:center;overflow:hidden;"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" sc-camel-src="{{ s.img }}" alt="{{ s.name }}" style="height:112px;width:100%;object-fit:contain;opacity:{{ s.imgOp }};"></div>
-              <div style="display:flex;flex-direction:column;"><b style="font-size:14px;">{{ s.name }}</b><span style="font-size:11px;opacity:.6;">{{ s.role }}</span></div>
-              <div style="display:flex;flex-wrap:wrap;gap:4px;"><sc-for list="{{ s.abs }}" as="a" hint-placeholder-count="2"><span style="font-size:10px;font-weight:800;background:#eef4f3;border-radius:999px;padding:2px 7px;">{{ a }}</span></sc-for></div>
+            <button type="button" onClick="{{ s.onClick }}" style="border:2px solid {{ s.bd }};background:{{ s.bg }};border-radius:20px;padding:10px;cursor:pointer;color:#033337;display:flex;flex-direction:column;gap:6px;align-items:stretch;text-align:left;">
+              <span style="height:120px;border-radius:14px;background:#f4faf6;display:flex;align-items:flex-end;justify-content:center;overflow:hidden;"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" sc-camel-src="{{ s.img }}" alt="{{ s.name }}" style="height:112px;width:100%;object-fit:contain;opacity:{{ s.imgOp }};"></span>
+              <span style="display:flex;flex-direction:column;"><b style="font-size:14px;">{{ s.name }}</b><span style="font-size:11px;opacity:.6;">{{ s.role }}</span></span>
+              <span style="display:flex;flex-wrap:wrap;gap:4px;"><sc-for list="{{ s.abs }}" as="a" hint-placeholder-count="2"><span style="font-size:10px;font-weight:800;background:#eef4f3;border-radius:999px;padding:2px 7px;">{{ a }}</span></sc-for></span>
               <span style="font-size:12px;font-weight:800;color:{{ s.tagColor }};">{{ s.tag }}</span>
             </button>
           </sc-for>
@@ -113,9 +114,9 @@ button,input{font-family:inherit;}
       <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
         <span style="font-size:13px;font-weight:800;">{{ tx.perWeek }}</span>
         <div style="display:flex;gap:4px;background:#eef4f3;border-radius:14px;padding:4px;">
-          <sc-for list="{{ timerOpts }}" as="o" hint-placeholder-count="3"><button onClick="{{ o.onClick }}" style="min-height:38px;padding:0 12px;border:none;border-radius:10px;background:{{ o.bg }};color:#033337;font-weight:800;cursor:pointer;">{{ o.label }}</button></sc-for>
+          <sc-for list="{{ timerOpts }}" as="o" hint-placeholder-count="3"><button type="button" onClick="{{ o.onClick }}" style="min-height:38px;padding:0 12px;border:none;border-radius:10px;background:{{ o.bg }};color:#033337;font-weight:800;cursor:pointer;">{{ o.label }}</button></sc-for>
         </div>
-        <button onClick="{{ start }}" style="min-height:50px;padding:0 22px;border:none;border-radius:16px;background:{{ startBg }};color:#033337;font-size:15px;font-weight:800;cursor:pointer;box-shadow:inset 0 -5px 0 rgba(232,118,45,.5);">{{ startLabel }}</button>
+        <button type="button" onClick="{{ start }}" style="min-height:50px;padding:0 22px;border:none;border-radius:16px;background:{{ startBg }};color:#033337;font-size:15px;font-weight:800;cursor:pointer;box-shadow:inset 0 -5px 0 rgba(232,118,45,.5);">{{ startLabel }}</button>
       </div>
     </sc-if>
     <sc-if value="{{ notHost }}" hint-placeholder-val="{{ true }}"><span style="font-size:13px;font-weight:700;opacity:.7;">{{ tx.waitHost }}</span></sc-if>
@@ -145,10 +146,10 @@ button,input{font-family:inherit;}
     <div ref="{{ mapRef }}" style="position:absolute;inset:0;"></div>
     <div style="position:absolute;left:14px;bottom:56px;right:{{ chipRight }};display:flex;gap:8px;pointer-events:none;flex-wrap:wrap;"><span style="background:rgba(3,51,55,.85);color:#fff;border-radius:12px;padding:6px 10px;font-size:12px;font-weight:700;white-space:nowrap;">{{ mapHint }}</span><span style="background:#fda127;color:#033337;border-radius:12px;padding:6px 10px;font-size:12px;font-weight:800;white-space:nowrap;">📍 {{ finalLoc }}</span></div>
   </div>
-  <sc-if value="{{ canMin }}" hint-placeholder-val="{{ false }}"><button onClick="{{ togglePanel }}" style="position:fixed;z-index:9;right:{{ toggleRight }};bottom:14px;min-height:48px;padding:0 18px;white-space:nowrap;border:none;border-radius:999px;background:#fda127;color:#033337;font-weight:800;font-size:14px;cursor:pointer;box-shadow:0 5px 0 #c97a12,0 14px 24px -10px rgba(0,0,0,.5);">{{ panelLabel }}</button></sc-if>
+  <sc-if value="{{ canMin }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ togglePanel }}" style="position:fixed;z-index:9;right:{{ toggleRight }};bottom:14px;min-height:48px;padding:0 18px;white-space:nowrap;border:none;border-radius:999px;background:#fda127;color:#033337;font-weight:800;font-size:14px;cursor:pointer;box-shadow:0 5px 0 #c97a12,0 14px 24px -10px rgba(0,0,0,.5);">{{ panelLabel }}</button></sc-if>
   <div style="display:{{ panelDisp }};position:{{ panelPos }};top:{{ panelTop }};right:{{ panelRight }};bottom:{{ panelBottom }};width:{{ panelW }};max-width:{{ panelMax }};margin:{{ panelMargin }};overflow-y:{{ panelOv }};z-index:8;flex-direction:column;gap:14px;padding:{{ panelPad }};background:{{ panelBg }};-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-radius:{{ panelRad }};box-shadow:{{ panelSh }};">
     <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;"><h2 style="margin:0;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-family:'Plus Jakarta Sans',sans-serif;font-size:20px;">{{ tx.river }}</h2>
-      <div style="display:flex;gap:4px;background:#fff;border-radius:14px;padding:4px;box-shadow:0 6px 14px -8px rgba(3,51,55,.4);"><sc-for list="{{ viewOpts }}" as="o" hint-placeholder-count="2"><button onClick="{{ o.onClick }}" style="min-height:36px;padding:0 14px;border:none;border-radius:10px;background:{{ o.bg }};color:#033337;font-weight:800;cursor:pointer;">{{ o.label }}</button></sc-for></div></div>
+      <div style="display:flex;gap:4px;background:#fff;border-radius:14px;padding:4px;box-shadow:0 6px 14px -8px rgba(3,51,55,.4);"><sc-for list="{{ viewOpts }}" as="o" hint-placeholder-count="2"><button type="button" onClick="{{ o.onClick }}" style="min-height:36px;padding:0 14px;border:none;border-radius:10px;background:{{ o.bg }};color:#033337;font-weight:800;cursor:pointer;">{{ o.label }}</button></sc-for></div></div>
     <sc-if value="{{ hasEv }}" hint-placeholder-val="{{ false }}">
       <div style="display:flex;gap:12px;align-items:center;background:#fff4dc;border:2px solid #fda127;border-radius:20px;padding:10px 14px;"><span style="font-size:30px;">{{ evIcon }}</span><div style="display:flex;flex-direction:column;"><span style="font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#e8762d;">{{ tx.evWeek }}</span><b style="font-size:15px;">{{ evName }}</b><span style="font-size:12px;opacity:.8;">{{ evDesc }}</span></div></div>
     </sc-if>
@@ -156,15 +157,15 @@ button,input{font-family:inherit;}
     <span style="font-size:12px;opacity:.7;">{{ tx.cardsHint }}</span>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;">
       <sc-for list="{{ landings }}" as="l" hint-placeholder-count="8">
-        <button onClick="{{ l.onClick }}" style="position:relative;min-height:150px;border:3px solid {{ l.bd }};background:{{ l.bg }};border-radius:22px;padding:10px;cursor:pointer;color:#033337;text-align:left;display:flex;flex-direction:column;gap:5px;box-shadow:0 10px 20px -12px rgba(3,51,55,.4), inset 0 -4px 0 rgba(3,51,55,.06);">
-          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:4px;"><span style="font-size:28px;line-height:1;">{{ l.icon }}</span><span style="font-size:10px;font-weight:800;background:{{ l.tagBg }};color:#fff;border-radius:999px;padding:2px 7px;opacity:{{ l.tagOp }};">{{ l.tag }}</span></div>
+        <button type="button" onClick="{{ l.onClick }}" style="position:relative;min-height:150px;border:3px solid {{ l.bd }};background:{{ l.bg }};border-radius:22px;padding:10px;cursor:pointer;color:#033337;text-align:left;display:flex;flex-direction:column;gap:5px;box-shadow:0 10px 20px -12px rgba(3,51,55,.4), inset 0 -4px 0 rgba(3,51,55,.06);">
+          <span style="display:flex;justify-content:space-between;align-items:flex-start;gap:4px;"><span style="font-size:28px;line-height:1;">{{ l.icon }}</span><span style="font-size:10px;font-weight:800;background:{{ l.tagBg }};color:#fff;border-radius:999px;padding:2px 7px;opacity:{{ l.tagOp }};">{{ l.tag }}</span></span>
           <b style="font-size:14px;line-height:1.2;">{{ l.name }}</b>
           <span style="font-size:11px;opacity:.6;line-height:1.3;">{{ l.aud }}</span>
           <span style="font-size:11px;font-weight:800;color:#006687;">{{ l.known }}</span>
-          <div style="display:flex;gap:3px;flex-wrap:wrap;margin-top:auto;align-items:center;">
+          <span style="display:flex;gap:3px;flex-wrap:wrap;margin-top:auto;align-items:center;">
             <sc-for list="{{ l.voters }}" as="p" hint-placeholder-count="0"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" sc-camel-src="{{ p.img }}" alt="{{ p.name }}" title="{{ p.name }}" style="width:26px;height:26px;border-radius:50%;object-fit:cover;object-position:50% 0%;border:2px solid {{ p.color }};"></sc-for>
             <sc-for list="{{ l.ai }}" as="p" hint-placeholder-count="0"><img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" sc-camel-src="{{ p.img }}" alt="{{ p.name }}" title="{{ p.name }} bán ở đây tuần trước" style="width:22px;height:22px;border-radius:50%;object-fit:cover;opacity:.75;filter:grayscale(.3);"></sc-for>
-          </div>
+          </span>
         </button>
       </sc-for>
     </div>
@@ -175,8 +176,8 @@ button,input{font-family:inherit;}
     <sc-if value="{{ hasMethod }}" hint-placeholder-val="{{ false }}">
       <div style="background:#fff;border-radius:24px;padding:14px;display:flex;flex-direction:column;gap:8px;box-shadow:0 10px 22px -12px rgba(3,51,55,.35);">
         <b style="font-size:14px;">{{ tx.method }}</b>
-        <sc-for list="{{ methods }}" as="m" hint-placeholder-count="3"><button onClick="{{ m.onClick }}" style="min-height:52px;border:2px solid {{ m.bd }};background:{{ m.bg }};border-radius:16px;padding:8px 12px;cursor:pointer;color:#033337;display:flex;gap:10px;align-items:center;text-align:left;"><span style="font-size:24px;">{{ m.icon }}</span><span style="display:flex;flex-direction:column;"><b style="font-size:13px;">{{ m.name }}</b><span style="font-size:11px;opacity:.65;">{{ m.desc }}</span></span></button></sc-for>
-        <button onClick="{{ adsAct }}" style="min-height:48px;border:2px solid {{ adsBd }};background:{{ adsBg }};border-radius:14px;padding:6px 12px;cursor:pointer;color:#033337;display:flex;gap:10px;align-items:center;text-align:left;"><span style="font-size:22px;">📣</span><span style="flex:1;display:flex;flex-direction:column;"><b style="font-size:13px;">{{ adsLabel }}</b><span style="font-size:11px;opacity:.65;">{{ adsDesc }}</span></span><b style="font-size:12px;">0,3</b></button>
+        <sc-for list="{{ methods }}" as="m" hint-placeholder-count="3"><button type="button" onClick="{{ m.onClick }}" style="min-height:52px;border:2px solid {{ m.bd }};background:{{ m.bg }};border-radius:16px;padding:8px 12px;cursor:pointer;color:#033337;display:flex;gap:10px;align-items:center;text-align:left;"><span style="font-size:24px;">{{ m.icon }}</span><span style="display:flex;flex-direction:column;"><b style="font-size:13px;">{{ m.name }}</b><span style="font-size:11px;opacity:.65;">{{ m.desc }}</span></span></button></sc-for>
+        <button type="button" onClick="{{ adsAct }}" style="min-height:48px;border:2px solid {{ adsBd }};background:{{ adsBg }};border-radius:14px;padding:6px 12px;cursor:pointer;color:#033337;display:flex;gap:10px;align-items:center;text-align:left;"><span style="font-size:22px;">📣</span><span style="flex:1;display:flex;flex-direction:column;"><b style="font-size:13px;">{{ adsLabel }}</b><span style="font-size:11px;opacity:.65;">{{ adsDesc }}</span></span><b style="font-size:12px;">0,3</b></button>
       </div>
     </sc-if>
 
@@ -184,17 +185,17 @@ button,input{font-family:inherit;}
       <div style="background:#fff;border-radius:24px;padding:14px;display:flex;flex-direction:column;gap:8px;box-shadow:0 10px 22px -12px rgba(3,51,55,.35);">
         <b style="font-size:14px;">{{ tx.menu }}</b>
         <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;">
-          <sc-for list="{{ menus }}" as="m" hint-placeholder-count="4"><button onClick="{{ m.onClick }}" style="min-height:64px;border:2px solid {{ m.bd }};background:{{ m.bg }};border-radius:16px;padding:8px 10px;cursor:pointer;color:#033337;display:flex;flex-direction:column;gap:2px;text-align:left;"><b style="font-size:13px;">{{ m.icon }} {{ m.name }}</b><span style="font-size:10px;opacity:.65;line-height:1.3;">{{ m.desc }}</span></button></sc-for>
+          <sc-for list="{{ menus }}" as="m" hint-placeholder-count="4"><button type="button" onClick="{{ m.onClick }}" style="min-height:64px;border:2px solid {{ m.bd }};background:{{ m.bg }};border-radius:16px;padding:8px 10px;cursor:pointer;color:#033337;display:flex;flex-direction:column;gap:2px;text-align:left;"><b style="font-size:13px;">{{ m.icon }} {{ m.name }}</b><span style="font-size:10px;opacity:.65;line-height:1.3;">{{ m.desc }}</span></button></sc-for>
         </div>
         <b style="font-size:13px;margin-top:4px;">{{ qtyTitle }}</b>
         <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;">
-          <sc-for list="{{ qtys }}" as="q" hint-placeholder-count="3"><button onClick="{{ q.onClick }}" style="min-height:64px;border:2px solid {{ q.bd }};background:{{ q.bg }};border-radius:14px;padding:6px 8px;cursor:pointer;color:#033337;display:flex;flex-direction:column;gap:2px;text-align:left;"><b style="font-size:12px;">{{ q.icon }} {{ q.name }}</b><span style="font-size:10px;opacity:.65;line-height:1.3;">{{ q.desc }}</span></button></sc-for>
+          <sc-for list="{{ qtys }}" as="q" hint-placeholder-count="3"><button type="button" onClick="{{ q.onClick }}" style="min-height:64px;border:2px solid {{ q.bd }};background:{{ q.bg }};border-radius:14px;padding:6px 8px;cursor:pointer;color:#033337;display:flex;flex-direction:column;gap:2px;text-align:left;"><b style="font-size:12px;">{{ q.icon }} {{ q.name }}</b><span style="font-size:10px;opacity:.65;line-height:1.3;">{{ q.desc }}</span></button></sc-for>
         </div>
       </div>
     </sc-if>
 
     <sc-if value="{{ hasLand }}" hint-placeholder-val="{{ false }}">
-      <div style="background:#033337;color:#fff;border-radius:24px;padding:14px 16px;display:flex;flex-direction:column;gap:4px;"><b style="font-size:14px;color:#fda127;">{{ tx.landT }}</b><span style="font-size:13px;opacity:.85;line-height:1.45;">{{ tx.landD }} <b>{{ finalLoc }}</b></span><button onClick="{{ vetoAct }}" style="margin-top:6px;min-height:44px;border:none;border-radius:12px;background:{{ vetoBg }};color:#033337;font-weight:800;cursor:pointer;opacity:{{ vetoOp }};">⚖️ {{ vetoLabel }}</button><span style="font-size:11px;opacity:.7;">{{ vetoNote }}</span></div>
+      <div style="background:#033337;color:#fff;border-radius:24px;padding:14px 16px;display:flex;flex-direction:column;gap:4px;"><b style="font-size:14px;color:#fda127;">{{ tx.landT }}</b><span style="font-size:13px;opacity:.85;line-height:1.45;">{{ tx.landD }} <b>{{ finalLoc }}</b></span><button type="button" onClick="{{ vetoAct }}" style="margin-top:6px;min-height:44px;border:none;border-radius:12px;background:{{ vetoBg }};color:#033337;font-weight:800;cursor:pointer;opacity:{{ vetoOp }};">⚖️ {{ vetoLabel }}</button><span style="font-size:11px;opacity:.7;">{{ vetoNote }}</span></div>
     </sc-if>
 
     <sc-if value="{{ hasScout }}" hint-placeholder-val="{{ false }}">
@@ -202,7 +203,7 @@ button,input{font-family:inherit;}
         <div style="display:flex;justify-content:space-between;gap:6px;"><b style="font-size:14px;">{{ tx.scout }}</b><span style="font-size:12px;font-weight:800;color:#006687;">{{ scoutLeft }}</span></div>
         <span style="font-size:12px;opacity:.7;">{{ tx.scoutD }}</span>
         <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;">
-          <sc-for list="{{ scoutBtns }}" as="b" hint-placeholder-count="8"><button onClick="{{ b.onClick }}" title="{{ b.name }}" style="min-height:44px;border:none;border-radius:12px;background:{{ b.bg }};opacity:{{ b.op }};cursor:pointer;font-size:20px;">{{ b.icon }}</button></sc-for>
+          <sc-for list="{{ scoutBtns }}" as="b" hint-placeholder-count="8"><button type="button" onClick="{{ b.onClick }}" title="{{ b.name }}" style="min-height:44px;border:none;border-radius:12px;background:{{ b.bg }};opacity:{{ b.op }};cursor:pointer;font-size:20px;">{{ b.icon }}</button></sc-for>
         </div>
       </div>
     </sc-if>
@@ -210,7 +211,7 @@ button,input{font-family:inherit;}
     <sc-if value="{{ hasShop }}" hint-placeholder-val="{{ false }}">
       <div style="background:#fff;border-radius:24px;padding:14px;display:flex;flex-direction:column;gap:8px;box-shadow:0 10px 22px -12px rgba(3,51,55,.35);">
         <div style="display:flex;justify-content:space-between;gap:6px;"><b style="font-size:14px;">{{ tx.shop }}</b><span style="font-size:13px;font-weight:800;color:#e8762d;">{{ wallet }}</span></div>
-        <sc-for list="{{ shop }}" as="s" hint-placeholder-count="4"><button onClick="{{ s.onClick }}" style="min-height:48px;border:2px solid {{ s.bd }};background:{{ s.bg }};opacity:{{ s.op }};border-radius:14px;padding:6px 10px;cursor:pointer;color:#033337;display:flex;gap:10px;align-items:center;text-align:left;"><span style="font-size:22px;">{{ s.icon }}</span><span style="flex:1;display:flex;flex-direction:column;"><b style="font-size:13px;">{{ s.name }}</b><span style="font-size:11px;opacity:.65;">{{ s.desc }}</span></span><b style="font-size:12px;">{{ s.price }}</b></button></sc-for>
+        <sc-for list="{{ shop }}" as="s" hint-placeholder-count="4"><button type="button" onClick="{{ s.onClick }}" style="min-height:48px;border:2px solid {{ s.bd }};background:{{ s.bg }};opacity:{{ s.op }};border-radius:14px;padding:6px 10px;cursor:pointer;color:#033337;display:flex;gap:10px;align-items:center;text-align:left;"><span style="font-size:22px;">{{ s.icon }}</span><span style="flex:1;display:flex;flex-direction:column;"><b style="font-size:13px;">{{ s.name }}</b><span style="font-size:11px;opacity:.65;">{{ s.desc }}</span></span><b style="font-size:12px;">{{ s.price }}</b></button></sc-for>
       </div>
     </sc-if>
 
@@ -219,15 +220,15 @@ button,input{font-family:inherit;}
         <b style="font-size:14px;">{{ tx.allyT }}</b>
         <span style="font-size:12px;opacity:.75;line-height:1.45;">{{ tx.allyD }}</span>
         <span style="font-size:13px;font-weight:800;color:#006687;">{{ allyStatus }}</span>
-        <button onClick="{{ allyAct }}" style="min-height:46px;border:none;border-radius:14px;background:{{ allyBg }};color:#033337;font-weight:800;cursor:pointer;">{{ allyLabel }}</button>
+        <button type="button" onClick="{{ allyAct }}" style="min-height:46px;border:none;border-radius:14px;background:{{ allyBg }};color:#033337;font-weight:800;cursor:pointer;">{{ allyLabel }}</button>
       </div>
     </sc-if>
 
     <sc-if value="{{ hasTrade }}" hint-placeholder-val="{{ false }}">
       <div style="background:#fff;border-radius:24px;padding:14px;display:flex;flex-direction:column;gap:8px;box-shadow:0 10px 22px -12px rgba(3,51,55,.35);">
         <b style="font-size:14px;">{{ tx.tradeT }}</b>
-        <sc-for list="{{ offersIn }}" as="o" hint-placeholder-count="0"><div style="display:flex;gap:8px;align-items:center;background:#fff4dc;border-radius:12px;padding:8px 10px;"><span style="flex:1;font-size:12px;">{{ o.label }}</span><button onClick="{{ o.onClick }}" style="min-height:38px;padding:0 12px;border:none;border-radius:10px;background:#fda127;color:#033337;font-weight:800;cursor:pointer;">{{ tx.buy }} {{ o.price }}</button></div></sc-for>
-        <sc-for list="{{ sellList }}" as="o" hint-placeholder-count="0"><div style="display:flex;gap:8px;align-items:center;background:#eef4f3;border-radius:12px;padding:8px 10px;"><span style="flex:1;font-size:12px;">{{ o.label }}</span><button onClick="{{ o.onClick }}" style="min-height:38px;padding:0 12px;border:none;border-radius:10px;background:{{ o.bg }};color:#033337;font-weight:800;cursor:pointer;">{{ o.btn }}</button></div></sc-for>
+        <sc-for list="{{ offersIn }}" as="o" hint-placeholder-count="0"><div style="display:flex;gap:8px;align-items:center;background:#fff4dc;border-radius:12px;padding:8px 10px;"><span style="flex:1;font-size:12px;">{{ o.label }}</span><button type="button" onClick="{{ o.onClick }}" style="min-height:38px;padding:0 12px;border:none;border-radius:10px;background:#fda127;color:#033337;font-weight:800;cursor:pointer;">{{ tx.buy }} {{ o.price }}</button></div></sc-for>
+        <sc-for list="{{ sellList }}" as="o" hint-placeholder-count="0"><div style="display:flex;gap:8px;align-items:center;background:#eef4f3;border-radius:12px;padding:8px 10px;"><span style="flex:1;font-size:12px;">{{ o.label }}</span><button type="button" onClick="{{ o.onClick }}" style="min-height:38px;padding:0 12px;border:none;border-radius:10px;background:{{ o.bg }};color:#033337;font-weight:800;cursor:pointer;">{{ o.btn }}</button></div></sc-for>
         <sc-if value="{{ noTrade }}" hint-placeholder-val="{{ true }}"><span style="font-size:12px;opacity:.6;">{{ tx.noTrade }}</span></sc-if>
       </div>
     </sc-if>
@@ -237,7 +238,7 @@ button,input{font-family:inherit;}
     </sc-if>
     <sc-if value="{{ seated }}" hint-placeholder-val="{{ false }}">
       <span style="font-size:12px;opacity:.7;line-height:1.4;">{{ autoNote }}</span>
-      <button onClick="{{ toggleReady }}" style="min-height:58px;border:none;border-radius:20px;background:{{ readyBg }};color:{{ readyFg }};font-size:16px;font-weight:800;cursor:pointer;box-shadow:inset 0 -5px 0 rgba(0,0,0,.15);">{{ readyLabel }}</button>
+      <button type="button" onClick="{{ toggleReady }}" style="min-height:58px;border:none;border-radius:20px;background:{{ readyBg }};color:{{ readyFg }};font-size:16px;font-weight:800;cursor:pointer;box-shadow:inset 0 -5px 0 rgba(0,0,0,.15);">{{ readyLabel }}</button>
     </sc-if>
 
     <div style="background:#fff;border-radius:24px;padding:14px;display:flex;flex-direction:column;gap:8px;box-shadow:0 10px 22px -12px rgba(3,51,55,.35);">
@@ -253,7 +254,7 @@ button,input{font-family:inherit;}
     <sc-if value="{{ hasOther }}" hint-placeholder-val="{{ false }}">
       <div style="background:rgba(3,51,55,.08);border-radius:20px;padding:12px 14px;display:flex;gap:10px;align-items:center;"><span style="font-size:22px;">🔒</span><span style="font-size:13px;line-height:1.4;">{{ otherStatus }}</span></div>
     </sc-if>
-    <sc-if value="{{ isHost }}" hint-placeholder-val="{{ false }}"><button onClick="{{ force }}" style="min-height:40px;border:none;border-radius:12px;background:transparent;color:#006687;font-weight:800;cursor:pointer;">{{ tx.forceW }}</button></sc-if>
+    <sc-if value="{{ isHost }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ force }}" style="min-height:40px;border:none;border-radius:12px;background:transparent;color:#006687;font-weight:800;cursor:pointer;">{{ tx.forceW }}</button></sc-if>
     <div style="background:#fff;border-radius:24px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;box-shadow:0 10px 22px -12px rgba(3,51,55,.35);">
       <b style="font-size:14px;">{{ nbTitle }}</b><span style="font-size:12px;opacity:.7;line-height:1.4;">{{ nbNote }}</span>
       <sc-if value="{{ noTips }}" hint-placeholder-val="{{ true }}"><span style="font-size:12px;opacity:.6;">{{ tx.noTips }}</span></sc-if>
@@ -303,9 +304,9 @@ button,input{font-family:inherit;}
       </sc-for>
     </div>
     <sc-if value="{{ seated }}" hint-placeholder-val="{{ false }}">
-      <button onClick="{{ nextWeek }}" style="min-height:58px;border:none;border-radius:20px;background:{{ nextBg }};color:#033337;font-size:16px;font-weight:800;cursor:pointer;box-shadow:inset 0 -5px 0 rgba(232,118,45,.5);">{{ nextLabel }}</button>
+      <button type="button" onClick="{{ nextWeek }}" style="min-height:58px;border:none;border-radius:20px;background:{{ nextBg }};color:#033337;font-size:16px;font-weight:800;cursor:pointer;box-shadow:inset 0 -5px 0 rgba(232,118,45,.5);">{{ nextLabel }}</button>
     </sc-if>
-    <sc-if value="{{ isHost }}" hint-placeholder-val="{{ false }}"><button onClick="{{ force }}" style="min-height:40px;border:none;border-radius:12px;background:transparent;color:#006687;font-weight:800;cursor:pointer;">{{ tx.forceN }}</button></sc-if>
+    <sc-if value="{{ isHost }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ force }}" style="min-height:40px;border:none;border-radius:12px;background:transparent;color:#006687;font-weight:800;cursor:pointer;">{{ tx.forceN }}</button></sc-if>
   </div>
 </div>
 </sc-if>
@@ -335,15 +336,15 @@ button,input{font-family:inherit;}
         <div style="flex:1 1 160px;min-width:0;display:flex;flex-direction:column;"><b style="font-size:14px;">{{ r.name }} {{ r.crown }}</b><span style="font-size:11px;opacity:.7;">{{ r.role }}</span></div>
         <div style="display:flex;flex-direction:column;align-items:flex-end;"><b style="font-size:15px;">⭐ {{ r.pts }}</b><span style="font-size:11px;opacity:.7;">{{ r.weeks }}</span></div>
         <span style="font-size:13px;font-weight:800;min-width:54px;text-align:right;">🗳 {{ r.votes }}</span>
-        <button onClick="{{ r.onVote }}" style="min-height:44px;padding:0 14px;border:none;border-radius:12px;background:{{ r.voteBg }};color:#033337;font-weight:800;cursor:pointer;opacity:{{ r.voteOp }};">{{ r.voteLabel }}</button>
+        <button type="button" onClick="{{ r.onVote }}" style="min-height:44px;padding:0 14px;border:none;border-radius:12px;background:{{ r.voteBg }};color:#033337;font-weight:800;cursor:pointer;opacity:{{ r.voteOp }};">{{ r.voteLabel }}</button>
       </div>
     </sc-for>
   </div>
   </sc-if>
   <div style="display:flex;gap:10px;flex-wrap:wrap;">
-    <sc-if value="{{ seated }}" hint-placeholder-val="{{ false }}"><input value="{{ klass }}" onChange="{{ onKlass }}" placeholder="{{ tx.phClass }}" aria-label="{{ tx.klass }}" style="min-height:52px;width:150px;border:none;border-radius:16px;padding:0 14px;font-size:15px;font-weight:800;letter-spacing:.06em;color:#033337;background:#fff;box-shadow:inset 0 3px 6px rgba(3,51,55,.1);"></sc-if>
-    <sc-if value="{{ seated }}" hint-placeholder-val="{{ false }}"><button onClick="{{ copyResult }}" style="min-height:52px;padding:0 20px;border:none;border-radius:16px;background:#fda127;color:#033337;font-weight:800;cursor:pointer;box-shadow:inset 0 -5px 0 rgba(232,118,45,.6);">📨 {{ copyResLabel }}</button></sc-if>
-    <sc-if value="{{ isHost }}" hint-placeholder-val="{{ false }}"><button onClick="{{ again }}" style="min-height:52px;padding:0 20px;border:none;border-radius:16px;background:#033337;color:#fff;font-weight:800;cursor:pointer;">{{ tx.again }}</button></sc-if>
+    <sc-if value="{{ seated }}" hint-placeholder-val="{{ false }}"><input type="text" value="{{ klass }}" onChange="{{ onKlass }}" placeholder="{{ tx.phClass }}" aria-label="{{ tx.klass }}" style="min-height:52px;width:150px;border:none;border-radius:16px;padding:0 14px;font-size:15px;font-weight:800;letter-spacing:.06em;color:#033337;background:#fff;box-shadow:inset 0 3px 6px rgba(3,51,55,.1);"></sc-if>
+    <sc-if value="{{ seated }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ copyResult }}" style="min-height:52px;padding:0 20px;border:none;border-radius:16px;background:#fda127;color:#033337;font-weight:800;cursor:pointer;box-shadow:inset 0 -5px 0 rgba(232,118,45,.6);">📨 {{ copyResLabel }}</button></sc-if>
+    <sc-if value="{{ isHost }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ again }}" style="min-height:52px;padding:0 20px;border:none;border-radius:16px;background:#033337;color:#fff;font-weight:800;cursor:pointer;">{{ tx.again }}</button></sc-if>
     <a href="Bang%20Giao%20Vien.dc.html" style="align-self:center;font-weight:800;font-size:14px;">{{ tx.teacher }}</a>
   </div>
 </div>

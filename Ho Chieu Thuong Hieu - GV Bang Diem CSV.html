@@ -46,16 +46,16 @@
   </div>
 
   <label class="drop" id="drop">
-    <div style="font:800 17px 'Manrope'">📂 Kéo-thả file BP3D-*.csv vào đây</div>
-    <div style="font:600 12px 'Manrope';color:#4a6a72">hoặc bấm để chọn nhiều file</div>
+    <span style="display:block;font:800 17px 'Manrope'">📂 Kéo-thả file BP3D-*.csv vào đây</span>
+    <span style="display:block;font:600 12px 'Manrope';color:#4a6a72">hoặc bấm để chọn nhiều file</span>
     <input type="file" accept=".csv" multiple id="filePick" style="display:none">
   </label>
 
   <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
-    <button class="clay-btn" style="background:#e8742a;color:#fff" id="btnExport">📥 Xuất bảng lớp CSV</button>
-    <button class="clay-btn" style="background:transparent;color:#4a6a72;box-shadow:none" id="btnClear">🗑️ Xóa danh sách</button>
+    <button type="button" class="clay-btn" style="background:#e8742a;color:#fff" id="btnExport">📥 Xuất bảng lớp CSV</button>
+    <button type="button" class="clay-btn" style="background:transparent;color:#4a6a72;box-shadow:none" id="btnClear">🗑️ Xóa danh sách</button>
     <div style="flex:1"></div>
-    <input id="filter" placeholder="Lọc theo lớp…" style="padding:10px 12px;min-height:44px;box-sizing:border-box;border:2px solid rgba(0,102,135,.18);border-radius:12px;font:700 13px 'Manrope';background:transparent;color:inherit">
+    <input type="text" id="filter" placeholder="Lọc theo lớp…" style="padding:10px 12px;min-height:44px;box-sizing:border-box;border:2px solid rgba(0,102,135,.18);border-radius:12px;font:700 13px 'Manrope';background:transparent;color:inherit">
   </div>
 
   <div class="clay-card" id="empty">
@@ -65,8 +65,8 @@
   <div class="clay-card" id="tableWrap" style="display:none;overflow-x:auto;padding:0">
     <table>
       <thead><tr>
-        <th>Tên</th><th>Lớp</th><th>Thương hiệu</th><th>Điểm</th><th>Danh hiệu</th>
-        <th>Thị trường</th><th>Lợi nhuận (tỷ)</th><th>Kim Long (tỷ)</th><th>Quý dẫn trước</th><th>Ngày</th>
+        <th scope="col">Tên</th><th scope="col">Lớp</th><th scope="col">Thương hiệu</th><th scope="col">Điểm</th><th scope="col">Danh hiệu</th>
+        <th scope="col">Thị trường</th><th scope="col">Lợi nhuận (tỷ)</th><th scope="col">Kim Long (tỷ)</th><th scope="col">Quý dẫn trước</th><th scope="col">Ngày</th>
       </tr></thead>
       <tbody id="rows"></tbody>
     </table>

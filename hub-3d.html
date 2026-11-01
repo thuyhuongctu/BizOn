@@ -48,7 +48,7 @@
   #hub3d-charselect button { background:rgba(255,255,255,.08); border:2px solid rgba(255,255,255,.18); border-radius:20px; padding:10px; width:130px; transition:transform .15s ease, border-color .15s ease; }
   #hub3d-charselect button:hover, #hub3d-charselect button:active { border-color:#fda127; transform:translateY(-3px); }
   #hub3d-charselect img { width:100%; height:150px; object-fit:contain; object-position:bottom; }
-  #hub3d-charselect p.name { font-size:11px; font-weight:800; margin-top:6px; }
+  #hub3d-charselect .name { display:block; font-size:11px; font-weight:800; margin-top:6px; }
 
   #hub3d-fade { position:absolute; inset:0; z-index:55; background:#033337; opacity:0; pointer-events:none; transition:opacity .42s ease; }
   #hub3d-fade.on { opacity:1; }
@@ -81,30 +81,30 @@
       <div id="hub3d-charselect">
         <p class="font-display font-extrabold text-lg" data-en="🧑‍🎓 Choose your avatar">🧑‍🎓 Chọn đại diện của bạn</p>
         <div class="opt">
-          <button id="hub3d-pick-nam" data-tex="assets/character/team/aodai-nam-diploma-cut.webp">
+          <button type="button" id="hub3d-pick-nam" data-tex="assets/character/team/aodai-nam-diploma-cut.webp">
             <img src="assets/character/team/aodai-nam-diploma-cut.webp" alt="Đại diện nam">
-            <p class="name" data-en="Avatar (male)">Đại diện (nam)</p>
+            <span class="name" data-en="Avatar (male)">Đại diện (nam)</span>
           </button>
-          <button id="hub3d-pick-nu" data-tex="assets/character/team/aodai-nu-lotus-cut.webp">
+          <button type="button" id="hub3d-pick-nu" data-tex="assets/character/team/aodai-nu-lotus-cut.webp">
             <img src="assets/character/team/aodai-nu-lotus-cut.webp" alt="Đại diện nữ">
-            <p class="name" data-en="Avatar (female)">Đại diện (nữ)</p>
+            <span class="name" data-en="Avatar (female)">Đại diện (nữ)</span>
           </button>
         </div>
       </div>
       <p id="hub3d-hint" data-en-html="🖥️ WASD / arrow keys to move · E to interact&lt;br&gt;📱 Joystick at bottom left · tap the button to interact">🖥️ WASD / mũi tên để đi · phím E để tương tác<br>📱 Cần điều khiển ở góc trái · chạm nút để tương tác</p>
       <p id="hub3d-prompt" hidden data-en-html="Press &lt;b&gt;E&lt;/b&gt; or tap the button on the right to chat">Nhấn <b>E</b> hoặc chạm nút bên phải để trò chuyện</p>
-      <button id="hub3d-interact" hidden data-en="🗨️ Talk">🗨️ Nói chuyện</button>
+      <button type="button" id="hub3d-interact" hidden data-en="🗨️ Talk">🗨️ Nói chuyện</button>
       <div id="hub3d-joy-base"><div id="hub3d-joy-knob"></div></div>
 
       <div id="hub3d-dialogue">
         <div id="hub3d-dlg-box">
-          <button id="hub3d-dlg-close" aria-label="Đóng" data-en-aria="Close">✕</button>
+          <button type="button" id="hub3d-dlg-close" aria-label="Đóng" data-en-aria="Close">✕</button>
           <img id="hub3d-dlg-avatar" src="assets/character/lumina-ao-dai-wave.webp" alt="">
           <p id="hub3d-dlg-name" class="font-display font-extrabold text-sm text-primary"></p>
           <p id="hub3d-dlg-text" class="text-sm mt-1"></p>
           <div class="flex gap-2 justify-end mt-3">
             <a id="hub3d-dlg-cta" href="brand-passport.html" hidden class="clay-btn bg-clay-gold text-deep-teal font-display font-extrabold px-4 py-2 text-xs" data-en="🛂 Play Brand Passport">🛂 Vào chơi Hộ Chiếu Thương Hiệu</a>
-            <button id="hub3d-dlg-next" class="clay-btn bg-primary text-white font-display font-extrabold px-4 py-2 text-xs" data-en="Continue ▸">Tiếp tục ▸</button>
+            <button type="button" id="hub3d-dlg-next" class="clay-btn bg-primary text-white font-display font-extrabold px-4 py-2 text-xs" data-en="Continue ▸">Tiếp tục ▸</button>
           </div>
         </div>
       </div>

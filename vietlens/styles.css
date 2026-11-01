@@ -208,7 +208,7 @@ small { color: var(--muted); }
 .forecast-layout { grid-template-columns: 0.9fr 1.1fr; }
 .control-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .control-grid label { display: grid; gap: 7px; padding: 13px; border: 1px solid var(--line); border-radius: 14px; color: #bed0d4; }
-.control-grid output { color: var(--cyan); font-weight: 900; }
+.control-grid output, .control-grid .out { color: var(--cyan); font-weight: 900; }
 .control-grid input { width: 100%; }
 .scenario-results, .forecast-cards { display: grid; gap: 10px; margin-top: 16px; }
 .scenario-row, .forecast-card { padding: 14px; border-radius: 15px; background: rgba(0, 0, 0, 0.15); border: 1px solid var(--line); }

@@ -125,6 +125,14 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <script src="js/capture-guard.js"></script>
+<style>
+.vutru-goc{position:fixed;left:14px;bottom:14px;z-index:9999;display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border-radius:16px;background:#fff;color:#033337;text-decoration:none;font-family:'Manrope','Manrope Fallback',system-ui,sans-serif;font-weight:700;font-size:.82rem;box-shadow:0 8px 22px -6px rgba(0,102,135,.25),inset 0 -3px 0 rgba(0,0,0,.06);border:1px solid rgba(3,51,55,.08);transition:transform .18s ease,box-shadow .18s ease}
+.vutru-goc:hover{transform:translateY(-2px);box-shadow:0 12px 28px -6px rgba(0,102,135,.32),inset 0 -3px 0 rgba(0,0,0,.06)}
+.vutru-goc:focus-visible{outline:2px solid #0F5C4E;outline-offset:3px}
+.vutru-goc .vg-o{width:16px;height:16px;border-radius:50%;background:#0F5C4E;box-shadow:inset -4px 0 0 -1px #7FD9BE}
+@media(max-width:520px){.vutru-goc{left:10px;bottom:10px;padding:7px 11px;font-size:.76rem}}
+@media print{.vutru-goc{display:none}}
+</style>
 </head>
 <body class="clay">
 
@@ -166,9 +174,9 @@
         <div class="grid grid-cols-2 gap-2" id="ft-teams"></div>
         <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-4 mb-1.5" data-en="Choose your captain">Chọn thuyền trưởng</p>
         <div class="grid grid-cols-5 gap-2" id="ft-avatars"></div>
-        <button id="ft-music" onclick="ftMusic()" class="clay-btn w-full bg-deep-teal text-white font-display font-extrabold py-3 text-sm mt-4" data-en="🎵 Play theme song «Đội Phù Sa»">🎵 Bật nhạc chủ đề «Đội Phù Sa»</button>
+        <button type="button" id="ft-music" onclick="ftMusic()" class="clay-btn w-full bg-deep-teal text-white font-display font-extrabold py-3 text-sm mt-4" data-en="🎵 Play theme song «Đội Phù Sa»">🎵 Bật nhạc chủ đề «Đội Phù Sa»</button>
         <a href="nhac-ben-phu-sa.html" class="clay-btn w-full bg-white text-deep-teal font-display font-extrabold py-3 text-sm mt-3 flex items-center justify-center" style="border:2px solid rgba(0,102,135,.2)" data-en="🎤 «Golden Silt Journey» – listen with lyrics">🎤 «Golden Silt Journey» – nghe kèm lời</a>
-        <button onclick="ftStart()" class="clay-btn w-full bg-clay-gold text-deep-teal font-display font-extrabold py-4 mt-3" data-en="🚀 Start the 5-week venture">🚀 Bắt đầu 5 tuần kinh doanh</button>
+        <button type="button" onclick="ftStart()" class="clay-btn w-full bg-clay-gold text-deep-teal font-display font-extrabold py-4 mt-3" data-en="🚀 Start the 5-week venture">🚀 Bắt đầu 5 tuần kinh doanh</button>
         <p class="text-[11px] opacity-60 mt-3 text-center" data-en-html="⚡ Too many choices at once? Try the &lt;a href=&quot;ben-phu-sa-v2.html&quot; class=&quot;underline font-bold&quot;&gt;lean version&lt;/a&gt; – same engine, one step at a time each week.">⚡ Thấy nhiều lựa chọn quá? Thử <a href="ben-phu-sa-v2.html" class="underline font-bold">bản gọn</a> – cùng engine, mỗi tuần đi từng bước một.</p>
       </div>
     </div>
@@ -209,7 +217,7 @@
     </div>
 
     <div class="clay-card p-5 mb-4" id="ft-shop-card">
-      <button onclick="ftToggleShop()" class="w-full flex items-center justify-between" id="ft-shop-toggle" style="min-height:44px">
+      <button type="button" onclick="ftToggleShop()" class="w-full flex items-center justify-between" id="ft-shop-toggle" style="min-height:44px">
         <span class="font-display font-extrabold text-deep-teal text-sm">🛍️ <span data-en="Item Shop">Cửa hàng vật phẩm</span></span>
         <span class="text-xs font-bold opacity-60" id="ft-shop-caret">▾</span>
       </button>
@@ -227,7 +235,7 @@
       <div class="grid grid-cols-3 gap-2" id="ft-methods"></div>
       <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mb-1.5 mt-4" data-en="2 · Product × Location – tap a cell to pick both">2 · Món hàng × Địa điểm – bấm 1 ô để chọn cả hai</p>
       <div id="ft-matrix" style="overflow-x:auto"></div>
-      <button id="ft-commit" onclick="ftCommit()" class="clay-btn w-full bg-primary text-white font-display font-extrabold py-3.5 mt-5" data-en="🔒 Lock in this week">🔒 Chốt tuần này</button>
+      <button type="button" id="ft-commit" onclick="ftCommit()" class="clay-btn w-full bg-primary text-white font-display font-extrabold py-3.5 mt-5" data-en="🔒 Lock in this week">🔒 Chốt tuần này</button>
       <p id="ft-hint" class="text-xs font-semibold opacity-60 mt-2 text-center"></p>
       <p id="ft-forecast" class="text-xs font-semibold opacity-70 mt-1 text-center"></p>
       <button type="button" onclick="ftShowRules()" style="display:block;margin:8px auto 0;min-height:44px;padding:0 14px;border:0;border-radius:12px;background:rgba(0,102,135,.1);color:#006687;font-weight:800;font-size:12px;cursor:pointer" data-en="❓ How to play">❓ Cách chơi</button>
@@ -254,8 +262,8 @@
         <p class="font-display font-extrabold text-deep-teal" data-en="🪷 An honest seller's vow">🪷 Lời khấn của người bán ngay thật</p>
         <p class="text-sm opacity-80 mt-1" data-en-html="The old belief holds that Bà Cậu &lt;b&gt;punishes cheating buyers and sellers&lt;/b&gt;. Before moving on: this past week, did you &lt;b&gt;weigh fairly and post honest prices&lt;/b&gt; for your customers?">Người xưa tin Bà Cậu <b>trừng phạt kẻ mua gian bán lận</b>. Trước khi đi tiếp: tuần qua bạn có <b>cân đủ, niêm yết giá thật</b> với khách không?</p>
         <div class="flex gap-3 mt-3">
-          <button onclick="ftRitualNext(true)" class="clay-btn flex-1 bg-deep-teal text-white font-display font-extrabold py-3" data-en="🕯️ Yes – I sold honestly">🕯️ Có – tôi bán thật</button>
-          <button onclick="ftRitualNext(false)" class="clay-btn flex-1 bg-clay-gold text-deep-teal font-display font-extrabold py-3" data-en="🤔 I'll be more careful">🤔 Tôi sẽ giữ mình hơn</button>
+          <button type="button" onclick="ftRitualNext(true)" class="clay-btn flex-1 bg-deep-teal text-white font-display font-extrabold py-3" data-en="🕯️ Yes – I sold honestly">🕯️ Có – tôi bán thật</button>
+          <button type="button" onclick="ftRitualNext(false)" class="clay-btn flex-1 bg-clay-gold text-deep-teal font-display font-extrabold py-3" data-en="🤔 I'll be more careful">🤔 Tôi sẽ giữ mình hơn</button>
         </div>
       </div>
       <p class="text-[11px] opacity-50 mt-4" data-en-html="This ritual is only for reflection – &lt;b&gt;no points added or subtracted&lt;/b&gt;. Source: Mekong Delta river-boat offering custom (Bà Cậu worship, duck offering, 16th &amp; 29th lunar days).">Nghi lễ chỉ để suy ngẫm – <b>không cộng hay trừ điểm</b>. Nguồn: tục cúng ghe miền Tây (thờ Bà Cậu, cúng vịt, ngày 16 &amp; 29 âm lịch).</p>
@@ -296,8 +304,8 @@
             </div>
           </div>
           <p id="ft-cert-date" class="text-[9px] text-deep-teal/45 font-bold mt-3"></p>
-          <button onclick="ftDownloadCert()" class="clay-btn bg-clay-gold text-deep-teal font-display font-extrabold px-4 py-2 text-[11px] mt-3" data-en="📥 Download certificate">📥 Tải chứng chỉ</button>
-          <button onclick="ftDownloadCertOfficial()" class="clay-btn bg-primary text-white font-display font-extrabold px-4 py-2 text-[11px] mt-3 ml-2" data-en="🎓 Official certificate">🎓 Chứng nhận chính thức</button>
+          <button type="button" onclick="ftDownloadCert()" class="clay-btn bg-clay-gold text-deep-teal font-display font-extrabold px-4 py-2 text-[11px] mt-3" data-en="📥 Download certificate">📥 Tải chứng chỉ</button>
+          <button type="button" onclick="ftDownloadCertOfficial()" class="clay-btn bg-primary text-white font-display font-extrabold px-4 py-2 text-[11px] mt-3 ml-2" data-en="🎓 Official certificate">🎓 Chứng nhận chính thức</button>
           <p id="ft-cert-msg" class="text-[10px] font-bold mt-2" style="color:#c0392b"></p>
         </div>
       </div>
@@ -305,15 +313,15 @@
         <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mb-1.5" data-en="📡 Submit your result to the instructor">📡 Nộp kết quả cho giảng viên</p>
         <div id="ft-login"></div>
         <div class="flex flex-col sm:flex-row gap-2">
-          <input id="ft-class" placeholder="Mã lớp (VD: QTKD-2026-A)" data-en-ph="Class code (e.g. QTKD-2026-A)" class="flex-1 border-2 rounded-xl px-3 py-2.5 text-sm font-semibold" style="border-color:rgba(0,102,135,.25);background:transparent;color:inherit">
-          <input id="ft-name" maxlength="60" placeholder="Tên hoặc biệt danh (hiện trên bảng lớp)" data-en-ph="Name or nickname (shown on the class board)" class="flex-1 border-2 rounded-xl px-3 py-2.5 text-sm font-semibold" style="border-color:rgba(0,102,135,.25);background:transparent;color:inherit">
-          <button id="ft-send" onclick="ftSubmit()" class="clay-btn bg-deep-teal text-white font-display font-extrabold px-5 py-2.5 text-sm shrink-0" data-en="Submit">Nộp</button>
+          <input type="text" id="ft-class" placeholder="Mã lớp (VD: QTKD-2026-A)" data-en-ph="Class code (e.g. QTKD-2026-A)" class="flex-1 border-2 rounded-xl px-3 py-2.5 text-sm font-semibold" style="border-color:rgba(0,102,135,.25);background:transparent;color:inherit">
+          <input type="text" id="ft-name" maxlength="60" placeholder="Tên hoặc biệt danh (hiện trên bảng lớp)" data-en-ph="Name or nickname (shown on the class board)" class="flex-1 border-2 rounded-xl px-3 py-2.5 text-sm font-semibold" style="border-color:rgba(0,102,135,.25);background:transparent;color:inherit">
+          <button type="button" id="ft-send" onclick="ftSubmit()" class="clay-btn bg-deep-teal text-white font-display font-extrabold px-5 py-2.5 text-sm shrink-0" data-en="Submit">Nộp</button>
         </div>
         <p id="ft-send-msg" class="text-[11px] font-semibold opacity-60 mt-1.5"></p>
       </div>
       <a href="game.html" class="clay-btn w-full bg-deep-teal text-white font-display font-extrabold py-3.5 flex items-center justify-center mt-5" data-en="🏢 Move up to Level 2 → Bật Nghiệp">🏢 Lên Bậc 2 → Bật Nghiệp</a>
       <div class="flex gap-3 mt-3">
-        <button onclick="location.reload()" class="clay-btn flex-1 bg-clay-gold text-deep-teal font-display font-extrabold py-3.5" data-en="🔄 Play again">🔄 Chơi lại</button>
+        <button type="button" onclick="location.reload()" class="clay-btn flex-1 bg-clay-gold text-deep-teal font-display font-extrabold py-3.5" data-en="🔄 Play again">🔄 Chơi lại</button>
         <a href="games.html" class="clay-btn flex-1 bg-primary text-white font-display font-extrabold py-3.5 flex items-center justify-center">🕹️ Arcade</a>
       </div>
     </div>
@@ -1293,14 +1301,6 @@
 <a class="vutru-goc" href="universe.html" aria-label="Về Vũ trụ BizOn">
   <span class="vg-o" aria-hidden="true"></span><span>Vũ trụ</span>
 </a>
-<style>
-.vutru-goc{position:fixed;left:14px;bottom:14px;z-index:9999;display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border-radius:16px;background:#fff;color:#033337;text-decoration:none;font-family:'Manrope','Manrope Fallback',system-ui,sans-serif;font-weight:700;font-size:.82rem;box-shadow:0 8px 22px -6px rgba(0,102,135,.25),inset 0 -3px 0 rgba(0,0,0,.06);border:1px solid rgba(3,51,55,.08);transition:transform .18s ease,box-shadow .18s ease}
-.vutru-goc:hover{transform:translateY(-2px);box-shadow:0 12px 28px -6px rgba(0,102,135,.32),inset 0 -3px 0 rgba(0,0,0,.06)}
-.vutru-goc:focus-visible{outline:2px solid #0F5C4E;outline-offset:3px}
-.vutru-goc .vg-o{width:16px;height:16px;border-radius:50%;background:#0F5C4E;box-shadow:inset -4px 0 0 -1px #7FD9BE}
-@media(max-width:520px){.vutru-goc{left:10px;bottom:10px;padding:7px 11px;font-size:.76rem}}
-@media print{.vutru-goc{display:none}}
-</style>
 <script src="js/bizon-clay-footer.js" defer></script>
 </body>
 </html>
