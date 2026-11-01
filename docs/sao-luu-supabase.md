@@ -12,14 +12,15 @@ Gói miễn phí của Supabase không tự sao lưu. Workflow `.github/workflow
 
 GitHub → kho **BizOn** → **Settings** → **Secrets and variables** → **Actions** → **New repository secret**.
 
-### Bước 1 · `SUPABASE_DB_URL`
+### Bước 1 · `SUPABASE_DB_PASSWORD` (chỉ dán mật khẩu)
 
-1. Supabase → dự án BizOn → nút **Connect** (đầu trang) → thẻ **Connection string** → chọn **Session pooler**.
-   Không dùng «Direct connection»: địa chỉ đó chỉ có IPv6, máy chạy của GitHub không kết nối được.
-2. Chép chuỗi dạng `postgresql://postgres.ceytblfelodpnudomccn:[YOUR-PASSWORD]@aws-0-ap-northeast-1.pooler.supabase.com:5432/postgres`.
-3. Thay `[YOUR-PASSWORD]` bằng mật khẩu cơ sở dữ liệu. Quên thì đặt lại ở **Database → Settings → Reset database password**; BizOn không dùng mật khẩu này ở đâu khác (trang web dùng khóa công khai, workflow áp migration dùng `SUPABASE_ACCESS_TOKEN`).
-   Mật khẩu có ký tự đặc biệt (`@ # / : ?`…) thì đổi sang dạng mã hóa URL (`@` → `%40`, `#` → `%23`), hoặc đặt mật khẩu chỉ gồm chữ và số.
-4. Tạo secret tên `SUPABASE_DB_URL`, dán cả chuỗi.
+1. Supabase không bao giờ hiện lại mật khẩu cũ. Đặt mật khẩu mới: dự án BizOn → **Project Settings** → **Database** → **Reset database password**. Nên dùng mật khẩu chỉ gồm chữ và số, ghi lại trước khi bấm lưu.
+   BizOn không dùng mật khẩu này ở đâu khác (trang web dùng khóa công khai, workflow áp migration dùng `SUPABASE_ACCESS_TOKEN`), nên đặt lại không ảnh hưởng trang hay game.
+2. Tạo secret tên `SUPABASE_DB_PASSWORD`, dán **chỉ mật khẩu** (không có chuỗi kết nối, không có ngoặc vuông).
+   Workflow tự ghép chuỗi kết nối Session pooler: `postgres.ceytblfelodpnudomccn@aws-0-ap-northeast-1.pooler.supabase.com:5432` (dự án và vùng ghi trong `.github/workflows/supabase-backup.yml`). Ký tự đặc biệt trong mật khẩu được mã hóa tự động.
+3. Vừa đặt lại mật khẩu thì đợi 1–2 phút rồi mới chạy thử: máy chủ trung gian (pooler) của Supabase cần chút thời gian để nhận mật khẩu mới.
+
+Cách cũ vẫn dùng được: secret `SUPABASE_DB_URL` chứa cả chuỗi **Session pooler** (Supabase → **Connect** → **Session pooler**, thay cả cụm `[YOUR-PASSWORD]`, kể cả dấu ngoặc vuông, bằng mật khẩu). Không dùng «Direct connection»: địa chỉ đó chỉ có IPv6, máy chạy của GitHub không kết nối được. Có cả hai secret thì `SUPABASE_DB_PASSWORD` được ưu tiên.
 
 ### Bước 2 · `BACKUP_PASSPHRASE`
 

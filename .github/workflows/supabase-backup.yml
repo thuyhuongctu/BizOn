@@ -3,7 +3,8 @@ name: Supabase – sao lưu định kỳ (mã hóa)
 # Mỗi ngày 02:17 giờ Việt Nam (19:17 UTC) xuất cơ sở dữ liệu Supabase của BizOn (schema public + tài khoản
 # auth.users/identities), mã hóa AES-256 bằng gpg rồi lưu thành artifact 90 ngày. Kho này công khai: artifact
 # tải được bởi bất kỳ ai có tài khoản GitHub, nên KHÔNG BAO GIỜ tải lên bản chưa mã hóa.
-# Cần 2 repository secret: SUPABASE_DB_URL (Session pooler) và BACKUP_PASSPHRASE (≥ 16 ký tự).
+# Cần 2 repository secret: SUPABASE_DB_PASSWORD (chỉ mật khẩu cơ sở dữ liệu; hoặc SUPABASE_DB_URL là cả chuỗi
+# Session pooler) và BACKUP_PASSPHRASE (≥ 16 ký tự).
 # Cách thêm secret, tải và khôi phục: docs/sao-luu-supabase.md. Chạy tay: Actions → workflow này → Run workflow.
 on:
   schedule:
@@ -36,7 +37,10 @@ jobs:
       - name: Xuất, kiểm tra và mã hóa
         id: bk
         env:
+          SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_DB_PASSWORD }}
           SUPABASE_DB_URL: ${{ secrets.SUPABASE_DB_URL }}
+          SUPABASE_PROJECT_REF: ceytblfelodpnudomccn
+          SUPABASE_POOLER_HOST: aws-0-ap-northeast-1.pooler.supabase.com
           BACKUP_PASSPHRASE: ${{ secrets.BACKUP_PASSPHRASE }}
           PG_BIN: /usr/lib/postgresql/17/bin
           OUT_DIR: backup-out
