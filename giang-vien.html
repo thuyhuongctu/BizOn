@@ -57,6 +57,10 @@
   .gv-tool h3{margin:6px 0 0;font-size:19px;line-height:1.25}
   .gv-tool p{margin:0;flex:1;font-size:14px;line-height:1.55;color:var(--clay-sub)}
   .gv-tool .go{font-size:14px;font-weight:800;color:var(--clay-teal)}
+  .gv-src ul{margin:6px 0 0;padding:0;list-style:none;display:grid;gap:8px;flex:1}
+  .gv-src li{font-size:14px;line-height:1.5;color:var(--clay-sub)}
+  .gv-src li a{font-weight:800;color:var(--clay-teal)}
+  .gv-src-note{margin:18px 0 0;font-size:13.5px;line-height:1.55;color:var(--clay-sub);max-width:52em}
   .gv-help{margin:64px 0 72px;display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;padding:26px 30px;border-radius:32px;background:var(--clay-c4);box-shadow:var(--clay-night-shadow,inset 0 -9px 0 rgba(0,0,0,.07),inset 0 5px 0 rgba(255,255,255,.5),0 26px 36px -24px rgba(30,90,60,.5))}
   .gv-help-art{width:min(100%,260px);height:auto;border-radius:22px}
   .gv-help p{margin:4px 0 0;font-size:15px;line-height:1.55;color:var(--clay-ink-2)}
@@ -232,6 +236,61 @@
         <span class="go" data-en="Read →">Xem →</span>
       </a>
     </div>
+  </section>
+
+  <!-- Nguồn dữ liệu mở: trang bên ngoài, chỉ đặt liên kết, không nhúng -->
+  <section class="gv-sec" id="nguon-mo">
+    <h2 data-en="Open data sources">Nguồn dữ liệu mở</h2>
+    <p data-en="Live maps and open datasets that link the games to the real world. Open them on the projector when a round needs real figures.">Bản đồ trực tiếp và bộ dữ liệu mở giúp nối các game với thực tế. Mở trên máy chiếu khi một vòng chơi cần số liệu thật.</p>
+    <div class="gv-grid">
+      <div class="gv-tool gv-src">
+        <span class="ic" aria-hidden="true">🚢</span>
+        <h3 data-en="Durian Passport: ports and the cold chain">Hộ Chiếu Sầu Riêng: cảng và chuỗi lạnh</h3>
+        <ul>
+          <li><a href="https://www.marinetraffic.com/en/ais/home/centerx:106.79/centery:10.76/zoom:13" target="_blank" rel="noopener">MarineTraffic ↗</a> – <span data-en="real container ships around Cát Lái port right now">tàu container thật quanh cảng Cát Lái lúc này</span></li>
+          <li><a href="https://www.windy.com/?10.770,106.800,6" target="_blank" rel="noopener">Windy ↗</a> – <span data-en="wind and storms on the sea route, tied to the in-game weather events">gió và bão trên tuyến biển, nối với các biến cố thời tiết trong game</span></li>
+          <li><a href="https://zoom.earth/" target="_blank" rel="noopener">Zoom Earth ↗</a> – <span data-en="near-real-time satellite imagery: clouds, storms, fires">ảnh vệ tinh gần thời gian thực: mây, bão, cháy rừng</span></li>
+        </ul>
+      </div>
+      <div class="gv-tool gv-src">
+        <span class="ic" aria-hidden="true">🌏</span>
+        <h3 data-en="IE Lab, FDI Lab, BizOn Global">IE Lab, FDI Lab, BizOn Global</h3>
+        <ul>
+          <li><a href="https://data.worldbank.org/" target="_blank" rel="noopener">World Bank Open Data ↗</a> – <span data-en="GDP, trade, FDI by country (CC BY 4.0)">GDP, thương mại, FDI theo quốc gia (CC BY 4.0)</span></li>
+          <li><a href="https://ourworldindata.org/" target="_blank" rel="noopener">Our World in Data ↗</a> – <span data-en="long-run sourced charts with downloadable data (CC BY)">biểu đồ dài hạn có nguồn, tải được dữ liệu (CC BY)</span></li>
+          <li><a href="https://www.gapminder.org/tools/" target="_blank" rel="noopener">Gapminder Tools ↗</a> – <span data-en="animated income and population bubble charts">biểu đồ bong bóng thu nhập và dân số theo thời gian</span></li>
+          <li><a href="https://www.thetruesize.com/" target="_blank" rel="noopener">The True Size Of ↗</a> – <span data-en="compare real country sizes when discussing internationalisation">so độ lớn thật của các nước khi bàn về quốc tế hoá</span></li>
+        </ul>
+      </div>
+      <div class="gv-tool gv-src">
+        <span class="ic" aria-hidden="true">🌾</span>
+        <h3 data-en="Bến Phù Sa, CHAM Tân Lộc, the Mekong Delta">Bến Phù Sa, CHAM Tân Lộc, Đồng bằng</h3>
+        <ul>
+          <li><a href="https://www.globalforestwatch.org/map/" target="_blank" rel="noopener">Global Forest Watch ↗</a> – <span data-en="forest and coastal mangrove change in the Delta">biến động rừng, rừng ngập mặn ven biển Đồng bằng</span></li>
+          <li><a href="https://www.windy.com/?10.25,105.58,9" target="_blank" rel="noopener">Windy ↗</a> – <span data-en="rain and wind around Tân Lộc, for the flood-season discussion">mưa, gió quanh cù lao Tân Lộc, dùng khi bàn mùa nước nổi</span></li>
+          <li><a href="https://www.openstreetmap.org/#map=12/10.2453/105.5777" target="_blank" rel="noopener">OpenStreetMap ↗</a> – <span data-en="the open map behind the BizOn river-island map">bản đồ mở mà BizOn dùng cho bản đồ cù lao</span></li>
+        </ul>
+      </div>
+      <div class="gv-tool gv-src">
+        <span class="ic" aria-hidden="true">📊</span>
+        <h3 data-en="Data storytelling">Kể chuyện bằng dữ liệu</h3>
+        <ul>
+          <li><a href="https://pudding.cool/" target="_blank" rel="noopener">The Pudding ↗</a> – <span data-en="visual essays that tell stories with data">bài viết trực quan kể chuyện bằng số liệu</span></li>
+          <li><a href="https://informationisbeautiful.net/" target="_blank" rel="noopener">Information is Beautiful ↗</a> – <span data-en="examples of visualising complex data">ví dụ trực quan hoá dữ liệu phức tạp</span></li>
+          <li><a href="https://observablehq.com/" target="_blank" rel="noopener">Observable ↗</a> – <span data-en="live-code notebooks for charting class data">sổ tay mã trực tiếp để vẽ biểu đồ từ dữ liệu lớp</span></li>
+        </ul>
+      </div>
+      <div class="gv-tool gv-src">
+        <span class="ic" aria-hidden="true">📚</span>
+        <h3 data-en="Open learning and research">Học liệu và nghiên cứu mở</h3>
+        <ul>
+          <li><a href="https://www.openculture.com/" target="_blank" rel="noopener">Open Culture ↗</a> – <span data-en="free courses, books and films">khoá học, sách, phim miễn phí</span></li>
+          <li><a href="https://archive.org/" target="_blank" rel="noopener">Internet Archive ↗</a> – <span data-en="archive of books, documents and software">kho sách, tài liệu, phần mềm lưu trữ</span></li>
+          <li><a href="https://arxiv.org/" target="_blank" rel="noopener">arXiv ↗</a> – <span data-en="open research preprints (economics, computer science…)">bản thảo nghiên cứu mở (kinh tế, khoa học máy tính…)</span></li>
+        </ul>
+      </div>
+    </div>
+    <p class="gv-src-note" data-en="External sites, not part of BizOn: check each site's terms before showing it in class. When you reuse World Bank or Our World in Data figures, cite the source (CC BY 4.0).">Đây là trang bên ngoài, không thuộc BizOn: xem điều khoản của từng trang trước khi chiếu trong lớp. Khi dùng lại số liệu World Bank hoặc Our World in Data, ghi nguồn (CC BY 4.0).</p>
   </section>
 
   <section class="gv-help">

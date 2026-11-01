@@ -112,7 +112,8 @@ test('Góc giảng viên: trang riêng gom công cụ, có lối vào trên menu
   const links = [...s.matchAll(/<a [^>]*href="([^"#]+)/g)].map(m => decodeURI(m[1]));
   for (const tool of ['Trang Giang Vien.dc.html', 'app/instructor-studio.html', 'instructor-grading.html', 'truong-giang-vien.html'])
     assert.ok(links.includes(tool), 'giang-vien.html thiếu thẻ ' + tool);
-  for (const l of links) assert.ok(fs.existsSync(path.join(ROOT, l)), 'giang-vien.html trỏ tệp không tồn tại: ' + l);
+  for (const l of links.filter(x => !/^https:\/\//.test(x))) assert.ok(fs.existsSync(path.join(ROOT, l)), 'giang-vien.html trỏ tệp không tồn tại: ' + l);
+  for (const l of links.filter(x => /^https?:\/\//.test(x))) assert.match(l, /^https:\/\//, 'liên kết ngoài phải là https: ' + l);
   assert.ok(/href:'giang-vien\.html'/.test(read('js/bizon-clay-nav.js')), 'menu thiếu mục Giảng viên');
   assert.ok(/href:'giang-vien\.html'/.test(read('js/bizon-clay-footer.js')), 'chân trang thiếu Góc giảng viên');
   assert.ok(read('sw.js').includes("'./giang-vien.html'"), 'sw.js thiếu giang-vien.html');
