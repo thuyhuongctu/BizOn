@@ -12,7 +12,9 @@ for (const n of ['ben-phu-sa-trailer-v2', 'bizon-trailer-v3', 'bp-trailer-v2', '
   assert.ok(size(s) < size(o) * 0.6 && size(s) > 2e6, 'bản 720p nhẹ hơn ít nhất 40 %: ' + n);
   const b = fs.readFileSync(R(s)).subarray(0, 64 * 1024).toString('latin1');
   assert.ok(b.includes('moov') && b.indexOf('moov') < (b.indexOf('mdat') < 0 ? Infinity : b.indexOf('mdat')) && b.includes('avc1') && b.includes('mp4a'), 'faststart, H.264 + AAC: ' + n);
-  assert.ok(home.includes(`data-trailer="${s}"`) && !home.includes(`"${o}"`), 'trang chủ dùng bản 720p: ' + n);
+  // Bật Nghiệp: từ 01/11/2026 trang chủ dùng bản v4 (giọng đọc của tác giả, chỉ có bản 720p); bản v3 giữ trong kho
+  const onHome = n === 'bizon-trailer-v3' ? 'assets/video/bizon-trailer-v4-720p.mp4' : s;
+  assert.ok(home.includes(`data-trailer="${onHome}"`) && !home.includes(`"${o}"`), 'trang chủ dùng bản 720p: ' + n);
 }
 assert.ok(+(fs.readFileSync(R('sw.js'), 'utf8').match(/bizon-v(\d+)/) || [])[1] >= 698);
 console.log('trailers-720p: ok');
