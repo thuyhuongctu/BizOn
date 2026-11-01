@@ -54,9 +54,9 @@ assert.ok(+(read('sw.js').match(/bizon-v(\d+)/) || [])[1] >= 701);
     await pg.evaluate(s => document.querySelector(s).click(), 'a.hp-intro'); await pg.waitForTimeout(300);
     assert.deepEqual((await tracks(pg)).map(t => t[1] + ' ' + t[2]), ['assets/video/subs/bizon-intro-vi-v4.vi.vtt disabled', 'assets/video/subs/bizon-intro-vi-v4.en.vtt disabled']);
     await pg.close();
-    // Giao diện tiếng Anh, trailer tiếng Anh: không tự bật.
+    // Giao diện tiếng Anh, trailer tiếng Anh: không tự bật. (Trailer Bật Nghiệp v4 chưa có phụ đề, sẽ bổ sung sau.)
     pg = await open('index.html', 'en');
-    await pg.evaluate(s => document.querySelector(s).click(), 'a.hp-game-tr[data-trailer*="bizon-trailer-v3"]'); await pg.waitForTimeout(300);
+    await pg.evaluate(s => document.querySelector(s).click(), 'a.hp-game-tr[data-trailer*="bp-trailer-v2"]'); await pg.waitForTimeout(300);
     assert.deepEqual((await tracks(pg)).map(t => t[2]), ['disabled', 'disabled']);
     await pg.close();
     // Trang Vũ trụ: video giới thiệu đổi bản tiếng Việt thì phụ đề đổi theo.
