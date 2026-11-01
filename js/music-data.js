@@ -33,9 +33,9 @@ window.BZ_MUSIC = {
       ['«Vươn ra thế giới» – bản 1', 'Ca khúc mới cùng tuyến · 2:47', 'huong-vuon-ra-the-gioi', '«Vươn ra thế giới» – take 1', 'A new song on the same line · 2:47'],
       ['«Vươn ra thế giới» – bản 2', 'Hòa âm khác · 2:47', 'huong-vuon-ra-the-gioi-2', '«Vươn ra thế giới» – take 2', 'Alternate arrangement · 2:47']
     ], 'BizOn Go Global song · international pop 118 BPM'],
-    ['«Bến Phù Sa»', 'covers/ben-phu-sa-3d.webp', 'Bài hát của game Bến Phù Sa · lời và nhạc Đỗ Thùy Hương', [
+    ['«Bến Phù Sa»', 'covers/ben-phu-sa-3d.webp', 'Bài hát của game Bến Phù Sa · lời và nhạc Đỗ Thùy Hương & Phan Anh Tú', [
       ['Bản thu có lời ⭐', 'Lời tiếng Việt, song ca nam nữ · 5:49', 'bai-hat-ben-phu-sa', 'Vocal recording ⭐', 'Vietnamese lyrics, male–female duet · 5:49']
-    ], 'The song of the Bến Phù Sa game · words & music by Đỗ Thùy Hương'],
+    ], 'The song of the Bến Phù Sa game · words & music by Đỗ Thùy Hương & Phan Anh Tú'],
     ['«Đội Phù Sa»', 'covers/ben-phu-sa-3d.webp', 'Anthem đội chơi game Bến Phù Sa · V-pop electronic 116 BPM', [
       ['Bản gốc', 'Golden silt, we rise!', 'doi-phu-sa', 'Original', 'Golden silt, we rise!'],
       ['Bản remix', 'Cùng lời, màu nhạc mới', 'doi-phu-sa-remix', 'Remix', 'Same lyrics, new colour'],
