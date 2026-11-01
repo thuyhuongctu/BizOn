@@ -3,7 +3,9 @@
 # Chạy bởi .github/workflows/supabase-backup.yml; cũng chạy được trên máy (xem docs/sao-luu-supabase.md).
 #
 # Đầu vào (biến môi trường, KHÔNG truyền qua tham số dòng lệnh để không lộ trong danh sách tiến trình):
-#   SUPABASE_DB_URL     chuỗi kết nối Postgres (Supabase → Connect → Session pooler, đã điền mật khẩu)
+#   SUPABASE_DB_PASSWORD  mật khẩu cơ sở dữ liệu (cách dễ nhất: chỉ dán mật khẩu, script tự ghép chuỗi kết nối
+#                         Session pooler từ SUPABASE_PROJECT_REF và SUPABASE_POOLER_HOST); có thì được ưu tiên
+#   SUPABASE_DB_URL       hoặc cả chuỗi kết nối Postgres (Supabase → Connect → Session pooler, đã điền mật khẩu)
 #   BACKUP_PASSPHRASE   mật khẩu mã hóa tệp sao lưu (ít nhất 16 ký tự)
 #   OUT_DIR             thư mục ghi tệp (mặc định ./backup-out)
 #   PG_BIN              thư mục chứa pg_dump/psql (mặc định lấy theo PATH)
@@ -16,7 +18,15 @@
 set -euo pipefail
 
 die() { echo "::error::$*" >&2; exit 1; }
-[ -n "${SUPABASE_DB_URL:-}" ] || die "Thiếu SUPABASE_DB_URL (repository secret). Xem docs/sao-luu-supabase.md, bước 1."
+if [ -n "${SUPABASE_DB_PASSWORD:-}" ]; then
+  [ -n "${SUPABASE_PROJECT_REF:-}" ] && [ -n "${SUPABASE_POOLER_HOST:-}" ] || die "Thiếu SUPABASE_PROJECT_REF hoặc SUPABASE_POOLER_HOST để ghép chuỗi kết nối."
+  # Mã hóa URL cho mật khẩu (ký tự @ # / : ? % không làm hỏng chuỗi); bỏ khoảng trắng, xuống dòng lỡ dán thừa ở hai đầu
+  PW_ENC="$(SUPABASE_DB_PASSWORD="$SUPABASE_DB_PASSWORD" python3 -c 'import os,urllib.parse;print(urllib.parse.quote(os.environ["SUPABASE_DB_PASSWORD"].strip(), safe=""))')"
+  SUPABASE_DB_URL="postgresql://postgres.${SUPABASE_PROJECT_REF}:${PW_ENC}@${SUPABASE_POOLER_HOST}:5432/postgres?sslmode=require"
+  unset PW_ENC
+fi
+[ -n "${SUPABASE_DB_URL:-}" ] || die "Thiếu SUPABASE_DB_PASSWORD (hoặc SUPABASE_DB_URL) trong repository secret. Xem docs/sao-luu-supabase.md, bước 1."
+case "$SUPABASE_DB_URL" in *'[YOUR-PASSWORD]'*|*'['*']'*) die "SUPABASE_DB_URL còn dấu ngoặc vuông [ ]: thay cả cụm [YOUR-PASSWORD] bằng mật khẩu.";; esac
 [ -n "${BACKUP_PASSPHRASE:-}" ] || die "Thiếu BACKUP_PASSPHRASE (repository secret). Xem docs/sao-luu-supabase.md, bước 2."
 [ "${#BACKUP_PASSPHRASE}" -ge 16 ] || die "BACKUP_PASSPHRASE quá ngắn: cần ít nhất 16 ký tự."
 
