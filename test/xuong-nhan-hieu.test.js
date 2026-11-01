@@ -42,7 +42,9 @@ for (const need of ['js/bizon-clay-nav.js', 'js/bizon-clay-footer.js', 'js/bizon
 assert.ok(s.includes('Đề bài © 2026 ThS. Đỗ Thùy Hương'), 'thiếu dòng ghi đề bài');
 assert.ok(read('giang-vien.html').includes('href="xuong-nhan-hieu.html"'), 'trang giảng viên chưa có lối vào');
 assert.ok(read('sitemap.xml').includes('https://bizonland.com/xuong-nhan-hieu.html<'), 'sitemap thiếu trang');
-assert.ok(+(read('sw.js').match(/bizon-v(\d+)/) || [])[1] >= 706);
+assert.ok(s.includes('href="https://doi.org/10.5281/zenodo.23731421"'), 'thiếu DOI Zenodo');
+assert.ok(!s.includes('Chương 5 · Xây dựng nhãn hiệu'), 'đã bỏ dòng nhãn chương 5');
+assert.ok(+(read('sw.js').match(/bizon-v(\d+)/) || [])[1] >= 729);
 
 (async () => {
   const b = await chromium.launch(); const errs = [];
