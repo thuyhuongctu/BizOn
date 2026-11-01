@@ -2,3 +2,6 @@
 artifacts/
 node_modules/
 __pycache__/
+
+# Sao lưu Supabase chạy trên máy (scripts/supabase-backup.sh): không bao giờ commit
+backup-out/
