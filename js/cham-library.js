@@ -19,7 +19,7 @@
     [L('45 PHÚT · NHÓM', '45 MIN · TEAMS'), L('Thẩm định kế hoạch', 'Plan review'), L('Bút đỏ trên sáu phần của kế hoạch.', 'A red pen over six sections of the plan.'), 'cham/tham-dinh.html', 'var(--ch-brick-t)'],
     [L('2 BUỔI · 4 ĐỘI', '2 SESSIONS · 4 TEAMS'), L('Đấu trường Cù lao Tân Lộc', 'Tân Lộc Arena'), L('Kịch bản Bậc 2, sáu mùa, ba đối thủ.', 'Tier-2 scenario: six seasons, three rivals.'), 'cham/dau-truong.html', 'var(--ch-leaf)'],
     [L('GIẢNG VIÊN', 'INSTRUCTOR'), L('Bộ công cụ giảng dạy', 'Teaching kit'), L('Máy tính hòa vốn, soát lỗi, tin đăng mẫu, ghi chú.', 'Payback calculator, plan audit, sample listing, notes.'), 'cham/bo-cong-cu.html', 'var(--ch-raised)'],
-    [L('GIẢNG VIÊN', 'INSTRUCTOR'), L('Bài giảng 8 slide', '8-slide teaching deck'), L('Trình chiếu trên lớp, in được ra PDF.', 'For class, printable to PDF.'), 'cham/bai-giang.html', 'var(--ch-lilac)']
+    [L('GIẢNG VIÊN', 'INSTRUCTOR'), L('Bài giảng 9 slide', '9-slide teaching deck'), L('Trình chiếu trên lớp, in được ra PDF.', 'For class, printable to PDF.'), 'cham/bai-giang.html', 'var(--ch-lilac)']
   ];
   const GOALS = [L('Đọc và phản biện một kế hoạch kinh doanh khởi nghiệp.', 'Read and critique a startup business plan.'), L('Tính hòa vốn trên đúng khoản vốn đầu tư.', 'Calculate payback on the right investment base.'),
     L('Đánh giá chiến lược giá theo mùa và theo nhóm khách.', 'Evaluate pricing by season and by guest segment.'), L('Đề xuất cách khác biệt hóa khi rào cản gia nhập thấp, so sánh với đối thủ thật là Homestay Cẩm Lụa.', 'Propose differentiation when entry barriers are low, benchmarked against the real competitor Homestay Cẩm Lụa.')];

@@ -1,4 +1,4 @@
-/* CHAM – Bài giảng 8 slide: chuyển slide (nút, phím ←/→, vuốt), toàn màn hình (F), ghi chú người trình bày song ngữ, in/PDF. */
+/* CHAM – Bài giảng 9 slide: chuyển slide (nút, phím ←/→, vuốt), toàn màn hình (F), ghi chú người trình bày song ngữ, in/PDF. */
 (function () {
   'use strict';
   const K = window.ChamKit;

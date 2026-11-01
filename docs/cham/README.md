@@ -16,7 +16,7 @@ CHAM™ và nội dung tình huống © 2017–2026 Đỗ Thùy Hương, dùng t
 | Bảng điều khiển giảng viên | `cham/bang-dieu-khien.html` | CHAM Founder Dashboard (+ VI) |
 | Thẩm định kế hoạch (+ bản in/PDF trong cùng trang) | `cham/tham-dinh.html` | CHAM Plan Review, Plan Review Print (+ VI) |
 | Bộ công cụ giảng dạy (+ ghi chú giảng dạy) | `cham/bo-cong-cu.html` | CHAM Teaching Kit (+ VI) |
-| Bài giảng 8 slide (trình chiếu, in PDF) | `cham/bai-giang.html` | CHAM Teaching Deck (+ VI) |
+| Bài giảng 9 slide (trình chiếu, in PDF) | `cham/bai-giang.html` | CHAM Teaching Deck (+ VI) |
 | Đấu trường Cù lao Tân Lộc (Bậc 2) | `cham/dau-truong.html` | Tan Loc Arena (+ EN) |
 | Thư viện tình huống | `thu-vien-tinh-huong.html` | BizOn Case Library (+ EN) |
 | Tài liệu kịch bản Bậc 2 | `docs/cham/kich-ban-tan-loc.md` | Bat Nghiep Tan Loc Scenario |
