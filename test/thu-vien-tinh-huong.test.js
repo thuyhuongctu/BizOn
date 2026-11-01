@@ -59,7 +59,7 @@ assert.ok(js.includes('hiện chưa có khóa'), 'nói rõ chưa có khóa giả
 assert.ok(!/https?:\/\//.test(js.replace(/^\s*\/[*/].*$/gm, '')), 'liên kết trong thư viện là nội bộ');
 assert.ok(html.includes('<meta name="bizon-nav-current" content="lop-hoc.html">'));
 assert.ok(read('js/bizon-clay-nav.js').includes('bizon-nav-current'));
-assert.ok(+(read('sw.js').match(/bizon-v(\d+)/) || [])[1] >= 731);
+assert.ok(+(read('sw.js').match(/bizon-v(\d+)/) || [])[1] >= 743);
 
 // --- Trình duyệt ---
 (async () => {
