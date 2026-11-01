@@ -61,7 +61,8 @@
   .rb-dis li{padding:8px 12px;border-radius:14px;background:var(--clay-cream,#fffaf2)}
   .rb-dis li.big{border-left:5px solid #c0443a}
   .rb-dis li span{display:block;color:var(--clay-sub);font-size:13px;margin-top:4px}
-  @media (max-width:720px){.rb-form,.rb-levels{grid-template-columns:1fr}}
+  @media (max-width:720px){.rb-form,.rb-levels{grid-template-columns:minmax(0,1fr)}}
+  .rb-form input,.rb-form select{min-width:0;max-width:100%}
   @media screen{html[data-theme="dark"] .rb-item,html[data-theme="dark"] .rb-dis li{background:#232c4d}html[data-theme="dark"] .rb-why,html[data-theme="dark"] .rb-lv,html[data-theme="dark"] .rb-form input,html[data-theme="dark"] .rb-form select,html[data-theme="dark"] .rb-bar select{background:#1b2340;color:#f3efe6;border-color:#35406a}html[data-theme="dark"] .rb-lv.on{background:#1f4a55;color:#fff}}
 </style>
 <script src="js/capture-guard.js"></script>
