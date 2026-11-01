@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- [html-validate-disable element-name: cú pháp mẫu của bộ khung x-dc (support.js): onClick/onChange, <helmet>, {{ }}, nhiều <main> trong <sc-if>. Trình duyệt và support.js đọc đúng; đổi sẽ hỏng trang.] -->
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -52,9 +53,9 @@ td{padding:7px 9px;border-bottom:1px solid #eadcc6;vertical-align:top}
 <p style="margin:0 0 8px">Total time: <b>60 minutes</b>. The game opens and locks each round on schedule, with a countdown at the bottom of the screen. If a round ends before the team commits, the CEO's device commits the current slider values automatically. Each team starts the exam with <b>500 million ₫</b> in starting capital.</p>
 <table style="margin-bottom:10px;font-size:10pt">
   <thead><tr>
-    <th style="padding:6px 9px;text-align:left;background:#033337;color:#fff;width:20%">Time</th>
-    <th style="padding:6px 9px;text-align:left;background:#033337;color:#fff;width:16%">Duration</th>
-    <th style="padding:6px 9px;text-align:left;background:#033337;color:#fff">What to do</th>
+    <th scope="col" style="padding:6px 9px;text-align:left;background:#033337;color:#fff;width:20%">Time</th>
+    <th scope="col" style="padding:6px 9px;text-align:left;background:#033337;color:#fff;width:16%">Duration</th>
+    <th scope="col" style="padding:6px 9px;text-align:left;background:#033337;color:#fff">What to do</th>
   </tr></thead>
   <tbody>
     <tr><td><b>Min 0 – 10</b></td><td>10 min</td><td>Sign in on your own device, enter the Class code and Team name, pick your role. Check that all 5 roles are filled.</td></tr>
@@ -67,9 +68,9 @@ td{padding:7px 9px;border-bottom:1px solid #eadcc6;vertical-align:top}
 <h2 style="font:800 13pt 'Be Vietnam Pro';color:#b8561b;margin:0 0 8px">3. How the 10 points are awarded</h2>
 <table style="margin-bottom:16px;font-size:10pt">
   <thead><tr>
-    <th style="padding:7px 9px;text-align:left;background:#b8561b;color:#fff;width:24%">Criterion</th>
-    <th style="padding:7px 9px;text-align:left;background:#b8561b;color:#fff">How to score</th>
-    <th style="padding:7px 9px;text-align:right;background:#b8561b;color:#fff;width:10%">Max</th>
+    <th scope="col" style="padding:7px 9px;text-align:left;background:#b8561b;color:#fff;width:24%">Criterion</th>
+    <th scope="col" style="padding:7px 9px;text-align:left;background:#b8561b;color:#fff">How to score</th>
+    <th scope="col" style="padding:7px 9px;text-align:right;background:#b8561b;color:#fff;width:10%">Max</th>
   </tr></thead>
   <tbody>
     <tr><td><b>B1. Cumulative profit</b><br><span style="font-size:9pt;color:#5a6b74">Team</span></td><td>Class ranking by total 6-round profit: top 25% → 2.0 · 25–50% → 1.5 · 50–75% → 1.0 · rest → 0.5. Negative total profit: 0.5 max.</td><td style="text-align:right">2.0</td></tr>
@@ -86,9 +87,9 @@ td{padding:7px 9px;border-bottom:1px solid #eadcc6;vertical-align:top}
 <p style="margin:0 0 8px">On the Decisions screen, use the <b>«📋 Contribution log»</b> panel under the Team meeting. Only entries sent <b>before the CEO presses Commit</b> count.</p>
 <table style="margin-bottom:16px;font-size:9.5pt">
   <thead><tr>
-    <th style="padding:6px 9px;text-align:left;background:#033337;color:#fff;width:11%">Role</th>
-    <th style="padding:6px 9px;text-align:left;background:#033337;color:#fff;width:42%">Each round</th>
-    <th style="padding:6px 9px;text-align:left;background:#033337;color:#fff">Counts as «adopted» when</th>
+    <th scope="col" style="padding:6px 9px;text-align:left;background:#033337;color:#fff;width:11%">Role</th>
+    <th scope="col" style="padding:6px 9px;text-align:left;background:#033337;color:#fff;width:42%">Each round</th>
+    <th scope="col" style="padding:6px 9px;text-align:left;background:#033337;color:#fff">Counts as «adopted» when</th>
   </tr></thead>
   <tbody>
     <tr><td><b>CFO</b></td><td>Set R&amp;D and payment terms → «Send proposal to the CEO»</td><td>The committed decision is within 10% of your proposal</td></tr>

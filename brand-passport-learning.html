@@ -91,7 +91,7 @@
       <span class="engine-badge">Deterministic engine protected</span>
       <div class="team-field">
         <label for="team-id">Team</label>
-        <input id="team-id" maxlength="80" placeholder="Mã nhóm" autocomplete="off">
+        <input type="text" id="team-id" maxlength="80" placeholder="Mã nhóm" autocomplete="off">
       </div>
       <button class="top-action export" id="export-trace" type="button">Xuất audit JSON</button>
       <button class="top-action primary" id="lumina-toggle" type="button" aria-controls="lumina-panel" aria-expanded="false">✨ Mở Lumina</button>
@@ -107,7 +107,7 @@
       </div>
       <iframe id="bp-game" title="Brand Passport simulation game" src="about:blank"></iframe>
 
-      <aside class="panel" id="lumina-panel" aria-hidden="true" aria-label="Lumina learning support panel">
+      <aside class="panel" id="lumina-panel" aria-hidden="true" inert aria-label="Lumina learning support panel">
         <div class="panel-head">
           <div class="lumina-mark" aria-hidden="true">L</div>
           <div>

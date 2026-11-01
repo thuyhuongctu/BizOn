@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- [html-validate-disable element-name: cú pháp mẫu của bộ khung x-dc (support.js): onClick/onChange, <helmet>, {{ }}, nhiều <main> trong <sc-if>. Trình duyệt và support.js đọc đúng; đổi sẽ hỏng trang.] -->
 <html lang="vi">
 <head>
 <meta charset="utf-8">
@@ -52,9 +53,9 @@ td{padding:7px 9px;border-bottom:1px solid #eadcc6;vertical-align:top}
 <p style="margin:0 0 8px">Tổng thời gian <b>60 phút</b>. Game tự mở và khóa từng vòng theo giờ, đồng hồ đếm ngược hiện ở cuối màn hình. Hết giờ vòng mà đội chưa Commit, máy của CEO tự Commit các quyết định đang có trên thanh trượt. Khi vào thi, mỗi đội được cấp sẵn <b>500 triệu ₫</b> vốn khởi điểm.</p>
 <table style="margin-bottom:10px;font-size:10pt">
   <thead><tr>
-    <th style="padding:6px 9px;text-align:left;background:#033337;color:#fff;width:20%">Thời điểm</th>
-    <th style="padding:6px 9px;text-align:left;background:#033337;color:#fff;width:14%">Thời lượng</th>
-    <th style="padding:6px 9px;text-align:left;background:#033337;color:#fff">Việc cần làm</th>
+    <th scope="col" style="padding:6px 9px;text-align:left;background:#033337;color:#fff;width:20%">Thời điểm</th>
+    <th scope="col" style="padding:6px 9px;text-align:left;background:#033337;color:#fff;width:14%">Thời lượng</th>
+    <th scope="col" style="padding:6px 9px;text-align:left;background:#033337;color:#fff">Việc cần làm</th>
   </tr></thead>
   <tbody>
     <tr><td><b>Phút 0 – 10</b></td><td>10 phút</td><td>Đăng nhập trên máy riêng, nhập Mã lớp, Tên đội, chọn vai. Đội kiểm tra đủ 5 vai.</td></tr>
@@ -67,9 +68,9 @@ td{padding:7px 9px;border-bottom:1px solid #eadcc6;vertical-align:top}
 <h2 style="font:800 13pt 'Be Vietnam Pro';color:#b8561b;margin:0 0 8px">3. Cách tính 10 điểm</h2>
 <table style="margin-bottom:16px;font-size:10pt">
   <thead><tr>
-    <th style="padding:7px 9px;text-align:left;background:#b8561b;color:#fff;width:24%">Tiêu chí</th>
-    <th style="padding:7px 9px;text-align:left;background:#b8561b;color:#fff">Cách đạt điểm</th>
-    <th style="padding:7px 9px;text-align:right;background:#b8561b;color:#fff;width:10%">Tối đa</th>
+    <th scope="col" style="padding:7px 9px;text-align:left;background:#b8561b;color:#fff;width:24%">Tiêu chí</th>
+    <th scope="col" style="padding:7px 9px;text-align:left;background:#b8561b;color:#fff">Cách đạt điểm</th>
+    <th scope="col" style="padding:7px 9px;text-align:right;background:#b8561b;color:#fff;width:10%">Tối đa</th>
   </tr></thead>
   <tbody>
     <tr><td><b>B1. Lợi nhuận tích lũy</b><br><span style="font-size:9pt;color:#5a6b74">Cả đội</span></td><td>Xếp hạng tổng lợi nhuận 6 vòng trong lớp: 25% đội cao nhất → 2,0 · 25–50% → 1,5 · 50–75% → 1,0 · còn lại → 0,5. Tổng lợi nhuận âm: tối đa 0,5.</td><td style="text-align:right">2,0</td></tr>
@@ -86,9 +87,9 @@ td{padding:7px 9px;border-bottom:1px solid #eadcc6;vertical-align:top}
 <p style="margin:0 0 8px">Mở màn Quyết định, dùng khung <b>«📋 Ghi nhận đóng góp»</b> dưới Cuộc họp đội. Chỉ những gì gửi <b>trước khi CEO bấm Commit</b> mới được tính.</p>
 <table style="margin-bottom:16px;font-size:9.5pt">
   <thead><tr>
-    <th style="padding:6px 9px;text-align:left;background:#033337;color:#fff;width:11%">Vai</th>
-    <th style="padding:6px 9px;text-align:left;background:#033337;color:#fff;width:42%">Việc cần làm mỗi vòng</th>
-    <th style="padding:6px 9px;text-align:left;background:#033337;color:#fff">Được tính «áp dụng» khi</th>
+    <th scope="col" style="padding:6px 9px;text-align:left;background:#033337;color:#fff;width:11%">Vai</th>
+    <th scope="col" style="padding:6px 9px;text-align:left;background:#033337;color:#fff;width:42%">Việc cần làm mỗi vòng</th>
+    <th scope="col" style="padding:6px 9px;text-align:left;background:#033337;color:#fff">Được tính «áp dụng» khi</th>
   </tr></thead>
   <tbody>
     <tr><td><b>CFO</b></td><td>Chỉnh R&amp;D, kỳ hạn thanh toán → «Gửi đề xuất cho CEO»</td><td>Quyết định đội chốt lệch không quá 10% so với đề xuất của bạn</td></tr>

@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- [html-validate-disable attr-case, element-name, element-permitted-parent, element-required-content, no-multiple-main, unique-landmark, void-content: cú pháp mẫu của bộ khung x-dc (support.js): onClick/onChange, <helmet>, {{ }}, nhiều <main> trong <sc-if>. Trình duyệt và support.js đọc đúng; đổi sẽ hỏng trang.] -->
 <html lang="vi">
 <head>
 <meta charset="utf-8">
@@ -42,15 +43,15 @@ input,select,textarea,button{font-family:inherit}
       <div><div style="font:800 20px/1.1 'Baloo 2',sans-serif;color:#1f4a55">{{ tHead }}</div><div style="font-size:13px;color:#5a6b74">{{ subtitle }}</div></div>
     </div>
     <div role="group" aria-label="Ngôn ngữ / Language" style="display:flex;padding:3px;border-radius:999px;background:#efe4d2;border:2px solid #e6d6bf;margin-left:auto">
-      <button onClick="{{ setVi }}" aria-pressed="{{ viOn }}" style="border:0;cursor:pointer;padding:5px 11px;border-radius:999px;font-weight:800;font-size:12px;background:{{ viBg }};color:{{ viFg }}">VI</button>
-      <button onClick="{{ setEn }}" aria-pressed="{{ enOn }}" style="border:0;cursor:pointer;padding:5px 11px;border-radius:999px;font-weight:800;font-size:12px;background:{{ enBg }};color:{{ enFg }}">EN</button>
+      <button type="button" onClick="{{ setVi }}" aria-pressed="{{ viOn }}" style="border:0;cursor:pointer;padding:5px 11px;border-radius:999px;font-weight:800;font-size:12px;background:{{ viBg }};color:{{ viFg }}">VI</button>
+      <button type="button" onClick="{{ setEn }}" aria-pressed="{{ enOn }}" style="border:0;cursor:pointer;padding:5px 11px;border-radius:999px;font-weight:800;font-size:12px;background:{{ enBg }};color:{{ enFg }}">EN</button>
     </div>
     <sc-if value="{{ signedIn }}" hint-placeholder-val="{{ false }}">
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
         <span style="font-size:13px;color:#5a6b74">{{ email }}</span>
-        <sc-if value="{{ showBackNav }}" hint-placeholder-val="{{ false }}"><button onClick="{{ backToClasses }}" style="border:2px solid #cbb797;background:#fff;border-radius:12px;padding:7px 12px;font-weight:700;color:#1f4a55;cursor:pointer">← Lớp của tôi</button></sc-if>
-        <sc-if value="{{ isAdmin }}" hint-placeholder-val="{{ false }}"><button onClick="{{ openAdmin }}" style="border:2px solid #2f8a8c;background:#e3f1ef;border-radius:12px;padding:7px 12px;font-weight:700;color:#1f4a55;cursor:pointer">🛡️ Quản trị hệ thống</button></sc-if>
-        <button onClick="{{ signOut }}" style="border:2px solid #cbb797;background:#fff;border-radius:12px;padding:7px 12px;font-weight:700;color:#1f4a55;cursor:pointer">{{ tSignOut }}</button>
+        <sc-if value="{{ showBackNav }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ backToClasses }}" style="border:2px solid #cbb797;background:#fff;border-radius:12px;padding:7px 12px;font-weight:700;color:#1f4a55;cursor:pointer">← Lớp của tôi</button></sc-if>
+        <sc-if value="{{ isAdmin }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ openAdmin }}" style="border:2px solid #2f8a8c;background:#e3f1ef;border-radius:12px;padding:7px 12px;font-weight:700;color:#1f4a55;cursor:pointer">🛡️ Quản trị hệ thống</button></sc-if>
+        <button type="button" onClick="{{ signOut }}" style="border:2px solid #cbb797;background:#fff;border-radius:12px;padding:7px 12px;font-weight:700;color:#1f4a55;cursor:pointer">{{ tSignOut }}</button>
       </div>
     </sc-if>
   </header>
@@ -80,19 +81,19 @@ input,select,textarea,button{font-family:inherit}
           <label style="font-weight:700;font-size:13px">{{ tNewPass }}</label>
           <input value="{{ fNewPass }}" onChange="{{ onNewPass }}" type="password" autocomplete="new-password" placeholder="{{ tPassPh }}" style="padding:12px 14px;border-radius:14px;border:2px solid #e6d6bf;background:#fff;font-size:15px"></input>
         </sc-if>
-        <button onClick="{{ submitLogin }}" style="margin-top:6px;border:0;background:#2f8a8c;color:#fff;border-radius:16px;padding:13px;font:800 17px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #1b5a5a;cursor:pointer">{{ loginBtn }}</button>
+        <button type="button" onClick="{{ submitLogin }}" style="margin-top:6px;border:0;background:#2f8a8c;color:#fff;border-radius:16px;padding:13px;font:800 17px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #1b5a5a;cursor:pointer">{{ loginBtn }}</button>
         <sc-if value="{{ showForgotLink }}" hint-placeholder-val="{{ false }}">
-          <button onClick="{{ forgotLink }}" style="border:0;background:none;color:#1f6f8a;font-weight:700;cursor:pointer;font-size:13px;text-align:left">{{ tForgot }}</button>
+          <button type="button" onClick="{{ forgotLink }}" style="border:0;background:none;color:#1f6f8a;font-weight:700;cursor:pointer;font-size:13px;text-align:left">{{ tForgot }}</button>
         </sc-if>
         <sc-if value="{{ showModeLink }}" hint-placeholder-val="{{ true }}">
-          <button onClick="{{ toggleMode }}" style="border:0;background:none;color:#1f6f8a;font-weight:700;cursor:pointer;font-size:14px">{{ modeLink }}</button>
+          <button type="button" onClick="{{ toggleMode }}" style="border:0;background:none;color:#1f6f8a;font-weight:700;cursor:pointer;font-size:14px">{{ modeLink }}</button>
         </sc-if>
         <sc-if value="{{ showBackLink }}" hint-placeholder-val="{{ false }}">
-          <button onClick="{{ backToLogin }}" style="border:0;background:none;color:#1f6f8a;font-weight:700;cursor:pointer;font-size:14px">{{ tBack }}</button>
+          <button type="button" onClick="{{ backToLogin }}" style="border:0;background:none;color:#1f6f8a;font-weight:700;cursor:pointer;font-size:14px">{{ tBack }}</button>
         </sc-if>
         <sc-if value="{{ showDemoBlock }}" hint-placeholder-val="{{ true }}">
           <div style="border-top:2px dashed #e6d6bf;padding-top:12px;display:flex;flex-direction:column;gap:6px">
-            <button onClick="{{ tryDemo }}" style="border:2px solid #cbb797;background:#fff;border-radius:14px;padding:11px;font-weight:700;color:#1f4a55;cursor:pointer">{{ tDemo }}</button>
+            <button type="button" onClick="{{ tryDemo }}" style="border:2px solid #cbb797;background:#fff;border-radius:14px;padding:11px;font-weight:700;color:#1f4a55;cursor:pointer">{{ tDemo }}</button>
             <div style="font-size:12px;color:#5a6b74;text-align:center">{{ backendNote }}</div>
           </div>
         </sc-if>
@@ -105,8 +106,8 @@ input,select,textarea,button{font-family:inherit}
       <div style="border-radius:22px;overflow:hidden;box-shadow:0 5px 0 #d9c5a8"><img src="assets/illustrations/holo-strategy-briefing.webp" alt="Buổi họp chiến lược BizOn" style="width:100%;aspect-ratio:985/580;object-fit:cover;display:block"></div>
       <div style="font:800 24px 'Baloo 2',sans-serif">Lớp của tôi</div>
       <div style="display:flex;gap:10px;flex-wrap:wrap;background:#fbf6ee;border:3px solid #e6d6bf;border-radius:20px;padding:14px">
-        <input value="{{ fCode }}" onChange="{{ onCode }}" placeholder="Mã lớp mới, VD: QTKD-2026-A" style="flex:1;min-width:200px;padding:11px 14px;border-radius:14px;border:2px solid #e6d6bf;font-size:15px;text-transform:uppercase"></input>
-        <button onClick="{{ claim }}" style="border:0;background:#e8843a;color:#fff;border-radius:14px;padding:11px 16px;font:800 15px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #b8611f;cursor:pointer;white-space:nowrap">＋ Tạo lớp</button>
+        <input type="text" value="{{ fCode }}" onChange="{{ onCode }}" placeholder="Mã lớp mới, VD: QTKD-2026-A" style="flex:1;min-width:200px;padding:11px 14px;border-radius:14px;border:2px solid #e6d6bf;font-size:15px;text-transform:uppercase"></input>
+        <button type="button" onClick="{{ claim }}" style="border:0;background:#e8843a;color:#fff;border-radius:14px;padding:11px 16px;font:800 15px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #b8611f;cursor:pointer;white-space:nowrap">＋ Tạo lớp</button>
       </div>
       <sc-if value="{{ noClasses }}" hint-placeholder-val="{{ false }}">
         <div style="text-align:center;padding:20px 10px;display:flex;flex-direction:column;align-items:center;gap:10px">
@@ -122,7 +123,7 @@ input,select,textarea,button{font-family:inherit}
               <span style="font-size:13px;color:#5a6b74">Tạo ngày {{ c.date }}</span>
               <span style="font-size:13px;color:#2f8a8c;font-weight:700">Mở bảng điều khiển →</span>
             </div>
-            <button onClick="{{ c.remove }}" style="align-self:flex-start;border:0;background:none;color:#c0443a;font-weight:700;font-size:12px;cursor:pointer;padding:4px 0 0">🗑 Xóa lớp</button>
+            <button type="button" onClick="{{ c.remove }}" style="align-self:flex-start;border:0;background:none;color:#c0443a;font-weight:700;font-size:12px;cursor:pointer;padding:4px 0 0">🗑 Xóa lớp</button>
           </div>
         </sc-for>
       </div>
@@ -151,7 +152,7 @@ input,select,textarea,button{font-family:inherit}
               <span style="font-size:13px;color:#5a6b74">Tạo ngày {{ c.date }}</span>
               <span style="font-size:13px;color:#2f8a8c;font-weight:700">Mở bảng điều khiển →</span>
             </div>
-            <button onClick="{{ c.remove }}" style="align-self:flex-start;border:0;background:none;color:#c0443a;font-weight:700;font-size:12px;cursor:pointer;padding:4px 0 0">🗑 Xóa lớp</button>
+            <button type="button" onClick="{{ c.remove }}" style="align-self:flex-start;border:0;background:none;color:#c0443a;font-weight:700;font-size:12px;cursor:pointer;padding:4px 0 0">🗑 Xóa lớp</button>
           </div>
         </sc-for>
       </div>
@@ -166,14 +167,14 @@ input,select,textarea,button{font-family:inherit}
           <div><div style="font:800 28px/1 'Baloo 2',sans-serif">{{ code }}</div><div style="font-size:13px;color:#5a6b74;margin-top:4px">{{ classStats }}</div></div>
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <button onClick="{{ refresh }}" style="border:2px solid #cbb797;background:#fff;border-radius:12px;padding:8px 12px;font-weight:700;color:#1f4a55;cursor:pointer">⟳ Tải lại</button>
-          <button onClick="{{ exportXls }}" style="border:0;background:#3f8a44;color:#fff;border-radius:12px;padding:8px 14px;font-weight:700;cursor:pointer;box-shadow:0 3px 0 #2b6330">⬇ Xuất Excel</button>
-          <button onClick="{{ openBoard }}" style="border:0;background:#1f4a55;color:#fff;border-radius:12px;padding:8px 14px;font-weight:700;cursor:pointer;box-shadow:0 3px 0 #10303a">📽 Chiếu bảng xếp hạng</button>
+          <button type="button" onClick="{{ refresh }}" style="border:2px solid #cbb797;background:#fff;border-radius:12px;padding:8px 12px;font-weight:700;color:#1f4a55;cursor:pointer">⟳ Tải lại</button>
+          <button type="button" onClick="{{ exportXls }}" style="border:0;background:#3f8a44;color:#fff;border-radius:12px;padding:8px 14px;font-weight:700;cursor:pointer;box-shadow:0 3px 0 #2b6330">⬇ Xuất Excel</button>
+          <button type="button" onClick="{{ openBoard }}" style="border:0;background:#1f4a55;color:#fff;border-radius:12px;padding:8px 14px;font-weight:700;cursor:pointer;box-shadow:0 3px 0 #10303a">📽 Chiếu bảng xếp hạng</button>
         </div>
       </div>
       <nav style="display:flex;gap:6px;flex-wrap:wrap">
         <sc-for list="{{ tabs }}" as="t" hint-placeholder-count="4">
-          <button onClick="{{ t.go }}" style="border:3px solid {{ t.border }};background:{{ t.bg }};color:{{ t.fg }};border-radius:14px;padding:8px 14px;font:700 15px 'Baloo 2',sans-serif;cursor:pointer">{{ t.label }}</button>
+          <button type="button" onClick="{{ t.go }}" style="border:3px solid {{ t.border }};background:{{ t.bg }};color:{{ t.fg }};border-radius:14px;padding:8px 14px;font:700 15px 'Baloo 2',sans-serif;cursor:pointer">{{ t.label }}</button>
         </sc-for>
       </nav>
 
@@ -225,7 +226,7 @@ input,select,textarea,button{font-family:inherit}
             <div style="font:800 19px 'Baloo 2',sans-serif">🔒 Khóa vòng cho cả lớp</div>
             <div style="font-size:13px;color:#5a6b74">{{ lockNote }}</div>
             <div style="display:flex;gap:6px;flex-wrap:wrap">
-              <sc-for list="{{ lockBtns }}" as="b" hint-placeholder-count="7"><button onClick="{{ b.go }}" style="border:3px solid {{ b.border }};background:{{ b.bg }};color:{{ b.fg }};border-radius:12px;padding:8px 11px;font-weight:700;cursor:pointer">{{ b.label }}</button></sc-for>
+              <sc-for list="{{ lockBtns }}" as="b" hint-placeholder-count="7"><button type="button" onClick="{{ b.go }}" style="border:3px solid {{ b.border }};background:{{ b.bg }};color:{{ b.fg }};border-radius:12px;padding:8px 11px;font-weight:700;cursor:pointer">{{ b.label }}</button></sc-for>
             </div>
           </div>
           <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:10px">
@@ -234,16 +235,16 @@ input,select,textarea,button{font-family:inherit}
             <select value="{{ fEvent }}" onChange="{{ onEvent }}" style="padding:10px;border-radius:12px;border:2px solid #e6d6bf;background:#fff;font-weight:600">
               <sc-for list="{{ eventOpts }}" as="o" hint-placeholder-count="7"><option value="{{ o.v }}">{{ o.l }}</option></sc-for>
             </select>
-            <input value="{{ fMsg }}" onChange="{{ onMsg }}" placeholder="Thông báo cho cả lớp (tùy chọn)" style="padding:10px 12px;border-radius:12px;border:2px solid #e6d6bf"></input>
-            <button onClick="{{ saveEvent }}" style="border:0;background:#e8843a;color:#fff;border-radius:14px;padding:10px;font:800 15px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #b8611f;cursor:pointer">Áp dụng cho lớp</button>
+            <input type="text" value="{{ fMsg }}" onChange="{{ onMsg }}" placeholder="Thông báo cho cả lớp (tùy chọn)" style="padding:10px 12px;border-radius:12px;border:2px solid #e6d6bf"></input>
+            <button type="button" onClick="{{ saveEvent }}" style="border:0;background:#e8843a;color:#fff;border-radius:14px;padding:10px;font:800 15px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #b8611f;cursor:pointer">Áp dụng cho lớp</button>
           </div>
           <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:10px" data-panel="journey">
             <div style="font:800 19px 'Baloo 2',sans-serif">🧭 Hành trang hành trình 3 bậc</div>
             <div style="font-size:13px;color:#5a6b74">{{ jCarryNote }}</div>
             <div style="display:flex;gap:6px;flex-wrap:wrap">
-              <sc-for list="{{ jCarryBtns }}" as="b" hint-placeholder-count="2"><button onClick="{{ b.go }}" style="border:3px solid {{ b.border }};background:{{ b.bg }};color:{{ b.fg }};border-radius:12px;padding:8px 11px;font-weight:700;cursor:pointer">{{ b.label }}</button></sc-for>
+              <sc-for list="{{ jCarryBtns }}" as="b" hint-placeholder-count="2"><button type="button" onClick="{{ b.go }}" style="border:3px solid {{ b.border }};background:{{ b.bg }};color:{{ b.fg }};border-radius:12px;padding:8px 11px;font-weight:700;cursor:pointer">{{ b.label }}</button></sc-for>
             </div>
-            <div style="display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px;font-weight:700;padding-top:6px;border-top:1px solid #eadcc6"><span>{{ ctHead }}</span><span style="display:flex;gap:6px;flex-wrap:wrap"><button onClick="{{ exportCt }}" style="border:0;background:#3f8a44;color:#fff;border-radius:12px;padding:7px 12px;font-weight:700;cursor:pointer;box-shadow:0 3px 0 #2b6330">⬇ CSV bài tình huống</button><a href="cham-tinh-huong.html" target="_blank" rel="noopener" style="display:inline-block;border:2px solid #e6d6bf;background:#fff;color:#1f4a55;border-radius:12px;padding:6px 12px;font-weight:700;text-decoration:none">🧮 Chấm rubric</a><button onClick="{{ exportPack }}" style="border:0;background:#1f4a55;color:#fff;border-radius:12px;padding:7px 12px;font-weight:700;cursor:pointer;box-shadow:0 3px 0 #10303a">📦 Gói dữ liệu nghiên cứu (ZIP)</button></span></div>
+            <div style="display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px;font-weight:700;padding-top:6px;border-top:1px solid #eadcc6"><span>{{ ctHead }}</span><span style="display:flex;gap:6px;flex-wrap:wrap"><button type="button" onClick="{{ exportCt }}" style="border:0;background:#3f8a44;color:#fff;border-radius:12px;padding:7px 12px;font-weight:700;cursor:pointer;box-shadow:0 3px 0 #2b6330">⬇ CSV bài tình huống</button><a href="cham-tinh-huong.html" target="_blank" rel="noopener" style="display:inline-block;border:2px solid #e6d6bf;background:#fff;color:#1f4a55;border-radius:12px;padding:6px 12px;font-weight:700;text-decoration:none">🧮 Chấm rubric</a><button type="button" onClick="{{ exportPack }}" style="border:0;background:#1f4a55;color:#fff;border-radius:12px;padding:7px 12px;font-weight:700;cursor:pointer;box-shadow:0 3px 0 #10303a">📦 Gói dữ liệu nghiên cứu (ZIP)</button></span></div>
             <div style="font-size:13px;font-weight:700">{{ jpHead }}</div>
             <sc-for list="{{ jpRows }}" as="r" hint-placeholder-count="3"><div style="display:flex;justify-content:space-between;gap:8px;font-size:13px;padding:6px 0;border-top:1px solid #eadcc6"><span>{{ r.team }} · {{ r.email }}</span><span style="white-space:nowrap">{{ r.tiers }} · {{ r.when }}</span></div></sc-for>
           </div>
@@ -251,7 +252,7 @@ input,select,textarea,button{font-family:inherit}
             <div style="font:800 19px 'Baloo 2',sans-serif">🔬 Giải thích cơ chế (nhánh nghiên cứu)</div>
             <div style="font-size:13px;color:#5a6b74">{{ xNote }}</div>
             <div style="display:flex;gap:6px;flex-wrap:wrap">
-              <sc-for list="{{ xBtns }}" as="b" hint-placeholder-count="2"><button onClick="{{ b.go }}" style="border:3px solid {{ b.border }};background:{{ b.bg }};color:{{ b.fg }};border-radius:12px;padding:8px 11px;font-weight:700;cursor:pointer">{{ b.label }}</button></sc-for>
+              <sc-for list="{{ xBtns }}" as="b" hint-placeholder-count="2"><button type="button" onClick="{{ b.go }}" style="border:3px solid {{ b.border }};background:{{ b.bg }};color:{{ b.fg }};border-radius:12px;padding:8px 11px;font-weight:700;cursor:pointer">{{ b.label }}</button></sc-for>
             </div>
           </div>
           <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:10px">
@@ -260,8 +261,8 @@ input,select,textarea,button{font-family:inherit}
               <option value="*">Cả lớp</option>
               <sc-for list="{{ teamOptions }}" as="o" hint-placeholder-count="3"><option value="{{ o }}">{{ o }}</option></sc-for>
             </select>
-            <div style="display:flex;gap:8px"><input value="{{ gAmt }}" onChange="{{ onGAmt }}" type="number" placeholder="Triệu ₫, âm = trừ" style="flex:1;min-width:0;padding:10px 12px;border-radius:12px;border:2px solid #e6d6bf"></input><input value="{{ gReason }}" onChange="{{ onGReason }}" placeholder="Lý do" style="flex:1.4;min-width:0;padding:10px 12px;border-radius:12px;border:2px solid #e6d6bf"></input></div>
-            <button onClick="{{ doGrant }}" style="border:0;background:#2f8a8c;color:#fff;border-radius:14px;padding:10px;font:800 15px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #1b5a5a;cursor:pointer">Gửi</button>
+            <div style="display:flex;gap:8px"><input value="{{ gAmt }}" onChange="{{ onGAmt }}" type="number" placeholder="Triệu ₫, âm = trừ" style="flex:1;min-width:0;padding:10px 12px;border-radius:12px;border:2px solid #e6d6bf"></input><input type="text" value="{{ gReason }}" onChange="{{ onGReason }}" placeholder="Lý do" style="flex:1.4;min-width:0;padding:10px 12px;border-radius:12px;border:2px solid #e6d6bf"></input></div>
+            <button type="button" onClick="{{ doGrant }}" style="border:0;background:#2f8a8c;color:#fff;border-radius:14px;padding:10px;font:800 15px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #1b5a5a;cursor:pointer">Gửi</button>
             <div style="display:flex;flex-direction:column;gap:4px;max-height:160px;overflow:auto;font-size:13px">
               <sc-for list="{{ grants }}" as="g" hint-placeholder-count="2"><div style="display:flex;justify-content:space-between;gap:8px;border-bottom:1px dashed #e6d6bf;padding:4px 0"><span>{{ g.team }} · {{ g.reason }}</span><b style="color:{{ g.color }}">{{ g.amt }}</b></div></sc-for>
             </div>
@@ -281,49 +282,49 @@ input,select,textarea,button{font-family:inherit}
               </div>
             </sc-if>
             <div style="display:flex;gap:8px;flex-wrap:wrap">
-              <sc-if value="{{ examRunning }}" hint-placeholder-val="{{ false }}"><button onClick="{{ stopExam }}" style="border:3px solid #c0443a;background:#fff;color:#c0443a;border-radius:12px;padding:9px 14px;font-weight:700;cursor:pointer">⏹ Hủy tính giờ</button></sc-if>
-              <sc-if value="{{ examNotRunning }}" hint-placeholder-val="{{ true }}"><button onClick="{{ startExam }}" style="border:0;background:#1f4a55;color:#fff;border-radius:14px;padding:9px 14px;font:800 15px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #10303a;cursor:pointer">▶️ Bắt đầu tính giờ</button></sc-if>
+              <sc-if value="{{ examRunning }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ stopExam }}" style="border:3px solid #c0443a;background:#fff;color:#c0443a;border-radius:12px;padding:9px 14px;font-weight:700;cursor:pointer">⏹ Hủy tính giờ</button></sc-if>
+              <sc-if value="{{ examNotRunning }}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{ startExam }}" style="border:0;background:#1f4a55;color:#fff;border-radius:14px;padding:9px 14px;font:800 15px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #10303a;cursor:pointer">▶️ Bắt đầu tính giờ</button></sc-if>
             </div>
           </div>
           <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:10px">
             <div style="font:800 19px 'Baloo 2',sans-serif">📜 Chứng nhận chính thức</div>
             <div style="font-size:13px;color:#5a6b74;text-wrap:pretty">Áp dụng cho cả 3 game của lớp này. Sinh viên sẽ thấy nút tải «🎓 Chứng nhận chính thức» cạnh chứng chỉ BizOn mặc định, dùng đúng mã môn/tên môn/ngày học bạn nhập dưới đây. Mặc định chứng nhận do BizOn cấp; muốn mang tên trường bạn thì điền phần «Đơn vị cấp» bên dưới.</div>
             <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">Mã môn
-              <input value="{{ certCode }}" onChange="{{ onCertCode }}" placeholder="VD: KT330H (để trống nếu không có)" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
+              <input type="text" value="{{ certCode }}" onChange="{{ onCertCode }}" placeholder="VD: KT330H (để trống nếu không có)" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
             </label>
             <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">Tên môn
-              <input value="{{ certName }}" onChange="{{ onCertName }}" placeholder="BizOn Bật Nghiệp" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
+              <input type="text" value="{{ certName }}" onChange="{{ onCertName }}" placeholder="BizOn Bật Nghiệp" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
             </label>
             <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">Ngày học (hiển thị nguyên văn trên chứng nhận)
-              <input value="{{ certDates }}" onChange="{{ onCertDates }}" placeholder="4th, 10th and 11th March 2026" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
+              <input type="text" value="{{ certDates }}" onChange="{{ onCertDates }}" placeholder="4th, 10th and 11th March 2026" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
             </label>
             <div style="display:flex;align-items:center;gap:10px">
-              <button onClick="{{ saveCertConfig }}" style="border:0;background:#1f4a55;color:#fff;border-radius:14px;padding:9px 16px;font:800 15px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #10303a;cursor:pointer">💾 Lưu</button>
+              <button type="button" onClick="{{ saveCertConfig }}" style="border:0;background:#1f4a55;color:#fff;border-radius:14px;padding:9px 16px;font:800 15px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #10303a;cursor:pointer">💾 Lưu</button>
               <sc-if value="{{ certSaved }}" hint-placeholder-val="{{ false }}"><span style="color:#1f9a63;font-weight:800;font-size:13px">✅ Đã lưu</span></sc-if>
             </div>
             <div style="border-top:2px dashed #e6d6bf;margin-top:6px;padding-top:12px;display:flex;flex-direction:column;gap:9px">
               <div style="font:800 17px 'Baloo 2',sans-serif">🏛️ Đơn vị cấp chứng nhận (tuỳ chọn)</div>
               <div style="font-size:12.5px;color:#5a6b74;text-wrap:pretty">Để trống = chứng nhận do BizOn cấp (logo BizOn, chữ ký in của người sáng lập). Điền tên đơn vị để chứng nhận mang tên trường bạn: tên đơn vị, đơn vị trực thuộc, đường dẫn logo (ảnh trên web, ví dụ assets/docs/ctu-logo.png), logo thứ hai cho khoa/trường thành viên (ví dụ assets/docs/soe-logo.png; trống thì góc phải là logo BizOn), người ký và chức danh. Chỉ áp dụng cho lớp này và chỉ bạn sửa được.</div>
               <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">Tên đơn vị cấp
-                <input value="{{ certOrgName }}" onChange="{{ onCertOrgName }}" placeholder="VD: Trường Đại học Cần Thơ" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
+                <input type="text" value="{{ certOrgName }}" onChange="{{ onCertOrgName }}" placeholder="VD: Trường Đại học Cần Thơ" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
               </label>
               <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">Đơn vị trực thuộc (khoa / trường thành viên)
-                <input value="{{ certOrgSub }}" onChange="{{ onCertOrgSub }}" placeholder="VD: Trường Kinh tế" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
+                <input type="text" value="{{ certOrgSub }}" onChange="{{ onCertOrgSub }}" placeholder="VD: Trường Kinh tế" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
               </label>
               <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">Đường dẫn logo (tuỳ chọn)
-                <input value="{{ certOrgLogo }}" onChange="{{ onCertOrgLogo }}" placeholder="VD: assets/docs/ctu-logo.png hoặc https://…/logo.png" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
+                <input type="text" value="{{ certOrgLogo }}" onChange="{{ onCertOrgLogo }}" placeholder="VD: assets/docs/ctu-logo.png hoặc https://…/logo.png" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
               </label>
               <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">Đường dẫn logo thứ hai (khoa / trường thành viên, tuỳ chọn)
-                <input value="{{ certOrgLogo2 }}" onChange="{{ onCertOrgLogo2 }}" placeholder="VD: assets/docs/soe-logo.png" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
+                <input type="text" value="{{ certOrgLogo2 }}" onChange="{{ onCertOrgLogo2 }}" placeholder="VD: assets/docs/soe-logo.png" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
               </label>
               <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">Người ký
-                <input value="{{ certSignerName }}" onChange="{{ onCertSignerName }}" placeholder="VD: PGS.TS. Nguyễn Văn A" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
+                <input type="text" value="{{ certSignerName }}" onChange="{{ onCertSignerName }}" placeholder="VD: PGS.TS. Nguyễn Văn A" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
               </label>
               <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">Chức danh / đơn vị của người ký
-                <input value="{{ certSignerTitle }}" onChange="{{ onCertSignerTitle }}" placeholder="VD: Giảng viên, Trường Kinh tế" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
+                <input type="text" value="{{ certSignerTitle }}" onChange="{{ onCertSignerTitle }}" placeholder="VD: Giảng viên, Trường Kinh tế" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
               </label>
               <div style="display:flex;align-items:center;gap:10px">
-                <button onClick="{{ saveCertIssuer }}" style="border:0;background:#1f4a55;color:#fff;border-radius:14px;padding:9px 16px;font:800 15px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #10303a;cursor:pointer">💾 Lưu đơn vị cấp</button>
+                <button type="button" onClick="{{ saveCertIssuer }}" style="border:0;background:#1f4a55;color:#fff;border-radius:14px;padding:9px 16px;font:800 15px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #10303a;cursor:pointer">💾 Lưu đơn vị cấp</button>
                 <sc-if value="{{ certIssuerSaved }}" hint-placeholder-val="{{ false }}"><span style="color:#1f9a63;font-weight:800;font-size:13px">✅ Đã lưu</span></sc-if>
               </div>
             </div>
@@ -333,7 +334,7 @@ input,select,textarea,button{font-family:inherit}
               <sc-if value="{{ hasSig }}" hint-placeholder-val="{{ false }}">
                 <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
                   <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" sc-camel-src="{{ sigTu }}" alt="Chữ ký đã chọn" style="height:52px;max-width:220px;object-fit:contain;background:#fff;border:2px solid #e6d6bf;border-radius:10px;padding:4px 10px"></img>
-                  <button onClick="{{ clearSig }}" style="border:2px solid #c0443a;background:#fff;color:#c0443a;border-radius:10px;padding:6px 12px;font-weight:700;cursor:pointer">🗑 Xoá khỏi máy này</button>
+                  <button type="button" onClick="{{ clearSig }}" style="border:2px solid #c0443a;background:#fff;color:#c0443a;border-radius:10px;padding:6px 12px;font-weight:700;cursor:pointer">🗑 Xoá khỏi máy này</button>
                 </div>
               </sc-if>
               <label style="display:flex;flex-direction:column;gap:4px;font-size:11px;font-weight:700;color:#5a6b74">{{ sigPickLabel }}
@@ -343,8 +344,8 @@ input,select,textarea,button{font-family:inherit}
                 <textarea value="{{ rosterText }}" onChange="{{ onRosterText }}" placeholder="1&#9;Nguyễn Văn A&#9;B2400001" rows="4" style="width:100%;box-sizing:border-box;padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf;font-family:monospace;font-size:12px"></textarea>
               </label>
               <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-                <button onClick="{{ saveRoster }}" style="border:0;background:#2f8a8c;color:#fff;border-radius:10px;padding:7px 14px;font-weight:700;cursor:pointer">{{ rosterSaveLabel }}</button>
-                <button onClick="{{ issueAll }}" style="border:0;background:#1f4a55;color:#fff;border-radius:14px;padding:8px 14px;font:800 15px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #10303a;cursor:pointer">📚 In cả lớp ({{ certCount }}) → PDF</button>
+                <button type="button" onClick="{{ saveRoster }}" style="border:0;background:#2f8a8c;color:#fff;border-radius:10px;padding:7px 14px;font-weight:700;cursor:pointer">{{ rosterSaveLabel }}</button>
+                <button type="button" onClick="{{ issueAll }}" style="border:0;background:#1f4a55;color:#fff;border-radius:14px;padding:8px 14px;font:800 15px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #10303a;cursor:pointer">📚 In cả lớp ({{ certCount }}) → PDF</button>
               </div>
               <sc-if value="{{ certMsg }}" hint-placeholder-val="{{ false }}"><div style="font-size:12.5px;font-weight:700;color:#1f4a55">{{ certMsg }}</div></sc-if>
               <div style="max-height:320px;overflow:auto;display:flex;flex-direction:column;gap:4px">
@@ -352,7 +353,7 @@ input,select,textarea,button{font-family:inherit}
                   <div style="display:flex;align-items:center;gap:10px;background:#fff;border:2px solid #eadcc6;border-radius:12px;padding:6px 10px">
                     <div style="flex:1;min-width:0;font-weight:700;font-size:13.5px">{{ st.name }}</div>
                     <div style="font-family:monospace;font-size:12px;color:#5a6b74">{{ st.mssv }}</div>
-                    <button onClick="{{ st.dl }}" style="border:0;background:#f39a33;color:#1f3f4a;border-radius:10px;padding:6px 10px;font-weight:800;cursor:pointer">📜 Tải</button>
+                    <button type="button" onClick="{{ st.dl }}" style="border:0;background:#f39a33;color:#1f3f4a;border-radius:10px;padding:6px 10px;font-weight:800;cursor:pointer">📜 Tải</button>
                   </div>
                 </sc-for>
               </div>
@@ -398,8 +399,8 @@ input,select,textarea,button{font-family:inherit}
                   </div>
                   <div style="padding:10px 8px;border-bottom:1px solid #eadcc6;font:800 17px 'Baloo 2',sans-serif;color:#1f6f8a">{{ r.total }}</div>
                   <div style="padding:10px 8px;border-bottom:1px solid #eadcc6;font-weight:800;color:#5a6b74">{{ r.letter }}</div>
-                  <div style="padding:6px;border-bottom:1px solid #eadcc6"><input value="{{ r.note }}" onChange="{{ r.onN }}" placeholder="{{ r.notePh }}" style="width:100%;box-sizing:border-box;padding:7px;border-radius:10px;border:2px solid #e6d6bf"></input></div>
-                  <div style="padding:6px;border-bottom:1px solid #eadcc6"><button onClick="{{ r.save }}" style="border:0;background:#2f8a8c;color:#fff;border-radius:10px;padding:7px 10px;font-weight:700;cursor:pointer">{{ r.saveLabel }}</button></div>
+                  <div style="padding:6px;border-bottom:1px solid #eadcc6"><input type="text" value="{{ r.note }}" onChange="{{ r.onN }}" placeholder="{{ r.notePh }}" style="width:100%;box-sizing:border-box;padding:7px;border-radius:10px;border:2px solid #e6d6bf"></input></div>
+                  <div style="padding:6px;border-bottom:1px solid #eadcc6"><button type="button" onClick="{{ r.save }}" style="border:0;background:#2f8a8c;color:#fff;border-radius:10px;padding:7px 10px;font-weight:700;cursor:pointer">{{ r.saveLabel }}</button></div>
                 </div>
               </sc-for>
             </div>
@@ -410,7 +411,7 @@ input,select,textarea,button{font-family:inherit}
               <div style="font-size:12px;font-weight:700;color:#1f4a55;margin-bottom:4px">📋 Danh sách lớp (để ghép MSSV) – dán STT, Họ và tên, MSSV, Email, Nhóm (mỗi sinh viên một dòng, cách nhau bằng Tab hoặc dấu phẩy – dán thẳng từ Excel/Sheets cũng được)</div>
               <textarea value="{{ rosterText }}" onChange="{{ onRosterText }}" placeholder="1&#9;Nguyễn Văn A&#9;B2400001&#9;vanab2400001@student.ctu.edu.vn&#9;DOI-A" rows="4" style="width:100%;box-sizing:border-box;padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf;font-family:monospace;font-size:11.5px"></textarea>
               <div style="display:flex;align-items:center;gap:10px;margin-top:6px;flex-wrap:wrap">
-                <button onClick="{{ saveRoster }}" style="border:0;background:#2f8a8c;color:#fff;border-radius:10px;padding:7px 14px;font-weight:700;cursor:pointer">{{ rosterSaveLabel }}</button>
+                <button type="button" onClick="{{ saveRoster }}" style="border:0;background:#2f8a8c;color:#fff;border-radius:10px;padding:7px 14px;font-weight:700;cursor:pointer">{{ rosterSaveLabel }}</button>
                 <div style="font-size:11.5px;color:#5a6b74">{{ rosterHint }}</div>
               </div>
             </div>
@@ -482,13 +483,13 @@ input,select,textarea,button{font-family:inherit}
             <div style="font:800 17px 'Baloo 2',sans-serif">🏷️ Nhãn 4 mức rubric (tự đặt tên, áp dụng toàn lớp)</div>
             <div style="font-size:12px;color:#5a6b74">Mức 1 = chỉ số đồng đội ≥ 85 · Mức 2 = 65–84 · Mức 3 = 45–64 · Mức 4 = dưới 45.</div>
             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px">
-              <input value="{{ rLv1 }}" onChange="{{ onRLv1 }}" placeholder="Rất cân bằng" style="padding:9px 12px;border-radius:12px;border:2px solid #e6d6bf"></input>
-              <input value="{{ rLv2 }}" onChange="{{ onRLv2 }}" placeholder="Khá cân bằng" style="padding:9px 12px;border-radius:12px;border:2px solid #e6d6bf"></input>
-              <input value="{{ rLv3 }}" onChange="{{ onRLv3 }}" placeholder="Lệch rõ" style="padding:9px 12px;border-radius:12px;border:2px solid #e6d6bf"></input>
-              <input value="{{ rLv4 }}" onChange="{{ onRLv4 }}" placeholder="Lệch nhiều" style="padding:9px 12px;border-radius:12px;border:2px solid #e6d6bf"></input>
+              <input type="text" value="{{ rLv1 }}" onChange="{{ onRLv1 }}" placeholder="Rất cân bằng" style="padding:9px 12px;border-radius:12px;border:2px solid #e6d6bf"></input>
+              <input type="text" value="{{ rLv2 }}" onChange="{{ onRLv2 }}" placeholder="Khá cân bằng" style="padding:9px 12px;border-radius:12px;border:2px solid #e6d6bf"></input>
+              <input type="text" value="{{ rLv3 }}" onChange="{{ onRLv3 }}" placeholder="Lệch rõ" style="padding:9px 12px;border-radius:12px;border:2px solid #e6d6bf"></input>
+              <input type="text" value="{{ rLv4 }}" onChange="{{ onRLv4 }}" placeholder="Lệch nhiều" style="padding:9px 12px;border-radius:12px;border:2px solid #e6d6bf"></input>
             </div>
             <div style="display:flex;align-items:center;gap:10px">
-              <button onClick="{{ saveRubric }}" style="border:0;background:#1f4a55;color:#fff;border-radius:14px;padding:9px 16px;font:800 15px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #10303a;cursor:pointer">💾 Lưu nhãn</button>
+              <button type="button" onClick="{{ saveRubric }}" style="border:0;background:#1f4a55;color:#fff;border-radius:14px;padding:9px 16px;font:800 15px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #10303a;cursor:pointer">💾 Lưu nhãn</button>
               <sc-if value="{{ rubricSaved }}" hint-placeholder-val="{{ false }}"><span style="color:#1f9a63;font-weight:800;font-size:13px">✅ Đã lưu</span></sc-if>
             </div>
           </div>
@@ -522,7 +523,7 @@ input,select,textarea,button{font-family:inherit}
     <div style="position:fixed;inset:0;z-index:50;background:#1b2240;color:#fff;display:flex;flex-direction:column;padding:4vh 5vw;gap:3vh;box-sizing:border-box">
       <div style="display:flex;justify-content:space-between;align-items:center;gap:16px">
         <div><div style="font:800 clamp(28px,4vw,64px)/1 'Baloo 2',sans-serif">🏆 Bảng xếp hạng · {{ code }}</div><div style="font-size:clamp(16px,1.6vw,26px);opacity:.85;margin-top:8px">{{ classStats }}</div></div>
-        <button onClick="{{ closeBoard }}" style="border:0;background:#fff;color:#1b2240;border-radius:14px;padding:10px 16px;font-weight:800;cursor:pointer">✕ Đóng</button>
+        <button type="button" onClick="{{ closeBoard }}" style="border:0;background:#fff;color:#1b2240;border-radius:14px;padding:10px 16px;font-weight:800;cursor:pointer">✕ Đóng</button>
       </div>
       <div style="flex:1;display:flex;flex-direction:column;gap:1.4vh;overflow:auto">
         <sc-for list="{{ boardRows }}" as="b" hint-placeholder-count="5">

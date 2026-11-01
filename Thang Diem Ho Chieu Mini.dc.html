@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- [html-validate-disable attr-case, element-name, element-permitted-parent: cú pháp mẫu của bộ khung x-dc (support.js): onClick/onChange, <helmet>, {{ }}, nhiều <main> trong <sc-if>. Trình duyệt và support.js đọc đúng; đổi sẽ hỏng trang.] -->
 <html lang="vi">
 <head>
 <meta charset="utf-8">
@@ -44,39 +45,39 @@ th{font:700 8.5pt 'Plus Jakarta Sans';color:#006687;background:#eef6f7}
 </div>
 
 <h2 style="font:800 13pt 'Plus Jakarta Sans';color:#006687;margin:0 0 6px">1. {{ t.h1 }}</h2>
-<table style="margin-bottom:14px">
-  <tr><th style="width:34%"></th><th>{{ t.edFdi }}</th><th>{{ t.edIndo }}</th></tr>
+<table style="margin-bottom:14px"><tbody>
+  <tr><th scope="col" style="width:34%"></th><th scope="col">{{ t.edFdi }}</th><th scope="col">{{ t.edIndo }}</th></tr>
   <sc-for list="{{ editions }}" as="r" hint-placeholder-count="6">
     <tr><td><b>{{ r.k }}</b></td><td>{{ r.a }}</td><td>{{ r.b }}</td></tr>
   </sc-for>
-</table>
+</tbody></table>
 
 <h2 style="font:800 13pt 'Plus Jakarta Sans';color:#006687;margin:0 0 6px">2. {{ t.h2 }}</h2>
 <p style="margin:0 0 6px">{{ t.p2a }}</p>
 <p style="margin:0 0 6px;padding:8px 12px;background:#eef6f7;border-radius:8px;font:700 10.5pt ui-monospace,monospace">{{ t.formula }}</p>
 <p style="margin:0 0 8px">{{ t.p2b }}</p>
-<table style="margin-bottom:14px">
-  <tr><th>{{ t.valueCol }}</th><th>{{ t.ratioCol }}</th><th>{{ t.s4 }}</th><th>{{ t.s5 }}</th></tr>
+<table style="margin-bottom:14px"><tbody>
+  <tr><th scope="col">{{ t.valueCol }}</th><th scope="col">{{ t.ratioCol }}</th><th scope="col">{{ t.s4 }}</th><th scope="col">{{ t.s5 }}</th></tr>
   <sc-for list="{{ examples }}" as="r" hint-placeholder-count="6">
     <tr><td>{{ r.v }}</td><td>{{ r.r }}</td><td><b>{{ r.a }}</b></td><td><b>{{ r.b }}</b></td></tr>
   </sc-for>
-</table>
+</tbody></table>
 
 <h2 style="font:800 13pt 'Plus Jakarta Sans';color:#006687;margin:0 0 6px">3. {{ t.h3 }}</h2>
-<table style="margin-bottom:14px">
-  <tr><th style="width:24%">{{ t.decCol }}</th><th>{{ t.goodCol }}</th><th>{{ t.riskCol }}</th></tr>
+<table style="margin-bottom:14px"><tbody>
+  <tr><th scope="col" style="width:24%">{{ t.decCol }}</th><th scope="col">{{ t.goodCol }}</th><th scope="col">{{ t.riskCol }}</th></tr>
   <sc-for list="{{ levers }}" as="r" hint-placeholder-count="5">
     <tr><td><b>{{ r.k }}</b></td><td>{{ r.a }}</td><td>{{ r.b }}</td></tr>
   </sc-for>
-</table>
+</tbody></table>
 
 <h2 style="font:800 13pt 'Plus Jakarta Sans';color:#006687;margin:0 0 6px">4. {{ t.h4 }}</h2>
-<table style="margin-bottom:14px;max-width:420px">
-  <tr><th>{{ t.s10 }}</th><th>{{ t.letter }}</th><th>{{ t.s4pt }}</th></tr>
+<table style="margin-bottom:14px;max-width:420px"><tbody>
+  <tr><th scope="col">{{ t.s10 }}</th><th scope="col">{{ t.letter }}</th><th scope="col">{{ t.s4pt }}</th></tr>
   <sc-for list="{{ scale }}" as="r" hint-placeholder-count="8">
     <tr><td>{{ r.a }}</td><td><b>{{ r.b }}</b></td><td>{{ r.c }}</td></tr>
   </sc-for>
-</table>
+</tbody></table>
 <p style="margin:0 0 14px">{{ t.pass }}</p>
 
 <h2 style="font:800 13pt 'Plus Jakarta Sans';color:#006687;margin:0 0 6px">5. {{ t.h5 }}</h2>

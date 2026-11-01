@@ -466,6 +466,7 @@
     var shouldOpen = typeof open === 'boolean' ? open : !panel.classList.contains('open');
     panel.classList.toggle('open', shouldOpen);
     panel.setAttribute('aria-hidden', shouldOpen ? 'false' : 'true');
+    panel.inert = !shouldOpen; /* đóng thì không tab vào được nút bên trong */
     panelToggle.setAttribute('aria-expanded', shouldOpen ? 'true' : 'false');
     if (shouldOpen) window.setTimeout(function () { reflectionEl.focus(); }, 120);
   }

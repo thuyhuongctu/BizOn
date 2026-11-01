@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- [html-validate-disable valid-id: id/thẻ do trình đóng gói tự sinh (__bundler_*). Trình duyệt và support.js đọc đúng; đổi sẽ hỏng trang.] -->
 <!-- Bản 3D (thế giới đất sét) – logic game giữ nguyên từ brand-passport.html.
      BizOn Bật Nghiệp 2026 – © Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.
      «Hộ Chiếu Thương Hiệu / Brand Passport» – game gốc của BizOn về quốc tế hóa doanh nghiệp.
@@ -286,8 +287,8 @@
       </button>
       <div id="bp-howto-box" class="hidden mt-3">
       <div class="flex justify-center gap-2 mb-3">
-        <button id="bp-video-len-short" onclick="bpVideoLen('short')" class="clay-btn bg-deep-teal text-white font-display font-extrabold px-4 py-1.5 text-xs" data-en="🎬 Quick (~40s)">🎬 Ngắn (~40 giây)</button>
-        <button id="bp-video-len-full" onclick="bpVideoLen('full')" class="clay-btn bg-white text-deep-teal border border-deep-teal/20 font-display font-extrabold px-4 py-1.5 text-xs" data-en="📖 Detailed – all 6 quarters (~105s)">📖 Chi tiết – đủ 6 quý (~105 giây)</button>
+        <button type="button" id="bp-video-len-short" onclick="bpVideoLen('short')" class="clay-btn bg-deep-teal text-white font-display font-extrabold px-4 py-1.5 text-xs" data-en="🎬 Quick (~40s)">🎬 Ngắn (~40 giây)</button>
+        <button type="button" id="bp-video-len-full" onclick="bpVideoLen('full')" class="clay-btn bg-white text-deep-teal border border-deep-teal/20 font-display font-extrabold px-4 py-1.5 text-xs" data-en="📖 Detailed – all 6 quarters (~105s)">📖 Chi tiết – đủ 6 quý (~105 giây)</button>
       </div>
       <video id="bp-video-short-vi" controls preload="none" playsinline poster="assets/video/bp-huong-dan-choi-vi-poster.webp" class="w-full rounded-2xl block mx-auto" style="max-height:70vh">
         <source src="assets/video/bp-huong-dan-choi-vi-v3.mp4" type="video/mp4">
@@ -352,10 +353,10 @@
     </div>
     </div>
     <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-5 mb-1.5" data-en="🌊 Theme music">🌊 Nhạc chủ đề</p>
-    <button id="bp-music" onclick="bpMusic()" class="clay-btn w-full bg-deep-teal text-white font-display font-extrabold py-3 text-sm" data-en="🎵 Play theme music">🎵 Bật nhạc chủ đề</button>
+    <button type="button" id="bp-music" onclick="bpMusic()" class="clay-btn w-full bg-deep-teal text-white font-display font-extrabold py-3 text-sm" data-en="🎵 Play theme music">🎵 Bật nhạc chủ đề</button>
     <p class="text-[11px] text-deep-teal/50 mt-1.5" data-en="&laquo;Brand Passport – Part III&raquo; · remix 2, English lyrics · 5:33">«Hộ Chiếu Thương Hiệu – Phần III» · bản remix 2, lời tiếng Anh · 5:33</p>
-    <button id="bp-resume" onclick="bpResume()" class="clay-btn w-full bg-deep-teal text-white font-display font-extrabold py-3.5 mt-5 hidden" data-en="▶️ Resume your game in progress">▶️ Tiếp tục ván đang dở</button>
-    <button onclick="bpStart()" class="clay-btn w-full bg-clay-gold text-deep-teal font-display font-extrabold py-4 mt-3" data-en="🛫 Begin the 6-quarter journey">🛫 Bắt đầu hành trình 6 quý</button>
+    <button type="button" id="bp-resume" onclick="bpResume()" class="clay-btn w-full bg-deep-teal text-white font-display font-extrabold py-3.5 mt-5 hidden" data-en="▶️ Resume your game in progress">▶️ Tiếp tục ván đang dở</button>
+    <button type="button" onclick="bpStart()" class="clay-btn w-full bg-clay-gold text-deep-teal font-display font-extrabold py-4 mt-3" data-en="🛫 Begin the 6-quarter journey">🛫 Bắt đầu hành trình 6 quý</button>
   </section>
 
   <!-- MÀN CHƠI -->
@@ -363,8 +364,8 @@
     <div class="flex items-center justify-between flex-wrap gap-2 p-3" id="bp-status-bar">
       <div class="flex gap-1.5" id="bp-qdots"></div>
       <div class="flex items-center gap-2">
-        <button onclick="bpShowRules()" class="text-[11px] font-bold text-deep-teal/50" title="Luật chơi" data-en="📜 Rules">📜 Luật chơi</button>
-        <button onclick="bpTourReplay()" class="text-[11px] font-bold text-deep-teal/50" title="Hướng dẫn" data-en="❓ Guide">❓ Hướng dẫn</button>
+        <button type="button" onclick="bpShowRules()" class="text-[11px] font-bold text-deep-teal/50" title="Luật chơi" data-en="📜 Rules">📜 Luật chơi</button>
+        <button type="button" onclick="bpTourReplay()" class="text-[11px] font-bold text-deep-teal/50" title="Hướng dẫn" data-en="❓ Guide">❓ Hướng dẫn</button>
         <p class="text-sm font-extrabold" data-en-html="💼 <span id=&quot;bp-cash&quot;>0</span> bn ₫">💼 <span id="bp-cash">0</span> tỷ ₫</p>
       </div>
     </div>
@@ -374,7 +375,7 @@
     </div>
 
     <div class="clay-card p-5 mb-4" id="bp-shop-card">
-      <button onclick="bpToggleShop()" class="w-full flex items-center justify-between" id="bp-shop-toggle">
+      <button type="button" onclick="bpToggleShop()" class="w-full flex items-center justify-between" id="bp-shop-toggle">
         <span class="font-display font-extrabold text-deep-teal text-sm">🛍️ <span data-en="Item Shop">Cửa hàng vật phẩm</span></span>
         <span class="text-xs font-bold opacity-60" id="bp-shop-caret">▾</span>
       </button>
@@ -429,17 +430,17 @@
             </div>
           </div>
           <p id="bp-cert-date" class="text-[9px] text-deep-teal/45 font-bold mt-3"></p>
-          <button onclick="bpDownloadCert()" class="clay-btn bg-clay-gold text-deep-teal font-display font-extrabold px-4 py-2 text-[11px] mt-3" data-en="📥 Download certificate">📥 Tải chứng chỉ</button>
-          <button onclick="bpDownloadCertOfficial()" class="clay-btn bg-primary text-white font-display font-extrabold px-4 py-2 text-[11px] mt-3 ml-2" data-en="🎓 Official certificate">🎓 Chứng nhận chính thức</button>
+          <button type="button" onclick="bpDownloadCert()" class="clay-btn bg-clay-gold text-deep-teal font-display font-extrabold px-4 py-2 text-[11px] mt-3" data-en="📥 Download certificate">📥 Tải chứng chỉ</button>
+          <button type="button" onclick="bpDownloadCertOfficial()" class="clay-btn bg-primary text-white font-display font-extrabold px-4 py-2 text-[11px] mt-3 ml-2" data-en="🎓 Official certificate">🎓 Chứng nhận chính thức</button>
         </div>
       </div>
       <div class="mt-5 text-left hidden" id="bp-submit-box">
         <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mb-1.5" data-en="📡 Submit your result to the instructor">📡 Nộp kết quả cho giảng viên</p>
         <div id="bp-login"></div>
         <div class="flex flex-col sm:flex-row gap-2">
-          <input id="bp-class" placeholder="Mã lớp (VD: QTKD-2026-A)" data-en-ph="Class code (e.g. QTKD-2026-A)" class="flex-1 border-2 rounded-xl px-3 py-2.5 text-sm font-semibold" style="border-color:rgba(0,102,135,.25);background:transparent;color:inherit">
-          <input id="bp-name" maxlength="60" placeholder="Tên hoặc biệt danh (hiện trên bảng lớp)" data-en-ph="Name or nickname (shown on the class board)" class="flex-1 border-2 rounded-xl px-3 py-2.5 text-sm font-semibold" style="border-color:rgba(0,102,135,.25);background:transparent;color:inherit">
-          <button id="bp-send" onclick="bpSubmit()" class="clay-btn bg-deep-teal text-white font-display font-extrabold px-5 py-2.5 text-sm shrink-0" data-en="Submit">Nộp</button>
+          <input type="text" id="bp-class" placeholder="Mã lớp (VD: QTKD-2026-A)" data-en-ph="Class code (e.g. QTKD-2026-A)" class="flex-1 border-2 rounded-xl px-3 py-2.5 text-sm font-semibold" style="border-color:rgba(0,102,135,.25);background:transparent;color:inherit">
+          <input type="text" id="bp-name" maxlength="60" placeholder="Tên hoặc biệt danh (hiện trên bảng lớp)" data-en-ph="Name or nickname (shown on the class board)" class="flex-1 border-2 rounded-xl px-3 py-2.5 text-sm font-semibold" style="border-color:rgba(0,102,135,.25);background:transparent;color:inherit">
+          <button type="button" id="bp-send" onclick="bpSubmit()" class="clay-btn bg-deep-teal text-white font-display font-extrabold px-5 py-2.5 text-sm shrink-0" data-en="Submit">Nộp</button>
         </div>
         <p id="bp-send-msg" class="text-[11px] font-semibold opacity-60 mt-1.5"></p>
         <div id="bp-board" class="hidden mt-4" style="background:rgba(0,102,135,.06);border-radius:16px;padding:12px">
@@ -448,11 +449,11 @@
         </div>
       </div>
       <div class="mt-4 text-left">
-        <button onclick="bpExportCsv()" class="clay-btn bg-surface-bright text-deep-teal font-display font-extrabold px-4 py-2.5 text-[12px]" data-en="📊 Export result as CSV (no internet needed)">📊 Xuất kết quả CSV (khi không có mạng)</button>
+        <button type="button" onclick="bpExportCsv()" class="clay-btn bg-surface-bright text-deep-teal font-display font-extrabold px-4 py-2.5 text-[12px]" data-en="📊 Export result as CSV (no internet needed)">📊 Xuất kết quả CSV (khi không có mạng)</button>
         <p class="text-[10.5px] opacity-55 mt-1" data-en-html="For classes not using the online class-code system: save this file and send it to your instructor, who can drag it into the &lt;a href=&quot;Ho%20Chieu%20Thuong%20Hieu%20-%20GV%20Bang%20Diem%20CSV.html&quot; target=&quot;_blank&quot; class=&quot;underline&quot;&gt;Teacher Dashboard page&lt;/a&gt;.">Dành cho lớp chưa dùng mã lớp trực tuyến: lưu file này rồi gửi giảng viên, giảng viên kéo-thả vào <a href="Ho%20Chieu%20Thuong%20Hieu%20-%20GV%20Bang%20Diem%20CSV.html" target="_blank" class="underline">trang Bảng tổng kết lớp</a>.</p>
       </div>
       <div class="flex gap-3 mt-6">
-        <button onclick="localStorage.removeItem('bizon-bp-save');location.reload()" class="clay-btn flex-1 bg-clay-gold text-deep-teal font-display font-extrabold py-3.5" data-en="🔄 Play again">🔄 Chơi lại</button>
+        <button type="button" onclick="localStorage.removeItem('bizon-bp-save');location.reload()" class="clay-btn flex-1 bg-clay-gold text-deep-teal font-display font-extrabold py-3.5" data-en="🔄 Play again">🔄 Chơi lại</button>
         </div>
     </div>
     <div class="clay-card p-6">

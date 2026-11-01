@@ -291,11 +291,11 @@
 </head>
 <body>
 <div id="boot" style="position:fixed;inset:0;z-index:200;background:#2a2340 url('assets/illustrations/rong-bay-doi-bizon.webp') center/cover no-repeat;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;font-family:'Baloo 2','Be Vietnam Pro',sans-serif;color:#2b4a55;transition:opacity .5s">
-  
+
   <div style="font-size:26px;font-weight:800;letter-spacing:.5px;white-space:nowrap;text-align:center;color:#fff;text-shadow:0 3px 0 rgba(0,0,0,.35),0 8px 24px rgba(0,0,0,.4)">BẬT NGHIỆP</div>
   <div style="width:min(320px,70vw);height:14px;border-radius:10px;background:#dccbb0;border:2px solid #cbb797;overflow:hidden"><div id="bootBar" style="height:100%;width:4%;background:#2f8a8c;border-radius:10px;transition:width .35s"></div></div>
   <div id="bootMsg" data-en="Loading the 3D library…" style="margin-bottom:8vh;background:rgba(251,246,238,.92);padding:4px 12px;border-radius:10px;text-align:center;font:600 14px 'Be Vietnam Pro',sans-serif;color:#5a6b74">Đang tải thư viện 3D…</div>
-  <button id="bootLow" style="display:none;margin-top:6px;font:700 13px 'Baloo 2',sans-serif;background:#fbf6ee;border:2px solid #cbb797;border-radius:12px;padding:6px 12px;color:#2b4a55;cursor:pointer" data-en="Slow network? Play the light 2D version →">Mạng chậm? Chơi bản 2D nhẹ →</button>
+  <button type="button" id="bootLow" style="display:none;margin-top:6px;font:700 13px 'Baloo 2',sans-serif;background:#fbf6ee;border:2px solid #cbb797;border-radius:12px;padding:6px 12px;color:#2b4a55;cursor:pointer" data-en="Slow network? Play the light 2D version →">Mạng chậm? Chơi bản 2D nhẹ →</button>
 </div>
 <script>
 (function(){ const bar=document.getElementById('bootBar'), msg=document.getElementById('bootMsg'); let en=false; try{ en=localStorage.getItem('bizon-lang')==='en'; }catch(e){}
@@ -317,8 +317,8 @@
     <details id="l3SyncBox" style="font-size:12px;color:#5a6b74"><summary style="cursor:pointer;font-weight:700" data-en="Switching devices? Enter the team sync code">Đổi máy? Nhập Mã đồng bộ của đội</summary><input id="l3Sync" type="text" autocomplete="off" spellcheck="false" placeholder="48 ký tự" data-en-ph="48 characters" style="width:100%;box-sizing:border-box;margin-top:6px"></details>
     <label data-en="Your role">Vai trò của bạn</label>
     <div class="roles" id="l3Roles"></div>
-    <button class="go" id="l3Go" data-en="Start ▶">Bắt đầu ▶</button>
-    <button class="alt" id="l3Demo" data-en="👥 Try it with the Demo Team">👥 Chơi thử với Đội Demo</button>
+    <button type="button" class="go" id="l3Go" data-en="Start ▶">Bắt đầu ▶</button>
+    <button type="button" class="alt" id="l3Demo" data-en="👥 Try it with the Demo Team">👥 Chơi thử với Đội Demo</button>
     <div class="links"><a href="Trang Giang Vien.dc.html" data-en="👩‍🏫 Instructor page">👩‍🏫 Trang Giảng viên</a><a href="#" id="l3Classic" data-en="Classic 2D interface">Giao diện 2D cũ</a></div>
   </div>
   <div class="rtip" id="l3Tip"></div>
@@ -335,39 +335,39 @@
   </div>
 </div>
 <div id="rail" class="hud">
-  <button class="btn" id="homeBtn"><i>🏠</i><span data-en="Overview">Tổng quan</span></button>
-  <button class="btn" data-tab="advisor"><i>🤖</i><span>Lumina</span></button>
+  <button type="button" class="btn" id="homeBtn"><i>🏠</i><span data-en="Overview">Tổng quan</span></button>
+  <button type="button" class="btn" data-tab="advisor"><i>🤖</i><span>Lumina</span></button>
   <div class="rg" id="rgPlan">
-    <button class="btn rgb" aria-expanded="false" aria-controls="rgmPlan"><i>📊</i><span data-en="Analysis">Phân tích</span></button>
+    <button type="button" class="btn rgb" aria-expanded="false" aria-controls="rgmPlan"><i>📊</i><span data-en="Analysis">Phân tích</span></button>
     <div class="rgm" id="rgmPlan">
-      <button class="btn" data-tab="reports"><i>📊</i><span data-en="Reports">Báo cáo</span></button>
-      <button class="btn" id="openRes"><i>🚩</i><span data-en="Flag map">Bản đồ cờ</span></button>
-      <button class="btn" data-tab="leaderboard"><i>🏆</i><span data-en="Leaderboard">Xếp hạng</span></button>
-      <button class="btn" data-tab="journal"><i>📔</i><span data-en="Journal">Nhật ký</span></button>
+      <button type="button" class="btn" data-tab="reports"><i>📊</i><span data-en="Reports">Báo cáo</span></button>
+      <button type="button" class="btn" id="openRes"><i>🚩</i><span data-en="Flag map">Bản đồ cờ</span></button>
+      <button type="button" class="btn" data-tab="leaderboard"><i>🏆</i><span data-en="Leaderboard">Xếp hạng</span></button>
+      <button type="button" class="btn" data-tab="journal"><i>📔</i><span data-en="Journal">Nhật ký</span></button>
     </div>
   </div>
   <div class="rg" id="rgCo">
-    <button class="btn rgb" aria-expanded="false" aria-controls="rgmCo"><i>🏢</i><span data-en="Company">Công ty</span><b class="badge" id="bCo"></b></button>
+    <button type="button" class="btn rgb" aria-expanded="false" aria-controls="rgmCo"><i>🏢</i><span data-en="Company">Công ty</span><b class="badge" id="bCo"></b></button>
     <div class="rgm" id="rgmCo">
-      <button class="btn" data-tab="missions"><i>📋</i><span data-en="Missions">Nhiệm vụ</span><b class="badge" id="bMis"></b></button>
-      <button class="btn" data-tab="shop"><i>🛒</i><span data-en="Shop">Cửa hàng</span></button>
-      <button class="btn" data-tab="skills"><i>🌳</i><span data-en="Skills">Kỹ năng</span></button>
-      <button class="btn" data-tab="achievements"><i>🎖️</i><span data-en="Achievements">Thành tựu</span></button>
-      <button class="btn" data-tab="minigame"><i>🏭</i><span>Mini-game</span></button>
-      <button class="btn" data-tab="profile"><i>👤</i><span data-en="Profile">Hồ sơ</span></button>
+      <button type="button" class="btn" data-tab="missions"><i>📋</i><span data-en="Missions">Nhiệm vụ</span><b class="badge" id="bMis"></b></button>
+      <button type="button" class="btn" data-tab="shop"><i>🛒</i><span data-en="Shop">Cửa hàng</span></button>
+      <button type="button" class="btn" data-tab="skills"><i>🌳</i><span data-en="Skills">Kỹ năng</span></button>
+      <button type="button" class="btn" data-tab="achievements"><i>🎖️</i><span data-en="Achievements">Thành tựu</span></button>
+      <button type="button" class="btn" data-tab="minigame"><i>🏭</i><span>Mini-game</span></button>
+      <button type="button" class="btn" data-tab="profile"><i>👤</i><span data-en="Profile">Hồ sơ</span></button>
     </div>
   </div>
   <div class="rg" id="rgMore">
-    <button class="btn rgb" aria-expanded="false" aria-controls="rgmMore"><i>⚙️</i><span data-en="More">Thêm</span></button>
+    <button type="button" class="btn rgb" aria-expanded="false" aria-controls="rgmMore"><i>⚙️</i><span data-en="More">Thêm</span></button>
     <div class="rgm" id="rgmMore">
-      <button class="btn" id="tourBtn"><i>❓</i><span data-en="Guide">Hướng dẫn</span></button>
-      <button class="btn" id="musicBtn"><i>🎵</i><span>Nhạc nền</span></button>
-      <button class="btn" id="langBtn"><i>🌐</i><span>Tiếng Việt</span></button>
-      <button class="btn" id="night">🌙 Ban đêm</button>
-      <button class="btn" id="lowBtn"><i>⚡</i><span>Chi tiết thấp</span></button>
-      <button class="btn" data-tab="settings"><i>⚙️</i><span data-en="Settings">Cài đặt</span></button>
+      <button type="button" class="btn" id="tourBtn"><i>❓</i><span data-en="Guide">Hướng dẫn</span></button>
+      <button type="button" class="btn" id="musicBtn"><i>🎵</i><span>Nhạc nền</span></button>
+      <button type="button" class="btn" id="langBtn"><i>🌐</i><span>Tiếng Việt</span></button>
+      <button type="button" class="btn" id="night">🌙 Ban đêm</button>
+      <button type="button" class="btn" id="lowBtn"><i>⚡</i><span>Chi tiết thấp</span></button>
+      <button type="button" class="btn" data-tab="settings"><i>⚙️</i><span data-en="Settings">Cài đặt</span></button>
       <a class="btn" id="instructorBtn" href="Trang Giang Vien.dc.html" target="_blank" rel="noopener"><i>👩‍🏫</i><span data-en="Instructor">Giảng viên</span></a>
-      <button class="btn" id="moreBtn"><i>🧱</i><span data-en="3D collection">Bộ sưu tập 3D</span></button>
+      <button type="button" class="btn" id="moreBtn"><i>🧱</i><span data-en="3D collection">Bộ sưu tập 3D</span></button>
     </div>
   </div>
 </div>
@@ -380,13 +380,13 @@
   <a class="btn" href="BizOn Office Game.html" data-en="🚶 2D office (walk & talk)">🚶 Văn phòng 2D (đi lại & hội thoại)</a>
   <a class="btn" href="game.html" data-en="📱 Original 2D version (game.html)">📱 Bản 2D gốc (game.html)</a>
 </div>
-<div id="cta" class="hud"><div id="next" hidden><b data-en="NEXT UP">VIỆC TIẾP THEO</b><button type="button" class="st" id="ns1">1 · <span data-en="Read the event">Đọc biến cố</span></button><button type="button" class="st" id="ns2">2 · <span data-en="Lock decisions">Chốt quyết định</span></button><button type="button" class="st" id="ns3">3 · <span data-en="See results">Xem kết quả</span></button></div><button class="btn primary" id="ctaBtn" data-en="🎯 Make decisions">🎯 Ra quyết định</button><small id="ctaSub" data-en="Loading the game…">Đang tải trò chơi…</small></div>
+<div id="cta" class="hud"><div id="next" hidden><b data-en="NEXT UP">VIỆC TIẾP THEO</b><button type="button" class="st" id="ns1">1 · <span data-en="Read the event">Đọc biến cố</span></button><button type="button" class="st" id="ns2">2 · <span data-en="Lock decisions">Chốt quyết định</span></button><button type="button" class="st" id="ns3">3 · <span data-en="See results">Xem kết quả</span></button></div><button type="button" class="btn primary" id="ctaBtn" data-en="🎯 Make decisions">🎯 Ra quyết định</button><small id="ctaSub" data-en="Loading the game…">Đang tải trò chơi…</small></div>
 <div id="zones" class="hud"></div>
-<button class="btn" id="sheetX" data-en="✕ Back to HQ">✕ Về trụ sở</button>
+<button type="button" class="btn" id="sheetX" data-en="✕ Back to HQ">✕ Về trụ sở</button>
 <div id="evc" role="dialog" aria-label="Biến cố thị trường"></div><div id="bub"></div>
 <div id="arena"><div class="ah"><b id="aTitle">⚔️ ĐẤU TRƯỜNG</b><span id="aSub"></span><em id="aZone"></em><small class="asov" data-en="Hoàng Sa &amp; Trường Sa archipelagos (Viet Nam) · coastline: Natural Earth · illustrative, not to scale">QĐ. Hoàng Sa, Trường Sa (Việt Nam) · đường bờ: Natural Earth · minh họa, không theo tỉ lệ</small></div><div id="aLabs"></div>
-  <div class="af" id="aFoot"><div class="verdict" id="aVerdict"></div><button class="btn primary" id="aNext" data-en="See detailed results →">Xem kết quả chi tiết →</button></div></div>
-<div id="room"><div class="rh"><div class="rt"><img id="rmScene" alt="" style="display:none;width:min(260px,40vw);border-radius:16px;border:3px solid #e6d6bf;margin-bottom:6px"><b id="rmTitle"></b><span id="rmSub"></span></div><div class="rb"><button class="btn" id="rm2d" data-en="📋 List view">📋 Dạng danh sách</button><button class="btn primary" id="rmClose" data-en="✕ Back to HQ">✕ Về trụ sở</button></div></div><div id="rmLabs"></div><div id="rmCard"></div></div>
+  <div class="af" id="aFoot"><div class="verdict" id="aVerdict"></div><button type="button" class="btn primary" id="aNext" data-en="See detailed results →">Xem kết quả chi tiết →</button></div></div>
+<div id="room"><div class="rh"><div class="rt"><img id="rmScene" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt="" style="display:none;width:min(260px,40vw);border-radius:16px;border:3px solid #e6d6bf;margin-bottom:6px"><b id="rmTitle"></b><span id="rmSub"></span></div><div class="rb"><button type="button" class="btn" id="rm2d" data-en="📋 List view">📋 Dạng danh sách</button><button type="button" class="btn primary" id="rmClose" data-en="✕ Back to HQ">✕ Về trụ sở</button></div></div><div id="rmLabs"></div><div id="rmCard"></div></div>
 <div id="frame" class="full"><iframe id="gf" src="game.html" title="BẬT NGHIỆP"></iframe></div>
 <script>(function () { var m = /[?&]journey=([^&#]+)/.exec(location.search); if (m) document.getElementById('gf').src = 'game.html?journey=' + m[1]; })();</script>
 <div id="tip"></div>
@@ -395,7 +395,7 @@
 
 <div id="res" role="dialog" aria-modal="true" aria-label="Kết quả vòng">
   <div class="rs"><div class="rs-in">
-    <button class="x" id="closeRes" aria-label="Đóng">×</button>
+    <button type="button" class="x" id="closeRes" aria-label="Đóng">×</button>
     <div class="map" id="map"></div>
     <div class="side">
       <span class="pill" id="rPill">Vòng 1/6 · Đồng bằng sông Cửu Long</span>
@@ -406,7 +406,7 @@
         <div class="stat" style="border-color:#4f9a52"><small data-en="NET PROFIT">LỢI NHUẬN RÒNG</small><b id="rProfit" style="color:#3f8a44">+48trđ</b></div>
         <div class="stat" style="border-color:#f39a33"><small data-en="TEAM FLAGS">CỜ CỦA ĐỘI</small><b id="rFlags" style="color:#d86a24">1/6</b></div>
       </div>
-      <div class="foot"><div class="legend" id="legend"></div><button class="btn primary" id="nextRound">Vào vòng tiếp theo →</button></div>
+      <div class="foot"><div class="legend" id="legend"></div><button type="button" class="btn primary" id="nextRound">Vào vòng tiếp theo →</button></div>
     </div>
   </div></div>
 </div>

@@ -93,6 +93,7 @@
 <link rel="stylesheet" href="css/clay-tool-skin.css">
 <link rel="stylesheet" href="css/clay-legacy.css">
 <script src="js/capture-guard.js"></script>
+  <style>@keyframes floaty { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }</style>
 </head>
 <body>
 
@@ -111,7 +112,6 @@
     </div>
     <img src="assets/illustrations/globe-trade.webp" alt="Địa cầu đất sét với các tuyến thương mại kết nối Việt Nam ra thế giới" class="h-44 sm:h-56 w-auto mx-auto drop-shadow-2xl hidden sm:block" style="animation:floaty 5s ease-in-out infinite">
   </div>
-  <style>@keyframes floaty { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }</style>
 </header>
 
 <main class="max-w-5xl mx-auto px-5 py-8">
@@ -154,7 +154,7 @@
     <div class="clay-card p-3 sm:p-5 overflow-hidden">
       <div id="world-map"></div>
       <div id="market-cards" class="grid sm:grid-cols-5 gap-2.5 mt-4"></div>
-      <button onclick="gAnnual()" class="clay-btn w-full bg-surface-bright text-deep-teal/75 font-bold py-3 text-sm mt-4" data-en="🗓️ Year-end report – every campaign the team has run">🗓️ Báo cáo Tổng kết Năm – thành tích mọi chiến dịch của đội</button>
+      <button type="button" onclick="gAnnual()" class="clay-btn w-full bg-surface-bright text-deep-teal/75 font-bold py-3 text-sm mt-4" data-en="🗓️ Year-end report – every campaign the team has run">🗓️ Báo cáo Tổng kết Năm – thành tích mọi chiến dịch của đội</button>
     </div>
   </section>
 
@@ -182,9 +182,9 @@
         <input id="gl" type="range" min="0" max="100" value="25" class="w-full mb-2" oninput="gUpdate()">
         <div class="flex gap-1.5 items-start mt-2">
           <p id="g-lumina" class="text-[11px] text-deep-teal/70 italic min-h-[2rem]"></p>
-          <button id="g-lumina-voice" onclick="gVoice(this.dataset.clip)" class="hidden shrink-0 text-primary text-sm leading-none" aria-label="Nghe giọng Lumina" data-en-aria="Hear Lumina's voice" title="Nghe giọng Lumina">🔊</button>
+          <button type="button" id="g-lumina-voice" onclick="gVoice(this.dataset.clip)" class="hidden shrink-0 text-primary text-sm leading-none" aria-label="Nghe giọng Lumina" data-en-aria="Hear Lumina's voice" title="Nghe giọng Lumina">🔊</button>
         </div>
-        <button onclick="gCommit()" class="clay-btn-primary clay-btn w-full text-white font-display font-extrabold py-3.5 mt-3" data-en="Lock this quarter 🚀">Chốt quý này 🚀</button>
+        <button type="button" onclick="gCommit()" class="clay-btn-primary clay-btn w-full text-white font-display font-extrabold py-3.5 mt-3" data-en="Lock this quarter 🚀">Chốt quý này 🚀</button>
       </div>
       <div class="clay-card p-5">
         <p class="font-display font-extrabold text-deep-teal mb-4" data-en="🌍 Market response">🌍 Thị trường phản ứng</p>
