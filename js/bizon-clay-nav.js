@@ -35,6 +35,9 @@
   ];
 
   var here = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+  /* Trang con có thể chỉ định mục menu cha: <meta name="bizon-nav-current" content="lop-hoc.html"> */
+  var navCur = document.querySelector('meta[name="bizon-nav-current"]');
+  if(navCur && navCur.content) here = navCur.content.toLowerCase();
   /* Trang ở thư mục con (app/, lab/…) nạp '../js/bizon-clay-nav.js': lấy phần trước
      'js/' làm gốc để mọi liên kết tương đối trỏ đúng về trang ở thư mục gốc. */
   var cs = document.currentScript;

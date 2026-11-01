@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <!-- Thư viện tình huống BizOn – CHAM™ và nội dung tình huống © 2017–2026 Đỗ Thùy Hương, dùng trên BizOn theo giấy phép không độc quyền -->
+<!-- Bản 2 (11/2026) dựng theo gói bàn giao design_handoff_thu_vien_tinh_huong: cột lọc + kệ theo bậc, chế độ Sinh viên / Giảng viên, trang case 4 bước -->
 <html lang="vi" data-default-lang="vi">
 <head>
 <meta charset="UTF-8">
@@ -10,8 +11,9 @@
 <script src="js/bizon-lang.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="robots" content="noindex">
+<meta name="bizon-nav-current" content="lop-hoc.html">
 <title data-en="Case library · BizOn">Thư viện tình huống · BizOn</title>
-<meta name="description" data-en-content="Real cases from the Mekong Delta, each with a simulation. Filter by discipline and region." content="Tình huống thật từ Đồng bằng sông Cửu Long, mỗi case gắn một mô phỏng. Lọc theo ngành học và vùng.">
+<meta name="description" data-en-content="Real cases from the Mekong Delta, each with a simulation. Filter by tier, discipline and region." content="Tình huống thật từ Đồng bằng sông Cửu Long, mỗi case gắn một mô phỏng. Lọc theo bậc, ngành học và vùng.">
 <meta name="copyright" content="CHAM™ và nội dung tình huống © 2017–2026 Đỗ Thùy Hương">
 <link rel="icon" type="image/png" href="assets/icons/icon-192.png">
 <script src="js/bizon-boot.js"></script>
@@ -19,43 +21,195 @@
 <link rel="stylesheet" href="css/bizon-clay.css">
 <link rel="stylesheet" href="css/cham-clay.css">
 <style>
-  .lb-filters{display:flex;flex-direction:column;gap:10px}
-  .lb-filters .ch-row > span:first-child{font:500 12px var(--ch-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ch-muted-2);min-width:6.5em}
-  .lb-case{display:flex;flex-direction:column;gap:8px;width:100%;text-align:left;border:0;cursor:pointer;font:inherit;color:inherit;padding:22px;border-radius:32px;box-shadow:14px 16px 30px rgba(150,120,80,.18),inset -5px -7px 12px rgba(0,0,0,.06),inset 5px 5px 10px rgba(255,255,255,.6)}
-  .lb-case[aria-pressed="true"]{box-shadow:0 0 0 3px var(--ch-teal),14px 16px 30px rgba(150,120,80,.2)}
-  .lb-case .st{align-self:flex-start;font:500 11px var(--ch-mono);letter-spacing:.06em;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.65)}
-  .lb-case b{font:800 26px/1.1 var(--ch-display);color:var(--ch-ink-2)}
-  .lb-case span.d{font-size:14.5px;line-height:1.5;color:#4c5859}
-  .lb-tabs{display:inline-flex;gap:4px;padding:4px;border-radius:999px;background:var(--ch-sunk);box-shadow:var(--ch-sink);flex-wrap:wrap;margin:12px 0 18px}
-  .lb-tabs button{border:0;border-radius:999px;padding:8px 14px;min-height:38px;background:transparent;color:var(--ch-muted-2);font:800 13.5px var(--ch-sans);cursor:pointer}
-  .lb-tabs button[aria-selected="true"]{background:var(--ch-raised);color:var(--ch-ink);box-shadow:var(--ch-raise-sm)}
-  .lb-goal{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px dashed rgba(110,70,30,.2)}
-  .lb-goal .n{flex:none;width:30px;height:30px;border-radius:50%;background:var(--ch-teal);color:#fff;display:flex;align-items:center;justify-content:center;font:800 15px var(--ch-display)}
-  .lb-sims{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr))}
-  .lb-sims a{display:flex;flex-direction:column;gap:4px;padding:16px 18px;border-radius:24px;box-shadow:var(--ch-raise-sm);text-decoration:none;color:var(--ch-ink-2)}
-  .lb-sims .tg{font:500 11px var(--ch-mono);letter-spacing:.06em;color:var(--ch-muted-2)}
-  .lb-sims b{font:800 19px var(--ch-display)}
-  .lb-sims span:last-child{font-size:13.5px;color:#4c5859}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  .tv{--tv-on:inset -2px -3px 6px rgba(0,40,60,.4),inset 2px 2px 4px rgba(255,255,255,.3);--tv-pale:#fff3c9;--tv-alert:#6b4d00;--tv-ph:#8a8173}
+  .tv button{font-family:var(--ch-sans)}
+  .tv :focus-visible{outline:3px solid var(--ch-teal);outline-offset:3px}
+  .tv-eyebrow{font:500 11.5px/1.3 var(--ch-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ch-muted-2)}
+
+  /* ---------- Thư viện ---------- */
+  .tv-lib{max-width:1280px;margin:0 auto;padding:28px clamp(16px,3vw,24px) 40px;display:flex;flex-direction:column;gap:28px}
+  .tv-head{display:flex;flex-direction:column;gap:12px;max-width:860px}
+  .tv-head h1{margin:0;font-size:clamp(36px,5vw,56px);line-height:.98;text-wrap:balance}
+  .tv-head p{margin:0;font-size:17px;line-height:1.6;color:var(--ch-muted);max-width:40em;text-wrap:pretty}
+  .tv-body{display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start}
+  .tv-ftoggle{display:none;flex:1 1 100%;justify-content:space-between;align-items:center;gap:10px;border:0;cursor:pointer;min-height:48px;padding:10px 20px;border-radius:999px;background:var(--ch-ink);color:#fff;font:800 15px var(--ch-sans);box-shadow:0 14px 26px rgba(11,79,99,.3)}
+  .tv-ftoggle .r{display:flex;gap:8px;align-items:center}
+  .tv-badge{padding:2px 9px;border-radius:999px;background:var(--ch-yellow);color:#3a2a00;font-size:12px}
+  .tv-filters{flex:1 1 240px;max-width:100%;display:flex;flex-direction:column;gap:22px;padding:22px;border-radius:32px;background:var(--ch-raised);box-shadow:var(--ch-raise-sm);position:sticky;top:100px}
+  .tv-fgroup{display:flex;flex-direction:column;gap:8px;margin:0;padding:0;border:0;min-width:0}
+  .tv-fgroup > .tv-eyebrow{font-size:12px}
+  .tv-seg{display:flex;gap:4px;padding:4px;border-radius:999px;background:var(--ch-sunk);box-shadow:var(--ch-sink)}
+  .tv-seg .tv-chip{flex:1;justify-content:center;min-height:40px;font-size:13.5px;white-space:nowrap}
+  .tv-search{display:flex;align-items:center;gap:8px;padding:4px 14px;border-radius:999px;background:var(--ch-sunk);box-shadow:var(--ch-sink)}
+  .tv-search > span{font:500 11px var(--ch-mono);color:var(--ch-muted-2)}
+  .tv-search input{flex:1;min-width:0;border:0;background:transparent;font:700 14.5px var(--ch-sans);color:var(--ch-ink-2);outline:none;padding:10px 0}
+  .tv-search input::placeholder{color:var(--tv-ph)}
+  .tv-search:focus-within{box-shadow:var(--ch-sink),0 0 0 3px var(--ch-teal)}
+  .tv-chips{display:flex;flex-wrap:wrap;gap:6px}
+  .tv-list{display:flex;flex-direction:column;gap:4px}
+  .tv-chip{display:inline-flex;align-items:center;gap:8px;border:0;cursor:pointer;min-height:32px;padding:6px 12px;border-radius:999px;font:800 12.5px var(--ch-sans);background:var(--ch-raised);color:var(--ch-body);box-shadow:var(--ch-raise-sm);text-align:left}
+  .tv-chip[aria-pressed="true"]{background:var(--ch-teal);color:#fff;box-shadow:var(--tv-on)}
+  .tv-list .tv-chip{justify-content:space-between;min-height:34px;padding:6px 14px;font-size:13px}
+  .tv-n{font:500 11px var(--ch-mono);opacity:.7}
+  .tv-reset{align-self:flex-start;border:2px solid rgba(11,79,99,.25);background:transparent;cursor:pointer;min-height:36px;padding:6px 14px;border-radius:999px;font:800 13px var(--ch-sans);color:var(--ch-ink)}
+  .tv-results{flex:999 1 320px;min-width:0;display:flex;flex-direction:column;gap:30px}
+  .tv-countline{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .tv-countline b{font:800 22px var(--ch-display);color:var(--ch-ink)}
+  .tv-countline span{font:600 14px var(--ch-sans);color:var(--ch-muted)}
+  .tv-empty{margin:0;padding:28px;border-radius:26px;background:var(--ch-sunk);text-align:center;font-weight:700;color:var(--ch-muted)}
+  .tv-samplenote{margin:0;padding:12px 18px;border-radius:20px;background:var(--tv-pale);color:var(--tv-alert);font-weight:700;font-size:14.5px}
+  .tv-shelf{display:flex;flex-direction:column;gap:14px}
+  .tv-shelf-h{display:flex;align-items:center;gap:14px}
+  .tv-shelf-h > div{display:flex;flex-direction:column;min-width:0}
+  .tv-shelf-h h2{margin:0;font-size:26px;line-height:1.05}
+  .tv-shelf-h div span{font-size:14.5px;color:var(--ch-muted)}
+  .tv-tierdot{flex:none;width:48px;height:48px;border-radius:50%;background:var(--ch-teal);color:#fff;display:grid;place-items:center;font:800 24px var(--ch-display);box-shadow:var(--ch-btn)}
+  .tv-shelf-n{margin-left:auto;flex:none;font:500 12px var(--ch-mono);letter-spacing:.06em;color:var(--ch-muted-2)}
+  .tv-well{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(220px,100%),1fr));gap:14px;padding:clamp(10px,2vw,16px);border-radius:clamp(24px,4vw,36px);background:var(--ch-sunk);box-shadow:var(--ch-sink)}
+  .tv-card{display:flex;flex-direction:column;gap:8px;text-align:left;border:0;cursor:pointer;padding:16px;border-radius:24px;min-height:200px;color:var(--ch-body);font:inherit;box-shadow:8px 10px 18px rgba(150,120,80,.2),inset -4px -5px 10px rgba(0,0,0,.06),inset 4px 4px 8px rgba(255,255,255,.6);transition:transform .15s,box-shadow .15s}
+  .tv-card:hover{transform:translateY(-3px);box-shadow:12px 16px 24px rgba(150,120,80,.28),inset -4px -5px 10px rgba(0,0,0,.06),inset 4px 4px 8px rgba(255,255,255,.6)}
+  .tv-card-top{display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%}
+  .tv-reg{font:500 10.5px var(--ch-mono);letter-spacing:.05em;color:var(--ch-muted-2);text-transform:uppercase}
+  .tv-kind{flex:none;font:800 10.5px var(--ch-sans);padding:3px 9px;border-radius:999px}
+  .tv-kind.k-full{background:var(--ch-teal);color:#fff}
+  .tv-kind.k-sim{background:var(--ch-yellow);color:#3a2a00}
+  .tv-kind.k-draft{background:rgba(255,255,255,.7);color:var(--ch-muted-2)}
+  .tv-card b{font:800 20px/1.1 var(--ch-display);color:var(--ch-ink-2)}
+  .tv-card .tv-d{font-size:13px;line-height:1.5;color:#4c5859;flex:1}
+  .tv-disc{font:700 12px var(--ch-sans);color:var(--ch-muted);padding-top:8px;border-top:1px dashed rgba(110,70,30,.2);width:100%}
+  .tv-gvstrip{display:flex;justify-content:space-between;gap:8px;width:100%;padding:8px 10px;border-radius:14px;background:rgba(255,255,255,.6);font:700 11.5px/1.35 var(--ch-sans);color:var(--ch-ink)}
+  .tv-card.sm{min-height:0;gap:6px}
+  .tv-card.sm b{font-size:19px}
+  @media (max-width:859px){
+    .tv-ftoggle{display:flex}
+    .tv-filters{display:none;position:static}
+    .tv-filters.open{display:flex}
+  }
+  @media (prefers-reduced-motion:reduce){.tv-card{transition:none}.tv-card:hover{transform:none}}
+
+  /* ---------- Trang case ---------- */
+  .tv-band{background:var(--ch-river)}
+  .tv-band-in{max-width:1280px;margin:0 auto;padding:28px clamp(16px,3vw,24px) 76px;display:flex;flex-wrap:wrap;gap:24px;align-items:flex-end;justify-content:space-between}
+  .tv-band-main{flex:1 1 520px;display:flex;flex-direction:column;gap:10px;min-width:0}
+  .tv-crumb{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font:700 13.5px var(--ch-sans);color:var(--ch-ink)}
+  .tv-pill{border:0;cursor:pointer;min-height:36px;padding:6px 14px;border-radius:999px;background:rgba(255,255,255,.6);font:800 13.5px var(--ch-sans);color:var(--ch-ink)}
+  .tv-meta{font:500 11.5px var(--ch-mono);letter-spacing:.06em;color:#3e5a5c;text-transform:uppercase}
+  .tv-band h1{margin:0;font-size:clamp(44px,6vw,72px);line-height:1.02;overflow-wrap:anywhere}
+  .tv-band h1:focus{outline:none}
+  .tv-lede{margin:0;font-size:18px;line-height:1.55;color:var(--ch-body);max-width:36em;text-wrap:pretty}
+  .tv-tags{display:flex;gap:6px;flex-wrap:wrap}
+  .tv-tags .tv-kind,.tv-tag{font-size:12px;padding:5px 12px}
+  .tv-tag{font-weight:800;border-radius:999px;background:var(--ch-raised);color:var(--ch-ink)}
+  .tv-band-role{display:flex;flex-direction:column;gap:6px}
+  .tv-band-role .tv-eyebrow{color:#3e5a5c;font-size:11px}
+  .tv-band-role .tv-seg{padding:5px;background:rgba(255,255,255,.5);box-shadow:inset 3px 3px 8px rgba(0,60,80,.15)}
+  .tv-band-role .tv-chip{min-height:40px;padding:8px 18px;font-size:14px}
+  .tv-casemain{max-width:1280px;margin:-48px auto 0;padding:0 clamp(16px,3vw,24px) 40px;display:flex;flex-direction:column;gap:24px}
+  .tv-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(160px,100%),1fr));gap:14px}
+  .tv-stats > div{border-radius:24px;padding:16px 18px;background:var(--ch-raised);box-shadow:14px 16px 30px rgba(150,120,80,.2),inset 2px 2px 4px #fff}
+  .tv-stats span{display:block;font:500 11px/1.3 var(--ch-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ch-muted-2)}
+  .tv-stats b{display:block;font:800 clamp(18px,4.6vw,23px)/1.1 var(--ch-display);color:var(--ch-ink-2);margin-top:4px}
+  .tv-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(160px,100%),1fr));gap:10px}
+  .tv-steps button{display:flex;align-items:center;gap:10px;border:0;cursor:pointer;min-height:52px;padding:10px 14px 10px 10px;border-radius:999px;background:var(--ch-raised);color:var(--ch-ink);box-shadow:var(--ch-raise-sm);font:800 15px var(--ch-sans);text-align:left}
+  .tv-steps button.done{background:var(--ch-leaf)}
+  .tv-steps button.cur{background:var(--ch-teal);color:#fff;box-shadow:var(--tv-on)}
+  .tv-steps .m{flex:none;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.7);color:var(--ch-ink);display:grid;place-items:center;font:800 15px var(--ch-display)}
+  .tv-casegrid{display:flex;flex-wrap:wrap;gap:24px;align-items:flex-start}
+  .tv-panel{flex:999 1 320px;min-width:0;padding:28px clamp(18px,4vw,32px);border-radius:clamp(28px,5vw,44px);background:var(--ch-raised);box-shadow:var(--ch-raise);display:flex;flex-direction:column;gap:16px;min-height:380px}
+  .tv-panel-sm{min-height:0;align-items:flex-start;gap:14px}
+  .tv-panel h2{margin:0;font-size:32px}
+  .tv-panel h2:focus{outline:none}
+  .tv-panel > p{margin:0;font-size:16.5px;line-height:1.7;max-width:40em;text-wrap:pretty}
+  .tv-panel > p.tv-alert,.tv-panel > p.tv-note{font-size:15px;line-height:1.5;font-weight:700;padding:12px 18px;border-radius:20px}
+  .tv-alert{background:var(--tv-pale);color:var(--tv-alert)}
+  .tv-note{background:var(--ch-sunk);color:var(--ch-muted)}
+  .tv-panel > p.tv-small,.tv-small{font-size:13.5px;line-height:1.5;color:var(--ch-muted);margin:0}
+  .tv-btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:10px 18px;border:0;border-radius:999px;cursor:pointer;font:800 14.5px var(--ch-sans);text-decoration:none}
+  .cham a.tv-btn.soft,.tv-btn.soft{background:var(--ch-raised);color:var(--ch-ink);box-shadow:var(--ch-raise-sm);font-size:14px}
+  .cham a.tv-btn.primary,.tv-btn.primary{background:var(--ch-teal);color:#fff;box-shadow:var(--ch-btn);padding:10px 20px}
+  .tv-btn.sunk{background:var(--ch-sunk);color:var(--ch-ink);box-shadow:inset 3px 3px 8px rgba(150,120,80,.2)}
+  .tv-btn.outline{background:transparent;color:var(--ch-ink);border:2px solid rgba(11,79,99,.25);min-height:40px;font-size:14px}
+  .tv-btn.gold{background:var(--ch-yellow);color:#3a2a00;box-shadow:inset -3px -4px 8px rgba(150,100,0,.35),inset 3px 3px 6px rgba(255,255,255,.5)}
+  .tv-panel-foot{margin-top:auto;padding-top:16px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;border-top:1px dashed rgba(110,70,30,.2)}
+  .tv-panel-foot .primary{margin-left:auto}
+  .tv-statlist{display:flex;flex-direction:column;gap:8px}
+  .tv-statlist > div{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 16px;border-radius:18px}
+  .tv-statlist span{font:500 12px var(--ch-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--ch-muted-2)}
+  .tv-statlist b{font:800 18px var(--ch-display);color:var(--ch-ink-2);text-align:right}
+  .tv-found{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .tv-found > span{font:800 14px var(--ch-sans);color:var(--ch-ink)}
+  .tv-dots{display:flex;gap:6px}
+  .tv-dots button{border:0;cursor:pointer;width:44px;height:44px;border-radius:50%;font:800 16px var(--ch-display);background:var(--ch-sunk);color:var(--tv-ph);box-shadow:inset 2px 2px 4px rgba(255,255,255,.5),3px 4px 8px rgba(150,120,80,.2)}
+  .tv-dots button.on{background:#E8762D;color:#1E1915}
+  .tv-sims{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));gap:14px}
+  .cham .tv-sims a{display:flex;flex-direction:column;gap:4px;padding:16px 18px;border-radius:24px;box-shadow:var(--ch-raise-sm);color:var(--ch-ink-2);text-decoration:none;transition:transform .15s}
+  .tv-sims a:hover{transform:translateY(-3px)}
+  .tv-sims .tg{font:500 11px var(--ch-mono);letter-spacing:.06em;color:var(--ch-muted-2)}
+  .tv-sims b{font:800 19px var(--ch-display)}
+  .tv-sims span:last-child{font-size:13.5px;color:#4c5859}
+  .tv-goal{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px dashed rgba(110,70,30,.2);line-height:1.55}
+  .tv-goal .n{flex:none;width:30px;height:30px;border-radius:50%;background:var(--ch-teal);color:#fff;display:flex;align-items:center;justify-content:center;font:800 15px var(--ch-display)}
+  .tv-reflect{display:block}
+  .tv-reflect textarea{display:block;width:100%;min-height:110px;resize:vertical;border:0;outline:none;padding:14px 16px;border-radius:20px;background:var(--ch-sunk);box-shadow:var(--ch-sink);font:700 15px/1.5 var(--ch-sans);color:var(--ch-ink-2)}
+  .tv-reflect textarea:focus-visible{box-shadow:var(--ch-sink),0 0 0 3px var(--ch-teal)}
+  .tv-reflect textarea::placeholder{color:var(--tv-ph)}
+  .tv-saved{font:500 11px var(--ch-mono);letter-spacing:.06em;color:var(--ch-muted-2)}
+  .tv-gv{flex:1 1 300px;max-width:100%;display:flex;flex-direction:column;gap:12px;padding:22px;border-radius:36px;background:var(--ch-night);color:var(--ch-on-night);box-shadow:14px 16px 30px rgba(150,120,80,.25)}
+  .tv-gv .tv-eyebrow{color:var(--ch-on-night-2)}
+  .tv-gv h2{margin:0;font-size:22px;line-height:1.1;color:var(--ch-on-night)}
+  .tv-gv p{margin:0;font-size:14px;line-height:1.55;color:#cfe0e1}
+  .cham .tv-gv a:not(.tv-gvgo){padding:12px 14px;border-radius:18px;background:var(--ch-night-2);box-shadow:var(--ch-sink-night);display:flex;flex-direction:column;gap:2px;color:var(--ch-on-night);text-decoration:none}
+  .cham .tv-gv a:not(.tv-gvgo):hover{background:#1f4a58;color:#fff}
+  .tv-gv a b{font:800 16px var(--ch-display)}
+  .tv-gv a span{font-size:12.5px;color:var(--ch-on-night-2)}
+  #tv-notes{display:flex;flex-direction:column;gap:10px}
+  #tv-notes[hidden]{display:none}
+  .tv-lock{display:flex;justify-content:space-between;padding:10px 14px;border-radius:18px;background:var(--ch-night-2);font-size:14px}
+  .tv-lock span:last-child{color:var(--ch-yellow)}
+  .tv-gv .tv-small{color:var(--ch-on-night-2);font-size:12.5px}
+  .cham .tv-gvgo{font:800 13.5px var(--ch-sans);color:var(--ch-yellow)}
+  .tv-related{display:flex;flex-direction:column;gap:12px;margin-top:12px}
+  .tv-related h2{margin:0;font-size:24px}
+  .tv-relgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(240px,100%),1fr));gap:14px}
+  .tv-foot{max-width:1280px;margin:0 auto;padding:8px clamp(16px,3vw,24px) 40px}
+  .tv-foot .ch-lic{margin:0 auto;max-width:62em;text-align:center}
 </style>
 </head>
 <body class="clay cham">
 
-<main class="ch-wrap ch-stack">
-  <header class="ch-head">
-    <span class="ch-eyebrow" data-en="BizOn · Case library">BizOn · Thư viện tình huống</span>
-    <h1 data-en="Real cases from the Delta, each with a simulation">Tình huống thật từ Đồng bằng, mỗi case một mô phỏng</h1>
-    <p class="lead" data-en="Read the case, check the numbers, then play the simulation to test your decisions. Teaching notes are for instructors.">Đọc case, soát số liệu, rồi chơi mô phỏng để kiểm chứng quyết định. Ghi chú giảng dạy dành cho giảng viên.</p>
-  </header>
-  <img class="ch-cover" src="assets/cham/anh/thu-vien.webp" width="600" height="448" alt="Hình đất sét 3D: tủ sách tình huống theo ngành và màn hình mô phỏng" data-en-alt="3D clay render: a case-library bookcase by discipline with a simulation screen">
-  <section class="lb-filters" aria-label="Bộ lọc" data-en-aria="Filters">
-    <div class="ch-row"><span data-en="Discipline">Ngành học</span><span class="ch-row" id="lb-disc" role="group"></span></div>
-    <div class="ch-row"><span data-en="Region">Vùng</span><span class="ch-row" id="lb-region" role="group"></span></div>
-  </section>
-  <section class="ch-grid" id="lb-cases" aria-label="Danh sách case" data-en-aria="Cases"></section>
-  <p class="ch-note" id="lb-empty" hidden data-en="No cases match these filters.">Chưa có case nào khớp bộ lọc.</p>
-  <section class="ch-card lg" id="lb-detail" aria-live="polite"></section>
-  <p class="ch-lic" data-en="CHAM™ and this case © 2017–2026 Đỗ Thùy Hương, used on BizOn under a non-exclusive licence. A planned project; figures are planning assumptions, not operating data.">CHAM™ và nội dung tình huống © 2017–2026 Đỗ Thùy Hương, dùng trên BizOn theo giấy phép không độc quyền. Dự án đang ở giai đoạn kế hoạch; số liệu là giả định, không phải kết quả hoạt động.</p>
+<main class="tv" id="tv-root">
+  <div class="tv-lib" id="tv-lib">
+    <header class="tv-head">
+      <span class="ch-eyebrow" data-en="BizOn · Case library">BizOn · Thư viện tình huống</span>
+      <h1 id="tv-lib-h" tabindex="-1" data-en="Real cases from the Mekong Delta, each with a simulation">Tình huống thật từ Đồng bằng, mỗi case một mô phỏng</h1>
+      <p data-en="Read the case, check the numbers, then play the simulation to test your decisions. Teaching notes are for instructors.">Đọc case, soát số liệu, rồi chơi mô phỏng để kiểm chứng quyết định. Ghi chú giảng dạy dành cho giảng viên.</p>
+    </header>
+    <div class="tv-body">
+      <button type="button" class="tv-ftoggle" id="tv-ftoggle" data-act="filters" aria-expanded="false" aria-controls="tv-filters"><span data-en="Filters · tier, discipline, region">Bộ lọc · bậc, ngành, vùng</span><span class="r"><span class="tv-badge" id="tv-fbadge" hidden></span><span id="tv-farrow" aria-hidden="true">▾</span></span></button>
+      <aside class="tv-filters" id="tv-filters" aria-label="Bộ lọc" data-en-aria="Filters">
+        <div class="tv-fgroup"><span class="tv-eyebrow" id="tv-role-l" data-en="Viewing as">Xem với tư cách</span><div class="tv-seg" id="tv-roles" role="group" aria-labelledby="tv-role-l"></div></div>
+        <label class="tv-search"><span data-en="SEARCH">TÌM</span><input type="search" id="tv-q" autocomplete="off" placeholder="Case, sản phẩm, tỉnh…" data-en-ph="Case, product, province…"></label>
+        <div class="tv-fgroup"><span class="tv-eyebrow" id="tv-tier-l" data-en="Tier">Bậc</span><div class="tv-chips" id="tv-tiers" role="group" aria-labelledby="tv-tier-l"></div></div>
+        <div class="tv-fgroup"><span class="tv-eyebrow" id="tv-kind-l" data-en="Status">Trạng thái</span><div class="tv-chips" id="tv-kinds" role="group" aria-labelledby="tv-kind-l"></div></div>
+        <div class="tv-fgroup"><span class="tv-eyebrow" id="tv-disc-l" data-en="Discipline">Ngành học</span><div class="tv-list" id="tv-discs" role="group" aria-labelledby="tv-disc-l"></div></div>
+        <div class="tv-fgroup"><span class="tv-eyebrow" id="tv-region-l" data-en="Region">Vùng</span><div class="tv-list" id="tv-regions" role="group" aria-labelledby="tv-region-l"></div></div>
+        <button type="button" class="tv-reset" data-act="reset" data-en="Clear filters">Xóa bộ lọc</button>
+      </aside>
+      <div class="tv-results">
+        <div class="tv-countline" aria-live="polite"><b id="tv-count"></b><span id="tv-rolenote"></span></div>
+        <p class="tv-samplenote" id="tv-sample" hidden></p>
+        <p class="tv-empty" id="tv-empty" hidden data-en="No cases match these filters.">Chưa có case nào khớp bộ lọc.</p>
+        <div id="tv-shelves"></div>
+        <noscript><p class="tv-empty">Trang cần JavaScript để hiện danh sách case. Mở trực tiếp: <a href="cham/">CHAM Homestay</a> · <a href="ben-phu-sa-3d.html">Bến Phù Sa</a> · <a href="ho-chieu-sau-rieng.html">Hộ Chiếu Sầu Riêng</a>.</p></noscript>
+      </div>
+    </div>
+  </div>
+  <div id="tv-case" hidden></div>
 </main>
+<footer class="tv-foot">
+  <p class="ch-lic"><span data-en="CHAM™ and this case © 2017–2026 Đỗ Thùy Hương, used on BizOn under a non-exclusive licence. A planned project; figures are planning assumptions, not operating data.">CHAM™ và nội dung tình huống © 2017–2026 Đỗ Thùy Hương, dùng trên BizOn theo giấy phép không độc quyền. Dự án đang ở giai đoạn kế hoạch; số liệu là giả định, không phải kết quả hoạt động.</span> <span id="tv-lic-sample" hidden data-en="Cards marked “Sample” are illustrative content, not real cases.">Các thẻ «Case mẫu» là nội dung minh họa, không phải case thật.</span></p>
+</footer>
 
 <script src="js/bizon-clay-i18n.js" defer></script>
 <script src="js/bizon-clay-nav.js" defer></script>
