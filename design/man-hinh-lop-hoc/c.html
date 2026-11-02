@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Màn hình lớp học – Phác C: Dòng phù sa 8 chặng</title>
+<link rel="stylesheet" href="../../css/bizon-clay-fonts.css">
+<style>
+:root{--bg:#F6EBD6;--card:#FFFBF4;--ink:#033337;--muted:#3E5A5C;--amber:#FDA127;--silt:#C98B55}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family:'Be Vietnam Pro','BVP Fallback',system-ui,sans-serif;overflow:hidden}
+#stage{position:fixed;inset:0}
+header{position:fixed;left:48px;right:48px;top:32px;display:flex;align-items:flex-end;justify-content:space-between}
+h1{margin:0;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:56px;font-weight:800;letter-spacing:-.03em;line-height:1}
+.sub{margin-top:8px;font-size:22px;color:var(--muted);font-weight:600}
+.right{text-align:right}
+.chip{display:inline-block;padding:6px 14px;border-radius:999px;background:#FFE6B8;color:#7A4A0E;font-size:15px;font-weight:800}
+.vu{font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:44px;font-weight:800;margin-top:6px}
+.st{position:fixed;width:178px;transform:translate(-50%,-100%);text-align:center;pointer-events:none}
+.st img{display:block;width:178px;height:112px;object-fit:cover;border-radius:22px;border:5px solid var(--card);box-shadow:0 16px 26px -14px rgba(110,70,30,.55)}
+.st b{display:block;margin-top:8px;font-size:19px;line-height:1.2}
+.st span{display:inline-block;margin-top:6px;padding:3px 12px;border-radius:999px;background:var(--card);font-weight:800;font-size:17px}
+.st.lead span{background:var(--amber)}
+.st.below{transform:translate(-50%,0)}
+footer{position:fixed;left:48px;right:48px;bottom:24px;display:flex;gap:12px;flex-wrap:wrap}
+footer div{display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;background:var(--card);font-size:17px;font-weight:700;box-shadow:0 10px 18px -12px rgba(110,70,30,.5)}
+footer i{width:22px;height:22px;border-radius:50%}
+</style>
+</head>
+<body>
+<canvas id="stage"></canvas>
+<header>
+  <div><h1>Dòng phù sa 8 chặng</h1><div class="sub">Hộ Chiếu Sầu Riêng · Lớp KT330H-01 · từ vườn đến quầy bán lẻ</div></div>
+  <div class="right"><span class="chip">Dữ liệu minh họa</span><div class="vu">Vụ 4 / 6</div></div>
+</header>
+<div id="cards"></div>
+<footer id="teams"></footer>
+<script type="module">
+import * as THREE from '../../vendor/three/three.module.js';
+import { TEAMS, PROG, TEAM_COLORS } from './geo.js';
+const STAGES = [
+  ['chang-1-vuon-puc', 'Vườn có mã PUC'], ['chang-2-thu-hoach-brix', 'Thu hoạch đo Brix'], ['chang-3-rua-phan-loai-phc', 'Rửa, phân loại'], ['chang-4-cap-dong-iqf', 'Cấp đông IQF'],
+  ['chang-5-qr-kiem-dich', 'QR và kiểm dịch'], ['chang-6-xe-lanh-cao-toc', 'Xe lạnh cao tốc'], ['chang-7-cang-hai-quan', 'Cảng, hải quan'], ['chang-8-ban-le-nem-thu', 'Bán lẻ, nếm thử'],
+];
+const R = new THREE.WebGLRenderer({ canvas: document.getElementById('stage'), antialias: true });
+R.setPixelRatio(Math.min(devicePixelRatio, 2)); R.setSize(innerWidth, innerHeight);
+R.shadowMap.enabled = true; R.shadowMap.type = THREE.PCFSoftShadowMap; R.toneMapping = THREE.ACESFilmicToneMapping;
+const S = new THREE.Scene(); S.background = new THREE.Color('#F6EBD6');
+const cam = new THREE.PerspectiveCamera(28, innerWidth / innerHeight, 0.1, 200);
+cam.position.set(0.5, 25, 26); cam.lookAt(0.5, 0, 0.6);
+S.add(new THREE.HemisphereLight('#fff4e0', '#b98a5a', 1.2));
+const sun = new THREE.DirectionalLight('#ffe2b8', 2.2); sun.position.set(-8, 18, 10); sun.castShadow = true; sun.shadow.mapSize.set(2048, 2048);
+Object.assign(sun.shadow.camera, { left: -20, right: 20, top: 12, bottom: -12 }); S.add(sun);
+const ground = new THREE.Mesh(new THREE.PlaneGeometry(80, 40), new THREE.MeshStandardMaterial({ color: '#E9D6B0', roughness: 1 }));
+ground.rotation.x = -Math.PI / 2; ground.receiveShadow = true; S.add(ground);
+// dòng sông uốn lượn trái → phải
+const path = new THREE.CatmullRomCurve3([-15, -11, -7, -3, 1, 5, 9, 13, 16].map((x, i) => new THREE.Vector3(x, 0.02, Math.sin(i * 1.15) * 1.6 + 1.2)));
+const N = 240, W = 1.5, pos = [], uv = [], idx = [];
+for (let i = 0; i <= N; i++) {
+  const u = i / N, p = path.getPointAt(u), t = path.getTangentAt(u), n = new THREE.Vector3(-t.z, 0, t.x).normalize();
+  for (const s of [-1, 1]) { const q = p.clone().addScaledVector(n, s * W); pos.push(q.x, 0.03, q.z); uv.push(u, (s + 1) / 2); }
+  if (i < N) { const a = i * 2; idx.push(a, a + 1, a + 2, a + 1, a + 3, a + 2); }
+}
+const rg = new THREE.BufferGeometry(); rg.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); rg.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2)); rg.setIndex(idx);
+// phù sa: các vệt ochre trôi theo dòng
+const water = new THREE.ShaderMaterial({ uniforms: { t: { value: 0 } },
+  vertexShader: 'varying vec2 vUv; void main(){ vUv=uv; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.); }',
+  fragmentShader: `varying vec2 vUv; uniform float t;
+    float h(vec2 p){ return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453); }
+    float n(vec2 p){ vec2 i=floor(p), f=fract(p); f=f*f*(3.-2.*f); return mix(mix(h(i),h(i+vec2(1,0)),f.x), mix(h(i+vec2(0,1)),h(i+vec2(1,1)),f.x), f.y); }
+    void main(){ vec2 p=vec2(vUv.x*60.-t*.9, vUv.y*4.); float s=n(p)*.6+n(p*2.3+3.)*.4;
+      vec3 c=mix(vec3(.55,.76,.74), vec3(.80,.58,.36), smoothstep(.45,.8,s)*.75);
+      float edge=smoothstep(0.,.12,vUv.y)*smoothstep(1.,.88,vUv.y); c=mix(vec3(.85,.72,.52), c, edge);
+      gl_FragColor=vec4(c,1.); }` });
+const river = new THREE.Mesh(rg, water); river.receiveShadow = true; S.add(river);
+// 8 bến (bệ đất sét) dọc sông
+const U = STAGES.map((_, i) => 0.11 + i * (0.76 / 7));
+const counts = Array(8).fill(0); const at = PROG.map(p => Math.min(7, Math.floor(p * 8))); at.forEach(s => counts[s]++);
+const stationPos = U.map((u, i) => { const p = path.getPointAt(u); const off = (i % 2 ? 1 : -1) * 2.6; p.z += off;
+  const ped = new THREE.Mesh(new THREE.CylinderGeometry(0.75, 0.9, 0.5, 32), new THREE.MeshStandardMaterial({ color: '#D9A86C', roughness: 0.9 }));
+  ped.position.set(p.x, 0.25, p.z); ped.castShadow = ped.receiveShadow = true; S.add(ped); return p; });
+// hạt đất sét của các nhóm xếp chồng trên bệ chặng đang đứng
+const stack = Array(8).fill(0);
+TEAMS.forEach((_, i) => { const s = at[i], p = stationPos[s], k = stack[s]++;
+  const b = new THREE.Mesh(new THREE.SphereGeometry(0.28, 24, 16), new THREE.MeshStandardMaterial({ color: TEAM_COLORS[i], roughness: 0.6 }));
+  const a = k * 2.1; b.position.set(p.x + Math.cos(a) * (k ? 0.42 : 0), 0.78 + Math.floor(k / 3) * 0.42, p.z + Math.sin(a) * (k ? 0.42 : 0)); b.castShadow = true; S.add(b); });
+// sen nở ở chặng xa nhất có nhóm
+const lead = Math.max(...at), lp = stationPos[lead];
+const lotus = new THREE.Group(); const pm = new THREE.MeshStandardMaterial({ color: '#F4A7B9', roughness: 0.7 });
+for (let i = 0; i < 10; i++) { const p = new THREE.Mesh(new THREE.SphereGeometry(0.3, 12, 10), pm); p.scale.set(0.42, 1, 0.9); const a = i / 10 * Math.PI * 2;
+  p.position.set(Math.cos(a) * 0.32, 0.25, Math.sin(a) * 0.32); p.rotation.set(Math.sin(a) * 0.7, 0, -Math.cos(a) * 0.7); p.castShadow = true; lotus.add(p); }
+lotus.position.set(lp.x + 1.3, 0.15, lp.z + 0.4); S.add(lotus);
+// thẻ ảnh 8 chặng
+const cards = document.getElementById('cards');
+const els = STAGES.map(([f, vi], i) => { const d = document.createElement('div'); d.className = 'st' + (i === lead ? ' lead' : '') + (i % 2 ? ' below' : '');
+  d.innerHTML = `<img src="../../assets/hc/durian/${f}.webp" alt=""><b>${i + 1}. ${vi}</b><span>${counts[i]} nhóm</span>`; cards.appendChild(d); return d; });
+document.getElementById('teams').innerHTML = TEAMS.map((n, i) => `<div><i style="background:${TEAM_COLORS[i]}"></i>${n} · chặng ${at[i] + 1}</div>`).join('');
+const clock = new THREE.Clock();
+(function frame() {
+  const t = clock.getElapsedTime(); water.uniforms.t.value = t; lotus.rotation.y = t * 0.3;
+  R.render(S, cam);
+  els.forEach((e, i) => { const p = stationPos[i].clone(); p.y = i % 2 ? -0.2 : 1.3; if (i % 2) p.z += 0.5; const s = p.project(cam);
+    e.style.left = (s.x + 1) / 2 * innerWidth + 'px'; e.style.top = (1 - s.y) / 2 * innerHeight + 'px'; });
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

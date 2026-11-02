@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Màn hình lớp học – Phác A: Sa bàn đất sét</title>
+<link rel="stylesheet" href="../../css/bizon-clay-fonts.css">
+<style>
+:root{--bg:#FBF4E8;--card:#FFFBF4;--ink:#033337;--muted:#3E5A5C;--amber:#FDA127;--teal:#2F8A8C;--sand:#F3E6CF}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family:'Be Vietnam Pro','BVP Fallback',system-ui,sans-serif;overflow:hidden}
+#stage{position:fixed;inset:0}
+header{position:fixed;left:32px;right:32px;top:24px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px 18px 14px 26px;border-radius:999px;background:var(--card);box-shadow:0 18px 30px -16px rgba(110,70,30,.35),inset 0 -6px 0 rgba(0,0,0,.05)}
+.brand{display:flex;align-items:center;gap:16px;font-weight:800;font-size:22px}
+.chip{padding:6px 14px;border-radius:999px;background:#FFE6B8;color:#7A4A0E;font-size:15px;font-weight:800}
+h1{margin:0;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:30px;letter-spacing:-.02em}
+.round{display:flex;gap:8px}
+.round span{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:18px;background:var(--sand);color:var(--muted)}
+.round span.done{background:var(--teal);color:#fff}
+.round span.now{background:var(--amber);color:var(--ink);box-shadow:0 6px 0 #c47a14}
+aside{position:fixed;right:32px;top:128px;bottom:32px;width:520px;padding:26px 26px 20px;border-radius:36px;background:var(--card);box-shadow:0 24px 40px -20px rgba(110,70,30,.4),inset 0 -8px 0 rgba(0,0,0,.05);display:flex;flex-direction:column}
+aside h2{margin:0 0 14px;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:26px}
+ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:12px;flex:1}
+li{display:grid;grid-template-columns:40px 1fr 150px;align-items:center;gap:14px;font-size:21px;font-weight:700}
+li .n{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:800}
+li .bar{height:16px;border-radius:999px;background:var(--sand);overflow:hidden}
+li .bar i{display:block;height:100%;border-radius:999px}
+.legend{margin-top:16px;font-size:16px;color:var(--muted);line-height:1.5}
+.place{position:fixed;transform:translate(-50%,-140%);padding:6px 14px;border-radius:999px;background:var(--card);font-weight:800;font-size:19px;box-shadow:0 10px 18px -10px rgba(110,70,30,.5);white-space:nowrap;pointer-events:none}
+.place.home{background:var(--amber)}
+</style>
+</head>
+<body>
+<canvas id="stage"></canvas>
+<header>
+  <div class="brand">BizOn <h1>Bến Phù Sa · Lớp KT330H-01</h1> <span class="chip">Dữ liệu minh họa</span></div>
+  <div class="round" aria-label="Vụ 4 trên 6"><span class="done">1</span><span class="done">2</span><span class="done">3</span><span class="now">4</span><span>5</span><span>6</span></div>
+</header>
+<aside>
+  <h2>Hải trình các nhóm</h2>
+  <ol id="rank"></ol>
+  <div style="margin-top:14px;padding:16px 18px;border-radius:24px;background:#FFE6B8"><b style="font-size:17px;color:#7A4A0E">Biến cố vụ 4</b><div style="font-size:21px;font-weight:800;margin-top:4px">Mặn xâm nhập sớm · giá thu mua giảm</div></div>
+  <p class="legend">Mỗi ghe là một nhóm. Ghe đi xa hơn khi nhóm khóa quyết định tốt ở vụ đó. Sen nở ở chặng nhóm đầu tiên vừa đến.</p>
+</aside>
+<div id="labels"></div>
+<script type="module">
+import { THREE, P, PLACES, RIVERS, ROUTE, vnShapes, curve, TEAMS, PROG, TEAM_COLORS } from './geo.js';
+const cv = document.getElementById('stage');
+const R = new THREE.WebGLRenderer({ canvas: cv, antialias: true });
+R.setPixelRatio(Math.min(devicePixelRatio, 2)); R.setSize(innerWidth, innerHeight);
+R.shadowMap.enabled = true; R.shadowMap.type = THREE.PCFSoftShadowMap;
+R.toneMapping = THREE.ACESFilmicToneMapping; R.toneMappingExposure = 1.05;
+const S = new THREE.Scene(); S.background = new THREE.Color('#FBF4E8'); S.fog = new THREE.Fog('#FBF4E8', 40, 90);
+const cam = new THREE.PerspectiveCamera(32, innerWidth / innerHeight, 0.1, 200);
+cam.position.set(3.2, 19, 11); cam.lookAt(3.2, 0, -2.4);
+cam.setViewOffset(innerWidth + 560, innerHeight, 560, 0, innerWidth, innerHeight); // dồn sa bàn sang trái, chừa chỗ bảng xếp hạng
+S.add(new THREE.HemisphereLight('#fff4e0', '#b98a5a', 1.1));
+const sun = new THREE.DirectionalLight('#ffe2b8', 2.4); sun.position.set(-14, 26, 10); sun.castShadow = true;
+sun.shadow.mapSize.set(2048, 2048); Object.assign(sun.shadow.camera, { left: -26, right: 26, top: 26, bottom: -26 }); S.add(sun);
+// mặt nước biển đất sét
+const sea = new THREE.Mesh(new THREE.CylinderGeometry(30, 30, 0.6, 96), new THREE.MeshStandardMaterial({ color: '#9FD3D6', roughness: 0.85 }));
+sea.position.y = -0.5; sea.receiveShadow = true; S.add(sea);
+const rim = new THREE.Mesh(new THREE.CylinderGeometry(30.6, 31.4, 1.6, 96, 1, true), new THREE.MeshStandardMaterial({ color: '#C98B55', roughness: 0.9, side: THREE.DoubleSide }));
+rim.position.y = -0.9; S.add(rim);
+// đất liền
+const shapes = await vnShapes('../../assets/geo/vnm.json');
+const land = new THREE.Mesh(new THREE.ExtrudeGeometry(shapes, { depth: 0.5, bevelEnabled: true, bevelThickness: 0.12, bevelSize: 0.1, bevelSegments: 3, curveSegments: 4 }),
+  new THREE.MeshStandardMaterial({ color: '#CFE3A4', roughness: 0.95 }));
+land.rotation.x = Math.PI / 2; land.position.y = 0.3; land.castShadow = land.receiveShadow = true; S.add(land);
+// sông đất sét
+for (const k of ['hau', 'tien']) {
+  const t = new THREE.Mesh(new THREE.TubeGeometry(curve(RIVERS[k], 0.3), 120, 0.14, 8), new THREE.MeshStandardMaterial({ color: '#7FBFC4', roughness: 0.6 }));
+  t.receiveShadow = true; S.add(t);
+}
+// tuyến hải trình nét đứt
+const route = curve(ROUTE, 0.62);
+const dots = new THREE.InstancedMesh(new THREE.SphereGeometry(0.05, 8, 8), new THREE.MeshStandardMaterial({ color: '#8a5a2b' }), 80);
+for (let i = 0; i < 80; i++) { const p = route.getPointAt(i / 79); dots.setMatrixAt(i, new THREE.Matrix4().makeTranslation(p.x, p.y, p.z)); } S.add(dots);
+// ghe đất sét cho từng nhóm
+const boats = TEAMS.map((n, i) => {
+  const g = new THREE.Group();
+  const hull = new THREE.Mesh(new THREE.CapsuleGeometry(0.16, 0.42, 6, 12), new THREE.MeshStandardMaterial({ color: TEAM_COLORS[i], roughness: 0.7 }));
+  hull.rotation.z = Math.PI / 2; hull.scale.set(1, 1, 0.75); hull.castShadow = true; g.add(hull);
+  const roof = new THREE.Mesh(new THREE.SphereGeometry(0.14, 12, 8, 0, Math.PI * 2, 0, Math.PI / 2), new THREE.MeshStandardMaterial({ color: '#F6E7CB', roughness: 0.8 }));
+  roof.position.y = 0.12; roof.castShadow = true; g.add(roof);
+  g.scale.setScalar(1.4); S.add(g); return g;
+});
+// sen nở ở chặng nhóm đầu vừa đến
+function lotus(at) {
+  const g = new THREE.Group(); const m = new THREE.MeshStandardMaterial({ color: '#F4A7B9', roughness: 0.7 });
+  for (let i = 0; i < 8; i++) { const p = new THREE.Mesh(new THREE.SphereGeometry(0.16, 10, 8), m); p.scale.set(0.45, 1, 0.9); const a = i / 8 * Math.PI * 2; p.position.set(Math.cos(a) * 0.15, 0.12, Math.sin(a) * 0.15); p.rotation.set(Math.sin(a) * 0.6, 0, -Math.cos(a) * 0.6); g.add(p); }
+  const core = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.1, 0.1, 12), new THREE.MeshStandardMaterial({ color: '#F4D35E' })); core.position.y = 0.16; g.add(core);
+  const pad = new THREE.Mesh(new THREE.CylinderGeometry(0.4, 0.4, 0.04, 24), new THREE.MeshStandardMaterial({ color: '#6FA35A' })); g.add(pad);
+  g.position.copy(at); g.position.y = 0.66; g.scale.setScalar(1.6); g.traverse(o => o.castShadow = true); S.add(g); return g;
+}
+const L = lotus(route.getPointAt(0.8));
+// nhãn địa danh
+const lab = document.getElementById('labels');
+const tags = Object.entries(PLACES).map(([k, p]) => { const el = document.createElement('div'); el.className = 'place' + (k === 'canTho' ? ' home' : ''); el.textContent = p.vi; lab.appendChild(el); const v = P(p.lon, p.lat); return { el, v: new THREE.Vector3(v.x, 0.8, v.y) }; });
+// bảng xếp hạng
+document.getElementById('rank').innerHTML = TEAMS.map((n, i) => `<li><span class="n" style="background:${TEAM_COLORS[i]}">${i + 1}</span><span>${n}</span><span class="bar"><i style="width:${PROG[i] * 100}%;background:${TEAM_COLORS[i]}"></i></span></li>`).join('');
+const clock = new THREE.Clock();
+function frame() {
+  const t = clock.getElapsedTime();
+  boats.forEach((b, i) => { const u = Math.min(PROG[i] + Math.sin(t * 0.6 + i) * 0.004, 0.999); const p = route.getPointAt(u); const q = route.getTangentAt(u);
+    b.position.set(p.x + (i % 2 ? 0.3 : -0.3), 0.8 + Math.sin(t * 2 + i) * 0.02, p.z + (i % 3 - 1) * 0.3); b.rotation.y = Math.atan2(-q.z, q.x); });
+  L.scale.setScalar(0.9 + Math.sin(t * 1.5) * 0.05);
+  R.render(S, cam);
+  for (const g of tags) { const s = g.v.clone().project(cam); g.el.style.left = (s.x + 1) / 2 * innerWidth + 'px'; g.el.style.top = (1 - s.y) / 2 * innerHeight + 'px'; }
+  requestAnimationFrame(frame);
+}
+frame();
+</script>
+</body>
+</html>

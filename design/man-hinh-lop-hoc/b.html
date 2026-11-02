@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Màn hình lớp học – Phác B: Sông đêm đom đóm</title>
+<link rel="stylesheet" href="../../css/bizon-clay-fonts.css">
+<script src="../../js/vendor/topojson-client.min.js"></script>
+<style>
+:root{--night:#14231F;--ink:#FFF6E6;--muted:#C9BFA8;--amber:#FDA127;--glow:#FFE08A;--panel:rgba(32,46,40,.78)}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--night);color:var(--ink);font-family:'Be Vietnam Pro','BVP Fallback',system-ui,sans-serif;overflow:hidden}
+#stage{position:fixed;inset:0}
+.hud{position:fixed;left:48px;top:44px;width:560px}
+.kicker{font-size:20px;font-weight:700;color:var(--muted);letter-spacing:.02em}
+.big{font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:96px;font-weight:800;line-height:1;letter-spacing:-.04em;margin:8px 0 4px}
+.big small{font-size:48px;color:var(--muted)}
+.timer{display:inline-flex;align-items:baseline;gap:12px;margin-top:18px;padding:14px 22px;border-radius:24px;background:var(--panel);backdrop-filter:blur(6px)}
+.timer b{font-family:'IBM Plex Mono',monospace;font-size:54px;color:var(--glow)}
+.timer span{font-size:20px;color:var(--muted)}
+.locked{margin-top:18px;font-size:24px;font-weight:700}
+.dots{display:flex;gap:10px;margin-top:10px}
+.dots i{width:30px;height:30px;border-radius:50%;background:rgba(255,246,230,.12)}
+.dots i.on{background:var(--amber);box-shadow:0 0 18px rgba(253,161,39,.7)}
+.chip{position:fixed;right:48px;top:44px;padding:8px 16px;border-radius:999px;background:var(--panel);color:var(--glow);font-weight:800;font-size:16px}
+.markets{position:fixed;left:48px;right:48px;bottom:40px;display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+.m{padding:16px 20px;border-radius:24px;background:var(--panel);backdrop-filter:blur(6px)}
+.m b{display:block;font-size:24px}
+.m span{font-size:19px;color:var(--muted)}
+.m .w{height:8px;margin-top:10px;border-radius:999px;background:rgba(255,246,230,.12)}
+.m .w i{display:block;height:100%;border-radius:999px;background:var(--amber)}
+.lab{position:fixed;transform:translate(-50%,-50%);font-weight:800;font-size:18px;color:var(--ink);text-shadow:0 2px 8px rgba(0,0,0,.6);white-space:nowrap;pointer-events:none}
+.lab.sea{font-style:italic;font-weight:600;color:#9FC9C4}
+.lab.isl{font-size:15px;color:var(--glow)}
+.lab.home{padding:6px 14px;border-radius:999px;background:var(--amber);color:#14231F;text-shadow:none}
+</style>
+</head>
+<body>
+<canvas id="stage"></canvas>
+<div class="hud">
+  <div class="kicker">BizOn · Hộ Chiếu Thương Hiệu · Lớp KT330H-01</div>
+  <div class="big">Vụ 4 <small>/ 6</small></div>
+  <div class="timer"><b id="t">02:41</b><span>còn lại để khóa quyết định</span></div>
+  <div class="locked">7 / 10 nhóm đã khóa</div>
+  <div class="dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i></div>
+</div>
+<div class="chip">Dữ liệu minh họa</div>
+<div class="markets" id="mk"></div>
+<div id="labels"></div>
+<script type="module">
+import * as THREE from '../../vendor/three/three.module.js';
+const C = { lon: 116, lat: 21 }, K = 0.62;
+const P = (lon, lat) => new THREE.Vector2((lon - C.lon) * K, -(lat - C.lat) * K);
+const R = new THREE.WebGLRenderer({ canvas: document.getElementById('stage'), antialias: true });
+R.setPixelRatio(Math.min(devicePixelRatio, 2)); R.setSize(innerWidth, innerHeight);
+const S = new THREE.Scene(); S.background = new THREE.Color('#14231F'); S.fog = new THREE.Fog('#14231F', 40, 80);
+const cam = new THREE.PerspectiveCamera(30, innerWidth / innerHeight, 0.1, 200);
+cam.position.set(7, 36, 21); cam.lookAt(7, 0, -0.6);
+cam.setViewOffset(innerWidth + 480, innerHeight, 0, 0, innerWidth, innerHeight);
+S.add(new THREE.HemisphereLight('#3a5a52', '#120c06', 1.2));
+const moon = new THREE.DirectionalLight('#ffd9a0', 0.9); moon.position.set(-10, 20, 8); S.add(moon);
+const water = new THREE.Mesh(new THREE.PlaneGeometry(120, 120), new THREE.MeshStandardMaterial({ color: '#173A36', roughness: 0.4, metalness: 0.1 }));
+water.rotation.x = -Math.PI / 2; water.position.y = -0.2; S.add(water);
+// đất liền: các nước quanh Biển Đông (Natural Earth 110m) + Việt Nam chi tiết hơn
+function shapesOf(geom) {
+  const polys = geom.type === 'Polygon' ? [geom.coordinates] : geom.coordinates;
+  return polys.filter(p => p[0].some(([x, y]) => x > 85 && x < 150 && y > -12 && y < 52)).map(p => {
+    const s = new THREE.Shape(p[0].map(([x, y]) => P(x, y))); p.slice(1).forEach(h => s.holes.push(new THREE.Path(h.map(([x, y]) => P(x, y))))); return s; });
+}
+const topo = await (await fetch('../../js/vendor/countries-110m.json')).json();
+const world = topojson.feature(topo, topo.objects.countries);
+const landMat = new THREE.MeshStandardMaterial({ color: '#2C4038', roughness: 0.9 });
+for (const f of world.features) {
+  if (['643', '242', '010', '704'].includes(f.id) || !f.geometry) continue;
+  const sh = shapesOf(f.geometry); if (!sh.length) continue;
+  const m = new THREE.Mesh(new THREE.ExtrudeGeometry(sh, { depth: 0.18, bevelEnabled: false }), landMat);
+  m.rotation.x = Math.PI / 2; m.position.y = 0.18; S.add(m);
+}
+const vn = await (await fetch('../../assets/geo/vnm.json')).json();
+const vnM = new THREE.Mesh(new THREE.ExtrudeGeometry(shapesOf(vn), { depth: 0.32, bevelEnabled: true, bevelThickness: 0.05, bevelSize: 0.04, bevelSegments: 2 }),
+  new THREE.MeshStandardMaterial({ color: '#7A5A2E', roughness: 0.7, emissive: '#3a2410', emissiveIntensity: 0.6 }));
+vnM.rotation.x = Math.PI / 2; vnM.position.y = 0.32; S.add(vnM);
+// Hoàng Sa, Trường Sa (Việt Nam): dữ liệu 110m không có đảo nhỏ, vẽ cụm chấm cùng màu lãnh thổ Việt Nam
+const ISL = [[112.33, 16.83], [112.2, 16.95], [111.62, 16.53], [111.75, 16.45], [111.5, 16.45], [112.55, 16.05], [111.2, 15.78], [112.9, 16.07],
+  [114.28, 11.06], [114.36, 10.38], [114.0, 10.9], [114.7, 10.5], [115.0, 9.9], [115.5, 9.0], [113.85, 8.85], [111.92, 8.64], [112.8, 9.2], [116.2, 10.2], [113.0, 7.9]];
+for (const [x, y] of ISL) { const v = P(x, y); const d = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.07, 0.1, 10), vnM.material); d.position.set(v.x, 0.1, v.y); S.add(d); }
+// tuyến xuất khẩu từ Cần Thơ, độ dày theo số nhóm đã vào thị trường (minh hoạ)
+const HOME = [105.78, 10.03];
+const MK = [
+  { vi: 'Trung Quốc', at: [113.3, 23.1], n: 6 }, { vi: 'Hàn Quốc', at: [126.98, 37.57], n: 3 }, { vi: 'Nhật Bản', at: [139.7, 35.7], n: 2 },
+  { vi: 'Singapore', at: [103.8, 1.35], n: 4 }, { vi: 'EU', at: [88, 6], n: 1, far: true },
+];
+const v3 = ([x, y], h = 0.4) => { const v = P(x, y); return new THREE.Vector3(v.x, h, v.y); };
+const arcs = MK.map(m => {
+  const a = v3(HOME), b = v3(m.at), mid = a.clone().lerp(b, 0.5); mid.y = 0.8 + a.distanceTo(b) * 0.12;
+  const c = new THREE.QuadraticBezierCurve3(a, mid, b);
+  S.add(new THREE.Mesh(new THREE.TubeGeometry(c, 80, 0.025 + m.n * 0.012, 8), new THREE.MeshBasicMaterial({ color: '#FDA127', transparent: true, opacity: 0.85 })));
+  const end = new THREE.Mesh(new THREE.SphereGeometry(0.16, 16, 12), new THREE.MeshBasicMaterial({ color: '#FFE08A' })); end.position.copy(b); S.add(end);
+  return c;
+});
+// ánh sáng đom đóm (sprite tròn tự vẽ)
+const cv = document.createElement('canvas'); cv.width = cv.height = 64; const g = cv.getContext('2d');
+const rg = g.createRadialGradient(32, 32, 0, 32, 32, 32); rg.addColorStop(0, 'rgba(255,240,170,1)'); rg.addColorStop(0.3, 'rgba(255,214,110,.6)'); rg.addColorStop(1, 'rgba(255,200,80,0)');
+g.fillStyle = rg; g.fillRect(0, 0, 64, 64);
+const N = 520, pos = new Float32Array(N * 3), seed = [];
+for (let i = 0; i < N; i++) {
+  let p;
+  if (i < 300) { p = v3([104.6 + Math.random() * 2.4, 8.8 + Math.random() * 2.2], 0.5 + Math.random() * 0.8); } // trên đồng bằng
+  else { const c = arcs[i % arcs.length]; p = c.getPointAt(Math.random()); p.x += (Math.random() - 0.5) * 0.5; p.y += (Math.random() - 0.5) * 0.4; p.z += (Math.random() - 0.5) * 0.5; }
+  pos.set([p.x, p.y, p.z], i * 3); seed.push([p.clone(), Math.random() * 10]);
+}
+const fg = new THREE.BufferGeometry(); fg.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+const fire = new THREE.Points(fg, new THREE.PointsMaterial({ map: new THREE.CanvasTexture(cv), size: 0.5, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending }));
+S.add(fire);
+// thuyền đèn chạy trên tuyến
+const lanterns = arcs.map(() => { const l = new THREE.Mesh(new THREE.SphereGeometry(0.11, 12, 10), new THREE.MeshBasicMaterial({ color: '#FFFFFF' })); S.add(l); return l; });
+// nhãn
+const L = document.getElementById('labels');
+const tags = [
+  ...MK.map(m => ({ t: m.vi, p: v3(m.at, 0.9) })), { t: 'Cần Thơ', p: v3(HOME, 0.9), c: 'home' },
+  { t: 'Biển Đông', p: v3([115.2, 14.6], 0.2), c: 'sea' }, { t: 'QĐ. Hoàng Sa (Việt Nam)', p: v3([112.2, 17.5], 0.3), c: 'isl' }, { t: 'QĐ. Trường Sa (Việt Nam)', p: v3([114.6, 11.8], 0.3), c: 'isl' },
+].map(o => { const e = document.createElement('div'); e.className = 'lab ' + (o.c || ''); e.textContent = o.t; L.appendChild(e); return { e, p: o.p }; });
+document.getElementById('mk').innerHTML = MK.map(m => `<div class="m"><b>${m.vi}</b><span>${m.n} nhóm đã vào</span><div class="w"><i style="width:${m.n * 10}%"></i></div></div>`).join('');
+const clock = new THREE.Clock();
+(function frame() {
+  const t = clock.getElapsedTime();
+  for (let i = 0; i < N; i++) { const [b, s] = seed[i]; pos[i * 3] = b.x + Math.sin(t * 0.5 + s) * 0.12; pos[i * 3 + 1] = b.y + Math.sin(t * 0.8 + s * 2) * 0.08; pos[i * 3 + 2] = b.z + Math.cos(t * 0.4 + s) * 0.12; }
+  fg.attributes.position.needsUpdate = true;
+  fire.material.opacity = 0.75 + Math.sin(t * 3) * 0.15;
+  lanterns.forEach((l, i) => l.position.copy(arcs[i].getPointAt((t * 0.08 + i * 0.21) % 1)));
+  R.render(S, cam);
+  for (const o of tags) { const s = o.p.clone().project(cam); o.e.style.left = (s.x + 1) / 2 * innerWidth + 'px'; o.e.style.top = (1 - s.y) / 2 * innerHeight + 'px'; }
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
