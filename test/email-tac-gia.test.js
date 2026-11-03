@@ -15,6 +15,7 @@ for (const f of ['lien-he.html', 'chinh-sach.html', 'js/site-footer.js', 'js/biz
   for (const e of AUTH) assert.ok(s.includes('mailto:' + e), f + ': có ' + e);
   assert.ok(s.indexOf('bricoleur@bizonland.com') < s.indexOf('thuyhuongctu@gmail.com'), f + ': hộp thư chung đứng trước');
 }
+assert.ok(!read('chinh-sach.html').includes('Các cơ sở đào tạo khác.</dd>'), 'chính sách: không còn câu cụt');
 const u = read('universe.html');
 assert.ok(!/Ba người đồng hành|Three companions/.test(u));
 assert.match(u, /Hai người dẫn đường và một cuốn hộ chiếu/);
