@@ -265,6 +265,16 @@
     }, 20000);
   }
 
+  // Bản lưu của đội do MỌI thành viên ghi (bizon_student_upsert_save), nên coi là dữ liệu người khác nhập:
+  // bỏ ký tự < > trong mọi chuỗi trước khi game đưa vào giao diện (trạng thái game không bao giờ cần thẻ HTML),
+  // giới hạn độ sâu và độ dài để một bản lưu hỏng hoặc cố ý phá không làm treo trang.
+  function cleanState(v, depth) {
+    if (depth > 12) return null;
+    if (typeof v === 'string') return v.replace(/[<>]/g, '').slice(0, 4000);
+    if (Array.isArray(v)) return v.slice(0, 500).map(x => cleanState(x, depth + 1));
+    if (v && typeof v === 'object') { const o = {}; Object.keys(v).slice(0, 400).forEach(k => { if (k !== '__proto__' && k !== 'constructor' && k !== 'prototype') o[k] = cleanState(v[k], depth + 1); }); return o; }
+    return v;
+  }
   async function loadTeamState(classId, teamName) {
     if (!on()) return null;
     const classCode = String(classId || '').trim();
@@ -272,7 +282,9 @@
     if (!classCode || !team || classCode === 'DEMO-2026' || !signedIn()) return null;
     try {
       const rows = await rpcAuth('bizon_student_get_save', { p_class_code: classCode });
-      return Array.isArray(rows) && rows.length ? rows[0] : null; // {state_json, updated_at}
+      const row = Array.isArray(rows) && rows.length ? rows[0] : null; // {state_json, updated_at}
+      if (row && row.state_json) row.state_json = cleanState(row.state_json, 0);
+      return row;
     } catch (e) { return null; }
   }
 
@@ -342,5 +354,5 @@
     } catch (e) { return false; }
   }
 
-  window.BizonBackend = { submitRound, flush, syncTeamState, loadTeamState, classLeaderboard, getSyncCode, adoptSyncCode, sendBugReport };
+  window.BizonBackend = { submitRound, flush, syncTeamState, loadTeamState, classLeaderboard, getSyncCode, adoptSyncCode, sendBugReport, cleanState: v => cleanState(v, 0) };
 })();
