@@ -100,6 +100,8 @@
       return guard(rpc('bizon_set_rubric_config', { p_class_code: code, p_level1: r.level1 || '', p_level2: r.level2 || '', p_level3: r.level3 || '', p_level4: r.level4 || '' })); },
     // Màn hình lớp học: bảng Bến Phù Sa của lớp (ft_class_leaderboard, migration 20261002000000_ft_leaderboard.sql)
     async ftBoard(code) { if (demo) return []; try { return (await rpc('ft_class_leaderboard', { p_class_code: code })) || []; } catch (e) { if (missing(e)) return []; throw e; } },
+    // Tiến độ đang chơi (migration 20261103000000_live_progress.sql); chưa áp migration thì trả rỗng
+    async liveProgress(code, game) { if (demo) return []; try { return (await rpc('bizon_live_progress_class', { p_class_code: code, p_game: game })) || []; } catch (e) { if (missing(e)) return []; throw e; } },
     async bpResults(code) { if (demo) return []; try { return (await rpc('bizon_bp_results', { p_class_code: code })) || []; } catch (e) { if (missing(e)) return []; throw e; } },
   };
   window.BizOnInstructor = api;

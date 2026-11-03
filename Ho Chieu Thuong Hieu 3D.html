@@ -26,6 +26,7 @@
 <script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
 <script src="js/backend-config.js"></script>
 <script src="js/student-login.js"></script>
+<script src="js/live-progress.js"></script>
 <script src="js/error-log.js"></script>
 <script src="js/game3d-login-gate.js"></script>
 <script>Game3DGate.mount({ backdrop: true, introId: 'bp-intro', ns: 'bp', title: 'Chào mừng tới Hộ Chiếu Thương Hiệu!', titleEn: 'Welcome to Brand Passport!', subtitle: 'Điền nhanh thông tin đội rồi vào thẳng phần giới thiệu – bỏ trống vẫn chơi được trọn vẹn.', subtitleEn: 'Fill in your team details and go straight to the intro – leave them blank and you can still play the full game.' });</script>
@@ -1962,6 +1963,8 @@
     if (S.lowQ >= 2) return bpEnd('cash', evOut);
     if (S.rep < 15) return bpEnd('rep');
     S.q++;
+    if (window.BizOnLive) { var lvSc = null; try { lvSc = window.BPCore.scoreOf(S, null).total; } catch (e) {}   // Màn hình lớp học: tiến độ từng quý
+      BizOnLive.report({ game: 'hcth', round: S.q, roundsTotal: 6, score: lvSc, finished: S.q >= 6, team: F().name, detail: { markets: S.entered.map(function (x) { return x == null ? 0 : 1; }) } }); }
     if (S.q >= 6) return bpEnd(null);
     // Vật phẩm FORECAST đã dùng: rút trước sự kiện của quý sắp mở, để hiển thị
     // ở màn Quan sát kế tiếp và dùng lại nguyên vẹn trong stageEvent().

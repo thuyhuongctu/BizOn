@@ -87,6 +87,8 @@ const DP2 = (() => {
     if (!C.sheetComplete(sh)) { ui.err = T('Thiếu ghi chú trước khi chốt: chọn mục tiêu và viết giả định, lý do (từ 10 ký tự).', 'Add the note before committing: pick a goal and write your assumption and reason (10+ characters).'); logEv('COMMIT_REJECTED', '', 'SHEET_INCOMPLETE'); save(); render(); return false; }
     ui.err = '';
     C.commitSeason(APP, D, E, RIVALS, n, sh);
+    if (window.BizOnLive) { const h = g().history.length, tot = D.seasons.length;   // Màn hình lớp học: tiến độ từng vụ
+      BizOnLive.report({ game: 'hcsr', round: h, roundsTotal: tot, score: E.summary(D, g()).total, stage: Math.min(7, Math.round(h / tot * 7)), finished: h >= tot, team: APP.team, classCode: APP.cls }); }
     save(); ui.view = 'result'; ui.adv = false; render(); window.scrollTo({ top: 0, behavior: 'smooth' });
     return true;
   }

@@ -79,15 +79,50 @@
     return { game: 'hcsr', teams, submitted: list.length, playing: [...new Set(playing)] };
   }
 
-  // Dữ liệu minh hoạ cố định (không ngẫu nhiên) để thử máy chiếu khi chưa có lớp thật
-  const DEMO_NAMES = ['Phù Sa', 'Sen Hồng', 'Cá Linh', 'Đom Đóm', 'Bông Điên Điển', 'Gió Chướng', 'Ghe Lườn', 'Lục Bình', 'Mù U', 'Bần Chua'];
-  function demo(game) {
-    if (game === 'bps') return fromFt(DEMO_NAMES.map((n, i) => ({ team_name: 'Nhóm ' + n, total_revenue: 980 - i * 71 - (i % 3) * 13, efficiency: 88 - i * 5, final_rank: (i % 4) + 1 })));
-    if (game === 'hcth') return fromBp(DEMO_NAMES.map((n, i) => ({ company: n + ' Foods', total_score: 91 - i * 6 - (i % 2) * 2,
-      detail_json: { markets: [0, 1, 2, 3, 4, 5, 6].map(m => ([5, 2, 0, 3, 4, 1, 6].indexOf(m) < 7 - Math.floor(i * 0.6) ? (m % 6) + 1 : null)) } })));
-    return fromJourney(DEMO_NAMES.map((n, i) => ({ team_name: 'Nhóm ' + n,
-      passport: { tiers: { t3: i === 9 ? { status: 'playing', variant: 'durian' } : { status: 'done', variant: 'durian', total: 94 - i * 8, channelOrder: ['DOM', 'BORDER', 'CN', 'FROZEN', 'TW', 'JP'].slice(0, 6 - (i % 5)) } } } })));
+  // Tiến độ đang chơi (bizon_live_progress_class, migration 20261103000000_live_progress.sql): ghép với kết quả cuối.
+  // Nhóm đã nộp kết quả cuối giữ kết quả cuối; nhóm chưa nộp hiện «Tuần/Quý/Vụ x/N · đang chơi». Khi có nhóm đang chơi,
+  // vị trí trên sa bàn = tiến độ ván (nhóm đã xong ở cuối tuyến / chặng cuối); bảng: nhóm đã xong theo điểm, rồi nhóm đang chơi theo vụ.
+  const UNIT = { bps: 'Tuần', hcth: 'Quý', hcsr: 'Vụ' };
+  const scoreText = (game, v) => (game === 'bps' ? fmt(v) + ' triệu ₫' : Math.round(v) + ' điểm');
+  function withLive(base, rows, game) {
+    const known = new Set(base.teams.map(t => t.name.toLowerCase())), live = [];
+    const markets = base.markets ? base.markets.map(m => Object.assign({}, m)) : null;
+    for (const r of rows || []) {
+      const name = noEmail(text(r.team_name)) || 'Nhóm', k = name.toLowerCase();
+      if (known.has(k)) continue;
+      known.add(k);
+      const total = Math.max(1, Math.round(num(r.rounds_total))), round = Math.min(total, Math.max(0, Math.round(num(r.round))));
+      const hasScore = r.score != null && Number.isFinite(Number(r.score));
+      const t = { name, live: true, finished: !!r.finished, round, total, score: hasScore ? num(r.score) : 0,
+        label: UNIT[game] + ' ' + round + '/' + total, sub: (r.finished ? 'vừa xong ván' : 'đang chơi') + (hasScore ? ' · ' + scoreText(game, num(r.score)) : ''),
+        progress: Math.max(0.04, round / total) };
+      if (game === 'hcsr') t.stage = Number.isInteger(r.stage) && r.stage >= 0 && r.stage <= 7 ? r.stage : Math.min(STAGES - 1, Math.round(round / total * (STAGES - 1)));
+      if (game === 'hcth' && markets && r.detail && Array.isArray(r.detail.markets)) r.detail.markets.forEach((on, i) => { if (on && markets[i]) markets[i].count++; });
+      live.push(t);
+    }
+    if (!live.length) return Object.assign({}, base, { live: { count: 0, playing: 0 } });
+    live.sort((a, b) => b.round - a.round || b.score - a.score || a.name.localeCompare(b.name, 'vi'));
+    const finals = base.teams.map(t => Object.assign({}, t, { progress: 1 }, game === 'hcsr' ? { stage: STAGES - 1 } : {}));
+    const teams = finals.concat(live); teams.forEach((t, i) => { t.rank = i + 1; });
+    const rounds = live.map(t => t.round);
+    return Object.assign({}, base, { teams, markets: markets || base.markets,
+      live: { count: live.length, playing: live.filter(t => !t.finished).length, min: Math.min(...rounds), max: Math.max(...rounds), total: live[0].total, unit: UNIT[game] } });
   }
 
-  return { GAMES, BP_MARKETS, DURIAN_CHANNELS, STAGES, fromFt, fromBp, fromJourney, demo };
+  // Dữ liệu minh hoạ cố định (không ngẫu nhiên) để thử máy chiếu khi chưa có lớp thật: 4 nhóm đã xong, 6 nhóm đang chơi
+  const DEMO_NAMES = ['Phù Sa', 'Sen Hồng', 'Cá Linh', 'Đom Đóm', 'Bông Điên Điển', 'Gió Chướng', 'Ghe Lườn', 'Lục Bình', 'Mù U', 'Bần Chua'];
+  function demo(game) {
+    const N = { bps: 5, hcth: 6, hcsr: 6 }[game] || 6, done = DEMO_NAMES.slice(0, 4), going = DEMO_NAMES.slice(4);
+    const liveRows = going.map((n, i) => ({ team_name: (game === 'hcth' ? n + ' Foods' : 'Nhóm ' + n), round: Math.max(1, N - 1 - (i >> 1)), rounds_total: N,
+      score: game === 'bps' ? 620 - i * 60 : 64 - i * 4, detail: game === 'hcth' ? { markets: [1, i < 3 ? 1 : 0, 1, 0, i < 2 ? 1 : 0, 1, 0] } : null }));
+    let base;
+    if (game === 'bps') base = fromFt(done.map((n, i) => ({ team_name: 'Nhóm ' + n, total_revenue: 980 - i * 71 - (i % 3) * 13, efficiency: 88 - i * 5, final_rank: (i % 4) + 1 })));
+    else if (game === 'hcth') base = fromBp(done.map((n, i) => ({ company: n + ' Foods', total_score: 91 - i * 6 - (i % 2) * 2,
+      detail_json: { markets: [0, 1, 2, 3, 4, 5, 6].map(m => ([5, 2, 0, 3, 4, 1, 6].indexOf(m) < 7 - i ? (m % 6) + 1 : null)) } })));
+    else base = fromJourney(done.map((n, i) => ({ team_name: 'Nhóm ' + n,
+      passport: { tiers: { t3: { status: 'done', variant: 'durian', total: 94 - i * 8, channelOrder: ['DOM', 'BORDER', 'CN', 'FROZEN', 'TW', 'JP'].slice(0, 6 - (i % 5)) } } } })));
+    return withLive(base, liveRows, game);
+  }
+
+  return { GAMES, BP_MARKETS, DURIAN_CHANNELS, STAGES, fromFt, fromBp, fromJourney, withLive, demo };
 });

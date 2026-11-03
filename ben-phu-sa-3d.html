@@ -32,6 +32,7 @@
 </script>
 <script src="js/backend-config.js"></script>
 <script src="js/student-login.js"></script>
+<script src="js/live-progress.js"></script>
 <script src="js/error-log.js"></script>
 <script src="js/game3d-login-gate.js"></script>
 <script>Game3DGate.mount({ backdrop: true, introId: 'ft-intro', ns: 'bps', title: 'Chào mừng tới Bến Phù Sa!', titleEn: 'Welcome to Bến Phù Sa!', subtitle: 'Điền nhanh thông tin đội rồi vào thẳng phần giới thiệu – bỏ trống vẫn chơi được trọn vẹn.', subtitleEn: 'Fill in your team details and go straight to the intro – leave it blank and you can still play the full game.' });</script>
@@ -902,6 +903,7 @@ body:has(#ft-play:not(.hidden)) .vutru-goc{display:none!important}
     }).join(' · '));
 
     S.week++;
+    if (window.BizOnLive) BizOnLive.report({ game: 'bps', round: S.week, roundsTotal: 5, score: S.total, finished: S.week >= 5, team: myTeam() });   // Màn hình lớp học: tiến độ từng tuần
     if (S.week >= 5) return ftEnd();
     if (window.BPSRivalIntel) BPSRivalIntel.showArena(S.total, RIVALS, S.week);
     if (window.BPSHub) BPSHub.markNew();

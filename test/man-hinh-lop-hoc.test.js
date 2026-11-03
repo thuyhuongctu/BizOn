@@ -52,10 +52,32 @@ const D = require('../js/man-hinh-lop-hoc-data.js');
   assert.equal(d.teams[0].stage, 7); assert.equal(d.teams[1].stage, 0);
   assert.deepEqual(d.teams[0].channels, ['DOM', 'CN']); assert.equal(d.teams[0].sub, 'Nội địa, Trung Quốc chính ngạch');
 }
-// ---- Dữ liệu minh họa: cố định, đủ 10 nhóm
-for (const g of ['bps', 'hcth', 'hcsr']) assert.deepEqual(D.demo(g), D.demo(g), 'minh họa không ngẫu nhiên: ' + g);
-assert.equal(D.demo('bps').teams.length, 10); assert.equal(D.demo('hcth').teams.length, 10);
-assert.equal(D.demo('hcsr').teams.length, 9); assert.equal(D.demo('hcsr').playing.length, 1);
+// ---- Tiến độ đang chơi (live_progress): nhóm đã nộp kết quả cuối giữ kết quả cuối; nhóm khác hiện vụ đang chơi
+{
+  const base = D.fromFt([{ team_name: 'Đội A', total_revenue: 900 }]);
+  const d = D.withLive(base, [
+    { team_name: 'đội a', round: 3, rounds_total: 5, score: 100 },
+    { team_name: 'Đội B', round: 2, rounds_total: 5, score: 410 },
+    { team_name: 'Đội C', round: 4, rounds_total: 5, score: null },
+    { team_name: 'x@student.ctu.edu.vn', round: 5, rounds_total: 5, score: 500, finished: true },
+  ], 'bps');
+  assert.deepEqual(d.teams.map(t => t.name), ['Đội A', 'x', 'Đội C', 'Đội B'], 'đã xong theo điểm, rồi đang chơi theo vụ');
+  assert.equal(d.teams[0].label, '900 triệu ₫'); assert.equal(d.teams[0].progress, 1);
+  assert.equal(d.teams[3].label, 'Tuần 2/5'); assert.equal(d.teams[3].sub, 'đang chơi · 410 triệu ₫'); assert.equal(d.teams[3].progress, 0.4);
+  assert.equal(d.teams[2].sub, 'đang chơi'); assert.equal(d.teams[1].sub, 'vừa xong ván · 500 triệu ₫');
+  assert.deepEqual(d.live, { count: 3, playing: 2, min: 2, max: 5, total: 5, unit: 'Tuần' });
+  assert.ok(!JSON.stringify(d).includes('@'));
+  const h = D.withLive(D.fromBp([]), [{ team_name: 'Mekong', round: 2, rounds_total: 6, detail: { markets: [1, 0, 0, 0, 0, 1, 0] } }], 'hcth');
+  assert.deepEqual(h.markets.map(m => m.count), [1, 0, 0, 0, 0, 1, 0], 'thị trường tính cả nhóm đang chơi');
+  const s = D.withLive(D.fromJourney([{ team_name: 'N1', passport: { tiers: { t3: { status: 'done', variant: 'durian', total: 40 } } } }]), [{ team_name: 'N2', round: 3, rounds_total: 6, stage: 4 }, { team_name: 'N3', round: 6, rounds_total: 6 }], 'hcsr');
+  assert.deepEqual(s.teams.map(t => [t.name, t.stage]), [['N1', 7], ['N3', 7], ['N2', 4]], 'chặng theo tiến độ, nhóm xong ở chặng cuối');
+  assert.deepEqual(D.withLive(base, [], 'bps').live, { count: 0, playing: 0 }, 'không có tiến độ: giữ nguyên');
+}
+// ---- Dữ liệu minh họa: cố định, 4 nhóm đã xong + 6 nhóm đang chơi
+for (const g of ['bps', 'hcth', 'hcsr']) {
+  assert.deepEqual(D.demo(g), D.demo(g), 'minh họa không ngẫu nhiên: ' + g);
+  assert.equal(D.demo(g).teams.length, 10); assert.equal(D.demo(g).submitted, 4); assert.equal(D.demo(g).live.playing, 6);
+}
 
 // ---- 2. Trang, lối vào, service worker
 const page = read('man-hinh-lop-hoc.html');
@@ -65,7 +87,7 @@ assert.ok(read('js/man-hinh-lop-hoc.js').includes("from '../vendor/three/three.m
 assert.ok(/async ftBoard\(code\)[^\n]*ft_class_leaderboard/.test(read('js/instructor-api.js')));
 assert.ok(read('Trang Giang Vien.dc.html').includes('href="man-hinh-lop-hoc.html?lop={{ code }}"'), 'lối vào từ Trang Giảng viên');
 const sw = read('sw.js');
-assert.ok(+(sw.match(/bizon-v(\d+)/) || [])[1] >= 753);
+assert.ok(+(sw.match(/bizon-v(\d+)/) || [])[1] >= 754);
 for (const f of ['./man-hinh-lop-hoc.html', './js/man-hinh-lop-hoc.js', './js/man-hinh-lop-hoc-data.js']) assert.ok(sw.includes("'" + f + "'"), 'sw.js thiếu ' + f);
 
 // ---- 3. Trình duyệt
@@ -82,13 +104,16 @@ let chromium; try { chromium = require('playwright').chromium; } catch (e) { con
     return pg;
   };
   try {
-    const want = { bps: { rows: 10, sel: '#tags .lab', n: 5, night: false }, hcth: { rows: 10, sel: '#tags .lab', n: 8, night: true }, hcsr: { rows: 9, sel: '#tags .st', n: 8, night: false } };
+    const want = { bps: { rows: 10, sel: '#tags .lab', n: 5, night: false, unit: 'Tuần 2–4/5' }, hcth: { rows: 10, sel: '#tags .lab', n: 8, night: true, unit: 'Quý 3–5/6' }, hcsr: { rows: 10, sel: '#tags .st', n: 8, night: false, unit: 'Vụ 3–5/6' } };
     for (const [g, w] of Object.entries(want)) {
       const pg = await open('demo=1&game=' + g);
       await pg.waitForFunction(s => document.querySelectorAll(s).length > 0, w.sel, { timeout: 30000 });
       assert.equal(await pg.locator(w.sel).count(), w.n, g + ': số nhãn/thẻ trên sa bàn');
       assert.equal(await pg.locator('#rank li').count(), w.rows, g + ': bảng xếp hạng');
       assert.equal(await pg.locator('#demoChip').isVisible(), true, g + ': ghi rõ dữ liệu minh họa');
+      assert.equal(await pg.textContent('#count'), '6'); assert.equal(await pg.textContent('#countLabel'), 'nhóm đang chơi', g + ': số nhóm đang chơi');
+      assert.ok((await pg.textContent('#upd')).includes(w.unit), g + ': vụ đang chơi ' + w.unit);
+      assert.equal(await pg.locator('#join').isVisible(), false, g + ': minh họa không hiện đường dẫn lớp');
       assert.equal(await pg.evaluate(() => document.body.classList.contains('night')), w.night, g + ': chế độ mặc định');
       assert.equal(await pg.evaluate(() => document.documentElement.scrollWidth <= innerWidth), true, g + ': không tràn ngang');
       await pg.close();
@@ -101,7 +126,6 @@ let chromium; try { chromium = require('playwright').chromium; } catch (e) { con
     await pg.waitForFunction(() => document.querySelectorAll('#tags .st').length === 8, null, { timeout: 30000 });
     assert.equal(await pg.getAttribute('.tabs button[data-game="hcsr"]', 'aria-pressed'), 'true');
     assert.ok(pg.url().includes('game=hcsr'), 'URL giữ trò đang chiếu');
-    assert.ok((await pg.textContent('#strip')).includes('Đang chơi Bậc 3'));
     await pg.close();
     // Máy chiếu 1280×720
     const sm = await open('demo=1&game=hcth', { width: 1280, height: 720 });
