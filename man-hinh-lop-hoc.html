@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Màn hình lớp học – BizOn</title>
+<meta name="description" content="Màn hình chiếu cho giảng viên: kết quả các nhóm trong Bến Phù Sa, Hộ Chiếu Thương Hiệu và Hộ Chiếu Sầu Riêng trên sa bàn 3D.">
+<link rel="icon" href="logo/bizon-icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/bizon-clay-fonts.css">
+<style>
+:root{--bg:#FBF4E8;--card:#FFFBF4;--ink:#033337;--muted:#3E5A5C;--amber:#FDA127;--teal:#2F8A8C;--sand:#F3E6CF;--shadow:0 18px 30px -16px rgba(110,70,30,.35)}
+body.night{--bg:#14231F;--card:rgba(32,46,40,.86);--ink:#FFF6E6;--muted:#C9BFA8;--sand:rgba(255,246,230,.12);--shadow:0 18px 30px -16px rgba(0,0,0,.6)}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden}
+body{background:var(--bg);color:var(--ink);font-family:'Be Vietnam Pro','BVP Fallback',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+#stage{position:fixed;inset:0;display:block}
+#tags{position:fixed;inset:0;pointer-events:none;overflow:hidden}
+header{position:fixed;left:24px;right:24px;top:18px;display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;padding:10px 12px 10px 22px;border-radius:999px;background:var(--card);box-shadow:var(--shadow);backdrop-filter:blur(6px);z-index:3}
+.brand{font-weight:800;font-size:20px;letter-spacing:-.03em}
+.brand small{font-weight:700;font-size:15px;color:var(--muted);margin-left:8px}
+.tabs{display:flex;gap:4px;padding:4px;border-radius:999px;background:var(--sand)}
+.tabs button,.tool{border:0;cursor:pointer;font:700 15px 'Be Vietnam Pro',sans-serif;padding:9px 16px;border-radius:999px;background:transparent;color:var(--ink)}
+.tabs button[aria-pressed="true"]{background:var(--amber);color:#14231F}
+.tool{background:var(--sand)}
+select{font:700 15px 'Be Vietnam Pro',sans-serif;padding:8px 12px;border-radius:999px;border:0;background:var(--sand);color:var(--ink)}
+.grow{flex:1}
+.chip{padding:6px 12px;border-radius:999px;background:#FFE6B8;color:#7A4A0E;font-size:14px;font-weight:800}
+.hud{position:fixed;left:32px;top:104px;max-width:520px;z-index:2;text-shadow:0 1px 0 var(--bg)}
+.kicker{font-size:19px;font-weight:700;color:var(--muted)}
+.big{font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:76px;font-weight:800;line-height:1;letter-spacing:-.04em;margin:6px 0 2px}
+.big small{font-size:30px;font-weight:700;color:var(--muted);letter-spacing:0}
+.upd{font-size:16px;color:var(--muted)}
+aside{position:fixed;right:24px;top:96px;bottom:24px;width:440px;padding:22px 22px 16px;border-radius:32px;background:var(--card);box-shadow:var(--shadow);backdrop-filter:blur(6px);display:flex;flex-direction:column;z-index:2}
+aside h2{margin:0 0 12px;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:24px}
+ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px;flex:1;min-height:0;overflow:hidden}
+li{display:grid;grid-template-columns:34px minmax(0,1fr) 110px;grid-template-rows:auto auto;column-gap:12px;align-items:center}
+li .n{grid-row:span 2;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;color:#14231F;font-weight:800;font-size:16px}
+li b{font-size:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+li .v{font-size:16px;font-weight:800;text-align:right}
+li .s{font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+li .bar{height:9px;border-radius:999px;background:var(--sand);overflow:hidden}
+li .bar i{display:block;height:100%;border-radius:999px}
+.note{margin:12px 0 0;font-size:14px;line-height:1.45;color:var(--muted)}
+.strip{position:fixed;left:32px;right:488px;bottom:24px;display:flex;flex-wrap:wrap;gap:10px;z-index:2}
+.strip div{padding:8px 14px;border-radius:999px;background:var(--card);box-shadow:var(--shadow);font-size:16px;font-weight:700}
+.lab{position:absolute;transform:translate(-50%,-130%);padding:5px 12px;border-radius:999px;background:var(--card);color:var(--ink);font-weight:800;font-size:17px;white-space:nowrap;box-shadow:var(--shadow)}
+.lab.home{background:var(--amber);color:#14231F}
+.lab.dim{opacity:.6}
+.st{position:absolute;width:150px;transform:translate(-50%,-100%);text-align:center}
+.st.below{transform:translate(-50%,0)}
+.st img{display:block;width:150px;height:94px;object-fit:cover;border-radius:18px;border:4px solid var(--card);box-shadow:var(--shadow)}
+.st b{display:block;margin-top:6px;font-size:16px;line-height:1.2}
+.st span{display:inline-block;margin-top:4px;padding:2px 10px;border-radius:999px;background:var(--card);font-weight:800;font-size:15px}
+.st.lead span{background:var(--amber);color:#14231F}
+#gate{position:fixed;inset:0;display:none;place-items:center;z-index:5;background:rgba(20,35,31,.45)}
+#gate.on{display:grid}
+#gate div{max-width:520px;margin:16px;padding:28px;border-radius:28px;background:#FFFBF4;color:#033337;box-shadow:var(--shadow);text-align:center}
+#gate h2{margin:0 0 8px;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif}
+#gate a,#gate button{display:inline-block;margin:8px 6px 0;padding:11px 18px;border-radius:999px;border:0;font:800 15px 'Be Vietnam Pro',sans-serif;text-decoration:none;cursor:pointer}
+#gate a{background:#FDA127;color:#14231F}
+#gate button{background:#F3E6CF;color:#033337}
+@media (max-width:1100px){aside{width:340px}.strip{right:388px}.big{font-size:56px}}
+@media (max-width:760px){aside{display:none}.strip{right:24px}header{border-radius:24px}}
+</style>
+</head>
+<body>
+<canvas id="stage" aria-label="Sa bàn 3D kết quả các nhóm"></canvas>
+<div id="tags"></div>
+<header>
+  <span class="brand">BizOn<small>Màn hình lớp học</small></span>
+  <nav class="tabs" aria-label="Chọn trò chơi">
+    <button type="button" data-game="bps" aria-pressed="true">Bến Phù Sa</button>
+    <button type="button" data-game="hcth" aria-pressed="false">Hộ Chiếu Thương Hiệu</button>
+    <button type="button" data-game="hcsr" aria-pressed="false">Hộ Chiếu Sầu Riêng</button>
+  </nav>
+  <span class="grow"></span>
+  <span class="chip" id="demoChip" hidden>Dữ liệu minh họa</span>
+  <select id="cls" aria-label="Mã lớp"></select>
+  <button type="button" class="tool" id="night" aria-pressed="false">🌙 Đêm</button>
+  <button type="button" class="tool" id="full">⛶ Toàn màn hình</button>
+</header>
+<div class="hud" aria-live="polite">
+  <div class="kicker" id="kicker">Bến Phù Sa</div>
+  <div class="big"><span id="count">0</span> <small id="countLabel">nhóm đã nộp</small></div>
+  <div class="upd" id="upd"></div>
+</div>
+<aside>
+  <h2 id="panelTitle">Xếp hạng các nhóm</h2>
+  <ol id="rank"></ol>
+  <p class="note" id="note"></p>
+</aside>
+<div class="strip" id="strip"></div>
+<div id="gate" role="dialog" aria-modal="true" aria-labelledby="gateT">
+  <div>
+    <h2 id="gateT">Cần đăng nhập giảng viên</h2>
+    <p id="gateP">Màn hình này đọc kết quả lớp của chị/anh. Hãy đăng nhập ở Trang Giảng viên rồi mở lại trang này trên cùng trình duyệt.</p>
+    <a href="Trang%20Giang%20Vien.dc.html">Mở Trang Giảng viên</a>
+    <button type="button" id="tryDemo">Xem dữ liệu minh họa</button>
+  </div>
+</div>
+<script src="js/backend-config.js"></script>
+<script src="js/instructor-api.js"></script>
+<script src="js/man-hinh-lop-hoc-data.js"></script>
+<script type="module">
+import { createStage, TEAM_COLORS } from './js/man-hinh-lop-hoc.js';
+const D = window.BizOnClassScreen, I = window.BizOnInstructor;
+const $ = id => document.getElementById(id);
+const q = new URLSearchParams(location.search);
+const NOTES = {
+  bps: 'Mỗi ghe là một nhóm. Ghe đi xa hơn trên tuyến Cần Thơ → cảng Cái Mép khi tổng doanh thu cao hơn (so với nhóm dẫn đầu). Sen nở cạnh ghe dẫn đầu.',
+  hcth: 'Bảy đảo là bảy thị trường của game. Tuyến từ đảo nhà Mekong càng dày khi càng nhiều doanh nghiệp đã vào thị trường đó. Con số cạnh tên đảo là số doanh nghiệp.',
+  hcsr: 'Mỗi hạt đất sét là một nhóm, đứng ở chặng ứng với điểm tổng (0–100 chia đều 8 chặng). Chỉ tính nhóm chơi qua Hành trình 3 bậc và đã xong Bậc 3.',
+};
+const NIGHT_DEFAULT = { bps: false, hcth: true, hcsr: false };
+let game = ['bps', 'hcth', 'hcsr'].includes(q.get('game')) ? q.get('game') : 'bps';
+let night = q.has('dem') ? q.get('dem') !== '0' : NIGHT_DEFAULT[game];
+let demo = q.get('demo') === '1' || (I && I.demo);
+let cls = (q.get('lop') || '').toUpperCase(), timer = null, last = null;
+const stage = createStage($('stage'), $('tags'));
+const panelPx = () => (innerWidth > 760 ? document.querySelector('aside').offsetWidth + 24 : 0);
+
+function setUrl() { const u = new URL(location.href); u.searchParams.set('game', game); cls ? u.searchParams.set('lop', cls) : u.searchParams.delete('lop'); demo ? u.searchParams.set('demo', '1') : u.searchParams.delete('demo'); history.replaceState(null, '', u); }
+function paint(data) {
+  const G = D.GAMES[game];
+  $('kicker').textContent = G.vi + (demo ? ' · lớp minh họa' : cls ? ' · lớp ' + cls : '');
+  $('count').textContent = data.submitted;
+  $('countLabel').textContent = game === 'hcth' ? 'bài đã nộp' : 'nhóm đã nộp';
+  $('upd').textContent = demo ? 'Dữ liệu minh họa, không phải lớp thật.' : 'Cập nhật lúc ' + new Date().toLocaleTimeString('vi-VN') + ' · tự làm mới mỗi 20 giây';
+  $('panelTitle').textContent = game === 'hcth' ? 'Xếp hạng doanh nghiệp' : 'Xếp hạng các nhóm';
+  const top = data.teams.slice(0, 10);
+  $('rank').replaceChildren(...top.map((t, i) => {
+    const li = document.createElement('li');
+    li.innerHTML = '<span class="n"></span><b></b><span class="v"></span><span class="s"></span><span class="bar"><i></i></span>';
+    li.querySelector('.n').style.background = TEAM_COLORS[i]; li.querySelector('.n').textContent = t.rank;
+    li.querySelector('b').textContent = t.name; li.querySelector('.v').textContent = t.label; li.querySelector('.s').textContent = t.sub;
+    const bar = li.querySelector('.bar i'); bar.style.width = (t.progress * 100).toFixed(1) + '%'; bar.style.background = TEAM_COLORS[i];
+    return li;
+  }));
+  if (!top.length) { const li = document.createElement('li'); li.textContent = 'Chưa có kết quả nào được nộp.'; $('rank').append(li); }
+  $('note').textContent = NOTES[game] + (data.teams.length > 10 ? ' Sa bàn và bảng hiện 10 nhóm đầu trên ' + data.teams.length + ' nhóm.' : '');
+  const chips = game === 'hcsr' ? (data.playing && data.playing.length ? ['Đang chơi Bậc 3: ' + data.playing.slice(0, 6).join(', ') + (data.playing.length > 6 ? '…' : '')] : [])
+    : [];
+  $('strip').replaceChildren(...chips.map(c => { const d = document.createElement('div'); d.textContent = c; return d; }));
+}
+async function fetchData() {
+  if (demo) return D.demo(game);
+  if (game === 'bps') return D.fromFt(await I.ftBoard(cls));
+  if (game === 'hcth') return D.fromBp(await I.bpResults(cls));
+  return D.fromJourney(await I.journeyPassports(cls));
+}
+async function refresh(rebuild) {
+  let data;
+  try { data = await fetchData(); } catch (e) { $('upd').textContent = 'Không tải được kết quả: ' + e.message; return; }
+  const sig = JSON.stringify([game, night, data.teams.map(t => [t.name, t.score]), data.markets]);
+  paint(data);
+  if (rebuild || sig !== last) { last = sig; await stage.show(game, data, night, panelPx()); }
+}
+function sync() {
+  document.querySelectorAll('.tabs button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.game === game)));
+  document.body.classList.toggle('night', night); $('night').setAttribute('aria-pressed', String(night)); $('night').textContent = night ? '☀️ Ngày' : '🌙 Đêm';
+  $('demoChip').hidden = !demo; setUrl();
+}
+async function start() {
+  sync();
+  const signed = I && I.backendOn && I.signedIn && !I.demo;
+  if (!demo && !signed) { $('gate').classList.add('on'); $('cls').hidden = true; await stage.show(game, { teams: [], submitted: 0 }, night, panelPx()); return; }
+  $('gate').classList.remove('on');
+  if (demo) { $('cls').hidden = true; }
+  else {
+    const list = (await I.myClasses().catch(() => [])) || [];
+    const codes = list.map(c => c.class_code);
+    if (!cls || !codes.includes(cls)) cls = codes[0] || '';
+    $('cls').replaceChildren(...codes.map(c => new Option(c, c, false, c === cls))); $('cls').hidden = !codes.length;
+    if (!codes.length) { $('upd').textContent = 'Tài khoản chưa có lớp nào. Tạo lớp ở Trang Giảng viên.'; }
+  }
+  sync(); await refresh(true);
+  clearInterval(timer); if (!demo) timer = setInterval(() => refresh(false), 20000);
+}
+document.querySelectorAll('.tabs button').forEach(b => b.addEventListener('click', () => { if (game === b.dataset.game) return; game = b.dataset.game; night = NIGHT_DEFAULT[game]; last = null; sync(); refresh(true); }));
+$('night').addEventListener('click', () => { night = !night; sync(); refresh(true); });
+$('cls').addEventListener('change', e => { cls = e.target.value; sync(); refresh(true); });
+$('full').addEventListener('click', () => { document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen().catch(() => {}); });
+$('tryDemo').addEventListener('click', () => { demo = true; start(); });
+start();
+</script>
+</body>
+</html>
