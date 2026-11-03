@@ -23,6 +23,10 @@ on:
       - 'test/sql/live_progress_smoke.sql'
       - '.github/workflows/supabase-student-login.yml'
 
+# Chỉ cần đọc mã nguồn; không ghi gì lên kho (rà soát 03/11/2026)
+permissions:
+  contents: read
+
 jobs:
   smoke:
     runs-on: ubuntu-latest

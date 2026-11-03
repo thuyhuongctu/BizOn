@@ -18,6 +18,10 @@ on:
   push:
     branches: ['main', 'feat/aibis-app-engine-main']
 
+# Chỉ cần đọc mã nguồn; không ghi gì lên kho (rà soát 03/11/2026)
+permissions:
+  contents: read
+
 jobs:
   contract:
     runs-on: ubuntu-latest

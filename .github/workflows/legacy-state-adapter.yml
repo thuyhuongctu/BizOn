@@ -16,6 +16,10 @@ on:
       - 'js/core/legacy-state-adapter.js'
       - 'test/legacy-state-adapter.test.js'
 
+# Chỉ cần đọc mã nguồn; không ghi gì lên kho (rà soát 03/11/2026)
+permissions:
+  contents: read
+
 jobs:
   contract:
     runs-on: ubuntu-latest
