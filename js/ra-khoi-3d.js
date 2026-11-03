@@ -3,6 +3,7 @@
  * Địa hình bảy đảo thị trường dựng cùng cách với MV «Brand Passport – Vietnam to the World» (bản thế giới thu nhỏ). */
 import * as THREE from 'three';
 import { moPhong } from './phong-realtime.js';
+import { GLTFLoader } from './vendor/GLTFLoader.js';
 
 const EN = () => { try { return localStorage.getItem('bizon-lang') === 'en'; } catch (e) { return false; } };
 const T = (vi, en) => (EN() ? en : vi);
@@ -101,11 +102,30 @@ DAO.forEach(o => { const g = new THREE.Group(); g.position.set(o.x, 0, o.z); sce
   g.userData.h = (lx, lz) => caoDo(o.id, lx, lz, o.r);
   const bot = new THREE.Mesh(new THREE.RingGeometry(o.r * .93, o.r * 1.08, 56), new THREE.MeshBasicMaterial({ color: '#ffffff', transparent: true, opacity: .3, depthWrite: false }));
   bot.rotation.x = -Math.PI / 2; bot.position.set(o.x, .12, o.z); scene.add(bot); });
-function cayDua(g, x, z, h = 3) { const t = new THREE.Group(); t.position.set(x, g.userData.h(x, z), z);
+// ---------- mô hình 3D Kenney (CC0): thuyền, dừa, cây, bụi, đá, hoa, lục bình ----------
+// Nạp không đồng bộ: chỗ nào cần mô hình thì gọi chay(f); nạp xong mới chạy. Nạp hỏng thì dùng hình khối cũ.
+const MH = {}, DAT = []; let MH_XONG = false;
+const MH_DS = { 'kenney-thuyen': ['boat-fishing-small', 'boat-row-small', 'boat-house-a'],
+  'kenney-cay': ['tree_palm', 'tree_palmBend', 'tree_palmShort', 'tree_default', 'tree_oak', 'plant_bush', 'plant_bushDetailed', 'plant_bushLarge',
+    'rock_smallA', 'flower_redA', 'flower_yellowB', 'flower_purpleB', 'grass_large', 'lily_large', 'lily_small', 'stump_round'] };
+const chay = f => { if (MH_XONG) f(); else DAT.push(f); };
+function moHinh(ten, cao) { const m = MH[ten]; if (!m) return null; const g = m.clone(true);
+  if (cao) { const b = new THREE.Box3().setFromObject(g); g.scale.setScalar(cao / Math.max(.01, b.max.y - b.min.y)); }
+  g.traverse(o => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } }); return g; }
+function datMH(cha, ten, x, y, z, cao, quay) { const g = moHinh(ten, cao); if (!g) return false; g.position.set(x, y, z); g.rotation.y = quay; cha.add(g); return true; }
+{ const L = new GLTFLoader(); const viec = Object.entries(MH_DS).flatMap(([d, ds]) => ds.map(t => [d, t])); let con = viec.length;
+  const xong = () => { if (--con > 0) return; MH_XONG = true; DAT.splice(0).forEach(f => f()); document.body.dataset.moHinh = Object.keys(MH).length + '/' + viec.length; };
+  viec.forEach(([d, ten]) => L.load('assets/models/' + d + '/' + ten + '.glb', gl => {
+    gl.scene.traverse(o => { if (!o.isMesh) return; (Array.isArray(o.material) ? o.material : [o.material]).forEach(m => { m.metalness = 0;
+      const hsl = {}; m.color.getHSL(hsl); if (!m.map && hsl.h > .38 && hsl.h < .56 && hsl.s > .2) m.color.set(hsl.l > .3 ? '#79b25c' : '#4f8a3e'); }); });  // Nature Kit khai metallic 1; lá xanh ngọc → xanh lá
+    MH[ten] = gl.scene; xong(); }, undefined, () => xong())); }
+function cayDua(g, x, z, h = 3) { const k = DAT.length; chay(() => datMH(g, ['tree_palm', 'tree_palmBend', 'tree_palmShort'][k % 3], x, g.userData.h(x, z) - .05, z, h * 1.25, k * 1.7) || cayDuaCu(g, x, z, h)); }
+function cayDuaCu(g, x, z, h = 3) { const t = new THREE.Group(); t.position.set(x, g.userData.h(x, z), z);
   const th = new THREE.Mesh(new THREE.CylinderGeometry(.12, .18, h, 6), clay('#9a6b3f')); th.position.y = h / 2; th.rotation.z = .12; t.add(th);
   for (let k = 0; k < 6; k++) { const la = new THREE.Mesh(new THREE.ConeGeometry(.35, 1.9, 4), clay('#4f9a4a')); la.position.set(Math.cos(k) * .7, h + .1, Math.sin(k) * .7); la.rotation.set(Math.PI / 2 - .6, 0, k * 1.05); t.add(la); }
   g.add(bong(t)); }
-function cayTron(g, x, z, m, s = 1) { const t = new THREE.Group(); t.position.set(x, g.userData.h(x, z), z);
+function cayTron(g, x, z, m, s = 1) { const k = DAT.length; chay(() => (!/^#f[3-6]/i.test(m) && datMH(g, k % 2 ? 'tree_oak' : 'tree_default', x, g.userData.h(x, z) - .05, z, 3.4 * s, k * 1.3)) || cayTronCu(g, x, z, m, s)); }
+function cayTronCu(g, x, z, m, s = 1) { const t = new THREE.Group(); t.position.set(x, g.userData.h(x, z), z);
   const th = new THREE.Mesh(new THREE.CylinderGeometry(.12 * s, .18 * s, 1.4 * s, 6), clay('#6a4a3a')); th.position.y = .7 * s;
   const tan = new THREE.Mesh(new THREE.IcosahedronGeometry(1.1 * s, 0), clay(m)); tan.position.y = 1.9 * s; t.add(th, tan); g.add(bong(t)); }
 function cayThong(g, x, z, s = 1) { const t = new THREE.Group(); t.position.set(x, g.userData.h(x, z), z);
@@ -141,6 +161,16 @@ function nha(g, x, z, w, h, mt, mm, rot = 0) { const n = new THREE.Group(); n.po
     const ng = new THREE.Mesh(new THREE.BoxGeometry(.35, .35, 8), clay('#f2c23a')); ng.position.set(0, 7, -2); c.add(a, b, ng); g.add(bong(c)); }
   for (let k = 0; k < 24; k++) { const b = new THREE.Mesh(new THREE.BoxGeometry(2, .9, .9), clay(m[k % 5])); b.position.set(-6 + (k % 6) * 2.15, 1.45 + Math.floor(k / 12) * .9, 1 + (Math.floor(k / 6) % 2) * 1.05); g.add(bong(b)); } }
 
+// nhà nổi, lục bình ven đảo nhà; bụi, đá, hoa rải trên các đảo xanh
+const NHA_NOI = [];
+chay(() => { [[-12, -12, .9], [-15, 6, -.6], [61, 26, 2.2]].forEach(([x, z, q]) => { const b = moHinh('boat-house-a', 3.2); if (b) { b.position.set(x, .05, z); b.rotation.y = q; scene.add(b); NHA_NOI.push(b); } });
+  for (let k = 0; k < 26; k++) { const a = k * 2.399, rr = 14.2 + (k % 4) * .9; datMH(scene, k % 2 ? 'lily_large' : 'lily_small', Math.cos(a) * rr, .16, Math.sin(a) * rr, .15, k); }
+  const RAI = { 'nha': 22, 'luc-dao': 10, 'nhat-quang': 12, 'kim-sa': 8, 'hoa-son': 6, 'bac-phong': 8 };
+  const DO = ['plant_bushDetailed', 'plant_bush', 'plant_bushLarge', 'rock_smallA', 'flower_redA', 'flower_yellowB', 'flower_purpleB', 'grass_large', 'stump_round'];
+  DAO.forEach(o => { const g = G[o.id]; for (let k = 0; k < (RAI[o.id] || 0); k++) { const a = k * 2.399 + o.id.length, rr = o.r * (.35 + .4 * ((k * .618) % 1)), x = Math.cos(a) * rr, z = Math.sin(a) * rr, y = g.userData.h(x, z);
+      if (y < .6 || y > 4) continue; const t = o.id === 'kim-sa' ? ['rock_smallA', 'grass_large', 'stump_round'][k % 3] : DO[k % DO.length];
+      datMH(g, t, x, y - .03, z, /flower/.test(t) ? .55 : /rock|stump/.test(t) ? .7 : .9, k * 1.9); } }); });
+
 // nhãn chữ trên canvas (tên đảo, tên người chơi)
 function nhan(text, mauNen, w = 512) { const c = document.createElement('canvas'); c.width = w; c.height = 128; const g = c.getContext('2d');
   g.font = '800 54px Manrope, "Be Vietnam Pro", sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle';
@@ -154,14 +184,16 @@ DAO.forEach(o => { const s = nhan(o.ten); s.scale.multiplyScalar(1.1); const top
 const anhCty = {}; const loader = new THREE.TextureLoader();
 CTY.forEach(c => { const tex = loader.load('assets/character/firms/' + c.id + '-cut.webp', t => { anhCty[c.id].ratio = t.image.width / t.image.height; anhCty[c.id].ok = true; });
   tex.colorSpace = THREE.SRGBColorSpace; anhCty[c.id] = { tex, ratio: .7, ok: false }; });
-function taoThuyen(ctyId, ten, cuaMinh) { const c = ctyCua(ctyId), g = new THREE.Group();
+function taoThuyen(ctyId, ten, cuaMinh) { const c = ctyCua(ctyId), g = new THREE.Group(), vo = new THREE.Group(); g.add(vo);
+  // thân thuyền: thuyền đánh cá Kenney khi mô hình đã nạp, còn không thì khối hộp (rồi đổi khi nạp xong); cờ mang màu doanh nghiệp
+  const coMau = new THREE.Mesh(new THREE.PlaneGeometry(.9, .5), clay(c.mau, { side: THREE.DoubleSide })); coMau.position.set(.45, 3.8, .3); coMau.rotation.y = Math.PI / 2; g.add(coMau);
+  chay(() => { const b = moHinh('boat-fishing-small', 3.1); if (!b) return; vo.clear(); vo.add(b); });
   const than = new THREE.Mesh(new THREE.BoxGeometry(1.5, .7, 4), clay(c.mau)); than.position.y = .35;
   const mui = new THREE.Mesh(new THREE.ConeGeometry(.75, 1.5, 4), clay(c.mau)); mui.rotation.set(Math.PI / 2, 0, Math.PI / 4); mui.position.set(0, .35, 2.7);
   const cot = new THREE.Mesh(new THREE.CylinderGeometry(.06, .06, 3.4, 5), clay('#7a5634')); cot.position.set(0, 2.2, .9);
   const buom = new THREE.Mesh(new THREE.PlaneGeometry(1.8, 2.4), clay('#fff7e6', { side: THREE.DoubleSide })); buom.position.set(0, 2.3, .9); buom.rotation.y = Math.PI / 2;
-  const co = new THREE.Mesh(new THREE.PlaneGeometry(.8, .45), clay(c.mau, { side: THREE.DoubleSide })); co.position.set(.4, 3.75, .9); co.rotation.y = Math.PI / 2;
-  g.add(than, mui, cot, buom, co); bong(g);
-  const a = anhCty[c.id]; const nv = new THREE.Sprite(new THREE.SpriteMaterial({ map: a.tex, transparent: true, alphaTest: .05 })); nv.center.set(.5, 0); nv.position.set(0, .7, -1); g.add(nv); g.userData.nv = nv; g.userData.cty = c.id; NV_DS.push(g);
+  if (!MH_XONG) vo.add(than, mui, cot, buom); bong(g);
+  const a = anhCty[c.id]; const nv = new THREE.Sprite(new THREE.SpriteMaterial({ map: a.tex, transparent: true, alphaTest: .05 })); nv.center.set(.5, 0); nv.position.set(0, .75, 1.2); g.add(nv); g.userData.nv = nv; g.userData.cty = c.id; NV_DS.push(g);
   const tag = nhan(ten, cuaMinh ? '#006687' : c.mau); tag.position.set(0, 4.6, 0); tag.scale.multiplyScalar(.42); g.add(tag); g.userData.tag = tag;
   scene.add(g); return g; }
 function datTen(g, ten, cuaMinh, dau) { g.remove(g.userData.tag); g.userData.tag.material.map.dispose(); const tag = nhan(ten + (dau ? '  ✦' + dau : ''), cuaMinh ? '#006687' : ctyCua(g.userData.cty).mau); tag.position.set(0, 4.6, 0); tag.scale.multiplyScalar(.42); g.add(tag); g.userData.tag = tag; }
@@ -317,6 +349,7 @@ function vong(now) {
     const x = a.x + (c.x - a.x) * k, z = a.z + (c.z - a.z) * k; b.g.position.set(x, song(x, z, t), z); b.g.rotation.set(Math.sin(t * 1.3) * .03, a.h + dh * k, Math.sin(t * 1.7) * .04); }
   // hình nhà sáng lập trên boong: đúng tỉ lệ ảnh khi ảnh đã nạp
   NV_DS.forEach(o => { const a = anhCty[o.userData.cty]; o.userData.nv.scale.set(2.3 * a.ratio, 2.3, 1); });
+  NHA_NOI.forEach((b, k) => { b.position.y = song(b.position.x, b.position.z, t) * .7; b.rotation.z = Math.sin(t * 1.1 + k) * .025; });
   chayHieu(now);
   cam.position.copy(camPos); cam.lookAt(camNhin);
   sun.target.position.copy(camNhin); sun.position.copy(camNhin).addScaledVector(huongNang, 140);
