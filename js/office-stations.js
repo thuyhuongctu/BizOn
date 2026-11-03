@@ -11,6 +11,8 @@
   'use strict';
   const tr = (vi, en) => (typeof T === 'function' ? T(vi, en) : vi);
   const gs = () => (typeof S !== 'undefined' ? S : null);
+  // Tên đội / đối thủ lấy từ trạng thái ván (có thể khôi phục từ bản lưu chung của đội): luôn thoát ký tự khi vào innerHTML
+  const esc = v => String(v == null ? '' : v).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const fmt = m => (typeof money === 'function' ? money(m) : Math.round(m) + 'tr₫');
   const has = n => typeof window[n] === 'function';
   const call = (n, ...a) => { try { if (has(n)) return window[n](...a); } catch (e) { console.warn(n, e); } };
@@ -205,7 +207,7 @@
     }
     const medal = i => (i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : '#' + (i + 1));
     const p = panel(ctx, '🏆', tr('Bảng xếp hạng', 'Leaderboard'), note, 'leaderboard');
-    p.bd.innerHTML = rows.map((t, i) => `<div class="bzs-row${t.me ? ' on' : ''}"><span class="em" style="font-size:24px">${medal(i)}</span><div style="flex:1;min-width:0"><b>${t.name}</b><small>${tr('Thị phần', 'Market share')} ${t.share.toFixed(1)}%${t.flags != null ? ' · 🚩 ' + t.flags : ''}</small></div><b style="color:${t.profit >= 0 ? '#006687' : '#c8641c'}">${fmt(t.profit)}</b></div>`).join('');
+    p.bd.innerHTML = rows.map((t, i) => `<div class="bzs-row${t.me ? ' on' : ''}"><span class="em" style="font-size:24px">${medal(i)}</span><div style="flex:1;min-width:0"><b>${esc(t.name)}</b><small>${tr('Thị phần', 'Market share')} ${t.share.toFixed(1)}%${t.flags != null ? ' · 🚩 ' + t.flags : ''}</small></div><b style="color:${t.profit >= 0 ? '#006687' : '#c8641c'}">${fmt(t.profit)}</b></div>`).join('');
   }
 
   // ---------- Clay Factory Frenzy ----------
@@ -311,7 +313,7 @@
     p.bd.innerHTML = `<div class="bzs-row on"><span class="em">${ev.icon || '📡'}</span><div style="flex:1;min-width:0"><b>${tr('Vòng ', 'Round ')}${Math.min(s.round, 6)} · ${ev.name || ''}</b><small>${ev.desc || ''}</small></div></div>
       <p class="bzs-h">📰 ${tr('BẢN TIN', 'TICKER')}</p>${ticker.map(t => `<div style="font-size:12px;padding:4px 0">${t}</div>`).join('')}
       <p class="bzs-h">📊 ${tr('THỈ PHẦN THỜI GIAN THỰC', 'REAL-TIME SHARE')}</p>
-      ${teams.map(t => `<div style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:${t.me ? 900 : 700};margin:4px 0"><span style="width:120px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${t.name}</span><span style="flex:1;height:10px;border-radius:99px;background:#eef4f8;overflow:hidden"><span style="display:block;height:100%;width:${(t.share / max * 100).toFixed(1)}%;background:${t.me ? '#006687' : COL[t.name] || '#8a96a0'}"></span></span><span style="width:40px;text-align:right">${t.share.toFixed(1)}%</span></div>`).join('')}
+      ${teams.map(t => `<div style="display:flex;align-items:center;gap:8px;font-size:12px;font-weight:${t.me ? 900 : 700};margin:4px 0"><span style="width:120px;flex-shrink:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(t.name)}</span><span style="flex:1;height:10px;border-radius:99px;background:#eef4f8;overflow:hidden"><span style="display:block;height:100%;width:${(t.share / max * 100).toFixed(1)}%;background:${t.me ? '#006687' : COL[t.name] || '#8a96a0'}"></span></span><span style="width:40px;text-align:right">${t.share.toFixed(1)}%</span></div>`).join('')}
       <p class="bzs-h">🗣️ ${tr('TIẾNG NÓI KHÁCH HÀNG', 'CUSTOMER VOICES')}</p>
       ${voices.map(v => `<div class="bzs-row"><div style="flex:1;min-width:0"><b style="font-size:10px;color:${v[2]};letter-spacing:.04em">${v[0]}</b><small style="font-size:12px;color:#033337">${v[1]}</small></div></div>`).join('')}`;
   }
