@@ -41,7 +41,7 @@ assert.match(html, /So giao kèo đầu vụ với kết quả/);
 assert.ok(!read('js/bps-giao-keo.js').includes('fetch('), 'không gọi mạng');
 const sw = read('sw.js');
 assert.ok(sw.includes("'./js/bps-giao-keo.js'"));
-assert.ok(+sw.match(/bizon-v(\d+)/)[1] >= 757);
+assert.ok(+sw.match(/bizon-v(\d+)/)[1] >= 758);
 
 // ---- 3. Trình duyệt: ký giao kèo, chơi 5 tuần, xem so sánh
 let chromium; try { chromium = require('playwright').chromium; } catch (e) { console.error('Cần cài playwright.'); process.exit(2); }
