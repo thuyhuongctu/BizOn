@@ -13,7 +13,7 @@ const page = read('ra-khoi-3d.html'), game = read('js/ra-khoi-3d.js'), rt = read
 assert.ok(read('ho-chieu-thuong-hieu.html').includes('href="ra-khoi-3d.html"'), 'trang Hộ Chiếu chưa dẫn tới phòng 3D');
 const sw = read('sw.js');
 for (const f of ['./ra-khoi-3d.html', './js/ra-khoi-3d.js', './js/phong-realtime.js']) assert.ok(sw.includes("'" + f + "'"), 'sw.js thiếu ' + f);
-assert.ok(+(sw.match(/bizon-v(\d+)/) || [])[1] >= 757);
+assert.ok(+(sw.match(/bizon-v(\d+)/) || [])[1] >= 761);
 assert.ok(read('sitemap.xml').includes('https://bizonland.com/ra-khoi-3d.html<'));
 assert.ok(page.includes('<link rel="canonical" href="https://bizonland.com/ra-khoi-3d.html">'));
 assert.ok(!/innerHTML/.test(game) && !/innerHTML/.test(rt), 'tên người chơi phải đi qua textContent / canvas');
@@ -64,6 +64,8 @@ assert.match(game, /const SUC_CHUA = 30;/);
       await pg.goto(BASE + '/ra-khoi-3d.html', { waitUntil: 'load', timeout: 60000 }); await pg.waitForTimeout(1500);
       assert.equal(await pg.textContent('#rk-vao-h'), lang === 'en' ? '⛵ Set sail with your class' : '⛵ Ra khơi cùng lớp');
       assert.equal(await pg.locator('.rk-firm').count(), 4);
+      await pg.waitForFunction(() => document.body.dataset.moHinh, null, { timeout: 30000 });
+      assert.equal(await pg.evaluate(() => document.body.dataset.moHinh), '19/19', 'đủ 19 mô hình Kenney');
       await pg.fill('#rk-ten', '<b>Lan</b>'); await pg.click('.rk-firm:nth-child(3)'); await pg.fill('#rk-ma', 'kdqt k48'); await pg.click('.rk-go');
       await pg.waitForTimeout(800);
       assert.ok(await pg.isHidden('#rk-vao'), 'màn vào phải đóng');
