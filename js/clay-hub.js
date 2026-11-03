@@ -47,7 +47,9 @@
 #chub .hint{position:absolute;bottom:14px;right:14px;background:rgba(3,51,55,.75);color:#fff;font-size:12px;padding:8px 12px;border-radius:12px;max-width:290px;z-index:2}
 #chub .joy{position:absolute;bottom:28px;left:28px;width:116px;height:116px;border-radius:50%;background:rgba(255,255,255,.35);border:4px solid rgba(255,255,255,.7);display:flex;align-items:center;justify-content:center;touch-action:none;z-index:2}
 #chub .thumb{width:50px;height:50px;border-radius:50%;background:#fff;box-shadow:inset -4px -4px 8px rgba(0,0,0,.1),4px 4px 12px rgba(0,0,0,.15)}
-#chub .mk{position:absolute;width:32px;height:32px;margin:-16px;border-radius:50%;border:4px solid #00c4ff;display:none}
+#chub .dust{position:absolute;width:26px;height:10px;margin:-5px -13px;border-radius:50%;background:rgba(190,160,120,.55);pointer-events:none;animation:chub-dust .55s ease-out forwards}
+@keyframes chub-dust{from{opacity:.8;transform:scale(.5)}to{opacity:0;transform:scale(1.9) translateY(-6px)}}
+#chub .mk{z-index:5000;position:absolute;width:32px;height:32px;margin:-16px;border-radius:50%;border:4px solid #00c4ff;display:none}
 #chub .dlg{position:absolute;left:16px;right:16px;bottom:20px;max-width:780px;margin:0 auto;background:#fff;border:4px solid #dbe9f0;border-radius:28px;box-shadow:10px 10px 30px rgba(0,60,80,.15);padding:20px;display:flex;gap:18px;align-items:flex-start;z-index:3}
 #chub .dlg .av{height:150px;width:auto;flex-shrink:0}
 #chub .dlg .ic{width:104px;height:104px;border-radius:26px;background:#f4faff;display:flex;align-items:center;justify-content:center;font-size:52px;flex-shrink:0}
@@ -61,9 +63,11 @@
 #chub .toast.on{opacity:1;transform:none}
 #chub .skip{margin-left:auto;background:#006687;color:#fff;border:0;border-radius:999px;padding:7px 14px;font:inherit;font-weight:800;cursor:pointer}
 @keyframes chub-idle{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+#chub .npc img{transition:rotate .5s ease}
+@media (prefers-reduced-motion:reduce){#chub .npc img{animation:none}#chub .dust{display:none}}
 @media (max-width:640px){#chub .dlg{flex-direction:column;align-items:center;padding:12px}#chub .dlg .av{height:96px}#chub .npc img{height:150px}#chub .pl img{height:165px}}`;
 
-  let activeClose = null;
+  let activeClose = null, debugState = () => null;
 
   function open(cfg) {
     if (activeClose) activeClose();
@@ -95,7 +99,7 @@
     const entities = {};
     const addEntity = (kind, def) => {
       const el = document.createElement('div'); el.className = kind; el.dataset.id = def.id;
-      el.style.left = def.x + 'px'; el.style.top = def.y + 'px';
+      el.style.left = def.x + 'px'; el.style.top = def.y + 'px'; el.style.zIndex = Math.round(def.y);   // ai đứng thấp hơn (gần người xem) thì che người đứng sau
       if (kind === 'stn' && def.flat) el.classList.add('flat');
       if (kind === 'npc') {
         el.innerHTML = `<img src="${def.img}" alt="${def.name}"${def.fb ? ` onerror="this.onerror=null;this.src='${def.fb}'"` : ''} style="animation-delay:${-Math.random() * 3}s"><span class="tag"${def.accent ? ` style="background:${def.accent}"` : ''}>${def.icon ? def.icon + ' ' : ''}${def.name}</span>`;
@@ -108,6 +112,12 @@
     (cfg.npcs || []).forEach(n => addEntity('npc', n));
     (cfg.stations || []).forEach(s => addEntity('stn', Object.assign({}, s, { station: true })));
 
+    // Đi lại tự nhiên: vận tốc có gia tốc/giảm tốc (không khựng), chậm dần khi tới đích, nhịp bước tính theo quãng đường
+    // (chân không trượt), nhấp nhô + lắc vai + nén nhẹ khi chạm đất, quay mặt mượt, bóng co theo nhịp, bụi chân mỗi bước,
+    // đứng yên thì thở; NPC hơi nghiêng về phía người chơi đang tới gần. prefers-reduced-motion: chỉ di chuyển, không hiệu ứng.
+    const REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches, MAXSP = 380, ACC = 2200, STEP_PX = 46;
+    let velX = 0, velY = 0, phase = 0, face = 1, shadow = q('.sh');
+    const dust = (x, y) => { if (REDUCE) return; const d = document.createElement('div'); d.className = 'dust'; d.style.left = x + 'px'; d.style.top = y + 'px'; d.style.zIndex = Math.round(y) - 1; world.appendChild(d); setTimeout(() => d.remove(), 600); };
     let px = cfg.player.x ?? W / 2, py = cfg.player.y ?? H / 2, vec = { x: 0, y: 0 }, keys = {}, target = null, facing = 1,
       drag = false, pid = null, jc = {}, nearId = null, camX = 0, camY = 0, dlg = null, done = false, last = performance.now(), toastT, typeT, raf;
     const toast = m => { toastEl.textContent = m; toastEl.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(() => toastEl.classList.remove('on'), 3200); };
@@ -136,6 +146,7 @@
       cfg.onClose && cfg.onClose();
     }
     activeClose = finish;
+    debugState = () => ({ x: px, y: py, vx: velX, vy: velY, phase, face });   // cho test: đọc vận tốc thật, không phụ thuộc nhịp khung
     if (cfg.autoTalk) setTimeout(() => talk(cfg.autoTalk), 260);
     q('.skip').onclick = () => finish();
     joy.addEventListener('pointerdown', e => { drag = true; pid = e.pointerId; joy.setPointerCapture(pid); const r = joy.getBoundingClientRect(); jc = { x: r.left + r.width / 2, y: r.top + r.height / 2 }; });
@@ -148,16 +159,34 @@
     world.addEventListener('pointerdown', e => { if (dlg) return; const r = world.getBoundingClientRect(); target = { x: e.clientX - r.left, y: e.clientY - r.top }; marker.style.display = 'block'; marker.style.left = target.x + 'px'; marker.style.top = target.y + 'px'; });
 
     function loop(now) {
-      const dt = Math.min(0.05, (now - last) / 1000); last = now;
+      const dt = Math.max(0, Math.min(0.05, (now - last) / 1000)); last = now;   // khung rAF đầu có thể sớm hơn performance.now() → dt âm
       if (!dlg) {
         let vx = vec.x, vy = vec.y;
         if (!drag) { const kx = (keys.d || keys.arrowright ? 1 : 0) - (keys.a || keys.arrowleft ? 1 : 0), ky = (keys.s || keys.arrowdown ? 1 : 0) - (keys.w || keys.arrowup ? 1 : 0); if (kx || ky) { vx = kx; vy = ky; target = null; } }
-        if (target) { const dx = target.x - px, dy = target.y - py, d = Math.hypot(dx, dy); if (d < 8) { const t = target.then; target = null; marker.style.display = 'none'; t && t(); } else { vx = dx / d; vy = dy / d; } }
-        const sp = 380 * dt, l = Math.hypot(vx, vy) || 1, mv = Math.min(1, Math.hypot(vx, vy));
-        px = clamp(px + vx / l * mv * sp, 60, W - 60); py = clamp(py + vy / l * mv * sp, 300, H - 40);
-        if (Math.abs(vx) > 0.05) facing = vx < 0 ? -1 : 1;
-        pimg.style.transform = mv > 0.05 ? `scaleX(${facing}) translateY(${Math.abs(Math.sin(now / 85)) * -7}px)` : `scaleX(${facing})`;
+        let slow = 1;
+        if (target) { const dx = target.x - px, dy = target.y - py, d = Math.hypot(dx, dy); if (d < 8) { const t = target.then; target = null; marker.style.display = 'none'; t && t(); vx = vy = 0; } else { vx = dx / d; vy = dy / d; slow = Math.min(1, 0.35 + d / 110); } }
+        const l = Math.hypot(vx, vy) || 1, mv = Math.min(1, Math.hypot(vx, vy)) * slow;
+        // vận tốc mong muốn → tiến dần (gia tốc có giới hạn)
+        const wantX = vx / l * mv * MAXSP, wantY = vy / l * mv * MAXSP, ddx = wantX - velX, ddy = wantY - velY, dd = Math.hypot(ddx, ddy), lim = ACC * dt;
+        if (dd > lim && dd > 0) { velX += ddx / dd * lim; velY += ddy / dd * lim; } else { velX = wantX; velY = wantY; }
+        const ox = px, oy = py;
+        px = clamp(px + velX * dt, 60, W - 60); py = clamp(py + velY * dt, 300, H - 40);
+        if (px === ox) velX = 0; if (py === oy) velY = 0;   // chạm mép: dừng hẳn, không "đẩy tường"
+        const moved = Math.hypot(px - ox, py - oy), speed = Math.min(1, Math.hypot(velX, velY) / MAXSP);
+        if (Math.abs(velX) > 25) facing = velX < 0 ? -1 : 1;
+        face += Math.sign(facing - face) * Math.min(Math.abs(facing - face), dt * 11);   // quay mặt qua ~0,18 giây thay vì lật tức thì
+        const f = Math.abs(face) < 0.12 ? Math.sign(face || facing) * 0.12 : face;
+        if (REDUCE) { pimg.style.transform = `scaleX(${facing})`; }
+        else {
+          const before = Math.floor(phase / Math.PI); phase += moved / STEP_PX * Math.PI;
+          if (speed > 0.15 && Math.floor(phase / Math.PI) !== before) dust(px + (facing < 0 ? 18 : -18), py - 4);
+          const s = Math.abs(Math.sin(phase)), bob = s * 8 * speed, sway = Math.sin(phase) * 3.2 * speed;
+          const squash = speed > 0.05 ? 1 - (1 - s) * 0.035 * speed : 1 + Math.sin(now / 650) * 0.012;   // nén khi chân chạm đất / thở khi đứng
+          pimg.style.transform = `translateY(${(-bob).toFixed(1)}px) rotate(${sway.toFixed(2)}deg) scale(${f.toFixed(3)},${squash.toFixed(3)})`;
+          shadow.style.transform = `translateX(-50%) scale(${(1 - bob / 30).toFixed(3)})`; shadow.style.opacity = (1 - bob / 22).toFixed(2);
+        }
       }
+      player.style.zIndex = Math.round(py);
       player.style.left = px + 'px'; player.style.top = py + 'px';
       const vw = root.clientWidth, vh = root.clientHeight;
       const tx = clamp(px - vw / 2, 0, Math.max(0, W - vw)), ty = clamp(py - vh / 2 - 60, 0, Math.max(0, H - vh));
@@ -165,11 +194,13 @@
       world.style.transform = `translate3d(${-camX}px,${-camY}px,0)`;
       nearId = null; let best = 200;
       for (const [id, c] of Object.entries(entities)) { const d = Math.hypot(c.x - px, c.y - py); if (d < best) { best = d; nearId = id; } }
-      npcsEl.querySelectorAll('[data-id]').forEach(el => el.classList.toggle('near', el.dataset.id === nearId));
+      npcsEl.querySelectorAll('[data-id]').forEach(el => { const on = el.dataset.id === nearId; el.classList.toggle('near', on);
+        const c = entities[el.dataset.id], img = el.querySelector('img');
+        if (!c.station && img && !REDUCE) img.style.rotate = on ? (px < c.x ? '-3deg' : '3deg') : '0deg'; });   // NPC hơi nghiêng về phía người chơi
       raf = requestAnimationFrame(loop);
     }
     raf = requestAnimationFrame(loop);
   }
 
-  window.ClayHub = { open, close: () => activeClose && activeClose() };
+  window.ClayHub = { open, close: () => activeClose && activeClose(), state: () => debugState() };
 })();
