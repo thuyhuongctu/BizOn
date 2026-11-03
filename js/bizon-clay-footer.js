@@ -68,6 +68,12 @@
           + '<span data-en="© 2026 Bizonland · Do Thuy Huong &amp; Phan Anh Tu · All rights reserved">© 2026 Bizonland · Đỗ Thùy Hương &amp; Phan Anh Tú · Bảo lưu mọi quyền</span>'
           + '<span><span data-en="Cite as:" data-vi="Trích dẫn:">Trích dẫn:</span> <a href="https://doi.org/10.5281/zenodo.23325489" target="_blank" rel="noopener">doi:10.5281/zenodo.23325489</a></span>'
         + '</div>'
+        /* Hộp thư chung là kênh chính; email hai tác giả đi kèm cho liên hệ học thuật/cấp phép */
+        + '<div class="cf-legal cf-mail" style="margin-top:6px">'
+          + '<span><span data-en="Main inbox:">Hộp thư chung:</span> <a href="mailto:bricoleur@bizonland.com">bricoleur@bizonland.com</a></span>'
+          + '<span><span data-en="Authors: Do Thuy Huong">Tác giả: Đỗ Thùy Hương</span> · <a href="mailto:thuyhuongctu@gmail.com">thuyhuongctu@gmail.com</a></span>'
+          + '<span><span data-en="Assoc. Prof. Dr. Phan Anh Tu">PGS.TS. Phan Anh Tú</span> · <a href="mailto:patu@ctu.edu.vn">patu@ctu.edu.vn</a></span>'
+        + '</div>'
         + '<div class="cf-dis" data-en="'+esc(disEn)+'">'+esc(disVi)+'</div>'
       + '</div>'
     + '</div>';
