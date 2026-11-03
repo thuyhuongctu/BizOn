@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<!-- Ra Khơi Cùng Lớp 3D – phòng nhiều người của «Hộ Chiếu Thương Hiệu»: cả lớp cùng lái thuyền quanh quần đảo bảy
+     thị trường, thấy thuyền của nhau, vẫy chào, cập cảng đóng dấu. Đồng bộ qua Supabase Realtime (js/phong-realtime.js),
+     máy chủ không lưu gì. © 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. -->
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<script src="js/bizon-lang.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Ra Khơi Cùng Lớp 3D – Hộ Chiếu Thương Hiệu</title>
+<meta name="description" content="Phòng 3D nhiều người của Hộ Chiếu Thương Hiệu: cả lớp cùng lái thuyền quanh bảy thị trường, thấy nhau, vẫy chào và cập cảng đóng dấu hộ chiếu.">
+<link rel="canonical" href="https://bizonland.com/ra-khoi-3d.html">
+<meta property="og:title" content="Ra Khơi Cùng Lớp 3D – Hộ Chiếu Thương Hiệu">
+<meta property="og:description" content="Cả lớp cùng ra khơi trên quần đảo bảy thị trường của BizOn.">
+<meta property="og:url" content="https://bizonland.com/ra-khoi-3d.html">
+<meta property="og:image" content="https://bizonland.com/assets/og/og-cover.jpg">
+<meta name="theme-color" content="#006687">
+<link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<link rel="stylesheet" href="css/bizon-fonts.css">
+<script type="importmap">
+{ "imports": { "three": "./js/vendor/three.module.js" } }
+</script>
+<script src="js/backend-config.js"></script>
+<style>
+  html, body { margin:0; height:100%; overflow:hidden; background:#9fd7dc; font-family:Manrope,'Be Vietnam Pro',system-ui,sans-serif; color:#033337; }
+  #rk-stage { position:fixed; inset:0; touch-action:none; }
+  #rk-stage canvas { display:block; width:100%; height:100%; }
+  .rk-pill { background:rgba(255,255,255,.94); border-radius:999px; box-shadow:0 8px 22px -10px rgba(0,60,80,.45), inset 0 -3px 0 rgba(0,0,0,.05); }
+  .rk-bar { position:fixed; left:0; right:0; top:0; display:flex; align-items:center; gap:10px; padding:calc(10px + env(safe-area-inset-top)) 14px 10px; z-index:3; pointer-events:none; }
+  .rk-bar > * { pointer-events:auto; }
+  .rk-back { display:inline-flex; align-items:center; gap:6px; padding:9px 14px; font-weight:800; font-size:13px; text-decoration:none; color:#033337; min-height:40px; box-sizing:border-box; white-space:nowrap; }
+  .rk-title { padding:8px 16px; min-width:0; }
+  .rk-title b { display:block; font-size:14px; font-weight:800; white-space:nowrap; }
+  .rk-title small { display:block; font-size:11px; font-weight:700; opacity:.65; white-space:nowrap; }
+  #rk-room { margin-left:auto; border:0; cursor:pointer; padding:9px 14px; font:800 13px Manrope,sans-serif; color:#033337; min-height:40px; display:flex; gap:8px; align-items:center; }
+  #rk-room i { font-style:normal; width:9px; height:9px; border-radius:50%; background:#bbb; }
+  #rk-room.on i { background:#2bb673; box-shadow:0 0 0 3px rgba(43,182,115,.25); }
+  #rk-list { position:fixed; right:14px; top:calc(64px + env(safe-area-inset-top)); width:min(280px, calc(100vw - 28px)); max-height:50vh; overflow:auto; z-index:3; padding:12px 14px; border-radius:18px; box-sizing:border-box; }
+  #rk-list h3 { margin:0 0 8px; font-size:13px; }
+  #rk-list ul { list-style:none; margin:0; padding:0; font-size:13px; font-weight:700; }
+  #rk-list li { display:flex; align-items:center; gap:8px; padding:5px 0; border-top:1px solid rgba(0,60,80,.08); }
+  #rk-list li span.c { width:12px; height:12px; border-radius:4px; flex:0 0 auto; }
+  #rk-list li em { margin-left:auto; font-style:normal; font-size:12px; opacity:.7; }
+  .rk-dock { position:fixed; right:14px; bottom:calc(14px + env(safe-area-inset-bottom)); display:flex; flex-direction:column; gap:10px; align-items:flex-end; z-index:3; }
+  .rk-btn { border:0; cursor:pointer; font:800 14px Manrope,sans-serif; color:#033337; min-height:48px; padding:0 18px; border-radius:999px; background:rgba(255,255,255,.95); box-shadow:0 8px 22px -10px rgba(0,60,80,.5), inset 0 -3px 0 rgba(0,0,0,.06); }
+  .rk-btn:focus-visible, .rk-firm:focus-visible, #rk-room:focus-visible { outline:3px solid #fda127; outline-offset:2px; }
+  .rk-emo { display:flex; gap:8px; }
+  .rk-emo .rk-btn { width:52px; padding:0; font-size:22px; }
+  #rk-port { background:#006687; color:#fff; font-size:15px; }
+  #rk-hint { position:fixed; left:50%; bottom:calc(16px + env(safe-area-inset-bottom)); transform:translateX(-50%); padding:9px 16px; font-size:12px; font-weight:700; z-index:2; white-space:nowrap; }
+  #rk-toast { position:fixed; left:50%; top:calc(70px + env(safe-area-inset-top)); transform:translateX(-50%); display:flex; flex-direction:column; gap:6px; align-items:center; z-index:4; pointer-events:none; }
+  #rk-toast div { padding:8px 16px; font-size:13px; font-weight:800; animation:rkT 4s ease forwards; }
+  @keyframes rkT { 0% { opacity:0; transform:translateY(-6px); } 8%, 80% { opacity:1; transform:none; } 100% { opacity:0; } }
+  #rk-joy { position:fixed; left:18px; bottom:calc(18px + env(safe-area-inset-bottom)); width:120px; height:120px; border-radius:50%; background:rgba(255,255,255,.35); border:2px solid rgba(255,255,255,.7); z-index:3; touch-action:none; }
+  #rk-joy b { position:absolute; left:50%; top:50%; width:52px; height:52px; margin:-26px 0 0 -26px; border-radius:50%; background:rgba(255,255,255,.95); box-shadow:0 6px 16px -6px rgba(0,60,80,.5); }
+  .rk-modal { position:fixed; inset:0; z-index:6; display:flex; align-items:center; justify-content:center; padding:16px; background:rgba(3,40,48,.42); box-sizing:border-box; }
+  .rk-modal[hidden] { display:none; }
+  .rk-card { background:#fffdf8; border-radius:24px; padding:22px; width:min(520px, 100%); max-height:calc(100vh - 32px); overflow:auto; box-sizing:border-box; box-shadow:0 30px 60px -20px rgba(0,40,50,.55); }
+  .rk-card h1 { margin:0 0 4px; font-size:22px; }
+  .rk-card p { margin:6px 0; font-size:14px; line-height:1.5; }
+  .rk-card label { display:block; font-size:12px; font-weight:800; margin:14px 0 6px; text-transform:uppercase; letter-spacing:.06em; opacity:.75; }
+  .rk-card input { width:100%; box-sizing:border-box; font:700 16px Manrope,sans-serif; padding:12px 14px; border:2px solid #cfe3e5; border-radius:14px; background:#fff; color:#033337; }
+  .rk-card input:focus { outline:none; border-color:#006687; }
+  .rk-firms { display:grid; grid-template-columns:repeat(4, 1fr); gap:8px; }
+  .rk-firm { border:2px solid #e2ecec; background:#fff; border-radius:16px; padding:6px 4px 8px; cursor:pointer; font:800 12px Manrope,sans-serif; color:#033337; text-align:center; }
+  .rk-firm img { display:block; width:100%; height:86px; object-fit:contain; }
+  .rk-firm[aria-pressed="true"] { border-color:#006687; background:#e6f4f6; }
+  .rk-go { margin-top:18px; width:100%; background:#006687; color:#fff; font-size:16px; min-height:52px; }
+  .rk-note { font-size:12px !important; opacity:.7; }
+  .rk-mkt img { width:100%; height:auto; border-radius:16px; display:block; aspect-ratio:16/9; object-fit:cover; background:#e6f0f0; }
+  .rk-mkt .dau { display:inline-block; margin-top:10px; padding:6px 12px; border-radius:999px; background:#fde7c2; font-weight:800; font-size:13px; }
+  @media (max-width:520px) { .rk-title small, .rk-back span { display:none; } .rk-firm img { height:64px; } #rk-hint { display:none; } }
+  @media (hover:hover) and (pointer:fine) { #rk-joy { display:none; } }
+  @media (prefers-reduced-motion: reduce) { #rk-toast div { animation:none; } }
+</style>
+</head>
+<body>
+<div id="rk-stage" aria-label="Quần đảo bảy thị trường, thuyền của cả lớp" data-en-aria="The seven-market archipelago with the whole class's boats"></div>
+
+<div class="rk-bar">
+  <a class="rk-back rk-pill" href="ho-chieu-thuong-hieu.html">← <span data-en="Brand Passport">Hộ Chiếu Thương Hiệu</span></a>
+  <div class="rk-title rk-pill"><b data-en="⛵ Set Sail Together 3D">⛵ Ra Khơi Cùng Lớp 3D</b><small data-en="One room, the whole class">Một phòng, cả lớp cùng đi</small></div>
+  <button id="rk-room" class="rk-pill" type="button" aria-expanded="false" aria-controls="rk-list"><i></i><span id="rk-room-t">…</span></button>
+</div>
+<div id="rk-list" class="rk-pill" hidden><h3 id="rk-list-h">Phòng</h3><ul id="rk-list-ul"></ul></div>
+<div id="rk-toast" role="status" aria-live="polite"></div>
+
+<div class="rk-dock">
+  <button id="rk-port" class="rk-btn" type="button" hidden></button>
+  <div class="rk-emo">
+    <button id="rk-wave" class="rk-btn" type="button" aria-label="Vẫy chào" data-en-aria="Wave">👋</button>
+    <button id="rk-fire" class="rk-btn" type="button" aria-label="Bắn pháo hoa" data-en-aria="Fireworks">🎉</button>
+  </div>
+</div>
+<div id="rk-hint" class="rk-pill" data-en="Arrow keys or WASD to sail · sail close to an island to dock">Phím mũi tên hoặc WASD để lái · tới gần đảo để cập cảng</div>
+<div id="rk-joy" aria-hidden="true"><b></b></div>
+
+<div id="rk-vao" class="rk-modal" role="dialog" aria-modal="true" aria-labelledby="rk-vao-h">
+  <form class="rk-card" id="rk-form">
+    <h1 id="rk-vao-h" data-en="⛵ Set sail with your class">⛵ Ra khơi cùng lớp</h1>
+    <p data-en="Everyone in the same room sails the same archipelago: you see each other's boats, wave, and dock at the seven markets to stamp your passport.">Cả phòng cùng một quần đảo: thấy thuyền của nhau, vẫy chào, cập cảng bảy thị trường để đóng dấu hộ chiếu.</p>
+    <label for="rk-ten" data-en="Your name">Tên của bạn</label>
+    <input id="rk-ten" type="text" maxlength="24" autocomplete="nickname" required placeholder="VD: Lan Anh" data-en-ph="e.g. Lan Anh">
+    <label data-en="Your company">Doanh nghiệp của bạn</label>
+    <div class="rk-firms" id="rk-firms" role="group"></div>
+    <label for="rk-ma" data-en="Room code (your class code)">Mã phòng (mã lớp)</label>
+    <input id="rk-ma" type="text" maxlength="24" autocapitalize="characters" placeholder="VD: KDQT-K48" data-en-ph="e.g. IB-K48">
+    <button class="rk-btn rk-go" type="submit" data-en="Set sail →">Ra khơi →</button>
+    <p class="rk-note" data-en="Your name is shown only to people in the same room and is not stored on any server. Up to 30 boats per room.">Tên chỉ hiện cho người cùng phòng, máy chủ không lưu lại. Mỗi phòng tối đa 30 thuyền.</p>
+  </form>
+</div>
+
+<div id="rk-mkt" class="rk-modal" hidden role="dialog" aria-modal="true" aria-labelledby="rk-mkt-h">
+  <div class="rk-card rk-mkt">
+    <img id="rk-mkt-img" src="assets/illustrations/game/mkt-tan-cang.webp" alt="" width="640" height="360">
+    <h1 id="rk-mkt-h" style="margin-top:14px">Thị trường</h1>
+    <p id="rk-mkt-p"></p>
+    <span class="dau" id="rk-mkt-dau"></span>
+    <button class="rk-btn rk-go" type="button" id="rk-mkt-x" data-en="Back to sea">Ra khơi tiếp</button>
+  </div>
+</div>
+
+<script type="module" src="js/ra-khoi-3d.js"></script>
+<script>if ('serviceWorker' in navigator && location.protocol.startsWith('http')) addEventListener('load', function () { navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' }).catch(function () {}); });</script>
+</body>
+</html>
