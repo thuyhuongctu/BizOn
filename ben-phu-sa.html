@@ -41,6 +41,7 @@
 </script>
 <script src="js/backend-config.js"></script>
 <script src="js/student-login.js"></script>
+<script src="js/live-progress.js"></script>
 <script src="js/error-log.js"></script>
 <!-- Phong tu host trong assets/fonts: khong con phu thuoc may chu phong ben ngoai,
      nen chu hien dung kieu ca khi offline hoac khi mang truong chan ten mien do. -->
@@ -903,6 +904,7 @@
     }).join(' · '));
 
     S.week++;
+    if (window.BizOnLive) BizOnLive.report({ game: 'bps', round: S.week, roundsTotal: 5, score: S.total, finished: S.week >= 5, team: myTeam() });   // Màn hình lớp học: tiến độ từng tuần
     if (S.week >= 5) return ftEnd();
     if (window.BPSRivalIntel) BPSRivalIntel.showArena(S.total, RIVALS, S.week);
     // Rằm giữa mùa: Lễ cúng Bà Cậu (một lần, nhịp cố định – không đổi doanh thu/điểm)

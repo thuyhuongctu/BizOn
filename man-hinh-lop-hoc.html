@@ -31,6 +31,12 @@ select{font:700 15px 'Be Vietnam Pro',sans-serif;padding:8px 12px;border-radius:
 .big{font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:76px;font-weight:800;line-height:1;letter-spacing:-.04em;margin:6px 0 2px}
 .big small{font-size:30px;font-weight:700;color:var(--muted);letter-spacing:0}
 .upd{font-size:16px;color:var(--muted)}
+.join{display:flex;align-items:center;gap:12px;margin-top:14px;padding:10px 14px 10px 10px;border-radius:20px;background:var(--card);box-shadow:var(--shadow);max-width:520px}
+.join[hidden]{display:none}
+.join img{width:104px;height:104px;border-radius:10px;background:#fff;flex:none;image-rendering:pixelated}
+.join b{display:block;font-size:15px}
+.join code{display:block;margin-top:4px;font:700 15px 'IBM Plex Mono',monospace;word-break:break-all}
+.join span{display:block;margin-top:4px;font-size:13px;color:var(--muted)}
 aside{position:fixed;right:24px;top:96px;bottom:24px;width:440px;padding:22px 22px 16px;border-radius:32px;background:var(--card);box-shadow:var(--shadow);backdrop-filter:blur(6px);display:flex;flex-direction:column;z-index:2}
 aside h2{margin:0 0 12px;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:24px}
 ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px;flex:1;min-height:0;overflow:hidden}
@@ -84,6 +90,7 @@ li .bar i{display:block;height:100%;border-radius:999px}
   <div class="kicker" id="kicker">Bến Phù Sa</div>
   <div class="big"><span id="count">0</span> <small id="countLabel">nhóm đã nộp</small></div>
   <div class="upd" id="upd"></div>
+  <div class="join" id="join" hidden><img id="joinQr" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt="Mã QR mở trò chơi cho lớp"><div><b>Sinh viên mở đường dẫn này để giảng viên thấy tiến độ:</b><code id="joinUrl"></code><span>Đăng nhập email trường trong game. Mỗi vụ chơi xong, sa bàn tự cập nhật.</span></div></div>
 </div>
 <aside>
   <h2 id="panelTitle">Xếp hạng các nhóm</h2>
@@ -102,6 +109,7 @@ li .bar i{display:block;height:100%;border-radius:999px}
 <script src="js/backend-config.js"></script>
 <script src="js/instructor-api.js"></script>
 <script src="js/man-hinh-lop-hoc-data.js"></script>
+<script src="js/vendor/qrcode.js"></script>
 <script type="module">
 import { createStage, TEAM_COLORS } from './js/man-hinh-lop-hoc.js';
 const D = window.BizOnClassScreen, I = window.BizOnInstructor;
@@ -113,6 +121,14 @@ const NOTES = {
   hcsr: 'Mỗi hạt đất sét là một nhóm, đứng ở chặng ứng với điểm tổng (0–100 chia đều 8 chặng). Chỉ tính nhóm chơi qua Hành trình 3 bậc và đã xong Bậc 3.',
 };
 const NIGHT_DEFAULT = { bps: false, hcth: true, hcsr: false };
+const GAME_URL = { bps: 'ben-phu-sa.html', hcth: 'brand-passport.html', hcsr: 'lab/ho-chieu-sau-rieng-v2.html' };
+const LIVE_NOTE = 'Đang có nhóm chơi: vị trí trên sa bàn là tiến độ ván (nhóm đã xong đứng cuối tuyến). Bảng: nhóm đã nộp kết quả cuối xếp theo điểm, rồi nhóm đang chơi xếp theo vụ.';
+function joinBox() {
+  const show = !demo && !!cls; $('join').hidden = !show; if (!show) return;
+  const url = new URL(GAME_URL[game] + '?lop=' + encodeURIComponent(cls), location.href).href;
+  $('joinUrl').textContent = url.replace(/^https?:\/\//, '');
+  try { const q = window.qrcode(0, 'M'); q.addData(url); q.make(); $('joinQr').src = q.createDataURL(4, 2); $('joinQr').hidden = false; } catch (e) { $('joinQr').hidden = true; }
+}
 let game = ['bps', 'hcth', 'hcsr'].includes(q.get('game')) ? q.get('game') : 'bps';
 let night = q.has('dem') ? q.get('dem') !== '0' : NIGHT_DEFAULT[game];
 let demo = q.get('demo') === '1' || (I && I.demo);
@@ -124,9 +140,12 @@ function setUrl() { const u = new URL(location.href); u.searchParams.set('game',
 function paint(data) {
   const G = D.GAMES[game];
   $('kicker').textContent = G.vi + (demo ? ' · lớp minh họa' : cls ? ' · lớp ' + cls : '');
-  $('count').textContent = data.submitted;
-  $('countLabel').textContent = game === 'hcth' ? 'bài đã nộp' : 'nhóm đã nộp';
-  $('upd').textContent = demo ? 'Dữ liệu minh họa, không phải lớp thật.' : 'Cập nhật lúc ' + new Date().toLocaleTimeString('vi-VN') + ' · tự làm mới mỗi 20 giây';
+  const L = data.live || {};
+  $('count').textContent = L.playing ? L.playing : data.submitted;
+  $('countLabel').textContent = L.playing ? 'nhóm đang chơi' : game === 'hcth' ? 'bài đã nộp' : 'nhóm đã nộp';
+  const prog = L.count ? L.unit + ' ' + (L.min === L.max ? L.max : L.min + '–' + L.max) + '/' + L.total + ' · ' + data.submitted + ' đã nộp kết quả cuối · ' : '';
+  $('upd').textContent = prog + (demo ? 'Dữ liệu minh họa, không phải lớp thật.' : 'Cập nhật lúc ' + new Date().toLocaleTimeString('vi-VN') + ' · tự làm mới mỗi 20 giây');
+  joinBox();
   $('panelTitle').textContent = game === 'hcth' ? 'Xếp hạng doanh nghiệp' : 'Xếp hạng các nhóm';
   const top = data.teams.slice(0, 10);
   $('rank').replaceChildren(...top.map((t, i) => {
@@ -138,21 +157,22 @@ function paint(data) {
     return li;
   }));
   if (!top.length) { const li = document.createElement('li'); li.textContent = 'Chưa có kết quả nào được nộp.'; $('rank').append(li); }
-  $('note').textContent = NOTES[game] + (data.teams.length > 10 ? ' Sa bàn và bảng hiện 10 nhóm đầu trên ' + data.teams.length + ' nhóm.' : '');
+  $('note').textContent = (L.count ? LIVE_NOTE : NOTES[game]) + (data.teams.length > 10 ? ' Sa bàn và bảng hiện 10 nhóm đầu trên ' + data.teams.length + ' nhóm.' : '');
   const chips = game === 'hcsr' ? (data.playing && data.playing.length ? ['Đang chơi Bậc 3: ' + data.playing.slice(0, 6).join(', ') + (data.playing.length > 6 ? '…' : '')] : [])
     : [];
   $('strip').replaceChildren(...chips.map(c => { const d = document.createElement('div'); d.textContent = c; return d; }));
 }
 async function fetchData() {
   if (demo) return D.demo(game);
-  if (game === 'bps') return D.fromFt(await I.ftBoard(cls));
-  if (game === 'hcth') return D.fromBp(await I.bpResults(cls));
-  return D.fromJourney(await I.journeyPassports(cls));
+  const [base, live] = await Promise.all([
+    game === 'bps' ? I.ftBoard(cls).then(D.fromFt) : game === 'hcth' ? I.bpResults(cls).then(D.fromBp) : I.journeyPassports(cls).then(D.fromJourney),
+    I.liveProgress(cls, game)]);
+  return D.withLive(base, live, game);
 }
 async function refresh(rebuild) {
   let data;
   try { data = await fetchData(); } catch (e) { $('upd').textContent = 'Không tải được kết quả: ' + e.message; return; }
-  const sig = JSON.stringify([game, night, data.teams.map(t => [t.name, t.score]), data.markets]);
+  const sig = JSON.stringify([game, night, data.teams.map(t => [t.name, t.score, t.progress, t.stage]), data.markets]);
   paint(data);
   if (rebuild || sig !== last) { last = sig; await stage.show(game, data, night, panelPx()); }
 }
