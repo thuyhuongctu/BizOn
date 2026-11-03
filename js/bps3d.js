@@ -125,7 +125,7 @@ function vessel(kind, color) {
   if (kind === 0) { box(3.2, 0.6, 1.2, color, 0, 0, 0, g); cyl(0.07, 0.07, 3, 0x7a5a3a, 0, 0.6, 0, g); const s = M(new THREE.ConeGeometry(1, 2.2, 3), clay(0xf4efe4), 0.4, 2.4, 0, g); s.rotation.z = -0.1; boatEyes(g, 1.15, 0.62); }
   else if (kind === 1) { person(color, g); box(2.4, 0.08, 0.08, 0x8a5a3b, 0, 1.3, 0, g); [-1.1, 1.1].forEach(x => M(new THREE.CylinderGeometry(0.45, 0.35, 0.5, 12), clay(0xd9a85a), x, 0.8, 0, g)); }
   else { person(color, g); box(0.6, 0.8, 0.1, 0xf4efe4, 0.5, 0.9, 0.3, g); }
-  scene.add(g); return g;
+  g.userData.kind = kind; scene.add(g); return g;
 }
 const TL = new THREE.TextureLoader();
 function sprite(url, h, y) { const s = new THREE.Sprite(new THREE.SpriteMaterial({ transparent: true, depthWrite: false, alphaTest: 0.5 })); s.visible = false; s.position.y = y;
@@ -184,12 +184,59 @@ function showRivals(prevWeek) {
   const g = G(); if (!g) return;
   rivals.forEach((v, k) => { const r = g.RIVALS[k]; if (!r.plan || prevWeek < 0) { v.visible = false; return; } const loc = r.plan[prevWeek]; const p = P[loc]; v.visible = true; tween(v, new THREE.Vector3(p[0] + 3 * Math.cos(k * 2.1 + 1), 0.1, p[1] + 3 * Math.sin(k * 2.1 + 1)), 1400); });
 }
-function tween(obj, to, ms, done) { anim.push({ obj, from: obj.position.clone(), to, t0: performance.now(), ms, done }); }
+// Đi lại tự nhiên (học từ các game đi lại 3D): KHÔNG nhảy vòng cung nữa. Ghe (kind 0, mũi ở +x) xoay mũi về hướng đi
+// rồi trượt êm, mũi hơi ngóc khi chạy, lắc nhẹ theo sóng và để lại vệt sóng sau lái; người gánh/khảo sát (mặt ở +z)
+// bước theo quãng đường thật (nhấp nhô + lắc vai theo nhịp chân), không trượt chân. Tôn trọng prefers-reduced-motion.
+const REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const angDiff = (a, b) => Math.atan2(Math.sin(b - a), Math.cos(b - a));
+function headingTo(obj, to) { const dx = to.x - obj.position.x, dz = to.z - obj.position.z; if (Math.hypot(dx, dz) < 0.01) return obj.rotation.y; const y = Math.atan2(dx, dz); return obj.userData.kind === 0 ? y - Math.PI / 2 : y; }
+function tween(obj, to, ms, done) {
+  const from = obj.position.clone(), yaw0 = obj.rotation.y, yaw1 = headingTo(obj, to);
+  anim = anim.filter(a => { if (a.obj !== obj) return true; if (a.done) a.done(); return false; });   // lệnh mới thay lệnh cũ, không giằng co
+  anim.push({ obj, from, to, t0: performance.now(), ms, done, yaw0, turn: angDiff(yaw0, yaw1), dist: Math.hypot(to.x - from.x, to.z - from.z), wakeAt: 0 });
+}
+const STEP = 0.9;   // chiều dài một bước chân (đơn vị cảnh)
+const wakes = [];   // vòng sóng sau lái ghe: tái dùng, không tạo mới liên tục
+function spawnWake(obj) {
+  if (REDUCE) return; let w = wakes.find(x => !x.visible);
+  if (!w) { if (wakes.length >= 14) return; w = new THREE.Mesh(new THREE.RingGeometry(0.35, 0.5, 24), new THREE.MeshBasicMaterial({ color: 0xeaf8fb, transparent: true, depthWrite: false })); w.rotation.x = -Math.PI / 2; scene.add(w); wakes.push(w); }
+  const back = obj.userData.kind === 0 ? 1.7 * obj.scale.x : 0.6;   // sau lái: ngược hướng mũi
+  w.position.set(obj.position.x - Math.cos(obj.rotation.y) * back, 0.42, obj.position.z + Math.sin(obj.rotation.y) * back);
+  w.userData.t0 = performance.now(); w.visible = true; w.scale.setScalar(1); w.material.opacity = 0.7;
+}
+function stepGait(a, now, t) {
+  const k = Math.min(1, (now - a.t0) / a.ms), o = a.obj;
+  // quay mũi/mặt trước (25% đầu), di chuyển ease-in-out để có tăng tốc – giảm tốc
+  const kt = Math.min(1, k / 0.25), turnE = kt * kt * (3 - 2 * kt);
+  o.rotation.y = a.yaw0 + a.turn * turnE;
+  const e = k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+  o.position.x = a.from.x + (a.to.x - a.from.x) * e; o.position.z = a.from.z + (a.to.z - a.from.z) * e;
+  const speed = Math.sin(k * Math.PI);   // 0 lúc khởi hành/cập bến, 1 giữa đường
+  if (o.userData.kind === 0) {
+    o.position.y = a.to.y + (REDUCE ? 0 : Math.sin(t * 2.4) * 0.05);
+    o.rotation.z = REDUCE ? 0 : 0.045 * speed;                                   // mũi ngóc khi chạy
+    o.rotation.x = REDUCE ? 0 : Math.sin(t * 1.9) * 0.025 + a.turn * 0.04 * (1 - kt) * kt * 4; // lắc theo sóng + nghiêng khi bẻ lái
+    if (speed > 0.25 && now - a.wakeAt > 140) { a.wakeAt = now; spawnWake(o); }
+  } else {
+    const ph = (a.dist * e) / STEP * Math.PI;                                    // nhịp bước theo quãng đường thật
+    o.position.y = a.to.y + (REDUCE ? 0 : Math.abs(Math.sin(ph)) * 0.14 * Math.min(1, speed * 3));
+    o.rotation.z = REDUCE ? 0 : Math.sin(ph) * 0.07 * Math.min(1, speed * 3);    // lắc vai trái – phải
+    o.rotation.x = 0;
+  }
+  if (k >= 1) { o.position.copy(a.to); o.rotation.z = 0; o.rotation.x = 0; if (a.done) a.done(); return false; }
+  return true;
+}
+// Khi đứng yên: ghe dập dềnh nhè nhẹ, người thở (co giãn rất nhỏ)
+function idleFloat(o, t, ph) {
+  if (REDUCE || !o || !o.visible || anim.some(a => a.obj === o)) return;
+  if (o.userData.kind === 0) { o.position.y = 0.1 + Math.sin(t * 1.5 + ph) * 0.05; o.rotation.x = Math.sin(t * 1.1 + ph) * 0.02; }
+  else { const s = o.userData.s0 || (o.userData.s0 = o.scale.y); o.scale.y = s * (1 + Math.sin(t * 2 + ph) * 0.012); }
+}
 function sendMe(m, loc, done) {
   if (me && meKind !== m) { scene.remove(me); me = null; }
   if (!me) { me = vessel(m, 0xfda127); if (m === 0) { const sp = sprite('assets/character/phu-sa/huong-tu-ghe-chonoi-v2.webp', 3.4, 3.4); me.add(sp); } me.scale.setScalar(1.25); me.position.copy(HOME); meKind = m; }
   const p = P[loc], to = m === 2 ? new THREE.Vector3(p[0] - 2, 0.1, p[1] + 4.5) : new THREE.Vector3(p[0] - 1.5, 0.1, p[1] + 4.2);
-  me.lookAt(to.x, me.position.y, to.z); tween(me, to, 1600, done);
+  tween(me, to, 1600, done);
 }
 
 // ---- Chế độ khám phá: Chợ nổi Phù Sa (thị trấn hư cấu, lấy cảm hứng từ văn hoá chợ nổi
@@ -326,7 +373,9 @@ function frame() {
   // Bước 3 (đã có phương thức + món, chưa có địa điểm): 6 vòng đệm nhấp nháy vàng để người mới biết phải bấm vào đâu
   { const g = G(), need = !exploreMode && sel == null && g && g.S.sel.m !== null && g.S.sel.m !== 2 && g.S.sel.menu !== null && g.S.sel.loc === null;
     spots.forEach((s, i) => { if (s.cloud.visible) s.drops.forEach(d => { d.position.y -= 0.25; if (d.position.y < 0) d.position.y = 8; }); s.pad.rotation.y = t * 0.3; if (sel == null) s.pad.material.opacity = need ? 0.2 + 0.18 * Math.sin(t * 3.4 + i) : 0; }); }
-  anim = anim.filter(a => { const k = Math.min(1, (now - a.t0) / a.ms), e = k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2; a.obj.position.lerpVectors(a.from, a.to, e); a.obj.position.y = a.to.y + Math.sin(k * Math.PI) * 1.2; if (k >= 1) { if (a.done) a.done(); return false; } return true; });
+  anim = anim.filter(a => stepGait(a, now, t));
+  idleFloat(me, t, 0); rivals.forEach((v, k) => idleFloat(v, t, k * 1.3));
+  wakes.forEach(w => { if (!w.visible) return; const a = (now - w.userData.t0) / 1600; if (a >= 1) { w.visible = false; return; } w.scale.setScalar(1 + a * 3.2); w.material.opacity = 0.7 * (1 - a); });
   if (camGoal) { controls.target.lerp(camGoal, 0.04); if (controls.target.distanceTo(camGoal) < 0.05) camGoal = null; }
   controls.update(); renderer.render(scene, camera);
   for (let k = pops.length - 1; k >= 0; k--) { const p = pops[k], a = (now - p.t0) / 1000, sp = P[p.loc]; v3.set(sp[0], 9 + a * 1.2, sp[1]).project(camera);
@@ -340,5 +389,6 @@ function frame() {
     declutter(explorePins.filter(p => p.lab.style.display !== 'none')); }
   requestAnimationFrame(frame);
 }
+window.__bps3d = { get me() { return me; }, rivals, get moving() { return anim.length; }, wakes };   // cho test: đọc tư thế ghe/người
 const wait = () => { if (G()) { setWeek(G().S.week || 0); frame(); } else setTimeout(wait, 60); };
 wait();
