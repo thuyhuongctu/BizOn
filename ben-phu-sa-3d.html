@@ -208,6 +208,7 @@ body:has(#ft-play:not(.hidden)) .vutru-goc{display:none!important}
     <div class="grid grid-cols-2 gap-2" id="ft-teams"></div>
     <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-4 mb-1.5" data-en="Choose your captain">Chọn thuyền trưởng</p>
     <div class="grid grid-cols-5 gap-2" id="ft-avatars"></div>
+    <div id="ft-pledge"></div>
     <button type="button" onclick="ftStart()" class="clay-btn w-full bg-clay-gold text-deep-teal font-display font-extrabold py-4 mt-4" data-en="🚀 Start week 1 (Lumina guides you)">🚀 Bắt đầu tuần 1 (Lumina dẫn đường)</button>
     <details id="ft-rules" class="mt-4 text-sm">
     <summary class="font-display font-extrabold text-deep-teal cursor-pointer" style="min-height:44px;display:flex;align-items:center" data-en="📜 Detailed rules (methods, products, rivals)">📜 Luật chơi chi tiết (phương thức, món hàng, đối thủ)</summary>
@@ -345,6 +346,7 @@ body:has(#ft-play:not(.hidden)) .vutru-goc{display:none!important}
       <p class="text-sm font-semibold opacity-70 mt-1.5" id="ft-eff"></p>
       <div class="mt-4 space-y-2 text-left" id="ft-board"></div>
       <div class="text-xs opacity-60 mt-3" id="ft-reveal"></div>
+      <div id="ft-pledge-end"></div>
       <div class="mt-5 hidden" id="ft-cert-box">
         <div class="rounded-[20px] p-5 text-center relative overflow-hidden" style="background:linear-gradient(180deg,#fffdf6,#f4faff);border:3px solid rgba(253,161,39,.55);box-shadow:inset 0 0 0 1px rgba(0,102,135,.18)">
           <p class="text-[10px] font-extrabold uppercase tracking-widest text-deep-teal/50" data-en="🎓 Certificate of Completion">🎓 Giấy chứng nhận hoàn thành</p>
@@ -397,6 +399,7 @@ body:has(#ft-play:not(.hidden)) .vutru-goc{display:none!important}
         <li data-en="Did you change strategy after getting market feedback?">Bạn có đổi chiến lược sau khi nhận phản hồi thị trường không?</li>
         <li data-en-html="How did you balance &lt;b&gt;learning&lt;/b&gt; (street cart) against &lt;b&gt;scaling&lt;/b&gt; (trading boat)?">Bạn cân bằng thế nào giữa <b>học hỏi</b> (gánh hàng rong) và <b>nhân rộng</b> (ghe hàng bông)?</li>
         <li data-en="Which lesson applies to a real startup?">Bài học nào áp dụng được cho khởi nghiệp thật?</li>
+        <li data-en="Compare your season pact with the result: where did plan and reality part ways, and why?">So giao kèo đầu vụ với kết quả: kế hoạch và thực tế lệch nhau ở đâu, vì sao?</li>
       </ol>
       <p class="text-xs opacity-60 mt-3 bz-explain" data-en-html="💡 Core lesson: &lt;b&gt;test cheap and fast first&lt;/b&gt; (prototyping with the street cart), then &lt;b&gt;bet big&lt;/b&gt; once the signal is clear enough (trading boat). Historical data only points a direction – direct observation is the real gold.">💡 Bài học lõi: <b>thử nghiệm rẻ và nhanh trước</b> (prototyping bằng gánh hàng rong), khi tín hiệu đủ rõ mới <b>đặt cược lớn</b> (ghe hàng bông). Dữ liệu lịch sử chỉ mang tính định hướng – quan sát trực tiếp mới là vàng.</p>
       <p class="text-xs opacity-60 mt-2" data-en-html="📰 A true story: Croatian expat &lt;b&gt;Matko Kmezic&lt;/b&gt; opened a «Viet Drip» phin-coffee cart with low Vietnamese-style street stools in Amsterdam – in the early days he sold only 3–4 cups a day, patiently explaining the robusta flavor to every customer, until people started lining up. The exact lesson of this game: test small, learn fast, scale at the right moment. &lt;a href=&quot;https://znews.vn/xe-ca-phe-phin-ghe-nhua-do-kieu-viet-o-ha-lan-post1672015.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot; class=&quot;underline font-bold&quot;&gt;Znews, 26/7/2026 →&lt;/a&gt;">📰 Chuyện thật ngoài đời: chàng trai Croatia <b>Matko Kmezic</b> mở xe cà phê phin «Viet Drip» với ghế nhựa thấp kiểu vỉa hè Việt giữa Amsterdam – những ngày đầu chỉ bán được 3–4 ly/ngày, anh kiên trì giải thích vị robusta cho từng vị khách, rồi người ta bắt đầu xếp hàng. Đúng bài học của game: thử nhỏ, học nhanh, nhân rộng đúng lúc. <a href="https://znews.vn/xe-ca-phe-phin-ghe-nhua-do-kieu-viet-o-ha-lan-post1672015.html" target="_blank" rel="noopener" class="underline font-bold">Znews, 26/7/2026 →</a></p>
@@ -405,6 +408,7 @@ body:has(#ft-play:not(.hidden)) .vutru-goc{display:none!important}
 
 </main>
 
+<script src="js/bps-giao-keo.js"></script>
 <script>
 (function () {
   var METHODS = [
@@ -616,6 +620,10 @@ body:has(#ft-play:not(.hidden)) .vutru-goc{display:none!important}
   }
 
   window.ftStart = function () {
+    // Giao kèo đầu vụ (js/bps-giao-keo.js): chỉ để phản tư cuối ván, không đổi điểm
+    S.pledge = window.BPSGiaoKeo ? BPSGiaoKeo.read() : null;
+    if (S.pledge) S.log.unshift('<li><b>📜 ' + T('Giao kèo đầu vụ', 'Season pact') + ':</b> ≥ ' + f1(S.pledge.target) + ' ' + MU() + (S.pledge.text ? ' · «' + S.pledge.text + '»' : '') + ' <i>(' + T('không tính điểm', 'no points affected') + ')</i></li>');
+    if (S.pledge) $('ft-log').innerHTML = S.log.join('');
     $('ft-intro').classList.add('hidden');
     $('ft-play').classList.remove('hidden');
     render();
@@ -973,6 +981,7 @@ body:has(#ft-play:not(.hidden)) .vutru-goc{display:none!important}
         (left > 0.05 ? ' <span style="opacity:.65">(' + T('để lại trên bàn ~', 'left ~') + f1(left) + ' ' + MU() + T('', ' on the table') + ')</span>' : '') + '</li>';
     }).join('') + (S.shopSpent > 0 ? '<li>🛍️ ' + T('Vật phẩm đã mua', 'Items bought') + ' → <b>−' + f1(S.shopSpent) + ' ' + MU() + '</b></li>' : '');
     var totalLeft = Math.max(0, maxRev - S.total);
+    if (window.BPSGiaoKeo) $('ft-pledge-end').innerHTML = BPSGiaoKeo.endHtml(S.pledge, S.history, S.total, isEN());
     $('ft-reveal').innerHTML = T(
       '🔍 Đáp án của ván này: cặp thắng là ' + MENUS[bc[0]][0] + ' <b>' + mName(bc[0]) + '</b> × ' + LOCS[bc[1]][0] + ' <b>' + lName(bc[1]) + '</b>. Chiến lược tham chiếu: dò 1 tuần bằng gánh hàng rong (rẻ, nhiều tin) rồi chạy ghe hàng bông 4 tuần với cặp tốt nhất – và né khu đông đối thủ. Chạy ghe ngay từ đầu khi chưa biết thị trường thường lỗ phí ghe.',
       '🔍 This run\'s answer key: the winning pair was ' + MENUS[bc[0]][0] + ' <b>' + mName(bc[0]) + '</b> × ' + LOCS[bc[1]][0] + ' <b>' + lName(bc[1]) + '</b>. Reference strategy: scout for 1 week with the street cart (cheap, lots of intel), then run the trading boat for 4 weeks on the best pair – and avoid crowded spots. Launching the boat blind usually burns the boat cost.'
@@ -1201,6 +1210,7 @@ body:has(#ft-play:not(.hidden)) .vutru-goc{display:none!important}
   applyStatic(); // trạng thái ban đầu (nếu người dùng đã chọn EN từ trước)
   renderTeams();
   renderAvatars();
+  if (window.BPSGiaoKeo) { var perfect = 0; for (var pw = 0; pw < 5; pw++) perfect += bestWeek(pw); BPSGiaoKeo.mount($('ft-pledge'), { maxRev: perfect }); }
 })();
 </script>
 <!-- Hành trình 3 bậc: chỉ hoạt động khi URL có ?journey=<id> (docs/architecture/HANH-TRINH-3-BAC.md, J4) -->

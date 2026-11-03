@@ -146,6 +146,7 @@ const SHELL = [
   './js/tutorial.js',
   './js/bp-tutorial.js',
   './js/bps-tutorial.js',
+  './js/bps-giao-keo.js',
   './js/bps-saban.js',
   './js/bp-core.js',
   './js/vendor/auto-animate.min.js',
