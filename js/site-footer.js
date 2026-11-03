@@ -81,6 +81,7 @@
     '#bz-footer ul a:hover{text-decoration:underline}' +
 
     /* --- tầng 3: trích dẫn, liên hệ, bản quyền --- */
+    '#bz-footer .bzf-authors{font-size:11.5px;line-height:1.6;opacity:.75;margin-top:10px;overflow-wrap:anywhere}#bz-footer .bzf-authors a{color:inherit;text-decoration:underline}' +
     '#bz-footer .bzf-cite{font-size:11px;line-height:1.65;opacity:.6;border-top:1px solid rgba(0,102,135,.12);margin-top:24px;padding-top:16px}' +
     '#bz-footer .bzf-tail{text-align:center;margin-top:12px}' +
     '#bz-footer .bzf-tail p{max-width:42rem;margin:6px auto 0}' +
@@ -157,6 +158,7 @@
           '</span>' +
         '</div>' +
         '<p class="bzf-cite">Cite (APA 7): Do, T. H., &amp; Phan, A. T. (2026). <i>BizOn Bật Nghiệp: A 3D claymorphism business-simulation game for entrepreneurship education</i> [Computer software]. https://doi.org/10.5281/zenodo.21592241</p>' +
+        '<p class="bzf-authors"><span data-en="Main inbox:">Hộp thư chung:</span> <a href="mailto:bricoleur@bizonland.com">bricoleur@bizonland.com</a> · <span data-en="Authors: Do Thuy Huong">Tác giả: Đỗ Thùy Hương</span> (<a href="mailto:thuyhuongctu@gmail.com">thuyhuongctu@gmail.com</a>) · <span data-en="Phan Anh Tu">Phan Anh Tú</span> (<a href="mailto:patu@ctu.edu.vn">patu@ctu.edu.vn</a>)</p>' +
         '<div class="bzf-tail" id="bzf-tail"></div>' +
         '<div class="bzf-legal">' +
           '<span data-en="© 2026 Bizonland · Do Thuy Huong &amp; Phan Anh Tu · All rights reserved">© 2026 Bizonland · Đỗ Thùy Hương &amp; Phan Anh Tú · Bảo lưu mọi quyền</span>' +
@@ -169,8 +171,9 @@
     var tail = document.getElementById('bzf-tail');
     Array.prototype.slice.call(document.querySelectorAll('body > p')).forEach(function (p) {
       var t = p.textContent || '';
-      if (t.indexOf('✉️ Liên hệ') === 0 || t.indexOf('🎓 Trang web') === 0 ||
-          t.indexOf('✉️ Contact') === 0 || t.indexOf('🎓 This website') === 0) tail.appendChild(p);
+      // Dòng «✉️ Liên hệ» cũ chỉ có hộp thư chung – đã nằm trong dòng .bzf-authors nên bỏ, tránh ghi hai lần
+      if (t.indexOf('✉️ Liên hệ') === 0 || t.indexOf('✉️ Contact') === 0) p.remove();
+      else if (t.indexOf('🎓 Trang web') === 0 || t.indexOf('🎓 This website') === 0) tail.appendChild(p);
     });
 
     // Trang đất sét không có site-ui.js: tự dịch chân trang vừa bơm (data-en) theo ngôn ngữ hiện tại.
