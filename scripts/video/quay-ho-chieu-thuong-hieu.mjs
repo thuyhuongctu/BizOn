@@ -77,7 +77,7 @@ async function scrollTo(sel, block = 'center', ms = 900) {
   await page.evaluate(([s, b]) => { const el = typeof s === 'number' ? null : document.querySelector(s); if (el) el.scrollIntoView({ behavior: 'smooth', block: b }); else window.scrollTo({ top: s, behavior: 'smooth' }); }, [sel, block]);
   await wait(ms);
 }
-async function tap(sel, { before = 500, after = 800, block = 'center' } = {}) {
+async function tap(sel, { before = 380, after = 650, block = 'center' } = {}) {
   await page.waitForSelector(sel, { state: 'attached', timeout: 15000 });
   await scrollTo(sel, block, before);
   const ok = await page.evaluate(s => {
@@ -164,15 +164,13 @@ if (BAN === 'ngan') {
   await cap(L('Kết quả quý: doanh thu, lợi nhuận, uy tín… và đối thủ <b>Kim Long</b> cũng đang chạy', 'Quarter results: revenue, profit, reputation… and rival <b>Kim Long</b> is racing too'), 1200);
   await scrollTo('#bp-log', 'center', 1500); await scrollTo(0, 'start', 600);
   await cap(L('Quý 2 → 6: tri thức tích lũy dần, quyết định nhanh và chắc hơn', 'Quarters 2 → 6: knowledge builds up, decisions get faster and surer'), 0);
-  for (let i = 1; i < 6; i++) {
+  for (let i = 1; i < 6; i++) {          // lướt nhanh: mỗi quý ~1,5 giây, vẫn là bấm thật qua giao diện của game
     if (await page.evaluate(() => window.bpTest.ended())) break;
-    await tap('[onclick="bpNext()"]', { before: 250, after: 450 });
-    await tap('[onclick="bpToDecide()"]', { before: 250, after: 450 });
-    await tap(`.bp-opt[data-g="prio"][data-i="${PLAN[i][0]}"]`, { before: 250, after: 200 });
-    await tap(`.bp-opt[data-g="bud"][data-i="${PLAN[i][1]}"]`, { before: 250, after: 200 });
-    await tap('[onclick="bpCommit()"]', { before: 250, after: 450 });
-    await tap('[onclick="bpEv(0)"]', { before: 250, after: 500 });
-    await arena(false);
+    await page.evaluate(() => { window.bpNext(); window.scrollTo(0, 0); }); await wait(380);
+    await page.evaluate(p => { window.bpToDecide(); window.bpPick('prio', p[0]); window.bpPick('bud', p[1]); window.scrollTo(0, 0); }, PLAN[i]); await wait(380);
+    await page.evaluate(() => { window.bpCommit(); }); await wait(300);
+    await page.evaluate(() => { window.bpEv(0); window.scrollTo(0, 0); }); await wait(350);
+    await page.evaluate(() => { if (window.BPRivalIntel && document.getElementById('bp-rival-arena')) BPRivalIntel.closeArena(); }); await wait(150);
   }
 } else {
   await quarterFull(0, { intel: 1, enter: [MKT, MODE, SHIP] });
@@ -232,9 +230,22 @@ writeFileSync(join(tmp, 'list.txt'), list);
 const dur = frames[frames.length - 1].t - frames[0].t + 0.5;
 const silent = join(OUT, name + '-hinh.mp4'), final = join(OUT, name + '.mp4');
 const ff = (...a) => { const r = spawnSync('ffmpeg', ['-v', 'error', '-y', ...a], { stdio: 'inherit' }); if (r.status !== 0) throw new Error('ffmpeg lỗi'); };
-ff('-f', 'concat', '-safe', '0', '-i', join(tmp, 'list.txt'), '-vf', 'fps=30,scale=720:1280:flags=lanczos,format=yuv420p', '-c:v', 'libx264', '-preset', 'slow', '-crf', '21', '-profile:v', 'high', '-level', '4.0', silent);
+const raw = join(OUT, name + '-tho.mp4');
+ff('-f', 'concat', '-safe', '0', '-i', join(tmp, 'list.txt'), '-vf', 'fps=30,scale=720:1280:flags=lanczos,format=yuv420p', '-c:v', 'libx264', '-preset', 'slow', '-crf', '21', '-profile:v', 'high', '-level', '4.0', raw);
+// Khung hỏng một hình (trang vẽ lại danh sách, ảnh nháy mất một khung): thay bằng khung liền trước
+const { check } = await import('../kiem-video.mjs');
+const glitch = check(raw).glitch;
+if (glitch.length) {
+  ff('-i', raw, '-vf', glitch.map(n => `freezeframes=first=${n}:last=${n}:replace=${n - 1}`).join(','), '-c:v', 'libx264', '-preset', 'slow', '-crf', '21', '-profile:v', 'high', '-level', '4.0', silent);
+  console.log('Đã thay khung hỏng: ' + glitch.join(', '));
+} else ff('-i', raw, '-c', 'copy', silent);
+rmSync(raw, { force: true });
 const music = join(ROOT, 'assets/audio/ho-chieu-p3-en-remix2.mp3');
-ff('-i', silent, '-i', music, '-filter_complex', `[1:a]atrim=0:${dur.toFixed(2)},afade=t=in:d=0.8,afade=t=out:st=${Math.max(0, dur - 2.2).toFixed(2)}:d=2,loudnorm=I=-15:TP=-1.5:LRA=7,aresample=48000[a]`,
+const pre = `[1:a]atrim=0:${dur.toFixed(2)},afade=t=in:d=0.8,afade=t=out:st=${Math.max(0, dur - 2.2).toFixed(2)}:d=2`;
+// loudnorm hai lượt: đo trước rồi chỉnh tuyến tính, để thành phẩm đúng −15 LUFS, đỉnh thật ≤ −1 dBTP sau khi mã hoá AAC (đặt −2,5)
+const meas = spawnSync('ffmpeg', ['-hide_banner', '-i', silent, '-i', music, '-filter_complex', `${pre},loudnorm=I=-15:TP=-2.5:LRA=7:print_format=json[a]`, '-map', '[a]', '-f', 'null', '-'], { encoding: 'utf8' }).stderr;
+const m = JSON.parse(meas.slice(meas.lastIndexOf('{'), meas.lastIndexOf('}') + 1));
+ff('-i', silent, '-i', music, '-filter_complex', `${pre},loudnorm=I=-15:TP=-2.5:LRA=7:measured_I=${m.input_i}:measured_TP=${m.input_tp}:measured_LRA=${m.input_lra}:measured_thresh=${m.input_thresh}:offset=${m.target_offset}:linear=true,aresample=48000[a]`,
   '-map', '0:v:0', '-map', '[a]', '-c:v', 'copy', '-c:a', 'aac', '-b:a', '128k', '-shortest', '-movflags', '+faststart', final);
 rmSync(tmp, { recursive: true, force: true }); rmSync(silent, { force: true });
 console.log('Xong: ' + final + ` (${dur.toFixed(1)} s, ${frames.length} ảnh screencast)`);
