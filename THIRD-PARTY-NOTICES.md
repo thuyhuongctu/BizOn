@@ -81,6 +81,8 @@ Chỉ chạy trên máy phát triển hoặc trong CI; không có mã của chú
 
 Bốn lệnh cho Claude Code trong `.claude/skills/` (`balance-check`, `playtest-report`, `design-review`, `ux-review`) phỏng theo các skill cùng tên của **Claude Code Game Studios** (© 2026 Donchitos, giấy phép **MIT**), đã Việt hóa và viết lại cho BizOn. Đây là hướng dẫn làm việc cho công cụ phát triển, không chạy trên trang web; mỗi tệp giữ dòng ghi nguồn. Toàn văn giấy phép MIT: <https://opensource.org/license/mit>.
 
+Lệnh `video-ngan` (`.claude/skills/video-ngan/`) và công cụ kiểm video `scripts/kiem-video.mjs` phỏng theo công thức kịch bản và `scripts/short_qa.py` của **Claude Animated Shorts** (© 2026 Mr omi, giấy phép **MIT**), viết lại bằng tiếng Việt và Node cho BizOn; không dùng ảnh tham khảo hay mã dựng hình của kho đó.
+
 ## 7 · Nội dung được tạo với sự hỗ trợ của công cụ AI
 
 Một phần tài sản nghe nhìn của BizOn được dựng với công cụ AI rồi do nhóm tác giả biên tập, chọn lọc và tích hợp; nhóm **không** kê các phần máy tạo thuần tuý là tác phẩm của mình (phương án A, Mục F1 hồ sơ SHTT). Ghi ở đây để minh bạch với người dùng và cơ quan thẩm định:
