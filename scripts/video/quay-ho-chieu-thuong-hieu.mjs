@@ -66,7 +66,7 @@ const frames = [];
 const cdp = await ctx.newCDPSession(page);
 cdp.on('Page.screencastFrame', async f => { frames.push({ t: f.metadata.timestamp, data: f.data }); try { await cdp.send('Page.screencastFrameAck', { sessionId: f.sessionId }); } catch (e) {} });
 const wait = ms => page.waitForTimeout(ms);
-let shotN = 0;
+let shotN = 0, posterAt = 0;
 const shot = async name => { if (THU) await page.screenshot({ path: join(OUT, `${String(shotN++).padStart(2, '0')}-${name}.png`) }); };
 
 async function cap(html, ms = 0, top = false) {
@@ -127,6 +127,7 @@ async function quarterFull(qi, { intel = null, enter = null, shop = false, slow 
   const [prio, bud] = PLAN[qi];
   await scrollTo(0, 'start', 500);
   await shot(`q${qi + 1}-quansat`);
+  if (qi === 0) { posterAt = Date.now() / 1000 + 1.2; }
   if (qi === 0) await cap(L('Mỗi quý ba bước: <b>① Quan sát → ② Quyết định → ③ Biến cố</b>', 'Every quarter has three steps: <b>① Observe → ② Decide → ③ Event</b>'), 2000);
   await cap(L(`Quý ${qi + 1} · ① <b>Quan sát & Tình báo</b>: đọc tín hiệu thị trường${intel !== null ? ', mua thêm tin (tối đa 2 nguồn)' : ''}`, `Quarter ${qi + 1} · ① <b>Observe & Intel</b>: read the market signals${intel !== null ? ', buy extra intel (2 sources max)' : ''}`), slow ? 1700 : 700);
   if (intel !== null) {
@@ -191,7 +192,7 @@ if (BAN === 'ngan') {
 
 // ---------- màn kết thúc ----------
 await page.waitForFunction(() => window.bpTest.ended(), null, { timeout: 15000 });
-await scrollTo(0, 'start', 700); await wait(1600);
+await scrollTo('#bp-end', 'start', 700); await wait(1600);
 await shot('ket-thuc');
 await cap(L('Điểm tổng = 30% Lợi nhuận + 20% Uy tín + 20% Năng lực + 15% Thích ứng + 15% Bền vững', 'Total = 30% Profit + 20% Reputation + 20% Capability + 15% Adaptability + 15% Sustainability'), 0);
 await scrollTo('#bp-breakdown', 'center', 2800);
@@ -205,7 +206,7 @@ if (BAN === 'chi-tiet') {
   await scrollTo('#bp-cert-box', 'center', 2600);
   await shot('chung-nhan');
 }
-await scrollTo(0, 'start', 900);
+await scrollTo('#bp-end', 'start', 900);
 await cap(L('Không có một con đường đúng cho mọi doanh nghiệp. <b>Vào chơi và tự rút ra bài học!</b>', 'There is no single right path for every company. <b>Play and draw your own lessons!</b>'), 2600);
 await cap('', 500);
 
@@ -231,7 +232,7 @@ const dur = frames[frames.length - 1].t - frames[0].t + 0.5;
 const silent = join(OUT, name + '-hinh.mp4'), final = join(OUT, name + '.mp4');
 const ff = (...a) => { const r = spawnSync('ffmpeg', ['-v', 'error', '-y', ...a], { stdio: 'inherit' }); if (r.status !== 0) throw new Error('ffmpeg lỗi'); };
 const raw = join(OUT, name + '-tho.mp4');
-ff('-f', 'concat', '-safe', '0', '-i', join(tmp, 'list.txt'), '-vf', 'fps=30,scale=720:1280:flags=lanczos,format=yuv420p', '-c:v', 'libx264', '-preset', 'slow', '-crf', '21', '-profile:v', 'high', '-level', '4.0', raw);
+ff('-f', 'concat', '-safe', '0', '-i', join(tmp, 'list.txt'), '-vf', 'fps=30,scale=720:1280:flags=lanczos,format=yuv420p', '-c:v', 'libx264', '-preset', 'slow', '-crf', '25', '-profile:v', 'high', '-level', '4.0', raw);
 // Khung hỏng một hình (trang vẽ lại danh sách, ảnh nháy mất một khung): thay bằng khung liền trước
 const { check } = await import('../kiem-video.mjs');
 const glitch = check(raw).glitch;
@@ -239,7 +240,7 @@ if (glitch.length) {
   // freezeframes cần hai đầu vào (luồng gốc và luồng lấy khung thay): tách đôi luồng cho từng khung hỏng
   let g = '', last = '0:v';
   glitch.forEach((n, i) => { g += `[${last}]split[s${i}a][s${i}b];[s${i}a][s${i}b]freezeframes=first=${n}:last=${n}:replace=${n - 1}[f${i}];`; last = `f${i}`; });
-  ff('-i', raw, '-filter_complex', g.slice(0, -1), '-map', `[${last}]`, '-c:v', 'libx264', '-preset', 'slow', '-crf', '21', '-profile:v', 'high', '-level', '4.0', silent);
+  ff('-i', raw, '-filter_complex', g.slice(0, -1), '-map', `[${last}]`, '-c:v', 'libx264', '-preset', 'slow', '-crf', '25', '-profile:v', 'high', '-level', '4.0', silent);
   console.log('Đã thay khung hỏng: ' + glitch.join(', '));
 } else ff('-i', raw, '-c', 'copy', silent);
 rmSync(raw, { force: true });
@@ -250,5 +251,9 @@ const meas = spawnSync('ffmpeg', ['-hide_banner', '-i', silent, '-i', music, '-f
 const m = JSON.parse(meas.slice(meas.lastIndexOf('{'), meas.lastIndexOf('}') + 1));
 ff('-i', silent, '-i', music, '-filter_complex', `${pre},loudnorm=I=-15:TP=-2.5:LRA=7:measured_I=${m.input_i}:measured_TP=${m.input_tp}:measured_LRA=${m.input_lra}:measured_thresh=${m.input_thresh}:offset=${m.target_offset}:linear=true,aresample=48000[a]`,
   '-map', '0:v:0', '-map', '[a]', '-c:v', 'copy', '-c:a', 'aac', '-b:a', '128k', '-shortest', '-movflags', '+faststart', final);
+// Ảnh bìa: khung ở màn chơi chính (đầu quý 1, đã có HUD và phụ đề «Mỗi quý ba bước»)
+const pt = Math.max(0, posterAt - frames[0].t).toFixed(2);
+ff('-ss', pt, '-i', final, '-frames:v', '1', '-q:v', '3', join(OUT, name + '-poster.jpg'));
+ff('-i', join(OUT, name + '-poster.jpg'), '-c:v', 'libwebp', '-quality', '80', join(OUT, name + '-poster.webp'));
 rmSync(tmp, { recursive: true, force: true }); rmSync(silent, { force: true });
 console.log('Xong: ' + final + ` (${dur.toFixed(1)} s, ${frames.length} ảnh screencast)`);
