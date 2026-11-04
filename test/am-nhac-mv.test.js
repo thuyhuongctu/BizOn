@@ -23,6 +23,6 @@ assert.match(s, /<h2 data-en="Music video «Brand Passport»">MV «Hộ chiếu 
 assert.ok(s.includes('href="ho-chieu-thuong-hieu.html" data-en="▶ Play the Brand Passport game"'));
 assert.ok(fs.existsSync(R('ho-chieu-thuong-hieu.html')));
 // MV Durian Passport bản hoạt hình 3D (04/11/2026), cạnh bản lyric video
-assert.ok(ma.has('d-LuG6_eAR4') && s.includes('assets/video/mv-durian-passport-3d-poster.webp'), 'thiếu MV Durian Passport 3D');
+assert.ok(ma.has('4Y07yX8BARU') && !ma.has('d-LuG6_eAR4') && s.includes('assets/video/mv-durian-passport-3d-poster.webp'), 'thiếu MV Durian Passport 3D');
 assert.ok(ma.has('Vy3dhR4ichs'), 'vẫn giữ bản lyric video Durian Passport');
 console.log('am-nhac-mv: ' + nut.length + ' nút MV, poster và mã YouTube đều hợp lệ');
