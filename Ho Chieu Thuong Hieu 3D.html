@@ -1236,7 +1236,25 @@
         '<small>✅ ' + T(f.adv, f.advEn) + '</small><small>⚠️ ' + T(f.weak, f.weakEn) + '</small></span></button>';
     }).join('');
   }
-  window.bpFirm = function (i) { S.firm = i; renderFirms(); };
+  // Chọn doanh nghiệp chỉ đổi viền chọn, không vẽ lại cả danh sách (vẽ lại làm ảnh nạp lại, nháy mất một khung)
+  window.bpFirm = function (i) {
+    S.firm = i;
+    var bs = document.querySelectorAll('#bp-firms .bp-firm');
+    if (bs.length !== FIRMS.length) return renderFirms();
+    bs.forEach(function (b, k) { b.classList.toggle('sel', k === i); });
+  };
+  // Đổi màn (Quan sát → Quyết định → Biến cố → Kết thúc): đưa đầu màn mới vào khung nhìn. Nút chuyển màn nằm cuối một
+  // màn dài, màn mới ngắn hơn nên trình duyệt giữ chỗ cuộn cũ – trên điện thoại người chơi bị bỏ lại ở chân trang.
+  function toStageTop(id) {
+    if (document.documentElement.classList.contains('bp-embed')) return;
+    var el = $(id); if (!el || el.classList.contains('hidden')) return;
+    var top = el.getBoundingClientRect().top;
+    if (top < 0 || top > window.innerHeight * 0.6) window.scrollTo(0, Math.max(0, window.scrollY + top - 8));
+  }
+  stageObs = (function (f) { return function () { var r = f.apply(this, arguments); toStageTop('bp-play'); return r; }; })(stageObs);
+  stageDecide = (function (f) { return function () { var r = f.apply(this, arguments); toStageTop('bp-stage'); return r; }; })(stageDecide);
+  stageEvent = (function (f) { return function () { var r = f.apply(this, arguments); toStageTop('bp-stage'); return r; }; })(stageEvent);
+  bpEnd = (function (f) { return function () { var r = f.apply(this, arguments); toStageTop('bp-end'); return r; }; })(bpEnd);
 
   function renderCast() {
     var el = $('bp-cast');

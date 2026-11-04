@@ -236,7 +236,10 @@ ff('-f', 'concat', '-safe', '0', '-i', join(tmp, 'list.txt'), '-vf', 'fps=30,sca
 const { check } = await import('../kiem-video.mjs');
 const glitch = check(raw).glitch;
 if (glitch.length) {
-  ff('-i', raw, '-vf', glitch.map(n => `freezeframes=first=${n}:last=${n}:replace=${n - 1}`).join(','), '-c:v', 'libx264', '-preset', 'slow', '-crf', '21', '-profile:v', 'high', '-level', '4.0', silent);
+  // freezeframes cần hai đầu vào (luồng gốc và luồng lấy khung thay): tách đôi luồng cho từng khung hỏng
+  let g = '', last = '0:v';
+  glitch.forEach((n, i) => { g += `[${last}]split[s${i}a][s${i}b];[s${i}a][s${i}b]freezeframes=first=${n}:last=${n}:replace=${n - 1}[f${i}];`; last = `f${i}`; });
+  ff('-i', raw, '-filter_complex', g.slice(0, -1), '-map', `[${last}]`, '-c:v', 'libx264', '-preset', 'slow', '-crf', '21', '-profile:v', 'high', '-level', '4.0', silent);
   console.log('Đã thay khung hỏng: ' + glitch.join(', '));
 } else ff('-i', raw, '-c', 'copy', silent);
 rmSync(raw, { force: true });
