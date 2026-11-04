@@ -23,6 +23,10 @@ on conflict (id) do nothing;
 insert into public.instructor_allowlist (email, note, added_by) values ('jt.gv@ctu.edu.vn', 'test', 'test'), ('jt.gv2@ctu.edu.vn', 'test', 'test') on conflict (email) do nothing;
 delete from public.live_progress where class_code = 'LP-TEST';
 delete from public.instructor_class_access where class_code = 'LP-TEST';
+-- Lớp phải được giảng viên đăng ký trước (migration 20261104000000_ra_soat_bao_mat.sql): f1 nhận lớp LP-TEST ngay từ đầu
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-0000000000f1","email":"jt.gv@ctu.edu.vn","role":"authenticated"}', false); set role authenticated;
+select public.bizon_claim_class('LP-TEST');
+reset role;
 
 -- anon: bị chặn hoàn toàn
 select set_config('request.jwt.claims', '{"role":"anon"}', false); set role anon;
@@ -58,7 +62,6 @@ reset role;
 
 -- giảng viên chủ lớp đọc được, không có email; giảng viên khác không thấy
 select set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-0000000000f1","email":"jt.gv@ctu.edu.vn","role":"authenticated"}', false); set role authenticated;
-select public.bizon_claim_class('LP-TEST');
 select pg_temp.lp_eq((select string_agg(team_name || ':' || round || '/' || rounds_total || ':' || finished, ',') from public.bizon_live_progress_class('lp-test','bps')), 'Doi B:5/5:true,Doi A:2/5:false', 'bảng lớp');
 select pg_temp.lp_eq((select detail->>'loc' from public.bizon_live_progress_class('LP-TEST','bps') where team_name = 'Doi A'), 'ben-ninh-kieu', 'chi tiết');
 select pg_temp.lp_eq((select count(*)::text from public.bizon_live_progress_class('LP-TEST','hcsr')), '1', 'lọc theo trò');
