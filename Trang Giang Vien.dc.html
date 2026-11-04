@@ -568,6 +568,8 @@ const SIG_KEY = 'bizon-gv-sig-tu';
 function examMMSS(ms) { const s = Math.max(0, Math.round(ms / 1000)); return String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0'); }
 // Ngôn ngữ dùng chung với toàn site (localStorage «bizon-lang»); mặc định tiếng Việt cho giảng viên.
 const GV_LANG = () => { try { return localStorage.getItem('bizon-lang') === 'en' ? 'en' : 'vi'; } catch (e) { return 'vi'; } };
+// Khớp «Minimum password length» = 8 của Supabase Auth và trang đăng ký sinh viên (js/student-auth.js).
+const GV_MIN_PASS = 8;
 class Component extends DCLogic {
   state = { view: 'login', mode: 'in', err: '', fEmail: '', fPass: '', fNewPass: '', recoveryToken: '', fCode: '', classes: [], adminClasses: [], code: '', tab: 'teams', subs: [], st: {}, memberLog: [], bpResults: [], exam: null, examNow: null, exSetup: '', exRound: '', selTeam: '', fEvent: '', fMsg: '', gTeam: '*', gAmt: '', gReason: '', edits: {}, saved: {}, board: false, ready: false, certCode: '', certName: '', certDates: '', certSaved: false, certOrgName: '', certOrgSub: '', certOrgLogo: '', certOrgLogo2: '', certSignerName: '', certSignerTitle: '', certIssuerSaved: false, rubric: {}, rLv1: '', rLv2: '', rLv3: '', rLv4: '', rubricSaved: false, rosterText: '', rosterSaved: false, sigTu: '', certMsg: '', lang: GV_LANG() };
   tr(vi, en) { return this.state.lang === 'en' ? en : vi; }
@@ -610,6 +612,7 @@ class Component extends DCLogic {
     } catch (e) { this.fail(e); } }
   async login() {
     const { fEmail, fPass, mode } = this.state; if (!fEmail || !fPass) return this.fail(this.tr('Nhập email và mật khẩu.', 'Enter your email and password.'));
+    if (mode === 'up' && fPass.length < GV_MIN_PASS) return this.fail(this.tr('Mật khẩu cần tối thiểu 8 ký tự.', 'The password needs at least 8 characters.'));
     try { if (mode === 'up') { const ok = await this.api().signUp(fEmail, fPass); if (!ok) return this.setState({ err: this.tr('Đã tạo tài khoản. Kiểm tra email để xác nhận rồi đăng nhập.', 'Account created. Check your email to confirm, then sign in.'), mode: 'in' }); }
       else await this.api().signIn(fEmail, fPass);
       this.setState({ fPass: '' }); this.loadClasses(); } catch (e) { this.fail(e); } }
@@ -618,7 +621,7 @@ class Component extends DCLogic {
     try { await this.api().resetPassword(fEmail); this.setState({ mode: 'in', err: this.tr('Nếu email này có tài khoản, một email đặt lại mật khẩu đã được gửi. Kiểm tra hộp thư (cả Spam).', 'If this email has an account, a password-reset email has been sent. Check your inbox (and Spam).') }); }
     catch (e) { this.fail(e); } }
   async submitNewPassword() {
-    const { fNewPass, recoveryToken } = this.state; if (!fNewPass || fNewPass.length < 6) return this.fail(this.tr('Mật khẩu mới cần tối thiểu 6 ký tự.', 'The new password needs at least 6 characters.'));
+    const { fNewPass, recoveryToken } = this.state; if (!fNewPass || fNewPass.length < GV_MIN_PASS) return this.fail(this.tr('Mật khẩu mới cần tối thiểu 8 ký tự.', 'The new password needs at least 8 characters.'));
     try { await this.api().completeRecovery(recoveryToken, fNewPass); this.setState({ mode: 'in', fPass: '', fNewPass: '', recoveryToken: '', err: this.tr('Đã đặt lại mật khẩu. Đăng nhập bằng mật khẩu mới.', 'Password reset. Sign in with your new password.') }); }
     catch (e) { this.fail(e); } }
   async claim() { try { await this.api().claimClass(this.state.fCode); this.setState({ fCode: '' }); this.loadClasses(); } catch (e) { this.fail(e); } }
@@ -719,7 +722,7 @@ class Component extends DCLogic {
       subtitle: inClass ? 'Bảng điều khiển lớp' : inAdmin ? 'Quản trị hệ thống' : signedIn ? 'Quản lý lớp học' : tr('Đăng nhập giảng viên', 'Instructor sign-in'),
       tHead: tr('BizOn · Giảng viên', 'BizOn · Instructors'), tSignOut: tr('Đăng xuất', 'Sign out'),
       tAuthNote: tr('Tài khoản giảng viên dùng Supabase Auth. Mỗi mã lớp chỉ thuộc về một giảng viên.', 'Instructor accounts use Supabase Auth. Each class code belongs to one instructor.'),
-      tEmailPh: tr('giangvien@truong.edu.vn', 'instructor@university.edu'), tPass: tr('Mật khẩu', 'Password'), tNewPass: tr('Mật khẩu mới', 'New password'), tPassPh: tr('Tối thiểu 6 ký tự', 'At least 6 characters'),
+      tEmailPh: tr('giangvien@truong.edu.vn', 'instructor@university.edu'), tPass: tr('Mật khẩu', 'Password'), tNewPass: tr('Mật khẩu mới', 'New password'), tPassPh: tr('Tối thiểu 8 ký tự', 'At least 8 characters'),
       tForgot: tr('Quên mật khẩu?', 'Forgot password?'), tBack: tr('← Quay lại đăng nhập', '← Back to sign-in'), tDemo: tr('👀 Dùng thử với lớp mẫu DEMO-2026', '👀 Try the DEMO-2026 sample class'),
       setVi: () => this.setLang('vi'), setEn: () => this.setLang('en'), viOn: s.lang !== 'en' ? 'true' : 'false', enOn: s.lang === 'en' ? 'true' : 'false',
       viBg: s.lang !== 'en' ? '#1f4a55' : 'transparent', viFg: s.lang !== 'en' ? '#fff' : '#1f4a55', enBg: s.lang === 'en' ? '#1f4a55' : 'transparent', enFg: s.lang === 'en' ? '#fff' : '#1f4a55',
