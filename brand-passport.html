@@ -168,20 +168,20 @@
     <p class="text-center text-[11px] font-extrabold text-primary uppercase tracking-[.2em]" data-en="Watch before you play">📺 Xem trước khi chơi</p>
     <h2 class="font-display font-extrabold text-deep-teal text-lg text-center mt-1 mb-3" data-en="How-to-play video">Video hướng dẫn chơi</h2>
     <div class="flex justify-center gap-2 mb-3">
-      <button type="button" id="bp-video-len-short" onclick="bpVideoLen('short')" class="clay-btn bg-deep-teal text-white font-display font-extrabold px-4 py-1.5 text-xs" data-en="🎬 Quick (~40s)">🎬 Ngắn (~40 giây)</button>
-      <button type="button" id="bp-video-len-full" onclick="bpVideoLen('full')" class="clay-btn bg-white text-deep-teal border border-deep-teal/20 font-display font-extrabold px-4 py-1.5 text-xs" data-en="📖 Detailed – all 6 quarters (~105s)">📖 Chi tiết – đủ 6 quý (~105 giây)</button>
+      <button type="button" id="bp-video-len-short" onclick="bpVideoLen('short')" class="clay-btn bg-deep-teal text-white font-display font-extrabold px-4 py-1.5 text-xs" data-en="🎬 Quick (~1 min)">🎬 Ngắn (~1 phút)</button>
+      <button type="button" id="bp-video-len-full" onclick="bpVideoLen('full')" class="clay-btn bg-white text-deep-teal border border-deep-teal/20 font-display font-extrabold px-4 py-1.5 text-xs" data-en="📖 Detailed – all 6 quarters (~2 min)">📖 Chi tiết – đủ 6 quý (~2 phút)</button>
     </div>
-    <video id="bp-video-short-vi" controls preload="none" playsinline poster="assets/video/bp-huong-dan-choi-vi-poster.webp" class="w-full rounded-2xl block mx-auto" style="max-height:70vh">
-      <source src="assets/video/bp-huong-dan-choi-vi-v3.mp4" type="video/mp4">
+    <video id="bp-video-short-vi" controls preload="none" playsinline poster="assets/video/bp-huong-dan-choi-vi-v4-poster.webp" class="w-full rounded-2xl block mx-auto" style="max-height:70vh">
+      <source src="assets/video/bp-huong-dan-choi-vi-v4.mp4" type="video/mp4">
     </video>
-    <video id="bp-video-short-en" controls preload="none" playsinline poster="assets/video/bp-huong-dan-choi-en-poster.webp" class="w-full rounded-2xl mx-auto hidden" style="max-height:70vh">
-      <source src="assets/video/bp-huong-dan-choi-en-v3.mp4" type="video/mp4">
+    <video id="bp-video-short-en" controls preload="none" playsinline poster="assets/video/bp-huong-dan-choi-en-v4-poster.webp" class="w-full rounded-2xl mx-auto hidden" style="max-height:70vh">
+      <source src="assets/video/bp-huong-dan-choi-en-v4.mp4" type="video/mp4">
     </video>
-    <video id="bp-video-full-vi" controls preload="none" playsinline poster="assets/video/bp-huong-dan-chi-tiet-vi-poster.webp" class="w-full rounded-2xl mx-auto hidden" style="max-height:70vh">
-      <source src="assets/video/bp-huong-dan-chi-tiet-vi-v4.mp4" type="video/mp4">
+    <video id="bp-video-full-vi" controls preload="none" playsinline poster="assets/video/bp-huong-dan-chi-tiet-vi-v5-poster.webp" class="w-full rounded-2xl mx-auto hidden" style="max-height:70vh">
+      <source src="assets/video/bp-huong-dan-chi-tiet-vi-v5.mp4" type="video/mp4">
     </video>
-    <video id="bp-video-full-en" controls preload="none" playsinline poster="assets/video/bp-huong-dan-chi-tiet-en-poster.webp" class="w-full rounded-2xl mx-auto hidden" style="max-height:70vh">
-      <source src="assets/video/bp-huong-dan-chi-tiet-en-v4.mp4" type="video/mp4">
+    <video id="bp-video-full-en" controls preload="none" playsinline poster="assets/video/bp-huong-dan-chi-tiet-en-v5-poster.webp" class="w-full rounded-2xl mx-auto hidden" style="max-height:70vh">
+      <source src="assets/video/bp-huong-dan-chi-tiet-en-v5.mp4" type="video/mp4">
     </video>
     <p class="text-[10px] text-deep-teal/40 mt-3 text-center" data-en="Burned-in captions + original background music – switch language from the ⋯ button top-left to switch the video too.">Có phụ đề chữ đốt sẵn + nhạc nền gốc – đổi ngôn ngữ bằng nút ⋯ góc trái sẽ đổi luôn video.</p>
   </section>
@@ -934,7 +934,25 @@
         '<small>✅ ' + T(f.adv, f.advEn) + '</small><small>⚠️ ' + T(f.weak, f.weakEn) + '</small></span></button>';
     }).join('');
   }
-  window.bpFirm = function (i) { S.firm = i; renderFirms(); };
+  // Chọn doanh nghiệp chỉ đổi viền chọn, không vẽ lại cả danh sách (vẽ lại làm ảnh nạp lại, nháy mất một khung)
+  window.bpFirm = function (i) {
+    S.firm = i;
+    var bs = document.querySelectorAll('#bp-firms .bp-firm');
+    if (bs.length !== FIRMS.length) return renderFirms();
+    bs.forEach(function (b, k) { b.classList.toggle('sel', k === i); });
+  };
+  // Đổi màn (Quan sát → Quyết định → Biến cố → Kết thúc): đưa đầu màn mới vào khung nhìn. Nút chuyển màn nằm cuối một
+  // màn dài, màn mới ngắn hơn nên trình duyệt giữ chỗ cuộn cũ – trên điện thoại người chơi bị bỏ lại ở chân trang.
+  function toStageTop(id) {
+    if (document.documentElement.classList.contains('bp-embed')) return;
+    var el = $(id); if (!el || el.classList.contains('hidden')) return;
+    var top = el.getBoundingClientRect().top;
+    if (top < 0 || top > window.innerHeight * 0.6) window.scrollTo(0, Math.max(0, window.scrollY + top - 8));
+  }
+  stageObs = (function (f) { return function () { var r = f.apply(this, arguments); toStageTop('bp-play'); return r; }; })(stageObs);
+  stageDecide = (function (f) { return function () { var r = f.apply(this, arguments); toStageTop('bp-stage'); return r; }; })(stageDecide);
+  stageEvent = (function (f) { return function () { var r = f.apply(this, arguments); toStageTop('bp-stage'); return r; }; })(stageEvent);
+  bpEnd = (function (f) { return function () { var r = f.apply(this, arguments); toStageTop('bp-end'); return r; }; })(bpEnd);
 
   function renderCast() {
     var el = $('bp-cast');
@@ -1991,7 +2009,7 @@
   }
 
   // Video hướng dẫn có 2 chiều độc lập: ngôn ngữ (theo T()/isEN() chung của
-  // trang) và độ dài (bản ngắn ~40s mặc định, hoặc bản chi tiết đủ 6 quý
+  // trang) và độ dài (bản ngắn ~1 phút mặc định, hoặc bản chi tiết đủ 6 quý
   // ~95s – nhớ lựa chọn qua localStorage để không phải chọn lại mỗi lần ghé).
   function bpVideoLen(len) {
     try { localStorage.setItem('bizon-bp-video-len', len); } catch (e) {}
