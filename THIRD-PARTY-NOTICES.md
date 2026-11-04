@@ -79,6 +79,8 @@ Các trang chính của bizonland.com (trang chủ, bốn trò chơi, hành trì
 
 Chỉ chạy trên máy phát triển hoặc trong CI; không có mã của chúng trong trang web: Node.js, **Playwright** (Apache 2.0, kiểm thử trình duyệt), **html-validate** (MIT), **sharp**/libvips (Apache 2.0 / LGPL, xử lý ảnh), **ffmpeg** (LGPL, mã hoá lại video MP4 H.264/AAC), **rembg** (MIT) với mô hình U²-Net (Apache 2.0, tách nền ảnh — tệp mới, không ghi đè ảnh gốc), **Demucs** (MIT, tách giọng khỏi nhạc nền), **faster-whisper** (MIT) với mô hình Whisper (MIT, nhận dạng lời để kiểm phát âm), **edge-tts** (LGPL-3.0, gọi dịch vụ đọc của Edge), Android SDK và Gradle (xây gói Android), các action chính thức của GitHub.
 
+Bốn lệnh cho Claude Code trong `.claude/skills/` (`balance-check`, `playtest-report`, `design-review`, `ux-review`) phỏng theo các skill cùng tên của **Claude Code Game Studios** (© 2026 Donchitos, giấy phép **MIT**), đã Việt hóa và viết lại cho BizOn. Đây là hướng dẫn làm việc cho công cụ phát triển, không chạy trên trang web; mỗi tệp giữ dòng ghi nguồn. Toàn văn giấy phép MIT: <https://opensource.org/license/mit>.
+
 ## 7 · Nội dung được tạo với sự hỗ trợ của công cụ AI
 
 Một phần tài sản nghe nhìn của BizOn được dựng với công cụ AI rồi do nhóm tác giả biên tập, chọn lọc và tích hợp; nhóm **không** kê các phần máy tạo thuần tuý là tác phẩm của mình (phương án A, Mục F1 hồ sơ SHTT). Ghi ở đây để minh bạch với người dùng và cơ quan thẩm định:
