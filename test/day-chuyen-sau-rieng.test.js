@@ -52,7 +52,7 @@ check(['../js/durian-voice.js', 'day-chuyen-sau-rieng-data.js', 'day-chuyen-sau-
   && page.indexOf('day-chuyen-sau-rieng-data.js') < page.indexOf('day-chuyen-sau-rieng-ui.js') && page.indexOf('bizon-clay-i18n.js') < page.indexOf('day-chuyen-sau-rieng-ui.js'), 'trang nạp giọng đọc, dữ liệu, i18n trước giao diện');
 check(!/ho-chieu-sau-rieng-(engine|core|data)\.js/.test(page) && !/Math\.random/.test(ui + read('lab/day-chuyen-sau-rieng-data.js')), 'không đụng engine Hộ Chiếu, không có số ngẫu nhiên');
 check(read('ho-chieu-sau-rieng.html').includes('href="lab/day-chuyen-sau-rieng.html"'), 'trang Hộ Chiếu Sầu Riêng dẫn tới dây chuyền');
-check(+(/CACHE = 'bizon-v(\d+)'/.exec(sw) || [])[1] >= 773 && ['day-chuyen-sau-rieng.html', 'day-chuyen-sau-rieng-data.js', 'day-chuyen-sau-rieng-ui.js'].every(f => sw.includes("'./lab/" + f + "'")), 'sw.js ≥ bizon-v773 và cache ba tệp');
+check(+(/CACHE = 'bizon-v(\d+)'/.exec(sw) || [])[1] >= 774 && ['day-chuyen-sau-rieng.html', 'day-chuyen-sau-rieng-data.js', 'day-chuyen-sau-rieng-ui.js'].every(f => sw.includes("'./lab/" + f + "'")), 'sw.js ≥ bizon-v774 và cache ba tệp');
 
 // ---- Chạy thật ----
 (async () => {
