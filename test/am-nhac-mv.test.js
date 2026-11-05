@@ -17,8 +17,9 @@ for (const [, id, nhan, poster] of nut) {
   assert.ok(fs.existsSync(R(poster)) && fs.statSync(R(poster)).size > 10000, 'thiếu poster ' + poster);
 }
 // MV Brand Passport 3D: đúng mã, đúng poster, có liên kết về game, có bản tiếng Anh cho tiêu đề và mô tả
-assert.ok(ma.has('4Do7SZpc5pU'), 'thiếu MV Brand Passport 3D');
-assert.ok(s.includes("data-yt=\"4Do7SZpc5pU\"") && s.includes("assets/video/mv-brand-passport-3d-poster.webp"));
+assert.ok(ma.has('Huf5fw858iQ'), 'thiếu MV Brand Passport 3D');
+assert.ok(!ma.has('4Do7SZpc5pU'), 'còn mã MV Brand Passport cũ (trước hậu kỳ)');
+assert.ok(s.includes("data-yt=\"Huf5fw858iQ\"") && s.includes("assets/video/mv-brand-passport-3d-v2-poster.webp"));
 assert.match(s, /<h2 data-en="Music video «Brand Passport»">MV «Hộ chiếu thương hiệu»<\/h2>/);
 assert.ok(s.includes('href="ho-chieu-thuong-hieu.html" data-en="▶ Play the Brand Passport game"'));
 assert.ok(fs.existsSync(R('ho-chieu-thuong-hieu.html')));
