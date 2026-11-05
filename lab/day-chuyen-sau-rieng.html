@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<!-- Dây Chuyền Sầu Riêng (Durian Packing Line) · BizOn 2026 – © Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. -->
+<html lang="vi" data-default-lang="vi">
+<head>
+<meta charset="UTF-8">
+<link rel="canonical" href="https://bizonland.com/lab/day-chuyen-sau-rieng.html">
+<link rel="alternate" hreflang="vi" href="https://bizonland.com/lab/day-chuyen-sau-rieng.html?lang=vi">
+<link rel="alternate" hreflang="en" href="https://bizonland.com/lab/day-chuyen-sau-rieng.html?lang=en">
+<link rel="alternate" hreflang="x-default" href="https://bizonland.com/lab/day-chuyen-sau-rieng.html">
+<meta property="og:url" content="https://bizonland.com/lab/day-chuyen-sau-rieng.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Dây Chuyền Sầu Riêng · Hộ Chiếu Sầu Riêng">
+<meta property="og:image" content="https://bizonland.com/assets/og/og-cover.jpg">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:locale" content="vi_VN"><meta property="og:locale:alternate" content="en_US">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+<script src="../js/bizon-lang.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title data-en="Durian Packing Line · Durian Passport">Dây Chuyền Sầu Riêng · Hộ Chiếu Sầu Riêng</title>
+<meta name="description" data-en-content="Build the durian packhouse line for four orders – official fresh export, whole frozen, frozen pulp, domestic fresh – set maturity, timing and cold-chain temperature, then run it and see whether the lot passes. Rule-based scoring with voice narration." content="Lắp dây chuyền sơ chế, đóng gói sầu riêng cho bốn đơn hàng – trái tươi chính ngạch, nguyên trái cấp đông, múi cấp đông, trái tươi bán trong nước – chỉnh độ già, thời gian, nhiệt độ chuỗi lạnh rồi chạy để xem lô đạt hay bị trả. Chấm theo luật công khai, có giọng đọc.">
+<meta name="copyright" content="© 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.">
+<meta name="theme-color" content="#FBF4E8">
+<link rel="icon" href="../assets/brand/bizon-favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../css/bizon-clay-fonts.css">
+<link rel="stylesheet" href="../css/bizon-clay.css">
+<style>
+  .dc{--ok:#1f7a4d;--ok-bg:#DDF1E4;--warn:#8a5a00;--warn-bg:#FFE6B8;--bad:#a8321e;--bad-bg:#FDE1CE;--durian:#4A7419}
+  .dc .clay-main{padding-bottom:48px}
+  .dc-the{background:var(--clay-card);border-radius:var(--clay-r-lg);box-shadow:var(--clay-shadow);padding:clamp(18px,3vw,28px);margin:0 0 22px}
+  .dc-nhat{color:var(--clay-sub)}
+  .dc-hero{margin:22px 0;border-radius:var(--clay-r-xl);background:var(--clay-cream-deep);box-shadow:var(--clay-shadow);padding:clamp(22px,4vw,40px);display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center}
+  .dc-crumb{font-size:14px;color:var(--clay-sub);display:flex;gap:6px;flex-wrap:wrap}
+  .dc-hero h1{margin:10px 0 0;font-size:clamp(30px,5vw,50px);text-wrap:balance}
+  .dc-hero .lead{margin:12px 0 0;max-width:44em;font-size:17px;color:var(--clay-sub);text-wrap:pretty}
+  .dc-hero-img{width:clamp(220px,30vw,360px);height:auto;border-radius:24px;box-shadow:var(--clay-shadow-sm)}
+  @media (max-width:760px){.dc-hero{grid-template-columns:1fr}.dc-hero-img{width:100%}}
+  .dc-tien-do{list-style:none;margin:18px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+  .dc-td{display:flex;gap:6px;align-items:center;background:var(--clay-card);border-radius:999px;padding:6px 12px;font-size:14px;box-shadow:var(--clay-shadow-sm)}
+  .dc-td.dang{outline:3px solid var(--clay-orange)}
+  .dc-td b{font-family:var(--clay-head);color:var(--clay-accent)}
+  .dc-tong{text-align:right;margin:-6px 0 16px;font:700 15px var(--clay-head)}
+  .dc-don{display:grid;grid-template-columns:minmax(0,300px) 1fr;gap:20px;align-items:start}
+  @media (max-width:700px){.dc-don{grid-template-columns:1fr}}
+  .dc-don-img{display:block;width:100%;height:auto;border-radius:22px;box-shadow:var(--clay-shadow-sm)}
+  .dc-don h2{font-size:clamp(22px,3vw,28px);margin:6px 0 2px}
+  .dc-khach{color:var(--clay-sub);font-weight:600}
+  .dc-tom{margin-top:8px !important}
+  .dc-bien{margin-top:12px !important;background:var(--warn-bg);border-radius:18px;padding:10px 14px;font-size:15px}
+  .dc-bien b{color:var(--warn)}
+  .dc-loa{border:0;background:var(--clay-tray);border-radius:999px;width:36px;height:36px;font-size:17px;cursor:pointer;vertical-align:middle;box-shadow:var(--clay-tray-shadow)}
+  h2.dc-muc{font-size:20px;margin:0 0 4px}
+  .dc-muc-phu{color:var(--clay-sub);font-size:15px;margin:0 0 14px !important}
+  .dc-kho{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+  .dc-tram{display:flex;gap:10px;align-items:center;text-align:left;cursor:pointer;border:0;border-radius:20px;padding:10px 12px;background:var(--clay-tray);box-shadow:var(--clay-tray-shadow);min-height:64px;color:var(--clay-ink);font:inherit}
+  .dc-tram:hover:not(:disabled){outline:2px solid var(--clay-teal)}
+  .dc-tram.da{background:var(--clay-card);box-shadow:var(--clay-shadow-sm);opacity:.55}
+  .dc-tram.da b::after{content:' ✓';color:var(--ok)}
+  .dc-tram-img{width:56px;height:56px;object-fit:contain;flex:none;filter:drop-shadow(0 6px 6px rgba(110,70,30,.25))}
+  .dc-tram-chu{display:flex;flex-direction:column;min-width:0}
+  .dc-tram-chu b{font-family:var(--clay-head);font-size:15px}
+  .dc-tram-chu small{color:var(--clay-sub);font-size:13px;line-height:1.35}
+  .dc-day{list-style:none;margin:0;padding:16px 10px;display:flex;flex-wrap:wrap;gap:10px 22px;border-radius:24px;background:var(--clay-tray);box-shadow:var(--clay-tray-shadow);
+          background-image:repeating-linear-gradient(90deg,transparent 0 18px,rgba(110,70,30,.07) 18px 22px)}
+  .dc-day-trong{color:var(--clay-sub);padding:10px}
+  .dc-o{position:relative;background:var(--clay-card);border-radius:20px;box-shadow:var(--clay-shadow-sm);width:132px;display:flex;flex-direction:column;transition:transform .2s}
+  .dc-o:not(:last-child)::after{content:'➜';position:absolute;right:-19px;top:34px;color:var(--clay-orange);font-weight:800}
+  .dc-o-chinh{position:relative;border:0;background:none;cursor:pointer;padding:10px 8px 4px;display:flex;flex-direction:column;align-items:center;gap:2px;border-radius:20px 20px 0 0;color:var(--clay-ink);font:inherit}
+  .dc-o-so{font:800 12px var(--clay-head);background:var(--clay-teal);color:var(--clay-on-teal);border-radius:999px;min-width:22px;padding:1px 7px}
+  .dc-o-icon{width:64px;height:64px;object-fit:contain;filter:drop-shadow(0 6px 6px rgba(110,70,30,.25))}
+  .dc-o-ten{font:700 13px/1.25 var(--clay-head);text-align:center}
+  .dc-o-nut{display:flex;justify-content:center;gap:2px;padding:2px 4px 8px}
+  .dc-o-nut button{border:0;background:var(--clay-tray);border-radius:10px;width:32px;height:28px;cursor:pointer;font-size:12px;color:var(--clay-ink)}
+  .dc-o-nut button:disabled{opacity:.3;cursor:default}
+  .dc-o.xem{outline:3px solid var(--clay-teal)}
+  .dc-o.qua{background:var(--ok-bg)}
+  .dc-o.chay{transform:translateY(-6px);outline:3px solid var(--clay-orange)}
+  .dc-o.chay .dc-o-icon{visibility:hidden}
+  .dc-o.chay .dc-o-chinh::before{content:'';position:absolute;top:26px;left:50%;width:64px;height:64px;margin-left:-32px;background:url("../assets/hc/tool/trai-sau-rieng.webp") center/contain no-repeat;filter:drop-shadow(0 8px 6px rgba(110,70,30,.35))}
+  @media (prefers-reduced-motion:reduce){.dc-o{transition:none}.dc-o.chay{transform:none}}
+  .dc-xem{margin-top:14px;border-radius:20px;background:var(--clay-cream-deep);padding:12px 16px;min-height:64px}
+  .dc-xem h3{font-size:17px;margin-bottom:4px}
+  .dc-xem::after{content:'';display:block;clear:both}
+  .dc-xem-img{float:left;width:min(260px,40%);height:auto;border-radius:16px;margin:0 16px 4px 0;box-shadow:var(--clay-shadow-sm)}
+  @media (max-width:560px){.dc-xem-img{float:none;width:100%;margin:0 0 10px}}
+  .dc-kq-dau-img{width:80px;height:80px;object-fit:contain;transform:rotate(-12deg)}
+  .dc-thanh{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  @media (max-width:760px){.dc-thanh{grid-template-columns:1fr}}
+  .dc-thanh label{display:block;font:700 15px var(--clay-head)}
+  .dc-gt{float:right;color:var(--clay-accent);font-family:var(--clay-head)}
+  .dc-thanh input{width:100%;accent-color:var(--clay-teal);margin:10px 0 2px}
+  .dc-thanh small{color:var(--clay-sub);font-size:13px;display:block}
+  .dc-hang{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;align-items:center}
+  .dc .clay-btn{font-size:15px;padding:12px 16px}
+  .dc .clay-btn:disabled{opacity:.45;cursor:default}
+  .dc .dc-phu{background:var(--clay-tray);color:var(--clay-ink);box-shadow:var(--clay-tray-shadow)}
+  .dc-goi-y-chu{margin-top:10px !important;color:var(--clay-sub);font-size:15px}
+  .dc-ket-qua{border-radius:var(--clay-r-lg);padding:clamp(18px,3vw,28px);margin:0 0 22px;box-shadow:var(--clay-shadow);background:var(--clay-card);border-top:10px solid var(--ok)}
+  .dc-ket-qua.kq-giam-gia{border-top-color:var(--clay-gold)}
+  .dc-ket-qua.kq-tra{border-top-color:var(--bad)}
+  .dc-kq-dau{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:baseline}
+  .dc-kq-dau h3{font-size:24px}
+  .dc-kq-sao{font-size:26px;color:var(--clay-gold);letter-spacing:2px}
+  .dc-kq-diem b{font:800 30px var(--clay-head)}
+  .dc-kq-bang{border-collapse:collapse;margin:12px 0;font-size:15px}
+  .dc-kq-bang th{text-align:left;font-weight:600;padding:4px 18px 4px 0;color:var(--clay-sub)}
+  .dc-kq-bang td{font-family:var(--clay-head);font-weight:700}
+  .dc-kq-nx{list-style:none;padding:0;margin:8px 0 0;display:grid;gap:8px}
+  .dc-kq-nx li{border-radius:16px;padding:10px 14px;font-size:15px}
+  .nx-tot{background:var(--ok-bg)} .nx-tam{background:var(--warn-bg)} .nx-hong{background:var(--bad-bg)}
+  .dc-bang-cuon{overflow-x:auto}
+  .dc-tong-bang{width:100%;border-collapse:collapse;font-size:15px;margin-top:12px}
+  .dc-tong-bang th,.dc-tong-bang td{text-align:left;padding:8px;border-bottom:1px solid rgba(110,70,30,.18);vertical-align:top}
+  .dc-nho{font-size:13px;color:var(--clay-sub)}
+  .dc-tong-so{font:800 40px var(--clay-head);color:var(--clay-accent)}
+  .dc-chu-y{font-size:14px;color:var(--clay-sub)}
+  .dc-chu-y ul{margin:6px 0 0;padding-left:20px}
+  .dc-chu-y li{margin:4px 0}
+  @media print{
+    #clay-nav,#clay-footer,#durian-voice-btn,.dc-hero,#dc-man-choi,.dc-chu-y,#dc-lai,#dc-in{display:none !important}
+    .dc-the{box-shadow:none;border:1px solid #ccc}
+  }
+</style>
+</head>
+<body class="clay dc">
+<main class="clay-main">
+  <header class="dc-hero">
+    <div>
+      <nav class="dc-crumb" aria-label="Breadcrumb"><a href="../index.html">BizOn</a><span>›</span><a href="../ho-chieu-sau-rieng.html" data-en="Durian Passport">Hộ Chiếu Sầu Riêng</a></nav>
+      <h1 data-en="Durian Packing Line">Dây Chuyền Sầu Riêng</h1>
+      <p class="lead" data-en="You run a packhouse in the Mekong Delta. Four orders arrive one after another and each needs a different line. Pick stations, put them in the order the fruit passes through, set maturity, timing and temperature, then run the line to see whether the lot passes or comes back.">Bạn là quản đốc một cơ sở đóng gói ở miền Tây. Bốn đơn hàng tới lần lượt, mỗi đơn cần một dây chuyền khác nhau. Chọn trạm, xếp đúng thứ tự trái đi qua, chỉnh độ già khi cắt, thời gian và nhiệt độ, rồi cho dây chuyền chạy để xem lô hàng đạt hay bị trả.</p>
+      <ol class="dc-tien-do" id="dc-tien-do" aria-label="Tiến độ bốn đơn hàng · Progress"></ol>
+    </div>
+    <img class="dc-hero-img" src="../assets/hc/scene/nha-may-cap-dong.webp" alt="" width="688" height="384">
+  </header>
+  <p class="dc-tong"><span data-en="Total score:">Tổng điểm:</span> <span id="dc-tong-diem">0 / 400</span></p>
+
+  <div id="dc-man-choi">
+    <section class="dc-the dc-don" aria-labelledby="dc-don-ten">
+      <div class="dc-don-anh" id="dc-don-anh"></div>
+      <div>
+        <span class="clay-eyebrow" id="dc-don-so"></span>
+        <h2 id="dc-don-ten">Đơn hàng</h2>
+        <p class="dc-khach" id="dc-don-khach"></p>
+        <p class="dc-tom" id="dc-don-tom"></p>
+        <p class="dc-bien"><b data-en="Event:">Biến cố:</b> <span id="dc-don-bien"></span></p>
+      </div>
+    </section>
+
+    <section class="dc-the" aria-labelledby="dc-h-kho">
+      <h2 class="dc-muc" id="dc-h-kho" data-en="1. Station store">1. Kho trạm</h2>
+      <p class="dc-muc-phu" data-en="Tap to add a station to the end of the line; tap again to remove it. Not every order uses all 11 stations.">Bấm để lắp trạm vào cuối dây chuyền; bấm lần nữa để tháo. Không phải đơn nào cũng dùng hết 11 trạm.</p>
+      <div class="dc-kho" id="dc-kho"></div>
+    </section>
+
+    <section class="dc-the" aria-labelledby="dc-h-day">
+      <h2 class="dc-muc" id="dc-h-day" data-en="2. Your line">2. Dây chuyền của bạn</h2>
+      <p class="dc-muc-phu" data-en="Fruit moves left to right. Use ◀ ▶ to reorder and ✕ to remove. Tap a station to read what it does.">Trái đi từ trái sang phải. Dùng ◀ ▶ để đổi chỗ, ✕ để tháo. Bấm vào trạm để đọc trạm ấy làm gì.</p>
+      <ol class="dc-day" id="dc-day" aria-live="polite"></ol>
+      <div class="dc-xem" id="dc-xem" aria-live="polite"></div>
+    </section>
+
+    <section class="dc-the" aria-labelledby="dc-h-ts">
+      <h2 class="dc-muc" id="dc-h-ts" data-en="3. Settings">3. Thông số</h2>
+      <div class="dc-thanh">
+        <div>
+          <label for="dc-tt-chin"><span data-en="Maturity at cutting">Độ già khi cắt</span> <span class="dc-gt" id="dc-gt-chin"></span></label>
+          <input type="range" id="dc-tt-chin" min="60" max="100" step="1">
+          <small data-en="Percent of eating-ripe, a game convention.">Phần trăm so với lúc chín ăn được, quy ước của trò chơi.</small>
+        </div>
+        <div>
+          <label for="dc-tt-gio"><span data-en="Cutting to cold store">Từ cắt đến kho lạnh</span> <span class="dc-gt" id="dc-gt-gio"></span></label>
+          <input type="range" id="dc-tt-gio" min="2" max="72" step="1">
+          <small data-en="Includes collecting from orchards, waiting for grading, treatment.">Gồm gom hàng từ vườn, chờ phân loại, xử lý.</small>
+        </div>
+        <div>
+          <label for="dc-tt-nhiet"><span data-en="Store & container temperature">Nhiệt độ kho &amp; container</span> <span class="dc-gt" id="dc-gt-nhiet"></span></label>
+          <input type="range" id="dc-tt-nhiet" min="-40" max="30" step="1">
+          <small data-en="Held all the way after the last cooling station.">Nhiệt độ giữ suốt đường đi, sau trạm cuối cùng làm lạnh.</small>
+        </div>
+      </div>
+      <div class="dc-hang">
+        <button type="button" class="clay-btn clay-btn-orange" id="dc-chay" data-en="▶ Run the line">▶ Chạy dây chuyền</button>
+        <button type="button" class="clay-btn dc-phu" id="dc-goi-y" data-en="💡 Hint (−5 points)">💡 Gợi ý (−5 điểm)</button>
+        <button type="button" class="clay-btn dc-phu" id="dc-tham-khao" data-en="Reference settings">Thông số tham khảo</button>
+        <button type="button" class="clay-btn dc-phu" id="dc-xoa" data-en="Clear line">Tháo hết</button>
+      </div>
+      <p class="dc-goi-y-chu" id="dc-goi-y-chu" aria-live="polite"></p>
+    </section>
+
+    <section id="dc-ket-qua" class="dc-ket-qua" hidden aria-live="polite"></section>
+  </div>
+
+  <section id="dc-man-tong" class="dc-the" hidden aria-labelledby="dc-h-tong">
+    <span class="clay-eyebrow" data-en="Shift summary">Tổng kết ca làm</span>
+    <h2 id="dc-h-tong" style="font-size:28px;margin:10px 0 4px" data-en="All four orders closed">Bốn đơn hàng đã chốt</h2>
+    <p class="dc-tong-so" id="dc-tong-so"></p>
+    <p id="dc-tong-loi"></p>
+    <div class="dc-bang-cuon">
+      <table class="dc-tong-bang">
+        <thead><tr><th scope="col" data-en="Order">Đơn</th><th scope="col" data-en="Result">Kết quả</th><th scope="col" data-en="Stars">Sao</th><th scope="col" data-en="Score">Điểm</th><th scope="col" data-en="Line &amp; settings">Dây chuyền &amp; thông số</th></tr></thead>
+        <tbody id="dc-tong-bang"></tbody>
+      </table>
+    </div>
+    <div class="dc-hang">
+      <button type="button" class="clay-btn" id="dc-in" data-en="🖨 Print / save PDF">🖨 In phiếu / lưu PDF</button>
+      <button type="button" class="clay-btn dc-phu" id="dc-lai" data-en="Play again">Chơi lại</button>
+    </div>
+  </section>
+
+  <section class="dc-the dc-chu-y" aria-labelledby="dc-h-chu-y">
+    <h2 class="dc-muc" id="dc-h-chu-y" data-en="Read before using the numbers">Đọc trước khi dùng số liệu</h2>
+    <ul>
+      <li data-en-html="The station order and the ranges for maturity, hours and temperature are &lt;b&gt;teaching conventions&lt;/b&gt; compiled for the game, not a Vietnamese standard (TCVN) or an importing country’s customs rule.">Thứ tự trạm, các khoảng độ già, giờ và nhiệt độ là <b>quy ước dạy học</b> tổng hợp cho trò chơi, không phải tiêu chuẩn TCVN hay quy định của hải quan nước nhập khẩu.</li>
+      <li data-en="«Maturity %» is the game’s relative scale. In the orchard, growers count days from fruit set (different for Ri6, Monthong…), tap and listen, check stalk and spines, or measure dry matter.">«Độ già %» là thang tương đối của trò chơi. Ngoài vườn người ta đếm ngày từ khi đậu trái (khác nhau theo giống Ri6, Monthong…), gõ nghe tiếng, xem cuống và gai, hoặc đo chất khô.</li>
+      <li data-en="Official exports to China follow the 2022 protocol between Vietnam’s agriculture ministry and China’s customs (GACC): planting-area codes, packhouse codes, quarantine. Lab-test requirements (such as cadmium and auramine O) change year to year: check the latest notice before teaching.">Hàng xuất chính ngạch sang Trung Quốc đi theo Nghị định thư năm 2022 giữa Bộ Nông nghiệp Việt Nam với Tổng cục Hải quan Trung Quốc (GACC): cần mã số vùng trồng, mã số cơ sở đóng gói, kiểm dịch. Yêu cầu kiểm nghiệm (như cadimi, vàng O) thay đổi theo từng năm: đối chiếu thông báo mới nhất trước khi dạy.</li>
+      <li data-en="Score per order: order &amp; stations 40, maturity 20, timing 15, temperature 25; each hint −5. Same line, same settings, same score. A rejected lot gets at most 1 star.">Điểm mỗi đơn: thứ tự và đủ trạm 40, độ già 20, thời gian 15, nhiệt độ 25; mỗi gợi ý trừ 5. Cùng dây chuyền, cùng thông số thì cùng điểm. Lô bị trả tối đa 1 sao.</li>
+      <li data-en="Voice uses your browser’s built-in speech (🎙️ button in the corner turns it on/off). If your device has no Vietnamese voice, install one in system settings or switch to English.">Giọng đọc dùng giọng có sẵn của trình duyệt (nút 🎙️ ở góc màn hình để bật/tắt). Máy chưa có giọng tiếng Việt thì cài thêm trong cài đặt hệ thống, hoặc chuyển sang tiếng Anh.</li>
+      <li data-en="This game is separate from the 6-season simulation and does not change its scores. Progress is saved in this browser only.">Trò chơi này tách riêng với mô phỏng 6 vụ, không đổi điểm Hộ Chiếu. Ván chơi chỉ lưu trong trình duyệt này.</li>
+    </ul>
+  </section>
+</main>
+
+<script src="../js/durian-voice.js"></script>
+<script src="day-chuyen-sau-rieng-data.js"></script>
+<script src="../js/bizon-clay-i18n.js" defer></script>
+<script src="day-chuyen-sau-rieng-ui.js" defer></script>
+<script src="../js/bizon-clay-nav.js" defer></script>
+<script src="../js/bizon-clay-footer.js" defer></script>
+</body>
+</html>
