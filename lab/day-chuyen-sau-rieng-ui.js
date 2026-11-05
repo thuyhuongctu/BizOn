@@ -28,6 +28,19 @@
   const loa = (title, fn) => (voice() && voice().canSpeak)
     ? el('button', { type: 'button', class: 'dc-loa', title, 'aria-label': title, onclick: fn }, '🔊') : null;
 
+  // Ô «Dữ kiện có nguồn»: đọc DurianData.facts + sources của Hộ Chiếu (không chép lại nội dung).
+  function veDk(keys) {
+    const DD = window.DurianData;
+    if (!DD || !keys || !keys.length) return null;
+    const l = lang(), src = l === 'en' ? Object.assign({}, DD.sources, DD.sourcesEn) : DD.sources;
+    const li = keys.filter(k => DD.facts[k]).map(k => {
+      const f = DD.facts[k];
+      return el('li', null, (f.v ? f.v + ' · ' : '') + (l === 'en' ? f.en : f.vi), el('small', null, L('Nguồn: ', 'Source: ') + (src[f.src] || f.src)));
+    });
+    if (!li.length) return null;
+    return el('details', { class: 'dc-dk' }, el('summary', null, L('📚 Dữ kiện có nguồn (', '📚 Sourced facts (') + li.length + ')'), el('ul', null, ...li));
+  }
+
   const TS0 = { chin: 70, gio: 30, nhiet: 25 };
   function moi() { return { don: 0, ketQua: [], day: [], ts: Object.assign({}, TS0), goiY: 0, xem: null }; }
   let S = moi();
@@ -60,6 +73,7 @@
     $('#dc-don-khach').textContent = t.khach;
     $('#dc-don-tom').textContent = t.tomTat;
     $('#dc-don-bien').textContent = t.bienCo;
+    const dk = $('#dc-don-dk'); dk.innerHTML = ''; const n = veDk(D.DU_KIEN.don[d.id]); if (n) dk.append(n);
   }
 
   function veKho() {
@@ -95,7 +109,7 @@
     const x = $('#dc-xem'); x.innerHTML = '';
     if (!S.xem) { x.append(el('p', { class: 'dc-nhat' }, L('Bấm một trạm trên dây chuyền để đọc trạm ấy làm gì.', 'Tap a station on the line to read what it does.'))); return; }
     const t = T(D.TRAM[S.xem]);
-    x.append(anh(D.ANH[S.xem].canh, 'dc-xem-img', 688, 384, true), el('h3', null, t.ten + ' ', loa(L('Nghe trạm này', 'Listen to this station'), () => noi(t.ten + '. ' + t.mo))), el('p', null, t.mo));
+    x.append(anh(D.ANH[S.xem].canh, 'dc-xem-img', 688, 384, true), el('h3', null, t.ten + ' ', loa(L('Nghe trạm này', 'Listen to this station'), () => noi(t.ten + '. ' + t.mo))), el('p', null, t.mo), veDk(D.DU_KIEN[S.xem]));
   }
 
   const NHAN = { chin: v => v + '%', gio: v => v + L(' giờ', ' h'), nhiet: v => v + ' °C' };

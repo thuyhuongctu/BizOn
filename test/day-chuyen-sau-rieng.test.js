@@ -50,9 +50,17 @@ const page = read('lab/day-chuyen-sau-rieng.html'), ui = read('lab/day-chuyen-sa
 check(page.includes('<link rel="canonical" href="https://bizonland.com/lab/day-chuyen-sau-rieng.html">') && read('sitemap.xml').includes('https://bizonland.com/lab/day-chuyen-sau-rieng.html'), 'canonical + sitemap');
 check(['../js/durian-voice.js', 'day-chuyen-sau-rieng-data.js', 'day-chuyen-sau-rieng-ui.js', '../js/bizon-clay-i18n.js'].every(f => page.includes('src="' + f + '"'))
   && page.indexOf('day-chuyen-sau-rieng-data.js') < page.indexOf('day-chuyen-sau-rieng-ui.js') && page.indexOf('bizon-clay-i18n.js') < page.indexOf('day-chuyen-sau-rieng-ui.js'), 'trang nạp giọng đọc, dữ liệu, i18n trước giao diện');
-check(!/ho-chieu-sau-rieng-(engine|core|data)\.js/.test(page) && !/Math\.random/.test(ui + read('lab/day-chuyen-sau-rieng-data.js')), 'không đụng engine Hộ Chiếu, không có số ngẫu nhiên');
+check(!/ho-chieu-sau-rieng-(engine|core)\.js/.test(page) && !/Math\.random/.test(ui + read('lab/day-chuyen-sau-rieng-data.js')), 'không nạp engine/core Hộ Chiếu, không có số ngẫu nhiên');
+{ const DD = require('../lab/ho-chieu-sau-rieng-data.js');
+  const keys = [...D.THU_TU_KHO.flatMap(id => D.DU_KIEN[id] || []), ...Object.values(D.DU_KIEN.don).flat()];
+  const thieu = keys.filter(k => !DD.facts[k] || !DD.sources[DD.facts[k].src]);
+  check(!thieu.length && D.DON.every(d => (D.DU_KIEN.don[d.id] || []).length) && page.indexOf('ho-chieu-sau-rieng-data.js') < page.indexOf('day-chuyen-sau-rieng-ui.js'),
+    'mọi trạm/đơn trỏ tới dữ kiện có nguồn trong DurianData.facts (chỉ đọc data Hộ Chiếu) ' + thieu.join(', '));
+  const txt = JSON.stringify(D.DON) + JSON.stringify(D.TRAM);
+  check(!/Quảng Tây|Guangxi|−35 đến −40|−35 to −40|5–7 ngày|5–7 days|10–14 ngày|Năm 2025 phía/.test(txt) && txt.includes('1/6/2024') && txt.includes('10/1/2025') && txt.includes('19/8/2024') && txt.includes('13,5 °C'),
+    'nội dung khớp dữ kiện Hộ Chiếu (mốc cadimi 1/6/2024, vàng O 10/1/2025, đông lạnh 19/8/2024, 13,5 °C), bỏ các số chưa có nguồn'); }
 check(read('ho-chieu-sau-rieng.html').includes('href="lab/day-chuyen-sau-rieng.html"'), 'trang Hộ Chiếu Sầu Riêng dẫn tới dây chuyền');
-check(+(/CACHE = 'bizon-v(\d+)'/.exec(sw) || [])[1] >= 774 && ['day-chuyen-sau-rieng.html', 'day-chuyen-sau-rieng-data.js', 'day-chuyen-sau-rieng-ui.js'].every(f => sw.includes("'./lab/" + f + "'")), 'sw.js ≥ bizon-v774 và cache ba tệp');
+check(+(/CACHE = 'bizon-v(\d+)'/.exec(sw) || [])[1] >= 775 && ['day-chuyen-sau-rieng.html', 'day-chuyen-sau-rieng-data.js', 'day-chuyen-sau-rieng-ui.js'].every(f => sw.includes("'./lab/" + f + "'")), 'sw.js ≥ bizon-v775 và cache ba tệp');
 
 // ---- Chạy thật ----
 (async () => {
@@ -83,6 +91,10 @@ check(+(/CACHE = 'bizon-v(\d+)'/.exec(sw) || [])[1] >= 774 && ['day-chuyen-sau-r
         check((await p.evaluate(() => window.__noi.length)) >= 1, w + 'px ' + lang + ': giọng đọc kết quả sau khi chạy');
         await p.click('#dc-don-ten .dc-loa'); const n = await p.evaluate(() => window.__noi.slice(-1)[0]);
         check(n.includes(lang === 'en' ? 'Fresh fruit, official export' : 'Trái tươi xuất chính ngạch'), w + 'px ' + lang + ': 🔊 đọc đơn hàng đúng ngôn ngữ');
+        await p.click('#dc-don-dk summary'); const dk = await p.textContent('#dc-don-dk');
+        check(dk.includes(lang === 'en' ? 'Source:' : 'Nguồn:') && dk.includes('GACC') && dk.includes('10/1/2025'), w + 'px ' + lang + ': ô dữ kiện có nguồn mở được, có trích nguồn');
+        await p.click('#dc-day [data-id="kiemMau"] .dc-o-chinh');
+        check((await p.textContent('#dc-xem .dc-dk summary')).includes('2'), w + 'px ' + lang + ': trạm kiểm mẫu có 2 dữ kiện có nguồn');
       }
       await p.click('.dc-chot');
     }
