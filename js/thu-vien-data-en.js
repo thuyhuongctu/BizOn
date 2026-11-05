@@ -3,7 +3,7 @@
    Mục nào thiếu ở đây thì trang giữ nguyên bản tiếng Việt. */
 window.BZ_LIB_EN={
 /* mv */
-'mv3d/bia-brand-passport-3d.webp':['Cover of the MV «Brand Passport – Vietnam to the World»','The whole team sees Lumina and Tú Phan off at the Mekong Island pier · YouTube cover'],
+'mv3d/bia-brand-passport-3d.webp':['Cover of the MV «Brand Passport – Vietnam to the World»','The whole cast at the Mekong Island pier: Bà Sáu, the advisors, the firms, Lumina, Tú Phan and the captain · YouTube cover'],
 'mv3d/bia-durian-passport-3d.webp':['Cover of the MV «Durian Passport»','A Mekong floating market on durian harvest day · YouTube cover'],
 'mv3d/bp-roi-ben-mekong.webp':['Leaving Mekong Island','Opening of the Brand Passport MV · Bà Sáu, the advisors and the firms wave the boat off'],
 'mv3d/bp-dao-mekong.webp':['Mekong Island from above','The riverside village, the pier and a container port in the distance'],
