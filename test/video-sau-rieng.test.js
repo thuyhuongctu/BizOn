@@ -15,7 +15,7 @@ for (const l of ['vi', 'en']) {
   }
   assert.ok(size(`assets/video/${n}-720p.mp4`) < size(`assets/video/${n}.mp4`) * 0.6, n + ': bản 720p phải nhẹ hơn nhiều');
   assert.ok(size(`assets/video/${n}.mp4`) < 25e6, n + ': bản 1080p quá nặng');
-  assert.ok(size(`assets/video/${n}-poster.webp`) < size(`assets/video/${n}-poster.jpg`), n + ': poster WebP nhỏ hơn JPG');
+  for (const p of [`${n}-poster`, `${n}-v2-poster`]) assert.ok(size(`assets/video/${p}.webp`) < size(`assets/video/${p}.jpg`), p + ': poster WebP nhỏ hơn JPG');
   for (const s of ['vi', 'en']) {
     const v = fs.readFileSync(R(`assets/video/subs/${n}.${s}.vtt`), 'utf8');
     assert.ok(v.startsWith('WEBVTT'), n + '.' + s + ': WebVTT');
