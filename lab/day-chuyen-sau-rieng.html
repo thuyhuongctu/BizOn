@@ -83,6 +83,7 @@
   .dc-xem::after{content:'';display:block;clear:both}
   .dc-xem-img{float:left;width:min(260px,40%);height:auto;border-radius:16px;margin:0 16px 4px 0;box-shadow:var(--clay-shadow-sm)}
   @media (max-width:560px){.dc-xem-img{float:none;width:100%;margin:0 0 10px}}
+  .dc-mo-dau{margin-top:10px}
   .dc-dk{margin-top:12px;font-size:14px}
   .dc-dk summary{cursor:pointer;font:700 14px var(--clay-head);color:var(--clay-teal);min-height:32px;display:flex;align-items:center}
   .dc-dk ul{margin:6px 0 0;padding-left:18px}
@@ -135,6 +136,7 @@
       <nav class="dc-crumb" aria-label="Breadcrumb"><a href="../index.html">BizOn</a><span>›</span><a href="../ho-chieu-sau-rieng.html" data-en="Durian Passport">Hộ Chiếu Sầu Riêng</a></nav>
       <h1 data-en="Durian Packing Line">Dây Chuyền Sầu Riêng</h1>
       <p class="lead" data-en="You run a packhouse in the Mekong Delta. Four orders arrive one after another and each needs a different line. Pick stations, put them in the order the fruit passes through, set maturity, timing and temperature, then run the line to see whether the lot passes or comes back.">Bạn là quản đốc một cơ sở đóng gói ở miền Tây. Bốn đơn hàng tới lần lượt, mỗi đơn cần một dây chuyền khác nhau. Chọn trạm, xếp đúng thứ tự trái đi qua, chỉnh độ già khi cắt, thời gian và nhiệt độ, rồi cho dây chuyền chạy để xem lô hàng đạt hay bị trả.</p>
+      <div class="dc-mo-dau" id="dc-mo-dau"></div>
       <ol class="dc-tien-do" id="dc-tien-do" aria-label="Tiến độ bốn đơn hàng · Progress"></ol>
     </div>
     <img class="dc-hero-img" src="../assets/hc/scene/nha-may-cap-dong.webp" alt="" width="688" height="384">
@@ -201,7 +203,7 @@
   <section id="dc-man-tong" class="dc-the" hidden aria-labelledby="dc-h-tong">
     <span class="clay-eyebrow" data-en="Shift summary">Tổng kết ca làm</span>
     <h2 id="dc-h-tong" style="font-size:28px;margin:10px 0 4px" data-en="All four orders closed">Bốn đơn hàng đã chốt</h2>
-    <p class="dc-tong-so" id="dc-tong-so"></p>
+    <p class="dc-tong-so"><span id="dc-tong-so"></span> <span id="dc-tong-loa"></span></p>
     <p id="dc-tong-loi"></p>
     <div class="dc-bang-cuon">
       <table class="dc-tong-bang">
@@ -222,7 +224,7 @@
       <li data-en="«Maturity %» is the game’s relative scale. In the orchard, growers count days from fruit set (different for Ri6, Monthong…), tap and listen, check stalk and spines, or measure dry matter (Thailand’s export standard rose from 32% to 35%).">«Độ già %» là thang tương đối của trò chơi. Ngoài vườn người ta đếm ngày từ khi đậu trái (khác nhau theo giống Ri6, Monthong…), gõ nghe tiếng, xem cuống và gai, hoặc đo độ khô cơm (Thái Lan nâng chuẩn xuất khẩu từ 32% lên 35%).</li>
       <li data-en="Requirements change: the 2024–2025 cadmium and auramine O rules come from press reports (Dân Việt, Tuổi Trẻ) cited in Durian Passport. Check the latest notice from the plant-protection authority before teaching.">Yêu cầu thay đổi theo từng năm: mốc cadimi, vàng O 2024–2025 lấy theo báo Dân Việt, Tuổi Trẻ như Hộ Chiếu đã trích. Đối chiếu thông báo mới nhất của cơ quan bảo vệ thực vật trước khi dạy.</li>
       <li data-en="Score per order: order &amp; stations 40, maturity 20, timing 15, temperature 25; each hint −5. Same line, same settings, same score. A rejected lot gets at most 1 star.">Điểm mỗi đơn: thứ tự và đủ trạm 40, độ già 20, thời gian 15, nhiệt độ 25; mỗi gợi ý trừ 5. Cùng dây chuyền, cùng thông số thì cùng điểm. Lô bị trả tối đa 1 sao.</li>
-      <li data-en="Voice uses your browser’s built-in speech (🎙️ button in the corner turns it on/off). If your device has no Vietnamese voice, install one in system settings or switch to English.">Giọng đọc dùng giọng có sẵn của trình duyệt (nút 🎙️ ở góc màn hình để bật/tắt). Máy chưa có giọng tiếng Việt thì cài thêm trong cài đặt hệ thống, hoặc chuyển sang tiếng Anh.</li>
+      <li data-en="Narration is recorded by Đỗ Thùy Hương (Vietnamese and English). Lines whose numbers change each turn – scores, order mistakes, hints – use the browser voice. The 🎙️ button in the corner turns all narration on or off.">Lời dẫn do Đỗ Thùy Hương ghi âm (tiếng Việt và tiếng Anh). Câu có con số đổi theo lượt chơi – điểm, lỗi thứ tự, gợi ý – dùng giọng có sẵn của trình duyệt. Nút 🎙️ ở góc màn hình bật/tắt toàn bộ giọng đọc.</li>
       <li data-en="This game is separate from the 6-season simulation and does not change its scores. Progress is saved in this browser only.">Trò chơi này tách riêng với mô phỏng 6 vụ, không đổi điểm Hộ Chiếu. Ván chơi chỉ lưu trong trình duyệt này.</li>
     </ul>
   </section>

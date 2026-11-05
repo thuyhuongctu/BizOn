@@ -60,13 +60,20 @@ check(!/ho-chieu-sau-rieng-(engine|core)\.js/.test(page) && !/Math\.random/.test
   check(!/Quảng Tây|Guangxi|−35 đến −40|−35 to −40|5–7 ngày|5–7 days|10–14 ngày|Năm 2025 phía/.test(txt) && txt.includes('1/6/2024') && txt.includes('10/1/2025') && txt.includes('19/8/2024') && txt.includes('13,5 °C'),
     'nội dung khớp dữ kiện Hộ Chiếu (mốc cadimi 1/6/2024, vàng O 10/1/2025, đông lạnh 19/8/2024, 13,5 °C), bỏ các số chưa có nguồn'); }
 check(read('ho-chieu-sau-rieng.html').includes('href="lab/day-chuyen-sau-rieng.html"'), 'trang Hộ Chiếu Sầu Riêng dẫn tới dây chuyền');
-check(+(/CACHE = 'bizon-v(\d+)'/.exec(sw) || [])[1] >= 775 && ['day-chuyen-sau-rieng.html', 'day-chuyen-sau-rieng-data.js', 'day-chuyen-sau-rieng-ui.js'].every(f => sw.includes("'./lab/" + f + "'")), 'sw.js ≥ bizon-v775 và cache ba tệp');
+check(+(/CACHE = 'bizon-v(\d+)'/.exec(sw) || [])[1] >= 778 && ['day-chuyen-sau-rieng.html', 'day-chuyen-sau-rieng-data.js', 'day-chuyen-sau-rieng-ui.js'].every(f => sw.includes("'./lab/" + f + "'")), 'sw.js ≥ bizon-v778 và cache ba tệp');
+
+// ---- Giọng thật: đủ 34 file mỗi thứ tiếng, đúng tên giao diện gọi ----
+{ const can = ['mo-dau', ...D.DON.map((d, i) => 'don-' + (i + 1)), ...D.THU_TU_KHO.map((id, i) => 'tram-' + String(i + 1).padStart(2, '0') + '-' + id),
+    ...D.DON.flatMap((d, i) => ['chin', 'gio', 'nhiet'].map(k => 'giai-thich-don-' + (i + 1) + '-' + k)), 'ket-qua-dat', 'ket-qua-giam-gia', 'ket-qua-tra', 'tong-ket-gioi', 'tong-ket-kha', 'tong-ket-lam-lai'];
+  const thieu = ['vi', 'en'].flatMap(l => can.map(f => l + '/' + f + '.mp3')).filter(f => !fs.existsSync(path.join(root, 'assets/voice/day-chuyen', f)));
+  check(can.length === 34 && !thieu.length && ui.includes("'../assets/voice/day-chuyen/'"), 'đủ 34 file giọng thật mỗi thứ tiếng ' + thieu.join(', ')); }
 
 // ---- Chạy thật ----
 (async () => {
   const b = await chromium.launch();
   const stubVoice = () => {
-    window.__noi = [];
+    window.__noi = []; window.__phat = [];
+    window.Audio = function (u) { this.src = u; window.__phat.push(u); const a = this; this.pause = () => {}; this.play = () => { setTimeout(() => a.onended && a.onended(), 0); return Promise.resolve(); }; };
     window.SpeechSynthesisUtterance = function (t) { this.text = t; };
     Object.defineProperty(window, 'speechSynthesis', { value: { speak(u) { window.__noi.push(u.text); setTimeout(() => u.onend && u.onend(), 0); }, cancel() {}, getVoices() { return []; } } });
   };
@@ -88,16 +95,20 @@ check(+(/CACHE = 'bizon-v(\d+)'/.exec(sw) || [])[1] >= 775 && ['day-chuyen-sau-r
       if (i === 0) check(await p.evaluate(() => [...document.querySelectorAll('#dc-day img, #dc-kho img, #dc-don-anh img')].every(im => im.complete && im.naturalWidth > 0)), w + 'px ' + lang + ': ảnh 3D trạm và đơn hàng tải được');
       kq.push((await p.textContent('.dc-kq-diem')).replace(/\s+/g, ' ').trim());
       if (i === 0) {
-        check((await p.evaluate(() => window.__noi.length)) >= 1, w + 'px ' + lang + ': giọng đọc kết quả sau khi chạy');
-        await p.click('#dc-don-ten .dc-loa'); const n = await p.evaluate(() => window.__noi.slice(-1)[0]);
-        check(n.includes(lang === 'en' ? 'Fresh fruit, official export' : 'Trái tươi xuất chính ngạch'), w + 'px ' + lang + ': 🔊 đọc đơn hàng đúng ngôn ngữ');
+        check((await p.evaluate(() => window.__phat.slice(-1)[0])).endsWith('/day-chuyen/' + lang + '/ket-qua-dat.mp3'), w + 'px ' + lang + ': chạy xong phát giọng thật «lô đạt»');
+        await p.click('#dc-don-ten .dc-loa'); const n = await p.evaluate(() => window.__phat.slice(-1)[0]);
+        check(n.endsWith('/day-chuyen/' + lang + '/don-1.mp3'), w + 'px ' + lang + ': 🔊 phát giọng thật đơn 1 đúng ngôn ngữ');
+        check((await p.evaluate(async u => (await fetch(u)).status, n)) === 200, w + 'px ' + lang + ': file giọng thật tải được qua máy chủ');
         await p.click('#dc-don-dk summary'); const dk = await p.textContent('#dc-don-dk');
         check(dk.includes(lang === 'en' ? 'Source:' : 'Nguồn:') && dk.includes('GACC') && dk.includes('10/1/2025'), w + 'px ' + lang + ': ô dữ kiện có nguồn mở được, có trích nguồn');
         await p.click('#dc-day [data-id="kiemMau"] .dc-o-chinh');
         check((await p.textContent('#dc-xem .dc-dk summary')).includes('2'), w + 'px ' + lang + ': trạm kiểm mẫu có 2 dữ kiện có nguồn');
       }
+      if (i === 3) check(JSON.stringify(await p.evaluate(() => window.__phat.slice(-2).map(u => u.split('/').pop()))) === '["ket-qua-tra.mp3","giai-thich-don-4-nhiet.mp3"]',
+        w + 'px ' + lang + ': lô bị trả: phát «bị trả» rồi lời giải thích nhiệt độ đơn 4');
       await p.click('.dc-chot');
     }
+    check((await p.evaluate(() => window.__phat.slice(-1)[0])).endsWith('/' + lang + '/tong-ket-gioi.mp3'), w + 'px ' + lang + ': màn tổng kết phát giọng thật «giỏi» (375/400, trung bình 93,75)');
     const tong = await p.textContent('#dc-tong-so');
     check(/^100 /.test(kq[0]) && /^100 /.test(kq[1]) && /^100 /.test(kq[2]) && /^75 /.test(kq[3]) && tong === '375 / 400', w + 'px ' + lang + ': 4 đơn ' + kq.join(' | ') + ' · tổng ' + tong);
     check(lang !== 'en' || (await p.textContent('#dc-man-tong h2')) === 'All four orders closed', w + 'px ' + lang + ': màn tổng kết đúng ngôn ngữ');
