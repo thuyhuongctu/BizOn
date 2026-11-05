@@ -60,7 +60,7 @@ check(!/ho-chieu-sau-rieng-(engine|core)\.js/.test(page) && !/Math\.random/.test
   check(!/Quảng Tây|Guangxi|−35 đến −40|−35 to −40|5–7 ngày|5–7 days|10–14 ngày|Năm 2025 phía/.test(txt) && txt.includes('1/6/2024') && txt.includes('10/1/2025') && txt.includes('19/8/2024') && txt.includes('13,5 °C'),
     'nội dung khớp dữ kiện Hộ Chiếu (mốc cadimi 1/6/2024, vàng O 10/1/2025, đông lạnh 19/8/2024, 13,5 °C), bỏ các số chưa có nguồn'); }
 check(read('ho-chieu-sau-rieng.html').includes('href="lab/day-chuyen-sau-rieng.html"'), 'trang Hộ Chiếu Sầu Riêng dẫn tới dây chuyền');
-check(+(/CACHE = 'bizon-v(\d+)'/.exec(sw) || [])[1] >= 776 && ['day-chuyen-sau-rieng.html', 'day-chuyen-sau-rieng-data.js', 'day-chuyen-sau-rieng-ui.js'].every(f => sw.includes("'./lab/" + f + "'")), 'sw.js ≥ bizon-v776 và cache ba tệp');
+check(+(/CACHE = 'bizon-v(\d+)'/.exec(sw) || [])[1] >= 778 && ['day-chuyen-sau-rieng.html', 'day-chuyen-sau-rieng-data.js', 'day-chuyen-sau-rieng-ui.js'].every(f => sw.includes("'./lab/" + f + "'")), 'sw.js ≥ bizon-v778 và cache ba tệp');
 
 // ---- Giọng thật: đủ 34 file mỗi thứ tiếng, đúng tên giao diện gọi ----
 { const can = ['mo-dau', ...D.DON.map((d, i) => 'don-' + (i + 1)), ...D.THU_TU_KHO.map((id, i) => 'tram-' + String(i + 1).padStart(2, '0') + '-' + id),

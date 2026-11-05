@@ -5,7 +5,7 @@
  * 12 thẻ «Case mẫu» trong bản thiết kế chỉ minh họa thư viện ở quy mô lớn: không phải nội dung thật,
  * chỉ hiện khi mở ?mau=1. Ghi chú giảng dạy đầy đủ nằm ở cham/bo-cong-cu.html; trang này không giả lập
  * đăng nhập giảng viên (BizOn chưa có khóa này).
- * CHAM™ và nội dung tình huống © 2017–2026 Đỗ Thùy Hương, dùng trên BizOn theo giấy phép không độc quyền. */
+ * CHAM™ và nội dung tình huống © 2017–2026 Đỗ Thùy Hương & Phan Anh Tú, dùng trên BizOn theo giấy phép không độc quyền. */
 (function (root) {
   'use strict';
   const L = (vi, en) => ({ vi, en });

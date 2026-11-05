@@ -9,7 +9,7 @@ let chromium; try { chromium = require('playwright').chromium; } catch (e) { con
 const ROOT = path.join(__dirname, '..'), read = f => fs.readFileSync(path.join(ROOT, f), 'utf8');
 const s = read('cham-homestay.html');
 assert.ok(s.includes('<meta name="robots" content="noindex">'), 'trang tình huống để noindex tới khi nộp nhãn hiệu');
-assert.ok(s.includes('© 2017–2026 Đỗ Thùy Hương, dùng trên BizOn theo giấy phép không độc quyền'), 'thiếu dòng giấy phép');
+assert.ok(s.includes('© 2017–2026 Đỗ Thùy Hương & Phan Anh Tú, dùng trên BizOn theo giấy phép không độc quyền'), 'thiếu dòng giấy phép');
 assert.ok(!/®/.test(s), 'chưa có văn bằng, không được dùng ®');
 assert.ok(s.includes('3972/QĐ-UBND') && s.includes('07/8/2026'), 'thiếu căn cứ công nhận xã đảo');
 for (const need of ['js/bizon-clay-nav.js', 'js/bizon-clay-footer.js', 'js/bizon-clay-i18n.js']) assert.ok(s.includes(need), 'thiếu ' + need);

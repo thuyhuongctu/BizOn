@@ -2,7 +2,7 @@
 
 Dựng lại từ gói bản mẫu thiết kế «Bizonland clay style mockups» (bàn giao 29/10/2026) theo khuôn của kho: trang tĩnh, một tệp HTML song ngữ cho mỗi sản phẩm (`data-en`, nút VI/EN chung), CSS đất sét chung, menu và chân trang chung, không cần build.
 
-CHAM™ và nội dung tình huống © 2017–2026 Đỗ Thùy Hương, dùng trên BizOn theo giấy phép không độc quyền (xem `docs/ho-so-so-huu-tri-tue.md`, mục D4). Mọi trang để `noindex` và mang dòng giấy phép.
+CHAM™ và nội dung tình huống © 2017–2026 Đỗ Thùy Hương & Phan Anh Tú, dùng trên BizOn theo giấy phép không độc quyền (xem `docs/ho-so-so-huu-tri-tue.md`, mục D4). Mọi trang để `noindex` và mang dòng giấy phép.
 
 ## Sản phẩm
 
@@ -21,7 +21,7 @@ CHAM™ và nội dung tình huống © 2017–2026 Đỗ Thùy Hương, dùng t
 | Thư viện tình huống | `thu-vien-tinh-huong.html` | BizOn Case Library (+ EN) |
 | Tài liệu kịch bản Bậc 2 | `docs/cham/kich-ban-tan-loc.md` | Bat Nghiep Tan Loc Scenario |
 
-Mã dùng chung: `css/cham-clay.css` (bảng màu, phông Baloo 2 / Nunito tự lưu trữ, bóng đất sét), `js/cham-kit.js` (song ngữ, định dạng số, lưu cục bộ), `js/cham-engine.js` (mô hình 5 năm, máy tính hòa vốn, engine Đấu trường, mã kết quả). Ảnh đất sét tạm: `assets/cham/clay/*.png`. Bản đồ: `assets/geo/tan-loc-clay.svg` (OpenStreetMap, ODbL). Test: `test/cham-hoc-lieu.test.js`.
+Mã dùng chung: `css/cham-clay.css` (bảng màu, phông Baloo 2 / Nunito tự lưu trữ, bóng đất sét), `js/cham-kit.js` (song ngữ, định dạng số, lưu cục bộ), `js/cham-engine.js` (mô hình 5 năm, máy tính hòa vốn, engine Đấu trường, mã kết quả). Ảnh đất sét tạm: `assets/cham/clay-v2/*.png`. Bản đồ: `assets/geo/tan-loc-clay.svg` (OpenStreetMap, ODbL). Test: `test/cham-hoc-lieu.test.js`.
 
 Khóa lưu trên thiết bị: `cham-founder-board` (bảng xếp hạng, dùng chung trò chơi và bảng điều khiển), `cham-review-notes` (ghi chú thẩm định), `cham-arena-state` (ván Đấu trường đang chơi).
 
@@ -29,6 +29,7 @@ Khóa lưu trên thiết bị: `cham-founder-board` (bảng xếp hạng, dùng 
 
 - Không dựng: «BizOn Case CHAM Concepts» (ba hướng ý tưởng ban đầu, chỉ là phác thảo), hai công cụ three.js tạo ảnh đất sét (Tan Loc Clay Diorama/Props), tệp PowerPoint dạng ảnh trong `export/` (7 MB, không sửa được; bài giảng HTML in ra PDF thay thế).
 - Không đưa lên kho bản PDF/văn bản kế hoạch 2017 (`uploads/`).
+- Ghi tác giả, cập nhật 05/11/2026: mọi trang ghi **Đỗ Thùy Hương & Phan Anh Tú** («Tác giả: Đỗ Thùy Hương & Phan Anh Tú», dòng giấy phép và dòng in trên ảnh); câu «kế hoạch kinh doanh gốc năm 2017 của Đỗ Thùy Hương» đổi thành «kế hoạch kinh doanh giai đoạn 2017–2026». Dòng 29/10 dưới đây là quyết định cũ, giữ lại để tra.
 - Ghi tác giả (quyết định của tác giả, 29/10/2026): **không** ghi nhóm tác giả gốc; mọi trang ghi tác giả chính là **Đỗ Thùy Hương** («Tác giả: Đỗ Thùy Hương» ở trang tổng hợp, trang kế hoạch 2017 và slide tiêu đề; «kế hoạch kinh doanh gốc năm 2017 của Đỗ Thùy Hương» ở các đoạn giới thiệu). Câu «kế hoạch của bốn sinh viên Kinh tế ĐH Cần Thơ» trong bản mẫu không dùng.
 - Khóa giảng viên giả trong thư viện tình huống bị bỏ: không giả lập bảo mật; ghi chú giảng dạy nằm ở Bộ công cụ, kèm lời nói rõ là chưa có khóa.
 - Website cho khách gắn nhãn «bản mẫu» rõ ràng, không nhận/gửi dữ liệu đặt phòng.
@@ -56,8 +57,8 @@ Repo không có kế hoạch 2026 đầy đủ; các giá trị dưới đây l�
 
 ## Ảnh trưng bày và bản quyền
 
-- `assets/cham/anh/*.webp` (74 ảnh: sản phẩm, màn hình website, «Khám phá cù lao», an toàn mùa nước, lịch trình, bản đồ đất sét), `assets/cham/clay/*` và `assets/giang-vien/*.webp`: ảnh minh họa đất sét do tác giả cung cấp (29–30/10/2026), 600×448 hoặc 512×512, WebP chất lượng 78.
-- Mỗi ảnh có **dòng bản quyền in trên ảnh**, góc dưới bên phải: «© 2026 Đỗ Thùy Hương · CHAM Tân Lộc» (ảnh CHAM) hoặc «© 2026 BizOn · Đỗ Thùy Hương & Phan Anh Tú» (ảnh Góc giảng viên). Dòng chữ nằm trong tệp ảnh nên vẫn còn khi ảnh bị tải về hay chia sẻ lại.
+- `assets/cham/anh-v2/*.webp` (74 ảnh: sản phẩm, màn hình website, «Khám phá cù lao», an toàn mùa nước, lịch trình, bản đồ đất sét), `assets/cham/clay-v2/*` và `assets/giang-vien/*.webp`: ảnh minh họa đất sét do tác giả cung cấp (29–30/10/2026), 600×448 hoặc 512×512, WebP chất lượng 78.
+- Mỗi ảnh có **dòng bản quyền in trên ảnh**, góc dưới bên phải: «© 2026 Đỗ Thùy Hương & Phan Anh Tú · CHAM Tân Lộc» (ảnh CHAM, bản in lại 05/11/2026 trong `anh-v2/`, `clay-v2/`; ảnh gốc trong `anh/`, `clay/` giữ nguyên, có dòng cũ chỉ một tên) hoặc «© 2026 BizOn · Đỗ Thùy Hương & Phan Anh Tú» (ảnh Góc giảng viên). Dòng chữ nằm trong tệp ảnh nên vẫn còn khi ảnh bị tải về hay chia sẻ lại.
 - CSS neo ảnh về góc dưới bên phải (`object-position: 100% 100%`) để khung cắt ảnh không làm mất dòng bản quyền. Ảnh mới thêm sau này cần in dòng bản quyền tương tự trước khi đưa vào kho.
 
 ## Việc còn mở (từ bản bàn giao)
@@ -67,5 +68,5 @@ Repo không có kế hoạch 2026 đầy đủ; các giá trị dưới đây l�
 3. Bảng xếp hạng và ghi chú sinh viên đang ở bộ nhớ thiết bị; cần máy chủ để dùng chung giữa các máy.
 4. Hiệu chỉnh engine Đấu trường với lớp thật; bản chơi nhiều đội trên nhiều máy.
 5. Bản PowerPoint chỉnh sửa được (hoặc xuất từ bài giảng HTML).
-6. Ảnh đất sét: đã thay ảnh chính của trang tổng hợp, trang kế hoạch 2017, trang chủ website và trang tình huống 2026 bằng ảnh tác giả cung cấp (`assets/cham/clay/*.webp`); các màn hình website, cửa hàng, bài giảng, tin đăng mẫu và 4 chương «Một ngày ở Tân Lộc» cũng đã dùng ảnh của tác giả (30/10/2026); chỉ còn 3 ảnh tạm `.png` (islet-overview, canoe-pier, campfire) ở 3 chương còn lại và màn hình xác nhận.
+6. Ảnh đất sét: đã thay ảnh chính của trang tổng hợp, trang kế hoạch 2017, trang chủ website và trang tình huống 2026 bằng ảnh tác giả cung cấp (`assets/cham/clay-v2/*.webp`); các màn hình website, cửa hàng, bài giảng, tin đăng mẫu và 4 chương «Một ngày ở Tân Lộc» cũng đã dùng ảnh của tác giả (30/10/2026); chỉ còn 3 ảnh tạm `.png` (islet-overview, canoe-pier, campfire) ở 3 chương còn lại và màn hình xác nhận.
 7. Kiểm chứng số liệu thực tế (Cẩm Lụa, khách sạn Thốt Nốt, đò Thuận Hưng – Tân Lộc) trước khi dùng trên lớp.

@@ -359,13 +359,14 @@ Hai điều **không được ghi** trong hồ sơ vì chưa có căn cứ:
 
 ---
 
-## D4 · CHAM Homestay — tài sản riêng của Đỗ Thùy Hương, BizOn dùng theo giấy phép *(bổ sung 28/10/2026)*
+## D4 · CHAM Homestay — tài sản riêng của Đỗ Thùy Hương & Phan Anh Tú, BizOn dùng theo giấy phép *(bổ sung 28/10/2026; đồng tác giả từ 05/11/2026)*
 
-- **CHAM** (kế hoạch kinh doanh homestay sinh thái trên cù lao Tân Lộc, Cần Thơ; bản gốc 2017 – bài học phần Khởi sự doanh nghiệp khi tác giả học cử nhân Kinh doanh quốc tế, bản nâng cấp 2026; nhãn hiệu dự kiến «CHAM TÂN LỘC») là **tài sản riêng của Đỗ Thùy Hương**, không thuộc phạm vi đồng sở hữu BizOn tại Mục F2.
-- BizOn được **dùng theo giấy phép không độc quyền** để đăng trang tình huống `cham-homestay.html` (dạy học, không thu phí riêng). Trang ghi: «CHAM™ và nội dung tình huống © 2017–2026 Đỗ Thùy Hương, dùng trên BizOn theo giấy phép không độc quyền».
-- **Không** khai CHAM trong bất kỳ hồ sơ đăng ký nào của BizOn; hồ sơ nhãn hiệu và quyền tác giả của CHAM đứng tên một mình Đỗ Thùy Hương, giữ ngoài kho này.
+- **CHAM** (kế hoạch kinh doanh homestay sinh thái trên cù lao Tân Lộc, Cần Thơ; bản gốc 2017 – bài học phần Khởi sự doanh nghiệp khi tác giả học cử nhân Kinh doanh quốc tế, bản nâng cấp 2026; nhãn hiệu dự kiến «CHAM TÂN LỘC») là **tài sản riêng của Đỗ Thùy Hương & Phan Anh Tú** (đồng tác giả từ 05/11/2026), tách khỏi phạm vi đồng sở hữu BizOn tại Mục F2.
+- BizOn được **dùng theo giấy phép không độc quyền** để đăng trang tình huống `cham-homestay.html` (dạy học, không thu phí riêng). Trang ghi: «CHAM™ và nội dung tình huống © 2017–2026 Đỗ Thùy Hương & Phan Anh Tú, dùng trên BizOn theo giấy phép không độc quyền».
+- **Không** khai CHAM trong bất kỳ hồ sơ đăng ký nào của BizOn; hồ sơ nhãn hiệu và quyền tác giả của CHAM đứng tên **hai đồng tác giả Đỗ Thùy Hương & Phan Anh Tú** (quyết định của tác giả, 05/11/2026; trước đó đứng tên một mình Đỗ Thùy Hương), giữ ngoài kho này.
 - Bản kế hoạch 2017 **không** đăng lên BizOn nếu chưa có đồng ý riêng của tác giả. Ký hiệu ® chỉ dùng sau khi nhãn hiệu được cấp văn bằng.
 - *(29/10/2026)* Tác giả bàn giao bộ bản mẫu học liệu CHAM và yêu cầu dựng lên BizOn: thư mục `cham/` và `thu-vien-tinh-huong.html` (xem `docs/cham/README.md`). Các trang trích số liệu và một số câu của kế hoạch 2017 để dạy thẩm định; **tệp kế hoạch 2017 (PDF/văn bản) vẫn không đưa lên kho**. Mọi trang `noindex` và mang cùng dòng giấy phép như trang tình huống. Theo quyết định của tác giả, các trang **không** ghi nhóm tác giả gốc và ghi tác giả chính là **Đỗ Thùy Hương**.
+- *(05/11/2026)* Theo yêu cầu của tác giả, mọi trang CHAM trên BizOn ghi thêm đồng tác giả **Phan Anh Tú**: «Tác giả: Đỗ Thùy Hương & Phan Anh Tú», dòng giấy phép «CHAM™ và nội dung tình huống © 2017–2026 Đỗ Thùy Hương & Phan Anh Tú, dùng trên BizOn theo giấy phép không độc quyền», và dòng bản quyền in trên ảnh (bản in lại ở `assets/cham/anh-v2/`, `assets/cham/clay-v2/`; ảnh gốc giữ nguyên). Câu «kế hoạch kinh doanh gốc năm 2017 của Đỗ Thùy Hương» đổi thành «kế hoạch kinh doanh giai đoạn 2017–2026» (EN «the 2017–2026 business plan»). Hồ sơ đăng ký nhãn hiệu và quyền tác giả CHAM nay đứng tên cả hai.
 
 # PHẦN E · CHỨNG CỨ CẦN CHUẨN BỊ
 
