@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Cảnh video «Một trái sầu riêng, cả vùng cùng sầu»</title>
+<!-- Trang dựng hình cho scripts/video/dung-sau-rieng.mjs: 14 cảnh khổ 1920×1080, vẽ theo thời gian t (giây) do script truyền vào
+     qua window.veKhung(t). Không dùng animation CSS để mỗi khung hình là tất định. Ảnh lấy từ assets/hc/ của BizOn. -->
+<link rel="stylesheet" href="../../../css/bizon-clay-fonts.css">
+<style>
+  html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: #033337; }
+  body { font-family: 'Be Vietnam Pro', system-ui, sans-serif; color: #033337; }
+  .canh { position: absolute; inset: 0; opacity: 0; overflow: hidden; }
+  .nen { position: absolute; inset: -4%; background-size: cover; background-position: center; will-change: transform; }
+  .the { position: absolute; background: rgba(255, 250, 240, .96); border-radius: 36px; padding: 34px 48px; box-shadow: 0 18px 50px rgba(0,0,0,.28); }
+  .lon { font-weight: 800; font-size: 120px; line-height: 1; letter-spacing: -2px; }
+  .vua { font-weight: 800; font-size: 64px; line-height: 1.1; }
+  .nho { font-weight: 600; font-size: 34px; line-height: 1.3; opacity: .8; }
+  .cam { color: #E07B00; } .do { color: #C62828; } .xanh { color: #006687; }
+  .chip { display: inline-block; background: #033337; color: #fff; font-weight: 800; font-size: 44px; padding: 16px 30px; border-radius: 999px; margin: 8px; }
+  .chip.cam { background: #FDA127; color: #033337; }
+  .ghichu { position: absolute; right: 36px; bottom: 26px; font-size: 24px; font-weight: 600; color: rgba(255,255,255,.85); text-shadow: 0 2px 6px rgba(0,0,0,.6); }
+  .kem { background: #FFFAF0; }
+  .o { position: absolute; width: 120px; height: 90px; border-radius: 14px; background: #d8e6e3; border: 4px solid #9fbdb7; }
+  .tem { position: absolute; font-weight: 800; font-size: 110px; color: #C62828; border: 12px solid #C62828; border-radius: 22px; padding: 6px 40px; letter-spacing: 6px; background: rgba(255,255,255,.75); }
+  .nguoi { position: absolute; bottom: 0; height: 900px; }
+  .ban { position: absolute; width: 200px; height: 130px; background: #c9a77a; border-radius: 12px; box-shadow: inset 0 -16px 0 rgba(0,0,0,.12); }
+  .ban b { position: absolute; top: 18px; left: 0; right: 0; text-align: center; font-size: 46px; font-weight: 800; color: #033337; }
+  .gach { position: absolute; left: 10px; right: 10px; top: 52px; height: 12px; background: #C62828; border-radius: 6px; transform-origin: left; }
+  .giay { position: absolute; width: 420px; height: 280px; background: #fff; border-radius: 22px; box-shadow: 0 14px 34px rgba(0,0,0,.25); font-weight: 800; font-size: 40px; display: flex; align-items: center; justify-content: center; text-align: center; padding: 20px; box-sizing: border-box; border-top: 22px solid #006687; }
+  #den { position: absolute; inset: 0; background: #000; opacity: 0; }
+</style>
+</head>
+<body>
+<div id="san"></div>
+<div id="den"></div>
+<script>
+'use strict';
+// t trong cảnh i: s = giây kể từ đầu cảnh, p = tỉ lệ 0..1 trong cảnh, d = độ dài cảnh
+const Q = new URLSearchParams(location.search);
+const EN = Q.get('lang') === 'en';
+const L = (vi, en) => (EN ? en : vi);
+const A = p => '../../../assets/hc/' + p;
+const ez = x => x <= 0 ? 0 : x >= 1 ? 1 : x * x * (3 - 2 * x);                 // smoothstep
+const vao = (s, a, dur = 0.45) => ez((s - a) / dur);                                // 0→1 bắt đầu từ giây a
+
+const CANH = [
+  { // 01 Móc câu: một trái → cả vùng bị khóa
+    html: `<div class="nen" style="background-image:url(${A('durian/chang-2-thu-hoach-brix.webp')})"></div>
+      <div class="the" id="c1a" style="left:90px;bottom:110px"><div class="lon">${L('1 trái', '1 fruit')}</div></div>
+      <div class="the" id="c1b" style="right:90px;bottom:110px"><div class="vua">🔒 ${L('cả vùng trồng', 'a whole growing zone')}</div></div>`,
+    ve(s, p, d, el) { el.nen.style.transform = `scale(${1.18 - 0.16 * ez(p)})`; op(el, '#c1a', vao(s, 0.2)); op(el, '#c1b', vao(s, d * 0.55)); } },
+  { // 02 Bối cảnh: 2022 chính ngạch
+    html: `<div class="nen" style="background-image:url(${A('durian/vuon-dak-lak-puc.webp')})"></div>
+      <div class="the" id="c2" style="left:90px;top:100px"><div class="lon cam">2022</div><div class="nho">${L('Sầu riêng Việt Nam được bán chính ngạch sang Trung Quốc', 'Vietnamese durian cleared for official export to China')}</div></div>`,
+    ve(s, p, d, el) { kb(el, p); op(el, '#c2', vao(s, 0.2)); } },
+  { // 03 Hai mã = hộ chiếu
+    html: `<div class="nen" style="background-image:url(${A('durian/chang-1-vuon-puc.webp')})"></div>
+      <div class="the" id="c3" style="left:90px;bottom:90px;max-width:1100px">
+        <span class="chip" id="c3a">${L('Mã số vùng trồng', 'Growing-area code')}</span><span class="chip" id="c3b">${L('Mã cơ sở đóng gói', 'Packing-house code')}</span>
+        <div class="vua" id="c3c" style="margin-top:14px">= 🛂 ${L('hộ chiếu của trái sầu riêng', "the fruit's passport")}</div></div>`,
+    ve(s, p, d, el) { kb(el, p); op(el, '#c3', vao(s, 0.1)); op(el, '#c3a', vao(s, 0.3)); op(el, '#c3b', vao(s, d * 0.35)); op(el, '#c3c', vao(s, d * 0.65)); } },
+  { // 04 Anh Tư chung mã
+    html: `<div class="nen" style="background-image:url(${A('durian/nha-vuon-xep-thung.webp')})"></div>
+      <div class="the" id="c4" style="right:90px;top:90px"><div class="vua">${L('Anh Tư · Cái Bè', 'Mr. Tư · Cái Bè')}</div>
+        <div class="vua cam" style="margin-top:10px">${L('1 mã · nhiều nhà', '1 code · many families')}</div></div>
+      <div class="ghichu">${L('Nhân vật minh họa', 'Illustrative character')}</div>`,
+    ve(s, p, d, el) { kb(el, p, true); op(el, '#c4', vao(s, 0.3)); } },
+  { // 05 124 triệu → 3,3 tỷ USD
+    html: `<div class="nen kem"></div>
+      <div style="position:absolute;left:330px;bottom:170px;width:300px;background:#9fbdb7;border-radius:18px 18px 0 0" id="c5a"></div>
+      <div style="position:absolute;left:1180px;bottom:170px;width:300px;background:#FDA127;border-radius:18px 18px 0 0" id="c5b"></div>
+      <div style="position:absolute;left:250px;right:250px;bottom:166px;height:8px;background:#033337;border-radius:4px"></div>
+      <div class="vua" style="position:absolute;left:330px;width:300px;bottom:90px;text-align:center">2021</div>
+      <div class="vua" style="position:absolute;left:1180px;width:300px;bottom:90px;text-align:center">2024</div>
+      <div class="vua" id="c5c" style="position:absolute;left:250px;width:460px;text-align:center;bottom:230px">${L('124 triệu USD', '$124 million')}</div>
+      <div class="lon cam" id="c5d" style="position:absolute;left:1060px;width:540px;text-align:center;top:70px">${L('3,3 tỷ USD', '$3.3 billion')}</div>`,
+    ve(s, p, d, el) { const a = vao(s, 0.2, 0.8), b = vao(s, d * 0.45, 1.2);
+      el.q('#c5a').style.height = (24 * a) + 'px'; el.q('#c5b').style.height = (640 * b) + 'px'; op(el, '#c5c', a); op(el, '#c5d', b); } },
+  { // 06 30 lô cảnh báo cadimi
+    html: `<div class="nen kem"></div><div id="c6o"></div>
+      <img class="nguoi" src="${A('pipeline/lab-m.webp')}" style="right:40px;height:860px">
+      <div class="the" id="c6t" style="left:90px;top:70px"><div class="lon do">${L('30 lô', '30 shipments')}</div><div class="nho">${L('bị cảnh báo nhiễm cadimi – một kim loại nặng', 'flagged for cadmium – a heavy metal')}</div></div>`,
+    init(el) { let h = ''; for (let i = 0; i < 30; i++) h += `<div class="o" style="left:${90 + (i % 10) * 132}px;top:${420 + Math.floor(i / 10) * 112}px"></div>`; el.q('#c6o').innerHTML = h; },
+    ve(s, p, d, el) { op(el, '#c6t', vao(s, 0.1)); el.qa('#c6o .o').forEach((o, i) => { const r = vao(s, 0.4 + i * (d * 0.6 / 30), 0.25);
+      o.style.background = mix('#d8e6e3', '#ef5350', r); o.style.borderColor = mix('#9fbdb7', '#C62828', r); }); } },
+  { // 07 Giấy vàng O + hàng trăm container bị trả lại
+    html: `<div class="nen" style="background-image:url(${A('durian/cang-boc-xep-container.webp')})"></div>
+      <div class="nen kem" id="c7k" style="inset:0"></div>
+      <img class="nguoi" id="c7n" src="${A('pipeline/lab-f.webp')}" style="left:120px;height:860px">
+      <div class="giay" id="c7g" style="left:760px;top:330px;width:620px;height:340px;font-size:52px">${L('Giấy kiểm nghiệm vàng O', 'Auramine O test certificate')}<br>${L('(từ 10/1/2025)', '(from 10 Jan 2025)')}</div>
+      <div class="the" id="c7t" style="left:90px;bottom:90px"><div class="vua do">↩︎ ${L('Hai tuần: hàng trăm container bị trả lại', 'In two weeks: hundreds of containers turned back')}</div></div>`,
+    ve(s, p, d, el) { const sw = vao(s, d * 0.55, 0.5); op(el, '#c7k', 1 - sw); op(el, '#c7n', 1 - sw); op(el, '#c7g', vao(s, 0.4) * (1 - sw));
+      el.nen.style.transform = `scale(${1.12 - 0.08 * ez(p)})`; op(el, '#c7t', vao(s, d * 0.62)); } },
+  { // 08 Mã thành hàng hiếm ~120 triệu
+    html: `<div class="nen kem"></div>
+      <img class="nguoi" src="${A('pipeline/codes.webp')}" style="left:60px;height:auto;width:1150px;bottom:60px">
+      <div class="the" id="c8" style="right:90px;top:180px;transform:rotate(-4deg)"><div class="nho">${L('Một mã từng được sang tay', 'One code reportedly changed hands for')}</div><div class="lon cam">~120</div><div class="vua">${L('triệu đồng', 'million dong')}</div></div>
+      <div class="ghichu" style="color:#033337;text-shadow:none">${L('Theo phản ánh của doanh nghiệp – Tiền Phong, 29/7/2026', 'As reported by businesses – Tiền Phong, 29 Jul 2026')}</div>`,
+    ve(s, p, d, el) { op(el, '#c8', vao(s, d * 0.35)); } },
+  { // 09 Khởi tố 17 bị can
+    html: `<div class="nen" style="background:#1f2d2f"></div>
+      <div class="the" id="c9" style="left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;width:1200px">
+        <div class="nho">${L('Tháng 11/2025', 'November 2025')}</div><div class="lon">${L('Khởi tố 17 bị can', '17 people charged')}</div>
+        <div class="vua xanh" style="margin-top:16px">${L('mua bán mã vùng trồng và giấy kiểm nghiệm', 'trading growing-area codes and test certificates')}</div></div>`,
+    ve(s, p, d, el) { const v = vao(s, 0.2); el.q('#c9').style.opacity = v; el.q('#c9').style.transform = `translate(-50%,-50%) scale(${0.96 + 0.04 * v + 0.02 * p})`; } },
+  { // 10 Một trái → cả lô trả lại, mã bị đình chỉ
+    html: `<div class="nen" style="background-image:url(${A('durian/chang-1-vuon-puc.webp')})"></div>
+      <div class="the" id="c10a" style="left:90px;top:90px"><div class="vua">${L('1 trái nhiễm → cả lô bị trả lại', '1 bad fruit → whole shipment sent back')}</div></div>
+      <div class="tem" id="c10b" style="left:50%;top:52%">${L('ĐÌNH CHỈ', 'SUSPENDED')}</div>`,
+    ve(s, p, d, el) { kb(el, p); op(el, '#c10a', vao(s, 0.2)); const v = vao(s, d * 0.5, 0.25);
+      el.q('#c10b').style.opacity = v; el.q('#c10b').style.transform = `translate(-50%,-50%) rotate(-12deg) scale(${1.6 - 0.6 * v})`; } },
+  { // 11 May mà / không may
+    html: `<div class="nen kem"></div>
+      <div class="the" id="c11a" style="left:90px;top:200px;width:760px"><div class="nho">${L('May mà, lúc đầu…', 'Luckily, at first…')}</div><div class="vua">${L('vàng O chỉ thấy ở sầu riêng Thái Lan', 'Auramine O was only found in Thai durian')}</div></div>
+      <div class="the" id="c11b" style="right:90px;top:200px;width:760px;background:#033337;color:#fff"><div class="nho" style="color:#FDA127;opacity:1">${L('Không may là…', 'Unluckily…')}</div><div class="vua">${L('luật mới áp cho sầu riêng mọi nước', 'the new rule applied to every country')}</div></div>`,
+    ve(s, p, d, el) { op(el, '#c11a', vao(s, 0.2)); op(el, '#c11b', vao(s, d * 0.5)); } },
+  { // 12 Số báo danh: gạch một số / khám cả phòng
+    html: `<div class="nen kem"></div><div id="c12b"></div>
+      <div class="the" id="c12t" style="left:50%;bottom:60px;transform:translateX(-50%);text-align:center;width:1300px"><div class="vua" id="c12x">${L('Mã số = số báo danh', 'A code = an exam number')}</div></div>`,
+    init(el) { let h = ''; for (let i = 0; i < 12; i++) h += `<div class="ban" style="left:${240 + (i % 6) * 250}px;top:${120 + Math.floor(i / 6) * 220}px"><b>${String(101 + i)}</b><div class="gach" style="transform:scaleX(0)"></div></div>`; el.q('#c12b').innerHTML = h; },
+    ve(s, p, d, el) { op(el, '#c12t', vao(s, 0.1)); const bs = el.qa('#c12b .ban');
+      bs[3].querySelector('.gach').style.transform = `scaleX(${vao(s, d * 0.22, 0.35)})`;
+      const all = vao(s, d * 0.62, 0.6); bs.forEach((b, i) => { b.style.boxShadow = `inset 0 -16px 0 rgba(0,0,0,.12), 0 0 0 ${8 * all}px rgba(198,40,40,${0.85 * all})`; });
+      el.q('#c12x').textContent = s < d * 0.6 ? L('Mã số = số báo danh: sai ai, gạch người đó', 'A code = an exam number: one wrong paper, one mark') : L('Có người thi hộ → khám túi cả phòng', 'Someone cheats → every pocket gets searched'); } },
+  { // 13 Ba giấy = vé vào cửa
+    html: `<div class="nen kem"></div>
+      <div class="giay" id="c13a" style="left:180px;top:200px">${L('Mã vùng trồng', 'Growing-area code')}</div>
+      <div class="giay" id="c13b" style="left:750px;top:200px;border-top-color:#FDA127">${L('Mã đóng gói', 'Packing-house code')}</div>
+      <div class="giay" id="c13c" style="left:1320px;top:200px;border-top-color:#C62828">${L('Giấy kiểm nghiệm', 'Test certificate')}</div>
+      <div class="the" id="c13t" style="left:50%;bottom:110px;transform:translateX(-50%);text-align:center"><div class="lon cam">🎟️ ${L('Tuân thủ = vé vào cửa', 'Compliance = the ticket')}</div></div>`,
+    ve(s, p, d, el) { ['#c13a', '#c13b', '#c13c'].forEach((k, i) => op(el, k, vao(s, 0.2 + i * d * 0.12))); op(el, '#c13t', vao(s, d * 0.6)); } },
+  { // 14 Cú lật: «Việt Nam», cắt đen
+    html: `<div class="nen" style="background-image:url(${A('durian/cau-container.webp')})"></div>
+      <div class="the" id="c14" style="left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;padding:40px 80px"><div class="nho">${L('Trên mọi thùng hàng', 'On every box')}</div><div class="lon">Product of Viet Nam</div></div>`,
+    ve(s, p, d, el) { el.nen.style.transform = `scale(${1.06 + 0.14 * ez(p)})`; op(el, '#c14', vao(s, d * 0.55, 0.5)); } },
+];
+
+function op(el, sel, v) { const n = el.q(sel); if (n) n.style.opacity = v; }
+function kb(el, p, trai) { el.nen.style.transform = `scale(${1.04 + 0.08 * ez(p)}) translateX(${(trai ? -1 : 1) * 1.2 * ez(p)}%)`; } // luôn đẩy vào chậm
+function mix(a, b, t) { const h = x => [1, 3, 5].map(i => parseInt(x.substr(i, 2), 16)); const A_ = h(a), B = h(b); return `rgb(${A_.map((v, i) => Math.round(v + (B[i] - v) * t)).join(',')})`; }
+
+const san = document.getElementById('san');
+const ELS = CANH.map((c, i) => { const d = document.createElement('div'); d.className = 'canh'; d.innerHTML = c.html; san.appendChild(d);
+  const el = { root: d, nen: d.querySelector('.nen'), q: s => d.querySelector(s), qa: s => [...d.querySelectorAll(s)] }; if (c.init) c.init(el); return el; });
+
+// MOC: [{a: bắt đầu, b: kết thúc}] theo giọng đọc; script đặt bằng window.datMoc(). Chuyển cảnh mờ 0,25 s.
+let MOC = CANH.map((_, i) => ({ a: i * 5, b: i * 5 + 5 })), TONG = CANH.length * 5;
+window.datMoc = (m, tong) => { MOC = m; TONG = tong; };
+window.veKhung = t => {
+  const X = 0.25;
+  ELS.forEach((el, i) => {
+    const a = i === 0 ? 0 : MOC[i].a, b = i === CANH.length - 1 ? TONG : MOC[i + 1].a;
+    const v = t < a - X || t > b + X ? 0 : i === 0 ? (t <= b ? 1 : 1 - (t - b) / X) : t < a ? (t - (a - X)) / X : t <= b ? 1 : i === CANH.length - 1 ? 1 : 1 - (t - b) / X;
+    el.root.style.opacity = Math.max(0, Math.min(1, v));
+    if (v > 0) { const d = b - a, s = t - a; CANH[i].ve(Math.max(0, s), Math.max(0, Math.min(1, s / d)), d, el); }
+  });
+  // Cắt đen đúng chữ cuối («Việt Nam»)
+  document.getElementById('den').style.opacity = t > TONG - 0.35 ? 1 : 0;
+};
+window.veKhung(0);
+</script>
+</body>
+</html>
