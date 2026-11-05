@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<!-- Hành Trình Một Trái Sầu Riêng (Durian Journey) · BizOn 2026 – © Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.
+     Trang cuộn kể chuyện: cuộn để máy quay đi dọc sa bàn 3D đất sét từ vườn tới chợ; mỗi chặng một dữ kiện có nguồn
+     của Hộ Chiếu Sầu Riêng. Cảnh 3D: hanh-trinh-sau-rieng-3d.js; giao diện: hanh-trinh-sau-rieng-ui.js. -->
+<html lang="vi" data-default-lang="vi">
+<head>
+<meta charset="UTF-8">
+<link rel="canonical" href="https://bizonland.com/lab/hanh-trinh-sau-rieng.html">
+<link rel="alternate" hreflang="vi" href="https://bizonland.com/lab/hanh-trinh-sau-rieng.html?lang=vi">
+<link rel="alternate" hreflang="en" href="https://bizonland.com/lab/hanh-trinh-sau-rieng.html?lang=en">
+<link rel="alternate" hreflang="x-default" href="https://bizonland.com/lab/hanh-trinh-sau-rieng.html">
+<meta property="og:url" content="https://bizonland.com/lab/hanh-trinh-sau-rieng.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hành Trình Một Trái Sầu Riêng · Hộ Chiếu Sầu Riêng">
+<meta property="og:image" content="https://bizonland.com/assets/og/og-cover.jpg">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:locale" content="vi_VN"><meta property="og:locale:alternate" content="en_US">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+<script src="../js/bizon-lang.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title data-en="Durian Journey · Durian Passport">Hành Trình Một Trái Sầu Riêng · Hộ Chiếu Sầu Riêng</title>
+<meta name="description" data-en-content="Scroll the journey of one Vietnamese durian on a 3D clay diorama: orchard with an area code, harvest, packhouse, cold chain, reefer truck, border quarantine, market – each stage with a sourced fact from Durian Passport." content="Cuộn theo hành trình của một trái sầu riêng Việt trên sa bàn 3D đất sét: vườn có mã vùng trồng, cắt trái, nhà đóng gói, chuỗi lạnh, xe lạnh, kiểm dịch ở cửa khẩu, chợ – mỗi chặng một dữ kiện có nguồn của Hộ Chiếu Sầu Riêng.">
+<meta name="copyright" content="© 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.">
+<meta name="theme-color" content="#FBF4E8">
+<link rel="icon" href="../assets/brand/bizon-favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../css/bizon-clay-fonts.css">
+<link rel="stylesheet" href="../css/bizon-clay.css">
+<script type="importmap">
+{ "imports": { "three": "../js/vendor/three.module.js" } }
+</script>
+<style>
+  .ht{background:var(--clay-bg)}
+  .ht .dc-crumb{font-size:14px;color:var(--clay-sub)}
+  #ht-stage{position:fixed;inset:0;z-index:0}
+  #ht-stage canvas{display:block;width:100%;height:100%}
+  .ht main{position:relative;z-index:1}
+  #clay-nav,#clay-footer{position:relative;z-index:3}
+  .ht-mo{min-height:88vh;display:flex;align-items:center;padding:24px 0}
+  .ht-mo .ht-the{max-width:560px}
+  .ht-mo h1{font-size:clamp(32px,5.4vw,56px);margin:12px 0 10px;text-wrap:balance}
+  .ht-mo p{font-size:17px;color:var(--clay-sub);margin:0 0 14px}
+  .ht-cuon{font:700 14px var(--clay-head);color:var(--clay-teal)}
+  .ht-buoc{min-height:100vh;display:flex;align-items:center;padding:24px 0}
+  .ht-the{background:color-mix(in srgb,var(--clay-card) 92%,transparent);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border-radius:var(--clay-r-lg);box-shadow:var(--clay-shadow);padding:clamp(18px,2.6vw,26px);max-width:430px;transition:opacity .4s,transform .4s}
+  .ht-buoc:not(.dang) .ht-the{opacity:.55;transform:translateY(12px)}
+  .ht-the h2{font-size:clamp(22px,2.6vw,28px);margin:8px 0 8px}
+  .ht-the p{margin:0 0 4px;line-height:1.6}
+  .ht-anh{display:block;width:100%;height:auto;border-radius:18px;margin-bottom:12px;box-shadow:var(--clay-shadow-sm)}
+  .ht-loa{border:0;background:var(--clay-tray);border-radius:999px;width:40px;height:40px;font-size:18px;cursor:pointer;vertical-align:middle;box-shadow:var(--clay-tray-shadow)}
+  .ht-dk{margin-top:10px;font-size:14px}
+  .ht-dk summary{cursor:pointer;font:700 14px var(--clay-head);color:var(--clay-teal);min-height:40px;display:flex;align-items:center}
+  .ht-dk ul{margin:4px 0 0;padding-left:18px;max-height:34vh;overflow:auto}
+  .ht-dk li{margin:6px 0}
+  .ht-dk small{display:block;color:var(--clay-sub);font-size:12px}
+  .ht-nut{margin-top:12px}
+  .ht-ket{min-height:90vh;display:flex;align-items:center;padding:24px 0 64px}
+  .ht-ket .ht-the{max-width:620px}
+  .ht-ket h2{font-size:clamp(26px,3.4vw,36px)}
+  .ht-hang{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+  .ht-hang .clay-btn{font-size:15px;padding:12px 16px}
+  .ht .ht-phu{background:var(--clay-tray);color:var(--clay-ink);box-shadow:var(--clay-tray-shadow)}
+  .ht .ht-ghi{font-size:13px;color:var(--clay-sub);margin-top:14px !important}
+  #ht-ray{position:fixed;right:14px;top:50%;transform:translateY(-50%);z-index:2;list-style:none;margin:0;padding:6px;display:flex;flex-direction:column;gap:6px;background:color-mix(in srgb,var(--clay-card) 85%,transparent);border-radius:999px;box-shadow:var(--clay-shadow-sm)}
+  #ht-ray a{display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;font:800 13px var(--clay-head);color:var(--clay-ink);background:var(--clay-tray);text-decoration:none}
+  #ht-ray a[aria-current]{background:var(--clay-orange);color:var(--clay-on-orange)}
+  @media (max-width:760px){
+    .ht-buoc{align-items:flex-end;padding-bottom:18px}
+    .ht-the{max-width:none}
+    .ht-buoc .ht-anh{display:none}
+    #ht-ray{right:6px;padding:4px;gap:4px}
+    #ht-ray a{width:28px;height:28px;font-size:12px}
+    .ht .clay-main{padding-right:44px}
+  }
+  /* Không có WebGL: không có sa bàn, thẻ hiện ảnh 3D có sẵn và xếp liền nhau */
+  .ht-no3d #ht-stage{display:none}
+  .ht-no3d .ht-buoc{min-height:0}
+  .ht-no3d .ht-buoc .ht-anh{display:block}
+  .ht-no3d .ht-buoc:not(.dang) .ht-the{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){.ht-the{transition:none}.ht-buoc:not(.dang) .ht-the{transform:none}}
+</style>
+</head>
+<body class="clay ht">
+<div id="ht-stage" aria-hidden="true"></div>
+<ol id="ht-ray" aria-label="Các chặng · Stages"></ol>
+<main class="clay-main">
+  <section class="ht-mo" aria-labelledby="ht-h1">
+    <div class="ht-the">
+      <nav class="dc-crumb" aria-label="Breadcrumb"><a href="../index.html">BizOn</a> › <a href="../ho-chieu-sau-rieng.html" data-en="Durian Passport">Hộ Chiếu Sầu Riêng</a></nav>
+      <h1 id="ht-h1" data-en="The Journey of One Durian">Hành Trình Một Trái Sầu Riêng</h1>
+      <p data-en="From an orchard in the Mekong Delta to a market stall across the border: seven stages, each with a sourced fact. Scroll and the camera travels along the clay diorama.">Từ một vườn ở miền Tây tới quầy chợ bên kia biên giới: bảy chặng, mỗi chặng một dữ kiện có nguồn. Cuộn xuống, máy quay sẽ đi dọc sa bàn đất sét.</p>
+      <p class="ht-cuon" data-en="Scroll to begin ↓">Cuộn để bắt đầu ↓</p>
+    </div>
+  </section>
+  <div id="ht-chang"></div>
+  <section class="ht-ket" aria-labelledby="ht-h-ket">
+    <div class="ht-the">
+      <span class="clay-eyebrow" data-en="Your turn">Tới lượt bạn</span>
+      <h2 id="ht-h-ket" data-en="Now run the chain yourself">Giờ tự điều hành chuỗi này</h2>
+      <p data-en="Each stage you just scrolled through is a decision in the games: build the packing line, or lead a 5-role team through 6 export seasons.">Mỗi chặng vừa cuộn qua là một quyết định trong game: tự lắp dây chuyền đóng gói, hoặc dẫn đội 5 vai qua 6 vụ xuất khẩu.</p>
+      <div class="ht-hang">
+        <a class="clay-btn clay-btn-orange" href="day-chuyen-sau-rieng.html" data-en="🏭 Packing line">🏭 Dây chuyền đóng gói</a>
+        <a class="clay-btn" href="ho-chieu-sau-rieng.html" data-en="📋 Classroom edition">📋 Bản lớp học</a>
+        <a class="clay-btn ht-phu" href="ho-chieu-sau-rieng-3d.html" data-en="🗺️ 3D map">🗺️ Bản đồ 3D</a>
+      </div>
+      <p class="ht-ghi" data-en="Facts and sources come from Durian Passport’s data (lab/ho-chieu-sau-rieng-data.js). 3D models: Kenney.nl (CC0) and clay blocks built for BizOn.">Dữ kiện và nguồn lấy từ dữ liệu của Hộ Chiếu Sầu Riêng. Mô hình 3D: Kenney.nl (CC0) và khối đất sét dựng riêng cho BizOn.</p>
+    </div>
+  </section>
+</main>
+
+<script src="../js/durian-voice.js"></script>
+<script src="ho-chieu-sau-rieng-data.js"></script>
+<script src="hanh-trinh-sau-rieng-data.js"></script>
+<script src="../js/bizon-clay-i18n.js" defer></script>
+<script src="hanh-trinh-sau-rieng-ui.js" defer></script>
+<script type="module" src="hanh-trinh-sau-rieng-3d.js"></script>
+<script>
+  // Không có WebGL (máy cũ, tắt tăng tốc phần cứng): bỏ sa bàn, thẻ hiện ảnh.
+  (function () { try { var c = document.createElement('canvas'); if (!(c.getContext('webgl2') || c.getContext('webgl'))) document.documentElement.classList.add('ht-no3d'); } catch (e) { document.documentElement.classList.add('ht-no3d'); } })();
+</script>
+<script src="../js/bizon-clay-nav.js" defer></script>
+<script src="../js/bizon-clay-footer.js" defer></script>
+</body>
+</html>
