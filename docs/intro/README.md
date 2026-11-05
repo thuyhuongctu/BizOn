@@ -47,7 +47,7 @@ Clay shadow pattern: `inset 0 -Npx 0 rgba(0,0,0,.08–.2), inset 0 Mpx 0 rgba(25
 ## Assets used (all from the repo)
 - Characters: assets/character/huong-ao-dai-sen.png, anh-tu-ao-dai-welcome-cut-v2.webp, teo-soi-wink-cut.webp, phu-sa/huong-tu-ghe-chonoi-v2.webp
 - Brand: assets/brand/trong-dong.svg, assets/hc/stamp/vn.png, passport-cover-cut.webp
-- Games: assets/covers/ben-phu-sa-3d.webp, bat-nghiep-3d-v2.webp, ho-chieu-thuong-hieu-3d.webp, ho-chieu-sau-rieng-3d.webp (included)
+- Games: assets/covers/ben-phu-sa-3d.webp, bat-nghiep-3d-v3.webp, ho-chieu-thuong-hieu-3d.webp, ho-chieu-sau-rieng-3d.webp (included)
 - Tools: assets/hc/item/forecast.png, assets/cmr-lab/dragon-magnifier.jpg, assets/character/arcade-rong-bay-sau-rieng.webp
 - Trailers: assets/video/bizon-trailer-poster.jpg, ben-phu-sa-trailer-poster.jpg, bp-trailer-poster.jpg, srp-trailer-poster.jpg
 - Voiceover: assets/vo/01-hero.mp3 … 08-close.mp3 (included; 04-tools re-recorded: "four practicum labs")
