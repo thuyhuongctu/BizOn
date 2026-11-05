@@ -130,3 +130,26 @@ Số được viết bằng chữ để đọc và đếm âm tiết cho đúng.
 
 - **Tiếng Anh:** *One Durian, One Code: Why a Single Fruit Can Lock Out a Whole Orchard Zone*
 - **Tiếng Việt:** *Một trái sầu riêng, cả vùng cùng sầu*
+
+---
+
+## 7. Lời đọc tiếng Anh (bản EN, 5/11/2026)
+
+Dịch sát 14 câu tiếng Việt, cùng nguồn trích. 265 từ (≈ 72 giây ở 3,7 từ/giây). Giọng đọc: giọng của tác giả Đỗ Thùy Hương (tệp trong `assets/video/src/sau-rieng-ma-so/en/`).
+
+| # | Lời đọc |
+|---|---|
+| 1 | A single durian can lock an entire growing zone out of its export market. |
+| 2 | In 2022, Vietnamese durian won the right to be sold officially to China. |
+| 3 | Each orchard needs a growing-area code, each packing house its own: a passport for the fruit. |
+| 4 | Mr. Tư in Cái Bè has a small orchard, so he shares one code with his neighbours. |
+| 5 | In three years, exports leapt from 124 million dollars to 3.3 billion. |
+| 6 | Then thirty shipments were flagged for cadmium, a heavy metal. |
+| 7 | From January 2025, every shipment also needed a test certificate for Auramine O, an industrial dye. Within two weeks, hundreds of containers were turned back. |
+| 8 | Codes became scarce. Businesses told reporters that a single code had changed hands for about 120 million dong. |
+| 9 | In November 2025, police charged seventeen people after uncovering a trade in growing-area codes and test certificates. |
+| 10 | And if one fruit in a shipment carries cadmium or Auramine O, the whole shipment goes back, the zone's code is suspended, and Mr. Tư's family pays too. |
+| 11 | Luckily, at first, Auramine O was only found in Thai durian. Unluckily, the new rule applied to durian from every country. |
+| 12 | You see, a code is like an exam number: one wrong paper, one number marked down. But once someone sits the exam for someone else, the proctor searches every pocket in the room. |
+| 13 | So now every shipment needs a growing-area code, a packing-house code and a test certificate. Compliance is the price of the ticket. |
+| 14 | On the other side of the border, nobody tastes Mr. Tư's fruit. They only read one line: Viet Nam. |
