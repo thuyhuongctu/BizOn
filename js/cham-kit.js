@@ -1,7 +1,7 @@
 /* CHAM Homestay – tiện ích giao diện dùng chung cho bộ học liệu trong cham/ (song ngữ, lưu cục bộ).
  * Nội dung dựng bằng JS lấy chữ theo ngôn ngữ hiện tại qua ChamKit.t({ vi, en }) và vẽ lại khi
  * bizon-clay-i18n.js phát 'bizon:langchange'; phần tĩnh trong HTML dùng data-en như mọi trang đất sét.
- * CHAM™ và nội dung tình huống © 2017–2026 Đỗ Thùy Hương, dùng trên BizOn theo giấy phép không độc quyền. */
+ * CHAM™ và nội dung tình huống © 2017–2026 Đỗ Thùy Hương & Phan Anh Tú, dùng trên BizOn theo giấy phép không độc quyền. */
 (function (root) {
   'use strict';
   const K = {};

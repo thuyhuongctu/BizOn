@@ -55,12 +55,14 @@ const PAGES = ['cham/index.html', 'cham/ke-hoach-2017.html', 'cham/website.html'
 for (const p of PAGES) {
   const s = read(p);
   assert.ok(s.includes('<meta name="robots" content="noindex">'), p + ': noindex');
-  assert.ok(s.includes('© 2017–2026 Đỗ Thùy Hương, dùng trên BizOn theo giấy phép không độc quyền'), p + ': dòng giấy phép');
+  assert.ok(s.includes('© 2017–2026 Đỗ Thùy Hương & Phan Anh Tú, dùng trên BizOn theo giấy phép không độc quyền'), p + ': dòng giấy phép');
   assert.ok(!/®/.test(s), p + ': chưa có văn bằng, không dùng ®');
   assert.ok(s.includes('bizon-clay-i18n.js') && s.includes('bizon-clay-nav.js') && s.includes('cham-clay.css'), p + ': khung chung');
   for (const m of s.matchAll(/(?:src|href)="(\.\.\/)?((?:js|css|assets)\/[^"?#]+)"/g)) assert.ok(fs.existsSync(path.join(ROOT, m[2])), p + ': thiếu ' + m[2]);
 }
-for (const p of ['cham/index.html', 'cham/ke-hoach-2017.html', 'cham/bai-giang.html']) assert.ok(read(p).includes('Tác giả: Đỗ Thùy Hương') && read(p).includes('Author: Đỗ Thùy Hương'), p + ': ghi tác giả Đỗ Thùy Hương');
+for (const p of ['cham/index.html', 'cham/ke-hoach-2017.html', 'cham/bai-giang.html']) assert.ok(read(p).includes('Tác giả: Đỗ Thùy Hương &amp; Phan Anh Tú') && read(p).includes('Authors: Đỗ Thùy Hương &amp; Phan Anh Tú'), p + ': ghi hai tác giả');
+// 05/11/2026: CHAM ghi thêm đồng tác giả Phan Anh Tú ở mọi dòng giấy phép
+for (const p of PAGES.concat(['cham-homestay.html', 'thu-vien-tinh-huong.html'])) assert.ok(!/© 2017–2026 Đỗ Thùy Hương(?! &)/.test(read(p)), p + ': dòng © còn một tác giả');
 for (const p of PAGES.concat(fs.readdirSync(path.join(ROOT, 'js')).filter(f => f.startsWith('cham-')).map(f => 'js/' + f))) assert.ok(!/bốn sinh viên|four [^.]*students/i.test(read(p)), p + ': không ghi nhóm tác giả gốc');
 assert.ok(!fs.readdirSync(path.join(ROOT, 'cham')).some(f => /\.pdf$|ksdn/i.test(f)), 'không đưa tệp kế hoạch 2017 lên kho');
 assert.ok(read('giang-vien.html').includes('href="cham/"'), 'trang giảng viên chưa có lối vào');
@@ -77,11 +79,11 @@ assert.ok(read('cham-homestay.html').includes('1 quản lý vận hành 10 tri�
   assert.equal(imgs.length, 16, 'số thẻ có ảnh trên trang giảng viên'); assert.equal(new Set(imgs).size, 16, 'ảnh thẻ bị trùng');
   for (const f of imgs.concat(['assets/giang-vien/ho-tro-giang-vien.webp'])) assert.ok(gv.includes(f) && fs.existsSync(path.join(ROOT, f)), 'thiếu ảnh ' + f); }
 for (const [p, img] of [['cham/index.html', 'du-an-cham.webp'], ['cham/website.html', 'homestay-diorama.webp'], ['cham/ke-hoach-2017.html', 'thuyen-ke-hoach.webp'], ['cham-homestay.html', 'homestay-diorama.webp']])
-  assert.ok(read(p).includes('assets/cham/clay/' + img), p + ' chưa dùng ảnh ' + img);
-// Ảnh minh họa đất sét của bộ CHAM (assets/cham/anh): mọi ảnh đều được dùng, mọi ảnh được trỏ tới đều tồn tại
-{ const dir = path.join(ROOT, 'assets/cham/anh'), files = fs.readdirSync(dir).filter(f => f.endsWith('.webp')).map(f => f.slice(0, -5));
+  assert.ok(read(p).includes('assets/cham/clay-v2/' + img), p + ' chưa dùng ảnh ' + img);
+// Ảnh minh họa đất sét của bộ CHAM (assets/cham/anh-v2, bản in lại dòng bản quyền có hai tác giả): mọi ảnh đều được dùng, mọi ảnh được trỏ tới đều tồn tại
+{ const dir = path.join(ROOT, 'assets/cham/anh-v2'), files = fs.readdirSync(dir).filter(f => f.endsWith('.webp')).map(f => f.slice(0, -5));
   const used = PAGES.concat(['cham-homestay.html', 'js/cham-website.js']).map(read).join('\n');
-  for (const f of files) assert.ok(used.includes('anh/' + f + '.webp') || used.includes("'" + f + "'"), 'ảnh chưa dùng: ' + f);
+  for (const f of files) assert.ok(used.includes('anh-v2/' + f + '.webp') || used.includes("'" + f + "'"), 'ảnh chưa dùng: ' + f);
   const refs = [...read('js/cham-website.js').matchAll(/\['([a-z-]+)', '/g)].map(m => m[1]);
   assert.ok(refs.length >= 45, 'màn hình Khám phá quá ít ảnh: ' + refs.length);
   for (const f of refs) assert.ok(files.includes(f), 'thiếu ảnh ' + f);

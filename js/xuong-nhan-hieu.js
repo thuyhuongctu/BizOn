@@ -1,5 +1,5 @@
-/* Xưởng Nhãn Hiệu Đặc Sản – phiếu bài chuyên cần chương 5 (Xây dựng nhãn hiệu & Marketing mix).
- * Đề bài © 2026 ThS. Đỗ Thùy Hương.
+/* Xưởng Nhãn Hiệu Đặc Sản – phiếu bài chuyên cần (Xây dựng nhãn hiệu & Marketing mix).
+ * Đề bài © 2026 ThS. Đỗ Thùy Hương & PGS.TS. Phan Anh Tú.
  *
  * Chạy hoàn toàn trên máy người dùng: không gửi dữ liệu đi đâu, bản nháp lưu ở localStorage.
  * Phần thuần (hints, progress, code, cardLines) không đụng DOM để test được bằng Node.
@@ -183,7 +183,7 @@
     c.fillText(L.who || T(lang, 'Họ tên · MSSV · Lớp', 'Name · Student ID · Class'), P, H - 120);
     c.font = `700 24px "IBM Plex Mono", ui-monospace, monospace`; c.textAlign = 'right'; c.fillText(T(lang, 'Mã thẻ ', 'Card code ') + L.code, W - P, H - 120); c.textAlign = 'left';
     c.font = `500 20px ${SANS}`; c.fillStyle = '#3E5A5C';
-    c.fillText(T(lang, 'bizonland.com · Xưởng Nhãn Hiệu Đặc Sản · Đề bài © 2026 ThS. Đỗ Thùy Hương', 'bizonland.com · Local Specialty Brand Lab · Brief © 2026 MSc Đỗ Thùy Hương'), P, H - 70);
+    c.fillText(T(lang, 'bizonland.com · Xưởng Nhãn Hiệu Đặc Sản · Đề bài © 2026 ThS. Đỗ Thùy Hương & PGS.TS. Phan Anh Tú', 'bizonland.com · Local Specialty Brand Lab · Brief © 2026 MSc Đỗ Thùy Hương & Assoc. Prof. Phan Anh Tú'), P, H - 70, W - P * 2);
     return canvas;
   }
   function png(canvas) { return new Promise((ok, fail) => canvas.toBlob(b => (b ? ok(b) : fail(new Error('toBlob'))), 'image/png')); }

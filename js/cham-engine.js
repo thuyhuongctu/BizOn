@@ -5,7 +5,7 @@
  * - mã kết quả base64 (UTF-8) để dán vào Bảng điều khiển giảng viên; giải mã có kiểm tra.
  * Đơn vị tiền: triệu đồng, trừ giá phòng/vé tính bằng nghìn đồng như bản thiết kế.
  * Mọi hệ số của Đấu trường là ĐỀ XUẤT, cần hiệu chỉnh khi chạy thử với lớp thật (docs/cham/kich-ban-tan-loc.md).
- * CHAM™ và nội dung tình huống © 2017–2026 Đỗ Thùy Hương, dùng trên BizOn theo giấy phép không độc quyền. */
+ * CHAM™ và nội dung tình huống © 2017–2026 Đỗ Thùy Hương & Phan Anh Tú, dùng trên BizOn theo giấy phép không độc quyền. */
 (function (root, factory) {
   if (typeof module === 'object' && module.exports) module.exports = factory(); else root.ChamEngine = factory();
 })(typeof self !== 'undefined' ? self : this, function () {

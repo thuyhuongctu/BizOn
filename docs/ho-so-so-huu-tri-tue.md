@@ -366,6 +366,7 @@ Hai điều **không được ghi** trong hồ sơ vì chưa có căn cứ:
 - **Không** khai CHAM trong bất kỳ hồ sơ đăng ký nào của BizOn; hồ sơ nhãn hiệu và quyền tác giả của CHAM đứng tên một mình Đỗ Thùy Hương, giữ ngoài kho này.
 - Bản kế hoạch 2017 **không** đăng lên BizOn nếu chưa có đồng ý riêng của tác giả. Ký hiệu ® chỉ dùng sau khi nhãn hiệu được cấp văn bằng.
 - *(29/10/2026)* Tác giả bàn giao bộ bản mẫu học liệu CHAM và yêu cầu dựng lên BizOn: thư mục `cham/` và `thu-vien-tinh-huong.html` (xem `docs/cham/README.md`). Các trang trích số liệu và một số câu của kế hoạch 2017 để dạy thẩm định; **tệp kế hoạch 2017 (PDF/văn bản) vẫn không đưa lên kho**. Mọi trang `noindex` và mang cùng dòng giấy phép như trang tình huống. Theo quyết định của tác giả, các trang **không** ghi nhóm tác giả gốc và ghi tác giả chính là **Đỗ Thùy Hương**.
+- *(05/11/2026)* Theo yêu cầu của tác giả, mọi trang CHAM trên BizOn ghi thêm đồng tác giả **Phan Anh Tú**: «Tác giả: Đỗ Thùy Hương & Phan Anh Tú», dòng giấy phép «CHAM™ và nội dung tình huống © 2017–2026 Đỗ Thùy Hương & Phan Anh Tú, dùng trên BizOn theo giấy phép không độc quyền», và dòng bản quyền in trên ảnh (bản in lại ở `assets/cham/anh-v2/`, `assets/cham/clay-v2/`; ảnh gốc giữ nguyên). Câu «kế hoạch kinh doanh gốc năm 2017 của Đỗ Thùy Hương» giữ nguyên vì nói về bản gốc 2017. Các dòng trên về hồ sơ đăng ký đứng tên một mình chưa được sửa: tác giả cần quyết định riêng có đổi hồ sơ nhãn hiệu và quyền tác giả của CHAM hay không.
 
 # PHẦN E · CHỨNG CỨ CẦN CHUẨN BỊ
 
