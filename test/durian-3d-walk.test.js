@@ -20,6 +20,12 @@ assert.match(html, /this\.animRig\(w\.rig, moving, w\.step,/);
 assert.match(html, /const rig = this\.clayRigFor\(this\.npcStyle\(id\)\)/);
 assert.equal((html.match(/this\.animRig\(n\.rig, di \? 1 : 0,/g) || []).length, 2, 'NPC đi theo đội và NPC đi dạo');
 assert.doesNotMatch(html, /this\.npcs\[id\]\.card = m/);
+// dáng đi kiểu phim hoạt hình: tay chân hai đốt có gối, khuỷu; gập gối khi đưa chân, khuỷu cong khi vung tay; người chỉ nhún ±2 cm
+assert.match(html, /pv\.userData\.jt = jt; g\.add\(pv\); return pv;/);
+assert.match(html, /kneeL: legL\.userData\.jt, kneeR: legR\.userData\.jt, elbowL: armL\.userData\.jt, elbowR: armR\.userData\.jt/);
+assert.match(html, /r\.kneeL\.rotation\.x = mv \* \(0\.08 \+ Math\.max\(0, cs\) \* 0\.95\); r\.kneeR\.rotation\.x = mv \* \(0\.08 \+ Math\.max\(0, -cs\) \* 0\.95\);/);
+assert.match(html, /r\.elbowL\.rotation\.x = -\(0\.22 \+ mv \* \(0\.1 \+ Math\.max\(0, -sn\) \* 0\.5\)\)/);
+assert.match(html, /\(1 - Math\.abs\(sn\)\) \* 0\.02 - 0\.01/);
 // không còn nhấc cả nhân vật lên khi bước
 assert.doesNotMatch(html, /Math\.abs\(Math\.sin\(w\.step\)\) \* 0\.09/);
 assert.doesNotMatch(html, /Math\.abs\(Math\.sin\(now \/ 140 \+ fi\)\) \* 0\.1/);
