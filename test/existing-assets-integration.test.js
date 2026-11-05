@@ -78,7 +78,7 @@ assert.match(aibis, /app-shell\.js/);
 const music = read('am-nhac.html') + '\n' + read('js/music-data.js');
 assert.match(music, /arena-vietnam-map-v2\.webp/);
 for (const cover of ['ben-phu-sa-3d', 'bat-nghiep-3d', 'ho-chieu-thuong-hieu-3d', 'ho-chieu-sau-rieng-cho-noi']) {
-  assert.match(music, new RegExp('covers/' + cover + '\\.webp'));
+  assert.match(music, new RegExp('covers/' + cover + '(-v\\d+)?\\.webp'));
 }
 
 const stylesheet = read('css/bizon-existing-assets.css');
