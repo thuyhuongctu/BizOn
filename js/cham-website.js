@@ -10,11 +10,11 @@
   const S = { nights: 1, cart: 0, step: 1, bNights: 1, bRooms: 1, bGuests: 2, dinner: true, cls: false, name: '', phone: '' };
   const LIM = { nights: [1, 7], bNights: [1, 7], bRooms: [1, 6] };
   const PRODUCTS = [
-    { img: '../assets/cham/anh/tra-cuc.webp', bg: 'var(--ch-yellow-t)', name: { vi: 'Trà cúc la mã khô', en: 'Dried chamomile tea' }, price: { vi: '80.000 đ / 500 g', en: '80,000 đ / 500 g' }, art: { vi: 'hộp trà', en: 'tea tin' } },
-    { img: '../assets/cham/anh/tinh-dau.webp', bg: 'var(--ch-leaf)', name: { vi: 'Tinh dầu cúc la mã', en: 'Chamomile essential oil' }, price: { vi: '50.000 đ / 15 ml', en: '50,000 đ / 15 ml' }, art: { vi: 'chai tinh dầu', en: 'oil bottle' } },
-    { img: '../assets/cham/anh/mam-ca-tra.webp', bg: 'var(--ch-brick-t)', name: { vi: 'Mắm cá tra', en: 'Fermented pangasius (mắm cá tra)' }, price: { vi: '120.000 đ / kg', en: '120,000 đ / kg' }, art: { vi: 'hũ sành', en: 'clay jar' } }
+    { img: '../assets/cham/anh-v2/tra-cuc.webp', bg: 'var(--ch-yellow-t)', name: { vi: 'Trà cúc la mã khô', en: 'Dried chamomile tea' }, price: { vi: '80.000 đ / 500 g', en: '80,000 đ / 500 g' }, art: { vi: 'hộp trà', en: 'tea tin' } },
+    { img: '../assets/cham/anh-v2/tinh-dau.webp', bg: 'var(--ch-leaf)', name: { vi: 'Tinh dầu cúc la mã', en: 'Chamomile essential oil' }, price: { vi: '50.000 đ / 15 ml', en: '50,000 đ / 15 ml' }, art: { vi: 'chai tinh dầu', en: 'oil bottle' } },
+    { img: '../assets/cham/anh-v2/mam-ca-tra.webp', bg: 'var(--ch-brick-t)', name: { vi: 'Mắm cá tra', en: 'Fermented pangasius (mắm cá tra)' }, price: { vi: '120.000 đ / kg', en: '120,000 đ / kg' }, art: { vi: 'hũ sành', en: 'clay jar' } }
   ];
-  /* Khám phá cù lao: ảnh minh họa đất sét do tác giả cung cấp (assets/cham/anh/) */
+  /* Khám phá cù lao: ảnh minh họa đất sét do tác giả cung cấp (assets/cham/anh-v2/) */
   const G = (vi, en, items) => ({ vi, en, items });
   const EXPLORE = [
     G('Vườn trái cây', 'Orchards', [['vuon-xoai', 'Vườn xoài', 'Mango grove'], ['vuon-oi', 'Vườn ổi', 'Guava orchard'], ['vuon-man', 'Vườn mận', 'Rose-apple orchard'],
@@ -36,7 +36,7 @@
   let exTab = 0;
   function renderExplore() {
     K.$('#ws-ex-tabs').innerHTML = EXPLORE.map((g, i) => '<button type="button" class="ch-chip" data-ex="' + i + '" aria-pressed="' + (i === exTab) + '">' + esc(t(g)) + ' · ' + g.items.length + '</button>').join('');
-    K.$('#ws-gal').innerHTML = EXPLORE[exTab].items.map(([f, vi, en]) => '<figure><img src="../assets/cham/anh/' + f + '.webp" width="600" height="448" loading="lazy" alt="' + esc(t({ vi: 'Hình đất sét 3D: ' + vi, en: '3D clay render: ' + en })) + '"><figcaption>' + esc(t({ vi, en })) + (K.en() ? '<small>' + esc(vi) + '</small>' : '') + '</figcaption></figure>').join('');
+    K.$('#ws-gal').innerHTML = EXPLORE[exTab].items.map(([f, vi, en]) => '<figure><img src="../assets/cham/anh-v2/' + f + '.webp" width="600" height="448" loading="lazy" alt="' + esc(t({ vi: 'Hình đất sét 3D: ' + vi, en: '3D clay render: ' + en })) + '"><figcaption>' + esc(t({ vi, en })) + (K.en() ? '<small>' + esc(vi) + '</small>' : '') + '</figcaption></figure>').join('');
   }
   const clamp = (v, [lo, hi]) => Math.max(lo, Math.min(hi, v));
   const roomLine = () => S.bRooms * S.bNights * ROOM, dinnerLine = () => (S.dinner ? S.bGuests * DINNER : 0);
