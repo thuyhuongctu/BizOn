@@ -37,17 +37,17 @@ assert.match(tpl, /if \(sbOn\) out\.ovHint = /);
 assert.match(tpl, /<sc-if value="\{\{ sb\.narrow \}\}">\s*<div style="position:absolute;left:12px;right:12px;top:\{\{ sb\.listTop \}\};display:grid;grid-template-columns:1fr 1fr/);
 assert.match(tpl, /<sc-if value="\{\{ sb\.wide \}\}">/);
 
-// 2. Thợ = thẻ ảnh người thật: không còn makeRig trong initWorkers; ảnh nạp chung; lật/nhún trong tickWorkers.
+// 2. Thợ = nhân vật đất sét 3D theo công việc (11/2026, chị Hương yêu cầu đổi thẻ ảnh sang 3D): dựng qua clayRigFor
+//    (một lần mỗi kiểu rồi nhân bản), quay theo hướng đi, chân tay cử động bằng animRig trong tickWorkers.
 const iw = tpl.slice(tpl.indexOf('  initWorkers() {'), tpl.indexOf('  tickWorkers(dt, now) {'));
-assert.ok(!/makeRig\(/.test(iw), 'initWorkers không còn mô hình khối');
-assert.match(iw, /const src = Component\.workerImg\(job, j\[1\], i\)/);
-assert.match(iw, /this\.workerTex\(src\.p, tx => \{ const h = src\.h \|\| 1\.9, wd = h \* tx\.image\.width \/ tx\.image\.height;/);
+assert.match(iw, /const rig = this\.clayRigFor\(this\.workerStyle\(job, i\)\); rig\.g\.scale\.setScalar\(0\.9\); g\.add\(rig\.g\);/);
+assert.ok(!/PlaneGeometry/.test(iw), 'initWorkers không còn thẻ ảnh');
 const tw = tpl.slice(tpl.indexOf('  tickWorkers(dt, now) {'), tpl.indexOf('  layoutNpcs() {'));
-assert.ok(!/w\.rig/.test(tw), 'tickWorkers không còn w.rig');
-assert.match(tw, /w\.card\.rotation\.y = ry;/);
-assert.match(tw, /if \(Math\.abs\(sx\) > 0\.25\) w\.flip = sx > 0 \? 1 : -1;/);
-assert.match(tw, /w\.card\.scale\.x = w\.w \* w\.flip;/);
-assert.match(tpl, /workerTex\(p, cb\) \{/);
+assert.ok(!/w\.card/.test(tw), 'tickWorkers không còn w.card');
+assert.match(tw, /if \(moving\) w\.g\.rotation\.y = Math\.atan2\(mdx, mdz\);/);
+assert.match(tw, /this\.animRig\(w\.rig, moving, w\.step, now \+ w\.ph \* 1000, working\);/);
+assert.match(tpl, /workerStyle\(job, i\) \{/);
+// ảnh thợ (WORKER_IMG) vẫn giữ cho chân dung trong hộp thoại và bản 2D
 // mọi ảnh thợ khai báo đều có thật trong kho
 const m = tpl.match(/static WORKER_IMG = \{[\s\S]*?\n  \};/); assert.ok(m, 'WORKER_IMG');
 const paths = Array.from(m[0].matchAll(/p: '([^']+)'/g)).map(x => x[1]);

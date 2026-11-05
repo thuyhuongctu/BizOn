@@ -21,7 +21,7 @@ for (const f of ['ban-non-la-dung-khong-de', 'ban-non-la-chay', 'ban-gai-non-la-
 // Bundle 3D: ME có hai bộ m/f, chọn qua meSet(pos); bảng xếp hạng và thẻ nhân vật cùng dùng meSet.
 const b = read('lab/ho-chieu-sau-rieng-3d.html');
 for (const need of ['static ME = {', "m: { idle: ['hc/cast/ban-non-la-dung-khong-de.webp'", "f: { idle: ['hc/cast/ban-gai-non-la-dung-khong-de.webp'",
-  'static meSet(pos)', "m.gender === 'f' ? 'f' : 'm'", 'const me = Component.meSet(this.state.pos);', 'Component.meSet(s.pos).idle[0]', "(u.me || Component.ME.m)[k][1]"]) {
+  'static meSet(pos)', "m.gender === 'f' ? 'f' : 'm'", 'const me = Component.meSet(this.state.pos), girl = me === Component.ME.f;', "girl ? { shirt: '#F3D9C6'", 'Component.meSet(s.pos).idle[0]', "(u.me || Component.ME.m)[k][1]"]) {
   assert.ok(b.includes(need), 'bundle 3D thiếu: ' + need);
 }
 assert.ok(!b.includes('Component.ME.idle'), 'không còn tham chiếu bộ ảnh cũ không phân giới');
