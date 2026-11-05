@@ -6,7 +6,7 @@ Bến Phù Sa ở `../ben-phu-sa/`.
 
 | Tệp / thư mục | Nội dung |
 |---|---|
-| [`ma-nguon-dac-trung/`](ma-nguon-dac-trung/) | Bản trích mã nguồn để in kèm: toàn bộ `js/engine.js` (engine mô phỏng, cố vấn Lumina, biến cố thị trường) + `js/backend.js` (hạ tầng dữ liệu lớp học) — 1.026 dòng ≈ 19 trang. Đã loại `sw.js` và hạ tầng dùng chung (site-ui, site-nav…) để giữ trong trần 15–20 trang. Không lược hằng số nào — engine là mô hình xác định, không phải dữ liệu ẩn cần giấu như Bến Phù Sa. |
+| [`ma-nguon-dac-trung/`](ma-nguon-dac-trung/) | Bản trích mã nguồn để in kèm: toàn bộ `js/engine.js` (engine mô phỏng, cố vấn Lumina, biến cố thị trường) + `js/backend.js` (hạ tầng dữ liệu lớp học) — 1.187 dòng ≈ 23 trang A4, lấy nguyên văn từ đúng phiên bản đăng ký `afbacd2` (07/10/2026, sinh lại 05/11/2026). Đã loại `sw.js` và hạ tầng dùng chung (site-ui, site-nav…) để giữ trong trần 15–20 trang. Không lược hằng số nào — engine là mô hình xác định, không phải dữ liệu ẩn cần giấu như Bến Phù Sa. |
 | [`anh-giao-dien/`](anh-giao-dien/) | Ảnh 6 màn hình chính trong game (đăng nhập · trung tâm điều hành · nhập quyết định · đấu trường kết quả · báo cáo vòng · sự kiện & cố vấn AI). Đều là màn hình **bên trong game**, không chụp trang chủ/Đội ngũ nên không dính logo GitHub/Zenodo/ORCID/OSF/Supabase (xem Cảnh báo 1 trong hồ sơ chính). Kèm [`bat-nghiep-giao-dien-chuong-trinh.pdf`](anh-giao-dien/bat-nghiep-giao-dien-chuong-trinh.pdf) — bản in gộp 6 trang (mỗi ảnh một trang + chú thích "Hình N." + số trang). |
 
 ## Cần lưu ý
