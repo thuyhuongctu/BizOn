@@ -2,7 +2,7 @@
 
 > Tài liệu thiết kế, bản phác thảo 1 (chuyển từ bản mẫu «Bat Nghiep Tan Loc Scenario», 10/2026).
 > Bản chơi thử: [`cham/dau-truong.html`](../../cham/dau-truong.html). Engine: `arena*` trong [`js/cham-engine.js`](../../js/cham-engine.js).
-> CHAM™ và nội dung tình huống © 2017–2026 Đỗ Thùy Hương, dùng trên BizOn theo giấy phép không độc quyền.
+> CHAM™ và nội dung tình huống © 2017–2026 Đỗ Thùy Hương & Phan Anh Tú, dùng trên BizOn theo giấy phép không độc quyền.
 
 Bốn đội cùng vận hành bốn homestay trên một cù lao. Bối cảnh, giá và chi phí gốc lấy từ kế hoạch CHAM. Các tham số engine dưới đây là **đề xuất ban đầu**, cần hiệu chỉnh khi chạy thử với lớp thật.
 
