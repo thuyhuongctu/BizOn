@@ -33,7 +33,7 @@ check(/"three": "\.\.\/js\/vendor\/three\.module\.js"/.test(page) && page.includ
 check(!/ho-chieu-sau-rieng-(engine|core)\.js/.test(page) && page.indexOf('src="ho-chieu-sau-rieng-data.js"') > 0 && page.indexOf('src="ho-chieu-sau-rieng-data.js"') < page.indexOf('src="hanh-trinh-sau-rieng-ui.js"'), 'chỉ đọc dữ liệu Hộ Chiếu, không nạp engine/core');
 check(['tan-cang-warehouse.glb', 'crate.glb', 'kenney-cay/'].every(f => g3.includes(f)) && /Kenney/.test(read('assets/models/SOURCES.md')), 'mô hình 3D chỉ dùng bộ Kenney (CC0) đã ghi nguồn');
 check(read('ho-chieu-sau-rieng.html').includes('href="lab/hanh-trinh-sau-rieng.html"'), 'trang Hộ Chiếu Sầu Riêng dẫn tới hành trình');
-check(+(/CACHE = 'bizon-v(\d+)'/.exec(sw) || [])[1] >= 779 && ['html', '-data.js', '-ui.js', '-3d.js'].every(f => sw.includes("'./lab/hanh-trinh-sau-rieng" + (f === 'html' ? '.html' : f) + "'")), 'sw.js ≥ bizon-v779 và cache bốn tệp');
+check(+(/CACHE = 'bizon-v(\d+)'/.exec(sw) || [])[1] >= 780 && ['html', '-data.js', '-ui.js', '-3d.js'].every(f => sw.includes("'./lab/hanh-trinh-sau-rieng" + (f === 'html' ? '.html' : f) + "'")), 'sw.js ≥ bizon-v780 và cache bốn tệp');
 
 // ---- Chạy thật ----
 (async () => {
