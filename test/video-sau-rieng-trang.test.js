@@ -1,5 +1,5 @@
 // Video «Một trái sầu riêng, cả vùng cùng sầu» gắn ở màn mở đầu Hộ Chiếu Sầu Riêng (bản lớp học, 5/11/2026):
-// bản 720p theo ngôn ngữ giao diện, poster WebP, phụ đề VI/EN để tắt; đổi ngôn ngữ thì đổi video; không tràn ngang ở 360 px.
+// bản 720p theo ngôn ngữ giao diện, poster WebP (bìa v2: cảnh anh Tư), phụ đề VI/EN để tắt; đổi ngôn ngữ thì đổi video; không tràn ngang ở 360 px.
 'use strict';
 const fs = require('node:fs');
 const path = require('node:path');
@@ -33,7 +33,7 @@ assert.ok(+(fs.readFileSync(path.join(ROOT, 'sw.js'), 'utf8').match(/bizon-v(\d+
     let pg = await open('vi', 1280);
     let r = await info(pg);
     assert.equal(r.src, '../assets/video/sau-rieng-ma-so-vi-720p.mp4');
-    assert.equal(r.poster, '../assets/video/sau-rieng-ma-so-vi-poster.webp');
+    assert.equal(r.poster, '../assets/video/sau-rieng-ma-so-vi-v2-poster.webp');
     assert.equal(r.preload, 'none', 'không tải video trước khi bấm');
     assert.deepEqual(r.tracks, [['vi', '../assets/video/subs/sau-rieng-ma-so-vi.vi.vtt', 'disabled'], ['en', '../assets/video/subs/sau-rieng-ma-so-vi.en.vtt', 'disabled']]);
     assert.ok(r.beforeQuick, 'video nằm ngay trên «Bắt đầu nhanh»');
@@ -44,6 +44,7 @@ assert.ok(+(fs.readFileSync(path.join(ROOT, 'sw.js'), 'utf8').match(/bizon-v(\d+
     r = await info(pg);
     assert.equal(r.src, '../assets/video/sau-rieng-ma-so-en-720p.mp4');
     assert.match(r.title, /One Durian, One Code/);
+    assert.equal(r.poster, '../assets/video/sau-rieng-ma-so-en-v2-poster.webp');
     await pg.close();
     // điện thoại 360 px, giao diện tiếng Anh: không tràn ngang
     pg = await open('en', 360);

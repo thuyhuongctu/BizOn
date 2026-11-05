@@ -6,7 +6,7 @@
  *
  * Dùng:  NODE_PATH=… node scripts/video/dung-sau-rieng.mjs --lang vi|en --out <thư mục> [--thu]
  *   --thu  chỉ chụp 1 ảnh giữa mỗi cảnh (xem bố cục), không dựng video
- * Kết quả: sau-rieng-ma-so-<lang>.mp4, -720p.mp4, -poster.jpg/.webp, phụ đề <tên>.vi.vtt và <tên>.en.vtt (cùng mốc câu).
+ * Kết quả: sau-rieng-ma-so-<lang>.mp4, -720p.mp4, -v2-poster.jpg/.webp, phụ đề <tên>.vi.vtt và <tên>.en.vtt (cùng mốc câu).
  */
 import { createRequire } from 'node:module';
 import { createServer } from 'node:http';
@@ -104,9 +104,9 @@ ff('-framerate', String(FPS), '-i', join(tmp, 'k%05d.jpg'), '-i', audio, '-c:v',
   '-c:a', 'copy', '-shortest', '-movflags', '+faststart', final);
 ff('-i', final, '-vf', 'scale=1280:720:flags=lanczos', '-c:v', 'libx264', '-preset', 'slow', '-crf', '24', '-profile:v', 'high', '-level', '4.0', '-pix_fmt', 'yuv420p',
   '-c:a', 'aac', '-b:a', '112k', '-movflags', '+faststart', join(OUT, NAME + '-720p.mp4'));
-// ảnh bìa: giữa cảnh 1 (móc câu)
-ff('-ss', ((moc[0].a + moc[0].b) / 2 + 0.6).toFixed(2), '-i', final, '-frames:v', '1', '-q:v', '3', join(OUT, NAME + '-poster.jpg'));
-ff('-i', join(OUT, NAME + '-poster.jpg'), '-c:v', 'libwebp', '-quality', '80', join(OUT, NAME + '-poster.webp'));
+// ảnh bìa v2: cảnh 4 (anh Tư ở Cái Bè, «1 mã · nhiều nhà»), gần cuối câu. Bìa v1 (cảnh 1) có bảng chữ tiếng Anh và tiêu đề bị cắt.
+ff('-ss', (moc[3].b - 0.8).toFixed(2), '-i', final, '-frames:v', '1', '-q:v', '3', join(OUT, NAME + '-v2-poster.jpg'));
+ff('-i', join(OUT, NAME + '-v2-poster.jpg'), '-c:v', 'libwebp', '-quality', '80', join(OUT, NAME + '-v2-poster.webp'));
 // phụ đề VI + EN theo mốc câu của giọng này
 const ts = x => { const h = Math.floor(x / 3600), mi = Math.floor(x / 60) % 60, s = x % 60; return `${String(h).padStart(2, '0')}:${String(mi).padStart(2, '0')}:${s.toFixed(3).padStart(6, '0')}`; };
 for (const l of ['vi', 'en']) writeFileSync(join(OUT, `${NAME}.${l}.vtt`), 'WEBVTT\n\n' + moc.map((c, i) => `${i + 1}\n${ts(c.a)} --> ${ts(Math.min(c.b + GAP * 0.9, TONG))}\n${LOI[l][i]}\n`).join('\n'));
