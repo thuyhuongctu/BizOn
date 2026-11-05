@@ -26,6 +26,12 @@ assert.match(html, /kneeL: legL\.userData\.jt, kneeR: legR\.userData\.jt, elbowL
 assert.match(html, /r\.kneeL\.rotation\.x = mv \* \(0\.08 \+ Math\.max\(0, cs\) \* 0\.95\); r\.kneeR\.rotation\.x = mv \* \(0\.08 \+ Math\.max\(0, -cs\) \* 0\.95\);/);
 assert.match(html, /r\.elbowL\.rotation\.x = -\(0\.22 \+ mv \* \(0\.1 \+ Math\.max\(0, -sn\) \* 0\.5\)\)/);
 assert.match(html, /\(1 - Math\.abs\(sn\)\) \* 0\.02 - 0\.01/);
+// giữ nhẹ: nhân vật nhân bản gộp khối theo đốt, lưới thưa (lod), không đổ bóng thật; thợ ở xa không vẽ
+// (journey-3d.test.js hết giờ trên CI khi 59 nhân vật 3D chưa gộp: số lượt vẽ mỗi khung tăng 3,5 lần)
+assert.match(html, /bakeRig\(r\) \{/);
+assert.match(html, /const r = this\.makeClayRig\(Object\.assign\(\{\}, o, \{ lod: 1 \}\)\); this\.bakeRig\(r\);/);
+assert.match(html, /const LD = o\.lod \? 0\.55 : 1/);
+assert.match(html, /w\.g\.visible = dd0 < \(this\.low \? 34 : 48\);/);
 // không còn nhấc cả nhân vật lên khi bước
 assert.doesNotMatch(html, /Math\.abs\(Math\.sin\(w\.step\)\) \* 0\.09/);
 assert.doesNotMatch(html, /Math\.abs\(Math\.sin\(now \/ 140 \+ fi\)\) \* 0\.1/);
