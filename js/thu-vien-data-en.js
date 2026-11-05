@@ -2,6 +2,14 @@
    Khoá = tên tệp ảnh (cột đầu của mỗi mục trong BZ_LIB) hoặc audioId với mục nhạc.
    Mục nào thiếu ở đây thì trang giữ nguyên bản tiếng Việt. */
 window.BZ_LIB_EN={
+/* mv */
+'mv3d/bia-brand-passport-3d.webp':['Cover of the MV «Brand Passport – Vietnam to the World»','The whole cast at the Mekong Island pier: Bà Sáu, the advisors, the firms, Lumina, Tú Phan and the captain · YouTube cover'],
+'mv3d/bia-durian-passport-3d.webp':['Cover of the MV «Durian Passport»','A Mekong floating market on durian harvest day · YouTube cover'],
+'mv3d/bp-roi-ben-mekong.webp':['Leaving Mekong Island','Opening of the Brand Passport MV · Bà Sáu, the advisors and the firms wave the boat off'],
+'mv3d/bp-dao-mekong.webp':['Mekong Island from above','The riverside village, the pier and a container port in the distance'],
+'mv3d/bp-tan-cang.webp':['Tân Cảng port','Cranes and a container ship · one of the seven market islands'],
+'mv3d/bp-ban-do-the-gioi.webp':['Map of the seven market islands','Island badges around Mekong Island in the closing climax'],
+'mv3d/bp-chia-tay-ca-doi.webp':['Back at Mekong Island','The whole team welcomes the boat home at dusk · finale of the Brand Passport MV'],
 /* chars */
 'lumina-ao-dai-wave.webp':['Lumina in áo dài','In-game learning advisor (rule-based) · also the avatar of Đỗ Thùy Hương'],
 'lumina-office-present.webp':['Lumina in a white suit','In-game AI strategy advisor'],
