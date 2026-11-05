@@ -62,6 +62,7 @@ for (const p of PAGES) {
 }
 for (const p of ['cham/index.html', 'cham/ke-hoach-2017.html', 'cham/bai-giang.html']) assert.ok(read(p).includes('Tác giả: Đỗ Thùy Hương &amp; Phan Anh Tú') && read(p).includes('Authors: Đỗ Thùy Hương &amp; Phan Anh Tú'), p + ': ghi hai tác giả');
 // 05/11/2026: CHAM ghi thêm đồng tác giả Phan Anh Tú ở mọi dòng giấy phép
+for (const p of ['cham/ke-hoach-2017.html', 'cham/bai-giang.html', 'js/cham-founder.js']) { const s = read(p); assert.ok(!/gốc năm 2017 của Đỗ Thùy Hương|2017 business plan by/.test(s) && s.includes('giai đoạn 2017–2026') && s.includes('2017–2026 business plan'), p + ': câu kế hoạch phải ghi giai đoạn 2017–2026'); }
 for (const p of PAGES.concat(['cham-homestay.html', 'thu-vien-tinh-huong.html'])) assert.ok(!/© 2017–2026 Đỗ Thùy Hương(?! &)/.test(read(p)), p + ': dòng © còn một tác giả');
 for (const p of PAGES.concat(fs.readdirSync(path.join(ROOT, 'js')).filter(f => f.startsWith('cham-')).map(f => 'js/' + f))) assert.ok(!/bốn sinh viên|four [^.]*students/i.test(read(p)), p + ': không ghi nhóm tác giả gốc');
 assert.ok(!fs.readdirSync(path.join(ROOT, 'cham')).some(f => /\.pdf$|ksdn/i.test(f)), 'không đưa tệp kế hoạch 2017 lên kho');
