@@ -83,6 +83,12 @@
   .dc-xem::after{content:'';display:block;clear:both}
   .dc-xem-img{float:left;width:min(260px,40%);height:auto;border-radius:16px;margin:0 16px 4px 0;box-shadow:var(--clay-shadow-sm)}
   @media (max-width:560px){.dc-xem-img{float:none;width:100%;margin:0 0 10px}}
+  .dc-dk{margin-top:12px;font-size:14px}
+  .dc-dk summary{cursor:pointer;font:700 14px var(--clay-head);color:var(--clay-teal);min-height:32px;display:flex;align-items:center}
+  .dc-dk ul{margin:6px 0 0;padding-left:18px}
+  .dc-dk li{margin:6px 0}
+  .dc-dk small{display:block;color:var(--clay-sub);font-size:12px}
+  .dc-xem .dc-dk{clear:both}
   .dc-kq-dau-img{width:80px;height:80px;object-fit:contain;transform:rotate(-12deg)}
   .dc-thanh{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
   @media (max-width:760px){.dc-thanh{grid-template-columns:1fr}}
@@ -144,6 +150,7 @@
         <p class="dc-khach" id="dc-don-khach"></p>
         <p class="dc-tom" id="dc-don-tom"></p>
         <p class="dc-bien"><b data-en="Event:">Biến cố:</b> <span id="dc-don-bien"></span></p>
+        <div id="dc-don-dk"></div>
       </div>
     </section>
 
@@ -211,9 +218,9 @@
   <section class="dc-the dc-chu-y" aria-labelledby="dc-h-chu-y">
     <h2 class="dc-muc" id="dc-h-chu-y" data-en="Read before using the numbers">Đọc trước khi dùng số liệu</h2>
     <ul>
-      <li data-en-html="The station order and the ranges for maturity, hours and temperature are &lt;b&gt;teaching conventions&lt;/b&gt; compiled for the game, not a Vietnamese standard (TCVN) or an importing country’s customs rule.">Thứ tự trạm, các khoảng độ già, giờ và nhiệt độ là <b>quy ước dạy học</b> tổng hợp cho trò chơi, không phải tiêu chuẩn TCVN hay quy định của hải quan nước nhập khẩu.</li>
-      <li data-en="«Maturity %» is the game’s relative scale. In the orchard, growers count days from fruit set (different for Ri6, Monthong…), tap and listen, check stalk and spines, or measure dry matter.">«Độ già %» là thang tương đối của trò chơi. Ngoài vườn người ta đếm ngày từ khi đậu trái (khác nhau theo giống Ri6, Monthong…), gõ nghe tiếng, xem cuống và gai, hoặc đo chất khô.</li>
-      <li data-en="Official exports to China follow the 2022 protocol between Vietnam’s agriculture ministry and China’s customs (GACC): planting-area codes, packhouse codes, quarantine. Lab-test requirements (such as cadmium and auramine O) change year to year: check the latest notice before teaching.">Hàng xuất chính ngạch sang Trung Quốc đi theo Nghị định thư năm 2022 giữa Bộ Nông nghiệp Việt Nam với Tổng cục Hải quan Trung Quốc (GACC): cần mã số vùng trồng, mã số cơ sở đóng gói, kiểm dịch. Yêu cầu kiểm nghiệm (như cadimi, vàng O) thay đổi theo từng năm: đối chiếu thông báo mới nhất trước khi dạy.</li>
+      <li data-en-html="Two kinds of numbers, kept apart as in Durian Passport: &lt;b&gt;facts&lt;/b&gt; in the descriptions (dates, −18 °C, 13.5 °C, 2% sampling…) come from the game’s sourced data – open «📚 Sourced facts» to see each source; the &lt;b&gt;scoring ranges&lt;/b&gt; for maturity, hours and temperature are teaching conventions anchored to those facts, not a TCVN standard or a customs rule.">Hai loại số, tách bạch như Hộ Chiếu Sầu Riêng: <b>dữ kiện</b> trong lời mô tả (mốc ngày, −18 °C, 13,5 °C, lấy mẫu 2%…) lấy từ dữ liệu có trích nguồn của game – mở «📚 Dữ kiện có nguồn» để xem nguồn từng câu; còn <b>khoảng chấm</b> độ già, số giờ, nhiệt độ là quy ước dạy học neo vào các dữ kiện ấy, không phải tiêu chuẩn TCVN hay quy định hải quan.</li>
+      <li data-en="«Maturity %» is the game’s relative scale. In the orchard, growers count days from fruit set (different for Ri6, Monthong…), tap and listen, check stalk and spines, or measure dry matter (Thailand’s export standard rose from 32% to 35%).">«Độ già %» là thang tương đối của trò chơi. Ngoài vườn người ta đếm ngày từ khi đậu trái (khác nhau theo giống Ri6, Monthong…), gõ nghe tiếng, xem cuống và gai, hoặc đo độ khô cơm (Thái Lan nâng chuẩn xuất khẩu từ 32% lên 35%).</li>
+      <li data-en="Requirements change: the 2024–2025 cadmium and auramine O rules come from press reports (Dân Việt, Tuổi Trẻ) cited in Durian Passport. Check the latest notice from the plant-protection authority before teaching.">Yêu cầu thay đổi theo từng năm: mốc cadimi, vàng O 2024–2025 lấy theo báo Dân Việt, Tuổi Trẻ như Hộ Chiếu đã trích. Đối chiếu thông báo mới nhất của cơ quan bảo vệ thực vật trước khi dạy.</li>
       <li data-en="Score per order: order &amp; stations 40, maturity 20, timing 15, temperature 25; each hint −5. Same line, same settings, same score. A rejected lot gets at most 1 star.">Điểm mỗi đơn: thứ tự và đủ trạm 40, độ già 20, thời gian 15, nhiệt độ 25; mỗi gợi ý trừ 5. Cùng dây chuyền, cùng thông số thì cùng điểm. Lô bị trả tối đa 1 sao.</li>
       <li data-en="Voice uses your browser’s built-in speech (🎙️ button in the corner turns it on/off). If your device has no Vietnamese voice, install one in system settings or switch to English.">Giọng đọc dùng giọng có sẵn của trình duyệt (nút 🎙️ ở góc màn hình để bật/tắt). Máy chưa có giọng tiếng Việt thì cài thêm trong cài đặt hệ thống, hoặc chuyển sang tiếng Anh.</li>
       <li data-en="This game is separate from the 6-season simulation and does not change its scores. Progress is saved in this browser only.">Trò chơi này tách riêng với mô phỏng 6 vụ, không đổi điểm Hộ Chiếu. Ván chơi chỉ lưu trong trình duyệt này.</li>
@@ -222,6 +229,7 @@
 </main>
 
 <script src="../js/durian-voice.js"></script>
+<script src="ho-chieu-sau-rieng-data.js"></script>
 <script src="day-chuyen-sau-rieng-data.js"></script>
 <script src="../js/bizon-clay-i18n.js" defer></script>
 <script src="day-chuyen-sau-rieng-ui.js" defer></script>
