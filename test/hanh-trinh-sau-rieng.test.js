@@ -49,7 +49,8 @@ check(+(/CACHE = 'bizon-v(\d+)'/.exec(sw) || [])[1] >= 780 && ['html', '-data.js
     const tien = [];
     for (let i = 1; i <= 7; i++) {
       await p.evaluate(i => document.getElementById('chang-' + i).scrollIntoView({ block: 'center' }), i);
-      await p.waitForTimeout(250);
+      // capNhat chạy trong requestAnimationFrame, mà khung hình 3D trên CI (SwiftShader) có thể mất hơn 250 ms: chờ tiến độ về đúng chặng, tối đa 4 s
+      await p.waitForFunction(i => Math.abs((window.__htTien || 0) - (i - 1)) < 0.05, i, { timeout: 4000 }).catch(() => {});
       tien.push(await p.evaluate(() => window.__htTien));
     }
     check(tien.every((t, i) => Math.abs(t - i) < 0.05), w + 'px ' + lang + ': cuộn tới chặng nào thì máy quay về chặng ấy ' + tien.map(t => t.toFixed(2)).join(' '));

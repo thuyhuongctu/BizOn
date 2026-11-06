@@ -39,8 +39,6 @@ window.__ready = 1;
     const p = await b.newPage(); const loi = []; p.on('pageerror', e => loi.push(e.message)); p.on('console', m => { if (m.type() === 'error') loi.push(m.text()); });
     await p.route(BASE + '/_nv3d.html', r => r.fulfill({ contentType: 'text/html', body: PAGE }));
     await p.goto(BASE + '/_nv3d.html'); await p.waitForFunction(() => window.__ready, null, { timeout: 60000 });
-    const truoc = await p.evaluate(() => window.__rig());
-    check(truoc.every(x => x.art && !x.glb), 'lúc đầu dùng ảnh gốc dựng đứng');
     await p.waitForFunction(() => window.__rig().every(x => x.glb), null, { timeout: 90000 });
     await p.evaluate(() => window.__step('idle', 5));
     let st = await p.evaluate(() => window.__rig());
@@ -54,6 +52,15 @@ window.__ready = 1;
     check(st[0].cur === 'talk', 'nói chuyện: chuyển sang clip Talk');
     check(!loi.length, 'không lỗi JS ' + loi.join(' / '));
     await p.close();
+    // Không tải được GLB (mạng chặn): vẫn là ảnh gốc dựng đứng, không lỗi
+    const q = await b.newPage(); const loi3 = []; q.on('pageerror', e => loi3.push(e.message));
+    await q.route(BASE + '/_nv3d.html', r => r.fulfill({ contentType: 'text/html', body: PAGE }));
+    await q.route(/nhan-vat\/ceo\.glb/, r => r.abort());
+    await q.goto(BASE + '/_nv3d.html'); await q.waitForFunction(() => window.__ready, null, { timeout: 60000 }); await q.waitForTimeout(1500);
+    await q.evaluate(() => window.__step('walk', 10));
+    const du = await q.evaluate(() => window.__rig());
+    check(du.every(x => x.art && !x.glb) && !loi3.length, 'tải GLB hỏng thì vẫn dùng ảnh gốc dựng đứng, không lỗi JS ' + loi3.join(' / '));
+    await q.close();
     // Trang game thật: CEO nạp được trong trụ sở (diorama), không lỗi JS
     const g = await b.newPage({ viewport: { width: 1000, height: 600 } }); const loi2 = []; g.on('pageerror', e => loi2.push(e.message));
     await g.goto(BASE + '/BizOn%20Game%203D.html?diorama=1'); await g.waitForTimeout(12000);
