@@ -188,6 +188,9 @@
         // Hành trình 3 bậc: { journeyId, tier, carryApplied } khi ván thuộc hành trình (S.journey do journey-link.stamp), null khi không.
         journey: (window.BizOnJourneyLink && typeof BizOnJourneyLink.submitInfo === 'function') ? BizOnJourneyLink.submitInfo(S) : null,
         explain: window.BizOnExplain ? BizOnExplain.condition() : 'shown',   // nhánh hộp đen (R1)
+        // Thị phần cao nhất của các đối thủ ảo trong vòng: trợ lý giảng viên cần để nhận ra «thị phần cao nhất mà lỗ»
+        // (docs/design/tro-ly-giang-vien.md, tín hiệu R3). Trường thêm mới; bản nộp cũ không có thì R3 tự bỏ qua.
+        rivalTopShare: Array.isArray(report.rivals) && report.rivals.length ? Math.max(...report.rivals.map(x => +x.share || 0)) : null,
       };
       const text = JSON.stringify(result);
       const row = {

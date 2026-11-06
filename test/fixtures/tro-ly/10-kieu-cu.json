@@ -1,0 +1,21 @@
+{
+ "r": {
+  "round": 2,
+  "share": 22.0,
+  "netProfit": 12,
+  "revenue": 1500,
+  "balance": 400,
+  "decision": {
+   "price": 150,
+   "marketing": 60
+  }
+ },
+ "p": {
+  "round": 1,
+  "share": 18.5,
+  "netProfit": 5
+ },
+ "hoi": "Q0",
+ "ghiNhan": "G1",
+ "thieu": false
+}

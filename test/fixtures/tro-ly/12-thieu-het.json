@@ -1,0 +1,13 @@
+{
+ "r": {
+  "round": 4,
+  "eventId": "E3",
+  "decisions": {
+   "price": null
+  }
+ },
+ "p": null,
+ "hoi": null,
+ "ghiNhan": null,
+ "thieu": true
+}

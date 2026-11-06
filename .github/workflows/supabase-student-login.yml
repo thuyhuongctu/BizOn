@@ -12,6 +12,7 @@ on:
       - 'test/sql/case_tasks_smoke.sql'
       - 'test/sql/live_progress_smoke.sql'
       - 'test/sql/ra_soat_bao_mat_smoke.sql'
+      - 'test/sql/class_feedback_smoke.sql'
       - '.github/workflows/supabase-student-login.yml'
   pull_request:
     paths:
@@ -23,6 +24,7 @@ on:
       - 'test/sql/case_tasks_smoke.sql'
       - 'test/sql/live_progress_smoke.sql'
       - 'test/sql/ra_soat_bao_mat_smoke.sql'
+      - 'test/sql/class_feedback_smoke.sql'
       - '.github/workflows/supabase-student-login.yml'
 
 # Chỉ cần đọc mã nguồn; không ghi gì lên kho (rà soát 03/11/2026)
@@ -65,7 +67,9 @@ jobs:
         run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -q -f test/sql/live_progress_smoke.sql
       - name: Kiểm siết bảo mật sau rà soát 03/11 (RLS key_check_attempts, lớp phải đăng ký, giới hạn cỡ + tần suất, cỡ bản lưu)
         run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -q -f test/sql/ra_soat_bao_mat_smoke.sql
-      # Chạy lại migration hành trình định nghĩa lại bizon_class_feed (mất explain_hidden) và bizon_purge_expired
+      - name: Kiểm nhận xét cuối vòng (chỉ chủ lớp gửi, đội chỉ thấy bản mới nhất của mình, thu hồi, phiên bản, dọn 365 ngày)
+        run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -q -f test/sql/class_feedback_smoke.sql
+      # Chạy lại migration hành trình định nghĩa lại bizon_class_feed (mất explain_hidden, mất feedback) và bizon_purge_expired
       # (mất case_tasks), nên phải chạy lại các migration sau nó theo thứ tự thời gian rồi kiểm lại tất cả.
       - name: Áp lại ba migration theo thứ tự (phải an toàn khi chạy lại) rồi kiểm lại
         run: |
@@ -78,3 +82,6 @@ jobs:
           psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -q -f test/sql/live_progress_smoke.sql
           psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -q -f supabase/migrations/20261104000000_ra_soat_bao_mat.sql
           psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -q -f test/sql/ra_soat_bao_mat_smoke.sql
+          psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -q -f supabase/migrations/20261106000000_class_feedback.sql
+          psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -q -f test/sql/class_feedback_smoke.sql
+          psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -q -f test/sql/explain_mode_smoke.sql
