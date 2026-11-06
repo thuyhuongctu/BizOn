@@ -42,7 +42,7 @@ Nội dung có công cụ AI tham gia, xem `THIRD-PARTY-NOTICES.md` Mục 7. N�
 
 | File | Nguồn | Cách làm |
 |---|---|---|
-| `nhan-vat/ceo.glb` | Tác phẩm riêng của BizOn: dựng từ ảnh gốc `assets/character/solid/ceo-tex.webp` bằng Meshy AI (06/11/2026, tài khoản của tác giả) | Image to 3D lưới thông minh (`meshy-t2.5`, 12.000 mặt, màu `meshy-n1`, dáng chữ A) → Rigging 1,7 m (kèm clip đi bộ) → Animate thư viện: Idle (0), Talk with Hands Open (313) → gộp ba clip vào một GLB bằng `scripts/3d/glb-gop-clip.py`, màu vẽ 1024 px JPEG, 0,97 MB |
+| `nhan-vat/ceo.glb` | Tác phẩm riêng của BizOn: dựng từ ảnh gốc `assets/character/solid/ceo-tex.webp` bằng Meshy AI (06/11/2026, tài khoản của tác giả) | Meshy vẽ lại ảnh gốc ở tư thế chữ A, la bàn cầm bên hông (ảnh gốc cầm la bàn trước ngực làm bàn tay ấy dính vào thân khi gắn xương) → Image to 3D lưới thông minh (`meshy-t2.5`, 12.000 mặt, màu `meshy-n1`, dáng chữ A) → Rigging 1,7 m (kèm clip đi bộ) → Animate thư viện: Idle (0), Talk with Hands Open (313) → gộp ba clip vào một GLB bằng `scripts/3d/glb-gop-clip.py`, màu vẽ 1024 px JPEG, 0,97 MB |
 
 Nạp trong `bizon-characters.js` (`rigChar`: GLTFLoader + SkeletonUtils.clone + AnimationMixer; clip chọn theo trạng thái idle/talk/walk của game).
 Nhân vật quay mặt về +z. Lưới có xương bỏ qua tỷ lệ 0,01 của nút Armature khi vẽ, nên đo chiều cao bằng hình học ở tư thế gốc.
