@@ -114,15 +114,15 @@ Hai bộ rubric, cùng thang 4 mức, dùng cho hai game khác nhau. Cả hai đ
 
 ### Vì sao neo vào chỉ số
 
-Engine ghi lại **hơn 20 chỉ số mỗi vòng chơi**, trong đó sáu chỉ số dùng làm neo cho rubric này đều xuất được ra tệp CSV từ bảng điều khiển giảng viên:
+Engine ghi lại **hơn 20 chỉ số mỗi vòng chơi**. Bản `result_json` gửi lên lớp là bản rút gọn (xem `docs/design/tro-ly-giang-vien.md` §2), nên tệp Excel/CSV từ bảng điều khiển giảng viên chỉ có **`share`, `quickRatio`, `oee`, `defect`** và lợi nhuận; **`adEff`, `lostSales`, `roi` chỉ hiện trong báo cáo vòng trên màn hình của đội**, người học phải tự trích khi trình bày (đối chiếu 06/11/2026):
 
 | Chỉ số | Ý nghĩa | Báo cáo chứa nó |
 |---|---|---|
-| `adEff` | Hiệu quả quảng cáo trên mỗi đồng chi | Báo cáo thị trường |
-| `share` · `lostSales` | Thị phần và số đơn hụt do thiếu hàng | Báo cáo thị trường |
-| `quickRatio` | Chỉ số thanh khoản nhanh | Báo cáo dòng tiền |
-| `roi` | Tỷ suất sinh lời trên tổng chi phí | Báo cáo lãi lỗ |
-| `oee` · `defect` | Hiệu quả thiết bị tổng thể và tỷ lệ phế phẩm | Báo cáo vận hành |
+| `adEff` | Hiệu quả quảng cáo trên mỗi đồng chi | Báo cáo thị trường (chỉ trên màn hình đội) |
+| `share` · `lostSales` | Thị phần và số đơn hụt do thiếu hàng | Báo cáo thị trường (`share` có trong tệp xuất; `lostSales` chỉ trên màn hình đội) |
+| `quickRatio` | Chỉ số thanh khoản nhanh | Báo cáo dòng tiền (có trong tệp xuất) |
+| `roi` | Tỷ suất sinh lời trên tổng chi phí | Báo cáo lãi lỗ (chỉ trên màn hình đội) |
+| `oee` · `defect` | Hiệu quả thiết bị tổng thể và tỷ lệ phế phẩm | Báo cáo vận hành (có trong tệp xuất) |
 
 **Hệ quả thực tế:** giảng viên chấm mức 3 và mức 4 **bắt buộc phải yêu cầu người học trích số cụ thể**. Nếu người học không dẫn được số, cao nhất chỉ đạt mức 2. Đây là cách giữ cho rubric không trôi về cảm tính.
 
@@ -137,6 +137,8 @@ Engine ghi lại **hơn 20 chỉ số mỗi vòng chơi**, trong đó sáu chỉ
 | Hợp tác vai trò & Bài học rút ra | **20%** | Giảng viên chấm – rubric bên dưới |
 
 > 🚧 45/35/20 là 40/30/15 gốc, làm tròn lại sau khi phân bổ đều phần 15% dư (tỷ lệ 40:30 giữa hai mục tự động) — có thể chỉnh lại nếu không phù hợp với lớp cụ thể.
+>
+> ⚠️ **Điểm chưa khớp, chờ hai tác giả chốt (ghi nhận 06/11/2026):** cơ cấu này dành 80% cho kết quả ván (lợi nhuận, cờ) trong khi Mục 4 tuyên bố «chấm phần lập luận, không chấm kết quả ván chơi». Tệp Excel xuất từ bảng điều khiển giảng viên (`js/bizon-grading.js`) lại dùng thang riêng B1–B6 /10: B1 lợi nhuận /2 · B2 cờ /2 · B3 vận hành /2 · B4 chống chịu biến cố /1,5 · B5 đóng góp vai trò /1,5 · B6 chuẩn bị /1, tức 75% tự động. Hai phương án: **(a)** giữ 45/35/20 và sửa câu tuyên bố thành «rubric chấm lập luận cho phần 20%»; **(b)** đổi thành 30% lợi nhuận · 20% cờ · 50% rubric lập luận (CLO-A→E) và sửa B1–B6 trong Excel theo. Chọn xong thì cập nhật cả `docs/cham-diem-bat-nghiep.md` và Excel cùng một PR.
 
 **Rubric tiêu chí "Hợp tác vai trò & Bài học rút ra" (20%)** — chia 2 nhánh nội bộ: Nhánh A – thảo luận vai trò xuyên suốt 6 vòng (60% × 20% = 12%) và Nhánh B – bài học rút ra cuối ván (40% × 20% = 8%).
 
@@ -282,7 +284,7 @@ Nhận xét cho đội:
 ### Chuẩn bị trước buổi chấm
 
 1. Vào bảng điều khiển giảng viên, lọc theo mã lớp, **xuất tệp CSV** kết quả từng vòng của tất cả các đội
-2. In hoặc mở sẵn tệp CSV khi chấm để đối chiếu ngay số liệu người học trích – phát hiện được đội nói số không khớp dữ liệu
+2. In hoặc mở sẵn tệp CSV khi chấm để đối chiếu ngay số liệu người học trích – phát hiện được đội nói số không khớp dữ liệu. Với `adEff`, `lostSales`, `roi` (không có trong tệp xuất) yêu cầu đội chụp màn hình báo cáo vòng kèm bài trình bày
 3. Với tiêu chí E, thu **Nhật ký đội** do vai Thư ký ghi và phiếu đánh giá đồng đẳng trước khi vào buổi thảo luận
 
 ---
@@ -291,7 +293,7 @@ Nhận xét cho đội:
 
 ## 5.1 · Cấu trúc
 
-Bộ trắc nghiệm gồm **30 câu hỏi**, dùng cả trước và sau buổi học để đo mức chênh lệch kiến thức.
+Phiếu đang dùng (`khao-sat.html`, bản in và `khao-sat-online.html`) gồm **15 câu kiến thức (Phần A)** và **8 phát biểu tự tin thang 1–5 (Phần B)**, dùng cả trước và sau buổi học để đo mức chênh lệch kiến thức và tự tin. Bản 30 câu nêu ở các phiên bản trước của tài liệu này đã rút gọn (06/11/2026, khớp `bang-chung.html` và `thiet-ke-nghien-cuu.html`).
 
 | Miền kiến thức | Nội dung kiểm tra | Liên hệ CLO |
 |---|---|---|
@@ -340,7 +342,7 @@ Cách gắn tài liệu này vào đề cương học phần:
 |---|---|---|---|
 | **Ngắn** | 90 phút | 3 quý chơi + thảo luận nhanh | Rubric tiêu chí 1 và 4 |
 | **Chuẩn** | 1 buổi 3–4 tiết | 6 quý chơi trọn ván + thảo luận đầy đủ | Toàn bộ rubric 4 tiêu chí |
-| **Đầy đủ** | 2 buổi | Đo trước – chơi – thảo luận – đo sau | Rubric + bộ 30 câu trước–sau + đánh giá đồng đẳng |
+| **Đầy đủ** | 2 buổi | Đo trước – chơi – thảo luận – đo sau | Rubric + phiếu trước–sau (15 câu kiến thức + 8 câu tự tin) + đánh giá đồng đẳng |
 
 ## 6.3 · Quy mô lớp
 
@@ -364,7 +366,7 @@ Nêu ra để người dạy biết trước khi đưa vào buổi học, và đ
 
 4. **Chưa có nghiên cứu hiệu quả được công bố.** Bộ công cụ này là thiết kế sư phạm có căn cứ lý thuyết, chưa phải bằng chứng đã kiểm định. Việc đo hiệu quả học tập cần thiết kế nghiên cứu riêng có nhóm đối chứng.
 
-5. **Bộ 30 câu trước – sau chưa qua kiểm định độ tin cậy.** Trước khi dùng cho công bố khoa học cần chạy thử trên mẫu đủ lớn, tính hệ số Cronbach's alpha và phân tích độ phân biệt của từng câu.
+5. **Phiếu trước – sau (15 câu kiến thức + 8 câu tự tin) chưa qua kiểm định độ tin cậy.** Trước khi dùng cho công bố khoa học cần chạy thử trên mẫu đủ lớn, tính hệ số Cronbach's alpha và phân tích độ phân biệt của từng câu.
 
 6. **Rubric chưa qua kiểm định độ tin cậy giữa các giám khảo.** Nếu nhiều giảng viên cùng chấm, nên chấm thử song song trên cùng một mẫu và tính hệ số đồng thuận trước khi áp dụng chính thức.
 
@@ -387,7 +389,7 @@ Ghi rõ để tài liệu không bị hiểu là đã hoàn chỉnh.
 | Hạng mục | Hiện trạng | Cần làm |
 |---|---|---|
 | **Rubric cho game mô phỏng chính** | **Đã có bản nháp v0.1** tại [Mục 4.1](#41--rubric-game-mô-phỏng-chính--clo-a-đến-clo-e), nay kèm cơ cấu điểm học phần 45/35/20 – dựng từ chỉ số engine ghi lại | Hai tác giả rà soát mức mô tả và ngưỡng phân biệt; chấm thử trên 2–3 đội trước khi dùng chính thức; xác nhận lại trọng số 45/35/20 (đang là suy ra từ 40/30/15 gốc, chưa hỏi lại tác giả) |
-| **Kiểm định bộ 30 câu trước – sau** | Đã soạn, chưa kiểm định | Chạy thử, tính Cronbach's alpha, phân tích độ phân biệt từng câu |
+| **Kiểm định phiếu trước – sau (15 + 8 câu)** | Đã soạn, đã thu khoảng 130 phiếu đợt 10/2026, chưa phân tích | Chạy thử, tính Cronbach's alpha, phân tích độ phân biệt từng câu |
 | **Kiểm định độ tin cậy giữa giám khảo của rubric** | Chưa làm | Chấm song song trên cùng mẫu, tính hệ số đồng thuận |
 | **Bộ câu hỏi riêng cho kinh doanh quốc tế** | Chưa có | Soạn bộ đo riêng cho BP-1 đến BP-6 |
 | **Bản tiếng Anh của rubric** | §4.2 (Hộ Chiếu Thương Hiệu) đã có bản song ngữ, kèm cơ cấu điểm học phần 40/40/20 | §4.1 (game mô phỏng chính) vẫn chỉ có tiếng Việt – cần dịch có đối dịch ngược nếu dùng chính thức cho lớp quốc tế |
