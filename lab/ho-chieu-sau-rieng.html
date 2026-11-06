@@ -301,7 +301,9 @@ footer{color:var(--faint)}
   const MAX_WHATIF = 2, MAX_LUMINA = 3;
 
   let LANG = (store.get('bizon-lang') || store.get('durian_lang')) === 'en' ? 'en' : 'vi'; // ngôn ngữ chung toàn site đi trước
-  let TRACK = BGM_TRACKS[store.get('durian_track')] ? store.get('durian_track') : 'vi';
+  // Giao diện tiếng Anh mở bài tiếng Anh, tiếng Việt mở bài tiếng Việt; bài đã lưu chỉ giữ khi cùng ngôn ngữ
+  const trackLang = t => (t === 'en' ? 'en' : 'vi');
+  let TRACK = BGM_TRACKS[store.get('durian_track')] && trackLang(store.get('durian_track')) === LANG ? store.get('durian_track') : LANG;
   document.getElementById('bgm').src = BGM_TRACKS[TRACK].src;
   const L = (vi, en) => (LANG === 'en' ? en : vi);
   const nm = o => (LANG === 'en' ? o.en : o.vi);
@@ -365,19 +367,22 @@ footer{color:var(--faint)}
     badge.classList.toggle('on', !!av);
     badge.innerHTML = av ? `<img src="../assets/${av.img}" alt="${esc(nm(av))}"><span>${esc(nm(av))}</span>` : '';
   }
-  $('langVI').onclick = () => { LANG = 'vi'; store.set('durian_lang', 'vi'); store.set('bizon-lang', 'vi'); render(); };
-  $('langEN').onclick = () => { LANG = 'en'; store.set('durian_lang', 'en'); store.set('bizon-lang', 'en'); render(); };
+  function setTrack(t) {
+    const a = $('bgm'), wasPlaying = !a.paused;
+    TRACK = t; store.set('durian_track', TRACK);
+    a.pause(); a.src = BGM_TRACKS[TRACK].src; a.load();
+    if (wasPlaying) { a.volume = 0.35; const p = a.play(); if (p && p.catch) p.catch(() => {}); }
+  }
+  const songLang = l => { if (trackLang(TRACK) !== l) setTrack(l); };
+  $('langVI').onclick = () => { LANG = 'vi'; store.set('durian_lang', 'vi'); store.set('bizon-lang', 'vi'); songLang('vi'); render(); };
+  $('langEN').onclick = () => { LANG = 'en'; store.set('durian_lang', 'en'); store.set('bizon-lang', 'en'); songLang('en'); render(); };
   $('musicBtn').onclick = () => {
     const a = $('bgm');
     if (a.paused) { a.volume = 0.35; const p = a.play(); if (p && p.catch) p.catch(() => {}); $('musicBtn').setAttribute('aria-pressed', 'true'); $('musicBtn').textContent = '♪ ❚❚'; }
     else { a.pause(); $('musicBtn').setAttribute('aria-pressed', 'false'); $('musicBtn').textContent = '♪'; }
   };
   $('trackBtn').onclick = () => {
-    const a = $('bgm'), wasPlaying = !a.paused;
-    TRACK = TRACK_ORDER[(TRACK_ORDER.indexOf(TRACK) + 1) % TRACK_ORDER.length];
-    store.set('durian_track', TRACK);
-    a.pause(); a.src = BGM_TRACKS[TRACK].src; a.load();
-    if (wasPlaying) { a.volume = 0.35; const p = a.play(); if (p && p.catch) p.catch(() => {}); }
+    setTrack(TRACK_ORDER[(TRACK_ORDER.indexOf(TRACK) + 1) % TRACK_ORDER.length]);
     chrome();
   };
 
