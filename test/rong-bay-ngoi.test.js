@@ -1,4 +1,4 @@
-// Tranh «Thanh Long cưỡi mây»: ảnh nền bản v4 (06/11/2026: phóng gấp đôi 2752×1536 và làm nét viền từ v3, vì ảnh nền toàn màn hình BizOn Game 3D bị vỡ trên màn hình lớn).
+// Tranh «Thanh Long cưỡi mây»: ảnh nền bản v4 (06/11/2026: phóng 4 lần bằng Real-ESRGAN x4plus từ v3 rồi thu về 2752×1536, vì ảnh nền toàn màn hình BizOn Game 3D bị vỡ trên màn hình lớn).
 // Bản v3 (05/11/2026: hai người vừa sửa làm nét và khớp màu với cả tranh; bìa Bật Nghiệp giữ trọn bề ngang, không cắt đuôi rồng).
 // Trước đó, bản v2 cho người đứng đầu và cô áo xanh ngồi trên lưng rồng như cả đội.
 // Mọi trang và dữ liệu phải dùng bản v2 (ba khổ: ảnh nền 1376×768, ảnh trang game 1100×614, bìa Bật Nghiệp 1280×800);
