@@ -34,6 +34,7 @@
 } }
 </script>
 <script type="module" src="js/game3d-globe.js"></script>
+<script type="module" src="js/game3d-rong.js"></script>
 <style>
   html,body{margin:0;height:100%;overflow:hidden;background:#efe4d2;font-family:"Be Vietnam Pro",system-ui,sans-serif;color:#2c3552}
   a{color:#1f6f8a}a:hover{color:#c8641c}
@@ -802,7 +803,7 @@ function overlayOn() {
 function setMode() {
   const shell = W && W.document && W.document.getElementById('app-shell'); booted = !!shell && !shell.classList.contains('hidden');
   const gd0 = id => W && W.document && W.document.getElementById(id), onLogin = !booted && !L3.classic && [gd0('screen-login'), gd0('screen-splash')].some(e => e && e.classList.contains('active'));
-  if (onLogin !== L3.on) { L3.on = onLogin; document.body.classList.toggle('login3d', onLogin); if (onLogin) l3Show(); else if (window.__l3Globe) { window.__l3Globe.dispose(); window.__l3Globe = null; } }
+  if (onLogin !== L3.on) { L3.on = onLogin; document.body.classList.toggle('login3d', onLogin); if (onLogin) l3Show(); else { if (window.__l3Globe) { window.__l3Globe.dispose(); window.__l3Globe = null; } if (window.__l3Rong) { window.__l3Rong.dispose(); window.__l3Rong = null; } } }
   const m = !booted || overlayOn() ? 'full' : sheetTab ? 'sheet' : 'hide';
   if (frame.className !== m) { frame.className = m; document.body.classList.toggle('sheet', m === 'sheet'); }
 }
@@ -833,6 +834,8 @@ function l3Show() {
   const g = id => W.document.getElementById(id);
   // Quả địa cầu nhỏ góc trên phải (góc dưới phải đã có bong bóng gợi ý); chỉ trên màn rộng (trên điện thoại thẻ thành bottom sheet, ẩn bằng CSS)
   if (!window.__l3Globe && window.Game3DGlobe && innerWidth > 760) window.__l3Globe = Game3DGlobe.mount(document.getElementById('l3Globe'));
+  // Thanh Long cưỡi mây 3D bay lượn trên ảnh nền (js/game3d-rong.js); không có WebGL thì chỉ còn ảnh nền
+  if (!window.__l3Rong && window.Game3DRong) window.__l3Rong = Game3DRong.mount(document.getElementById('login3d'));
   [['l3Email', 'login-email'], ['l3Team', 'login-team'], ['l3Class', 'login-class']].forEach(([a, b]) => { const s = g(b); if (s && s.value && !document.getElementById(a).value) document.getElementById(a).value = s.value; });
   l3Focus();
 }
