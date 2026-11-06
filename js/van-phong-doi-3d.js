@@ -1,5 +1,5 @@
 /* BizOn — Sa bàn văn phòng 3D cho trang «Văn phòng của đội» (van-phong-doi.html).
- * Nhìn từ trên xuống: mỗi vai một phòng, các phòng nối về trạm Lumina ở giữa bằng lối đi có đường sáng,
+ * Nhìn từ trên xuống: năm nhân vật và hai cố vấn, mỗi người một phòng, các phòng nối về trạm Lumina ở giữa bằng lối đi có đường sáng,
  * chấm sáng chạy dọc lối đi cho thấy việc đang chuyển giữa các phòng.
  * Nhân vật là ẢNH GỐC trong game (assets/character/solid/*-tex.webp) dựng đứng, luôn quay về máy quay; không dựng mô hình mới.
  * Cần js/vendor/three.min.js (THREE toàn cục). Dùng: BizOnVanPhong.mount(canvas, { onPick(id) {} }) → { dispose() }.
@@ -13,7 +13,7 @@
   // Toạ độ (x, z) trên sàn; w × d là cỡ phòng. mau: màu sàn phòng (bộ màu đất sét), sang: màu viền sáng.
   const PHONG = [
     { id: 'lumina', x: 0, z: 0, w: 6, d: 6, mau: 0xF3E6CF, sang: 0x7FD3DC, anh: 'lumina-tex', tl: 218 / 720,
-      ten: { vi: 'Trạm Lumina', en: 'Lumina hub' }, vai: { vi: 'Cố vấn', en: 'Advisor' } },
+      ten: { vi: 'Trạm Lumina', en: 'Lumina hub' }, vai: { vi: 'Cố vấn học tập', en: 'Learning advisor' } },
     { id: 'ceo', x: -10, z: -7, w: 7, d: 5.5, mau: 0xD9F0F2, sang: 0x7FD3DC, anh: 'ceo-tex', tl: 263 / 720,
       ten: { vi: 'Phòng chiến lược', en: 'Strategy room' }, vai: { vi: 'CEO Minh Long', en: 'CEO Minh Long' } },
     { id: 'cfo', x: 10, z: -7, w: 7, d: 5.5, mau: 0xFFE6B8, sang: 0xFDA127, anh: 'cfo-tex', tl: 233 / 720,
@@ -24,8 +24,8 @@
       ten: { vi: 'Xưởng đất sét', en: 'Clay workshop' }, vai: { vi: 'COO Bảo Ngọc', en: 'COO Bảo Ngọc' } },
     { id: 'sec', x: -5, z: 11, w: 6.5, d: 5, mau: 0xF4E1E6, sang: 0xF4B6C2, anh: 'sec-tex', tl: 257 / 720,
       ten: { vi: 'Văn thư – pháp chế', en: 'Records & compliance' }, vai: { vi: 'Thư ký Gia Hân', en: 'Secretary Gia Hân' } },
-    { id: 'giangvien', x: 6, z: 11, w: 7, d: 5, mau: 0xFFF3DA, sang: 0xFFD58A, anh: 'tu-phan-tex-v3', tl: 333 / 720,
-      ten: { vi: 'Bàn giảng viên', en: "Instructor's desk" }, vai: { vi: 'PGS.TS. Phan Anh Tú', en: 'Assoc. Prof. Phan Anh Tú' } },
+    { id: 'thaytu', x: 6, z: 11, w: 7, d: 5, mau: 0xFFF3DA, sang: 0xFFD58A, anh: 'tu-phan-tex-v3', tl: 333 / 720,
+      ten: { vi: 'Phòng cố vấn học thuật', en: 'Academic advisor' }, vai: { vi: 'Thầy Tú', en: 'Thầy Tú' } },
   ];
   // Lối đi: từ trạm giữa ra từng phòng, gãy góc một lần (kiểu sơ đồ mạch) cho dễ đọc từ trên xuống.
   const LOI = [
@@ -107,7 +107,7 @@
       // nhân vật: ảnh gốc dựng đứng, chân chạm sàn phòng
       const t = loader.load(IMG(p.anh)); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4; tex.push(t);
       const mat = new THREE.SpriteMaterial({ map: t, transparent: true, alphaTest: .35 }); vatLieu.push(mat);
-      const s = new THREE.Sprite(mat); const cao = p.id === 'giangvien' ? 4.3 : 4.0;
+      const s = new THREE.Sprite(mat); const cao = p.id === 'thaytu' ? 4.3 : 4.0;
       s.center.set(.5, 0); s.scale.set(cao * p.tl, cao, 1);
       const ox = p.id === 'lumina' ? 0 : -p.w * .18, oz = p.id === 'lumina' ? .6 : .6;
       s.position.set(p.x + ox, .5, p.z + oz); s.userData.phong = p.id; scene.add(s); chon.push(s);
@@ -145,7 +145,7 @@
       } else if (p.id === 'sec') {
         for (let i = 0; i < 3; i++) hop(.8, 1.5, .7, std(0xB9A890), x + .2 + i * .9, y + .75, z - 1.5);
         hop(1.8, .1, .9, std(0xC08A5A), x + .6, y + .8, z + .6);
-      } else if (p.id === 'giangvien') {
+      } else if (p.id === 'thaytu') {
         hop(2.6, 1.6, .1, std(0xFFFFFF, { roughness: .4 }), x, y + 1.6, z - 1.7);
         hop(2.8, .1, .1, std(0x8A6040), x, y + .78, z - 1.7);
         hop(1.8, .1, 1, std(0xC08A5A), x + .3, y + .8, z + .7);

@@ -17,14 +17,14 @@ assert.ok(sw.includes("'./van-phong-doi.html'") && sw.includes("'./js/van-phong-
 assert.ok(+sw.match(/bizon-v(\d+)/)[1] >= 795);
 // Mọi ảnh nhân vật đều là ảnh gốc có sẵn; tỉ lệ khai trong sa bàn khớp đúng cỡ tệp
 const anh = [...new Set([...page.matchAll(/assets\/character\/solid\/([\w-]+)\.webp/g)].map(m => m[1]))];
-assert.equal(anh.length, 7, 'bảy nhân vật');
+assert.equal(anh.length, 7, 'năm nhân vật và hai cố vấn');
 for (const a of anh) assert.ok(fs.existsSync(path.join(ROOT, 'assets/character/solid', a + '.webp')), 'thiếu ảnh ' + a);
 for (const m of js.matchAll(/anh: '([\w-]+)', tl: (\d+) \/ (\d+)/g)) {
   const buf = fs.readFileSync(path.join(ROOT, 'assets/character/solid', m[1] + '.webp'));
   const w = 1 + buf.readUIntLE(24, 3), h = 1 + buf.readUIntLE(27, 3);   // khối VP8X
   assert.deepEqual([+m[2], +m[3]], [w, h], m[1] + ': tỉ lệ khai sai cỡ ảnh');
 }
-for (const id of ['ceo', 'cfo', 'cmo', 'coo', 'sec', 'lumina', 'giangvien']) {
+for (const id of ['ceo', 'cfo', 'cmo', 'coo', 'sec', 'lumina', 'thaytu']) {
   assert.ok(page.includes(`id="${id}"`), 'thiếu mục ' + id);
   assert.ok(js.includes(`id: '${id}'`), 'sa bàn thiếu phòng ' + id);
 }
