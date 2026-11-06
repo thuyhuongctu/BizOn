@@ -88,7 +88,7 @@ for (const [ma, m] of Object.entries(TL.MAU)) for (const lang of ['vi', 'en']) {
   assert.ok(page.includes('<meta name="robots" content="noindex">'));
   const sw = read('sw.js');
   assert.ok(sw.includes("'./nhan-xet-vong.html'") && sw.includes("'./js/tro-ly-mau-cau.js'"), 'sw.js chưa đệm trang mới');
-  assert.ok(+sw.match(/bizon-v(\d+)/)[1] >= 791, 'chưa tăng số bộ nhớ đệm');
+  assert.ok(+sw.match(/bizon-v(\d+)/)[1] >= 794, 'chưa tăng số bộ nhớ đệm');
   const wf = read('.github/workflows/supabase-student-login.yml');
   assert.ok(wf.includes('test/sql/class_feedback_smoke.sql'), 'workflow chưa chạy test SQL');
 }

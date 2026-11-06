@@ -12,12 +12,12 @@
   const IMG = f => '../assets/hc/' + f;
   const anh = (f, cls, w, h, lazy) => el('img', { src: IMG(f), alt: '', class: cls, width: String(w), height: String(h), loading: lazy ? 'lazy' : null, decoding: 'async' });
   const voice = () => window.DurianVoice;
-  // Giọng thật của chị Hương: assets/voice/day-chuyen/{vi-v2,en-v2}/ – đủ 147 câu mỗi thứ tiếng, mọi chữ hiển thị trên trang
+  // Giọng thật của chị Hương: assets/voice/day-chuyen/{vi-v3,en-v2}/ – đủ 147 câu mỗi thứ tiếng, mọi chữ hiển thị trên trang
   // (kịch bản: docs/ghi-am/day-chuyen-sau-rieng-{vi,en}.md). Bộ 34 câu đầu tiên (vi/, en/) giữ nguyên trong kho.
   // Con số đổi theo lượt chơi (điểm, giá trị thanh trượt) và tệp nào tải hỏng thì đọc bằng giọng máy, nối tiếp trong cùng một lượt đọc.
   // Nút 🎙️ của durian-voice (khoá 'bizon-hcsr-voice') tắt cả hai.
   const GIONG = '../assets/voice/day-chuyen/';
-  const THU_MUC = { vi: 'vi-v2', en: 'en-v2' };
+  const THU_MUC = { vi: 'vi-v3', en: 'en-v2' };   // vi-v3: bộ tiếng Việt thu lại toàn bộ 06/11/2026; vi-v2 và vi/ giữ trong kho
   const coTep = (l, f) => !!f;
   const tatTieng = () => { try { return localStorage.getItem('bizon-hcsr-voice') === 'off'; } catch (e) { return false; } };
   let hangPhat = [], dangPhat = null;

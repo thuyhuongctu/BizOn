@@ -1,5 +1,9 @@
 // BizOn Bật Nghiệp — clay 3D characters, built from the repo's character art (assets/character/team, advisors).
 // makeCharacters(THREE) → { roster, build(id) }. Each built character exposes .userData.rig for animation.
+// Ba lớp tạo hình, ưu tiên từ trên xuống: (1) mô hình GLB có xương dựng bằng Meshy AI từ chính ảnh gốc (assets/models/nhan-vat/,
+// clip Idle/Talk/Walk), (2) ảnh gốc dựng đứng (billboard), (3) khối đất sét vẽ bằng mã.
+import { GLTFLoader } from './js/vendor/GLTFLoader.js';
+import { clone as skeletonClone } from './js/vendor/SkeletonUtils.js';
 export function makeCharacters(THREE) {
   const cache = {};
   const mat = (name, color, rough = 0.82) => {
@@ -335,12 +339,55 @@ export function makeCharacters(THREE) {
     return root;
   }
   const USE_ART = !(typeof window !== 'undefined' && window.BIZON_CHAR_ART === false);
-  const build = id => (USE_ART && ART[id]) ? artChar(id) : character(roster.find(r => r.id === id));
+
+  // Mô hình 3D có xương (Meshy AI dựng từ ảnh gốc, xem assets/models/SOURCES.md): một tệp GLB mỗi nhân vật, ba clip Idle, Talk, Walk,
+  // nhân vật quay mặt về +z (khớp với rotation.y = atan2(dx, dz) khi đi). Tải một lần rồi nhân bản bằng SkeletonUtils.clone;
+  // trong lúc tải, hay tải hỏng, dùng ảnh gốc dựng đứng như cũ.
+  const GLB = { ceo: 'ceo.glb', cfo: 'cfo.glb', cmo: 'cmo.glb', coo: 'coo.glb', sec: 'sec.glb', lumina: 'lumina.glb', tu: 'tu.glb' };
+  const GLBBASE = (typeof window !== 'undefined' && window.BIZON_GLB_BASE) || 'assets/models/nhan-vat/';
+  const USE_GLB = !(typeof window !== 'undefined' && window.BIZON_CHAR_GLB === false);
+  const gltfLoader = new GLTFLoader(), glbCache = {};
+  const loadGlb = url => glbCache[url] ??= new Promise((res, rej) => gltfLoader.load(url, res, undefined, rej));
+  function rigChar(id) {
+    const root = artChar(id);   // ảnh gốc hiện ngay; thay bằng mô hình khi tải xong
+    const r0 = root.userData.rig, h = ART_H[id] || 1.15;
+    loadGlb(GLBBASE + GLB[id]).then(gltf => {
+      gltf.scene.updateMatrixWorld(true);   // SkeletonUtils.clone gắn xương theo matrixWorld lúc nhân bản: phải đúng tư thế gốc, không thì lưới phóng sai tỷ lệ
+      const m = skeletonClone(gltf.scene);
+      // Lưới có xương được vẽ theo khớp xương, bỏ qua tỷ lệ 0,01 của nút Armature (glTF), nên đo kích thước bằng hình học ở tư thế gốc (mét)
+      let sm = null; m.traverse(o => { if (o.isSkinnedMesh && !sm) sm = o; });
+      const box = new THREE.Box3(); if (sm) { sm.geometry.computeBoundingBox(); box.copy(sm.geometry.boundingBox); } else box.setFromObject(m);
+      const size = box.getSize(new THREE.Vector3());
+      const s = h / (size.y || 1); m.scale.setScalar(s);
+      m.position.set(-(box.min.x + box.max.x) / 2 * s, -box.min.y * s, -(box.min.z + box.max.z) / 2 * s);
+      m.traverse(o => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = false; o.frustumCulled = false; if (o.material) { o.material.roughness = 0.85; o.material.metalness = 0; } } });
+      const mixer = new THREE.AnimationMixer(m), actions = {};
+      gltf.animations.forEach(c => { const k = /walk/i.test(c.name) ? 'walk' : /talk/i.test(c.name) ? 'talk' : 'idle'; actions[k] = mixer.clipAction(c, m); });
+      if (!actions.idle) return;   // không đủ clip: giữ ảnh
+      r0.sprite.visible = false; r0.body.position.y = 0; r0.body.add(m);
+      Object.assign(r0, { art: false, glb: true, model: m, mixer, actions, cur: null, lastT: null });
+    }).catch(() => { /* tải hỏng: giữ ảnh gốc */ });
+    return root;
+  }
+  const build = id => (USE_GLB && GLB[id]) ? rigChar(id) : (USE_ART && ART[id]) ? artChar(id) : character(roster.find(r => r.id === id));
 
   // Animation: mode 'idle' | 'talk' | 'walk'. Call every frame.
   function animate(root, t, mode, phase = 0) {
     const r = root.userData.rig; if (!r) return;
     const tt = t + phase;
+    if (r.glb) {
+      // Mô hình có xương: chuyển clip theo trạng thái, hoà trộn 0,25 s; thời gian tính từ t của vòng vẽ
+      const want = r.actions[mode === 'walk' ? 'walk' : mode === 'talk' ? 'talk' : 'idle'] ? (mode === 'walk' ? 'walk' : mode === 'talk' ? 'talk' : 'idle') : 'idle';
+      if (r.cur !== want) {
+        const next = r.actions[want], prev = r.cur && r.actions[r.cur];
+        next.reset(); if (r.cur === null) next.time = phase % (next.getClip().duration || 1);
+        if (prev) { prev.fadeOut(0.25); next.fadeIn(0.25); }
+        next.play(); r.cur = want;
+      }
+      const dt = r.lastT === null ? 0 : Math.max(0, Math.min(t - r.lastT, 0.05)); r.lastT = t;
+      r.mixer.update(dt);
+      return;
+    }
     if (r.art) {
       const s = r.sprite, w = (s.userData.aspect || 0.4) * r.h;
       if (mode === 'walk') { r.body.position.y = Math.abs(Math.sin(tt * 7)) * 0.035; r.body.rotation.z = 0; s.material.rotation = Math.sin(tt * 7) * 0.035; s.scale.set(w, r.h, 1); }

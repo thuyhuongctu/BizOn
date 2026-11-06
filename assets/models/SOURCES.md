@@ -37,3 +37,15 @@ chiếu texture qua đường dẫn tương đối `Textures/colormap.png` thay 
 Ảnh nền đi kèm `assets/illustrations/rong-bay-doi-bizon-nen.webp` (2752×1536): Meshy vẽ lại tranh gốc bỏ rồng và đội, chỉ còn trời, biển, bản đồ; chỉ hiện khi mô hình 3D đã tải, để rồng 2D không ló ra sau rồng 3D.
 Nội dung có công cụ AI tham gia, xem `THIRD-PARTY-NOTICES.md` Mục 7. Nạp trong `js/game3d-rong.js` (GLTFLoader, máy quay trực giao khớp
 đúng vị trí con rồng trong ảnh nền). Đầu rồng ở phía +z của mô hình.
+
+## Nhân vật 3D có xương (`nhan-vat/`, BizOn Game 3D)
+
+| File | Nguồn | Cách làm |
+|---|---|---|
+| `nhan-vat/ceo.glb` | Tác phẩm riêng của BizOn: dựng từ ảnh gốc `assets/character/solid/ceo-tex.webp` bằng Meshy AI (06/11/2026, tài khoản của tác giả) | Meshy vẽ lại ảnh gốc ở tư thế chữ A, la bàn cầm bên hông (ảnh gốc cầm la bàn trước ngực làm bàn tay ấy dính vào thân khi gắn xương) → Image to 3D lưới thông minh (`meshy-t2.5`, 12.000 mặt, màu `meshy-n1`, dáng chữ A) → Rigging 1,7 m (kèm clip đi bộ) → Animate thư viện: Idle (0), Talk with Hands Open (313) → gộp ba clip vào một GLB bằng `scripts/3d/glb-gop-clip.py`, màu vẽ 1024 px JPEG, 0,97 MB |
+| `nhan-vat/cfo.glb`, `cmo.glb`, `coo.glb`, `sec.glb`, `lumina.glb` | Tác phẩm riêng của BizOn: dựng từ ảnh gốc `assets/character/solid/{cfo,cmo,coo,sec,lumina}-tex.webp` bằng Meshy AI (06/11/2026, tài khoản của tác giả) | Cùng cách với CEO: Meshy vẽ lại ảnh gốc ở tư thế chữ A, đạo cụ (túi tiền, loa, máy tính bảng, bảng kẹp, hoa sen) cầm bên hông → Image to 3D lưới thông minh 12.000 mặt, màu `meshy-n1` → Rigging 1,7 m → Animate Idle (0) + Talk with Hands Open (313) → gộp ba clip, màu vẽ 1024 px JPEG, 0,95–1,11 MB |
+| `nhan-vat/tu.glb` | Tác phẩm riêng của BizOn: dựng từ ảnh gốc `assets/character/solid/tu-phan-tex-v3.webp` bằng Meshy AI (06/11/2026) | Ảnh gốc đã dang tay nên đưa thẳng vào Image to 3D (không vẽ lại) → Rigging → Animate Idle + Talk → gộp ba clip, 0,97 MB |
+
+Nạp trong `bizon-characters.js` (`rigChar`: GLTFLoader + SkeletonUtils.clone + AnimationMixer; clip chọn theo trạng thái idle/talk/walk của game).
+Nhân vật quay mặt về +z. Lưới có xương bỏ qua tỷ lệ 0,01 của nút Armature khi vẽ, nên đo chiều cao bằng hình học ở tư thế gốc.
+Nội dung có công cụ AI tham gia, xem `THIRD-PARTY-NOTICES.md` Mục 7.
