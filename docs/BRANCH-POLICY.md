@@ -83,3 +83,9 @@ gộp; giữ số nhánh mở ở mức thấp.*
 *Điền xong ba mục A1–A3 là mở khóa được Bước 3 (Instructor Studio) mà không lo mất lịch
 sử. Bước 1 (ghi dữ liệu người học) còn chờ thêm khung đồng thuận — xem
 `docs/learning/CONSENT-FRAMEWORK-DRAFT-V1.md`.*
+
+## Workflow CI (bổ sung 06/11/2026)
+
+- `tests.yml` chạy mọi `test/*.test.js` cho mọi PR và mọi lần đẩy lên `main`; đó là cổng chính.
+- Workflow riêng theo đường dẫn (`paths:`) giữ lại để báo nhanh khi chỉ sửa một vùng. Mỗi workflow có `on.push` **phải** gồm nhánh `main`; workflow chỉ gắn với một nhánh tính năng cũ thì bỏ khi nhánh đó đã gộp hoặc bỏ hoang (đã bỏ `core-state-seed.yml` và `save-resume-v2.yml`, các bộ test của chúng vẫn chạy trong `tests.yml` và `core-v2-feature-flag.yml`).
+- Test `test/ci-gon.test.js` giữ quy tắc trên.
