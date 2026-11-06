@@ -1,0 +1,34 @@
+{
+ "r": {
+  "round": 3,
+  "share": 31.2,
+  "netProfit": 40,
+  "sold": 9000,
+  "lostSales": 200,
+  "inventory": 300,
+  "balance": 600,
+  "oee": 80,
+  "roi": 8,
+  "quickRatio": 1.3,
+  "brandLoyalty": 65,
+  "defect": 2.5,
+  "rivalTopShare": 30.0,
+  "decisions": {
+   "price": 150,
+   "marketing": 60
+  }
+ },
+ "p": {
+  "round": 2,
+  "share": 26.8,
+  "netProfit": 30,
+  "quickRatio": 1.2,
+  "decisions": {
+   "price": 150,
+   "marketing": 60
+  }
+ },
+ "hoi": "Q0",
+ "ghiNhan": "G1",
+ "thieu": false
+}

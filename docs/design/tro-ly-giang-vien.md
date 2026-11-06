@@ -1,13 +1,13 @@
 # Trợ lý giảng viên: duyệt nhận xét cuối vòng (Bật Nghiệp)
 
-> Bản thiết kế 0.1, chờ chị và thầy Tú rà. Chưa có mã, chưa có migration.
+> Bản thiết kế 0.2: chị duyệt ngày 06/11/2026, đã làm theo bản này. Những chỗ lúc làm phải chốt khác bản 0.1 ghi ở §12.
 > Ý tưởng mượn từ cách làm «kế hoạch → duyệt → biên nhận» của OpenMuse (CopilotKit, MIT),
 > viết lại gọn trên Supabase sẵn có. Không dùng mã hay dịch vụ nào của OpenMuse.
 
 ## 1. Tổng quan
 
-Cuối mỗi vòng của **BizOn Bật Nghiệp** (6 vòng, mỗi vòng ≈ một quý), giảng viên chủ lớp mở tab
-**🧑‍🏫 Giảng viên** và thấy một bảng **bản nháp nhận xét**: mỗi đội một bản, soạn sẵn từ chính kết quả vòng mà
+Cuối mỗi vòng của **BizOn Bật Nghiệp** (6 vòng, mỗi vòng ≈ một quý), giảng viên chủ lớp mở trang
+**💬 Nhận xét cuối vòng** (`nhan-xet-vong.html?lop=MÃ`, nút ở tab «🎛 Điều khiển lớp» của Trang Giảng viên) và thấy một bảng **bản nháp nhận xét**: mỗi đội một bản, soạn sẵn từ chính kết quả vòng mà
 đội đã nộp (`round_submissions.result_json`). Giảng viên đọc, sửa, duyệt hoặc bỏ từng bản. Chỉ bản đã duyệt
 mới đến tay đội, hiện trong game thành thẻ «Nhận xét của giảng viên · vòng N». Mỗi lần gửi được lưu lại thành
 **biên nhận**: ai duyệt, lúc nào, gửi chữ gì, dựa trên số liệu nào.
@@ -77,7 +77,8 @@ Nhờ vậy sinh viên quen việc trích số liệu khi trả lời, đúng đ
 
 Dùng bản ghi vòng N (`r`) và vòng N−1 (`p`, nếu có). Duyệt danh sách tín hiệu theo thứ tự ưu tiên, lấy **tín
 hiệu rủi ro đầu tiên** làm câu hỏi và **tín hiệu tốt đầu tiên** làm điểm ghi nhận. Không có tín hiệu tốt thì dùng
-câu ghi nhận trung tính «Đội đã nộp đúng hạn vòng N».
+câu ghi nhận trung tính G0 «Đội đã nộp kết quả vòng N». Không có tín hiệu rủi ro thì câu hỏi là Q0: dẫn thị phần và
+lợi nhuận ròng của vòng, hỏi đội muốn giữ quyết định nào và số liệu nào cho thấy điều đó.
 
 | Mã | Loại | Điều kiện | CLO |
 |---|---|---|---|
@@ -150,7 +151,7 @@ Giá trị biên:
   - `bizon_feedback_send(...)`, `bizon_feedback_set_state(...)`: kiểm `bizon_owns_class`;
   - `bizon_feedback_class(p_class_code)`: chủ lớp đọc mọi dòng, kể cả biên nhận cũ;
   - mở rộng `bizon_class_feed` thêm khoá `feedback`: chỉ phiên bản mới nhất `da_gui` của đúng đội hỏi.
-- **Trang:** `giang-vien.html` (bảng nháp), `js/instructor-api.js` (ba hàm mới, có nhánh `demo`), trang Bật Nghiệp
+- **Trang:** `nhan-xet-vong.html` (bảng nháp, xem §12), `js/instructor-api.js` (ba hàm mới, có nhánh `demo`), trang Bật Nghiệp
   (thẻ nhận xét). Nếu thẻ đặt trong `index.html` thì chép y nguyên sang `academia3d-v2.html`.
 - **Không đụng:** engine mô phỏng, điểm số, luật cắm cờ.
 
@@ -160,9 +161,8 @@ Giá trị biên:
   **Không có email**, không có tên sinh viên.
 - Ai đọc được: chủ lớp (mọi dòng); đội (chỉ phiên bản mới nhất `da_gui` của đội mình, qua `bizon_class_feed`,
   giống cách đội đang nhận vốn thưởng).
-- Giữ bao lâu: **chưa quyết, cần chị chọn.** Hiện `bizon_delete_class` chỉ gỡ quyền sở hữu mã lớp, không xoá
-  `class_grants` hay `round_submissions`; nếu nhận xét theo đúng nếp ấy thì sẽ nằm mãi. Đề xuất: tự xoá sau
-  365 ngày, như cách `live_progress` tự dọn sau 30 ngày.
+- Giữ bao lâu: **365 ngày** (chị chọn 06/11/2026), khớp với `round_submissions` (12 tháng) mà nhận xét dựa vào.
+  Mỗi lần gửi, `bizon_feedback_send` xoá các dòng cũ hơn 365 ngày, như `live_progress` tự dọn sau 30 ngày.
 - Không gửi gì ra ngoài Supabase.
 
 ## 9. Tham số chỉnh được
@@ -190,3 +190,24 @@ tăng phiên bản, để dữ liệu nghiên cứu còn tách được lớp n�
 - Hộ Chiếu Thương Hiệu và Sầu Riêng: cấu trúc vòng khác, làm sau khi bản Bật Nghiệp chạy thử xong.
 - CLO-D, CLO-E (lý do ở §2).
 - Soạn bằng mô hình ngôn ngữ. Nếu sau này cần thì vẫn giữ nguyên luồng duyệt và biên nhận, chỉ thay bước soạn.
+
+## 12. Đã làm (bản 0.2) và chỗ khác bản 0.1
+
+Tệp: `js/tro-ly-mau-cau.js` (luật + mẫu câu, `MAU_PHIEN_BAN = 1`), `nhan-xet-vong.html` (bảng nháp),
+`js/instructor-api.js` (`feedbackClass`, `feedbackSend`, `feedbackSetState`, có nhánh dùng thử),
+`js/class-sync.js` (thẻ nhận xét phía đội), `js/backend.js` (`rivalTopShare`),
+`supabase/migrations/20261106000000_class_feedback.sql`, `test/tro-ly-giang-vien.test.js`, `test/sql/class_feedback_smoke.sql`.
+
+- **Trang riêng thay vì một tab trong `giang-vien.html`.** `giang-vien.html` chỉ là trang giới thiệu; bảng điều khiển
+  thật là `Trang Giang Vien.dc.html` (trang x-dc). Làm trang riêng như `man-hinh-lop-hoc.html`, dùng chung phiên
+  đăng nhập, nên không đụng bộ khuôn của trang x-dc.
+- **`result_hash` lấy trên máy chủ.** `bizon_feedback_send` tự đọc hash lần nộp mới nhất trong `round_submissions`,
+  không nhận từ máy khách, nên biên nhận không bị khai sai. Đội chưa nộp vòng ấy thì không gửi được.
+  `bizon_feedback_class` trả kèm hash mới nhất của mỗi đội để bảng giảng viên gắn nhãn «số liệu đã đổi».
+- **Hai thẻ cùng mở** được chặn bằng tham số `p_phien_ban_truoc`: máy chủ từ chối nếu phiên bản mới nhất đã khác
+  phiên bản thẻ đang thấy, báo «tải lại», thay vì chỉ dựa vào khoá duy nhất.
+- **Chế độ thi** chặn cả ở máy chủ (`class_exam.active`), không chỉ ẩn nút.
+- **Bỏ** cũng ghi một dòng (`trang_thai = 'bo'`, chữ rỗng) để bản nháp ấy không hiện lại; «Soạn lại» tạo phiên bản kế.
+- **Vòng mặc định** là vòng gần nhất mà nhiều đội đã nộp nhất, để một đội chạy trước không kéo cả bảng sang vòng
+  các đội khác chưa xong.
+- Tiêu chí 6 (≤ 5 phút cho 8 đội) còn chờ đo tay ở buổi chơi thử.

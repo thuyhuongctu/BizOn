@@ -18,6 +18,24 @@
     if (!el) { el = document.createElement('div'); el.id = 'bizon-class-msg'; Object.assign(el.style, { position: 'fixed', left: '50%', top: '12px', transform: 'translateX(-50%)', zIndex: 9999, background: '#1f4a55', color: '#fff', padding: '10px 16px', borderRadius: '14px', font: '700 14px "Be Vietnam Pro",sans-serif', boxShadow: '0 4px 0 #10303a', maxWidth: '90vw', textAlign: 'center' }); document.body.appendChild(el); }
     el.innerHTML = '<img src="assets/dragon/' + (pose || 'wave') + '.png" alt="" style="width:40px;vertical-align:middle;margin-right:8px">👩‍🏫 '; el.appendChild(document.createTextNode(msg)); el.style.display = 'block'; clearTimeout(el._t); el._t = setTimeout(() => { el.style.display = 'none'; }, 9000);
   }
+  // Thẻ «Nhận xét của giảng viên · vòng N»: ở lại tới khi đội bấm Đóng (nhận xét dài hơn một thông báo 9 giây).
+  function feedbackCard(f) {
+    try { if (window.parent !== window && typeof window.parent.__toast3D === 'function') window.parent.__toast3D('👩‍🏫 ' + TT(`Giảng viên vừa gửi nhận xét vòng ${f.round}`, `Your instructor sent round ${f.round} feedback`), 'checklist'); } catch (e) {}
+    let el = document.getElementById('bizon-class-feedback');
+    if (!el) {
+      el = document.createElement('section'); el.id = 'bizon-class-feedback'; el.setAttribute('role', 'status'); el.setAttribute('aria-live', 'polite');
+      Object.assign(el.style, { position: 'fixed', left: '50%', bottom: '16px', transform: 'translateX(-50%)', zIndex: 9999, width: 'min(560px, calc(100vw - 32px))', background: '#FFFBF4', color: '#033337', padding: '14px 16px', borderRadius: '18px', border: '2px solid #2F8A8C', boxShadow: '0 10px 24px -12px rgba(16,48,58,.5)', font: '500 15px/1.5 "Be Vietnam Pro",sans-serif', maxHeight: '60vh', overflowY: 'auto' });
+      document.body.appendChild(el);
+    }
+    el.textContent = '';
+    const h = document.createElement('b'); h.style.display = 'block'; h.style.marginBottom = '6px';
+    h.textContent = '👩‍🏫 ' + TT(`Nhận xét của giảng viên · vòng ${f.round}`, `Instructor feedback · round ${f.round}`) + (f.da_sua ? TT(' (đã sửa)', ' (edited)') : '');
+    const p = document.createElement('p'); p.style.margin = '0'; p.style.whiteSpace = 'pre-wrap'; p.textContent = f.noi_dung || '';
+    const b = document.createElement('button'); b.type = 'button'; b.textContent = TT('Đóng', 'Close');
+    Object.assign(b.style, { marginTop: '10px', minHeight: '44px', padding: '8px 18px', borderRadius: '999px', border: '0', background: '#2F8A8C', color: '#fff', font: '800 15px "Be Vietnam Pro",sans-serif', cursor: 'pointer' });
+    b.addEventListener('click', () => { el.style.display = 'none'; });
+    el.append(h, p, b); el.style.display = 'block';
+  }
   // Biến cố do GV tung: thay currentEvent đúng vòng được chỉ định.
   const orig = window.currentEvent;
   if (typeof orig === 'function') window.currentEvent = function (s) {
@@ -41,6 +59,12 @@
       const why = g.reason || TT('Giảng viên', 'Instructor'), amt = typeof money === 'function' ? money(Math.abs(g.amount)) : Math.abs(g.amount) + 'tr₫';
       toast(g.amount >= 0 ? TT(`Giảng viên thưởng ${amt} cho đội – ${why}`, `Your instructor awarded the team ${amt} – ${why}`) : TT(`Giảng viên trừ ${amt} – ${why}`, `Your instructor deducted ${amt} – ${why}`), g.amount >= 0 ? 'thumbs' : 'magnifier'); });
     if (ctl && ctl.message && ctl.message !== lastMsg) { lastMsg = ctl.message; toast(ctl.message); }
+    // Nhận xét cuối vòng giảng viên đã duyệt (trợ lý giảng viên, migration 20261106000000_class_feedback.sql).
+    // Feed chỉ trả phiên bản mới nhất đang gửi của đúng đội; mỗi phiên bản một id, nên bản sửa lại cũng hiện lại.
+    const fbs = (j && Array.isArray(j.feedback)) ? j.feedback : [];
+    S.classFeedback = fbs.map(f => ({ id: f.id, round: f.round, text: f.noi_dung, lang: f.ngon_ngu, edited: !!f.da_sua, at: f.created_at }));
+    S.classFeedbackSeen = S.classFeedbackSeen || [];
+    fbs.filter(f => f && f.id && !S.classFeedbackSeen.includes(f.id)).forEach(f => { S.classFeedbackSeen.push(f.id); dirty = true; feedbackCard(f); });
     if (dirty) { try { save(); renderAll(); } catch (e) {} }
   }
   // Đọc controls của lớp một lần, không đụng trạng thái ván (dùng trước khi áp hành trang hành trình 3 bậc). null nếu backend tắt/lỗi/không mã lớp.

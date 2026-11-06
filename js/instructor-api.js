@@ -34,15 +34,30 @@
   }
 
   // ---------- dữ liệu mẫu ----------
-  const D = { classes: [{ class_code: 'DEMO-2026', created_at: new Date().toISOString() }], controls: { locked_round: null, forced_event: null, message: '', journey_carry: null, explain_hidden: null }, grants: [], journey: [], caseTasks: [], scores: {}, subs: [], exam: null, cert: { course_code: '', course_name: 'BizOn Bật Nghiệp', course_dates: '', org_name: '', org_sub: '', org_logo: '', org_logo2: '', signer_name: '', signer_title: '', signer_sig: '' }, rubric: { level1: 'Rất cân bằng', level2: 'Khá cân bằng', level3: 'Lệch rõ', level4: 'Lệch nhiều' } };
+  const D = { classes: [{ class_code: 'DEMO-2026', created_at: new Date().toISOString() }], controls: { locked_round: null, forced_event: null, message: '', journey_carry: null, explain_hidden: null }, grants: [], journey: [], caseTasks: [], scores: {}, subs: [], feedback: [], exam: null, cert: { course_code: '', course_name: 'BizOn Bật Nghiệp', course_dates: '', org_name: '', org_sub: '', org_logo: '', org_logo2: '', signer_name: '', signer_title: '', signer_sig: '' }, rubric: { level1: 'Rất cân bằng', level2: 'Khá cân bằng', level3: 'Lệch rõ', level4: 'Lệch nhiều' } };
   (function seed() {
     const T = [['Đội Rồng Vàng', 1.0], ['Đội Sông Hậu', 0.9], ['Đội Miệt Vườn', 0.8], ['Đội Phù Sa', 1.1], ['Đội Gốm Đỏ', 0.7]];
     T.forEach(([n, k], ti) => { const rounds = 6 - (ti % 3); for (let r = 1; r <= rounds; r++) {
       const price = 140 + ((ti * 7 + r * 5) % 40), mkt = 50 + ((ti * 11 + r * 9) % 60), share = +(16 + k * r * 1.6 + (ti % 2 ? -1.2 : 1.1)).toFixed(1), np = +(k * 60 + r * 18 - (ti === 4 ? 70 : 0)).toFixed(1);
       D.subs.push({ team_name: n, round_number: r, created_at: new Date(Date.now() - (60 - r * 8 - ti) * 60000).toISOString(),
-        result_json: { share, netProfit: np, revenue: Math.round((1300 + r * 220) * k), balance: Math.round(500 + r * 60 * k), win: share > 20 && np > 0,
+        result_hash: 'demo-' + ti + '-' + r,
+        // Các chỉ số vận hành cho Trợ lý giảng viên (nhan-xet-vong.html): mỗi đội lệch một kiểu để bảng nháp có đủ tín hiệu.
+        result_json: { round: r, share, netProfit: np, revenue: Math.round((1300 + r * 220) * k), balance: Math.round(500 + r * 60 * k), win: share > 20 && np > 0,
+          quickRatio: +(ti === 2 ? 0.78 + r * 0.01 : 1.1 + k * 0.2).toFixed(2), sold: Math.round(8000 * k + r * 300), lostSales: ti === 1 ? 900 + r * 40 : 120,
+          defect: ti === 3 ? 5.1 : +(2 + (r % 3) * 0.4).toFixed(1), oee: ti === 0 ? 88 : 80, rivalTopShare: 30,
+          decisions: { price, marketing: ti === 4 && r > 1 ? mkt + 60 * r : mkt },
           decision: { price, marketing: mkt, production: 900 + r * 120, rd: 20 + ti * 4, workers: 8 + r, training: 5 + ti, funding: r % 2 ? 'equity' : 'loan' } } }); } });
   })();
+  // Ghi một dòng nhận xét vào bộ nhớ, cùng luật phiên bản với bizon_feedback_send / bizon_feedback_set_state.
+  function demoFb(team, round, prev, row) {
+    const cur = D.feedback.filter(f => f.team_name === team && f.round_number === round).reduce((m, f) => Math.max(m, f.phien_ban), 0);
+    if (cur !== prev) throw new Error('Nhận xét này vừa được cập nhật ở nơi khác. Tải lại trang rồi làm tiếp.');
+    if (row.trang_thai === 'da_gui' && !row.noi_dung) throw new Error('Nhận xét đang trống.');
+    const sub = D.subs.filter(s => s.team_name === team && s.round_number === round).pop();
+    const now = new Date().toISOString();
+    const f = Object.assign({ id: 'demo-fb-' + (D.feedback.length + 1), class_code: 'DEMO-2026', team_name: team, round_number: round, phien_ban: prev + 1, result_hash: sub ? sub.result_hash : null, created_at: now, updated_at: now }, row);
+    D.feedback.push(f); return Object.assign({}, f);
+  }
   const dRows = code => D.subs.filter(s => code === 'DEMO-2026');
   const MIG = 'Cần chạy migration supabase/migrations/20260928000000_class_controls.sql trong Supabase SQL Editor để dùng Khóa vòng / Cấp vốn / Biến cố / Chấm điểm.';
   const missing = e => /Could not find the function|PGRST202|schema cache/i.test((e && e.message) || '');
@@ -102,6 +117,19 @@
     async ftBoard(code) { if (demo) return []; try { return (await rpc('ft_class_leaderboard', { p_class_code: code })) || []; } catch (e) { if (missing(e)) return []; throw e; } },
     // Tiến độ đang chơi (migration 20261103000000_live_progress.sql); chưa áp migration thì trả rỗng
     async liveProgress(code, game) { if (demo) return []; try { return (await rpc('bizon_live_progress_class', { p_class_code: code, p_game: game })) || []; } catch (e) { if (missing(e)) return []; throw e; } },
+    // Trợ lý giảng viên: nhận xét cuối vòng (migration 20261106000000_class_feedback.sql). Dùng thử thì giữ trong bộ nhớ.
+    async feedbackClass(code) {
+      if (demo) return { feedback: D.feedback.slice(), hashes: D.subs.map(s => ({ team_name: s.team_name, round_number: s.round_number, result_hash: s.result_hash })) };
+      try { return (await rpc('bizon_feedback_class', { p_class_code: code })) || { feedback: [], hashes: [] }; } catch (e) { if (missing(e)) { api.needsMigration = true; return { feedback: [], hashes: [], missing: true }; } throw e; } },
+    async feedbackSend(code, team, round, text, lang, canCu, prev) {
+      if (demo) return demoFb(team, round, prev, { trang_thai: 'da_gui', noi_dung: String(text || '').trim(), ngon_ngu: lang === 'en' ? 'en' : 'vi', can_cu: canCu || null, da_sua: D.feedback.some(f => f.team_name === team && f.round_number === round && f.trang_thai !== 'bo') });
+      return guard(rpc('bizon_feedback_send', { p_class_code: code, p_team_name: team, p_round: round, p_noi_dung: text, p_ngon_ngu: lang, p_can_cu: canCu || null, p_phien_ban_truoc: prev })); },
+    async feedbackSetState(code, team, round, state, prev) {
+      if (demo) {
+        if (state === 'thu_hoi') { const f = D.feedback.find(x => x.team_name === team && x.round_number === round && x.phien_ban === prev); if (!f || f.trang_thai !== 'da_gui') throw new Error('Chỉ thu hồi được nhận xét đang gửi.'); f.trang_thai = 'thu_hoi'; f.updated_at = new Date().toISOString(); return Object.assign({}, f); }
+        return demoFb(team, round, prev, { trang_thai: 'bo', noi_dung: '', ngon_ngu: 'vi', can_cu: null, da_sua: false });
+      }
+      return guard(rpc('bizon_feedback_set_state', { p_class_code: code, p_team_name: team, p_round: round, p_trang_thai: state, p_phien_ban_truoc: prev })); },
     async bpResults(code) { if (demo) return []; try { return (await rpc('bizon_bp_results', { p_class_code: code })) || []; } catch (e) { if (missing(e)) return []; throw e; } },
   };
   window.BizOnInstructor = api;

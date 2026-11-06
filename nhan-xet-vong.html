@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Nhận xét cuối vòng – BizOn</title>
+<meta name="description" content="Trợ lý giảng viên: bản nháp nhận xét cuối vòng cho từng đội Bật Nghiệp, soạn từ số liệu đội đã nộp; giảng viên sửa, duyệt hoặc bỏ.">
+<link rel="icon" href="assets/brand/bizon-favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/bizon-clay-fonts.css">
+<style>
+:root{--bg:#FBF4E8;--card:#FFFBF4;--ink:#033337;--muted:#3E5A5C;--amber:#FDA127;--teal:#2F8A8C;--sand:#F3E6CF;--red:#B3412E;--line:#E6D6BF;--shadow:0 14px 26px -16px rgba(110,70,30,.35)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Be Vietnam Pro','BVP Fallback',system-ui,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.45}
+main{max-width:980px;margin:0 auto;padding:16px}
+header{display:flex;flex-wrap:wrap;align-items:center;gap:8px 14px;margin-bottom:12px}
+h1{margin:0;font-family:'Plus Jakarta Sans','PJS Fallback',sans-serif;font-size:26px;letter-spacing:-.02em}
+header a{color:var(--teal);font-weight:700}
+.grow{flex:1}
+.intro{margin:0 0 14px;color:var(--muted);font-size:15px;max-width:70ch}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;padding:12px;border-radius:20px;background:var(--card);box-shadow:var(--shadow);margin-bottom:14px}
+.bar label{display:flex;flex-direction:column;gap:4px;font-size:13px;font-weight:700;color:var(--muted)}
+select,textarea,button{font:inherit}
+select{min-height:44px;padding:8px 12px;border-radius:14px;border:1px solid var(--line);background:#fff;color:var(--ink);font-weight:700;max-width:100%}
+button{min-height:44px;padding:8px 16px;border-radius:999px;border:0;cursor:pointer;font-weight:800;background:var(--sand);color:var(--ink)}
+button:disabled{opacity:.55;cursor:not-allowed}
+button.chinh{background:var(--teal);color:#fff}
+button.nguy{background:#F7DCD3;color:var(--red)}
+button:focus-visible,select:focus-visible,textarea:focus-visible,a:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+.bao{padding:10px 14px;border-radius:14px;background:#FFE6B8;color:#5A3A08;font-weight:600;margin-bottom:12px}
+.bao[hidden]{display:none}
+.ds{display:grid;gap:12px}
+.nx-the{padding:14px;border-radius:20px;background:var(--card);box-shadow:var(--shadow);border-left:6px solid var(--line);min-width:0}
+.nx-the[data-muc="1"]{border-left-color:var(--amber)}
+.nx-the[data-muc="2"],.nx-the[data-muc="3"],.nx-the[data-muc="4"],.nx-the[data-muc="5"]{border-left-color:var(--red)}
+.dau{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;margin-bottom:8px}
+.dau h2{margin:0;font-size:18px;overflow-wrap:anywhere}
+.chip{display:inline-block;padding:3px 10px;border-radius:999px;background:var(--sand);font-size:13px;font-weight:800}
+.chip.rui{background:#F7DCD3;color:var(--red)}
+.chip.tot{background:#D8EEDF;color:#1D5B3A}
+.nx-trangthai{margin-left:auto}
+.nx-trangthai[data-tt="da_gui"]{background:#D8EEDF;color:#1D5B3A}
+.nx-trangthai[data-tt="bo"],.nx-trangthai[data-tt="thu_hoi"]{background:#E9E3D8;color:#5A5045}
+.cu{background:#FFE6B8;color:#5A3A08}
+textarea{width:100%;min-height:96px;padding:10px 12px;border-radius:14px;border:1px solid var(--line);background:#fff;color:var(--ink);resize:vertical}
+.gui{white-space:pre-wrap;margin:0;padding:10px 12px;border-radius:14px;background:#fff;border:1px dashed var(--line);overflow-wrap:anywhere}
+.nut{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.nx-bien-nhan{margin:8px 0 0;font-size:13px;color:var(--muted)}
+.loi{margin:6px 0 0;color:var(--red);font-weight:700;font-size:14px}
+.an{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.trong{padding:18px;border-radius:20px;background:var(--card);text-align:center;color:var(--muted)}
+#gate{position:fixed;inset:0;display:none;place-items:center;z-index:5;background:rgba(20,35,31,.45)}
+#gate.on{display:grid}
+#gate>div{max-width:520px;margin:16px;padding:24px;border-radius:24px;background:var(--card);box-shadow:var(--shadow);text-align:center}
+#gate .nut{justify-content:center}
+#gate a{display:inline-flex;align-items:center;min-height:44px;padding:8px 16px;border-radius:999px;background:var(--teal);color:#fff;font-weight:800;text-decoration:none}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Nhận xét cuối vòng</h1>
+    <span class="chip" id="nx-lop">—</span>
+    <span class="grow"></span>
+    <a href="Trang%20Giang%20Vien.dc.html">← Trang Giảng viên</a>
+  </header>
+  <p class="intro">Mỗi đội một bản nháp, soạn từ chính số liệu đội đã nộp: <b>một điểm ghi nhận</b> và <b>một câu hỏi gợi mở</b>, đều dẫn số. Bản nháp chưa lưu đi đâu cả. Chỉ bản chị/anh bấm <b>Duyệt và gửi</b> mới đến tay đội. Đội cần chú ý (nhiều tín hiệu rủi ro) đứng trước.</p>
+  <div class="bar">
+    <label>Lớp<select id="nx-chon-lop"></select></label>
+    <label>Vòng<select id="nx-vong"></select></label>
+    <label>Ngôn ngữ soạn<select id="nx-lang"><option value="vi">Tiếng Việt</option><option value="en">English</option></select></label>
+    <span class="grow"></span>
+    <button type="button" id="nx-duyet-het">Duyệt tất cả bản chưa sửa</button>
+  </div>
+  <div class="bao" id="nx-bao" role="status" hidden></div>
+  <div class="ds" id="nx-ds" aria-live="polite"></div>
+</main>
+<div id="gate" role="dialog" aria-modal="true" aria-labelledby="gateT">
+  <div>
+    <h2 id="gateT">Cần đăng nhập giảng viên</h2>
+    <p>Trang này đọc kết quả lớp của chị/anh. Đăng nhập ở Trang Giảng viên rồi mở lại trang này trên cùng trình duyệt.</p>
+    <div class="nut"><a href="Trang%20Giang%20Vien.dc.html">Mở Trang Giảng viên</a><button type="button" id="nx-thu">Xem dữ liệu minh họa</button></div>
+  </div>
+</div>
+<script src="js/backend-config.js"></script>
+<script src="js/instructor-api.js"></script>
+<script src="js/tro-ly-mau-cau.js"></script>
+<script>
+(function () {
+  const I = window.BizOnInstructor, TL = window.BizOnTroLy;
+  const $ = id => document.getElementById(id);
+  const q = new URLSearchParams(location.search);
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+  const NHAN_TT = { nhap: 'Bản nháp', da_gui: 'Đã gửi', bo: 'Đã bỏ', thu_hoi: 'Đã thu hồi' };
+  const NHAN_MA = { R1: 'Quick ratio thấp', R2: 'Hụt hàng', R3: 'Thị phần cao nhất mà lỗ', R4: 'Phế phẩm cao', R5: 'Marketing tăng, thị phần đứng', G1: 'Thị phần tăng', G2: 'Có lãi trở lại', G3: 'Vận hành tốt' };
+  const gio = t => { try { return new Date(t).toLocaleString('vi-VN', { hour: '2-digit', minute: '2-digit', day: '2-digit', month: '2-digit' }); } catch (e) { return ''; } };
+
+  let demo = q.get('demo') === '1';
+  let lop = (q.get('lop') || '').trim().toUpperCase();
+  let lang = 'vi';
+  try { lang = localStorage.getItem('bizon-lang') === 'en' ? 'en' : 'vi'; } catch (e) {}
+  // subs: bản nộp mới nhất mỗi đội × vòng; fb: mọi dòng biên nhận; hash: hash lần nộp mới nhất.
+  let subs = [], fb = [], hash = {}, vong = null, thi = false;
+  const sua = {};      // chữ giảng viên đang sửa, theo "đội|vòng" (giữ khi đổi ngôn ngữ)
+  const dangSua = {};  // thẻ đã gửi / đã bỏ đang mở lại để sửa
+  const loi = {};
+  const khoa = (t, r) => t + '|' + r;
+
+  function bao(msg) { const el = $('nx-bao'); el.hidden = !msg; el.textContent = msg || ''; }
+  function moiNhat(team, r) { return fb.filter(f => f.team_name === team && f.round_number === r).sort((a, b) => b.phien_ban - a.phien_ban)[0] || null; }
+  function sub(team, r) { return subs.find(s => s.team_name === team && s.round_number === r) || null; }
+
+  function nhap(team) {
+    const s = sub(team, vong), p = sub(team, vong - 1);
+    return TL.soan(s && s.result_json, p && p.result_json, { lang, round: vong });
+  }
+
+  function the(team) {
+    const k = khoa(team, vong), n = nhap(team), f = moiNhat(team, vong);
+    const tt = f ? f.trang_thai : 'nhap';
+    const moSua = tt === 'nhap' || dangSua[k];
+    const chu = sua[k] != null ? sua[k] : (dangSua[k] && f && f.trang_thai === 'da_gui' ? f.noi_dung : n.text);
+    const cu = f && f.trang_thai === 'da_gui' && hash[k] && f.result_hash && f.result_hash !== hash[k];
+    const chips = n.ruiRo.map(m => `<span class="chip rui" title="CLO-${esc(TL.CLO[m])}">${esc(NHAN_MA[m])}</span>`).join('')
+      + (n.ghiNhan && n.ghiNhan !== 'G0' ? `<span class="chip tot">${esc(NHAN_MA[n.ghiNhan])}</span>` : '');
+    let than;
+    if (moSua) {
+      const id = 'nx-t-' + btoa(unescape(encodeURIComponent(k))).replace(/[^a-z0-9]/gi, '');
+      than = `<label class="an" for="${id}">Nhận xét cho ${esc(team)}</label>
+        <textarea id="${id}" maxlength="1200" data-k="${esc(k)}">${esc(n.thieu && sua[k] == null && !dangSua[k] ? '' : chu)}</textarea>
+        ${n.thieu ? `<p class="loi">${esc(TL.THIEU.vi)}</p>` : ''}
+        <div class="nut"><button type="button" class="chinh nx-duyet"${thi ? ' disabled' : ''}>${loi[k] ? 'Chưa gửi được, thử lại' : 'Duyệt và gửi'}</button>
+        ${tt === 'nhap' ? `<button type="button" class="nx-bo"${thi ? ' disabled' : ''}>Bỏ</button>` : `<button type="button" class="nx-huy">Huỷ sửa</button>`}</div>`;
+    } else if (tt === 'da_gui') {
+      than = `<p class="gui">${esc(f.noi_dung)}</p>
+        <div class="nut"><button type="button" class="nx-sua"${thi ? ' disabled' : ''}>Sửa và gửi lại</button><button type="button" class="nguy nx-thuhoi"${thi ? ' disabled' : ''}>Thu hồi</button></div>`;
+    } else {
+      than = `<div class="nut"><button type="button" class="nx-soanlai"${thi ? ' disabled' : ''}>Soạn lại</button></div>`;
+    }
+    const bn = f ? `<p class="nx-bien-nhan">Biên nhận v${f.phien_ban} · ${esc(NHAN_TT[f.trang_thai])} lúc ${esc(gio(f.updated_at || f.created_at))}${f.can_cu && f.can_cu.hoi ? ' · căn cứ ' + esc([f.can_cu.ghi_nhan, f.can_cu.hoi].filter(Boolean).join('/')) : ''}${f.can_cu && f.can_cu.mau_phien_ban ? ' · bộ mẫu v' + esc(f.can_cu.mau_phien_ban) : ''}${f.da_sua ? ' · đã sửa' : ''}</p>` : '';
+    return `<article class="nx-the" data-team="${esc(team)}" data-muc="${n.mucChuY}">
+      <div class="dau"><h2>${esc(team)}</h2>${chips}${cu ? '<span class="chip cu">Số liệu đã đổi sau khi nhận xét</span>' : ''}<span class="chip nx-trangthai" data-tt="${esc(tt)}">${esc(NHAN_TT[tt])}</span></div>
+      ${than}${loi[k] ? `<p class="loi" role="alert">${esc(loi[k])}</p>` : ''}${bn}</article>`;
+  }
+
+  // Ô soạn cao vừa đủ chữ, để trên điện thoại đọc hết câu hỏi mà không phải cuộn trong ô.
+  function cao(t) { t.style.height = 'auto'; t.style.height = Math.max(96, t.scrollHeight + 4) + 'px'; }
+  function ve() {
+    const ds = $('nx-ds');
+    const doi = [...new Set(subs.filter(s => s.round_number === vong).map(s => s.team_name))];
+    if (!doi.length) { ds.innerHTML = '<p class="trong">Chưa đội nào nộp vòng này.</p>'; return; }
+    const xep = doi.map(team => ({ team, nhap: nhap(team) })).sort(TL.soSanh);
+    ds.innerHTML = xep.map(x => the(x.team)).join('');
+    ds.querySelectorAll('textarea').forEach(cao);
+  }
+
+  function dsVong() {
+    const rs = [...new Set(subs.map(s => s.round_number))].sort((a, b) => a - b);
+    // Mặc định: vòng gần nhất mà nhiều đội đã nộp nhất (đội chạy trước một vòng không kéo cả bảng sang vòng chưa ai xong).
+    const dem = r => subs.filter(s => s.round_number === r).length;
+    if (!rs.includes(vong)) vong = rs.length ? rs.reduce((m, r) => (dem(r) >= dem(m) ? r : m), rs[0]) : null;
+    $('nx-vong').innerHTML = rs.map(r => `<option value="${r}"${r === vong ? ' selected' : ''}>Vòng ${r}</option>`).join('') || '<option value="">—</option>';
+  }
+
+  async function taiFb() {
+    const j = await I.feedbackClass(lop);
+    fb = (j && j.feedback) || [];
+    hash = {}; ((j && j.hashes) || []).forEach(h => { hash[khoa(h.team_name, h.round_number)] = h.result_hash; });
+    if (j && j.missing) bao('Máy chủ chưa có bảng nhận xét: cần áp migration supabase/migrations/20261106000000_class_feedback.sql. Vẫn xem được bản nháp, nhưng chưa gửi được.');
+  }
+
+  async function tai() {
+    $('nx-lop').textContent = lop || '—';
+    if (!lop) { $('nx-ds').innerHTML = '<p class="trong">Chọn một lớp.</p>'; return; }
+    bao('');
+    try {
+      const rows = (await I.submissions(lop)) || [];
+      // Bản nộp mới nhất mỗi đội × vòng (dữ liệu mẫu có thể có nhiều dòng).
+      const m = {}; rows.forEach(r => { const k = khoa(r.team_name, r.round_number); if (!m[k] || String(r.created_at) > String(m[k].created_at)) m[k] = r; });
+      subs = Object.values(m);
+      await taiFb();
+      try { const ex = await I.examFeed(lop); thi = !!(ex && ex.exam && ex.exam.active); } catch (e) { thi = false; }
+      if (thi) bao('Lớp đang ở chế độ thi: tạm ẩn việc gửi nhận xét, vì nhận xét giữa giờ thi là gợi ý ngoài luồng.');
+    } catch (e) { bao('Không tải được dữ liệu lớp: ' + e.message); subs = []; }
+    dsVong(); ve();
+  }
+
+  async function gui(team, chu) {
+    const k = khoa(team, vong), f = moiNhat(team, vong), n = nhap(team);
+    const canCu = n.thieu ? { hoi: null, ghi_nhan: null, so: {}, mau_phien_ban: TL.MAU_PHIEN_BAN, tu_viet: true } : Object.assign({}, n.canCu, { da_sua_chu: chu.trim() !== n.text.trim() });
+    try {
+      const row = await I.feedbackSend(lop, team, vong, chu, lang, canCu, f ? f.phien_ban : 0);
+      fb.push(row); delete sua[k]; delete dangSua[k]; delete loi[k];
+    } catch (e) {
+      loi[k] = e.message;
+      if (/Tải lại/.test(e.message)) { try { await taiFb(); } catch (e2) {} }
+    }
+  }
+
+  $('nx-ds').addEventListener('input', e => { if (e.target.matches('textarea[data-k]')) { sua[e.target.dataset.k] = e.target.value; cao(e.target); } });
+  $('nx-ds').addEventListener('click', async e => {
+    const b = e.target.closest('button'); if (!b) return;
+    const card = b.closest('.nx-the'), team = card.dataset.team, k = khoa(team, vong), f = moiNhat(team, vong);
+    if (b.classList.contains('nx-duyet')) {
+      const chu = card.querySelector('textarea').value;
+      if (!chu.trim()) { loi[k] = 'Nhận xét đang trống.'; ve(); return; }
+      b.disabled = true; await gui(team, chu); ve();
+    } else if (b.classList.contains('nx-bo') || b.classList.contains('nx-thuhoi')) {
+      b.disabled = true;
+      try { fb.push(await I.feedbackSetState(lop, team, vong, b.classList.contains('nx-bo') ? 'bo' : 'thu_hoi', f ? f.phien_ban : 0)); delete loi[k]; delete sua[k]; }
+      catch (err) { loi[k] = err.message; }
+      // thu hồi đổi dòng cũ: tải lại cho chắc ở chế độ thật; dữ liệu mẫu trả về chính dòng đã đổi
+      if (b.classList.contains('nx-thuhoi')) { const r = fb.pop(); if (r && r.id) fb = fb.filter(x => x.id !== r.id).concat([r]); }
+      ve();
+    } else if (b.classList.contains('nx-sua') || b.classList.contains('nx-soanlai')) {
+      dangSua[k] = true; ve(); const t = document.querySelector(`.nx-the[data-team="${CSS.escape(team)}"] textarea`); if (t) t.focus();
+    } else if (b.classList.contains('nx-huy')) { delete dangSua[k]; delete sua[k]; delete loi[k]; ve(); }
+  });
+  $('nx-duyet-het').addEventListener('click', async () => {
+    if (thi) return;
+    const cho = [...document.querySelectorAll('.nx-the')].map(c => c.dataset.team).filter(team => {
+      const k = khoa(team, vong); return !moiNhat(team, vong) && sua[k] == null && !nhap(team).thieu;
+    });
+    if (!cho.length) { bao('Không còn bản nháp nào chưa sửa để duyệt.'); return; }
+    if (!confirm(`Gửi nguyên văn ${cho.length} bản nháp đang hiện (chưa sửa) cho các đội ở vòng ${vong}?`)) return;
+    for (const team of cho) await gui(team, nhap(team).text);
+    ve();
+  });
+  $('nx-vong').addEventListener('change', e => { vong = +e.target.value || null; ve(); });
+  $('nx-lang').addEventListener('change', e => { lang = e.target.value === 'en' ? 'en' : 'vi'; ve(); });
+  $('nx-chon-lop').addEventListener('change', e => {
+    lop = e.target.value; const u = new URL(location.href); u.searchParams.set('lop', lop); history.replaceState(null, '', u); tai();
+  });
+  $('nx-thu').addEventListener('click', () => { demo = true; $('gate').classList.remove('on'); start(); });
+
+  async function start() {
+    if (demo) { I.useDemo(); lop = 'DEMO-2026'; }
+    $('nx-lang').value = lang;
+    let lops = [];
+    try { lops = ((await I.myClasses()) || []).map(c => c.class_code); } catch (e) { bao('Không tải được danh sách lớp: ' + e.message); }
+    if (lop && !lops.includes(lop)) lops.unshift(lop);
+    if (!lop) lop = lops[0] || '';
+    $('nx-chon-lop').innerHTML = lops.map(c => `<option${c === lop ? ' selected' : ''}>${esc(c)}</option>`).join('') || '<option value="">—</option>';
+    await tai();
+  }
+  if (!demo && !(I && I.backendOn && I.signedIn)) $('gate').classList.add('on'); else start();
+})();
+</script>
+</body>
+</html>
