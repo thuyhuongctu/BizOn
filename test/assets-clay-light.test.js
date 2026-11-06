@@ -19,9 +19,10 @@ for (const v of mp4s) assert.ok(fs.existsSync(R(`assets/video/${v}.mp4`)) && siz
 assert.ok(!fs.readdirSync(R('assets/video')).some(f => f.endsWith('.webm')), 'assets/video không còn tệp WebM');
 // trailer Bật Nghiệp bản v3: lời đọc đúng tên riêng tiếng Việt; bản v2 giữ nguyên trong kho, trang dùng v3
 // từ 01/11/2026 trang dùng bản v4 có giọng đọc của tác giả (bizon-trailer-v4-720p.mp4); bản v3 giữ nguyên trong kho
-assert.ok(read('academia3d-v2.html').includes('data-trailer="assets/video/bizon-trailer-v4-720p.mp4"') && !read('academia3d-v2.html').includes('bizon-trailer-v2.mp4'));
+// từ 06/11/2026 trang dùng bản v5 = hình và giọng của v4 trộn lại nhạc nền gốc (v4 bị mất nhạc); bản v4 giữ nguyên trong kho
+assert.ok(read('academia3d-v2.html').includes('data-trailer="assets/video/bizon-trailer-v5-720p.mp4"') && fs.existsSync(R('assets/video/bizon-trailer-v4-720p.mp4')) && !read('academia3d-v2.html').includes('bizon-trailer-v2.mp4'));
 assert.ok(fs.existsSync(R('assets/video/bizon-trailer-v2.mp4')) && size('assets/video/bizon-trailer-v3.mp4') > 5e6, 'trailer v3 có, v2 giữ nguyên');
-for (const vf of ['bizon-trailer-v3', 'bizon-trailer-v3-720p', 'bizon-trailer-v4-720p']) { const b = fs.readFileSync(R(`assets/video/${vf}.mp4`)).subarray(0, 64 * 1024).toString('latin1'); assert.ok(b.includes('moov') && b.indexOf('moov') < (b.indexOf('mdat') < 0 ? Infinity : b.indexOf('mdat')), 'faststart: moov đứng trước mdat'); assert.ok(b.includes('mp4a') && b.includes('avc1'), 'H.264 + AAC'); }
+for (const vf of ['bizon-trailer-v3', 'bizon-trailer-v3-720p', 'bizon-trailer-v4-720p', 'bizon-trailer-v5-720p']) { const b = fs.readFileSync(R(`assets/video/${vf}.mp4`)).subarray(0, 64 * 1024).toString('latin1'); assert.ok(b.includes('moov') && b.indexOf('moov') < (b.indexOf('mdat') < 0 ? Infinity : b.indexOf('mdat')), 'faststart: moov đứng trước mdat'); assert.ok(b.includes('mp4a') && b.includes('avc1'), 'H.264 + AAC'); }
 assert.ok(read('docs/video/trailer-bat-nghiep-loi-doc.md').includes('**Hà Nội**') && read('THIRD-PARTY-NOTICES.md').includes('bizon-trailer-v3.mp4'));
 for (const p of posters) { assert.ok(fs.existsSync(R(`assets/video/${p}.webp`)), 'thiếu poster WebP ' + p); assert.ok(size(`assets/video/${p}.webp`) < size(`assets/video/${p}.jpg`), 'WebP phải nhỏ hơn JPG: ' + p); }
 // mỗi <source> là MP4; hộp thoại trailer và trang Vũ trụ chỉ dựng một nguồn MP4
