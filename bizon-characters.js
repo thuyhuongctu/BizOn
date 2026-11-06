@@ -343,7 +343,7 @@ export function makeCharacters(THREE) {
   // Mô hình 3D có xương (Meshy AI dựng từ ảnh gốc, xem assets/models/SOURCES.md): một tệp GLB mỗi nhân vật, ba clip Idle, Talk, Walk,
   // nhân vật quay mặt về +z (khớp với rotation.y = atan2(dx, dz) khi đi). Tải một lần rồi nhân bản bằng SkeletonUtils.clone;
   // trong lúc tải, hay tải hỏng, dùng ảnh gốc dựng đứng như cũ.
-  const GLB = { ceo: 'ceo.glb' };
+  const GLB = { ceo: 'ceo.glb', cfo: 'cfo.glb', cmo: 'cmo.glb', coo: 'coo.glb', sec: 'sec.glb', lumina: 'lumina.glb', tu: 'tu.glb' };
   const GLBBASE = (typeof window !== 'undefined' && window.BIZON_GLB_BASE) || 'assets/models/nhan-vat/';
   const USE_GLB = !(typeof window !== 'undefined' && window.BIZON_CHAR_GLB === false);
   const gltfLoader = new GLTFLoader(), glbCache = {};
