@@ -5,6 +5,8 @@
  *   hcsr Dòng phù sa 8 chặng (ảnh chặng thật của game): hạt đất sét mỗi nhóm đứng ở chặng ứng với điểm tổng.
  * Chế độ đêm: nền tối, đèn ấm, đom đóm. Tự viết, chỉ dùng three.js (MIT) trong vendor/three. */
 import * as THREE from '../vendor/three/three.module.js';
+// 06/11/2026: nhãn song ngữ, theo lựa chọn ngôn ngữ của site (bizon-lang / bizon-clay-i18n)
+const EN = (() => { try { const q = new URLSearchParams(location.search).get('lang'); if (q === 'en') return true; if (q === 'vi') return false; return localStorage.getItem('bizon-lang') === 'en' && localStorage.getItem('bizon-lang-auto') !== '1'; } catch (e) { return false; } })();
 
 export const TEAM_COLORS = ['#FDA127', '#E86A8C', '#2F8A8C', '#F4D35E', '#8FB339', '#5B8DEF', '#C0703A', '#7FC8A9', '#B48EAD', '#E8762D'];
 const ROOT = new URL('..', import.meta.url).href;
@@ -116,12 +118,12 @@ function buildHcth(ctx, data, night) {
   const home = island('home'); home.scale.setScalar(1.35); scene.add(home);
   const markets = data.markets || BP_KINDS.map(() => ({ count: 0 }));
   const max = Math.max(1, ...markets.map(m => m.count));
-  const arcs = [], labels = [{ text: 'Đảo nhà Mekong', cls: 'home', at: new THREE.Vector3(0, 2.2, 0) }];
+  const arcs = [], labels = [{ text: EN ? 'Mekong home island' : 'Đảo nhà Mekong', cls: 'home', at: new THREE.Vector3(0, 2.2, 0) }];
   BP_KINDS.forEach((k, i) => {
     const a = -Math.PI / 2 + i / 7 * Math.PI * 2, R = 7.2, x = Math.cos(a) * R * 1.25, z = Math.sin(a) * R * 0.82;
     const isl = island(k); isl.position.set(x, 0, z); scene.add(isl);
     const n = markets[i] ? markets[i].count : 0;
-    labels.push({ text: (markets[i] && markets[i].vi ? markets[i].vi : '') + ' · ' + n, cls: n ? '' : 'dim', at: new THREE.Vector3(x, 2.1, z) });
+    labels.push({ text: (markets[i] ? (EN && markets[i].en ? markets[i].en : markets[i].vi || '') : '') + ' · ' + n, cls: n ? '' : 'dim', at: new THREE.Vector3(x, 2.1, z) });
     if (!n) return;
     const s = new THREE.Vector3(0, 0.9, 0), e = new THREE.Vector3(x, 0.8, z), m = s.clone().lerp(e, 0.5); m.y = 2.4 + s.distanceTo(e) * 0.12;
     const c = new THREE.QuadraticBezierCurve3(s, m, e);
@@ -137,8 +139,8 @@ function buildHcth(ctx, data, night) {
 
 // ---------- hcsr: dòng phù sa 8 chặng ----------
 export const DURIAN_STAGES = [
-  ['chang-1-vuon-puc', 'Vườn có mã PUC'], ['chang-2-thu-hoach-brix', 'Thu hoạch đo Brix'], ['chang-3-rua-phan-loai-phc', 'Rửa, phân loại'], ['chang-4-cap-dong-iqf', 'Cấp đông IQF'],
-  ['chang-5-qr-kiem-dich', 'QR và kiểm dịch'], ['chang-6-xe-lanh-cao-toc', 'Xe lạnh cao tốc'], ['chang-7-cang-hai-quan', 'Cảng, hải quan'], ['chang-8-ban-le-nem-thu', 'Bán lẻ, nếm thử'],
+  ['chang-1-vuon-puc', 'Vườn có mã PUC', 'Orchard with PUC code'], ['chang-2-thu-hoach-brix', 'Thu hoạch đo Brix', 'Harvest, Brix check'], ['chang-3-rua-phan-loai-phc', 'Rửa, phân loại', 'Wash and grade'], ['chang-4-cap-dong-iqf', 'Cấp đông IQF', 'IQF freezing'],
+  ['chang-5-qr-kiem-dich', 'QR và kiểm dịch', 'QR and quarantine'], ['chang-6-xe-lanh-cao-toc', 'Xe lạnh cao tốc', 'Reefer truck, expressway'], ['chang-7-cang-hai-quan', 'Cảng, hải quan', 'Port and customs'], ['chang-8-ban-le-nem-thu', 'Bán lẻ, nếm thử', 'Retail tasting'],
 ];
 function buildHcsr(ctx, data, night) {
   const { scene, camera } = ctx;
@@ -172,7 +174,7 @@ function buildHcsr(ctx, data, night) {
   const lead = teams.length ? teams[0].stage || 0 : -1;
   if (lead >= 0) { const L = lotus(1.9); L.position.set(st[lead].x + 1.3, 0.15, st[lead].z + 0.4); scene.add(L); ctx.spin.push(L); }
   const counts = Array(8).fill(0); teams.forEach(t => counts[t.stage || 0]++);
-  ctx.cards(DURIAN_STAGES.map(([f, vi], i) => ({ img: ROOT + 'assets/hc/durian/' + f + '.webp', text: (i + 1) + '. ' + vi, badge: counts[i] + ' nhóm', lead: i === lead, below: i % 2 === 1,
+  ctx.cards(DURIAN_STAGES.map(([f, vi, en], i) => ({ img: ROOT + 'assets/hc/durian/' + f + '.webp', text: (i + 1) + '. ' + (EN && en ? en : vi), badge: counts[i] + (EN ? ' teams' : ' nhóm'), lead: i === lead, below: i % 2 === 1,
     at: new THREE.Vector3(st[i].x, i % 2 ? -0.2 : 1.3, st[i].z + (i % 2 ? 0.5 : 0)) })));
   const ff = night ? fireflies(scene, () => { const p = path.getPointAt(Math.random()); return new THREE.Vector3(p.x + (Math.random() - 0.5) * 3, 0.6 + Math.random(), p.z + (Math.random() - 0.5) * 3); }, 260) : null;
   ctx.tick = t => { water.uniforms.t.value = t; if (ff) ff(t); };
