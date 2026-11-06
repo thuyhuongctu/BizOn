@@ -16,7 +16,6 @@ import path from 'node:path';
 const args = process.argv.slice(2);
 const src = args.find(a => !a.startsWith('--'));
 const opt = k => { const i = args.indexOf(k); return i >= 0 ? args[i + 1] : null; };
-if (!src) { console.error('Dùng: node scripts/research/phan-tich-truoc-sau.mjs <surveys.csv|thư mục> [--md ra.md] [--json ra.json]'); process.exit(2); }
 
 export function parseCsv(text) {
   const rows = []; let row = [], cell = '', q = false;
@@ -128,6 +127,7 @@ export function toMarkdown(results) {
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === path.resolve(new URL(import.meta.url).pathname)) {
+  if (!src) { console.error('Dùng: node scripts/research/phan-tich-truoc-sau.mjs <surveys.csv|thư mục> [--md ra.md] [--json ra.json]'); process.exit(2); }
   const classes = loadClasses(src);
   if (!classes.length) { console.error('Không thấy surveys.csv ở ' + src); process.exit(2); }
   const results = classes.map(c => analyse(c.rows, c.cls));
