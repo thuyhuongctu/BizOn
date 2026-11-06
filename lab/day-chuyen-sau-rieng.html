@@ -50,6 +50,11 @@
   .dc-bien b{color:var(--warn)}
   .dc-loa{border:0;background:var(--clay-tray);border-radius:999px;width:36px;height:36px;font-size:17px;cursor:pointer;vertical-align:middle;box-shadow:var(--clay-tray-shadow)}
   h2.dc-muc{font-size:20px;margin:0 0 4px}
+  .dc-co-loa{position:relative}
+  .dc-co-loa > h2.dc-muc{padding-right:48px}
+  .dc-loa-goc{position:absolute;top:clamp(14px,2.4vw,22px);right:clamp(14px,2.4vw,22px)}
+  .dc-loa.dc-loa-nho{width:30px;height:30px;font-size:14px}
+  .dc-kq-nghe{margin:8px 0 4px;font-size:14px;color:var(--clay-sub);display:flex;align-items:center;gap:6px}
   .dc-muc-phu{color:var(--clay-sub);font-size:15px;margin:0 0 14px !important}
   .dc-kho{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
   .dc-tram{display:flex;gap:10px;align-items:center;text-align:left;cursor:pointer;border:0;border-radius:20px;padding:10px 12px;background:var(--clay-tray);box-shadow:var(--clay-tray-shadow);min-height:64px;color:var(--clay-ink);font:inherit}
@@ -205,7 +210,8 @@
     <h2 id="dc-h-tong" style="font-size:28px;margin:10px 0 4px" data-en="All four orders closed">Bốn đơn hàng đã chốt</h2>
     <p class="dc-tong-so"><span id="dc-tong-so"></span> <span id="dc-tong-loa"></span></p>
     <p id="dc-tong-loi"></p>
-    <div class="dc-bang-cuon">
+    <p class="dc-kq-nghe" id="dc-tong-bang-loa"></p>
+<div class="dc-bang-cuon">
       <table class="dc-tong-bang">
         <thead><tr><th scope="col" data-en="Order">Đơn</th><th scope="col" data-en="Result">Kết quả</th><th scope="col" data-en="Stars">Sao</th><th scope="col" data-en="Score">Điểm</th><th scope="col" data-en="Line &amp; settings">Dây chuyền &amp; thông số</th></tr></thead>
         <tbody id="dc-tong-bang"></tbody>

@@ -12,31 +12,50 @@
   const IMG = f => '../assets/hc/' + f;
   const anh = (f, cls, w, h, lazy) => el('img', { src: IMG(f), alt: '', class: cls, width: String(w), height: String(h), loading: lazy ? 'lazy' : null, decoding: 'async' });
   const voice = () => window.DurianVoice;
-  const noi = (text, who) => { const v = voice(); if (v && v.canSpeak) v.say(text, who || 'NAR', lang()); };
-  // Giọng thật của chị Hương: assets/voice/day-chuyen/{vi,en}/*.mp3 (kịch bản 34 câu mỗi thứ tiếng).
-  // Câu có con số đổi theo lượt chơi (điểm, lỗi thứ tự, gợi ý) vẫn đọc bằng giọng máy qua durian-voice.js.
+  // Giọng thật của chị Hương: assets/voice/day-chuyen/vi/ (34 câu) và en-v2/ (đủ 147 câu: mọi chữ hiển thị trên trang,
+  // kịch bản: docs/ghi-am/day-chuyen-sau-rieng-{vi,en}.md). Câu nào chưa có tệp (tiếng Việt: 113 câu mới chưa thu) hoặc có con số
+  // đổi theo lượt chơi (điểm, giá trị thanh trượt) thì đọc bằng giọng máy, nối tiếp trong cùng một lượt đọc.
   // Nút 🎙️ của durian-voice (khoá 'bizon-hcsr-voice') tắt cả hai.
   const GIONG = '../assets/voice/day-chuyen/';
+  const THU_MUC = { vi: 'vi', en: 'en-v2' };
+  // 34 câu đầu tiên có ở cả hai thứ tiếng; các câu khác hiện chỉ có tiếng Anh.
+  const CU = new Set(['mo-dau', 'don-1', 'don-2', 'don-3', 'don-4', 'ket-qua-dat', 'ket-qua-giam-gia', 'ket-qua-tra', 'tong-ket-gioi', 'tong-ket-kha', 'tong-ket-lam-lai']);
+  const coTep = (l, f) => !!f && (l === 'en' || CU.has(f) || /^(tram-\d\d-|giai-thich-don-)/.test(f));
   const tatTieng = () => { try { return localStorage.getItem('bizon-hcsr-voice') === 'off'; } catch (e) { return false; } };
   let hangPhat = [], dangPhat = null;
   const im = () => {
-    hangPhat = []; if (dangPhat) { try { dangPhat.pause(); } catch (e) { /* bỏ qua */ } dangPhat = null; }
+    luot++; hangPhat = []; if (dangPhat) { try { dangPhat.pause(); } catch (e) { /* bỏ qua */ } dangPhat = null; }
     const v = voice(); if (v) v.stop();
+    try { if (window.speechSynthesis) window.speechSynthesis.cancel(); } catch (e) { /* bỏ qua */ }
   };
-  // Phát lần lượt các file ghi âm; file hỏng hay trình duyệt chặn thì đọc bằng giọng máy (duPhong); hết hàng thì gọi sau().
-  function phat(files, duPhong, sau) {
+  // Đọc một câu bằng giọng máy rồi gọi xong() khi đọc hết (trình duyệt không đọc được thì gọi ngay).
+  function noiRoi(text, xong) {
+    const ss = window.speechSynthesis;
+    if (!text || !ss || typeof SpeechSynthesisUtterance === 'undefined') { xong(); return; }
+    const u = new SpeechSynthesisUtterance(String(text).replace(/[«»▶💡📚✅⚠️⛔]/g, ' '));
+    u.lang = lang() === 'en' ? 'en-US' : 'vi-VN';
+    let xg = false; const het = () => { if (!xg) { xg = true; xong(); } };
+    u.onend = u.onerror = het;
+    try { ss.speak(u); } catch (e) { het(); }
+  }
+  // Phát lần lượt các mục { f: tên tệp ghi âm, t: chữ }: có tệp thì phát tệp, chưa có tệp hay tệp hỏng thì đọc t bằng giọng máy.
+  // Chuỗi trần là tên tệp không kèm chữ. Hết hàng thì gọi sau().
+  let luot = 0;
+  function phat(muc, sau) {
     im();
     if (tatTieng()) return;
-    const l = lang();
-    hangPhat = files.map(f => GIONG + l + '/' + f + '.mp3');
-    const loi = () => { hangPhat = []; dangPhat = null; if (duPhong) duPhong(); };
+    const l = lang(), id = ++luot;
+    hangPhat = muc.filter(Boolean).map(m => (typeof m === 'string' ? { f: m } : m));
     const tiep = () => {
-      const u = hangPhat.shift();
-      if (!u) { dangPhat = null; if (sau) sau(); return; }
-      const a = new Audio(u); dangPhat = a;
+      if (id !== luot) return;
+      const m = hangPhat.shift();
+      if (!m) { dangPhat = null; if (sau) sau(); return; }
+      const may = () => { if (id === luot) { dangPhat = null; noiRoi(m.t, tiep); } };
+      if (!coTep(l, m.f)) { may(); return; }
+      const a = new Audio(GIONG + THU_MUC[l] + '/' + m.f + '.mp3'); dangPhat = a;
       a.onended = () => { if (dangPhat === a) tiep(); };
-      a.onerror = () => { if (dangPhat === a) loi(); };
-      try { const pr = a.play(); if (pr && pr.catch) pr.catch(() => { if (dangPhat === a) loi(); }); } catch (e) { loi(); }
+      a.onerror = () => { if (dangPhat === a) may(); };
+      try { const pr = a.play(); if (pr && pr.catch) pr.catch(() => { if (dangPhat === a) may(); }); } catch (e) { may(); }
     };
     tiep();
   }
@@ -52,8 +71,10 @@
     for (const c of kids) if (c != null) n.append(c);
     return n;
   };
-  const loa = (title, fn) => el('button', { type: 'button', class: 'dc-loa', title, 'aria-label': title, onclick: fn }, '🔊');
+  const loa = (title, fn, cls) => el('button', { type: 'button', class: 'dc-loa' + (cls ? ' ' + cls : ''), title, 'aria-label': title, onclick: fn }, '🔊');
   const so2 = n => String(n).padStart(2, '0');
+  const soTram = id => so2(D.THU_TU_KHO.indexOf(id) + 1);
+  const chu = s => { const n = $(s); return n ? n.textContent.trim() : ''; };
 
   // Ô «Dữ kiện có nguồn»: đọc DurianData.facts + sources của Hộ Chiếu (không chép lại nội dung).
   function veDk(keys) {
@@ -61,8 +82,8 @@
     if (!DD || !keys || !keys.length) return null;
     const l = lang(), src = l === 'en' ? Object.assign({}, DD.sources, DD.sourcesEn) : DD.sources;
     const li = keys.filter(k => DD.facts[k]).map(k => {
-      const f = DD.facts[k];
-      return el('li', null, (f.v ? f.v + ' · ' : '') + (l === 'en' ? f.en : f.vi), el('small', null, L('Nguồn: ', 'Source: ') + (src[f.src] || f.src)));
+      const f = DD.facts[k], cau = (f.v ? f.v + ' · ' : '') + (l === 'en' ? f.en : f.vi), nguon = L('Nguồn: ', 'Source: ') + (src[f.src] || f.src);
+      return el('li', null, cau + ' ', loa(L('Nghe dữ kiện này', 'Listen to this fact'), () => phat([{ f: 'du-kien-' + k, t: cau + ' ' + nguon }]), 'dc-loa-nho'), el('small', null, nguon));
     });
     if (!li.length) return null;
     return el('details', { class: 'dc-dk' }, el('summary', null, L('📚 Dữ kiện có nguồn (', '📚 Sourced facts (') + li.length + ')'), el('ul', null, ...li));
@@ -92,9 +113,10 @@
 
   function docDon() {
     const t = T(donHienTai());
-    phat(['don-' + (S.don + 1)], () => noi(t.ten + '. ' + t.khach + '. ' + t.tomTat + ' ' + L('Biến cố: ', 'Event: ') + t.bienCo));
+    phat([{ f: 'don-' + (S.don + 1), t: t.ten + '. ' + t.khach + '. ' + t.tomTat + ' ' + L('Biến cố: ', 'Event: ') + t.bienCo }]);
   }
-  function docTram(id) { const t = T(D.TRAM[id]); phat(['tram-' + so2(D.THU_TU_KHO.indexOf(id) + 1) + '-' + id], () => noi(t.ten + '. ' + t.mo)); }
+  function docTram(id) { const t = T(D.TRAM[id]); phat([{ f: 'tram-' + soTram(id) + '-' + id, t: t.ten + '. ' + t.mo }]); }
+  function docTramNgan(id) { const t = T(D.TRAM[id]); phat([{ f: 'tram-ngan-' + soTram(id) + '-' + id, t: t.ten + ': ' + t.ngan + '.' }]); }
   function veDon() {
     const d = donHienTai(), t = T(d);
     const a = $('#dc-don-anh'); a.innerHTML = ''; a.append(anh(D.ANH.don[d.id], 'dc-don-img', 688, 384));
@@ -160,6 +182,7 @@
         el('p', { class: 'dc-kq-sao', 'aria-label': r.sao + L(' trên 3 sao', ' of 3 stars') }, sao(r.sao)),
         el('p', { class: 'dc-kq-diem' }, el('b', null, String(r.tong)), L(' / 100 điểm', ' / 100 points')),
         r.ketQua === 'dat' ? anh('tool/con-dau-pass.webp', 'dc-kq-dau-img', 80, 80) : null),
+      el('p', { class: 'dc-kq-nghe' }, loa(L('Nghe bảng điểm', 'Listen to the score table'), () => docBang(r)), ' ', L('Nghe bảng điểm', 'Listen to the score table')),
       el('table', { class: 'dc-kq-bang' }, el('tbody', null,
         ...rows.map(([a, b, c]) => el('tr', null, el('th', { scope: 'row' }, a), el('td', null, (Math.round(b * 10) / 10) + ' / ' + c))),
         r.diem.goiY ? el('tr', null, el('th', { scope: 'row' }, L('Gợi ý đã dùng', 'Hints used')), el('td', null, String(r.diem.goiY))) : null)),
@@ -168,18 +191,58 @@
         el('button', { type: 'button', class: 'clay-btn clay-btn-ghost dc-sua', onclick: () => { im(); ketQuaMo = null; veKetQua(); $('#dc-day').scrollIntoView({ behavior: 'smooth', block: 'center' }); } }, L('Sửa rồi chạy lại', 'Fix and run again')),
         el('button', { type: 'button', class: 'clay-btn dc-chot', onclick: () => chot(r) }, S.don + 1 < D.DON.length ? L('Chốt đơn, sang đơn tiếp theo →', 'Close order, next one →') : L('Chốt đơn, xem tổng kết →', 'Close order, see summary →'))));
   }
-  // Kết quả: giọng thật đọc câu kết quả lô và lời giải thích của từng mục chưa tốt; lỗi thứ tự (có tên trạm) đọc bằng giọng máy sau đó.
+  // Kết quả: câu kết quả lô, nhận xét thứ tự (từng lỗi thiếu, thừa, trùng trạm), lời giải thích từng thông số chưa tốt,
+  // rồi hai nút để làm tiếp. Lỗi «A đặt trước B là ngược» dùng câu ghi âm chung «Thứ tự các trạm chưa đúng».
+  function tepLoi(x) {
+    const [loai, tram] = x.id.split(':');
+    if (loai === 'thua' || loai === 'thieu') return 'loi-' + loai + '-' + soTram(tram) + '-' + tram;
+    if (loai === 'trung') { const t = S.day.find((v, i) => S.day.indexOf(v) !== i); return t ? 'loi-trung-' + soTram(t) + '-' + t : null; }
+    return 'nhan-xet-thu-tu-chua-dung';
+  }
   function docKetQua(r) {
-    const l = lang();
-    const loiTT = r.nhanXet[l].filter(n => n.nhom === 'thuTu' && n.muc !== 'tot').map(n => n.text).join(' ');
-    const files = ['ket-qua-' + r.ketQua, ...['chin', 'gio', 'nhiet'].filter(k => r.muc[k] !== 'tot').map(k => 'giai-thich-don-' + (S.don + 1) + '-' + k)];
-    const loi = r.nhanXet[l].filter(n => n.muc !== 'tot').map(n => n.text).join(' ');
-    phat(files,
-      () => noi(D.KET_QUA[l][r.ketQua].replace(/^\S+\s/, '') + '. ' + r.tong + L(' trên 100 điểm. ', ' out of 100 points. ') + (loi || L('Mọi mục đều tốt.', 'Everything is good.'))),
-      loiTT ? () => noi(loiTT) : null);
+    const l = lang(), nx = r.nhanXet[l];
+    const dongKhong = S.ts.nhiet < 0 && !S.day.includes('capDong');
+    const tot = r.thuTu.dung && ['chin', 'gio', 'nhiet'].every(k => r.muc[k] === 'tot');
+    const giaiThich = k => { const n = nx.find(x => x.nhom === k), gt = { f: 'giai-thich-don-' + (S.don + 1) + '-' + k, t: n ? n.text : '' };
+      if (k !== 'nhiet' || !dongKhong) return [gt];
+      // Nhiệt độ âm mà không có trạm cấp đông: câu cảnh báo riêng rồi lời giải thích nhiệt độ của đơn.
+      return [{ f: 'nhan-xet-dong-khong-cap-dong', t: L('Đặt nhiệt độ âm mà dây chuyền không có trạm cấp đông: trái tươi đông đá dần trong container, vỏ thâm, cơm úng.', 'A below-zero setting with no freezing station: fresh fruit slowly freezes in the container, the husk blackens, the pulp goes soggy.') },
+        { f: gt.f, t: T(donHienTai()).nhiet }]; };
+    phat([
+      { f: 'ket-qua-' + r.ketQua, t: D.KET_QUA[l][r.ketQua].replace(/^\S+\s/, '') + '.' },
+      r.thuTu.dung ? { f: 'nhan-xet-dung-thu-tu', t: L('Dây chuyền đúng thứ tự, đủ trạm.', 'The line is complete and in the right order.') } : null,
+      ...r.thuTu.loi.map(x => ({ f: tepLoi(x), t: x[l] })),
+      ...['chin', 'gio', 'nhiet'].filter(k => r.muc[k] !== 'tot').flatMap(giaiThich),
+      tot ? { f: 'moi-muc-deu-tot', t: L('Mọi mục đều tốt.', 'Everything is good.') } : null,
+      { f: 'nut-sua-chay-lai', t: L('Sửa rồi chạy lại.', 'Fix and run again.') },
+      S.don + 1 < D.DON.length ? { f: 'nut-chot-don-tiep', t: L('Chốt đơn, sang đơn tiếp theo.', 'Close order, next one.') } : { f: 'nut-chot-don-tong-ket', t: L('Chốt đơn, xem tổng kết.', 'Close order, see summary.') }
+    ]);
+  }
+  // Bảng điểm: nhãn từng dòng bằng giọng thật, con số bằng giọng máy.
+  function docBang(r) {
+    const so = (a, b) => ({ t: (Math.round(a * 10) / 10) + L(' trên ', ' out of ') + b });
+    phat([
+      { f: 'bang-thu-tu', t: L('Thứ tự và đủ trạm.', 'Order and stations.') }, so(r.diem.thuTu, D.DIEM.thuTu),
+      { f: 'bang-do-gia', t: L('Độ già khi cắt.', 'Maturity at cutting.') }, so(r.diem.chin, D.DIEM.chin),
+      { f: 'bang-thoi-gian', t: L('Thời gian tới kho lạnh.', 'Time to cold store.') }, so(r.diem.gio, D.DIEM.gio),
+      { f: 'bang-nhiet-do', t: L('Nhiệt độ chuỗi lạnh.', 'Cold-chain temperature.') }, so(r.diem.nhiet, D.DIEM.nhiet),
+      r.diem.goiY ? { f: 'bang-goi-y', t: L('Gợi ý đã dùng.', 'Hints used.') } : null, r.diem.goiY ? { t: String(r.diem.goiY) } : null,
+      { t: r.tong + L(' trên 100 điểm.', ' out of 100 points.') }
+    ]);
   }
   const mucTong = () => { const tb = S.ketQua.reduce((a, k) => a + k.tong, 0) / D.DON.length; return tb >= 90 ? 'gioi' : tb >= 70 ? 'kha' : 'lam-lai'; };
-  function docTong() { phat(['tong-ket-' + mucTong()], () => noi($('#dc-tong-loi').textContent)); }
+  function docTong() {
+    const tong = S.ketQua.reduce((a, k) => a + k.tong, 0);
+    phat([{ f: 'tong-ket-tieu-de', t: L('Tổng kết ca làm. Bốn đơn hàng đã chốt.', 'Shift summary. All four orders closed.') },
+      { f: 'trang-tong-diem', t: L('Tổng điểm:', 'Total score:') }, { t: tong + L(' trên ', ' out of ') + D.DON.length * 100 },
+      { f: 'tong-ket-' + mucTong(), t: chu('#dc-tong-loi') },
+      { f: 'nut-in-phieu', t: L('In phiếu, lưu PDF.', 'Print, save PDF.') }, { f: 'nut-choi-lai', t: L('Chơi lại.', 'Play again.') }]);
+  }
+  function docBangTong() {
+    const l = lang();
+    phat([{ f: 'tong-ket-cot-bang', t: L('Đơn. Kết quả. Sao. Điểm. Dây chuyền và thông số.', 'Order. Result. Stars. Score. Line and settings.') },
+      ...S.ketQua.map((k, i) => ({ t: T(D.DON[i]).ten + '. ' + D.KET_QUA[l][k.ketQua].replace(/^\S+\s/, '') + '. ' + k.sao + L(' sao. ', ' stars. ') + k.tong + L(' điểm.', ' points.') }))]);
+  }
 
   function veTong() {
     const l = lang(), tong = S.ketQua.reduce((a, k) => a + k.tong, 0);
@@ -191,6 +254,7 @@
     });
     $('#dc-tong-so').textContent = tong + ' / ' + D.DON.length * 100;
     const nut = $('#dc-tong-loa'); nut.innerHTML = ''; nut.append(loa(L('Nghe tổng kết', 'Listen to the summary'), docTong));
+    const nb = $('#dc-tong-bang-loa'); if (nb) { nb.innerHTML = ''; nb.append(loa(L('Nghe bảng tổng kết', 'Listen to the summary table'), docBangTong), ' ' + L('Nghe bảng tổng kết', 'Listen to the summary table')); }
     const tb = tong / D.DON.length;
     $('#dc-tong-loi').textContent = tb >= 90 ? L('Quản đốc giỏi: dây chuyền nào cũng chạy đúng, lô nào cũng đạt.', 'Top line manager: every line ran right and every lot passed.')
       : tb >= 70 ? L('Khá: còn vài thông số lệch. Xem cột «Dây chuyền & thông số» để biết đơn nào cần làm lại.', 'Good: a few settings were off. Check the «Line & settings» column to see which order to redo.')
@@ -208,16 +272,27 @@
 
   // ---- Thao tác ----
   const doiDay = () => { ketQuaMo = null; luu(); veKho(); veDay(); veXem(); veKetQua(); };
-  function them(id) { if (dangChay || S.day.includes(id)) return; S.day.push(id); S.xem = id; doiDay(); }
+  function them(id) { if (dangChay || S.day.includes(id)) return; S.day.push(id); S.xem = id; doiDay(); docTramNgan(id); }
   function bo(id) { if (dangChay) return; S.day = S.day.filter(x => x !== id); if (S.xem === id) S.xem = null; doiDay(); }
   function doi(i, b) { const j = i + b; if (dangChay || j < 0 || j >= S.day.length) return; [S.day[i], S.day[j]] = [S.day[j], S.day[i]]; doiDay(); }
 
+  // Tệp ghi âm của lời gợi ý: so đúng câu với các mẫu trong day-chuyen-sau-rieng-data.js (goiY).
+  function tepGoiY(msg) {
+    const l = lang();
+    if (msg === L('Các trạm bắt buộc đã đủ và đúng thứ tự. Giờ chỉnh ba thanh thông số.', 'All required stations are in, in order. Now set the three sliders.')) return 'goi-y-du-roi';
+    for (const id of D.THU_TU_KHO) {
+      const ten = D.tenTram(id, l);
+      if (msg === L('Trạm tiếp theo: «' + ten + '».', 'Next station: «' + ten + '».')) return 'goi-y-tiep-' + soTram(id) + '-' + id;
+      if (msg === L('Bỏ «' + ten + '»: đơn này không cần trạm ấy.', 'Remove «' + ten + '»: this order does not need it.')) return 'goi-y-bo-' + soTram(id) + '-' + id;
+    }
+    return null;
+  }
   function goiY() {
     S.goiY++; luu();
     const msg = D.goiY(donHienTai(), S.day, lang());
     goiYChu = '💡 ' + msg + L(' (đã dùng ' + S.goiY + ' gợi ý, mỗi gợi ý −' + D.DIEM.goiY + ' điểm)', ' (' + S.goiY + ' hint(s) used, −' + D.DIEM.goiY + ' points each)');
     $('#dc-goi-y-chu').textContent = goiYChu;
-    noi(msg, 'LUM');
+    phat([{ f: tepGoiY(msg), t: msg }]);
   }
 
   function chay() {
@@ -258,10 +333,32 @@
   $('#dc-xoa').addEventListener('click', () => { if (dangChay) return; S.day = []; S.xem = null; doiDay(); });
   $('#dc-in').addEventListener('click', () => window.print());
   $('#dc-lai').addEventListener('click', () => {
-    if (!confirm(L('Chơi lại từ đơn 1? Kết quả bốn đơn sẽ bị xoá.', 'Start again from order 1? The four results will be cleared.'))) return;
+    const hoi = L('Chơi lại từ đơn 1? Kết quả bốn đơn sẽ bị xoá.', 'Start again from order 1? The four results will be cleared.');
+    phat([{ f: 'hoi-choi-lai', t: hoi }]);
+    if (!confirm(hoi)) { im(); return; }
     im(); S = moi(); ketQuaMo = null; goiYChu = ''; luu(); veTatCa();
   });
-  { const m = $('#dc-mo-dau'); if (m) m.append(loa(L('Nghe lời mở đầu', 'Listen to the introduction'), () => phat(['mo-dau'], () => noi($('.dc-hero .lead').textContent)))); }
+  { const m = $('#dc-mo-dau'); if (m) m.append(loa(L('Nghe lời mở đầu', 'Listen to the introduction'), () => phat([{ f: 'trang-tieu-de', t: chu('.dc-hero h1') }, { f: 'mo-dau', t: chu('.dc-hero .lead') }]))); }
+  // 🔊 ở góc mỗi mục: đọc tiêu đề, lời hướng dẫn, nhãn thanh trượt (kèm giá trị đang chọn bằng giọng máy) và các nút.
+  const MUC = {
+    'dc-h-kho': () => [{ f: 'trang-muc-1', t: chu('#dc-h-kho') }, { f: 'trang-muc-1-huong-dan', t: chu('#dc-h-kho + .dc-muc-phu') }],
+    'dc-h-day': () => [{ f: 'trang-muc-2', t: chu('#dc-h-day') }, { f: 'trang-muc-2-huong-dan', t: chu('#dc-h-day + .dc-muc-phu') },
+      S.day.length ? null : { f: 'trang-day-trong', t: chu('.dc-day-trong') }, S.xem ? null : { f: 'trang-chon-tram', t: chu('#dc-xem .dc-nhat') }],
+    'dc-h-ts': () => [{ f: 'trang-muc-3', t: chu('#dc-h-ts') },
+      ...[['chin', 'do-gia'], ['gio', 'gio'], ['nhiet', 'nhiet']].flatMap(([k, f]) => [{ f: 'thanh-' + f, t: chu('label[for="dc-tt-' + k + '"] span') }, { t: chu('#dc-gt-' + k) },
+        { f: 'thanh-' + f + '-chu-thich', t: chu('#dc-tt-' + k + ' + small') }]),
+      { f: 'nut-chay', t: chu('#dc-chay') }, { f: 'nut-goi-y', t: chu('#dc-goi-y') }, { f: 'nut-tham-khao', t: chu('#dc-tham-khao') }, { f: 'nut-thao-het', t: chu('#dc-xoa') }],
+    'dc-h-chu-y': () => [{ f: 'chu-y-tieu-de', t: chu('#dc-h-chu-y') }, ...[...document.querySelectorAll('.dc-chu-y li')].map((li, i) => ({ f: 'chu-y-' + (i + 1), t: li.textContent.trim() }))]
+  };
+  for (const id in MUC) {
+    const h = document.getElementById(id); if (!h || !h.parentNode) continue;
+    const ten = { 'dc-h-kho': ['Nghe hướng dẫn kho trạm', 'Listen: station store'], 'dc-h-day': ['Nghe hướng dẫn dây chuyền', 'Listen: your line'],
+      'dc-h-ts': ['Nghe phần thông số', 'Listen: settings'], 'dc-h-chu-y': ['Nghe phần lưu ý số liệu', 'Listen: notes on the numbers'] }[id];
+    const b = el('button', { type: 'button', class: 'dc-loa dc-loa-goc', 'data-muc': id, onclick: () => phat(MUC[id]()) }, '🔊');
+    const nhan = () => { const v = ten[lang() === 'en' ? 1 : 0]; b.title = v; b.setAttribute('aria-label', v); };
+    nhan(); window.addEventListener('bizon:langchange', nhan);
+    h.parentNode.classList.add('dc-co-loa'); h.parentNode.append(b);
+  }
   window.addEventListener('bizon:langchange', () => { im(); veTatCa(); });
   veTatCa();
   window.DayChuyen = { state: () => S };
