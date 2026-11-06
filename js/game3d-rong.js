@@ -7,13 +7,21 @@ import { GLTFLoader } from './vendor/GLTFLoader.js';
 
 (function () {
   var GLB = 'assets/models/rong-bay-doi-bizon.glb';
+  // Ảnh nền không có rồng (Meshy vẽ lại từ tranh gốc, chỉ còn trời, biển, bản đồ): chỉ đổi sang khi mô hình đã tải xong,
+  // để rồng 2D trong ảnh gốc không ló ra sau rồng 3D; máy không chạy được 3D vẫn thấy tranh gốc có rồng
+  var NEN = 'assets/illustrations/rong-bay-doi-bizon-nen.webp';
   // Khung con rồng + đội trong ảnh nền (tỷ lệ theo ảnh 1376×768, cùng tỷ lệ với bản v5 2752×1536)
   var IMG = { w: 1376, h: 768, x0: 45, y0: 60, x1: 1215, y1: 590 };
 
   // Vị trí khung rồng trên màn hình: tính lại đúng phép «background-size: cover» và background-position của #login3d
   function rectOnScreen(w, h) {
+    if (w <= 760) {
+      // Điện thoại: thẻ đăng nhập là tấm trượt từ dưới lên (top ≈ 22vh), khung rồng trong ảnh nằm gần hết sau thẻ;
+      // cho rồng bay trọn trong dải phía trên thẻ, rộng bằng màn hình
+      var rw = w * 0.96, rh = rw * (IMG.y1 - IMG.y0) / (IMG.x1 - IMG.x0), band = h * 0.22;
+      return { x: w * 0.02, y: Math.max(6, band / 2 - rh / 2), w: rw, h: rh };
+    }
     var s = Math.max(w / IMG.w, h / IMG.h), px = 0.5, py = 0.5;
-    if (w <= 600) { px = 0.58; py = 0.22; }   // điện thoại dọc: khớp CSS @media (max-width:600px)
     var ox = (w - IMG.w * s) * px, oy = (h - IMG.h * s) * py;
     return { x: ox + IMG.x0 * s, y: oy + IMG.y0 * s, w: (IMG.x1 - IMG.x0) * s, h: (IMG.y1 - IMG.y0) * s };
   }
@@ -43,7 +51,7 @@ import { GLTFLoader } from './vendor/GLTFLoader.js';
     var model = null, baseScale = 1, basePos = new THREE.Vector3(), fitted = false;
     var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    var handle = { dispose: dispose, ready: false, error: null, rect: null };
+    var handle = { dispose: dispose, ready: false, nen: false, error: null, rect: null };
 
     function size() {
       var w = el.clientWidth || window.innerWidth, h = el.clientHeight || window.innerHeight;
@@ -89,7 +97,11 @@ import { GLTFLoader } from './vendor/GLTFLoader.js';
       var b = new THREE.Box3().setFromObject(model), c = b.getCenter(new THREE.Vector3());
       model.position.sub(c);
       root.add(model);
-      size(); handle.ready = true;
+      size();
+      var nen = new Image();
+      nen.onload = function () { if (el.isConnected && el._rongHandle === handle) { el.style.backgroundImage = "url('" + NEN + "')"; handle.nen = true; } };
+      nen.src = NEN;
+      handle.ready = true;
     }, undefined, function (err) { handle.error = String(err && err.message || err); });
 
     size();
@@ -100,6 +112,7 @@ import { GLTFLoader } from './vendor/GLTFLoader.js';
       renderer.setAnimationLoop(null);
       if (ro) ro.disconnect(); else window.removeEventListener('resize', size);
       renderer.dispose(); renderer.domElement.remove();
+      el.style.backgroundImage = '';   // trả lại ảnh gốc có rồng của CSS
       el._rongHandle = null;
     }
 

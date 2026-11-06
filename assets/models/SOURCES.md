@@ -34,5 +34,6 @@ chiếu texture qua đường dẫn tương đối `Textures/colormap.png` thay 
 |---|---|---|
 | `rong-bay-doi-bizon.glb` | Tác phẩm riêng của BizOn: dựng từ tranh `assets/illustrations/rong-bay-doi-bizon-v5.webp` bằng Meshy AI (06/11/2026, tài khoản của tác giả) | Meshy vẽ lại rồng và đội theo đúng tranh gốc trên nền trắng → Image to 3D (`meshy-7.1`, màu vẽ `meshy-7` 4K) → Remesh về 41.714 tam giác → thu màu vẽ về 2048 px JPEG, bỏ lớp normal và metallic-roughness (chỉ giữ base color cho đúng tông đất sét), 3,3 MB |
 
+Ảnh nền đi kèm `assets/illustrations/rong-bay-doi-bizon-nen.webp` (2752×1536): Meshy vẽ lại tranh gốc bỏ rồng và đội, chỉ còn trời, biển, bản đồ; chỉ hiện khi mô hình 3D đã tải, để rồng 2D không ló ra sau rồng 3D.
 Nội dung có công cụ AI tham gia, xem `THIRD-PARTY-NOTICES.md` Mục 7. Nạp trong `js/game3d-rong.js` (GLTFLoader, máy quay trực giao khớp
 đúng vị trí con rồng trong ảnh nền). Đầu rồng ở phía +z của mô hình.
