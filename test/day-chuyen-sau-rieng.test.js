@@ -67,7 +67,7 @@ check(+(/CACHE = 'bizon-v(\d+)'/.exec(sw) || [])[1] >= 778 && ['day-chuyen-sau-r
     ...D.DON.flatMap((d, i) => ['chin', 'gio', 'nhiet'].map(k => 'giai-thich-don-' + (i + 1) + '-' + k)), 'ket-qua-dat', 'ket-qua-giam-gia', 'ket-qua-tra', 'tong-ket-gioi', 'tong-ket-kha', 'tong-ket-lam-lai'];
   const thieu = ['vi', 'en'].flatMap(l => can.map(f => l + '/' + f + '.mp3')).filter(f => !fs.existsSync(path.join(root, 'assets/voice/day-chuyen', f)));
   check(can.length === 34 && !thieu.length && ui.includes("'../assets/voice/day-chuyen/'"), 'đủ 34 file giọng thật mỗi thứ tiếng ' + thieu.join(', ')); }
-// Bộ đầy đủ (06/11/2026): en-v2/ và vi-v2/ mỗi thư mục đủ 147 câu – mọi chữ hiển thị trên trang; bộ vi/, en/ cũ giữ nguyên trong kho.
+// Bộ đầy đủ (06/11/2026): en-v2/ và vi-v3/ (tiếng Việt thu lại toàn bộ, thay vi-v2) mỗi thư mục đủ 147 câu – mọi chữ hiển thị trên trang; bộ vi/, en/ cũ giữ nguyên trong kho.
 { const so = id => String(D.THU_TU_KHO.indexOf(id) + 1).padStart(2, '0'), thua = ['tachMui', 'hutChan', 'capDong', 'kiemDich', 'kiemMau', 'tiepNhan'];
   const can = ['mo-dau', 'trang-tieu-de', 'trang-tong-diem', 'trang-muc-1', 'trang-muc-1-huong-dan', 'trang-muc-2', 'trang-muc-2-huong-dan', 'trang-muc-3', 'trang-day-trong', 'trang-chon-tram',
     ...['do-gia', 'gio', 'nhiet'].flatMap(k => ['thanh-' + k, 'thanh-' + k + '-chu-thich']), 'nut-chay', 'nut-goi-y', 'nut-tham-khao', 'nut-thao-het',
@@ -78,12 +78,13 @@ check(+(/CACHE = 'bizon-v(\d+)'/.exec(sw) || [])[1] >= 778 && ['day-chuyen-sau-r
     'bang-thu-tu', 'bang-do-gia', 'bang-thoi-gian', 'bang-nhiet-do', 'bang-goi-y', 'nut-sua-chay-lai', 'nut-chot-don-tiep', 'nut-chot-don-tong-ket',
     ...D.DON.flatMap((d, i) => ['chin', 'gio', 'nhiet'].map(k => 'giai-thich-don-' + (i + 1) + '-' + k)),
     'tong-ket-tieu-de', 'tong-ket-cot-bang', 'nut-in-phieu', 'nut-choi-lai', 'tong-ket-gioi', 'tong-ket-kha', 'tong-ket-lam-lai', 'hoi-choi-lai', 'chu-y-tieu-de', ...[1, 2, 3, 4, 5, 6].map(i => 'chu-y-' + i)];
-  for (const dir of ['vi-v2', 'en-v2']) {
+  for (const dir of ['vi-v3', 'en-v2']) {
     const thieu = can.filter(f => !fs.existsSync(path.join(root, 'assets/voice/day-chuyen', dir, f + '.mp3')));
     const thua2 = fs.readdirSync(path.join(root, 'assets/voice/day-chuyen', dir)).filter(f => !can.includes(f.replace(/\.mp3$/, '')));
     check(can.length === 147 && new Set(can).size === 147 && !thieu.length && !thua2.length, dir + ': đủ 147 câu ghi âm, không thiếu không thừa ' + thieu.concat(thua2).join(', '));
   }
-  check(ui.includes("vi: 'vi-v2', en: 'en-v2'"), 'giao diện dùng bộ vi-v2/, en-v2/');
+  check(ui.includes("vi: 'vi-v3', en: 'en-v2'"), 'giao diện dùng bộ vi-v3/ (thu lại 06/11/2026), en-v2/');
+check(fs.existsSync(path.join(root, 'assets/voice/day-chuyen/vi-v2/mo-dau.mp3')), 'bộ vi-v2 giữ nguyên trong kho');
   check(fs.existsSync(path.join(root, 'assets/voice/day-chuyen/en/mo-dau.mp3')) && fs.existsSync(path.join(root, 'assets/voice/day-chuyen/vi/mo-dau.mp3')), 'bộ vi/, en/ cũ giữ nguyên'); }
 
 // ---- Chạy thật ----
@@ -96,7 +97,7 @@ check(+(/CACHE = 'bizon-v(\d+)'/.exec(sw) || [])[1] >= 778 && ['day-chuyen-sau-r
     Object.defineProperty(window, 'speechSynthesis', { value: { speak(u) { window.__noi.push(u.text); setTimeout(() => u.onend && u.onend(), 0); }, cancel() {}, getVoices() { return []; } } });
   };
   async function choi(w, lang) {
-    const dir = lang === 'en' ? 'en-v2' : 'vi-v2';
+    const dir = lang === 'en' ? 'en-v2' : 'vi-v3';
     const ctx = await b.newContext({ viewport: { width: w, height: 900 }, reducedMotion: 'reduce' });
     const p = await ctx.newPage(); const loi = [];
     p.on('pageerror', e => loi.push(e.message)); p.on('console', m => { if (m.type() === 'error') loi.push(m.text()); });
