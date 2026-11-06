@@ -345,7 +345,9 @@ export function makeCharacters(THREE) {
   // trong lúc tải, hay tải hỏng, dùng ảnh gốc dựng đứng như cũ.
   const GLB = { ceo: 'ceo.glb', cfo: 'cfo.glb', cmo: 'cmo.glb', coo: 'coo.glb', sec: 'sec.glb', lumina: 'lumina.glb', tu: 'tu.glb' };
   const GLBBASE = (typeof window !== 'undefined' && window.BIZON_GLB_BASE) || 'assets/models/nhan-vat/';
-  const USE_GLB = !(typeof window !== 'undefined' && window.BIZON_CHAR_GLB === false);
+  // 06/11/2026: mô hình Meshy nhòe mặt và bảng tên so với tranh gốc, chị Hương chọn quay về tranh gốc dựng đứng. GLB vẫn giữ trong kho,
+  // chỉ bật khi trang đặt window.BIZON_CHAR_GLB = true (hoặc ?glb=1 khi thử) để xem lại sau khi có bản đẹp hơn.
+  const USE_GLB = typeof window !== 'undefined' && (window.BIZON_CHAR_GLB === true || /[?&]glb=1\b/.test(window.location.search));
   const gltfLoader = new GLTFLoader(), glbCache = {};
   const loadGlb = url => glbCache[url] ??= new Promise((res, rej) => gltfLoader.load(url, res, undefined, rej));
   function rigChar(id) {
