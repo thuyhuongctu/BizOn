@@ -18,12 +18,13 @@ check(tris > 5000 && tris <= 20000 && js.images.length === 1 && js.images[0].mim
 const bc = read('bizon-characters.js');
 check(bc.includes("const GLB = { ceo: 'ceo.glb',") && bc.includes("'assets/models/nhan-vat/'") && bc.includes('skeletonClone(gltf.scene)') && bc.includes('AnimationMixer'), 'bizon-characters.js: nạp GLB, nhân bản xương, mixer');
 check(bc.includes("const build = id => (USE_GLB && GLB[id]) ? rigChar(id) : (USE_ART && ART[id]) ? artChar(id)"), 'ưu tiên GLB → ảnh gốc → khối đất sét');
+check(bc.includes("window.BIZON_CHAR_GLB === true") && !bc.includes("BIZON_CHAR_GLB === false"), 'mặc định dùng tranh gốc dựng đứng; GLB chỉ bật khi trang đặt BIZON_CHAR_GLB = true');
 check(bc.includes('sm.geometry.computeBoundingBox()') && bc.includes('gltf.scene.updateMatrixWorld(true)'), 'đo chiều cao bằng hình học tư thế gốc; cập nhật ma trận trước khi nhân bản');
 check(read('assets/models/SOURCES.md').includes('nhan-vat/ceo.glb') && read('THIRD-PARTY-NOTICES.md').includes('nhan-vat/'), 'ghi nguồn gốc');
 check(+(/CACHE = 'bizon-v(\d+)'/.exec(read('sw.js')) || [])[1] >= 791, 'sw.js ≥ bizon-v791');
 
 const PAGE = `<!DOCTYPE html><html><head><meta charset="utf-8"><script type="importmap">{"imports":{"three":"./js/vendor/three.module.js"}}</script></head>
-<body><script type="module">
+<body><script>window.BIZON_CHAR_GLB = true;</script><script type="module">
 import * as THREE from 'three'; import { makeCharacters } from './bizon-characters.js';
 const r = new THREE.WebGLRenderer(); r.setSize(300, 300); document.body.append(r.domElement);
 const s = new THREE.Scene(), c = new THREE.PerspectiveCamera(35, 1, 0.01, 100); c.position.set(0, 1, 4); c.lookAt(0, 0.8, 0); s.add(new THREE.AmbientLight(0xffffff, 2));
@@ -62,10 +63,11 @@ window.__ready = 1;
     check(du.every(x => x.art && !x.glb) && !loi3.length, 'tải GLB hỏng thì vẫn dùng ảnh gốc dựng đứng, không lỗi JS ' + loi3.join(' / '));
     await q.close();
     // Trang game thật: CEO nạp được trong trụ sở (diorama), không lỗi JS
-    const g = await b.newPage({ viewport: { width: 1000, height: 600 } }); const loi2 = []; g.on('pageerror', e => loi2.push(e.message));
+    const g = await b.newPage({ viewport: { width: 1000, height: 600 } }); const loi2 = []; let taiGlb = false; g.on('pageerror', e => loi2.push(e.message)); g.on('request', r => { if (/nhan-vat\/.*\.glb/.test(r.url())) taiGlb = true; });
     await g.goto(BASE + '/BizOn%20Game%203D.html?diorama=1'); await g.waitForTimeout(12000);
+    const daTai = taiGlb;   // đọc trước khi tự HEAD tệp (HEAD cũng là một request)
     const ok = await g.evaluate(async () => (await fetch('assets/models/nhan-vat/ceo.glb', { method: 'HEAD' })).ok);
-    check(ok && !loi2.length, 'BizOn Game 3D (diorama) tải tệp CEO qua máy chủ, không lỗi JS ' + loi2.join(' / '));
+    check(ok && !loi2.length && !daTai, 'BizOn Game 3D (diorama): tệp CEO có trên máy chủ nhưng trang mặc định không tải GLB (dùng tranh gốc), không lỗi JS ' + loi2.join(' / '));
     await g.close();
   } catch (e) { check(false, 'lỗi khi chạy: ' + e.message); }
   await b.close();

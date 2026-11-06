@@ -25,7 +25,7 @@ check(IDS.every(id => src.includes(id + '.glb')), 'SOURCES.md ghi nguồn sáu t
 check(+(/CACHE = 'bizon-v(\d+)'/.exec(read('sw.js')) || [])[1] >= 793, 'sw.js ≥ bizon-v793');
 
 const PAGE = `<!DOCTYPE html><html><head><meta charset="utf-8"><script type="importmap">{"imports":{"three":"./js/vendor/three.module.js"}}</script></head>
-<body><script type="module">
+<body><script>window.BIZON_CHAR_GLB = true;</script><script type="module">
 import * as THREE from 'three'; import { makeCharacters } from './bizon-characters.js';
 const r = new THREE.WebGLRenderer(); r.setSize(300, 300); document.body.append(r.domElement);
 const s = new THREE.Scene(), c = new THREE.PerspectiveCamera(35, 1, 0.01, 100); c.position.set(0, 1, 6); c.lookAt(0, 0.8, 0); s.add(new THREE.AmbientLight(0xffffff, 2));
