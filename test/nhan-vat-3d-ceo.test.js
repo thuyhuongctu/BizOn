@@ -16,7 +16,7 @@ check(JSON.stringify((js.animations || []).map(a => a.name)) === '["Idle","Talk"
 const tris = js.meshes.flatMap(m => m.primitives).reduce((a, p) => a + js.accessors[p.indices].count / 3, 0);
 check(tris > 5000 && tris <= 20000 && js.images.length === 1 && js.images[0].mimeType === 'image/jpeg', 'lưới nhẹ ' + Math.round(tris) + ' tam giác, một lớp màu JPEG');
 const bc = read('bizon-characters.js');
-check(bc.includes("const GLB = { ceo: 'ceo.glb' }") && bc.includes("'assets/models/nhan-vat/'") && bc.includes('skeletonClone(gltf.scene)') && bc.includes('AnimationMixer'), 'bizon-characters.js: nạp GLB, nhân bản xương, mixer');
+check(bc.includes("const GLB = { ceo: 'ceo.glb',") && bc.includes("'assets/models/nhan-vat/'") && bc.includes('skeletonClone(gltf.scene)') && bc.includes('AnimationMixer'), 'bizon-characters.js: nạp GLB, nhân bản xương, mixer');
 check(bc.includes("const build = id => (USE_GLB && GLB[id]) ? rigChar(id) : (USE_ART && ART[id]) ? artChar(id)"), 'ưu tiên GLB → ảnh gốc → khối đất sét');
 check(bc.includes('sm.geometry.computeBoundingBox()') && bc.includes('gltf.scene.updateMatrixWorld(true)'), 'đo chiều cao bằng hình học tư thế gốc; cập nhật ma trận trước khi nhân bản');
 check(read('assets/models/SOURCES.md').includes('nhan-vat/ceo.glb') && read('THIRD-PARTY-NOTICES.md').includes('nhan-vat/'), 'ghi nguồn gốc');
