@@ -2,35 +2,48 @@ MÃ NGUỒN ĐẶC TRƯNG — PHẦN MỀM MÔ PHỎNG KINH DOANH "BIZON BẬT N
 (Trích để in kèm hồ sơ đăng ký quyền tác giả — loại hình: chương trình máy tính)
 
 Tác giả: Đỗ Thùy Hương · Phan Anh Tú
-Tệp nguồn: game.html (giao diện) + js/engine.js + js/backend.js
-Bản build: xem CACHE trong sw.js (bizon-v256), kho: github.com/thuyhuongctu/BizOn
+Tệp nguồn: game.html + BizOn Game 3D.html (giao diện) · js/engine.js + js/backend.js (lõi)
+
+PHIÊN BẢN ĐĂNG KÝ
+  Mã phiên bản (commit) afbacd2 – afbacd29a8efa30ff6f1d95778837cfa84c18498
+  Hoàn thành lúc 14 giờ 53 ngày 07/10/2026 (giờ Việt Nam); bản build sw.js: bizon-v388.
+  Kho mã nguồn: github.com/thuyhuongctu/BizOn. Công bố tại https://bizonland.com
+  (địa chỉ cũ https://thuyhuongctu.github.io/BizOn chuyển hướng về cùng trang).
+  Bản trích này lấy nguyên văn từ đúng phiên bản afbacd2 (trích ngày 05/11/2026),
+  thay cho bản trích 21/09/2026 lấy từ bản build cũ hơn.
 
 PHẠM VI BẢN TRÍCH
-  ✔ js/engine.js — TOÀN BỘ: engine mô phỏng kinh doanh xác định (doanh thu, thị
-    phần, dòng tiền, khấu hao, chỉ số hiệu quả thiết bị OEE, điểm hòa vốn), hệ
-    thống biến cố thị trường, mô-đun cố vấn Lumina (bộ luật "nếu – thì"), mô-đun
-    mô phỏng "Nếu – Thì". Đây là phần thể hiện rõ nhất tính sáng tạo riêng của
+  ✔ js/engine.js — TOÀN BỘ (914 dòng): engine mô phỏng kinh doanh xác định
+    (doanh thu, thị phần, dòng tiền, khấu hao, chỉ số hiệu quả thiết bị OEE, điểm hòa
+    vốn), hệ thống biến cố thị trường, mô-đun cố vấn Lumina (bộ luật "nếu – thì"),
+    mô-đun mô phỏng "Nếu – Thì". Đây là phần thể hiện rõ nhất tính sáng tạo riêng của
     tác phẩm — không lược bỏ.
-  ✔ js/backend.js — TOÀN BỘ: hạ tầng dữ liệu lớp học (ghi nhận kết quả từng
-    vòng theo mã lớp, hàng đợi gửi lại khi mất mạng, mã băm SHA-256 đối chiếu).
-  ✘ ĐÃ LOẠI TRỪ (không in trong bản này, để giữ trong khoảng 15–20 trang):
-      • sw.js — cơ chế chạy ngoại tuyến (PWA offline shell); hạ tầng kỹ thuật
-        chung, không phải phần thể hiện sáng tạo riêng của mô phỏng.
-      • js/site-ui.js, js/site-nav.js, js/site-dock.js, js/site-footer.js,
-        js/backend-config.js, js/error-log.js, js/tutorial.js,
-        js/lumina-mascot.js — hạ tầng khung website dùng chung cho toàn bộ hệ
-        sinh thái BizOn (nhiều trang khác cũng dùng), không riêng của Bật Nghiệp.
-      • css/tw.css — thư viện bên thứ ba (Tailwind CSS, giấy phép MIT).
+  ✔ js/backend.js — TOÀN BỘ (223 dòng): hạ tầng dữ liệu lớp học (ghi nhận kết
+    quả từng vòng theo mã lớp, hàng đợi gửi lại khi mất mạng, mã băm SHA-256 đối chiếu).
+  ✘ ĐÃ LOẠI TRỪ (không in trong bản này, để giữ bản in gọn; vẫn thuộc chương trình):
+      • game.html, js/app.js — bố cục giao diện và bộ điều khiển giao diện của màn chơi;
+        js/core/seed-engine.js, js/market-dynamic.js, js/class-sync.js,
+        js/lumina-whatif.js — các mô-đun bổ trợ (tình huống theo mã lớp, thị trường
+        động, đồng bộ lớp, "Nếu – Thì").
+      • BizOn Game 3D.html, bizon-3d-kit.js, bizon-characters.js, bizon-hq-kit.js,
+        js/office-rounds.js, js/office-scene.js, js/office-scenes.js, js/office-stations.js,
+        js/flag-scene-3d.js — trụ sở ba chiều (WebGL) nhúng màn chơi gốc.
+      • sw.js — cơ chế chạy ngoại tuyến (PWA offline shell); hạ tầng kỹ thuật chung.
+      • js/site-ui.js, js/site-nav.js, js/site-dock.js, js/site-footer.js, js/site-vnmap.js,
+        js/backend-config.js, js/error-log.js, js/tutorial.js, js/lumina-mascot.js — hạ
+        tầng khung website dùng chung cho toàn bộ hệ sinh thái BizOn.
+      • Thư viện bên thứ ba, đã khai tại mục "Sử dụng mã nguồn mở" của Tờ khai, không in:
+        css/tw.css (Tailwind CSS v3.4.17, giấy phép MIT); js/vendor/three.module.js,
+        js/vendor/three.core.js, js/vendor/OrbitControls.js (three.js r184, giấy phép MIT).
   Ghi chú: khối gửi kết quả trong js/backend.js tham chiếu cấu hình kết nối
-  window.BIZON_BACKEND (đặt trong js/backend-config.js, tệp hạ tầng dùng
-  chung, đã loại trừ) — không chứa khóa bí mật trong bản trích này.
+  window.BIZON_BACKEND (đặt trong js/backend-config.js, tệp hạ tầng dùng chung, đã loại
+  trừ) — không chứa khóa bí mật trong bản trích này.
 
-  Đối chiếu công thức mô phỏng: engine dùng hằng số công khai (BASE_MARKET_UNITS,
-  UNIT_COST, PRICE_ELASTICITY...) khai báo ngay đầu tệp — đây là mô hình xác
-  định (cùng đầu vào luôn cho cùng kết quả), không phải "đáp án" cần giấu như
-  các game thăm dò-khai thác có dữ liệu ẩn ngẫu nhiên; giữ nguyên, không lược.
+  Đối chiếu công thức mô phỏng: engine dùng hằng số công khai khai báo ngay đầu tệp —
+  đây là mô hình xác định (cùng đầu vào luôn cho cùng kết quả), không phải "đáp án" cần
+  giấu như các game thăm dò – khai thác có dữ liệu ẩn ngẫu nhiên; giữ nguyên, không lược.
 
-TỆP: js/engine.js  (825 dòng)
+TỆP: js/engine.js  (914 dòng)
 
 /* BizOn Bật Nghiệp 2026 – Engine mô phỏng 6 vòng (client-side)
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.
@@ -156,6 +169,65 @@ function MARKET_EVENTS_LIST_B() { return [
     cta: { label: T('🐉 Bứt phá về đích', '🐉 Sprint to the finish'), tab: 'decisions' } },
 ]; }
 
+/* Trường hợp C – "Sóng Livestream Giá Rẻ" (thiết kế: docs/design/CASE_DRAW_TWO_SCENARIOS_v1.md,
+ * mục "Trường hợp C"). Cùng nguyên tắc công bằng như B: mọi trường ảnh hưởng
+ * điểm GIỐNG HỆT MARKET_EVENTS_LIST() theo từng vòng – chỉ khác câu
+ * chuyện/tên/lời Lumina/icon. Đối thủ xuyên suốt là Alpha Dynamics (đã có sẵn
+ * trong COMPETITORS, style 'aggressive') đẩy mạnh bán hàng livestream giá sốc,
+ * thay vì Star Clay Co. (hàng ngoại cao cấp) ở Trường hợp B. Chỉ được đọc khi
+ * s.caseId === 'C' (mặc định 'A' cho mọi ván mới/ván cũ – xem newGameState()
+ * và currentEvent()). */
+function MARKET_EVENTS_LIST_C() { return [
+  null,
+  { id: 'EV_STABLE_C', round: 1, tone: 'good', icon: '🌤️', name: T('Thị trường ổn định – nhưng có traction lạ trên mạng', 'Stable Market – But Odd Traction Online'), tag: T('VÒNG KHỞI ĐỘNG', 'KICKOFF ROUND'),
+    desc: T('Vòng khởi động – nhu cầu thị trường ở mức chuẩn. Nhưng có tin Alpha Dynamics vừa mở kênh livestream bán hàng riêng, thu hút vài nghìn lượt xem thử nghiệm.',
+      'The kickoff round – market demand at baseline. But word is Alpha Dynamics just launched its own livestream sales channel, drawing a few thousand test viewers.'), demand: 1.0, costMul: 1.0,
+    impacts: [{ icon: '📈', label: T('Nhu cầu thị trường', 'Market demand'), value: T('Chuẩn', 'Baseline'), dir: 'flat' }, { icon: '📱', label: T('Tín hiệu đối thủ mới', 'New rival signal'), value: T('Đang thử nghiệm', 'Testing the waters'), dir: 'flat' }],
+    luminaImg: 'lumina-vest-thumbsup', luminaMsg: T('Chào cả đội! Vòng đầu vẫn là lúc xây nền tảng – nhưng nghe đâu Alpha Dynamics đang thử nghiệm bán hàng qua livestream. Cứ vững vàng, đội mình xây móng cho chắc trước đã!',
+      "Hi team! The first round is still about building the foundation – but word is Alpha Dynamics is testing livestream sales. Stay steady, let's build a solid base first!"),
+    cta: { label: T('🎯 Nhập quyết định ngay', '🎯 Enter decisions now'), tab: 'decisions' } },
+  { id: 'EV_GOLDEN_C', round: 2, tone: 'good', icon: '🌟', name: T('Làn Sóng Miễn Phí Vận Chuyển', 'The Free-Shipping Wave'), tag: T('SỰ KIỆN ĐẶC BIỆT', 'SPECIAL EVENT'),
+    desc: T('Một nền tảng thương mại điện tử lớn vừa miễn phí vận chuyển toàn quốc cho ngành hàng thủ công mỹ nghệ. Đồng thời, Alpha Dynamics chính thức tung chiến dịch livestream giá sốc mỗi tối, thu hút lượng lớn người xem.',
+      'A major e-commerce platform just went nationwide free-shipping for the handicrafts category. At the same time, Alpha Dynamics officially launches nightly shock-price livestreams, drawing huge crowds.'),
+    demand: 1.35, costMul: 1.0, rdBoost: 1.5,
+    impacts: [{ icon: '🚚', label: T('Phí vận chuyển', 'Shipping fee'), value: T('Miễn phí', 'Free'), dir: 'down-good' }, { icon: '📱', label: T('Đối thủ mới', 'New rival'), value: T('Livestream mỗi tối', 'Nightly livestreams'), dir: 'up-bad' }],
+    luminaImg: 'lumina-ao-dai-clap', luminaMsg: T('Cơ hội lớn đây! Miễn phí vận chuyển giúp mở rộng thị trường online đáng kể. Nhưng đừng lơ là – Alpha Dynamics vừa tung chiến dịch livestream giá sốc, CMO nên chuẩn bị tinh thần cho vòng sau!',
+      "Big opportunity! Free shipping opens up the online market significantly. But don't get comfortable – Alpha Dynamics just launched its shock-price livestreams, CMO should brace for next round!"),
+    cta: { label: T('🏭 Tăng công suất ngay', '🏭 Ramp up capacity now'), tab: 'decisions' } },
+  { id: 'EV_PRICEWAR_C', round: 3, tone: 'warn', icon: '⚔️', name: T('Giá Sốc Mỗi Đêm', 'Nightly Shock Prices'), tag: T('CẢNH BÁO THỊ TRƯỜNG', 'MARKET WARNING'),
+    desc: T('Alpha Dynamics giảm giá kịch sàn ngay trên sóng livestream, kèm minigame tặng quà liên tục để giữ chân người xem – khách hàng cực nhạy cảm về giá trong vòng này.',
+      'Alpha Dynamics slashes prices to the floor live on stream, with back-to-back giveaway games to keep viewers watching – customers are extremely price-sensitive this round.'),
+    demand: 1.0, costMul: 1.0, elasticityMul: 1.4,
+    impacts: [{ icon: '🏷️', label: T('Giá livestream của Alpha Dynamics', 'Alpha Dynamics livestream price'), value: '-15%', dir: 'down' }, { icon: '💔', label: T('Độ nhạy giá của khách', 'Customer price sensitivity'), value: T('CAO', 'HIGH'), dir: 'up-bad' }],
+    luminaImg: 'lumina-vest-worried', luminaMsg: T('Thưa CMO, Alpha Dynamics vừa châm ngòi chiến tranh giá ngay trên sóng livestream! Ta có 2 lối đi: Bundling hoặc tăng Value-Added – đừng lao vào giảm giá sâu kẻo mất biên lợi nhuận.',
+      "CMO, Alpha Dynamics just sparked a price war right on livestream! We have 2 paths: a Bundling tactic or adding more Value-Added – don't dive into deep discounts or we'll lose our margin."),
+    cta: { label: T('🤖 Xem giải pháp từ Lumina', '🤖 See Lumina\'s solution'), tab: 'advisor' } },
+  { id: 'EV_RECESSION_C', round: 4, tone: 'bad', icon: '🚛', name: T('Khủng Hoảng Cước Vận Chuyển', 'Freight Cost Crisis'), tag: T('CẢNH BÁO KHẨN CẤP', 'URGENT WARNING'),
+    desc: T('Giá cước vận chuyển nội địa tăng vọt vì quá tải đơn hàng mùa livestream giảm giá toàn ngành. Chi phí vận hành xưởng tăng theo, nhu cầu chung co lại vì người mua chờ đợt sale tiếp theo.',
+      "Domestic freight costs spike as couriers are overwhelmed by the industry-wide livestream discount season. Workshop operating costs rise while overall demand cools as buyers wait for the next sale."),
+    demand: 0.7, costMul: 1.3, shake: true, oeeHit: 10,
+    impacts: [{ icon: '📈', label: T('Chi phí vận hành', 'Operating cost'), value: '+30%', dir: 'up-bad' }, { icon: '🏭', label: T('Hiệu suất (OEE)', 'Efficiency (OEE)'), value: '-10%', dir: 'down' }],
+    luminaImg: 'lumina-ao-dai-alert', luminaMsg: T('Cảnh báo khẩn cấp! Cước vận chuyển nội địa tăng vọt vì quá tải mùa sale. COO hãy rà soát lịch chạy máy, còn CFO cần dự phòng thêm vốn ngay nhé!',
+      'Urgent warning! Domestic freight costs have spiked from sale-season overload. COO, review the machine schedule, and CFO, set aside extra reserve capital right away!'),
+    cta: { label: T('⚡ Tối ưu năng lượng ngay', '⚡ Optimize energy now'), tab: 'reports', report: 'energy' } },
+  { id: 'EV_SUPPLY_C', round: 5, tone: 'bad', icon: '📦', name: T('Kho Hàng Quá Tải', 'Warehouse Overload'), tag: T('CẢNH BÁO KHẨN CẤP', 'URGENT WARNING'),
+    desc: T('Các kho hàng trung chuyển thương mại điện tử quá tải vì lượng đơn khổng lồ từ mùa livestream giảm giá, khiến dây chuyền giao nhận của BizOn bị đình trệ theo.',
+      "E-commerce fulfillment warehouses are overloaded by the massive order volume from the livestream discount season, stalling BizOn's delivery pipeline along with it."),
+    demand: 1.0, costMul: 1.25, fulfillMul: 0.85, shake: true,
+    impacts: [{ icon: '💰', label: T('Giá thành đơn vị', 'Unit cost'), value: '+25%', dir: 'up-bad' }, { icon: '📦', label: T('Tỷ lệ đáp ứng đơn hàng', 'Order fulfillment rate'), value: '-15%', dir: 'down' }],
+    luminaImg: 'lumina-ao-dai-alert', luminaMsg: T('Thưa CEO, tình hình rất khẩn cấp! Kho hàng trung chuyển quá tải vì mùa sale livestream, đơn của ta bị kẹt theo. Cần quyết định ngay: tăng ngân sách vận chuyển hay đàm phán lại thời gian giao hàng?',
+      'CEO, this is extremely urgent! Fulfillment warehouses are overloaded from the livestream sale season, and our orders are stuck in the backlog. We need to decide now: raise the shipping budget or renegotiate delivery times?'),
+    cta: { label: T('👥 Họp khẩn cấp toàn đội', '👥 Emergency team meeting'), tab: 'decisions' } },
+  { id: 'EV_MILESTONE_C', round: 6, tone: 'good', icon: '🏺', name: T('Thương Hiệu Thật Lên Ngôi', 'Authentic Brands Rise'), tag: T('VÒNG CHUNG KẾT · KỊCH BẢN GIẢ ĐỊNH', 'FINAL ROUND · HYPOTHETICAL SCENARIO'),
+    desc: T('Kịch bản giả định: sau một mùa "đua giá" trên sóng livestream, người tiêu dùng dần mệt mỏi với các cú giảm giá liên tục và quay sang tìm những thương hiệu có câu chuyện thật, chất lượng ổn định – tầng lớp trung lưu mở rộng, ít nhạy cảm về giá, ưu tiên thương hiệu đáng tin. (Tham số minh họa, không phải số liệu thống kê thực.)',
+      'A hypothetical scenario: after a season of livestream "price races", consumers grow tired of endless discount stunts and turn to brands with a real story and consistent quality – the middle class expands, less price-sensitive, favoring trusted brands. (Illustrative simulation parameters, not real statistics.)'),
+    demand: 1.25, costMul: 1.0, elasticityMul: 0.85, wageMul: 1.1, brandPow: 1.5, mktBoost: 1.2,
+    impacts: [{ icon: '🎯', label: T('Niềm tin thương hiệu thật', 'Trust in authentic brands'), value: '+25%', dir: 'up' }, { icon: '🏷️', label: T('Độ nhạy giá của khách', 'Customer price sensitivity'), value: '-15%', dir: 'down-good' }, { icon: '👷', label: T('Chi phí nhân công', 'Labor cost'), value: '+10%', dir: 'up-bad' }, { icon: '✨', label: T('Trọng số thương hiệu', 'Brand weight'), value: '×1.5', dir: 'up' }],
+    luminaImg: 'lumina-ao-dai-clap', luminaMsg: T('Vòng chung kết, thưa đội ngũ điều hành! Sau một mùa "đua giá" với Alpha Dynamics trên sóng livestream, khách hàng đã bắt đầu quay về tìm những thương hiệu có câu chuyện thật như đội mình. Đây là cơ hội vàng để CMO nâng tầm thương hiệu thành dòng Premium và CEO mở rộng quy mô phục vụ làn sóng tin dùng mới!',
+      'The final round, executive team! After a season racing against Alpha Dynamics on livestream, customers are turning back to brands with a real story like yours. This is a golden chance for the CMO to elevate the brand into a Premium line and for the CEO to scale up for this new wave of loyal customers!'),
+    cta: { label: T('🐉 Bứt phá về đích', '🐉 Sprint to the finish'), tab: 'decisions' } },
+]; }
+
 function SHOP_ITEMS_LIST() { return [
   { id: 'SOLAR_01',     icon: '☀️', name: T('Pin Mặt Trời', 'Solar Panels'),   type: 'blueprint',  price: 150, img: 'assets/illustrations/solar-farm.webp', desc: T('Tự chủ nguồn điện: -15% chi phí cố định vĩnh viễn, +20 điểm ESG, giảm nửa tác động OEE khi khủng hoảng năng lượng. Hoàn vốn ~2 vòng.', 'Self-sufficient power: -15% fixed cost permanently, +20 ESG points, halves the OEE hit during an energy crisis. Pays back in ~2 rounds.') },
   { id: 'MKT_BOOST_01', icon: '📣', name: T('Marketing Boost', 'Marketing Boost'), type: 'booster',    price: 80,  desc: T('+30% hiệu quả marketing trong vòng kế tiếp.', '+30% marketing effectiveness next round.') },
@@ -170,7 +242,7 @@ function SKILLS_LIST() { return [
   { id: 'SK_MKT1', icon: '📣', name: T('Marketing số', 'Digital Marketing'),       cost: 80,  desc: T('+10% hiệu quả ngân sách quảng cáo.', "+10% advertising budget effectiveness."), effect: { mktMul: 1.10 } },
   { id: 'SK_OPS1', icon: '🏭', name: T('Sản xuất tinh gọn', 'Lean Manufacturing'),  cost: 80,  desc: T('-5% giá thành đơn vị.', '-5% unit production cost.'), effect: { costMul: 0.95 } },
   { id: 'SK_NEG1', icon: '🤝', name: T('Đàm phán chiến lược', 'Strategic Negotiation'), cost: 120, desc: T('Giảm 10% giá vật phẩm trong Cửa hàng.', '10% off item prices in the Shop.'), effect: { shopMul: 0.90 } },
-  { id: 'SK_AI1',  icon: '🤖', name: T('Cộng hưởng Lumina', 'Lumina Synergy'),  cost: 150, desc: T('+2 lượt hỏi Lumina AI mỗi vòng.', '+2 Lumina AI questions per round.'), effect: { aiQuota: 2 } },
+  { id: 'SK_AI1',  icon: '🤖', name: T('Cộng hưởng Lumina', 'Lumina Synergy'),  cost: 150, desc: T('+2 lượt hỏi Lumina mỗi vòng.', '+2 Lumina questions per round.'), effect: { aiQuota: 2 } },
 ]; }
 
 const COMPETITORS = [
@@ -185,7 +257,7 @@ function MISSIONS_LIST() { return [
   { id: 'M_PROFIT',   icon: '💎', name: T('Kinh doanh có lãi', 'Profitable Business'), desc: T('Đạt lợi nhuận dương trong một vòng.', 'Post a positive profit in one round.'), rewardMoney: 30, rewardXp: 20, test: s => s.history.some(r => r.netProfit > 0) },
   { id: 'M_SHARE30',  icon: '👑', name: T('Chiếm lĩnh thị trường', 'Market Domination'), desc: T('Đạt thị phần từ 30% trở lên.', 'Reach 30% market share or more.'), rewardMoney: 50, rewardXp: 30, test: s => s.history.some(r => r.share >= 30) },
   { id: 'M_SHOP',     icon: '🛍️', name: T('Nhà đầu tư thông thái', 'Savvy Investor'), desc: T('Mua ít nhất 1 vật phẩm trong Cửa hàng.', 'Buy at least 1 item from the Shop.'), rewardMoney: 20, rewardXp: 10, test: s => (s.itemsBought || 0) >= 1 },
-  { id: 'M_AI3',      icon: '🤖', name: T('Người bạn của Lumina', "Lumina's Friend"), desc: T('Hỏi Lumina AI tổng cộng 3 lần.', 'Ask Lumina AI a total of 3 times.'), rewardMoney: 15, rewardXp: 10, test: s => (s.aiAskedTotal || 0) >= 3 },
+  { id: 'M_AI3',      icon: '🤖', name: T('Người bạn của Lumina', "Lumina's Friend"), desc: T('Hỏi Lumina tổng cộng 3 lần.', 'Ask Lumina a total of 3 times.'), rewardMoney: 15, rewardXp: 10, test: s => (s.aiAskedTotal || 0) >= 3 },
   { id: 'M_SKILL',    icon: '🌳', name: T('Học không ngừng', 'Lifelong Learner'), desc: T('Mở khóa 1 kỹ năng trong Cây kỹ năng.', 'Unlock 1 skill in the Skill Tree.'), rewardMoney: 25, rewardXp: 15, test: s => s.skills.length >= 1 },
   { id: 'M_MINIGAME', icon: '🏭', name: T('Thợ đất sét cừ khôi', 'Master Clay Worker'), desc: T('Đạt từ 15 điểm trong Clay Factory Frenzy.', 'Score at least 15 in Clay Factory Frenzy.'), rewardMoney: 25, rewardXp: 15, test: s => (s.minigameBest || 0) >= 15 },
   { id: 'M_SURVIVE',  icon: '🛟', name: T('Thuyền trưởng bão táp', 'Storm Captain'), desc: T('Có lãi trong vòng Khủng hoảng năng lượng.', 'Turn a profit during the Energy Crisis round.'), rewardMoney: 60, rewardXp: 40, test: s => s.history.some(r => r.event.id === 'EV_RECESSION' && r.netProfit > 0) },
@@ -555,6 +627,7 @@ function newGameState(profile) {
     costCutter: false,
     peakShare: 0,
     eventShownRound: 0,
+    rivalDialogueShownRound: 0,
     whatIfUsed: 0,
     advisorHistory: [],
   };
@@ -631,7 +704,10 @@ function skillEffect(s, key, def) {
     .reduce((acc, sk) => acc * sk.effect[key], def);
 }
 
-function currentEvent(s) { return (s.caseId === 'B' ? MARKET_EVENTS_LIST_B() : MARKET_EVENTS_LIST())[s.round]; }
+function currentEvent(s) {
+  const list = s.caseId === 'B' ? MARKET_EVENTS_LIST_B() : s.caseId === 'C' ? MARKET_EVENTS_LIST_C() : MARKET_EVENTS_LIST();
+  return list[s.round];
+}
 
 /* Kỳ hạn thanh toán (theo màn hình Quyết định nâng cao):
  * cho khách trả chậm → cầu tăng nhưng chi phí vốn tăng */
@@ -676,12 +752,39 @@ function simulateRound(s, d) {
   const playerAttr = Math.pow(REF_PRICE / d.price, elasticity) * (1 + Math.sqrt(mktEff) / 18) * Math.pow(s.brand, brandPow);
 
   const diffMul = difficultyMul(s);   // độ khó: ×1.0 ở mức Thường (không đổi hành vi)
+  // Mỗi đối thủ đọc lại đúng vòng ngay trước để phản ứng theo đúng cá tính của
+  // mình – không phải cùng nhìn vào một chỉ số chung, để cảm giác như 3 đối
+  // thủ riêng biệt chứ không phải một "độ khó" đồng nhất áp lên cả ba:
+  // aggressive trả đũa phá giá, balanced bám đuổi khi đang thua thị phần,
+  // premium chỉ tăng marketing khi thương hiệu đối thủ đã đủ mạnh để đe dọa
+  // phân khúc cao cấp (không cạnh tranh giá, giữ đúng chất "không phá giá").
+  //
+  // Mức giá/marketing nền (trước jitter/phản ứng) từng được cân theo cảm tính
+  // (125/90, 150/60, 195/75) khiến aggressive mạnh hơn hẳn 2 đối thủ còn lại
+  // ở sức hút thị trường nền (~36% thị phần so với ~24%/~16%, tính cả người
+  // chơi ở mức quyết định mặc định). Đã cân lại: aggressive bớt phá giá cực
+  // đoan (130 thay vì 125, marketing 85 thay vì 90), premium hạ giá bớt phần
+  // "quá xa tầm với" (180 thay vì 195) và tăng marketing bù lại (85 thay vì
+  // 75) – vẫn giữ đúng cá tính rẻ nhất/đắt nhất/ở giữa, nhưng khoảng cách thị
+  // phần nền giữa 3 phong cách thu hẹp còn ~33%/~24%/~19% (spread ~15 điểm %
+  // thay vì ~20 điểm % trước đó). Đồng bộ với RIVAL_STYLE_BASE và các đoạn mô
+  // tả đối thủ trong js/app.js.
+  const prevReport = s.history[s.history.length - 1];
   const compDecisions = s.competitors.map(c => {
     const jitter = 0.9 + rng(s) * 0.25;
     let price = REF_PRICE, mkt = 55;
-    if (c.style === 'aggressive') { price = 125 * jitter; mkt = 90 * jitter; }
-    if (c.style === 'balanced')   { price = 150 * jitter; mkt = 60 * jitter; }
-    if (c.style === 'premium')    { price = 195 * jitter; mkt = 75 * jitter; }
+    if (c.style === 'aggressive') {
+      price = 130 * jitter; mkt = 85 * jitter;
+      if (prevReport && prevReport.decisions.price < REF_PRICE * 0.85) price *= 0.92;
+    }
+    if (c.style === 'balanced') {
+      price = 150 * jitter; mkt = 60 * jitter;
+      if (prevReport && prevReport.share > 35) { price *= 0.95; mkt *= 1.08; }
+    }
+    if (c.style === 'premium') {
+      price = 180 * jitter; mkt = 85 * jitter;
+      if (prevReport && prevReport.brandLoyalty > 65) mkt *= 1.15;
+    }
     const attr = Math.pow(REF_PRICE / price, elasticity) * (1 + Math.sqrt(mkt) / 18) * Math.pow(c.brand, brandPow) * diffMul;
     return { c, price, mkt, attr };
   });
@@ -780,7 +883,7 @@ function simulateRound(s, d) {
     revenue, netProfit, share, sold, demandUnits, lostSales,
     inventory: s.inventory, depreciation, cogs, unitCost,
     marketing: d.marketing, rd: d.rd,
-    wageCost, trainingCost, creditInterest, workers: d.workers,
+    wageCost, trainingCost, creditInterest, overdraft, workers: d.workers,
     fixed: fixedThisRound, holding, loanInterest,
     oee: s.oee, defect: s.defect, adEff: s.adEff, brandLoyalty: s.brandLoyalty,
     quickRatio: s.quickRatio, roi: s.roi, isNewPeak,
@@ -828,7 +931,7 @@ function unlockAchievements(s, r) {
   });
 }
 
-/** Lumina AI – kịch bản "Nếu – Thì" theo dữ liệu vòng trước. */
+/** Lumina – kịch bản "Nếu – Thì" theo dữ liệu vòng trước. */
 function luminaAdvice(s, topic) {
   const last = s.history[s.history.length - 1];
   const ev = currentEvent(s);
@@ -857,7 +960,7 @@ function luminaAdvice(s, topic) {
     `A golden-green opportunity: ${ev.name}. ${ev.desc} This is the time to invest boldly and break out on market share.`) };
 }
 
-TỆP: js/backend.js  (201 dòng)
+TỆP: js/backend.js  (223 dòng)
 
 /* BizOn – Nộp kết quả vòng chơi lên backend mỏng (Supabase)
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú.
@@ -915,7 +1018,7 @@ TỆP: js/backend.js  (201 dòng)
     return res.json().catch(() => null);
   }
 
-  async function flush() {
+  async function doFlush() {
     if (!on() || !navigator.onLine) return;
     const q = readQueue();
     if (!q.length) return;
@@ -923,7 +1026,30 @@ TỆP: js/backend.js  (201 dòng)
     for (const row of q) {
       try { await post(row); } catch (e) { rest.push(row); }
     }
-    writeQueue(rest);
+    // Dòng mới thêm vào SAU khi q được đọc (submitRound luôn push vào cuối
+    // mảng) chưa từng được gửi – giữ lại thay vì để writeQueue() dưới đây
+    // xoá mất chúng.
+    const extra = readQueue().slice(q.length);
+    writeQueue(rest.concat(extra));
+  }
+  // flush() được gọi từ nhiều nơi (submitRound, sự kiện 'online',
+  // DOMContentLoaded) có thể trùng thời điểm – khoá lại để chỉ 1 lượt gửi
+  // chạy thật sự cùng lúc, nếu không 2 lượt sẽ cùng đọc và cùng gửi lại y
+  // hệt các dòng giống nhau (POST trùng), và lượt xong sau sẽ writeQueue()
+  // đè mất dòng mới vừa được submitRound() thêm vào trong lúc lượt kia
+  // đang chạy.
+  let flushing = null;
+  function flush() {
+    if (flushing) return flushing;
+    // .finally() luôn chạy ở microtask kế tiếp (kể cả khi doFlush() đã xong
+    // ngay lập tức vì hàng đợi rỗng – không có await nào cả), nên gán
+    // "flushing = ..." chắc chắn hoàn tất TRƯỚC khi callback này chạy. Nếu
+    // viết finally NGAY TRONG doFlush() thay vì .finally() ở đây, đường
+    // "hàng đợi rỗng, không await" sẽ tự đặt flushing về null TRƯỚC KHI
+    // dòng "flushing = (async()=>{...})()" ở dưới kịp gán xong, khiến giá
+    // trị cuối cùng bị đè lại thành promise đã xong – kẹt "đang gửi" mãi.
+    flushing = doFlush().finally(function () { flushing = null; });
+    return flushing;
   }
 
   async function submitRound(S, report) {
@@ -1059,5 +1185,3 @@ TỆP: js/backend.js  (201 dòng)
   });
   window.BizonBackend = { submitRound, flush, syncTeamState, loadTeamState, classLeaderboard };
 })();
-
-TỔNG: 1026 dòng — ước tính 19 trang (55 dòng/trang, A4, cỡ chữ 10)
