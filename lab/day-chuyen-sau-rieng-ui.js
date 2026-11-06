@@ -12,15 +12,13 @@
   const IMG = f => '../assets/hc/' + f;
   const anh = (f, cls, w, h, lazy) => el('img', { src: IMG(f), alt: '', class: cls, width: String(w), height: String(h), loading: lazy ? 'lazy' : null, decoding: 'async' });
   const voice = () => window.DurianVoice;
-  // Giọng thật của chị Hương: assets/voice/day-chuyen/vi/ (34 câu) và en-v2/ (đủ 147 câu: mọi chữ hiển thị trên trang,
-  // kịch bản: docs/ghi-am/day-chuyen-sau-rieng-{vi,en}.md). Câu nào chưa có tệp (tiếng Việt: 113 câu mới chưa thu) hoặc có con số
-  // đổi theo lượt chơi (điểm, giá trị thanh trượt) thì đọc bằng giọng máy, nối tiếp trong cùng một lượt đọc.
+  // Giọng thật của chị Hương: assets/voice/day-chuyen/{vi-v2,en-v2}/ – đủ 147 câu mỗi thứ tiếng, mọi chữ hiển thị trên trang
+  // (kịch bản: docs/ghi-am/day-chuyen-sau-rieng-{vi,en}.md). Bộ 34 câu đầu tiên (vi/, en/) giữ nguyên trong kho.
+  // Con số đổi theo lượt chơi (điểm, giá trị thanh trượt) và tệp nào tải hỏng thì đọc bằng giọng máy, nối tiếp trong cùng một lượt đọc.
   // Nút 🎙️ của durian-voice (khoá 'bizon-hcsr-voice') tắt cả hai.
   const GIONG = '../assets/voice/day-chuyen/';
-  const THU_MUC = { vi: 'vi', en: 'en-v2' };
-  // 34 câu đầu tiên có ở cả hai thứ tiếng; các câu khác hiện chỉ có tiếng Anh.
-  const CU = new Set(['mo-dau', 'don-1', 'don-2', 'don-3', 'don-4', 'ket-qua-dat', 'ket-qua-giam-gia', 'ket-qua-tra', 'tong-ket-gioi', 'tong-ket-kha', 'tong-ket-lam-lai']);
-  const coTep = (l, f) => !!f && (l === 'en' || CU.has(f) || /^(tram-\d\d-|giai-thich-don-)/.test(f));
+  const THU_MUC = { vi: 'vi-v2', en: 'en-v2' };
+  const coTep = (l, f) => !!f;
   const tatTieng = () => { try { return localStorage.getItem('bizon-hcsr-voice') === 'off'; } catch (e) { return false; } };
   let hangPhat = [], dangPhat = null;
   const im = () => {

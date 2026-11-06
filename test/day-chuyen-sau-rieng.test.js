@@ -67,7 +67,7 @@ check(+(/CACHE = 'bizon-v(\d+)'/.exec(sw) || [])[1] >= 778 && ['day-chuyen-sau-r
     ...D.DON.flatMap((d, i) => ['chin', 'gio', 'nhiet'].map(k => 'giai-thich-don-' + (i + 1) + '-' + k)), 'ket-qua-dat', 'ket-qua-giam-gia', 'ket-qua-tra', 'tong-ket-gioi', 'tong-ket-kha', 'tong-ket-lam-lai'];
   const thieu = ['vi', 'en'].flatMap(l => can.map(f => l + '/' + f + '.mp3')).filter(f => !fs.existsSync(path.join(root, 'assets/voice/day-chuyen', f)));
   check(can.length === 34 && !thieu.length && ui.includes("'../assets/voice/day-chuyen/'"), 'đủ 34 file giọng thật mỗi thứ tiếng ' + thieu.join(', ')); }
-// Bộ tiếng Anh đầy đủ (06/11/2026): en-v2/ có đủ 147 câu – mọi chữ hiển thị trên trang; bộ en/ cũ giữ nguyên trong kho.
+// Bộ đầy đủ (06/11/2026): en-v2/ và vi-v2/ mỗi thư mục đủ 147 câu – mọi chữ hiển thị trên trang; bộ vi/, en/ cũ giữ nguyên trong kho.
 { const so = id => String(D.THU_TU_KHO.indexOf(id) + 1).padStart(2, '0'), thua = ['tachMui', 'hutChan', 'capDong', 'kiemDich', 'kiemMau', 'tiepNhan'];
   const can = ['mo-dau', 'trang-tieu-de', 'trang-tong-diem', 'trang-muc-1', 'trang-muc-1-huong-dan', 'trang-muc-2', 'trang-muc-2-huong-dan', 'trang-muc-3', 'trang-day-trong', 'trang-chon-tram',
     ...['do-gia', 'gio', 'nhiet'].flatMap(k => ['thanh-' + k, 'thanh-' + k + '-chu-thich']), 'nut-chay', 'nut-goi-y', 'nut-tham-khao', 'nut-thao-het',
@@ -78,10 +78,13 @@ check(+(/CACHE = 'bizon-v(\d+)'/.exec(sw) || [])[1] >= 778 && ['day-chuyen-sau-r
     'bang-thu-tu', 'bang-do-gia', 'bang-thoi-gian', 'bang-nhiet-do', 'bang-goi-y', 'nut-sua-chay-lai', 'nut-chot-don-tiep', 'nut-chot-don-tong-ket',
     ...D.DON.flatMap((d, i) => ['chin', 'gio', 'nhiet'].map(k => 'giai-thich-don-' + (i + 1) + '-' + k)),
     'tong-ket-tieu-de', 'tong-ket-cot-bang', 'nut-in-phieu', 'nut-choi-lai', 'tong-ket-gioi', 'tong-ket-kha', 'tong-ket-lam-lai', 'hoi-choi-lai', 'chu-y-tieu-de', ...[1, 2, 3, 4, 5, 6].map(i => 'chu-y-' + i)];
-  const thieu = can.filter(f => !fs.existsSync(path.join(root, 'assets/voice/day-chuyen/en-v2', f + '.mp3')));
-  const thua2 = fs.readdirSync(path.join(root, 'assets/voice/day-chuyen/en-v2')).filter(f => !can.includes(f.replace(/\.mp3$/, '')));
-  check(can.length === 147 && new Set(can).size === 147 && !thieu.length && !thua2.length && ui.includes("en: 'en-v2'"), 'tiếng Anh đủ 147 câu ghi âm trong en-v2/, không thiếu không thừa ' + thieu.concat(thua2).join(', '));
-  check(fs.existsSync(path.join(root, 'assets/voice/day-chuyen/en/mo-dau.mp3')), 'bộ en/ cũ giữ nguyên'); }
+  for (const dir of ['vi-v2', 'en-v2']) {
+    const thieu = can.filter(f => !fs.existsSync(path.join(root, 'assets/voice/day-chuyen', dir, f + '.mp3')));
+    const thua2 = fs.readdirSync(path.join(root, 'assets/voice/day-chuyen', dir)).filter(f => !can.includes(f.replace(/\.mp3$/, '')));
+    check(can.length === 147 && new Set(can).size === 147 && !thieu.length && !thua2.length, dir + ': đủ 147 câu ghi âm, không thiếu không thừa ' + thieu.concat(thua2).join(', '));
+  }
+  check(ui.includes("vi: 'vi-v2', en: 'en-v2'"), 'giao diện dùng bộ vi-v2/, en-v2/');
+  check(fs.existsSync(path.join(root, 'assets/voice/day-chuyen/en/mo-dau.mp3')) && fs.existsSync(path.join(root, 'assets/voice/day-chuyen/vi/mo-dau.mp3')), 'bộ vi/, en/ cũ giữ nguyên'); }
 
 // ---- Chạy thật ----
 (async () => {
@@ -93,7 +96,7 @@ check(+(/CACHE = 'bizon-v(\d+)'/.exec(sw) || [])[1] >= 778 && ['day-chuyen-sau-r
     Object.defineProperty(window, 'speechSynthesis', { value: { speak(u) { window.__noi.push(u.text); setTimeout(() => u.onend && u.onend(), 0); }, cancel() {}, getVoices() { return []; } } });
   };
   async function choi(w, lang) {
-    const dir = lang === 'en' ? 'en-v2' : 'vi';
+    const dir = lang === 'en' ? 'en-v2' : 'vi-v2';
     const ctx = await b.newContext({ viewport: { width: w, height: 900 }, reducedMotion: 'reduce' });
     const p = await ctx.newPage(); const loi = [];
     p.on('pageerror', e => loi.push(e.message)); p.on('console', m => { if (m.type() === 'error') loi.push(m.text()); });
@@ -114,32 +117,32 @@ check(+(/CACHE = 'bizon-v(\d+)'/.exec(sw) || [])[1] >= 778 && ['day-chuyen-sau-r
         await p.waitForTimeout(200);
         const sau = (await p.evaluate(() => window.__phat.map(u => u.split('/day-chuyen/')[1])));
         check(sau.includes(dir + '/ket-qua-dat.mp3'), w + 'px ' + lang + ': chạy xong phát giọng thật «lô đạt»');
-        check(lang !== 'en' || ['tram-ngan-01-cat', 'tram-ngan-11-kiemDich', 'nhan-xet-dung-thu-tu', 'moi-muc-deu-tot', 'nut-sua-chay-lai', 'nut-chot-don-tiep'].every(f => sau.includes('en-v2/' + f + '.mp3')),
-          w + 'px en: lắp trạm đọc dòng ngắn; kết quả đọc nhận xét và hai nút bằng giọng thật');
-        check(lang !== 'vi' || (await p.evaluate(() => window.__noi.includes('Dây chuyền đúng thứ tự, đủ trạm.'))), w + 'px vi: câu chưa thu tiếng Việt đọc bằng giọng máy');
+        check(['tram-ngan-01-cat', 'tram-ngan-11-kiemDich', 'nhan-xet-dung-thu-tu', 'moi-muc-deu-tot', 'nut-sua-chay-lai', 'nut-chot-don-tiep'].every(f => sau.includes(dir + '/' + f + '.mp3')),
+          w + 'px ' + lang + ': lắp trạm đọc dòng ngắn; kết quả đọc nhận xét và hai nút bằng giọng thật');
+        check(!(await p.evaluate(() => window.__noi.length)), w + 'px ' + lang + ': không câu nào phải đọc bằng giọng máy');
         await p.click('#dc-don-ten .dc-loa'); const n = await p.evaluate(() => window.__phat.slice(-1)[0]);
         check(n.endsWith('/day-chuyen/' + dir + '/don-1.mp3'), w + 'px ' + lang + ': 🔊 phát giọng thật đơn 1 đúng ngôn ngữ');
         check((await p.evaluate(async u => (await fetch(u)).status, n)) === 200, w + 'px ' + lang + ': file giọng thật tải được qua máy chủ');
         await p.click('#dc-don-dk summary'); const dk = await p.textContent('#dc-don-dk');
         check(dk.includes(lang === 'en' ? 'Source:' : 'Nguồn:') && dk.includes('GACC') && dk.includes('10/1/2025'), w + 'px ' + lang + ': ô dữ kiện có nguồn mở được, có trích nguồn');
-        if (lang === 'en') {
+        {
           await p.click('#dc-don-dk li .dc-loa'); await p.waitForTimeout(50);
-          check((await p.evaluate(() => window.__phat.slice(-1)[0])).endsWith('/en-v2/du-kien-openDate.mp3'), w + 'px en: 🔊 từng dữ kiện có nguồn phát giọng thật');
+          check((await p.evaluate(() => window.__phat.slice(-1)[0])).endsWith('/' + dir + '/du-kien-openDate.mp3'), w + 'px ' + lang + ': 🔊 từng dữ kiện có nguồn phát giọng thật');
           await p.click('[data-muc="dc-h-ts"]'); await p.waitForTimeout(300);
           const ts = await p.evaluate(() => window.__phat.map(u => u.split('/').pop()));
-          check(['trang-muc-3.mp3', 'thanh-do-gia.mp3', 'thanh-nhiet-chu-thich.mp3', 'nut-thao-het.mp3'].every(f => ts.includes(f)), w + 'px en: 🔊 mục thông số đọc nhãn, chú thích và nút');
+          check(['trang-muc-3.mp3', 'thanh-do-gia.mp3', 'thanh-nhiet-chu-thich.mp3', 'nut-thao-het.mp3'].every(f => ts.includes(f)), w + 'px ' + lang + ': 🔊 mục thông số đọc nhãn, chú thích và nút');
           await p.click('[data-muc="dc-h-chu-y"]'); await p.waitForTimeout(300);
-          check((await p.evaluate(() => window.__phat.slice(-1)[0])).endsWith('/en-v2/chu-y-6.mp3'), w + 'px en: 🔊 phần lưu ý đọc đủ 6 mục');
+          check((await p.evaluate(() => window.__phat.slice(-1)[0])).endsWith('/' + dir + '/chu-y-6.mp3'), w + 'px ' + lang + ': 🔊 phần lưu ý đọc đủ 6 mục');
         }
         await p.click('#dc-day [data-id="kiemMau"] .dc-o-chinh');
         check((await p.textContent('#dc-xem .dc-dk summary')).includes('2'), w + 'px ' + lang + ': trạm kiểm mẫu có 2 dữ kiện có nguồn');
       }
       if (i === 3) { await p.waitForTimeout(300); const ds = await p.evaluate(() => window.__phat.map(u => u.split('/').pop()));
         const k = ds.lastIndexOf('ket-qua-tra.mp3'), sau4 = ds.slice(k);
-        check(k >= 0 && sau4.includes('giai-thich-don-4-nhiet.mp3') && (lang !== 'en' || sau4.indexOf('nhan-xet-dong-khong-cap-dong.mp3') === sau4.indexOf('giai-thich-don-4-nhiet.mp3') - 1),
+        check(k >= 0 && sau4.includes('giai-thich-don-4-nhiet.mp3') && (sau4.indexOf('nhan-xet-dong-khong-cap-dong.mp3') === sau4.indexOf('giai-thich-don-4-nhiet.mp3') - 1),
           w + 'px ' + lang + ': lô bị trả: phát «bị trả», cảnh báo nhiệt độ âm không cấp đông, rồi lời giải thích nhiệt độ đơn 4'); }
       if (i === 1) { await p.click('#dc-goi-y'); await p.waitForTimeout(100);
-        check(lang !== 'en' || (await p.evaluate(() => window.__phat.slice(-1)[0])).endsWith('/en-v2/goi-y-du-roi.mp3'), w + 'px en: gợi ý phát giọng thật'); }
+        check((await p.evaluate(() => window.__phat.slice(-1)[0])).endsWith('/' + dir + '/goi-y-du-roi.mp3'), w + 'px ' + lang + ': gợi ý phát giọng thật'); }
       await p.click('.dc-chot');
     }
     await p.waitForTimeout(300);
