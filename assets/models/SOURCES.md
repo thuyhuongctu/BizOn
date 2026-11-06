@@ -27,3 +27,12 @@ Nạp bằng `js/meshy-loader.js` (`makeMeshyLoader(THREE)` → `load()`/`clone(
 `Textures/colormap.png` là texture dùng chung cho cả 2 model trên (GLB của Kenney tham
 chiếu texture qua đường dẫn tương đối `Textures/colormap.png` thay vì nhúng sẵn — xem
 `Importing 3D models into game engines` của Kenney, mục "Missing colors").
+
+## Thanh Long cưỡi mây 3D (`rong-bay-doi-bizon.glb`, màn đăng nhập BizOn Game 3D)
+
+| File | Nguồn | Cách làm |
+|---|---|---|
+| `rong-bay-doi-bizon.glb` | Tác phẩm riêng của BizOn: dựng từ tranh `assets/illustrations/rong-bay-doi-bizon-v5.webp` bằng Meshy AI (06/11/2026, tài khoản của tác giả) | Meshy vẽ lại rồng và đội theo đúng tranh gốc trên nền trắng → Image to 3D (`meshy-7.1`, màu vẽ `meshy-7` 4K) → Remesh về 41.714 tam giác → thu màu vẽ về 2048 px JPEG, bỏ lớp normal và metallic-roughness (chỉ giữ base color cho đúng tông đất sét), 3,3 MB |
+
+Nội dung có công cụ AI tham gia, xem `THIRD-PARTY-NOTICES.md` Mục 7. Nạp trong `js/game3d-rong.js` (GLTFLoader, máy quay trực giao khớp
+đúng vị trí con rồng trong ảnh nền). Đầu rồng ở phía +z của mô hình.
