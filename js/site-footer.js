@@ -23,7 +23,6 @@
       ['Hộ Chiếu Thương Hiệu', 'brand-passport.html', 'Brand Passport'],
       ['IE Lab · Quốc tế hóa', 'lab/ie-lab.html', 'IE Lab · Internationalisation'],
       ['Bến Phù Sa', 'ben-phu-sa.html', 'Bến Phù Sa'],
-      ['🧪 Sảnh 3D (thử nghiệm)', 'hub-3d.html', '🧪 3D Lobby (experimental)'],
     ]],
     ['🎨 Kho sáng tạo · Creative', '🎨 Creative', [
       ['Kho Âm nhạc', 'am-nhac.html', 'Music library'],
