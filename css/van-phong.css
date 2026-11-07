@@ -99,3 +99,12 @@
     .bang i:nth-child(1){left:6%}.bang i:nth-child(2){left:30%}.bang i:nth-child(3){left:54%}.bang i:nth-child(4){left:78%}
     .chon span.chot{background:var(--clay-teal);color:#fff}
   }
+
+/* Chủ đề theo game: khung sa bàn cùng màu trời của cảnh, dải màu nhẹ ở đầu trang */
+.vp-song .dn-sa{background:linear-gradient(#F6C28B,#3E7C80)}
+.vp-bien .dn-sa{background:linear-gradient(#2A4F80,#0E2440)}
+.vp-vuon .dn-sa{background:linear-gradient(#D8EEF2,#A9D6CB)}
+.vp-vuon .dn-sa .goi{color:#24403F;text-shadow:0 1px 0 rgba(255,255,255,.6)}
+.vp-song .dn-mo{background:radial-gradient(80% 60% at 50% 0,rgba(246,194,139,.35),transparent 70%)}
+.vp-bien .dn-mo{background:radial-gradient(80% 60% at 50% 0,rgba(42,79,128,.18),transparent 70%)}
+.vp-vuon .dn-mo{background:radial-gradient(80% 60% at 50% 0,rgba(125,174,102,.22),transparent 70%)}

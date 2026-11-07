@@ -31,6 +31,7 @@ GAME = {
     # Nguồn: ben-phu-sa.html:384-396 (hai đội), ben-phu-sa-v8.html:544-556 (ưu thế từng vai),
     # «Ben Phu Sa Game v4 Nhom.dc.html» (TX.lead: CEO chốt bến, CFO giữ quỹ…), js/bps-voice.js:6-11 (hai cố vấn).
     'ben-phu-sa': dict(
+        chu_de='song',
         tep='van-phong-ben-phu-sa.html', choi='ben-phu-sa.html', game=('Bến Phù Sa', 'Bến Phù Sa'),
         tieu=('Cả đội hàng rong, trên một bến sông.', 'The whole street-vendor team, on one river dock.'),
         lead=('Năm vai của Đội Rồng Xanh, nhà sáng lập Đội Phù Sa và hai cố vấn. Năm tuần buôn bán ở thị trấn sông nước: mỗi tuần chọn phương thức, món hàng và địa điểm. Cuộn xuống để xem ai lo việc gì.',
@@ -81,6 +82,7 @@ GAME = {
     # Nguồn: brand-passport.html:457-462 (bốn doanh nghiệp), :713-720 (CAST – Ban cố vấn),
     # «Ho Chieu Thuong Hieu 3D.html»:998 (thầy Tú · Giảng viên · Quốc tế hóa), js/bp-signature.js:154 (hỏi thầy Tú 1 lần/ván).
     'hc-thuong-hieu': dict(
+        chu_de='bien',
         tep='van-phong-hc-thuong-hieu.html', choi='brand-passport.html', game=('Hộ Chiếu Thương Hiệu', 'Brand Passport'),
         tieu=('Bốn doanh nghiệp, một ban cố vấn.', 'Four firms, one advisory board.'),
         lead=('Chọn một trong bốn doanh nghiệp, đưa thương hiệu Việt từ Vàm Thịnh ra bảy thị trường trong sáu quý. Ban cố vấn sáu người đi cùng mỗi quyết định.',
@@ -142,6 +144,7 @@ GAME = {
     # lab/ho-chieu-sau-rieng-3d.html:401 (NPC Bà Sáu Lành «Nhà vườn · cố vấn»; NPC thầy Tú: câu hỏi debrief trước khi CEO chốt,
     # giải đáp «phương thức thâm nhập ngay trong nước», «kênh của đội thuộc phương thức nào», debrief cuối sáu vụ).
     'hc-sau-rieng': dict(
+        chu_de='vuon',
         tep='van-phong-hc-sau-rieng.html', choi='lab/ho-chieu-sau-rieng.html', game=('Hộ Chiếu Sầu Riêng', 'Durian Passport'),
         tieu=('Một đội, một chuỗi xuất khẩu sầu riêng.', 'One team, one durian export chain.'),
         lead=('Đội 5 vai điều hành một mắt xích trong chuỗi xuất khẩu sầu riêng qua sáu vụ, từ ngày Trung Quốc mở chính ngạch năm 2022. Ba cố vấn đi cùng: Lumina, Bà Sáu Lành và thầy Tú.',
@@ -260,7 +263,7 @@ def trang(key, g):
 <meta name="twitter:card" content="summary_large_image">
 <script src="js/capture-guard.js"></script>
 </head>
-<body class="clay">
+<body class="clay vp-{g['chu_de']}">
 
 <main class="clay-main dn">
   <section class="dn-mo" aria-labelledby="dn-h1">
@@ -296,7 +299,7 @@ def trang(key, g):
   </section>
 </main>
 
-<script>window.VP_PHONG = {json.dumps(phong, ensure_ascii=False)};</script>
+<script>window.VP_PHONG = {json.dumps(phong, ensure_ascii=False)}; window.VP_CHUDE = '{g['chu_de']}';</script>
 <script src="js/vendor/three.min.js" defer></script>
 <script src="js/van-phong-doi-3d.js" defer></script>
 <script src="js/van-phong-trang.js"></script>
