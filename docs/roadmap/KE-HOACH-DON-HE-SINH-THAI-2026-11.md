@@ -45,7 +45,7 @@ Những việc trên gom vào **Giai đoạn 3 (sau khi có giấy chứng nhậ
 
 - Bấm «Delete branch» trên GitHub sau mỗi lần gộp.
 - PR 5: ~~chốt cơ cấu điểm~~ đã chốt 50/30/20 ngày 07/11/2026; số câu bộ đo trước–sau đã sửa thành 15 + 8.
-- PR 7: xuất gói dữ liệu nghiên cứu (ZIP) đợt 10/2026 từ Trang Giảng Viên và gửi em.
+- PR 7: ~~xuất gói dữ liệu~~ đã nhận hai gói KTM330HM01/02 ngày 07/11/2026; kết quả ở `docs/research/KET-QUA-TRUOC-SAU-2026-10.md` (PR 7b).
 - PR 4: ~~xác nhận 4 tệp SQL~~ đã kiểm trên production 07/11/2026: cả bốn đã áp (bảng, hàm, cột, ràng buộc đều có), chuyển vào `supabase/da-ap-tay/`.
 
 ## 4. Theo dõi
@@ -60,4 +60,6 @@ Những việc trên gom vào **Giai đoạn 3 (sau khi có giấy chứng nhậ
 | 6 | #1031 | đã gộp 07/11/2026 |
 | 7 | #1033 | đã gộp 07/11/2026; chờ gói ZIP đợt 10/2026 |
 | 8 | #1034 | đã gộp 07/11/2026 |
-| 5b | `co-cau-diem-50-50` | cơ cấu điểm 50/30/20, bốn tệp SQL đã áp chuyển vào `supabase/da-ap-tay/` |
+| 5b | #1035 | đã gộp 07/11/2026: cơ cấu điểm 50/30/20, bốn tệp SQL đã áp chuyển vào `supabase/da-ap-tay/` |
+| 7b | #1038 | kết quả 125 phiếu (49 cặp) hai lớp đợt 10/2026 vào Bằng chứng, Thiết kế nghiên cứu; bộ 15 câu bị trần, cần làm khó hơn |
+| 7c | `bo-cau-hoi-v2` | bộ câu hỏi kiến thức bản 2 (`batnghiep2`): 10 câu neo + 5 câu vận dụng; `docs/research/BO-CAU-HOI-KIEN-THUC-V2.md`; chờ thử trên một lớp |
