@@ -146,7 +146,7 @@
       g.font = '19px "Hanken Grotesk", sans-serif'; g.fillStyle = '#033337';
       wrapText(g, T('Vào ', 'On ') + courseDates + ' – ' + I.place, 700, 535, 1050, 28);
 
-      // chữ ký và người ký: đơn vị BizOn mặc định có hai người ký (trái: thầy Tú, phải: cô Hương)
+      // chữ ký và người ký: đơn vị BizOn mặc định có hai người ký (trái: thầy Tu Phan, phải: cô Hương)
       function signBlock(img, script, who, role, sx) {
         var sy = 700;
         g.textAlign = 'center';

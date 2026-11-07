@@ -13,7 +13,7 @@
  * + co giãn (squash & stretch) theo nhịp bước khi đang di chuyển, không
  * cần thêm ảnh mới. Tắt hoàn toàn khi prefers-reduced-motion.
  * v0.4: thêm 3 hoạt động khác ngoài đi lại + cửa: máy hát (bật/tắt nhạc
- * nền BizOn Theme), NPC thứ hai (Thầy Tú – cố vấn học thuật, hội thoại
+ * nền BizOn Theme), NPC thứ hai (Thầy Tu Phan – cố vấn học thuật, hội thoại
  * riêng), và bảng thông tin giới thiệu Sảnh. Tổng quát hoá hệ hội thoại
  * để dùng chung cho nhiều nhân vật/nội dung khác nhau thay vì chỉ Lumina.
  * v0.5: thêm bảng thành tích – ghi nhớ (localStorage) những game đã ghé
@@ -229,7 +229,7 @@
 
   var tuNpc, tuBob = 0;
 
-  // 3 hoạt động phụ ngoài đi lại + cửa: máy hát, NPC thứ hai (Thầy Tú),
+  // 3 hoạt động phụ ngoài đi lại + cửa: máy hát, NPC thứ hai (Thầy Tu Phan),
   // bảng thông tin. Đặt ở bán kính nhỏ hơn cửa, xen giữa các góc cửa.
   function buildExtras() {
     var jukeboxPos = new THREE.Vector3(Math.cos(JUKEBOX_ANGLE) * EXTRA_RADIUS, 0, Math.sin(JUKEBOX_ANGLE) * EXTRA_RADIUS);
@@ -252,7 +252,7 @@
     interactables.push({
       pos: tuNpc.position,
       dist: NPC_DIST,
-      promptAction: 'trò chuyện với Thầy Tú',
+      promptAction: 'trò chuyện với Thầy Tu Phan',
       buttonLabel: '🗨️ Nói chuyện',
       activate: function () { openDialogueWith('tu'); },
     });

@@ -24,7 +24,7 @@ Cách cũ vẫn dùng được: secret `SUPABASE_DB_URL` chứa cả chuỗi **S
 
 ### Bước 2 · `BACKUP_PASSPHRASE`
 
-Một câu mật khẩu dài **ít nhất 16 ký tự** (nên 25+), chỉ chị và thầy Tú biết. Lưu nó ở nơi an toàn ngoài GitHub (trình quản lý mật khẩu). **Mất mật khẩu này thì không mở được bất kỳ bản sao lưu nào.**
+Một câu mật khẩu dài **ít nhất 16 ký tự** (nên 25+), chỉ chị và thầy Tu Phan biết. Lưu nó ở nơi an toàn ngoài GitHub (trình quản lý mật khẩu). **Mất mật khẩu này thì không mở được bất kỳ bản sao lưu nào.**
 
 ### Bước 3 · Chạy thử
 

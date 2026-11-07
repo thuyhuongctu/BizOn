@@ -1,4 +1,4 @@
-/* Nhân vật 3D có xương cho cả đội BizOn (06/11/2026): CFO, CMO, COO, SEC, Lumina, thầy Tú dựng bằng Meshy AI từ ảnh gốc assets/character/solid/
+/* Nhân vật 3D có xương cho cả đội BizOn (06/11/2026): CFO, CMO, COO, SEC, Lumina, thầy Tu Phan dựng bằng Meshy AI từ ảnh gốc assets/character/solid/
  * theo cùng cách với CEO (test nhan-vat-3d-ceo). Kiểm tĩnh từng GLB (hợp lệ, nhẹ, ba clip Idle/Talk/Walk, một bộ xương, một lớp màu JPEG), bảng GLB
  * trong bizon-characters.js, ghi nguồn; chạy thật (Playwright): sáu nhân vật nạp xong thay ảnh, đúng chiều cao theo ART_H, chuyển clip, không lỗi JS. */
 'use strict';

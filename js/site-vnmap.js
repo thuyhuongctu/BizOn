@@ -60,7 +60,7 @@
 
   // Ảnh cắt nền của hai nhà sáng lập. Chiều cao đặt bằng nhau (38 đơn vị) rồi
   // suy ra chiều rộng theo đúng tỷ lệ gốc, nếu không dáng người sẽ bị bóp méo:
-  // Lumina 760×1100, thầy Tú 342×1046.
+  // Lumina 760×1100, thầy Tu Phan 342×1046.
   var FOLK = [
     { src: 'assets/character/advisors/lumina-aodai-cut.webp', cx: 105.0, w: 26.3, h: 38 },
     { src: 'assets/character/anh-tu-ao-dai-cut-v2.webp',         cx: 128.5, w: 12.4, h: 38 }

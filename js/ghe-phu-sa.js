@@ -19,7 +19,7 @@ export async function mountGhe(el, opts = {}) {
 
   const img = document.createElement('img');
   img.src = new URL(PHOTO_SRC, import.meta.url).href;
-  img.alt = 'Hương & Thầy Tú trên ghe hàng bông';
+  img.alt = 'Hương & Thầy Tu Phan trên ghe hàng bông';
   img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center bottom';
   el.appendChild(img);
 

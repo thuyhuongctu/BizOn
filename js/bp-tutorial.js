@@ -168,7 +168,7 @@
     return !!e && !e.classList.contains('hidden');
   }
 
-  // Các lớp phủ khác của trang: lễ đóng dấu / Kim Long / hỏi thầy Tú (.sg-ov, js/bp-signature.js), màn đua và hồ sơ
+  // Các lớp phủ khác của trang: lễ đóng dấu / Kim Long / hỏi thầy Tu Phan (.sg-ov, js/bp-signature.js), màn đua và hồ sơ
   // đối thủ (js/bp-rival-intel.js), bảng chọn thị trường, luật chơi, đàm phán, văn phòng 3D, trạm hộ chiếu. Tour không
   // được nằm dưới hay đè lên chúng: đang chạy thì tạm ẩn, chưa chạy thì chờ; lớp phủ đóng hết mới hiện và vẽ lại
   // (phần tử được soi có thể đã đổi chỗ trong lúc chờ).
