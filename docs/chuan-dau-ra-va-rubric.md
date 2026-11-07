@@ -187,17 +187,13 @@ Engine ghi lại **hơn 20 chỉ số mỗi vòng chơi**. Bản `result_json` g
 
 ### Cơ cấu điểm học phần
 
-`docs/huong-dan-giang-vien.md` từng nêu "Chấm điểm gợi ý: 40% lợi nhuận lũy kế · 30% số cờ chinh phục · 15% chất lượng thảo luận vai trò · 15% bài học rút ra". Quyết định 23/09/2026: gộp 2 tiêu chí 15% cuối ("thảo luận vai trò" + "bài học rút ra") thành **1 tiêu chí duy nhất, vẫn giữ 15% nội bộ** — phần 15% dư ra được phân bổ lại tỷ lệ cho 2 mục tự động còn lại để tổng vẫn bằng 100%:
-
 | Thành phần | Trọng số | Nguồn |
 |---|:-:|---|
-| Lợi nhuận lũy kế | **45%** | Tự động – báo cáo P&L cuối ván |
-| Số cờ chinh phục (thắng thị phần vòng **và** có lãi) | **35%** | Tự động – Bản đồ chinh phục |
-| Hợp tác vai trò & Bài học rút ra | **20%** | Giảng viên chấm – rubric bên dưới |
+| Điểm game B1–B6, thang 10 đã công bố cho sinh viên (B1 lợi nhuận /2 · B2 thị phần /2 · B3 vận hành /2 · B4 thành tựu /1,5 · B5 đóng góp cá nhân /1,5 · B6 ứng biến /1) | **50%** | Tự động – Excel «Tổng /10» từ bảng điều khiển giảng viên; B5 theo Nhật ký thành viên |
+| Rubric lập luận CLO-A…E (Mục 4.1, thang 4 mức, quy đổi /10 theo Mục 4.3) | **30%** | Giảng viên chấm bài thảo luận hoặc bản thu hoạch sau ván |
+| Hợp tác vai trò & Bài học rút ra (Nhánh A thảo luận vai trò 60% + Nhánh B bài học 40%) | **20%** | Giảng viên chấm từ Nhật ký đội và đánh giá đồng đẳng |
 
-> 🚧 45/35/20 là 40/30/15 gốc, làm tròn lại sau khi phân bổ đều phần 15% dư (tỷ lệ 40:30 giữa hai mục tự động) — có thể chỉnh lại nếu không phù hợp với lớp cụ thể.
->
-> ⚠️ **Điểm chưa khớp, chờ hai tác giả chốt (ghi nhận 06/11/2026):** cơ cấu này dành 80% cho kết quả ván (lợi nhuận, cờ) trong khi Mục 4 tuyên bố «chấm phần lập luận, không chấm kết quả ván chơi». Tệp Excel xuất từ bảng điều khiển giảng viên (`js/bizon-grading.js`) lại dùng thang riêng B1–B6 /10: B1 lợi nhuận /2 · B2 cờ /2 · B3 vận hành /2 · B4 chống chịu biến cố /1,5 · B5 đóng góp vai trò /1,5 · B6 chuẩn bị /1, tức 75% tự động. Hai phương án: **(a)** giữ 45/35/20 và sửa câu tuyên bố thành «rubric chấm lập luận cho phần 20%»; **(b)** đổi thành 30% lợi nhuận · 20% cờ · 50% rubric lập luận (CLO-A→E) và sửa B1–B6 trong Excel theo. Chọn xong thì cập nhật cả `docs/cham-diem-bat-nghiep.md` và Excel cùng một PR.
+> ✅ **Quyết định 07/11/2026** (sau đợt rà 06/11/2026), thay cho cơ cấu cũ 45 · 35 · 20: giữ nguyên thang B1–B6 đã phát cho sinh viên (`Thang Diem Bat Nghiep - Sinh Vien.dc.html`, đã dùng ở lớp KT330H-M02) làm phần kết quả 50%; 50% còn lại do giảng viên chấm lập luận và hợp tác, khớp tuyên bố «chấm phần lập luận, không chấm kết quả ván chơi». Không cần đổi tệp Excel hay cơ sở dữ liệu. Lớp đang học giữa kỳ theo cơ cấu cũ thì giữ tới hết kỳ.
 
 **Rubric tiêu chí "Hợp tác vai trò & Bài học rút ra" (20%)** — chia 2 nhánh nội bộ: Nhánh A – thảo luận vai trò xuyên suốt 6 vòng (60% × 20% = 12%) và Nhánh B – bài học rút ra cuối ván (40% × 20% = 8%).
 
@@ -240,8 +236,8 @@ Engine ghi lại **hơn 20 chỉ số mỗi vòng chơi**. Bản `result_json` g
 
 | Thành phần | Điểm | Trọng số | Quy đổi /10 |
 |---|:-:|:-:|:-:|
-| Lợi nhuận lũy kế | …… | 45% | …… |
-| Số cờ chinh phục | …/6 | 35% | …… |
+| Điểm game B1–B6 (Excel «Tổng /10») | …/10 | 50% | …… |
+| Rubric lập luận CLO-A…E (…/4 → …/10 theo Mục 4.3) | …/4 | 30% | …… |
 | Nhánh A (…/4) × 0,6 + Nhánh B (…/4) × 0,4 = …/4 | | 20% | …… |
 | **Điểm học phần** | | **100%** | **…… /10** |
 
@@ -447,7 +443,7 @@ Ghi rõ để tài liệu không bị hiểu là đã hoàn chỉnh.
 
 | Hạng mục | Hiện trạng | Cần làm |
 |---|---|---|
-| **Rubric cho game mô phỏng chính** | **Đã có bản nháp v0.1** tại [Mục 4.1](#41--rubric-game-mô-phỏng-chính--clo-a-đến-clo-e), nay kèm cơ cấu điểm học phần 45/35/20 – dựng từ chỉ số engine ghi lại | Hai tác giả rà soát mức mô tả và ngưỡng phân biệt; chấm thử trên 2–3 đội trước khi dùng chính thức; xác nhận lại trọng số 45/35/20 (đang là suy ra từ 40/30/15 gốc, chưa hỏi lại tác giả) |
+| **Rubric cho game mô phỏng chính** | **Đã có bản nháp v0.1** tại [Mục 4.1](#41--rubric-game-mô-phỏng-chính--clo-a-đến-clo-e), cơ cấu điểm học phần 50/30/20 chốt 07/11/2026 – dựng từ chỉ số engine ghi lại | Hai tác giả rà soát mức mô tả và ngưỡng phân biệt; chấm thử trên 2–3 đội trước khi dùng chính thức |
 | **Kiểm định phiếu trước – sau (15 + 8 câu)** | Đã soạn, đã thu khoảng 130 phiếu đợt 10/2026, chưa phân tích | Chạy thử, tính Cronbach's alpha, phân tích độ phân biệt từng câu |
 | **Chuẩn đầu ra Bến Phù Sa và Hộ Chiếu Sầu Riêng** | Đã có ma trận (Mục 3b, 3c, 06/11/2026) và tiêu chí đạt đếm được | Hai tác giả rà soát; chấm thử một lớp; bản EN đầy đủ |
 | **Kiểm định độ tin cậy giữa giám khảo của rubric** | Chưa làm | Chấm song song trên cùng mẫu, tính hệ số đồng thuận |

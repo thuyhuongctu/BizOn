@@ -55,7 +55,7 @@ Kim Long là đối thủ cùng tăng tốc theo ván: sức hút khởi điểm
 
 ## Nộp kết quả & bảng xếp hạng lớp (tuỳ chọn)
 1. Điền URL + anon key Supabase trong `js/backend-config.js`.
-2. Chạy `supabase/20260929000000_bp_leaderboard.sql` trong Supabase SQL Editor.
+2. Chạy `supabase/da-ap-tay/20260929000000_bp_leaderboard.sql` (đã áp trên production) trong Supabase SQL Editor.
 3. Giảng viên xem kết quả ở tab «🛂 Hộ Chiếu» của Trang Giảng Viên.
 Không cấu hình thì game vẫn chơi đủ, chỉ ẩn phần nộp kết quả.
 
