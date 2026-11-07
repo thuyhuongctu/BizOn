@@ -71,6 +71,8 @@ let chromium; try { chromium = require('playwright').chromium; } catch (e) { con
     const a = samples[2], b = samples[samples.length - 1];
     const dir = [b.x - a.x, b.z - a.z], n = Math.hypot(dir[0], dir[1]);
     if (n > 0.5) { const bow = [Math.cos(b.ry), -Math.sin(b.ry)]; const dot = (bow[0] * dir[0] + bow[1] * dir[1]) / n; assert.ok(dot > 0.8, 'mũi ghe chỉ về hướng đi (cos = ' + dot.toFixed(2) + ')'); }
+    // Vệt sóng sinh theo quãng đường đã trượt: máy CI chậm có thể chưa kịp sinh khi lấy mẫu xong (07/11/2026), chờ tối đa 8 s
+    await page.waitForFunction(() => window.__bps3d.wakes.length > 0, null, { timeout: 8000 }).catch(() => {});
     assert.ok(await page.evaluate(() => window.__bps3d.wakes.length > 0), 'có vệt sóng sau lái');
 
     await ctx.close();
