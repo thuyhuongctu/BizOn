@@ -30,6 +30,7 @@ for (const id of ['ceo', 'cfo', 'cmo', 'coo', 'sec', 'lumina', 'thaytu']) {
 }
 assert.ok(!/robot/i.test(page + js), 'không dựng robot');
 assert.ok(read('universe.html').includes('href="van-phong-doi.html"'), 'trang Vũ trụ chưa có lối vào');
+assert.ok(read('js/app.js').includes('<a href="van-phong-doi.html" target="_blank"'), 'game Bật Nghiệp chưa có lối vào');
 assert.match(page, /prefers-reduced-motion:reduce/);
 console.log('van-phong-doi (tĩnh): OK');
 
