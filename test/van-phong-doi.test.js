@@ -14,7 +14,7 @@ assert.ok(page.includes('<link rel="canonical" href="https://bizonland.com/van-p
 assert.ok(read('sitemap.xml').includes('<loc>https://bizonland.com/van-phong-doi.html</loc>'));
 const sw = read('sw.js');
 assert.ok(sw.includes("'./van-phong-doi.html'") && sw.includes("'./js/van-phong-doi-3d.js'"), 'sw.js chưa đệm trang');
-assert.ok(+sw.match(/bizon-v(\d+)/)[1] >= 795);
+assert.ok(+sw.match(/bizon-v(\d+)/)[1] >= 796);
 // Mọi ảnh nhân vật đều là ảnh gốc có sẵn; tỉ lệ khai trong sa bàn khớp đúng cỡ tệp
 const anh = [...new Set([...page.matchAll(/assets\/character\/solid\/([\w-]+)\.webp/g)].map(m => m[1]))];
 assert.equal(anh.length, 7, 'năm nhân vật và hai cố vấn');
@@ -29,6 +29,7 @@ for (const id of ['ceo', 'cfo', 'cmo', 'coo', 'sec', 'lumina', 'thaytu']) {
   assert.ok(js.includes(`id: '${id}'`), 'sa bàn thiếu phòng ' + id);
 }
 assert.ok(!/robot/i.test(page + js), 'không dựng robot');
+assert.ok(read('universe.html').includes('href="van-phong-doi.html"'), 'trang Vũ trụ chưa có lối vào');
 assert.match(page, /prefers-reduced-motion:reduce/);
 console.log('van-phong-doi (tĩnh): OK');
 
