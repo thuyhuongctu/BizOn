@@ -232,3 +232,16 @@ test('Di động 390×844: không tràn ngang ở cả 4 tab, nút bấm ≥ 44 
   console.log(`\n${results.length - failed}/${results.length} kiểm thử đạt.`);
   process.exit(failed ? 1 : 0);
 })();
+
+// Tên đầy đủ thống nhất (chị chốt 07/11/2026): «IE Lab – Phòng thí nghiệm Khởi nghiệp quốc tế» / «IE Lab – International Entrepreneurship Lab».
+{
+  const fsN = require('node:fs'), pathN = require('node:path'), rd = f => fsN.readFileSync(pathN.join(__dirname, '..', f), 'utf8');
+  const VI = 'IE Lab – Phòng thí nghiệm Khởi nghiệp quốc tế', EN = 'IE Lab – International Entrepreneurship Lab';
+  const page = rd('lab/ie-lab.html'), js = rd('lab/ie-lab.js'), glob = rd('global.html');
+  require('node:assert/strict').ok(page.includes(`<title>${EN} · BizOn</title>`), 'tiêu đề trang IE Lab');
+  require('node:assert/strict').ok(js.includes(`'${VI} · BizOn'`) && js.includes(`'${EN} · BizOn'`), 'tiêu đề VI/EN khi đổi ngôn ngữ');
+  require('node:assert/strict').ok(glob.includes(VI) && glob.includes(EN), 'global.html dùng tên đầy đủ');
+  for (const f of ['global.html', 'giai-phap.html', 'lab/ie-lab.html', 'lab/ie-lab.js', 'js/site-ui.js'])
+    for (const cu of ['IE Lab – Khởi nghiệp quốc tế', 'IE Lab · Khởi nghiệp quốc tế', 'IE Lab – phòng thí nghiệm quốc tế hóa', 'IE Lab quốc tế hóa', 'internationalisation lab', 'internationalization sandbox'])
+      require('node:assert/strict').ok(!rd(f).includes(cu), `${f}: còn tên cũ «${cu}»`);
+}
