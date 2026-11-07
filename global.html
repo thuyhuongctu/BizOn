@@ -872,7 +872,7 @@ function gAnnual() {
     ? { icon: '💰', title: `Lãi lũy kế +${totalProfit.toFixed(0)}k$`, desc: `Tích lũy qua ${campaigns} chiến dịch · ${rows.length} quý ra quyết định trên thương trường quốc tế.` }
     : { icon: '🎓', title: `${rows.length} quý kinh nghiệm thực chiến`, desc: `Lỗ lũy kế ${totalProfit.toFixed(0)}k$ – học phí của khởi nghiệp quốc tế; nhật ký CSV ghi lại từng bài học.` });
 
-  // Cố vấn AI cho năm tới: gợi ý thị trường chưa chinh phục hợp hồ sơ nhất
+  // Gợi ý của Lumina cho năm tới: gợi ý thị trường chưa chinh phục hợp hồ sơ nhất
   const openMkts = MARKETS.filter(m => !gFlags.includes(m.id));
   let advisor;
   if (!openMkts.length) {
@@ -925,7 +925,7 @@ function gAnnual() {
     </div>
     <div class="clay-card p-4 bg-primary-container/10 flex gap-3 items-start">
       <img src="assets/character/lumina-office-present.webp" alt="Lumina" class="w-10 h-10 rounded-full object-cover shadow-clay shrink-0" style="object-position:50% 8%">
-      <div><p class="font-display font-bold text-primary text-sm">Lumina · Cố vấn AI cho năm tới</p>
+      <div><p class="font-display font-bold text-primary text-sm">Lumina · <span data-en="Advice for next year">Gợi ý cho năm tới</span></p>
       <p class="text-xs text-deep-teal/80 italic mt-0.5">"${advisor}"</p></div>
     </div>`;
   sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
