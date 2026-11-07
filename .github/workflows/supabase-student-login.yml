@@ -47,12 +47,12 @@ jobs:
       DATABASE_URL: postgresql://postgres:postgres@localhost:5432/postgres
     steps:
       - uses: actions/checkout@v4
-      # Áp TOÀN BỘ migration theo thứ tự thời gian (cả supabase/*.sql ngoài thư mục migrations)
+      # Áp TOÀN BỘ migration theo thứ tự thời gian (cả supabase/da-ap-tay/*.sql: bốn tệp từng chạy tay trên production, giữ để CI dựng đủ bảng)
       # trên CSDL trống có giả lập auth của Supabase, rồi kiểm hành vi theo từng vai.
       - name: Áp migration
         run: |
           psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -q -f test/sql/supabase_auth_stub.sql
-          for f in $(ls supabase/migrations/*.sql supabase/*.sql | awk -F/ '{print $NF" "$0}' | sort | cut -d' ' -f2); do
+          for f in $(ls supabase/migrations/*.sql supabase/da-ap-tay/*.sql | awk -F/ '{print $NF" "$0}' | sort | cut -d' ' -f2); do
             echo "::group::$f"; psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -q -f "$f"; echo "::endgroup::"
           done
       - name: Kiểm hành vi (anon bị chặn, sinh viên đúng đội nộp được, giảng viên phải được duyệt)

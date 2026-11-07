@@ -6,7 +6,7 @@ production `ceytblfelodpnudomccn` ngày 07/11/2026: bảng `bp_results` (kèm c�
 `member_log` (kèm ràng buộc `member_log_kind_check`), `class_rubric_config` và các hàm `bizon_team_log`,
 `bizon_member_log`, `bizon_team_all_log`, `bizon_set_rubric_config`, `bizon_rubric_config_feed` **đều đã có**.
 
-Giữ lại để đối chiếu, **không chạy lại** (có `create policy` sẽ lỗi vì policy đã tồn tại). Migration mới đặt ở
+Giữ lại để đối chiếu, **không chạy lại trên production** (có `create policy` sẽ lỗi vì policy đã tồn tại). Workflow kiểm thử `supabase-student-login.yml` vẫn áp bốn tệp này theo thứ tự thời gian cùng `migrations/` trên Postgres tạm của CI, vì các migration sau (`revoke_anon_writes`, `ra_soat_bao_mat`) cần bảng `member_log`. Migration mới đặt ở
 `supabase/migrations/` và liệt kê trong `.github/workflows/supabase-migrate.yml` như quy ước.
 
 | Tệp | Trong danh sách migration của Supabase |
