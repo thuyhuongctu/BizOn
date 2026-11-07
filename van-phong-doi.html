@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<!-- BizOn Bật Nghiệp 2026 – © Đỗ Thùy Hương & PGS.TS. Phan Anh Tú. Bảo lưu mọi quyền. -->
+<!--
+  Văn phòng của đội: trang giới thiệu cuộn tới đâu, nhân vật làm việc tới đó; mở đầu và kết thúc bằng sa bàn văn phòng 3D
+  (js/van-phong-doi-3d.js). Nhân vật là ảnh gốc trong game (assets/character/solid/*-tex.webp), không dựng nhân vật mới.
+  Chuyển động theo cuộn: mỗi mục .canh có biến --p (0→1) do script cuối trang đặt, và lớp .vao khi mục vào khung nhìn.
+  prefers-reduced-motion: bỏ hết chuyển động, mọi thứ hiện sẵn ở trạng thái cuối.
+-->
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta property="og:url" content="https://bizonland.com/van-phong-doi.html">
+<meta property="og:image" content="https://bizonland.com/assets/og/og-cover.jpg">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:locale" content="vi_VN"><meta property="og:locale:alternate" content="en_US">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#006687">
+<link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+<script src="js/bizon-lang.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title data-en="The team office · BizOn">Văn phòng của đội · BizOn</title>
+<meta name="description" data-en-content="Five team members and two advisors: see what each of them does in Bật Nghiệp, inside a 3D office." content="Năm nhân vật và hai cố vấn: xem mỗi người trong đội Bật Nghiệp làm gì, trong một văn phòng 3D.">
+<meta name="copyright" content="© 2026 Đỗ Thùy Hương & PGS.TS. Phan Anh Tú">
+<link rel="canonical" href="https://bizonland.com/van-phong-doi.html">
+<link rel="alternate" hreflang="vi" href="https://bizonland.com/van-phong-doi.html?lang=vi">
+<link rel="alternate" hreflang="en" href="https://bizonland.com/van-phong-doi.html?lang=en">
+<link rel="alternate" hreflang="x-default" href="https://bizonland.com/van-phong-doi.html">
+<link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<script src="js/bizon-boot.js"></script>
+<link rel="stylesheet" href="css/bizon-clay-fonts.css">
+<link rel="stylesheet" href="css/bizon-clay.css">
+<style>
+  .clay-main.dn{max-width:1160px}
+  .dn-eyebrow{display:inline-block;padding:6px 14px;border-radius:999px;background:var(--clay-tray);color:var(--clay-sub);font-size:13px;font-weight:800;letter-spacing:.02em}
+  /* Mở đầu */
+  .dn-mo{margin:28px 0 0;text-align:center}
+  .dn-mo h1{margin:16px auto 0;max-width:15em;font-size:clamp(36px,6vw,68px);line-height:1.05;letter-spacing:-.03em;text-wrap:balance}
+  .dn-mo .lead{margin:16px auto 0;max-width:36em;font-size:17px;line-height:1.6;color:var(--clay-sub);text-wrap:pretty}
+  .dn-mo .acts{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin:22px 0 0}
+  .dn-sa{position:relative;margin:28px 0 0;border-radius:36px;overflow:hidden;background:#0B2E33;box-shadow:0 30px 50px -30px rgba(3,51,55,.7)}
+  .dn-sa canvas{display:block;width:100%;height:clamp(360px,60vw,620px);touch-action:pan-y;cursor:grab}
+  .dn-sa .goi{position:absolute;left:16px;bottom:14px;right:16px;margin:0;font-size:13px;font-weight:700;color:#C9E7EA;pointer-events:none;text-shadow:0 1px 2px rgba(0,0,0,.5)}
+  .dn-sa .du{display:none;padding:28px;color:#FFF3DA;text-align:center}
+  .dn-sa.loi canvas{display:none}.dn-sa.loi .du{display:block}
+  /* Từng cảnh */
+  .canh{--p:0;display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:clamp(20px,4vw,56px);align-items:center;min-height:min(92vh,760px);padding:clamp(40px,8vh,90px) 0;scroll-margin-top:90px}
+  .canh:nth-of-type(even) .chu{order:2}
+  .canh .so{font:800 13px var(--clay-mono);color:var(--clay-teal)}
+  .canh h2{margin:10px 0 0;font-size:clamp(32px,4.4vw,54px);line-height:1.06;letter-spacing:-.025em;text-wrap:balance}
+  .canh h2 em{font-style:normal;color:var(--clay-sub);opacity:.62}
+  .canh .chu p{margin:16px 0 0;max-width:30em;font-size:16.5px;line-height:1.65;color:var(--clay-sub);text-wrap:pretty}
+  .canh .ai{display:flex;align-items:center;gap:10px;margin-top:18px;font-size:14px;font-weight:800;color:var(--clay-ink-2)}
+  .canh .ai i{width:12px;height:12px;border-radius:50%;background:var(--m)}
+  .san{position:relative;min-height:440px;border-radius:40px;background:radial-gradient(120% 80% at 50% 105%,var(--nen,#F3E6CF) 0 38%,transparent 39%),linear-gradient(180deg,var(--clay-card),var(--clay-cream-deep));box-shadow:var(--clay-shadow);overflow:hidden;isolation:isolate}
+  .san::after{content:"";position:absolute;left:12%;right:12%;bottom:58px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,var(--m),transparent);opacity:.7}
+  .san .nv{position:absolute;bottom:34px;left:var(--x,14%);height:min(78%,360px);width:auto;filter:drop-shadow(0 18px 14px rgba(110,70,30,.28));transform:translateY(calc((1 - var(--p)) * 46px)) scale(calc(.94 + var(--p) * .06));transform-origin:50% 100%;z-index:2}
+  .the{position:absolute;right:6%;top:12%;width:min(54%,300px);padding:16px;border-radius:24px;background:rgba(255,251,244,.94);box-shadow:var(--clay-shadow-sm);font-size:14px;color:var(--clay-ink);z-index:3;opacity:0;transform:translateY(18px);transition:opacity .6s ease .15s,transform .6s cubic-bezier(.2,.8,.2,1) .15s}
+  .vao .the{opacity:1;transform:none}
+  .the b{display:block;font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--clay-sub)}
+  .the .lon{display:block;margin-top:4px;font:800 34px var(--clay-head);letter-spacing:-.02em;color:var(--clay-ink)}
+  .the small{display:block;margin-top:2px;font-size:12.5px;color:var(--clay-sub)}
+  /* CEO: la bàn + ba hướng */
+  .la-ban{width:84px;height:84px;margin:8px auto 4px;border-radius:50%;background:radial-gradient(circle,#FFFBF4 55%,var(--clay-c1) 56% 60%,#FFFBF4 61%);position:relative;box-shadow:inset 0 -4px 0 rgba(0,0,0,.08)}
+  .la-ban::before{content:"";position:absolute;left:50%;top:10px;width:6px;height:64px;margin-left:-3px;border-radius:3px;background:linear-gradient(var(--clay-orange) 50%,var(--clay-ink) 50%);transform:rotate(calc(-120deg + var(--p) * 155deg));transition:transform .2s}
+  .chon{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+  .chon span{padding:6px 10px;border-radius:999px;background:var(--clay-tray);font-weight:800;font-size:12.5px;transition:background .4s,color .4s}
+  .vao .chon span.chot{background:var(--clay-teal);color:#fff;transition-delay:.9s}
+  /* CFO: dòng tiền */
+  .cot{display:flex;align-items:flex-end;gap:7px;height:86px;margin-top:10px}
+  .cot i{flex:1;border-radius:8px 8px 3px 3px;background:var(--clay-c2);height:6%;transition:height .9s cubic-bezier(.2,.8,.2,1)}
+  .cot i.am{background:var(--clay-c3)}
+  .vao .cot i{height:var(--h)}
+  .vao .cot i:nth-child(2){transition-delay:.08s}.vao .cot i:nth-child(3){transition-delay:.16s}.vao .cot i:nth-child(4){transition-delay:.24s}.vao .cot i:nth-child(5){transition-delay:.32s}.vao .cot i:nth-child(6){transition-delay:.4s}
+  /* CMO: thị phần */
+  .tron{width:116px;height:116px;margin:10px auto 6px;border-radius:50%;background:conic-gradient(var(--clay-orange) 0 calc(var(--p) * 31%),var(--clay-c1) 0 calc(var(--p) * 31% + 26%),#B69CE0 0 calc(var(--p) * 31% + 49%),var(--clay-c4) 0 100%);-webkit-mask:radial-gradient(circle,transparent 44%,#000 45%);mask:radial-gradient(circle,transparent 44%,#000 45%)}
+  .chu-giai{display:grid;grid-template-columns:1fr 1fr;gap:4px 10px;font-size:12px;font-weight:700}
+  .chu-giai span::before{content:"";display:inline-block;width:9px;height:9px;margin-right:5px;border-radius:50%;background:var(--c)}
+  /* COO: băng chuyền */
+  .bang{position:relative;height:54px;margin-top:12px;border-radius:12px;background:repeating-linear-gradient(90deg,#3E5A5C 0 10px,#33504F 10px 20px);overflow:hidden}
+  .bang i{position:absolute;top:10px;width:30px;height:30px;border-radius:8px;background:var(--c);animation:chay 4.8s linear infinite;animation-delay:var(--d);left:-40px;box-shadow:inset 0 -4px 0 rgba(0,0,0,.15)}
+  @keyframes chay{to{left:calc(100% + 10px)}}
+  .so-doi{display:flex;justify-content:space-between;margin-top:10px;font-weight:800}
+  /* Thư ký: việc ai nấy làm */
+  .viec{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:7px}
+  .viec li{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:14px;background:var(--clay-tray);font-weight:700;font-size:13px;opacity:.35;transition:opacity .4s}
+  .viec li i{flex:none;width:22px;height:22px;border-radius:50%;background:var(--c);display:grid;place-items:center;color:#fff;font-style:normal;font-size:12px}
+  .vao .viec li{opacity:1}
+  .vao .viec li:nth-child(2){transition-delay:.25s}.vao .viec li:nth-child(3){transition-delay:.5s}.vao .viec li:nth-child(4){transition-delay:.75s}
+  /* Lumina: hỏi – gợi mở */
+  .hoi{display:grid;gap:8px}
+  .hoi p{margin:0;padding:10px 12px;border-radius:16px;line-height:1.45;opacity:0;transform:translateY(10px);transition:opacity .5s,transform .5s}
+  .hoi p.doi{justify-self:end;max-width:85%;background:var(--clay-teal);color:#fff;border-bottom-right-radius:4px}
+  .hoi p.lu{max-width:92%;background:var(--clay-tray);border-bottom-left-radius:4px}
+  .vao .hoi p{opacity:1;transform:none}.vao .hoi p.lu{transition-delay:.7s}.vao .hoi p.lu+p.lu{transition-delay:1.3s}
+  /* Gặp cả đội */
+  .doi-hinh{display:flex;align-items:flex-end;justify-content:center;gap:clamp(4px,1.4vw,18px);margin-top:26px;padding:24px 12px 0;border-radius:40px;background:linear-gradient(180deg,var(--clay-card),var(--clay-tray))}
+  .doi-hinh figure{margin:0;text-align:center;flex:1 1 0;min-width:0}
+  .doi-hinh img{display:block;height:clamp(150px,24vw,300px);width:auto;max-width:100%;object-fit:contain;object-position:50% 100%;margin:0 auto;transition:transform .25s ease;filter:drop-shadow(0 12px 10px rgba(110,70,30,.25))}
+  .doi-hinh figure:hover img,.doi-hinh figure:focus-within img{transform:translateY(-10px)}
+  .doi-hinh figcaption{margin:8px 0 14px;font-size:12.5px;font-weight:800;line-height:1.25;overflow-wrap:anywhere}
+  .doi-hinh figcaption span{display:block;font-weight:600;color:var(--clay-sub)}
+  /* Giảng viên: thẻ nhận xét */
+  .nx{border:2px solid var(--clay-teal-2)}
+  .nx p{margin:6px 0 0;line-height:1.5}
+  .ket{margin:72px 0 0;text-align:center}
+  .ket h2{font-size:clamp(30px,4vw,48px);letter-spacing:-.02em}
+  .ket p{margin:10px auto 0;max-width:34em;color:var(--clay-sub);font-size:16px;line-height:1.6}
+  .ket .acts{display:flex;flex-wrap:wrap;justify-content:center;gap:12px;margin:22px 0 80px}
+  @media (max-width:820px){
+    .canh{grid-template-columns:1fr;min-height:0;padding:44px 0}
+    .canh:nth-of-type(even) .chu{order:0}
+    .san{min-height:400px}
+    .san .nv{height:min(70%,300px);left:var(--xm,6%)}
+    .the{right:4%;width:min(58%,260px)}
+  }
+  @media (max-width:420px){
+    .san{min-height:420px}.san .nv{height:250px}
+    .the{left:auto;right:12px;top:12px;width:60%;padding:12px}.the .lon{font-size:28px}
+    .doi-hinh{flex-wrap:wrap;justify-content:center}.doi-hinh figure{flex:0 0 28%}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .canh{--p:1 !important}
+    .the,.hoi p,.viec li{opacity:1;transform:none;transition:none}
+    .cot i{height:var(--h);transition:none}
+    .bang i{animation:none;left:calc(var(--d) * -20 - 0px)}
+    .bang i:nth-child(1){left:6%}.bang i:nth-child(2){left:30%}.bang i:nth-child(3){left:54%}.bang i:nth-child(4){left:78%}
+    .chon span.chot{background:var(--clay-teal);color:#fff}
+  }
+</style>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Văn phòng của đội · BizOn">
+<meta property="og:description" content="Năm nhân vật và hai cố vấn, trong một văn phòng 3D.">
+<meta name="twitter:card" content="summary_large_image">
+<script src="js/capture-guard.js"></script>
+</head>
+<body class="clay">
+
+<main class="clay-main dn">
+  <section class="dn-mo" aria-labelledby="dn-h1">
+    <span class="dn-eyebrow" data-en="The team office">Văn phòng của đội</span>
+    <h1 id="dn-h1" data-en="Your whole team, in one office.">Cả đội của bạn, trong một văn phòng.</h1>
+    <p class="lead" data-en="Five team members in Bật Nghiệp and two advisors. Each runs their own corner of the company; work flows between the rooms. Scroll down to see who does what.">Năm nhân vật trong đội Bật Nghiệp và hai cố vấn. Mỗi người lo một góc công ty, việc chạy qua lại giữa các phòng. Cuộn xuống để xem ai làm gì.</p>
+    <div class="acts">
+      <a class="clay-btn clay-btn-pill clay-btn-orange" href="game.html" data-en="Play Bật Nghiệp →">Vào chơi Bật Nghiệp →</a>
+      <a class="clay-btn clay-btn-pill" href="#ceo" data-en="Meet them one by one">Gặp từng người</a>
+    </div>
+    <div class="dn-sa" id="sa-dau">
+      <canvas aria-label="Sa bàn văn phòng 3D: bảy phòng nối về trạm Lumina ở giữa. Bấm vào một phòng để đến phần giới thiệu người ấy." data-en-aria="3D office model: seven rooms linked to the Lumina hub in the middle. Click a room to jump to that person."></canvas>
+      <p class="goi" data-en="Drag to turn · click a room to meet who works there">Kéo để xoay · bấm vào một phòng để gặp người làm ở đó</p>
+      <p class="du" data-en="This browser can't show the 3D office. The team is introduced below.">Trình duyệt này chưa hiện được văn phòng 3D. Cả đội được giới thiệu ngay bên dưới.</p>
+    </div>
+  </section>
+
+  <section class="canh" id="ceo" style="--m:#7FD3DC;--nen:#D9F0F2" aria-labelledby="h-ceo">
+    <div class="chu">
+      <span class="so">01 · CEO</span>
+      <h2 id="h-ceo" data-en-html="Every round, <em>one direction.</em>">Mỗi vòng, <em>một hướng đi.</em></h2>
+      <p data-en="The CEO weighs price, marketing and production against each other and locks the round's strategy. Every other room starts from that call.">CEO cân giá, marketing và sản xuất với nhau rồi chốt chiến lược của vòng. Mọi phòng khác bắt đầu từ quyết định ấy.</p>
+      <div class="ai"><i></i><span>Minh Long · <span data-en="Visionary leader">Nhà lãnh đạo tầm nhìn</span></span></div>
+    </div>
+    <div class="san">
+      <img class="nv" src="assets/character/solid/ceo-tex.webp" alt="CEO Minh Long cầm la bàn" data-en-aria="CEO Minh Long holding a compass" width="263" height="720" loading="lazy">
+      <div class="the"><b data-en="Round 3 strategy">Chiến lược vòng 3</b><div class="la-ban" aria-hidden="true"></div>
+        <div class="chon"><span data-en="Price">Giá</span><span class="chot" data-en="Marketing ✓">Marketing ✓</span><span data-en="Production">Sản xuất</span></div></div>
+    </div>
+  </section>
+
+  <section class="canh" id="cfo" style="--m:#FDA127;--nen:#FFE6B8" aria-labelledby="h-cfo">
+    <div class="chu">
+      <span class="so">02 · CFO</span>
+      <h2 id="h-cfo" data-en-html="Money in, <em>money out.</em>">Đồng nào vào, <em>đồng nào ra.</em></h2>
+      <p data-en="The CFO watches cash, not just profit. A team can win market share and still run out of cash; the quick ratio says it first.">CFO canh tiền mặt chứ không chỉ canh lợi nhuận. Một đội có thể giành thị phần mà vẫn cạn tiền, và quick ratio báo trước điều ấy.</p>
+      <div class="ai"><i></i><span>Thu Hà · <span data-en="Finance strategist">Chiến lược gia tài chính</span></span></div>
+    </div>
+    <div class="san">
+      <img class="nv" src="assets/character/solid/cfo-tex.webp" alt="CFO Thu Hà ôm túi tiền" data-en-aria="CFO Thu Hà holding a money bag" width="233" height="720" loading="lazy">
+      <div class="the"><b data-en="Quick ratio">Quick ratio</b><span class="lon" data-dem="1.24" data-le="2">0</span><small data-en="Cash flow by round">Dòng tiền qua từng vòng</small>
+        <div class="cot" aria-hidden="true"><i style="--h:40%"></i><i style="--h:62%"></i><i class="am" style="--h:28%"></i><i style="--h:55%"></i><i style="--h:78%"></i><i style="--h:90%"></i></div></div>
+    </div>
+  </section>
+
+  <section class="canh" id="cmo" style="--m:#E8762D;--nen:#FDE1CE" aria-labelledby="h-cmo">
+    <div class="chu">
+      <span class="so">03 · CMO</span>
+      <h2 id="h-cmo" data-en-html="The right price, <em>said out loud.</em>">Đúng giá, <em>nói cho thị trường nghe.</em></h2>
+      <p data-en="The CMO sets price and the marketing budget, then fights three rival CEOs for share: Alpha Dynamics, Mekong Ventures and Star Clay Co.">CMO đặt giá và ngân sách marketing, rồi giành thị phần với ba CEO đối thủ: Alpha Dynamics, Mekong Ventures và Star Clay Co.</p>
+      <div class="ai"><i></i><span>Mạnh Chi · <span data-en="Marketing wizard">Phù thủy marketing</span></span></div>
+    </div>
+    <div class="san">
+      <img class="nv" src="assets/character/solid/cmo-tex.webp" alt="CMO Mạnh Chi cầm loa" data-en-aria="CMO Mạnh Chi with a megaphone" width="336" height="720" loading="lazy">
+      <div class="the"><b data-en="Market share">Thị phần</b><div class="tron" aria-hidden="true"></div>
+        <div class="chu-giai"><span style="--c:#E8762D" data-en="Your team">Đội bạn</span><span style="--c:#7FD3DC">Alpha</span><span style="--c:#B69CE0">Mekong</span><span style="--c:#A9DCC4">Star Clay</span></div></div>
+    </div>
+  </section>
+
+  <section class="canh" id="coo" style="--m:#5BAA86;--nen:#DDF1E4" aria-labelledby="h-coo">
+    <div class="chu">
+      <span class="so">04 · COO</span>
+      <h2 id="h-coo" data-en-html="The line runs, <em>orders ship on time.</em>">Dây chuyền chạy, <em>hàng ra đúng hẹn.</em></h2>
+      <p data-en="The COO decides output, workers and training in the clay workshop. OEE and the defect rate show whether the line keeps up with what the CMO sold.">COO quyết sản lượng, nhân công và đào tạo ở xưởng đất sét. OEE và tỉ lệ phế phẩm cho biết dây chuyền có theo kịp số CMO đã bán không.</p>
+      <div class="ai"><i></i><span>Bảo Ngọc · <span data-en="Operations expert">Chuyên gia vận hành</span></span></div>
+    </div>
+    <div class="san">
+      <img class="nv" src="assets/character/solid/coo-tex.webp" alt="COO Bảo Ngọc cầm máy tính bảng" data-en-aria="COO Bảo Ngọc with a tablet" width="245" height="720" loading="lazy">
+      <div class="the"><b data-en="Clay workshop">Xưởng đất sét</b>
+        <div class="bang" aria-hidden="true"><i style="--c:#E8762D;--d:0s"></i><i style="--c:#FDA127;--d:-1.2s"></i><i style="--c:#C2581B;--d:-2.4s"></i><i style="--c:#F4B6C2;--d:-3.6s"></i></div>
+        <div class="so-doi"><span>OEE <span data-dem="85" data-le="0">0</span>%</span><span data-en-html="Defects 2.0%">Phế phẩm 2,0%</span></div></div>
+    </div>
+  </section>
+
+  <section class="canh" id="sec" style="--m:#E58FA2;--nen:#F4E1E6" aria-labelledby="h-sec">
+    <div class="chu">
+      <span class="so">05 · <span data-en="Secretary">Thư ký</span></span>
+      <h2 id="h-sec" data-en-html="Who's on what, <em>at a glance.</em>">Ai đang làm gì, <em>nhìn là biết.</em></h2>
+      <p data-en="The secretary keeps the minutes, chases deadlines and writes the lessons of each round into the Team Journal, so the whole team plays from the same page.">Thư ký ghi biên bản, nhắc thời hạn và chép bài học mỗi vòng vào Nhật ký đội, để cả đội cùng chơi trên một trang.</p>
+      <div class="ai"><i></i><span>Gia Hân · <span data-en="Legal secretary">Thư ký pháp chế</span></span></div>
+    </div>
+    <div class="san">
+      <img class="nv" src="assets/character/solid/sec-tex.webp" alt="Thư ký Gia Hân cầm bảng kẹp hồ sơ" data-en-aria="Secretary Gia Hân with a clipboard" width="257" height="720" loading="lazy">
+      <div class="the"><b data-en="Team Journal · round 3">Nhật ký đội · vòng 3</b>
+        <ul class="viec">
+          <li><i style="--c:#006687">✓</i><span data-en="CEO locked the strategy">CEO đã chốt chiến lược</span></li>
+          <li><i style="--c:#FDA127">✓</i><span data-en="CFO checked cash">CFO đã soát tiền mặt</span></li>
+          <li><i style="--c:#E8762D">✓</i><span data-en="CMO set the price">CMO đã đặt giá</span></li>
+          <li><i style="--c:#5BAA86">…</i><span data-en="COO: output pending">COO: chờ chốt sản lượng</span></li>
+        </ul></div>
+    </div>
+  </section>
+
+  <section class="canh" id="lumina" style="--m:#7FD3DC;--nen:#E8F6F7" aria-labelledby="h-lumina">
+    <div class="chu">
+      <span class="so">06 · <span data-en="Learning advisor">Cố vấn học tập</span></span>
+      <h2 id="h-lumina" data-en-html="You ask, Lumina points. <em>The team decides.</em>">Bạn hỏi, Lumina gợi mở. <em>Đội tự chọn.</em></h2>
+      <p data-en="Lumina reads the team's numbers and flags risks or openings for each role. She never picks the answer: deciding first and understanding why is how the game teaches.">Lumina đọc số liệu của đội, cảnh báo rủi ro hay chỉ ra cơ hội cho từng vai. Lumina không bao giờ chọn giúp: quyết định trước, hiểu vì sao sau, đó là cách trò chơi dạy.</p>
+      <div class="ai"><i></i><span>Lumina · <span data-en="Learning advisor">Cố vấn học tập</span></span></div>
+    </div>
+    <div class="san">
+      <img class="nv" src="assets/character/solid/lumina-tex.webp" alt="Lumina mặc áo dài cầm hoa sen" data-en-aria="Lumina in an áo dài holding a lotus" width="218" height="720" loading="lazy" style="--x:10%">
+      <div class="the"><div class="hoi">
+        <p class="doi" data-en="Should we raise the price?">Có nên tăng giá không?</p>
+        <p class="lu" data-en="Your quick ratio is 0.84, below 1.00.">Quick ratio của đội đang 0,84, dưới 1,00.</p>
+        <p class="lu" data-en="Which cost this round left cash short? Decide that first.">Khoản chi nào vòng này làm tiền mặt hụt? Đội trả lời câu ấy trước đã.</p>
+      </div></div>
+    </div>
+  </section>
+
+  <section class="canh" id="thaytu" style="--m:#FFD58A;--nen:#FFF3DA" aria-labelledby="h-tu">
+    <div class="chu">
+      <span class="so">07 · <span data-en="Academic advisor">Cố vấn học thuật</span></span>
+      <h2 id="h-tu" data-en-html="The idea <em>behind the numbers.</em>">Ý tưởng <em>đứng sau con số.</em></h2>
+      <p data-en="Thầy Tú is the team's academic advisor. In Brand Passport the team may ask him once per game, so they save the question for the moment that matters. Like Lumina, he points to the idea behind the numbers and leaves the decision to the team.">Thầy Tú là cố vấn học thuật của đội. Trong Hộ Chiếu Thương Hiệu, mỗi ván đội chỉ được hỏi thầy một lần, nên phải để dành câu hỏi cho lúc thật cần. Cũng như Lumina, thầy chỉ ra ý tưởng đứng sau con số và để đội tự quyết.</p>
+      <div class="ai"><i></i><span data-en="Assoc. Prof. Phan Anh Tú · Academic advisor">PGS.TS. Phan Anh Tú · Cố vấn học thuật</span></div>
+    </div>
+    <div class="san">
+      <img class="nv" src="assets/character/solid/tu-phan-tex-v3.webp" alt="PGS.TS. Phan Anh Tú" data-en-aria="Assoc. Prof. Phan Anh Tú" width="333" height="720" loading="lazy" style="--x:6%">
+      <div class="the nx"><b data-en="Ask thầy Tú · 1 question left">Hỏi thầy Tú · còn 1 lượt</b>
+        <p data-en="Top market share, yet a loss.">Thị phần cao nhất mà vẫn lỗ.</p>
+        <p data-en="Did the extra revenue cover what it cost to win it? Look at your cost per unit before you answer.">Phần doanh thu giành thêm có bù được chi phí bỏ ra để giành nó không? Xem chi phí trên mỗi sản phẩm trước khi trả lời.</p></div>
+    </div>
+  </section>
+
+  <section class="ket" aria-labelledby="h-doi">
+    <span class="dn-eyebrow" data-en="The team">Cả đội</span>
+    <h2 id="h-doi" data-en="Meet the team.">Gặp cả đội.</h2>
+    <p data-en="Pick one of the five roles when you sign in. Lumina and thầy Tú advise every team.">Chọn một trong năm vai khi đăng nhập. Hai cố vấn Lumina và thầy Tú đồng hành với mọi đội.</p>
+    <div class="doi-hinh">
+      <figure><a href="#ceo"><img src="assets/character/solid/ceo-tex.webp" alt="CEO Minh Long" data-en-aria="CEO Minh Long" width="263" height="720" loading="lazy"></a><figcaption>CEO<span>Minh Long</span></figcaption></figure>
+      <figure><a href="#cfo"><img src="assets/character/solid/cfo-tex.webp" alt="CFO Thu Hà" data-en-aria="CFO Thu Hà" width="233" height="720" loading="lazy"></a><figcaption>CFO<span>Thu Hà</span></figcaption></figure>
+      <figure><a href="#cmo"><img src="assets/character/solid/cmo-tex.webp" alt="CMO Mạnh Chi" data-en-aria="CMO Mạnh Chi" width="336" height="720" loading="lazy"></a><figcaption>CMO<span>Mạnh Chi</span></figcaption></figure>
+      <figure><a href="#coo"><img src="assets/character/solid/coo-tex.webp" alt="COO Bảo Ngọc" data-en-aria="COO Bảo Ngọc" width="245" height="720" loading="lazy"></a><figcaption>COO<span>Bảo Ngọc</span></figcaption></figure>
+      <figure><a href="#sec"><img src="assets/character/solid/sec-tex.webp" alt="Thư ký Gia Hân" data-en-aria="Secretary Gia Hân" width="257" height="720" loading="lazy"></a><figcaption><span data-en="Secretary" style="display:inline;color:inherit;font-weight:800">Thư ký</span><span>Gia Hân</span></figcaption></figure>
+      <figure><a href="#lumina"><img src="assets/character/solid/lumina-tex.webp" alt="Cố vấn Lumina" data-en-aria="Advisor Lumina" width="218" height="720" loading="lazy"></a><figcaption>Lumina<span data-en="Learning advisor">Cố vấn học tập</span></figcaption></figure>
+      <figure><a href="#thaytu"><img src="assets/character/solid/tu-phan-tex-v3.webp" alt="Cố vấn học thuật Phan Anh Tú" data-en-aria="Academic advisor Phan Anh Tú" width="333" height="720" loading="lazy"></a><figcaption><span data-en="Thầy Tú" style="display:inline;color:inherit;font-weight:800">Thầy Tú</span><span data-en="Academic advisor">Cố vấn học thuật</span></figcaption></figure>
+    </div>
+    <div class="dn-sa" id="sa-cuoi" style="margin-top:40px">
+      <canvas aria-label="Sa bàn văn phòng 3D, toàn cảnh" data-en-aria="3D office model, full view"></canvas>
+      <p class="goi" data-en="The whole office · drag to turn">Toàn cảnh văn phòng · kéo để xoay</p>
+      <p class="du" data-en="This browser can't show the 3D office.">Trình duyệt này chưa hiện được văn phòng 3D.</p>
+    </div>
+    <div class="acts">
+      <a class="clay-btn clay-btn-pill clay-btn-orange" href="game.html" data-en="Play Bật Nghiệp →">Vào chơi Bật Nghiệp →</a>
+      <a class="clay-btn clay-btn-pill" href="giang-vien.html" data-en="For instructors">Dành cho giảng viên</a>
+    </div>
+  </section>
+</main>
+
+<script src="js/vendor/three.min.js" defer></script>
+<script src="js/van-phong-doi-3d.js" defer></script>
+<script>
+addEventListener('DOMContentLoaded', function () {
+  var tinh = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var canh = [].slice.call(document.querySelectorAll('.canh'));
+  // Số đếm: định dạng theo thứ tiếng đang hiện (1,24 / 1.24)
+  function dem(el, xong) {
+    var dich = parseFloat(el.dataset.dem), le = +el.dataset.le || 0;
+    var loc = document.documentElement.lang === 'en' ? 'en-US' : 'vi-VN';
+    var f = function (v) { return v.toLocaleString(loc, { minimumFractionDigits: le, maximumFractionDigits: le }); };
+    if (tinh || xong) { el.textContent = f(dich); return; }
+    var t0 = performance.now();
+    (function b(t) { var k = Math.min(1, (t - t0) / 1100); el.textContent = f(dich * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(b); })(t0);
+  }
+  var io = new IntersectionObserver(function (es) {
+    es.forEach(function (e) { if (e.isIntersecting && !e.target.classList.contains('vao')) { e.target.classList.add('vao'); [].forEach.call(e.target.querySelectorAll('[data-dem]'), function (el) { dem(el); }); } });
+  }, { threshold: .35 });
+  canh.forEach(function (c) { if (tinh) { c.classList.add('vao'); [].forEach.call(c.querySelectorAll('[data-dem]'), function (el) { dem(el, true); }); } else io.observe(c); });
+  new MutationObserver(function () { [].forEach.call(document.querySelectorAll('.vao [data-dem]'), function (el) { dem(el, true); }); })
+    .observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
+  // --p: tiến độ của mục qua khung nhìn (0 khi mép trên chạm đáy màn hình, 1 khi giữa mục tới giữa màn hình)
+  if (!tinh) {
+    var hen = false;
+    var cap = function () { hen = false; var h = innerHeight; canh.forEach(function (c) { var r = c.getBoundingClientRect(); if (r.bottom < 0 || r.top > h) return; var p = (h - r.top) / (h / 2 + r.height / 2); c.style.setProperty('--p', Math.max(0, Math.min(1, p)).toFixed(3)); }); };
+    addEventListener('scroll', function () { if (!hen) { hen = true; requestAnimationFrame(cap); } }, { passive: true });
+    addEventListener('resize', cap); cap();
+  }
+  // Sa bàn 3D: gắn khi đến gần khung nhìn, để trang mở nhanh
+  function gan(id) {
+    var o = document.getElementById(id), cv = o.querySelector('canvas'), xong = false;
+    var nhin = new IntersectionObserver(function (es) {
+      if (!es[0].isIntersecting || xong) return; xong = true; nhin.disconnect();
+      try { window.BizOnVanPhong.mount(cv, { onPick: function (p) { var d = document.getElementById(p); if (d) d.scrollIntoView({ behavior: tinh ? 'auto' : 'smooth' }); } }); }
+      catch (err) { o.classList.add('loi'); }
+    }, { rootMargin: '200px' });
+    nhin.observe(o);
+  }
+  gan('sa-dau'); gan('sa-cuoi');
+});
+</script>
+<script src="js/bizon-clay-i18n.js" defer></script>
+<script src="js/bizon-clay-nav.js" defer></script>
+<script src="js/bizon-clay-footer.js" defer></script>
+</body>
+</html>
