@@ -65,6 +65,7 @@
 <link rel="stylesheet" href="css/clay-tool-skin.css">
 <link rel="stylesheet" href="css/clay-legacy.css">
 <script src="js/capture-guard.js"></script>
+<script src="js/khao-sat-bo2.js"></script>
 </head>
 <body>
 
@@ -102,8 +103,9 @@
       <div class="grid sm:grid-cols-2 gap-4">
         <div class="sm:col-span-2">
           <label class="block text-xs font-extrabold mb-1.5 opacity-70">Bộ câu hỏi (theo game lớp bạn sử dụng)</label>
-          <div class="grid grid-cols-2 gap-2">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
             <label class="ks-opt !mt-0 justify-center"><input type="radio" name="instr" value="batnghiep" checked onchange="ksInstr()"> 🚀 Khởi nghiệp (Bật Nghiệp)</label>
+            <label class="ks-opt !mt-0 justify-center"><input type="radio" name="instr" value="batnghiep2" onchange="ksInstr()"> 🚀 Khởi nghiệp – bộ 2 (từ 11/2026)</label>
             <label class="ks-opt !mt-0 justify-center"><input type="radio" name="instr" value="quocte" onchange="ksInstr()"> 🛂 KD quốc tế (Hộ Chiếu Thương Hiệu)</label>
           </div>
         </div>
@@ -265,10 +267,14 @@
   const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
   // ===== Hai bộ câu hỏi – chọn theo game lớp sử dụng =====
+  // Bộ 2 (js/khao-sat-bo2.js): 10 câu neo của bộ 1 + 5 câu vận dụng thay cho câu 2, 3, 10, 13, 15; cùng cụm chuẩn đầu ra, cùng thang /15.
+  const BO2 = window.BIZON_KS_BO2 ? window.BIZON_KS_BO2.ghep(QA, KEY) : { qa: QA, key: KEY };
   const BANKS = {
     batnghiep: { qa: QA, key: KEY, out: OUTCOMES, likb: LIKERT_B },
+    batnghiep2: { qa: BO2.qa, key: BO2.key, out: OUTCOMES, likb: LIKERT_B },
     quocte: { qa: QA_IB, key: KEY_IB, out: OUTCOMES_IB, likb: LIKERT_B_IB },
   };
+  const TEN_BO = { batnghiep: 'Khởi nghiệp', batnghiep2: 'Khởi nghiệp – bộ 2', quocte: 'KD quốc tế' };
   const curInstr = () => document.querySelector('input[name="instr"]:checked').value;
 
   // ===== Render =====
@@ -290,7 +296,7 @@
   // Mã lớp lưu viết hoa, bỏ khoảng trắng – khớp mã giảng viên đăng ký ở Instructor Studio (cũng viết hoa).
   const normClass = v => String(v || '').trim().toUpperCase().replace(/\s+/g, '');
   let QS; try { QS = new URLSearchParams(location.search); } catch (e) { QS = new URLSearchParams(''); }
-  try { if (QS.get('bo') === 'quocte') document.querySelector('input[name="instr"][value="quocte"]').checked = true; } catch (e) {}
+  try { const bo = QS.get('bo'); if (bo && BANKS[bo]) document.querySelector('input[name="instr"][value="' + bo + '"]').checked = true; } catch (e) {}
   const linkClass = normClass(QS.get('lop')).slice(0, 40);
   if (/^[A-Z0-9][A-Z0-9._-]*$/.test(linkClass)) {
     $('ks-class').value = linkClass;
@@ -371,7 +377,7 @@
     const B = BANKS[instr];
     const dupKey = 'bizon-survey-sent-' + instr + '-' + phase + '-' + klass + '-' + code;
     try {
-      if (localStorage.getItem(dupKey)) { $('ks-status').textContent = '⚠️ Thiết bị này đã nộp ' + (phase === 'pre' ? 'phiếu trước' : 'phiếu sau') + ' (bộ ' + (instr === 'quocte' ? 'KD quốc tế' : 'Khởi nghiệp') + ') với mã ' + code + ' rồi.'; return; }
+      if (localStorage.getItem(dupKey)) { $('ks-status').textContent = '⚠️ Thiết bị này đã nộp ' + (phase === 'pre' ? 'phiếu trước' : 'phiếu sau') + ' (bộ ' + (TEN_BO[instr] || instr) + ') với mã ' + code + ' rồi.'; return; }
     } catch (e) {}
     // Chấm điểm tự động theo bộ câu hỏi đang chọn
     let score = 0;

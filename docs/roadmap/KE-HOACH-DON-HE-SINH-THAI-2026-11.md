@@ -61,4 +61,5 @@ Những việc trên gom vào **Giai đoạn 3 (sau khi có giấy chứng nhậ
 | 7 | #1033 | đã gộp 07/11/2026; chờ gói ZIP đợt 10/2026 |
 | 8 | #1034 | đã gộp 07/11/2026 |
 | 5b | #1035 | đã gộp 07/11/2026: cơ cấu điểm 50/30/20, bốn tệp SQL đã áp chuyển vào `supabase/da-ap-tay/` |
-| 7b | `ket-qua-truoc-sau-10-2026` | kết quả 125 phiếu (49 cặp) hai lớp đợt 10/2026 vào Bằng chứng, Thiết kế nghiên cứu; bộ 15 câu bị trần, cần làm khó hơn |
+| 7b | #1038 | kết quả 125 phiếu (49 cặp) hai lớp đợt 10/2026 vào Bằng chứng, Thiết kế nghiên cứu; bộ 15 câu bị trần, cần làm khó hơn |
+| 7c | `bo-cau-hoi-v2` | bộ câu hỏi kiến thức bản 2 (`batnghiep2`): 10 câu neo + 5 câu vận dụng; `docs/research/BO-CAU-HOI-KIEN-THUC-V2.md`; chờ thử trên một lớp |

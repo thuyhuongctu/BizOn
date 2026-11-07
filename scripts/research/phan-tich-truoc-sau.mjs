@@ -74,13 +74,14 @@ export function pairedStats(pre, post) {
 }
 
 export function analyse(rows, classCode) {
-  const latest = {};   // (student_code, phase) → dòng mới nhất
+  const latest = {};   // (instrument, student_code, phase) → dòng mới nhất; bộ câu hỏi khác nhau (batnghiep, batnghiep2, quocte) không ghép với nhau
   for (const r of rows) {
-    const code = (r.student_code || '').trim().toUpperCase(), ph = (r.phase || '').trim();
-    if (!code || !['pre', 'post'].includes(ph)) continue;
+    const code = ((r.instrument || '').trim() + '|' + (r.student_code || '').trim().toUpperCase()), ph = (r.phase || '').trim();
+    if (code.endsWith('|') || !['pre', 'post'].includes(ph)) continue;
     const k = code + '|' + ph; if (!latest[k] || (r.created_at || '') > (latest[k].created_at || '')) latest[k] = r;
   }
-  const codes = [...new Set(Object.keys(latest).map(k => k.split('|')[0]))];
+  const codes = [...new Set(Object.keys(latest).map(k => k.slice(0, k.lastIndexOf('|'))))];
+  const instruments = [...new Set(codes.map(c => c.split('|')[0]))];
   const pairs = codes.filter(c => latest[c + '|pre'] && latest[c + '|post']).map(c => ({ pre: latest[c + '|pre'], post: latest[c + '|post'] }));
   const only = { pre: codes.filter(c => latest[c + '|pre'] && !latest[c + '|post']).length, post: codes.filter(c => !latest[c + '|pre'] && latest[c + '|post']).length };
   const bKeys = Object.keys(rows[0] || {}).filter(k => /^b_\d+$/.test(k)), cKeys = Object.keys(rows[0] || {}).filter(k => /^c_\d+$/.test(k)), oKeys = Object.keys(rows[0] || {}).filter(k => /^out_/.test(k));
@@ -90,7 +91,7 @@ export function analyse(rows, classCode) {
   const postRows = Object.values(latest).filter(r => r.phase === 'post');
   const post = { n: postRows.length, nps: (() => { const v = postRows.map(r => num(r.nps)).filter(x => x != null); if (!v.length) return null; const pro = v.filter(x => x >= 9).length, det = v.filter(x => x <= 6).length; return { n: v.length, mean: r2(mean(v)), nps: Math.round((pro - det) / v.length * 100) }; })(),
     c: Object.fromEntries(cKeys.map(k => { const v = postRows.map(r => num(r[k])).filter(x => x != null); return [k, v.length ? { n: v.length, mean: r2(mean(v)) } : null]; })) };
-  return { class: classCode, rows: rows.length, pairs: pairs.length, unpaired: only, score_a: take('score_a'), outcomes: Object.fromEntries(oKeys.map(k => [k, take(k)])), b: Object.fromEntries(bKeys.map(k => [k, take(k)])), b_total: bTotal, post };
+  return { class: classCode, instruments, rows: rows.length, pairs: pairs.length, unpaired: only, score_a: take('score_a'), outcomes: Object.fromEntries(oKeys.map(k => [k, take(k)])), b: Object.fromEntries(bKeys.map(k => [k, take(k)])), b_total: bTotal, post };
 }
 
 function loadClasses(p) {

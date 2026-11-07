@@ -47,7 +47,7 @@ Gói xuất từ Trang Giảng viên (thẻ Hành trình → «📦 Gói dữ li
 Cùng cột với CSV bài tình huống của Trang Giảng viên (thêm `team_key`): `phase`, `form`, `item`, `mech`, `choice`, `expected`, `aligned`, `logic`, `why` (lý do hoặc câu giải thích), `duration_s`, `explain_condition`, `journey_hash`, `submitted_at`, `answers_version`. Điểm rubric nằm ở CSV của `cham-tinh-huong.html`, ghép qua `student_key + phase + form + item`.
 
 ## surveys.csv — một dòng mỗi phiếu khảo sát
-`instrument` (bộ câu hỏi), `phase`, `student_code`, `role`, `rounds_played`, `score_a` (0–15), `out_<chuẩn>` (điểm theo chuẩn đầu ra), `b_1…b_8` (tự tin, Likert 1–5), `c_1…c_5` (trải nghiệm, phiếu sau), `nps` (0–10), `created_at`; `open_like`, `open_improve` chỉ khi xuất với `includeOpenText`.
+`instrument` (bộ câu hỏi: `batnghiep` bộ 1, `batnghiep2` bộ 2 từ 11/2026, `quocte`; xem `BO-CAU-HOI-KIEN-THUC-V2.md`), `phase`, `student_code`, `role`, `rounds_played`, `score_a` (0–15), `out_<chuẩn>` (điểm theo chuẩn đầu ra), `b_1…b_8` (tự tin, Likert 1–5), `c_1…c_5` (trải nghiệm, phiếu sau), `nps` (0–10), `created_at`; `open_like`, `open_improve` chỉ khi xuất với `includeOpenText`.
 
 ## Quy ước
 Ô rỗng = không có dữ liệu. Số thập phân dùng dấu chấm. Mã hoá UTF-8 có BOM? Không: ZIP chứa UTF-8 không BOM; mở bằng R/Python/Excel (Data → From Text, UTF-8).

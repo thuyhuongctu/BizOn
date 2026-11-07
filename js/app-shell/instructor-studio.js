@@ -304,7 +304,7 @@
     const post = unique.filter(row => row.phase === 'post');
     const postKeys = new Set(post.map(row => `${row.instrument || 'batnghiep'}|${row.student_code}`));
     const pairs = pre.filter(row => postKeys.has(`${row.instrument || 'batnghiep'}|${row.student_code}`));
-    const startup = unique.filter(row => (row.instrument || 'batnghiep') === 'batnghiep').length;
+    const startup = unique.filter(row => ['batnghiep', 'batnghiep2'].includes(row.instrument || 'batnghiep')).length;
     const international = unique.filter(row => row.instrument === 'quocte').length;
 
     const set = (id, value) => { const node = $(id); if (node) node.textContent = value; };
@@ -425,7 +425,7 @@
     const url = new URL('../khao-sat-online.html', location.href);
     url.searchParams.set('lop', state.classCode);
     url.searchParams.set('phieu', phase === 'post' ? 'sau' : 'truoc');
-    if ($('bi-survey-instrument')?.value === 'quocte') url.searchParams.set('bo', 'quocte');
+    const bo = $('bi-survey-instrument')?.value; if (bo && bo !== 'batnghiep') url.searchParams.set('bo', bo);   // 'quocte' hoặc 'batnghiep2'
     return url.href;
   }
 
