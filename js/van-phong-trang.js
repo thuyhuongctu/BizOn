@@ -31,7 +31,7 @@ addEventListener('DOMContentLoaded', function () {
     var o = document.getElementById(id), cv = o.querySelector('canvas'), xong = false;
     var nhin = new IntersectionObserver(function (es) {
       if (!es[0].isIntersecting || xong) return; xong = true; nhin.disconnect();
-      try { window.BizOnVanPhong.mount(cv, { phong: window.VP_PHONG, onPick: function (p) { var d = document.getElementById(p); if (d) d.scrollIntoView({ behavior: tinh ? 'auto' : 'smooth' }); } }); }
+      try { window.BizOnVanPhong.mount(cv, { phong: window.VP_PHONG, chuDe: window.VP_CHUDE, onPick: function (p) { var d = document.getElementById(p); if (d) d.scrollIntoView({ behavior: tinh ? 'auto' : 'smooth' }); } }); }
       catch (err) { o.classList.add('loi'); }
     }, { rootMargin: '200px' });
     nhin.observe(o);

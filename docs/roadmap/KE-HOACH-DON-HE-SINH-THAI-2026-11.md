@@ -40,7 +40,7 @@ Những việc trên gom vào **Giai đoạn 3 (sau khi có giấy chứng nhậ
 5. `bp3d-explainer.html` 21 MB và `lab/ho-chieu-sau-rieng-3d.html` 1,4 MB: tách tài nguyên base64 ra tệp.
 6. Video, nhạc sang CDN hoặc YouTube; kho chỉ giữ bản mới nhất, bản cũ lưu Drive.
 7. Lumina: bỏ con số cụ thể trong lời khuyên (`luminaAdvice` trong `js/engine.js`).
-8. Đổi «Thầy Tú» thành «Thầy Tu Phan» trong 7 tệp hồ sơ còn giữ nguyên (07/11/2026): `doi-ngu.html`, `ben-phu-sa.html`, `ben-phu-sa-3d.html`, `Ho Chieu Thuong Hieu 3D.html`, ba tệp `docs/ip/ben-phu-sa/`.
+8. Đổi tên cũ của thầy («Thầy T.») thành «Thầy Tu Phan» trong 7 tệp hồ sơ còn giữ nguyên (07/11/2026): `doi-ngu.html`, `ben-phu-sa.html`, `ben-phu-sa-3d.html`, `Ho Chieu Thuong Hieu 3D.html`, ba tệp `docs/ip/ben-phu-sa/`.
 
 ## 3. Việc chị cần làm (không phụ thuộc PR)
 
