@@ -14,6 +14,8 @@
 - [1 · Khung lý thuyết và nguyên tắc thiết kế](#1--khung-lý-thuyết-và-nguyên-tắc-thiết-kế)
 - [2 · Ma trận chuẩn đầu ra – Game mô phỏng chính](#2--ma-trận-chuẩn-đầu-ra--game-mô-phỏng-chính)
 - [3 · Ma trận chuẩn đầu ra – Hộ Chiếu Thương Hiệu](#3--ma-trận-chuẩn-đầu-ra--hộ-chiếu-thương-hiệu)
+- [3b · Ma trận chuẩn đầu ra – Bến Phù Sa](#3b--ma-trận-chuẩn-đầu-ra--bến-phù-sa)
+- [3c · Ma trận chuẩn đầu ra – Hộ Chiếu Sầu Riêng](#3c--ma-trận-chuẩn-đầu-ra--hộ-chiếu-sầu-riêng)
 - [4 · Rubric chấm thảo luận sau ván chơi](#4--rubric-chấm-thảo-luận-sau-ván-chơi)
   - [4.1 · Rubric game mô phỏng chính](#41--rubric-game-mô-phỏng-chính--clo-a-đến-clo-e)
   - [4.2 · Rubric Hộ Chiếu Thương Hiệu](#42--rubric-game-hộ-chiếu-thương-hiệu--bp-1-đến-bp-6)
@@ -92,6 +94,63 @@ BP-3 là chuẩn đầu ra **khó dạy nhất bằng phương pháp truyền th
 
 ---
 
+# 3b · Ma trận chuẩn đầu ra – Bến Phù Sa
+
+Ký hiệu: **BPS-1** đến **BPS-5** · Game bậc 1 (khởi sự kinh doanh đường phố), 5 tuần, cùng 3 đối thủ AI. Bổ sung 06/11/2026 theo kế hoạch dọn hệ sinh thái; cơ chế lấy từ `ben-phu-sa.html` và hồ sơ `docs/ip/ben-phu-sa/HO-SO-NOP-2026.md`; chỉ số theo gói dữ liệu `docs/research/TU-DIEN-BIEN.md` (nhóm Bậc 1).
+
+| Mã | Chuẩn đầu ra – sau khi chơi và thảo luận, sinh viên có thể… | Bloom | Cơ chế game tương ứng |
+|---|---|---|---|
+| **BPS-1** | Phân biệt quyết định *thăm dò* (gánh hàng rong, khảo sát chợ) với quyết định *khai thác* (ghe hàng bông) và giải thích khi nào nên đổi | Hiểu / Vận dụng | 3 phương thức: ghe ×3 doanh thu · gánh ×1 nhiều thông tin · khảo sát không bán |
+| **BPS-2** | Suy ra nhu cầu ẩn của một cặp món hàng × địa điểm từ dữ liệu bán hàng vài tuần, thay vì đoán theo cảm tính | Phân tích | Nhu cầu ẩn theo cặp món×khu, sinh theo seed; 6 khu với chân dung khách khác nhau |
+| **BPS-3** | Dự đoán tác động của đụng độ đối thủ lên doanh thu và chọn địa điểm tránh hoặc chấp nhận cạnh tranh | Vận dụng | Luật chia khách khi đụng độ; 3 AI mỗi «nhà» một chiến lược |
+| **BPS-4** | Đánh giá kết quả của mình so với kịch bản hoàn hảo, nhận ra phần do may rủi và phần do quyết định | Đánh giá | Hiệu suất so với kịch bản hoàn hảo (`t1_eff` 0–100) và xếp hạng 4 đội |
+| **BPS-5** | Rút ra một bài học có thể kiểm chứng ở tuần sau từ kết quả tuần trước (vòng lặp ra quyết định – quan sát – điều chỉnh) | Sáng tạo | Câu hỏi tổng kết để debrief; `t1_explain` |
+
+## 3b.1 · Chỉ số quan sát và phương pháp đánh giá
+
+| Mã | Chỉ số quan sát được (tự động) | Phương pháp đánh giá |
+|---|---|---|
+| BPS-1 | `t1_explore_weeks`, `t1_exploit_weeks`, `t1_survey_weeks`; `effectuation_index` = (tuần thử + khảo sát) ÷ 5 | Đối chiếu lời giải thích của sinh viên với chuỗi phương thức 5 tuần |
+| BPS-2 | Doanh thu theo tuần của cặp món × khu đã chọn; số lần đổi món hoặc khu | Sinh viên chỉ ra tuần nào dữ liệu đủ để kết luận về nhu cầu |
+| BPS-3 | Tuần có đụng độ đối thủ và doanh thu tuần đó so với tuần không đụng độ | Thảo luận «Bảng Giáo Viên» Bến Phù Sa (`Bang Giao Vien.dc.html`) |
+| BPS-4 | `t1_eff` (0–100), `t1_rank` (1–4), `t1_total` | Sinh viên tự ước lượng rồi so với `t1_eff` thật |
+| BPS-5 | `t1_explain` (câu giải thích cuối ván); bài tình huống `case_tasks.csv` (`aligned`, `why`) | Rubric lập luận 4 mức như Mục 4 |
+
+**Tiêu chí đạt theo tuần (đếm được):** tuần 1–2 có ít nhất một tuần thăm dò (gánh hoặc khảo sát); từ tuần 3 có ít nhất một lần giữ nguyên cặp món × khu đã cho doanh thu cao nhất; câu giải thích cuối ván nêu được một con số của chính ván chơi.
+
+# 3c · Ma trận chuẩn đầu ra – Hộ Chiếu Sầu Riêng
+
+Ký hiệu: **SR-1** đến **SR-6** · Game bậc 3 (xuất khẩu nông sản), 6 vụ, đội 5 vai, 7 CEO đối thủ của Go Global. Bổ sung 06/11/2026; cơ chế và điểm tổng lấy từ `docs/huong-dan-ho-chieu-sau-rieng.md` và `lab/ho-chieu-sau-rieng-engine.js` (điểm 0–100 = 30% lợi nhuận + 20% uy tín + 20% năng lực + 15% thích ứng + 15% bền vững). Hộ Chiếu Sầu Riêng **không** nằm trong hồ sơ đăng ký quyền tác giả 2026, nên ma trận này có thể chỉnh tự do.
+
+| Mã | Chuẩn đầu ra – sau khi chơi và thảo luận, sinh viên có thể… | Bloom | Cơ chế game tương ứng |
+|---|---|---|---|
+| **SR-1** | Giải thích rào cản TBT/SPS của Nghị định thư sầu riêng Việt Nam – Trung Quốc 2022: mã vùng trồng, mã cơ sở đóng gói, lấy mẫu, tạm dừng mã | Hiểu | Nguồn hàng «vùng liên kết có mã» đắt hơn; biến cố kiểm tra Hải quan và cảnh báo cadimi (vụ 4) |
+| **SR-2** | So sánh biên lợi nhuận, rủi ro và yêu cầu năng lực giữa tiểu ngạch, chính ngạch, đông lạnh, thị trường cao cấp và nội địa | Phân tích | Chia sản lượng cho 6 kênh mỗi vụ; nghị định thư đông lạnh (vụ 6) |
+| **SR-3** | Đánh giá đánh đổi giữa chi phí tuân thủ và rủi ro bị chặn hàng, giữa lợi nhuận ngắn hạn và uy tín ngành | Đánh giá | Vụ «dán nhãn Thái»; điểm uy tín `rep` và bền vững `sus` công khai |
+| **SR-4** | Nhận diện nguồn tin thiên lệch và quyết định có đáng trả tiền mua tin hay không | Đánh giá | Mỗi vụ mua tối đa 2 nguồn tin, có nguồn thiên lệch; «Nếu – Thì» tối đa 2 lần |
+| **SR-5** | Phối hợp 5 vai để chốt một phiếu quyết định đúng hạn khi khuyến nghị của các vai mâu thuẫn | Vận dụng / Sáng tạo | Họp đội 4 khuyến nghị (có thể chưa tối ưu), đồng hồ vụ, ghi «trễ hạn» |
+| **SR-6** | Lập luận về nâng cấp chuỗi giá trị khi Việt Nam có thị phần lớn nhưng giá thấp hơn Thái Lan | Sáng tạo | Ưu tiên đầu tư mỗi vụ; điểm năng lực `capability`; so sánh với 7 nhà buôn nước ngoài |
+
+## 3c.1 · Chỉ số quan sát và phương pháp đánh giá
+
+| Mã | Chỉ số quan sát được (tự động, bảng đội–vụ CSV) | Phương pháp đánh giá |
+|---|---|---|
+| SR-1 | Tỷ lệ mua từ vùng liên kết có mã; kết quả kiểm tra (`audit`) vụ 4 | Sinh viên giải thích vì sao đội bị hoặc không bị chặn hàng |
+| SR-2 | Phân bổ 6 kênh (`byChannel`) và lãi theo kênh từng vụ | Bản thu hoạch: kênh nào lãi nhất, vì sao không dồn hết vào đó |
+| SR-3 | `rep`, `sus` cuối ván; phản ứng với biến cố «dán nhãn Thái» | Rubric lập luận 4 mức như Mục 4 |
+| SR-4 | Số nguồn tin đã mua, nguồn nào thiên lệch; số lần «Nếu – Thì» | Đối chiếu dự báo của đội với kết quả thật |
+| SR-5 | Số vụ chốt đúng hạn; nhật ký sự kiện (`event_id, timestamp`) | Đánh giá đồng đẳng trong đội |
+| SR-6 | `capability` cuối ván; chuỗi ưu tiên đầu tư 6 vụ; thứ hạng so với 7 đối thủ | Thảo luận 4 câu hỏi ở màn báo cáo |
+
+**Tiêu chí đạt theo vụ (đếm được):** ít nhất 4/6 vụ chốt đúng hạn; từ vụ 2 có mua tin và nêu được nguồn nào thiên lệch; vụ 4 giải thích được kết quả kiểm tra bằng tỷ lệ nguồn hàng có mã; bản thu hoạch cuối ván dẫn ít nhất hai trong năm điểm thành phần.
+
+## 3b–3c · English summary
+
+- **Bến Phù Sa (BPS-1…5):** tell exploration from exploitation; infer hidden demand per product × place from sales data; anticipate rival collisions; judge one's own result against the perfect-play benchmark (`t1_eff`); turn last week's result into a testable lesson.
+- **Durian Passport (SR-1…6):** explain the 2022 Viet Nam – China durian protocol (orchard and packing-house codes, sampling, code suspension); compare export channels; weigh compliance cost against shipment rejection and industry reputation; detect biased market intelligence; coordinate five roles to a deadline; argue for value-chain upgrading.
+
+---
+
 # 4 · Rubric chấm thảo luận sau ván chơi
 
 Hai bộ rubric, cùng thang 4 mức, dùng cho hai game khác nhau. Cả hai đều **chấm phần lập luận, không chấm kết quả ván chơi**.
@@ -114,15 +173,15 @@ Hai bộ rubric, cùng thang 4 mức, dùng cho hai game khác nhau. Cả hai đ
 
 ### Vì sao neo vào chỉ số
 
-Engine ghi lại **hơn 20 chỉ số mỗi vòng chơi**, trong đó sáu chỉ số dùng làm neo cho rubric này đều xuất được ra tệp CSV từ bảng điều khiển giảng viên:
+Engine ghi lại **hơn 20 chỉ số mỗi vòng chơi**. Bản `result_json` gửi lên lớp là bản rút gọn (xem `docs/design/tro-ly-giang-vien.md` §2), nên tệp Excel/CSV từ bảng điều khiển giảng viên chỉ có **`share`, `quickRatio`, `oee`, `defect`** và lợi nhuận; **`adEff`, `lostSales`, `roi` chỉ hiện trong báo cáo vòng trên màn hình của đội**, người học phải tự trích khi trình bày (đối chiếu 06/11/2026):
 
 | Chỉ số | Ý nghĩa | Báo cáo chứa nó |
 |---|---|---|
-| `adEff` | Hiệu quả quảng cáo trên mỗi đồng chi | Báo cáo thị trường |
-| `share` · `lostSales` | Thị phần và số đơn hụt do thiếu hàng | Báo cáo thị trường |
-| `quickRatio` | Chỉ số thanh khoản nhanh | Báo cáo dòng tiền |
-| `roi` | Tỷ suất sinh lời trên tổng chi phí | Báo cáo lãi lỗ |
-| `oee` · `defect` | Hiệu quả thiết bị tổng thể và tỷ lệ phế phẩm | Báo cáo vận hành |
+| `adEff` | Hiệu quả quảng cáo trên mỗi đồng chi | Báo cáo thị trường (chỉ trên màn hình đội) |
+| `share` · `lostSales` | Thị phần và số đơn hụt do thiếu hàng | Báo cáo thị trường (`share` có trong tệp xuất; `lostSales` chỉ trên màn hình đội) |
+| `quickRatio` | Chỉ số thanh khoản nhanh | Báo cáo dòng tiền (có trong tệp xuất) |
+| `roi` | Tỷ suất sinh lời trên tổng chi phí | Báo cáo lãi lỗ (chỉ trên màn hình đội) |
+| `oee` · `defect` | Hiệu quả thiết bị tổng thể và tỷ lệ phế phẩm | Báo cáo vận hành (có trong tệp xuất) |
 
 **Hệ quả thực tế:** giảng viên chấm mức 3 và mức 4 **bắt buộc phải yêu cầu người học trích số cụ thể**. Nếu người học không dẫn được số, cao nhất chỉ đạt mức 2. Đây là cách giữ cho rubric không trôi về cảm tính.
 
@@ -137,6 +196,8 @@ Engine ghi lại **hơn 20 chỉ số mỗi vòng chơi**, trong đó sáu chỉ
 | Hợp tác vai trò & Bài học rút ra | **20%** | Giảng viên chấm – rubric bên dưới |
 
 > 🚧 45/35/20 là 40/30/15 gốc, làm tròn lại sau khi phân bổ đều phần 15% dư (tỷ lệ 40:30 giữa hai mục tự động) — có thể chỉnh lại nếu không phù hợp với lớp cụ thể.
+>
+> ⚠️ **Điểm chưa khớp, chờ hai tác giả chốt (ghi nhận 06/11/2026):** cơ cấu này dành 80% cho kết quả ván (lợi nhuận, cờ) trong khi Mục 4 tuyên bố «chấm phần lập luận, không chấm kết quả ván chơi». Tệp Excel xuất từ bảng điều khiển giảng viên (`js/bizon-grading.js`) lại dùng thang riêng B1–B6 /10: B1 lợi nhuận /2 · B2 cờ /2 · B3 vận hành /2 · B4 chống chịu biến cố /1,5 · B5 đóng góp vai trò /1,5 · B6 chuẩn bị /1, tức 75% tự động. Hai phương án: **(a)** giữ 45/35/20 và sửa câu tuyên bố thành «rubric chấm lập luận cho phần 20%»; **(b)** đổi thành 30% lợi nhuận · 20% cờ · 50% rubric lập luận (CLO-A→E) và sửa B1–B6 trong Excel theo. Chọn xong thì cập nhật cả `docs/cham-diem-bat-nghiep.md` và Excel cùng một PR.
 
 **Rubric tiêu chí "Hợp tác vai trò & Bài học rút ra" (20%)** — chia 2 nhánh nội bộ: Nhánh A – thảo luận vai trò xuyên suốt 6 vòng (60% × 20% = 12%) và Nhánh B – bài học rút ra cuối ván (40% × 20% = 8%).
 
@@ -282,7 +343,7 @@ Nhận xét cho đội:
 ### Chuẩn bị trước buổi chấm
 
 1. Vào bảng điều khiển giảng viên, lọc theo mã lớp, **xuất tệp CSV** kết quả từng vòng của tất cả các đội
-2. In hoặc mở sẵn tệp CSV khi chấm để đối chiếu ngay số liệu người học trích – phát hiện được đội nói số không khớp dữ liệu
+2. In hoặc mở sẵn tệp CSV khi chấm để đối chiếu ngay số liệu người học trích – phát hiện được đội nói số không khớp dữ liệu. Với `adEff`, `lostSales`, `roi` (không có trong tệp xuất) yêu cầu đội chụp màn hình báo cáo vòng kèm bài trình bày
 3. Với tiêu chí E, thu **Nhật ký đội** do vai Thư ký ghi và phiếu đánh giá đồng đẳng trước khi vào buổi thảo luận
 
 ---
@@ -291,7 +352,7 @@ Nhận xét cho đội:
 
 ## 5.1 · Cấu trúc
 
-Bộ trắc nghiệm gồm **30 câu hỏi**, dùng cả trước và sau buổi học để đo mức chênh lệch kiến thức.
+Phiếu đang dùng (`khao-sat.html`, bản in và `khao-sat-online.html`) gồm **15 câu kiến thức (Phần A)** và **8 phát biểu tự tin thang 1–5 (Phần B)**, dùng cả trước và sau buổi học để đo mức chênh lệch kiến thức và tự tin. Bản 30 câu nêu ở các phiên bản trước của tài liệu này đã rút gọn (06/11/2026, khớp `bang-chung.html` và `thiet-ke-nghien-cuu.html`).
 
 | Miền kiến thức | Nội dung kiểm tra | Liên hệ CLO |
 |---|---|---|
@@ -340,7 +401,7 @@ Cách gắn tài liệu này vào đề cương học phần:
 |---|---|---|---|
 | **Ngắn** | 90 phút | 3 quý chơi + thảo luận nhanh | Rubric tiêu chí 1 và 4 |
 | **Chuẩn** | 1 buổi 3–4 tiết | 6 quý chơi trọn ván + thảo luận đầy đủ | Toàn bộ rubric 4 tiêu chí |
-| **Đầy đủ** | 2 buổi | Đo trước – chơi – thảo luận – đo sau | Rubric + bộ 30 câu trước–sau + đánh giá đồng đẳng |
+| **Đầy đủ** | 2 buổi | Đo trước – chơi – thảo luận – đo sau | Rubric + phiếu trước–sau (15 câu kiến thức + 8 câu tự tin) + đánh giá đồng đẳng |
 
 ## 6.3 · Quy mô lớp
 
@@ -364,7 +425,7 @@ Nêu ra để người dạy biết trước khi đưa vào buổi học, và đ
 
 4. **Chưa có nghiên cứu hiệu quả được công bố.** Bộ công cụ này là thiết kế sư phạm có căn cứ lý thuyết, chưa phải bằng chứng đã kiểm định. Việc đo hiệu quả học tập cần thiết kế nghiên cứu riêng có nhóm đối chứng.
 
-5. **Bộ 30 câu trước – sau chưa qua kiểm định độ tin cậy.** Trước khi dùng cho công bố khoa học cần chạy thử trên mẫu đủ lớn, tính hệ số Cronbach's alpha và phân tích độ phân biệt của từng câu.
+5. **Phiếu trước – sau (15 câu kiến thức + 8 câu tự tin) chưa qua kiểm định độ tin cậy.** Trước khi dùng cho công bố khoa học cần chạy thử trên mẫu đủ lớn, tính hệ số Cronbach's alpha và phân tích độ phân biệt của từng câu.
 
 6. **Rubric chưa qua kiểm định độ tin cậy giữa các giám khảo.** Nếu nhiều giảng viên cùng chấm, nên chấm thử song song trên cùng một mẫu và tính hệ số đồng thuận trước khi áp dụng chính thức.
 
@@ -387,7 +448,8 @@ Ghi rõ để tài liệu không bị hiểu là đã hoàn chỉnh.
 | Hạng mục | Hiện trạng | Cần làm |
 |---|---|---|
 | **Rubric cho game mô phỏng chính** | **Đã có bản nháp v0.1** tại [Mục 4.1](#41--rubric-game-mô-phỏng-chính--clo-a-đến-clo-e), nay kèm cơ cấu điểm học phần 45/35/20 – dựng từ chỉ số engine ghi lại | Hai tác giả rà soát mức mô tả và ngưỡng phân biệt; chấm thử trên 2–3 đội trước khi dùng chính thức; xác nhận lại trọng số 45/35/20 (đang là suy ra từ 40/30/15 gốc, chưa hỏi lại tác giả) |
-| **Kiểm định bộ 30 câu trước – sau** | Đã soạn, chưa kiểm định | Chạy thử, tính Cronbach's alpha, phân tích độ phân biệt từng câu |
+| **Kiểm định phiếu trước – sau (15 + 8 câu)** | Đã soạn, đã thu khoảng 130 phiếu đợt 10/2026, chưa phân tích | Chạy thử, tính Cronbach's alpha, phân tích độ phân biệt từng câu |
+| **Chuẩn đầu ra Bến Phù Sa và Hộ Chiếu Sầu Riêng** | Đã có ma trận (Mục 3b, 3c, 06/11/2026) và tiêu chí đạt đếm được | Hai tác giả rà soát; chấm thử một lớp; bản EN đầy đủ |
 | **Kiểm định độ tin cậy giữa giám khảo của rubric** | Chưa làm | Chấm song song trên cùng mẫu, tính hệ số đồng thuận |
 | **Bộ câu hỏi riêng cho kinh doanh quốc tế** | Chưa có | Soạn bộ đo riêng cho BP-1 đến BP-6 |
 | **Bản tiếng Anh của rubric** | §4.2 (Hộ Chiếu Thương Hiệu) đã có bản song ngữ, kèm cơ cấu điểm học phần 40/40/20 | §4.1 (game mô phỏng chính) vẫn chỉ có tiếng Việt – cần dịch có đối dịch ngược nếu dùng chính thức cho lớp quốc tế |
