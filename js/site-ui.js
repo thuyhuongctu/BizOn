@@ -1658,7 +1658,7 @@
 "Brand & music"
 ],
 [
-"Thầy Tú bên laptop, sách mở và cà phê – nơi các Model Card ra đời",
+"Thầy Tu Phan bên laptop, sách mở và cà phê – nơi các Model Card ra đời",
 "Tú at his laptop with open books and coffee – where the Model Cards were written"
 ],
 [

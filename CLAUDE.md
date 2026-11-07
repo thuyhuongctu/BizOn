@@ -44,5 +44,5 @@ Trang tĩnh bizonland.com: trò chơi mô phỏng học kinh doanh quốc tế (
 - Sao lưu tự động mỗi ngày: `.github/workflows/supabase-backup.yml`, hướng dẫn khôi phục ở `docs/sao-luu-supabase.md`.
 
 ## Các kho khác của chị
-- Local-Specialty-Brand-Lab: cùng quy tắc tác giả, có dòng `Co-authored-by` của thầy Tú khi gộp.
-- CHAM và Je-mappelle-Huong: tác giả chỉ thuyhuongctu, **không** có dòng `Co-authored-by` của thầy Tú.
+- Local-Specialty-Brand-Lab: cùng quy tắc tác giả, có dòng `Co-authored-by` của thầy Tu Phan khi gộp.
+- CHAM và Je-mappelle-Huong: tác giả chỉ thuyhuongctu, **không** có dòng `Co-authored-by` của thầy Tu Phan.

@@ -25,7 +25,7 @@
     { id: 'sec', do: 'tu', x: -5, z: 11, w: 6.5, d: 5, mau: 0xF4E1E6, sang: 0xF4B6C2, anh: 'sec-tex', tl: 257 / 720,
       ten: { vi: 'Văn thư – pháp chế', en: 'Records & compliance' }, vai: { vi: 'Thư ký Gia Hân', en: 'Secretary Gia Hân' } },
     { id: 'thaytu', do: 'bang-trang', cao: 4.3, x: 6, z: 11, w: 7, d: 5, mau: 0xFFF3DA, sang: 0xFFD58A, anh: 'tu-phan-tex-v3', tl: 333 / 720,
-      ten: { vi: 'Phòng cố vấn học thuật', en: 'Academic advisor' }, vai: { vi: 'Thầy Tú', en: 'Thầy Tú' } },
+      ten: { vi: 'Phòng cố vấn học thuật', en: 'Academic advisor' }, vai: { vi: 'Thầy Tu Phan', en: 'Thầy Tu Phan' } },
   ];
   // Lối đi: từ trạm giữa ra từng phòng, gãy góc một lần (kiểu sơ đồ mạch) cho dễ đọc từ trên xuống.
   const LOI = [

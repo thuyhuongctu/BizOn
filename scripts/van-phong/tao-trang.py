@@ -72,7 +72,7 @@ GAME = {
                   ('Ngoài Đội Rồng Xanh, người chơi có thể chọn Đội Phù Sa. Hương là nhà sáng lập: gánh hàng rong của đội biết chắc khu nào đông nhất tuần sau.',
                    'Besides the Blue Dragon team, players can pick the Phù Sa team. Hương is its founder: the team’s street cart knows for sure the busiest spot next week.'),
                   (('Ưu thế của nhà sáng lập', 'Founder perk'), [('🧺 Biết chắc khu đông nhất tuần sau', '🧺 Knows the busiest spot next week')])),
-            nguoi('thaytu', 'bps-tu', ('Thầy Tú', 'Thầy Tú'), ('Cố vấn học thuật', 'Academic advisor'), ('Chòi cố vấn học thuật', 'Academic advisor hut'), 'bang-trang',
+            nguoi('thaytu', 'bps-tu', ('Thầy Tu Phan', 'Thầy Tu Phan'), ('Cố vấn học thuật', 'Academic advisor'), ('Chòi cố vấn học thuật', 'Academic advisor hut'), 'bang-trang',
                   ('Mở đầu <em>mỗi tuần buôn bán.</em>', 'Opening <em>every trading week.</em>'),
                   ('PGS.TS. Phan Anh Tú là cố vấn học thuật. Đầu mỗi tuần trong năm tuần, thầy mở màn bằng một lời dẫn gợi mở cho tuần ấy.',
                    'Assoc. Prof. Phan Anh Tú is the academic advisor. At the start of each of the five weeks, he opens with a prompting line for that week.'),
@@ -80,7 +80,7 @@ GAME = {
         ]),
     # ---------------- Hộ Chiếu Thương Hiệu ----------------
     # Nguồn: brand-passport.html:457-462 (bốn doanh nghiệp), :713-720 (CAST – Ban cố vấn),
-    # «Ho Chieu Thuong Hieu 3D.html»:998 (thầy Tú · Giảng viên · Quốc tế hóa), js/bp-signature.js:154 (hỏi thầy Tú 1 lần/ván).
+    # «Ho Chieu Thuong Hieu 3D.html»:998 (thầy Tu Phan · Giảng viên · Quốc tế hóa), js/bp-signature.js:154 (hỏi thầy Tu Phan 1 lần/ván).
     'hc-thuong-hieu': dict(
         chu_de='bien',
         tep='van-phong-hc-thuong-hieu.html', choi='brand-passport.html', game=('Hộ Chiếu Thương Hiệu', 'Brand Passport'),
@@ -133,22 +133,22 @@ GAME = {
                   ('Lina Park lo phân phối trong ban cố vấn, và có chân dung riêng ở màn nhiệm vụ của game.',
                    'Lina Park handles distribution on the advisory board, and has her own portrait on the game’s mission screen.'),
                   (('Ban cố vấn', 'Advisory board'), [('Phân phối', 'Distribution')])),
-            nguoi('thaytu', 'hcth-tu', ('Thầy Tú', 'Thầy Tú'), ('Giảng viên · Quốc tế hoá', 'Lecturer · Internationalisation'), ('Phòng quốc tế hoá', 'Internationalisation room'), 'bang-trang',
-                  ('Hỏi thầy Tú, <em>một lần mỗi ván.</em>', 'Ask thầy Tú, <em>once a game.</em>'),
-                  ('Trong bản 3D, thầy Tú ngồi ghế quốc tế hoá của ban cố vấn. Mỗi ván người chơi được hỏi thầy một lần, nên phải để dành câu hỏi cho lúc thật cần.',
-                   'In the 3D edition thầy Tú holds the internationalisation seat on the board. Each game the player may ask him once, so the question is saved for when it matters.'),
-                  (('Ban cố vấn', 'Advisory board'), [('Hỏi thầy Tú: 1 lần/ván', 'Ask thầy Tú: once a game')])),
+            nguoi('thaytu', 'hcth-tu', ('Thầy Tu Phan', 'Thầy Tu Phan'), ('Giảng viên · Quốc tế hoá', 'Lecturer · Internationalisation'), ('Phòng quốc tế hoá', 'Internationalisation room'), 'bang-trang',
+                  ('Hỏi thầy Tu Phan, <em>một lần mỗi ván.</em>', 'Ask thầy Tu Phan, <em>once a game.</em>'),
+                  ('Trong bản 3D, thầy Tu Phan ngồi ghế quốc tế hoá của ban cố vấn. Mỗi ván người chơi được hỏi thầy một lần, nên phải để dành câu hỏi cho lúc thật cần.',
+                   'In the 3D edition thầy Tu Phan holds the internationalisation seat on the board. Each game the player may ask him once, so the question is saved for when it matters.'),
+                  (('Ban cố vấn', 'Advisory board'), [('Hỏi thầy Tu Phan: 1 lần/ván', 'Ask thầy Tu Phan: once a game')])),
         ]),
     # ---------------- Hộ Chiếu Sầu Riêng ----------------
     # Nguồn: lab/ho-chieu-sau-rieng-data.js:347-357 (đội 5 vai, nguyên văn), :411 + html:301 (hỏi Lumina tối đa 3),
-    # lab/ho-chieu-sau-rieng-3d.html:401 (NPC Bà Sáu Lành «Nhà vườn · cố vấn»; NPC thầy Tú: câu hỏi debrief trước khi CEO chốt,
+    # lab/ho-chieu-sau-rieng-3d.html:401 (NPC Bà Sáu Lành «Nhà vườn · cố vấn»; NPC thầy Tu Phan: câu hỏi debrief trước khi CEO chốt,
     # giải đáp «phương thức thâm nhập ngay trong nước», «kênh của đội thuộc phương thức nào», debrief cuối sáu vụ).
     'hc-sau-rieng': dict(
         chu_de='vuon',
         tep='van-phong-hc-sau-rieng.html', choi='lab/ho-chieu-sau-rieng.html', game=('Hộ Chiếu Sầu Riêng', 'Durian Passport'),
         tieu=('Một đội, một chuỗi xuất khẩu sầu riêng.', 'One team, one durian export chain.'),
-        lead=('Đội 5 vai điều hành một mắt xích trong chuỗi xuất khẩu sầu riêng qua sáu vụ, từ ngày Trung Quốc mở chính ngạch năm 2022. Ba cố vấn đi cùng: Lumina, Bà Sáu Lành và thầy Tú.',
-              'A team of 5 roles runs one link of the durian export chain over six seasons, from the day China opened official trade in 2022. Three advisors come along: Lumina, Bà Sáu Lành and thầy Tú.'),
+        lead=('Đội 5 vai điều hành một mắt xích trong chuỗi xuất khẩu sầu riêng qua sáu vụ, từ ngày Trung Quốc mở chính ngạch năm 2022. Ba cố vấn đi cùng: Lumina, Bà Sáu Lành và thầy Tu Phan.',
+              'A team of 5 roles runs one link of the durian export chain over six seasons, from the day China opened official trade in 2022. Three advisors come along: Lumina, Bà Sáu Lành and thầy Tu Phan.'),
         ds=[
             nguoi('lumina', 'sr-lumina', ('Lumina', 'Lumina'), ('Cố vấn', 'Advisor'), ('Trạm Lumina', 'Lumina hub'), 'vong',
                   ('Hỏi tối đa ba lần, <em>Lumina hỏi ngược lại.</em>', 'Ask up to three times; <em>Lumina asks back.</em>'),
@@ -185,11 +185,11 @@ GAME = {
                   ('Bà Sáu Lành là nhà vườn và cố vấn của đội trong bản 3D: người ở ngay đầu chuỗi, nơi trái sầu riêng được trồng.',
                    'Bà Sáu Lành is a grower and the team’s advisor in the 3D edition: right at the start of the chain, where the durian is grown.'),
                   (('Cố vấn', 'Advisor'), [('Nhà vườn sầu riêng', 'Durian grower')])),
-            nguoi('thaytu', 'bps-tu', ('Thầy Tú', 'Thầy Tú'), ('Giảng viên · cố vấn lý thuyết', 'Lecturer · theory advisor'), ('Phòng debrief', 'Debrief room'), 'bang-trang',
+            nguoi('thaytu', 'bps-tu', ('Thầy Tu Phan', 'Thầy Tu Phan'), ('Giảng viên · cố vấn lý thuyết', 'Lecturer · theory advisor'), ('Phòng debrief', 'Debrief room'), 'bang-trang',
                   ('Câu hỏi debrief <em>trước khi chốt vụ.</em>', 'Debrief questions <em>before the season is committed.</em>'),
-                  ('Trong bản 3D, thầy Tú là giảng viên Trường Kinh tế, Đại học Cần Thơ. Mỗi vụ, trước khi CEO chốt, thầy hỏi đội mấy câu debrief; đội hỏi lại thì thầy giải thích lý thuyết, như kênh bán của đội thuộc phương thức thâm nhập nào. Hết sáu vụ, thầy dẫn buổi debrief: đội đã học được gì về kinh doanh quốc tế.',
-                   'In the 3D edition thầy Tú is a lecturer at the CTU School of Economics. Each season, before the CEO commits, he asks the team a few debrief questions; asked back, he explains the theory, such as which entry mode each sales channel is. After six seasons he leads the debrief: what the team learned about international business.'),
-                  (('Thầy Tú', 'Thầy Tú'), [('Câu hỏi debrief mỗi vụ', 'Debrief questions each season'), ('Kênh bán ↔ phương thức thâm nhập', 'Channel ↔ entry mode')])),
+                  ('Trong bản 3D, thầy Tu Phan là giảng viên Trường Kinh tế, Đại học Cần Thơ. Mỗi vụ, trước khi CEO chốt, thầy hỏi đội mấy câu debrief; đội hỏi lại thì thầy giải thích lý thuyết, như kênh bán của đội thuộc phương thức thâm nhập nào. Hết sáu vụ, thầy dẫn buổi debrief: đội đã học được gì về kinh doanh quốc tế.',
+                   'In the 3D edition thầy Tu Phan is a lecturer at the CTU School of Economics. Each season, before the CEO commits, he asks the team a few debrief questions; asked back, he explains the theory, such as which entry mode each sales channel is. After six seasons he leads the debrief: what the team learned about international business.'),
+                  (('Thầy Tu Phan', 'Thầy Tu Phan'), [('Câu hỏi debrief mỗi vụ', 'Debrief questions each season'), ('Kênh bán ↔ phương thức thâm nhập', 'Channel ↔ entry mode')])),
         ]),
 }
 

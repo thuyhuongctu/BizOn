@@ -1,4 +1,4 @@
-/* Bến Phù Sa 3D – nhân vật nói (cô Hương, thầy Tú, đối thủ, người dẫn) + phát mp3. Thiếu file mp3 thì chỉ hiện chữ.
+/* Bến Phù Sa 3D – nhân vật nói (cô Hương, thầy Tu Phan, đối thủ, người dẫn) + phát mp3. Thiếu file mp3 thì chỉ hiện chữ.
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú. */
 (function () {
   var V = window.BPS_VOICE; if (!V) return;
