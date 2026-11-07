@@ -46,3 +46,12 @@ Trang tĩnh bizonland.com: trò chơi mô phỏng học kinh doanh quốc tế (
 ## Các kho khác của chị
 - Local-Specialty-Brand-Lab: cùng quy tắc tác giả, có dòng `Co-authored-by` của thầy Tu Phan khi gộp.
 - CHAM và Je-mappelle-Huong: tác giả chỉ thuyhuongctu, **không** có dòng `Co-authored-by` của thầy Tu Phan.
+
+## Spec Kit (đặc tả trước, mã sau)
+- Tính năng mới cỡ M trở lên đi qua Spec Kit: `/speckit-specify` → (`/speckit-clarify`) → `/speckit-plan` → `/speckit-tasks` → `/speckit-implement`. Sửa chữ, sửa lỗi nhỏ thì làm thẳng như cũ.
+- Hiến chương ở `.specify/memory/constitution.md` (rút từ tệp này; tệp này thắng khi hai bên khác nhau). Đặc tả mỗi tính năng nằm trong `specs/NNN-tên/`, đi cùng PR của tính năng ấy.
+- Spec Kit không tự tạo nhánh: vẫn mở nhánh `claude/<tên-việc>` như thường. Nguồn: github/spec-kit (MIT), bản sao ở thuyhuongctu/spec-kit.
+<!-- SPECKIT START -->
+For additional context about technologies to be used, project structure,
+shell commands, and other important information, read the current plan
+<!-- SPECKIT END -->
