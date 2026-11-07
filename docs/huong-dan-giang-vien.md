@@ -81,9 +81,10 @@ Bản đồ chinh phục hiển thị trên Trang chủ của mỗi đội – d
 Bộ phiếu khảo sát trước–sau in được trên khổ A4 (kèm đáp án và hướng dẫn chấm cho giảng viên):
 **https://thuyhuongctu.github.io/BizOn/khao-sat.html**
 
-- **Phiếu trước** (đầu buổi, 5–7 phút): 8 câu kiến thức + 5 câu tự tin ra quyết định (Likert 1–5)
-- **Phiếu sau** (cuối buổi, 7–10 phút): lặp lại A + B để đo chênh lệch, thêm phần C về mức độ tham gia, điểm giới thiệu 0–10 và 2 câu mở
-- Ẩn danh bằng mã tự đặt; trang thứ ba dành riêng cho giảng viên: đáp án, cách nhập bảng tính và các chỉ số Δ kiến thức / Δ tự tin / mức tham gia
+- **Phiếu trước** (đầu buổi, 10 phút): 15 câu kiến thức (Phần A) + 8 câu tự tin ra quyết định (Phần B, Likert 1–5)
+- **Phiếu sau** (cuối buổi, 12 phút): lặp lại A + B để đo chênh lệch, thêm phần C về trải nghiệm (5 câu), điểm giới thiệu 0–10 và 2 câu mở
+- Ẩn danh bằng mã tự đặt; bản online `khao-sat-online.html` tự chấm và lưu về lớp qua link giảng viên tạo ở Instructor Studio (tab Khảo sát)
+- **Từ 11/2026 có bộ câu hỏi 2** (`batnghiep2`, 5 câu vận dụng thay cho 5 câu quá dễ của bộ 1): đang thử trên một lớp trước khi dùng chung. Hướng dẫn từng bước cho lớp thử: `docs/research/HUONG-DAN-THU-BO-2-TREN-LOP.md`; nội dung và đáp án: `docs/research/BO-CAU-HOI-KIEN-THUC-V2.md`
 
 Dữ liệu trước–sau từ 2–3 lớp (~100 sinh viên) chính là bằng chứng hiệu quả học tập quan trọng nhất của dự án.
 

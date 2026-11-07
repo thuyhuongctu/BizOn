@@ -33,6 +33,10 @@ check(R('app/instructor-studio.html').includes('value="batnghiep2"') && R('js/ap
 check(R('scripts/research/phan-tich-truoc-sau.mjs').includes("(r.instrument || '').trim() + '|'"), 'script phân tích ghép cặp theo (bộ, mã)');
 check(R('docs/research/TU-DIEN-BIEN.md').includes('batnghiep2'), 'từ điển biến ghi giá trị instrument mới');
 check(+(/CACHE = 'bizon-v(\d+)'/.exec(R('sw.js')) || [])[1] >= 805, 'sw.js ≥ bizon-v805');
+// Hướng dẫn thử bộ 2 trên lớp (PR 7d): có tài liệu, nêu đúng điều kiện và chỗ bấm, được dẫn từ hướng dẫn giảng viên và tài liệu bộ 2
+{ const hd = R('docs/research/HUONG-DAN-THU-BO-2-TREN-LOP.md');
+  check(['≥ 30 sinh viên', 'bo=batnghiep2', 'Bộ Khởi nghiệp 2 (từ 11/2026)', 'Gói dữ liệu nghiên cứu (ZIP)', '60 phút', '0,40–0,70', '< 15 %'].every(s => hd.includes(s)), 'hướng dẫn thử bộ 2 đủ điều kiện, link, nút xuất, quy tắc 60 phút và ngưỡng quyết định');
+  check(R('docs/huong-dan-giang-vien.md').includes('HUONG-DAN-THU-BO-2-TREN-LOP.md') && R('docs/huong-dan-giang-vien.md').includes('15 câu kiến thức') && doc.includes('HUONG-DAN-THU-BO-2-TREN-LOP.md'), 'hướng dẫn giảng viên nói 15 câu và dẫn tới hướng dẫn thử'); }
 (async () => {
   const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
   try {

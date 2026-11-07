@@ -82,6 +82,8 @@ Dùng nếu sau lớp thử bộ 2 vẫn có trên 15 % phiếu trước đạt 
 
 ## 5. Thử trước trên một lớp (bắt buộc trước khi dùng đại trà)
 
+Hướng dẫn từng bước cho giảng viên đứng lớp thử: `docs/research/HUONG-DAN-THU-BO-2-TREN-LOP.md`.
+
 1. Phát bộ 2 cho một lớp (phiếu trước), n ≥ 30. Xuất gói dữ liệu, chạy `node scripts/research/phan-tich-truoc-sau.mjs <thư mục> --md`.
 2. Tính cho 5 câu mới: tỷ lệ đúng (mục tiêu 0,40–0,70) và tương quan câu–tổng (≥ 0,20). Câu ngoài khoảng thì thay bằng câu dự phòng cùng cụm.
 3. Kiểm trần: tỷ lệ phiếu trước ≥ 14/15 phải dưới 15 %. Nếu vẫn vượt, thay tiếp bằng câu dự phòng.
