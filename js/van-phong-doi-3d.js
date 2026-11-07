@@ -12,19 +12,19 @@
 
   // Toạ độ (x, z) trên sàn; w × d là cỡ phòng. mau: màu sàn phòng (bộ màu đất sét), sang: màu viền sáng.
   const PHONG = [
-    { id: 'lumina', x: 0, z: 0, w: 6, d: 6, mau: 0xF3E6CF, sang: 0x7FD3DC, anh: 'lumina-tex', tl: 218 / 720,
+    { id: 'lumina', giua: true, do: 'vong', x: 0, z: 0, w: 6, d: 6, mau: 0xF3E6CF, sang: 0x7FD3DC, anh: 'lumina-tex', tl: 218 / 720,
       ten: { vi: 'Trạm Lumina', en: 'Lumina hub' }, vai: { vi: 'Cố vấn học tập', en: 'Learning advisor' } },
-    { id: 'ceo', x: -10, z: -7, w: 7, d: 5.5, mau: 0xD9F0F2, sang: 0x7FD3DC, anh: 'ceo-tex', tl: 263 / 720,
+    { id: 'ceo', do: 'ban-tron', x: -10, z: -7, w: 7, d: 5.5, mau: 0xD9F0F2, sang: 0x7FD3DC, anh: 'ceo-tex', tl: 263 / 720,
       ten: { vi: 'Phòng chiến lược', en: 'Strategy room' }, vai: { vi: 'CEO Minh Long', en: 'CEO Minh Long' } },
-    { id: 'cfo', x: 10, z: -7, w: 7, d: 5.5, mau: 0xFFE6B8, sang: 0xFDA127, anh: 'cfo-tex', tl: 233 / 720,
+    { id: 'cfo', do: 'ket', x: 10, z: -7, w: 7, d: 5.5, mau: 0xFFE6B8, sang: 0xFDA127, anh: 'cfo-tex', tl: 233 / 720,
       ten: { vi: 'Két & sổ sách', en: 'Vault & ledgers' }, vai: { vi: 'CFO Thu Hà', en: 'CFO Thu Hà' } },
-    { id: 'cmo', x: -12, z: 4, w: 6.5, d: 5.5, mau: 0xFDE1CE, sang: 0xE8762D, anh: 'cmo-tex', tl: 336 / 720,
+    { id: 'cmo', do: 'bang', x: -12, z: 4, w: 6.5, d: 5.5, mau: 0xFDE1CE, sang: 0xE8762D, anh: 'cmo-tex', tl: 336 / 720,
       ten: { vi: 'Studio thị trường', en: 'Market studio' }, vai: { vi: 'CMO Mạnh Chi', en: 'CMO Mạnh Chi' } },
-    { id: 'coo', x: 12, z: 4, w: 7.5, d: 5.5, mau: 0xDDF1E4, sang: 0xA9DCC4, anh: 'coo-tex', tl: 245 / 720,
+    { id: 'coo', do: 'bang-chuyen', x: 12, z: 4, w: 7.5, d: 5.5, mau: 0xDDF1E4, sang: 0xA9DCC4, anh: 'coo-tex', tl: 245 / 720,
       ten: { vi: 'Xưởng đất sét', en: 'Clay workshop' }, vai: { vi: 'COO Bảo Ngọc', en: 'COO Bảo Ngọc' } },
-    { id: 'sec', x: -5, z: 11, w: 6.5, d: 5, mau: 0xF4E1E6, sang: 0xF4B6C2, anh: 'sec-tex', tl: 257 / 720,
+    { id: 'sec', do: 'tu', x: -5, z: 11, w: 6.5, d: 5, mau: 0xF4E1E6, sang: 0xF4B6C2, anh: 'sec-tex', tl: 257 / 720,
       ten: { vi: 'Văn thư – pháp chế', en: 'Records & compliance' }, vai: { vi: 'Thư ký Gia Hân', en: 'Secretary Gia Hân' } },
-    { id: 'thaytu', x: 6, z: 11, w: 7, d: 5, mau: 0xFFF3DA, sang: 0xFFD58A, anh: 'tu-phan-tex-v3', tl: 333 / 720,
+    { id: 'thaytu', do: 'bang-trang', cao: 4.3, x: 6, z: 11, w: 7, d: 5, mau: 0xFFF3DA, sang: 0xFFD58A, anh: 'tu-phan-tex-v3', tl: 333 / 720,
       ten: { vi: 'Phòng cố vấn học thuật', en: 'Academic advisor' }, vai: { vi: 'Thầy Tú', en: 'Thầy Tú' } },
   ];
   // Lối đi: từ trạm giữa ra từng phòng, gãy góc một lần (kiểu sơ đồ mạch) cho dễ đọc từ trên xuống.
@@ -33,6 +33,28 @@
     [[-3, 0], [-6, 0], [-6, 4], [-8.75, 4]], [[3, 0], [6, 0], [6, 4], [8.25, 4]],
     [[-1.5, 3], [-1.5, 8.5], [-5, 8.5]], [[1.5, 3], [1.5, 8.5], [6, 8.5]],
   ];
+
+  /* Trang của các game khác truyền danh sách phòng riêng (opts.phong) không kèm toạ độ: phòng đầu có giua: true
+   * đặt ở giữa, các phòng còn lại xếp quanh một vòng elip; lối đi tự gãy góc một lần từ mép trạm giữa ra mép phòng. */
+  function sapXep(ds) {
+    const giua = ds.filter(p => p.giua), quanh = ds.filter(p => !p.giua), n = quanh.length;
+    const rx = n > 7 ? 16.5 : 13.5, rz = n > 7 ? 12 : 10;
+    giua.forEach(p => Object.assign(p, { x: 0, z: 0, w: p.w || 6, d: p.d || 6 }));
+    quanh.forEach((p, i) => {
+      const a = -Math.PI / 2 + (i + .5) * 2 * Math.PI / n;
+      Object.assign(p, { x: Math.round(Math.cos(a) * rx * 10) / 10, z: Math.round(Math.sin(a) * rz * 10) / 10, w: p.w || 6.4, d: p.d || 5.2 });
+    });
+    const loi = quanh.map(p => {
+      const sx = Math.sign(p.x) || 1, sz = Math.sign(p.z) || 1;
+      if (Math.abs(p.x) >= Math.abs(p.z)) {
+        if (Math.abs(p.z) <= p.d / 2) return [[sx * 3, 0], [p.x - sx * p.w / 2, 0]];
+        return [[sx * 3, 0], [p.x, 0], [p.x, p.z - sz * p.d / 2]];
+      }
+      if (Math.abs(p.x) <= p.w / 2) return [[0, sz * 3], [0, p.z - sz * p.d / 2]];
+      return [[0, sz * 3], [0, p.z], [p.x - sx * p.w / 2, p.z]];
+    });
+    return loi;
+  }
 
   function nhan(text, sub, hex) {
     const c = document.createElement('canvas'); c.width = 512; c.height = 144;
@@ -51,6 +73,10 @@
   function mount(canvas, opts) {
     opts = opts || {};
     if (!window.THREE) throw new Error('Thiếu three.js');
+    const DS = opts.phong ? opts.phong.map(p => Object.assign({}, p)) : PHONG, LO = opts.phong ? sapXep(DS) : LOI;
+    // khung sàn và tâm máy quay theo đúng phạm vi các phòng
+    const bien = DS.reduce((b, p) => [Math.min(b[0], p.x - p.w / 2), Math.max(b[1], p.x + p.w / 2), Math.min(b[2], p.z - p.d / 2), Math.max(b[3], p.z + p.d / 2)], [0, 0, 0, 0]);
+    const tamX = (bien[0] + bien[1]) / 2, tamZ = (bien[2] + bien[3]) / 2, coSan = Math.max(1, (bien[1] - bien[0]) / 31.5, (bien[3] - bien[2]) / 23);
     const tinh = matchMedia('(prefers-reduced-motion: reduce)').matches;
     const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false, powerPreference: 'low-power' });
     renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
@@ -71,12 +97,13 @@
     const tru = (r, h, mat, x, y, z, seg) => { const g = new THREE.CylinderGeometry(r, r, h, seg || 24); hinh.push(g); const m = new THREE.Mesh(g, mat); m.position.set(x, y, z); scene.add(m); return m; };
 
     // Sàn chung + lưới mờ
-    hop(46, .4, 32, std(0x12393F), 0, -.21, 2);
-    const luoi = new THREE.GridHelper(46, 46, 0x1F5560, 0x174750); luoi.position.set(0, .001, 2); scene.add(luoi); hinh.push(luoi.geometry); vatLieu.push(luoi.material);
+    const sanW = Math.max(46, bien[1] - bien[0] + 14), sanD = Math.max(32, bien[3] - bien[2] + 10);
+    hop(sanW, .4, sanD, std(0x12393F), tamX, -.21, tamZ);
+    const luoi = new THREE.GridHelper(Math.max(sanW, sanD), Math.round(Math.max(sanW, sanD)), 0x1F5560, 0x174750); luoi.position.set(tamX, .001, tamZ); scene.add(luoi); hinh.push(luoi.geometry); vatLieu.push(luoi.material);
 
     // Lối đi + vạch sáng giữa lối + đường cho chấm sáng chạy
     const duong = [];
-    LOI.forEach(ds => {
+    LO.forEach(ds => {
       const pts = ds.map(([x, z]) => new THREE.Vector3(x, .14, z));
       for (let i = 0; i < ds.length - 1; i++) {
         const [x1, z1] = ds[i], [x2, z2] = ds[i + 1], dai = Math.hypot(x2 - x1, z2 - z1), ngang = Math.abs(x2 - x1) > Math.abs(z2 - z1);
@@ -93,23 +120,23 @@
     // Phòng: nền tôn cao, viền sáng, hai vách thấp phía sau, bảng tên, nhân vật
     const loader = new THREE.TextureLoader();
     const chon = [], nv = [], bang = [];
-    PHONG.forEach(p => {
+    DS.forEach(p => {
       const nen = hop(p.w, .5, p.d, std(p.mau), p.x, .25, p.z); nen.userData.phong = p.id; chon.push(nen);
       const v = sang(p.sang), dx = p.w / 2, dz = p.d / 2;
       hop(p.w + .16, .08, .16, v, p.x, .54, p.z - dz); hop(p.w + .16, .08, .16, v, p.x, .54, p.z + dz);
       hop(.16, .08, p.d + .16, v, p.x - dx, .54, p.z); hop(.16, .08, p.d + .16, v, p.x + dx, .54, p.z);
-      if (p.id !== 'lumina') {
+      if (!p.giua) {
         const vach = std(0xFFFBF4);
         hop(p.w, 1.1, .2, vach, p.x, 1.05, p.z - dz + .1); hop(.2, 1.1, p.d, vach, p.x - Math.sign(p.x || 1) * (dx - .1), 1.05, p.z);
         hop(p.w, .06, .24, v, p.x, 1.62, p.z - dz + .1);
       }
       doDac(p);
       // nhân vật: ảnh gốc dựng đứng, chân chạm sàn phòng
-      const t = loader.load(IMG(p.anh)); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4; tex.push(t);
+      const t = loader.load(p.anh.includes('/') ? p.anh : IMG(p.anh)); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4; tex.push(t);
       const mat = new THREE.SpriteMaterial({ map: t, transparent: true, alphaTest: .35 }); vatLieu.push(mat);
-      const s = new THREE.Sprite(mat); const cao = p.id === 'thaytu' ? 4.3 : 4.0;
+      const s = new THREE.Sprite(mat); const cao = p.cao || 4.0;
       s.center.set(.5, 0); s.scale.set(cao * p.tl, cao, 1);
-      const ox = p.id === 'lumina' ? 0 : -p.w * .18, oz = p.id === 'lumina' ? .6 : .6;
+      const ox = p.giua ? 0 : -p.w * .18, oz = .6;
       s.position.set(p.x + ox, .5, p.z + oz); s.userData.phong = p.id; scene.add(s); chon.push(s);
       // viền tối mờ quanh người để tách nhân vật khỏi sàn phòng sáng màu (áo dài trắng trên sàn kem)
       const vm = new THREE.SpriteMaterial({ map: t, color: 0x0B2E33, transparent: true, opacity: .5, depthWrite: false }); vatLieu.push(vm);
@@ -127,33 +154,50 @@
     // Đồ đạc từng phòng: hình khối đơn giản, đủ để nhận ra phòng làm gì
     function doDac(p) {
       const x = p.x + p.w * .18, z = p.z, y = .5;
-      if (p.id === 'lumina') {
+      const k = p.do;
+      if (k === 'vong') {
         const vong = new THREE.TorusGeometry(2.1, .07, 8, 64); hinh.push(vong);
         const m = new THREE.Mesh(vong, sang(0x7FD3DC)); m.rotation.x = Math.PI / 2; m.position.set(p.x, y + .05, p.z); scene.add(m); bang.push({ m, xoay: true });
         tru(.9, .5, std(0xFFFBF4), p.x, y + .25, p.z - 1.4);
-      } else if (p.id === 'ceo') {
+      } else if (k === 'ban-tron') {
         tru(1.3, .1, std(0xC08A5A), x, y + .9, z, 32); tru(.18, .85, std(0x8A6040), x, y + .43, z);
         tru(1.15, .02, std(0x7FD3DC, { emissive: 0x2F8A8C, emissiveIntensity: .5 }), x, y + .96, z, 32);
         const kim = hop(.12, .04, 1.6, sang(0xE8762D), x, y + .99, z); bang.push({ m: kim, quay: true });
-      } else if (p.id === 'cfo') {
+      } else if (k === 'ket') {
         hop(1.4, 1.6, 1.2, std(0x5A6B74, { roughness: .5 }), x + .6, y + .8, z - 1);
         tru(.38, .06, std(0xFDA127), x + .6, y + .9, z - .38).rotation.x = Math.PI / 2;
         for (let i = 0; i < 3; i++) tru(.3, .12 + i * .14, std(0xFDA127, { roughness: .4 }), x - .6 + i * .45, y + (.12 + i * .14) / 2, z + 1, 20);
-      } else if (p.id === 'cmo') {
+      } else if (k === 'bang') {
         hop(2.6, 1.6, .12, std(0x24403F), x, y + 1.5, z - 1.6);
         [.5, .9, .65, 1.2].forEach((h, i) => { const c = hop(.34, h, .04, sang(i === 3 ? 0xE8762D : 0xFFD58A), x - .8 + i * .55, y + .8 + h / 2, z - 1.52); bang.push({ m: c, cot: h, y0: y + .8, pha: i }); });
         tru(.05, 1, std(0x24403F), x, y + .5, z - 1.6);
-      } else if (p.id === 'coo') {
+      } else if (k === 'bang-chuyen') {
         hop(4.6, .5, .9, std(0x3E5A5C), x - .2, y + .45, z + 1.1);
         for (let i = 0; i < 4; i++) { const b = hop(.5, .45, .5, std([0xE8762D, 0xFDA127, 0xC2581B, 0xF4B6C2][i]), x - 2 + i * 1.2, y + .92, z + 1.1); bang.push({ m: b, bang: true, x0: x - 2.3, dai: 4.4, t: i / 4 }); }
         hop(.9, 1.6, .9, std(0x7FA88C), x + 1.6, y + .8, z - 1.2);
-      } else if (p.id === 'sec') {
+      } else if (k === 'tu') {
         for (let i = 0; i < 3; i++) hop(.8, 1.5, .7, std(0xB9A890), x + .2 + i * .9, y + .75, z - 1.5);
         hop(1.8, .1, .9, std(0xC08A5A), x + .6, y + .8, z + .6);
-      } else if (p.id === 'thaytu') {
+      } else if (k === 'bang-trang') {
         hop(2.6, 1.6, .1, std(0xFFFFFF, { roughness: .4 }), x, y + 1.6, z - 1.7);
         hop(2.8, .1, .1, std(0x8A6040), x, y + .78, z - 1.7);
         hop(1.8, .1, 1, std(0xC08A5A), x + .3, y + .8, z + .7);
+      } else if (k === 'ghe') {          // ghe hàng trên bến
+        hop(3.2, .45, 1.2, std(0x8A6040), x, y + .25, z + .9); hop(3.4, .12, 1.3, std(0xC08A5A), x, y + .5, z + .9);
+        for (let i = 0; i < 3; i++) tru(.22, .3, std([0xE8762D, 0xA9DCC4, 0xFDA127][i]), x - .9 + i * .9, y + .7, z + .9, 16);
+        tru(.04, 2.2, std(0x8A6040), x + 1.4, y + 1.1, z + .9);
+      } else if (k === 'noi') {          // bếp nấu
+        hop(1.6, .7, 1, std(0x7A5A44), x, y + .35, z - 1.1); tru(.5, .5, std(0x5A6B74, { roughness: .4 }), x, y + .95, z - 1.1, 20);
+        hop(1.6, .1, .9, std(0xC08A5A), x + .4, y + .8, z + .9);
+      } else if (k === 'cay') {          // cây trong vườn
+        [[-.8, -1.2], [.9, -1.3], [1.6, .9]].forEach(([dx, dz], i) => { tru(.15, 1.1, std(0x7A5A44), x + dx, y + .55, z + dz, 10);
+          const g = new THREE.SphereGeometry(.65 + i * .05, 14, 10); hinh.push(g); const c = new THREE.Mesh(g, std(0x5BAA86)); c.position.set(x + dx, y + 1.5, z + dz); scene.add(c); });
+      } else if (k === 'hang') {         // kệ hàng, thùng hàng
+        hop(2.4, 1.5, .5, std(0xC08A5A), x, y + .75, z - 1.5);
+        for (let i = 0; i < 4; i++) hop(.5, .4, .4, std([0xE8762D, 0xA9DCC4, 0xFDA127, 0xF4B6C2][i]), x - .8 + i * .55, y + 1.0 + (i % 2) * .5, z - 1.25);
+        hop(.8, .6, .8, std(0xB9A890), x + 1.3, y + .3, z + 1);
+      } else {                           // bàn làm việc
+        hop(1.8, .1, .9, std(0xC08A5A), x + .4, y + .8, z - .6); hop(.9, .55, .06, std(0x24403F), x + .4, y + 1.15, z - .9);
       }
     }
 
@@ -170,9 +214,9 @@
     function datMay(t) {
       const a = goc + (tinh || keo ? 0 : Math.sin(t * .00012) * (cam.aspect < 1.2 ? .1 : .28));
       // khung dọc (điện thoại) cần lùi xa hơn để thấy đủ bảy phòng
-      const R = 46 * Math.max(1, 1.32 / Math.min(cam.aspect, 1.32));
-      cam.position.set(Math.sin(a) * R * .62, R * .78, Math.cos(a) * R * .62 + 2);
-      cam.lookAt(0, 0, 2.4);
+      const R = 46 * coSan * Math.max(1, 1.32 / Math.min(cam.aspect, 1.32));
+      cam.position.set(tamX + Math.sin(a) * R * .62, R * .78, tamZ + Math.cos(a) * R * .62);
+      cam.lookAt(tamX, 0, tamZ + .4);
     }
     const ray = new THREE.Raycaster(), chuot = new THREE.Vector2();
     function trung(e) {
@@ -222,7 +266,7 @@
     khung(); datMay(0); renderer.render(scene, cam);
 
     return {
-      phong: PHONG.map(p => p.id),
+      phong: DS.map(p => p.id),
       dispose() {
         tat(); io.disconnect(); mo.disconnect(); document.removeEventListener('visibilitychange', vis);
         canvas.removeEventListener('pointerdown', down); removeEventListener('pointermove', move); removeEventListener('pointerup', up);
