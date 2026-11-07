@@ -1,4 +1,4 @@
-/* IE Lab · Khởi nghiệp quốc tế (International Entrepreneurship) – Bậc 3 · Quốc tế hóa · BizOn
+/* IE Lab – Phòng thí nghiệm Khởi nghiệp quốc tế – Bậc 3 · Quốc tế hóa · BizOn
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.
  *
  * Giao diện «BizOn Lab» (cùng hệ với CMR / CVP / FDI Lab) cho phòng thí nghiệm
@@ -81,7 +81,7 @@ if (typeof module !== 'undefined' && module.exports) {
 if (typeof document !== 'undefined') (function () {
   const T = {
     vi: {
-      title: 'IE Lab – Bậc 3 · Quốc tế hóa · BizOn',
+      title: 'IE Lab – Phòng thí nghiệm Khởi nghiệp quốc tế · BizOn',
       sub: 'Khởi nghiệp quốc tế · BizOn Lab', back: '← BizOn Go Global', kicker: 'IE LAB · MÔ PHỎNG SỐ LIỆU', hero1: 'Quốc tế hóa', hero2: 'bao nhiêu', hero3: 'là vừa?',
       intro: 'Chọn thị trường, kéo mức quốc tế hóa (FSTS %) và đầu tư năng lực số – xem hiệu quả hoạt động kinh doanh của doanh nghiệp thay đổi theo từng kiểu thể chế. Hoàn thành 5 nhiệm vụ để nhận XP cho nhóm.',
       xpp: 'Điểm kinh nghiệm', badges: 'Kiểu thị trường đã khám phá', pick: 'Chọn nhóm của bạn', teamSub: 'T01 – T05 · mỗi nhóm có XP riêng.', step: 'BƯỚC', chooseM: 'Chọn thị trường',
@@ -111,7 +111,7 @@ if (typeof document !== 'undefined') (function () {
       dragonHero: 'Rồng BizOn cầm kính lúp', dragonScroll: 'Rồng BizOn đọc cuộn giấy', dragonUp: 'Rồng BizOn ăn mừng', dragonWave: 'Rồng BizOn vẫy tay', langSw: 'Switch to English',
     },
     en: {
-      title: 'IE Lab – Level 3 · Internationalisation · BizOn',
+      title: 'IE Lab – International Entrepreneurship Lab · BizOn',
       sub: 'International Entrepreneurship · BizOn Lab', back: '← BizOn Go Global', kicker: 'IE LAB · DATA SIMULATION', hero1: 'How much', hero2: 'internationalisation', hero3: 'is enough?',
       intro: 'Pick a market, drag the internationalisation level (FSTS %) and invest in digital capability – see firm performance change across institution types. Complete 5 missions to earn XP for your team.',
       xpp: 'Experience points', badges: 'Market types explored', pick: 'Pick your team', teamSub: 'T01 – T05 · each team has its own XP.', step: 'STEP', chooseM: 'Choose a market',

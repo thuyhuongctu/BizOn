@@ -874,8 +874,8 @@
 "⚔️ Your 3 virtual rivals"
 ],
 [
-"🚀 IE Lab – Khởi nghiệp quốc tế (International Entrepreneurship)",
-"🚀 IE Lab – International Entrepreneurship"
+"🚀 IE Lab – Phòng thí nghiệm Khởi nghiệp quốc tế",
+"🚀 IE Lab – International Entrepreneurship Lab"
 ],
 [
 "🏢 Bước 0 – Hồ sơ doanh nghiệp của bạn",
@@ -1562,8 +1562,8 @@
 "An international entrepreneurship simulation: pick 1 of 7 markets, negotiate with AI partners, manage ESG and risk, then export the decision log (CSV) for the instructor to grade and discuss."
 ],
 [
-"Mô phỏng đưa sản phẩm Việt ra 7 thị trường thế giới: chọn phương thức thâm nhập, đàm phán AI, quản trị ESG – kèm phòng thí nghiệm số liệu IE Lab và xuất CSV cho nghiên cứu, giảng dạy.",
-"A simulation of taking Vietnamese products into 7 world markets: choose an entry mode, negotiate with AI, manage ESG – with the IE Lab data workbench and CSV export for research and teaching."
+"Mô phỏng đưa sản phẩm Việt ra 7 thị trường thế giới: chọn phương thức thâm nhập, đàm phán AI, quản trị ESG – kèm IE Lab (Phòng thí nghiệm Khởi nghiệp quốc tế) và xuất CSV cho nghiên cứu, giảng dạy.",
+"A simulation of taking Vietnamese products into 7 world markets: choose an entry mode, negotiate with AI, manage ESG – with the IE Lab (International Entrepreneurship Lab) and CSV export for research and teaching."
 ],
 [
 "Mọi ý tưởng đều nặn được lại từ đầu. Sai thì bóp lại, nặn tiếp – thử nghiệm nhanh quan trọng hơn hoàn hảo ngay.",
@@ -2658,7 +2658,7 @@
 "8 games in the ecosystem – from strategy sim to 30-second reflex games."
 ],
 [
-"Từ Việt Nam ra thế giới: phương thức thâm nhập, World Market LIVE và IE Lab Khởi nghiệp quốc tế.",
+"Từ Việt Nam ra thế giới: phương thức thâm nhập, World Market LIVE và IE Lab (Phòng thí nghiệm Khởi nghiệp quốc tế).",
 "From Vietnam to the world: entry modes, World Market LIVE and the International Entrepreneurship Lab."
 ],
 [
@@ -3913,8 +3913,8 @@
 "7 markets · information fog"
 ],
 [
-"BizOn Lab · IE Lab – phòng thí nghiệm quốc tế hóa",
-"BizOn Lab · IE Lab – the internationalization sandbox"
+"BizOn Lab · IE Lab – Phòng thí nghiệm Khởi nghiệp quốc tế",
+"BizOn Lab · IE Lab – International Entrepreneurship Lab"
 ],
 [
 "Sáu vòng, sáu vùng kinh tế. Thắng thị phần vòng nào thì cắm cờ doanh nghiệp lên vùng đó – từ Cần Thơ ngược ra Hà Nội. Đây đúng là tấm bản đồ hiện trong ván chơi.",
