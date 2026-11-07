@@ -39,7 +39,7 @@ assert.equal(L.fileName(full), 'the-thuong-hieu-linh-mua-nuoc.png');
 // Trang
 const s = read('xuong-nhan-hieu.html');
 for (const need of ['js/bizon-clay-nav.js', 'js/bizon-clay-footer.js', 'js/bizon-clay-i18n.js', 'js/xuong-nhan-hieu.js']) assert.ok(s.includes(need), 'thiếu ' + need);
-assert.ok(s.includes('Đề bài © 2026 ThS. Đỗ Thùy Hương &amp; PGS.TS. Phan Anh Tú'), 'thiếu dòng ghi đề bài hai tác giả');
+assert.ok(s.includes('Đề bài © 2026 NCS. Đỗ Thùy Hương &amp; PGS.TS. Phan Anh Tú'), 'thiếu dòng ghi đề bài hai tác giả');
 assert.ok(!/chương 5|chapter 5/i.test(read('giang-vien.html') + s + read('js/xuong-nhan-hieu.js')), 'còn chữ «chương 5» ở Xưởng Nhãn Hiệu');
 assert.ok(read('giang-vien.html').includes('href="xuong-nhan-hieu.html"'), 'trang giảng viên chưa có lối vào');
 assert.ok(read('sitemap.xml').includes('https://bizonland.com/xuong-nhan-hieu.html<'), 'sitemap thiếu trang');
