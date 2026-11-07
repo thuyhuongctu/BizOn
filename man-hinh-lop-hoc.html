@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" data-default-lang="vi">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>Màn hình lớp học – BizOn</title>
+<title data-en="Classroom screen – BizOn">Màn hình lớp học – BizOn</title>
 <meta name="description" content="Màn hình chiếu cho giảng viên: kết quả các nhóm trong Bến Phù Sa, Hộ Chiếu Thương Hiệu và Hộ Chiếu Sầu Riêng trên sa bàn 3D.">
 <link rel="icon" href="assets/brand/bizon-favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="css/bizon-clay-fonts.css">
@@ -71,26 +71,27 @@ li .bar i{display:block;height:100%;border-radius:999px}
 </style>
 </head>
 <body>
-<canvas id="stage" aria-label="Sa bàn 3D kết quả các nhóm"></canvas>
+<canvas id="stage" aria-label="Sa bàn 3D kết quả các nhóm" data-en-aria="3D model of team results"></canvas>
 <div id="tags"></div>
 <header>
-  <span class="brand">BizOn<small>Màn hình lớp học</small></span>
-  <nav class="tabs" aria-label="Chọn trò chơi">
+  <span class="brand">BizOn<small data-en="Classroom screen">Màn hình lớp học</small></span>
+  <nav class="tabs" aria-label="Chọn trò chơi" data-en-aria="Choose a game">
     <button type="button" data-game="bps" aria-pressed="true">Bến Phù Sa</button>
-    <button type="button" data-game="hcth" aria-pressed="false">Hộ Chiếu Thương Hiệu</button>
-    <button type="button" data-game="hcsr" aria-pressed="false">Hộ Chiếu Sầu Riêng</button>
+    <button type="button" data-game="hcth" aria-pressed="false" data-en="Brand Passport">Hộ Chiếu Thương Hiệu</button>
+    <button type="button" data-game="hcsr" aria-pressed="false" data-en="Durian Passport">Hộ Chiếu Sầu Riêng</button>
   </nav>
   <span class="grow"></span>
-  <span class="chip" id="demoChip" hidden>Dữ liệu minh họa</span>
-  <select id="cls" aria-label="Mã lớp"></select>
+  <span class="chip" id="demoChip" hidden data-en="Sample data">Dữ liệu minh họa</span>
+  <select id="cls" aria-label="Mã lớp" data-en-aria="Class code"></select>
   <button type="button" class="tool" id="night" aria-pressed="false">🌙 Đêm</button>
-  <button type="button" class="tool" id="full">⛶ Toàn màn hình</button>
+  <button type="button" class="tool" id="full" data-en="⛶ Full screen">⛶ Toàn màn hình</button>
+  <button type="button" class="tool" id="langBtn" aria-label="Ngôn ngữ / Language">EN</button>
 </header>
 <div class="hud" aria-live="polite">
   <div class="kicker" id="kicker">Bến Phù Sa</div>
   <div class="big"><span id="count">0</span> <small id="countLabel">nhóm đã nộp</small></div>
   <div class="upd" id="upd"></div>
-  <div class="join" id="join" hidden><img id="joinQr" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt="Mã QR mở trò chơi cho lớp"><div><b>Sinh viên mở đường dẫn này để giảng viên thấy tiến độ:</b><code id="joinUrl"></code><span>Đăng nhập email trường trong game. Mỗi vụ chơi xong, sa bàn tự cập nhật.</span></div></div>
+  <div class="join" id="join" hidden><img id="joinQr" src="data:image/gif;base64,R0lGODlhAQABAAAAACw=" alt="Mã QR mở trò chơi cho lớp" data-en-aria="QR code to open the game for the class"><div><b data-en="Students open this link so the instructor can see progress:">Sinh viên mở đường dẫn này để giảng viên thấy tiến độ:</b><code id="joinUrl"></code><span data-en="Sign in with your school email in the game. After each round the model updates itself.">Đăng nhập email trường trong game. Mỗi vụ chơi xong, sa bàn tự cập nhật.</span></div></div>
 </div>
 <aside>
   <h2 id="panelTitle">Xếp hạng các nhóm</h2>
@@ -100,10 +101,10 @@ li .bar i{display:block;height:100%;border-radius:999px}
 <div class="strip" id="strip"></div>
 <div id="gate" role="dialog" aria-modal="true" aria-labelledby="gateT">
   <div>
-    <h2 id="gateT">Cần đăng nhập giảng viên</h2>
-    <p id="gateP">Màn hình này đọc kết quả lớp của chị/anh. Hãy đăng nhập ở Trang Giảng viên rồi mở lại trang này trên cùng trình duyệt.</p>
-    <a href="Trang%20Giang%20Vien.dc.html">Mở Trang Giảng viên</a>
-    <button type="button" id="tryDemo">Xem dữ liệu minh họa</button>
+    <h2 id="gateT" data-en="Instructor sign-in required">Cần đăng nhập giảng viên</h2>
+    <p id="gateP" data-en="This screen reads your class results. Sign in on the Instructor page, then reopen this page in the same browser.">Màn hình này đọc kết quả lớp của chị/anh. Hãy đăng nhập ở Trang Giảng viên rồi mở lại trang này trên cùng trình duyệt.</p>
+    <a href="Trang%20Giang%20Vien.dc.html" data-en="Open the Instructor page">Mở Trang Giảng viên</a>
+    <button type="button" id="tryDemo" data-en="View sample data">Xem dữ liệu minh họa</button>
   </div>
 </div>
 <script src="js/backend-config.js"></script>
@@ -114,21 +115,28 @@ li .bar i{display:block;height:100%;border-radius:999px}
 import { createStage, TEAM_COLORS } from './js/man-hinh-lop-hoc.js';
 const D = window.BizOnClassScreen, I = window.BizOnInstructor;
 const $ = id => document.getElementById(id);
+const T = (vi, en) => EN ? en : vi;
 const q = new URLSearchParams(location.search);
+// 06/11/2026: song ngữ. Mặc định tiếng Việt (màn chiếu cho lớp); EN khi ?lang=en, bấm nút EN, hoặc đã tự chọn EN trên site
+// (bizon-lang 'en' mà không phải tự đoán theo trình duyệt). Chữ trong markup đổi qua data-en / data-en-aria.
+const EN = (() => { try { if (q.get('lang') === 'en') return true; if (q.get('lang') === 'vi') return false; return localStorage.getItem('bizon-lang') === 'en' && localStorage.getItem('bizon-lang-auto') !== '1'; } catch (e) { return false; } })();
+if (EN) { document.documentElement.lang = 'en'; document.querySelectorAll('[data-en]').forEach(el => { if (!el.children.length) el.textContent = el.dataset.en; }); document.querySelectorAll('[data-en-aria]').forEach(el => el.setAttribute(el.hasAttribute('alt') ? 'alt' : 'aria-label', el.dataset.enAria)); }
 const NOTES = {
-  bps: 'Mỗi ghe là một nhóm. Ghe đi xa hơn trên tuyến Cần Thơ → cảng Cái Mép khi tổng doanh thu cao hơn (so với nhóm dẫn đầu). Sen nở cạnh ghe dẫn đầu.',
-  hcth: 'Bảy đảo là bảy thị trường của game. Tuyến từ đảo nhà Mekong càng dày khi càng nhiều doanh nghiệp đã vào thị trường đó. Con số cạnh tên đảo là số doanh nghiệp.',
-  hcsr: 'Mỗi hạt đất sét là một nhóm, đứng ở chặng ứng với điểm tổng (0–100 chia đều 8 chặng). Chỉ tính nhóm chơi qua Hành trình 3 bậc và đã xong Bậc 3.',
+  bps: T('Mỗi ghe là một nhóm. Ghe đi xa hơn trên tuyến Cần Thơ → cảng Cái Mép khi tổng doanh thu cao hơn (so với nhóm dẫn đầu). Sen nở cạnh ghe dẫn đầu.', 'Each boat is a team. A boat travels further along the Cần Thơ → Cái Mép route when its total revenue is higher (relative to the leader). A lotus blooms beside the leading boat.'),
+  hcth: T('Bảy đảo là bảy thị trường của game. Tuyến từ đảo nhà Mekong càng dày khi càng nhiều doanh nghiệp đã vào thị trường đó. Con số cạnh tên đảo là số doanh nghiệp.', 'The seven islands are the seven markets of the game. The route from the Mekong home island grows thicker as more firms enter that market. The number beside an island is the firm count.'),
+  hcsr: T('Mỗi hạt đất sét là một nhóm, đứng ở chặng ứng với điểm tổng (0–100 chia đều 8 chặng). Chỉ tính nhóm chơi qua Hành trình 3 bậc và đã xong Bậc 3.', 'Each clay bead is a team, standing at the stage matching its total score (0–100 split into 8 stages). Only teams that played the three-tier Journey and finished Tier 3 count.'),
 };
 const NIGHT_DEFAULT = { bps: false, hcth: true, hcsr: false };
 const GAME_URL = { bps: 'ben-phu-sa.html', hcth: 'brand-passport.html', hcsr: 'lab/ho-chieu-sau-rieng-v2.html' };
-const LIVE_NOTE = 'Đang có nhóm chơi: vị trí trên sa bàn là tiến độ ván (nhóm đã xong đứng cuối tuyến). Bảng: nhóm đã nộp kết quả cuối xếp theo điểm, rồi nhóm đang chơi xếp theo vụ.';
+const LIVE_NOTE = T('Đang có nhóm chơi: vị trí trên sa bàn là tiến độ ván (nhóm đã xong đứng cuối tuyến). Bảng: nhóm đã nộp kết quả cuối xếp theo điểm, rồi nhóm đang chơi xếp theo vụ.', 'Teams are playing: positions on the model show game progress (finished teams stand at the end of the route). Table: teams with a final result ranked by score, then teams still playing ranked by season.');
 function joinBox() {
   const show = !demo && !!cls; $('join').hidden = !show; if (!show) return;
   const url = new URL(GAME_URL[game] + '?lop=' + encodeURIComponent(cls), location.href).href;
   $('joinUrl').textContent = url.replace(/^https?:\/\//, '');
   try { const q = window.qrcode(0, 'M'); q.addData(url); q.make(); $('joinQr').src = q.createDataURL(4, 2); $('joinQr').hidden = false; } catch (e) { $('joinQr').hidden = true; }
 }
+$('langBtn').textContent = EN ? 'VI' : 'EN';
+$('langBtn').addEventListener('click', () => { try { localStorage.setItem('bizon-lang', EN ? 'vi' : 'en'); localStorage.removeItem('bizon-lang-auto'); } catch (e) {} const u = new URL(location.href); u.searchParams.set('lang', EN ? 'vi' : 'en'); location.replace(u.href); });
 let game = ['bps', 'hcth', 'hcsr'].includes(q.get('game')) ? q.get('game') : 'bps';
 let night = q.has('dem') ? q.get('dem') !== '0' : NIGHT_DEFAULT[game];
 let demo = q.get('demo') === '1' || (I && I.demo);
@@ -139,14 +147,14 @@ const panelPx = () => (innerWidth > 760 ? document.querySelector('aside').offset
 function setUrl() { const u = new URL(location.href); u.searchParams.set('game', game); cls ? u.searchParams.set('lop', cls) : u.searchParams.delete('lop'); demo ? u.searchParams.set('demo', '1') : u.searchParams.delete('demo'); history.replaceState(null, '', u); }
 function paint(data) {
   const G = D.GAMES[game];
-  $('kicker').textContent = G.vi + (demo ? ' · lớp minh họa' : cls ? ' · lớp ' + cls : '');
+  $('kicker').textContent = (EN && G.en ? G.en : G.vi) + (demo ? T(' · lớp minh họa', ' · sample class') : cls ? T(' · lớp ', ' · class ') + cls : '');
   const L = data.live || {};
   $('count').textContent = L.playing ? L.playing : data.submitted;
-  $('countLabel').textContent = L.playing ? 'nhóm đang chơi' : game === 'hcth' ? 'bài đã nộp' : 'nhóm đã nộp';
-  const prog = L.count ? L.unit + ' ' + (L.min === L.max ? L.max : L.min + '–' + L.max) + '/' + L.total + ' · ' + data.submitted + ' đã nộp kết quả cuối · ' : '';
-  $('upd').textContent = prog + (demo ? 'Dữ liệu minh họa, không phải lớp thật.' : 'Cập nhật lúc ' + new Date().toLocaleTimeString('vi-VN') + ' · tự làm mới mỗi 20 giây');
+  $('countLabel').textContent = L.playing ? T('nhóm đang chơi', 'teams playing') : game === 'hcth' ? T('bài đã nộp', 'submissions') : T('nhóm đã nộp', 'teams submitted');
+  const prog = L.count ? L.unit + ' ' + (L.min === L.max ? L.max : L.min + '–' + L.max) + '/' + L.total + ' · ' + data.submitted + T(' đã nộp kết quả cuối · ', ' submitted a final result · ') : '';
+  $('upd').textContent = prog + (demo ? T('Dữ liệu minh họa, không phải lớp thật.', 'Sample data, not a real class.') : T('Cập nhật lúc ', 'Updated at ') + new Date().toLocaleTimeString(EN ? 'en-GB' : 'vi-VN') + T(' · tự làm mới mỗi 20 giây', ' · refreshes every 20 seconds'));
   joinBox();
-  $('panelTitle').textContent = game === 'hcth' ? 'Xếp hạng doanh nghiệp' : 'Xếp hạng các nhóm';
+  $('panelTitle').textContent = game === 'hcth' ? T('Xếp hạng doanh nghiệp', 'Firm ranking') : T('Xếp hạng các nhóm', 'Team ranking');
   const top = data.teams.slice(0, 10);
   $('rank').replaceChildren(...top.map((t, i) => {
     const li = document.createElement('li');
@@ -156,9 +164,9 @@ function paint(data) {
     const bar = li.querySelector('.bar i'); bar.style.width = (t.progress * 100).toFixed(1) + '%'; bar.style.background = TEAM_COLORS[i];
     return li;
   }));
-  if (!top.length) { const li = document.createElement('li'); li.textContent = 'Chưa có kết quả nào được nộp.'; $('rank').append(li); }
-  $('note').textContent = (L.count ? LIVE_NOTE : NOTES[game]) + (data.teams.length > 10 ? ' Sa bàn và bảng hiện 10 nhóm đầu trên ' + data.teams.length + ' nhóm.' : '');
-  const chips = game === 'hcsr' ? (data.playing && data.playing.length ? ['Đang chơi Bậc 3: ' + data.playing.slice(0, 6).join(', ') + (data.playing.length > 6 ? '…' : '')] : [])
+  if (!top.length) { const li = document.createElement('li'); li.textContent = T('Chưa có kết quả nào được nộp.', 'No results submitted yet.'); $('rank').append(li); }
+  $('note').textContent = (L.count ? LIVE_NOTE : NOTES[game]) + (data.teams.length > 10 ? T(' Sa bàn và bảng hiện 10 nhóm đầu trên ', ' The model and table show the top 10 of ') + data.teams.length + T(' nhóm.', ' teams.') : '');
+  const chips = game === 'hcsr' ? (data.playing && data.playing.length ? [T('Đang chơi Bậc 3: ', 'Playing Tier 3: ') + data.playing.slice(0, 6).join(', ') + (data.playing.length > 6 ? '…' : '')] : [])
     : [];
   $('strip').replaceChildren(...chips.map(c => { const d = document.createElement('div'); d.textContent = c; return d; }));
 }
@@ -171,14 +179,14 @@ async function fetchData() {
 }
 async function refresh(rebuild) {
   let data;
-  try { data = await fetchData(); } catch (e) { $('upd').textContent = 'Không tải được kết quả: ' + e.message; return; }
+  try { data = await fetchData(); } catch (e) { $('upd').textContent = T('Không tải được kết quả: ', 'Could not load results: ') + e.message; return; }
   const sig = JSON.stringify([game, night, data.teams.map(t => [t.name, t.score, t.progress, t.stage]), data.markets]);
   paint(data);
   if (rebuild || sig !== last) { last = sig; await stage.show(game, data, night, panelPx()); }
 }
 function sync() {
   document.querySelectorAll('.tabs button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.game === game)));
-  document.body.classList.toggle('night', night); $('night').setAttribute('aria-pressed', String(night)); $('night').textContent = night ? '☀️ Ngày' : '🌙 Đêm';
+  document.body.classList.toggle('night', night); $('night').setAttribute('aria-pressed', String(night)); $('night').textContent = night ? T('☀️ Ngày', '☀️ Day') : T('🌙 Đêm', '🌙 Night');
   $('demoChip').hidden = !demo; setUrl();
 }
 async function start() {
@@ -192,7 +200,7 @@ async function start() {
     const codes = list.map(c => c.class_code);
     if (!cls || !codes.includes(cls)) cls = codes[0] || '';
     $('cls').replaceChildren(...codes.map(c => new Option(c, c, false, c === cls))); $('cls').hidden = !codes.length;
-    if (!codes.length) { $('upd').textContent = 'Tài khoản chưa có lớp nào. Tạo lớp ở Trang Giảng viên.'; }
+    if (!codes.length) { $('upd').textContent = T('Tài khoản chưa có lớp nào. Tạo lớp ở Trang Giảng viên.', 'This account has no classes yet. Create one on the Instructor page.'); }
   }
   sync(); await refresh(true);
   clearInterval(timer); if (!demo) timer = setInterval(() => refresh(false), 20000);

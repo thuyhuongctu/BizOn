@@ -49,8 +49,8 @@ input,select,textarea,button{font-family:inherit}
     <sc-if value="{{ signedIn }}" hint-placeholder-val="{{ false }}">
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
         <span style="font-size:13px;color:#5a6b74">{{ email }}</span>
-        <sc-if value="{{ showBackNav }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ backToClasses }}" style="border:2px solid #cbb797;background:#fff;border-radius:12px;padding:7px 12px;font-weight:700;color:#1f4a55;cursor:pointer">← Lớp của tôi</button></sc-if>
-        <sc-if value="{{ isAdmin }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ openAdmin }}" style="border:2px solid #2f8a8c;background:#e3f1ef;border-radius:12px;padding:7px 12px;font-weight:700;color:#1f4a55;cursor:pointer">🛡️ Quản trị hệ thống</button></sc-if>
+        <sc-if value="{{ showBackNav }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ backToClasses }}" style="border:2px solid #cbb797;background:#fff;border-radius:12px;padding:7px 12px;font-weight:700;color:#1f4a55;cursor:pointer">{{ L.k47 }}</button></sc-if>
+        <sc-if value="{{ isAdmin }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ openAdmin }}" style="border:2px solid #2f8a8c;background:#e3f1ef;border-radius:12px;padding:7px 12px;font-weight:700;color:#1f4a55;cursor:pointer">{{ L.k88 }}</button></sc-if>
         <button type="button" onClick="{{ signOut }}" style="border:2px solid #cbb797;background:#fff;border-radius:12px;padding:7px 12px;font-weight:700;color:#1f4a55;cursor:pointer">{{ tSignOut }}</button>
       </div>
     </sc-if>
@@ -104,15 +104,15 @@ input,select,textarea,button{font-family:inherit}
   <sc-if value="{{ showClasses }}" hint-placeholder-val="{{ false }}">
     <main style="flex:1;padding:24px 22px;max-width:980px;width:100%;margin:0 auto;box-sizing:border-box;display:flex;flex-direction:column;gap:18px">
       <div style="border-radius:22px;overflow:hidden;box-shadow:0 5px 0 #d9c5a8"><img src="assets/illustrations/holo-strategy-briefing.webp" alt="Buổi họp chiến lược BizOn" style="width:100%;aspect-ratio:985/580;object-fit:cover;display:block"></div>
-      <div style="font:800 24px 'Baloo 2',sans-serif">Lớp của tôi</div>
+      <div style="font:800 24px 'Baloo 2',sans-serif">{{ L.k14 }}</div>
       <div style="display:flex;gap:10px;flex-wrap:wrap;background:#fbf6ee;border:3px solid #e6d6bf;border-radius:20px;padding:14px">
-        <input type="text" value="{{ fCode }}" onChange="{{ onCode }}" placeholder="Mã lớp mới, VD: QTKD-2026-A" style="flex:1;min-width:200px;padding:11px 14px;border-radius:14px;border:2px solid #e6d6bf;font-size:15px;text-transform:uppercase"></input>
-        <button type="button" onClick="{{ claim }}" style="border:0;background:#e8843a;color:#fff;border-radius:14px;padding:11px 16px;font:800 15px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #b8611f;cursor:pointer;white-space:nowrap">＋ Tạo lớp</button>
+        <input type="text" value="{{ fCode }}" onChange="{{ onCode }}" placeholder="{{ L.a06 }}" style="flex:1;min-width:200px;padding:11px 14px;border-radius:14px;border:2px solid #e6d6bf;font-size:15px;text-transform:uppercase"></input>
+        <button type="button" onClick="{{ claim }}" style="border:0;background:#e8843a;color:#fff;border-radius:14px;padding:11px 16px;font:800 15px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #b8611f;cursor:pointer;white-space:nowrap">{{ L.k58 }}</button>
       </div>
       <sc-if value="{{ noClasses }}" hint-placeholder-val="{{ false }}">
         <div style="text-align:center;padding:20px 10px;display:flex;flex-direction:column;align-items:center;gap:10px">
           <img src="assets/illustrations/game/phong-hop-chien-luoc.webp" alt="Phòng họp chiến lược BizOn" style="width:100%;max-width:320px;border-radius:20px;border:3px solid #e6d6bf">
-          <div style="font-size:14px;color:#5a6b74;max-width:360px">Chưa có lớp nào. Tạo lớp đầu tiên ở ô phía trên rồi phát mã lớp cho sinh viên.</div>
+          <div style="font-size:14px;color:#5a6b74;max-width:360px">{{ L.k05 }}</div>
         </div>
       </sc-if>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px">
@@ -121,13 +121,13 @@ input,select,textarea,button{font-family:inherit}
             <div onClick="{{ c.open }}" style="cursor:pointer;display:flex;flex-direction:column;gap:6px">
               <span style="font:800 20px 'Baloo 2',sans-serif;color:#1f4a55">{{ c.class_code }}</span>
               <span style="font-size:13px;color:#5a6b74">Tạo ngày {{ c.date }}</span>
-              <span style="font-size:13px;color:#2f8a8c;font-weight:700">Mở bảng điều khiển →</span>
+              <span style="font-size:13px;color:#2f8a8c;font-weight:700">{{ L.k17 }}</span>
             </div>
-            <button type="button" onClick="{{ c.remove }}" style="align-self:flex-start;border:0;background:none;color:#c0443a;font-weight:700;font-size:12px;cursor:pointer;padding:4px 0 0">🗑 Xóa lớp</button>
+            <button type="button" onClick="{{ c.remove }}" style="align-self:flex-start;border:0;background:none;color:#c0443a;font-weight:700;font-size:12px;cursor:pointer;padding:4px 0 0">{{ L.k87 }}</button>
           </div>
         </sc-for>
       </div>
-      <div style="font-size:13px;color:#5a6b74"><a href="BizOn Game 3D.html" style="font-weight:700">🎮 Mở game sinh viên</a> · Phát mã lớp cho sinh viên. Các đội nhập mã này ở màn đăng nhập của game để kết quả gửi về đây.</div>
+      <div style="font-size:13px;color:#5a6b74"><a href="BizOn Game 3D.html" style="font-weight:700">{{ L.k65 }}</a> {{ L.k36 }}</div>
     </main>
   </sc-if>
 
@@ -136,12 +136,12 @@ input,select,textarea,button{font-family:inherit}
       <div style="border-radius:22px;overflow:hidden;box-shadow:0 5px 0 #16393f;position:relative">
         <img src="assets/illustrations/game/lumina-vortex.webp" alt="Lumina giám sát toàn hệ thống BizOn" style="width:100%;aspect-ratio:1100/619;object-fit:cover;display:block">
         <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(31,74,85,.92),rgba(31,74,85,.15));display:flex;flex-direction:column;justify-content:flex-end;padding:16px 20px;color:#fff">
-          <div style="font:800 22px 'Baloo 2',sans-serif">🛡️ Quản trị hệ thống</div>
-          <div style="font-size:13px;opacity:.9">Toàn bộ lớp đã triển khai trên mọi giảng viên – chỉ 2 tài khoản chủ dự án thấy được màn này.</div>
+          <div style="font:800 22px 'Baloo 2',sans-serif">{{ L.k88 }}</div>
+          <div style="font-size:13px;opacity:.9">{{ L.k32 }}</div>
         </div>
       </div>
       <sc-if value="{{ noAdminClasses }}" hint-placeholder-val="{{ false }}">
-        <div style="text-align:center;padding:20px 10px;font-size:14px;color:#5a6b74">Chưa có giảng viên nào tạo lớp.</div>
+        <div style="text-align:center;padding:20px 10px;font-size:14px;color:#5a6b74">{{ L.k04 }}</div>
       </sc-if>
       <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px">
         <sc-for list="{{ adminClasses }}" as="c" hint-placeholder-count="2">
@@ -150,9 +150,9 @@ input,select,textarea,button{font-family:inherit}
               <span style="font:800 20px 'Baloo 2',sans-serif;color:#1f4a55">{{ c.class_code }}</span>
               <span style="font-size:12px;color:#5a6b74">{{ c.ownerLine }}</span>
               <span style="font-size:13px;color:#5a6b74">Tạo ngày {{ c.date }}</span>
-              <span style="font-size:13px;color:#2f8a8c;font-weight:700">Mở bảng điều khiển →</span>
+              <span style="font-size:13px;color:#2f8a8c;font-weight:700">{{ L.k17 }}</span>
             </div>
-            <button type="button" onClick="{{ c.remove }}" style="align-self:flex-start;border:0;background:none;color:#c0443a;font-weight:700;font-size:12px;cursor:pointer;padding:4px 0 0">🗑 Xóa lớp</button>
+            <button type="button" onClick="{{ c.remove }}" style="align-self:flex-start;border:0;background:none;color:#c0443a;font-weight:700;font-size:12px;cursor:pointer;padding:4px 0 0">{{ L.k87 }}</button>
           </div>
         </sc-for>
       </div>
@@ -167,9 +167,9 @@ input,select,textarea,button{font-family:inherit}
           <div><div style="font:800 28px/1 'Baloo 2',sans-serif">{{ code }}</div><div style="font-size:13px;color:#5a6b74;margin-top:4px">{{ classStats }}</div></div>
         </div>
         <div style="display:flex;gap:8px;flex-wrap:wrap">
-          <button type="button" onClick="{{ refresh }}" style="border:2px solid #cbb797;background:#fff;border-radius:12px;padding:8px 12px;font-weight:700;color:#1f4a55;cursor:pointer">⟳ Tải lại</button>
-          <button type="button" onClick="{{ exportXls }}" style="border:0;background:#3f8a44;color:#fff;border-radius:12px;padding:8px 14px;font-weight:700;cursor:pointer;box-shadow:0 3px 0 #2b6330">⬇ Xuất Excel</button>
-          <button type="button" onClick="{{ openBoard }}" style="border:0;background:#1f4a55;color:#fff;border-radius:12px;padding:8px 14px;font-weight:700;cursor:pointer;box-shadow:0 3px 0 #10303a">📽 Chiếu bảng xếp hạng</button>
+          <button type="button" onClick="{{ refresh }}" style="border:2px solid #cbb797;background:#fff;border-radius:12px;padding:8px 12px;font-weight:700;color:#1f4a55;cursor:pointer">{{ L.k55 }}</button>
+          <button type="button" onClick="{{ exportXls }}" style="border:0;background:#3f8a44;color:#fff;border-radius:12px;padding:8px 14px;font-weight:700;cursor:pointer;box-shadow:0 3px 0 #2b6330">{{ L.k57 }}</button>
+          <button type="button" onClick="{{ openBoard }}" style="border:0;background:#1f4a55;color:#fff;border-radius:12px;padding:8px 14px;font-weight:700;cursor:pointer;box-shadow:0 3px 0 #10303a">{{ L.k82 }}</button>
         </div>
       </div>
       <nav style="display:flex;gap:6px;flex-wrap:wrap">
@@ -179,11 +179,11 @@ input,select,textarea,button{font-family:inherit}
       </nav>
 
       <sc-if value="{{ tabTeams }}" hint-placeholder-val="{{ true }}">
-        <div class="scroll-hint">↔️ Vuốt ngang để xem đủ cột</div>
+        <div class="scroll-hint">{{ L.k48 }}</div>
         <section style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:22px;overflow:auto">
           <div style="display:grid;grid-template-columns:minmax(160px,1.6fr) minmax(170px,1.4fr) repeat(4,minmax(90px,1fr));gap:0;min-width:760px">
             <div style="display:contents;font-size:12px;font-weight:700;color:#5a6b74;text-transform:uppercase;letter-spacing:.04em">
-              <div style="padding:12px 16px;border-bottom:2px solid #e6d6bf">Đội</div><div style="padding:12px;border-bottom:2px solid #e6d6bf">Tiến độ 6 vòng</div><div style="padding:12px;border-bottom:2px solid #e6d6bf">Thị phần</div><div style="padding:12px;border-bottom:2px solid #e6d6bf">LN lũy kế</div><div style="padding:12px;border-bottom:2px solid #e6d6bf">Cờ</div><div style="padding:12px;border-bottom:2px solid #e6d6bf">Nộp gần nhất</div>
+              <div style="padding:12px 16px;border-bottom:2px solid #e6d6bf">{{ L.k46 }}</div><div style="padding:12px;border-bottom:2px solid #e6d6bf">{{ L.k31 }}</div><div style="padding:12px;border-bottom:2px solid #e6d6bf">{{ L.k30 }}</div><div style="padding:12px;border-bottom:2px solid #e6d6bf">{{ L.k13 }}</div><div style="padding:12px;border-bottom:2px solid #e6d6bf">{{ L.k09 }}</div><div style="padding:12px;border-bottom:2px solid #e6d6bf">{{ L.k23 }}</div>
             </div>
             <sc-for list="{{ teams }}" as="t" hint-placeholder-count="4">
               <div style="display:contents">
@@ -208,9 +208,9 @@ input,select,textarea,button{font-family:inherit}
             <select value="{{ selTeam }}" onChange="{{ onSelTeam }}" style="padding:9px 12px;border-radius:12px;border:2px solid #e6d6bf;background:#fff;font-weight:600">
               <sc-for list="{{ teamOptions }}" as="o" hint-placeholder-count="3"><option value="{{ o }}">{{ o }}</option></sc-for>
             </select>
-            <span style="font-size:13px;color:#5a6b74">Quyết định và kết quả mỗi vòng, lấy từ bài nộp mới nhất của đội.</span>
+            <span style="font-size:13px;color:#5a6b74">{{ L.k26 }}</span>
           </div>
-          <div class="scroll-hint">↔️ Vuốt ngang để xem đủ cột</div>
+          <div class="scroll-hint">{{ L.k48 }}</div>
           <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:22px;overflow:auto">
             <div style="display:grid;grid-template-columns:70px repeat(9,minmax(86px,1fr));min-width:900px">
               <sc-for list="{{ decHead }}" as="h" hint-placeholder-count="10"><div style="padding:11px 10px;border-bottom:2px solid #e6d6bf;font-size:12px;font-weight:700;color:#5a6b74">{{ h }}</div></sc-for>
@@ -223,129 +223,129 @@ input,select,textarea,button{font-family:inherit}
       <sc-if value="{{ tabControls }}" hint-placeholder-val="{{ false }}">
         <section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px">
           <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:10px">
-            <div style="font:800 19px 'Baloo 2',sans-serif">🔒 Khóa vòng cho cả lớp</div>
+            <div style="font:800 19px 'Baloo 2',sans-serif">{{ L.k84 }}</div>
             <div style="font-size:13px;color:#5a6b74">{{ lockNote }}</div>
             <div style="display:flex;gap:6px;flex-wrap:wrap">
               <sc-for list="{{ lockBtns }}" as="b" hint-placeholder-count="7"><button type="button" onClick="{{ b.go }}" style="border:3px solid {{ b.border }};background:{{ b.bg }};color:{{ b.fg }};border-radius:12px;padding:8px 11px;font-weight:700;cursor:pointer">{{ b.label }}</button></sc-for>
             </div>
           </div>
           <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:10px">
-            <div style="font:800 19px 'Baloo 2',sans-serif">⚡ Tung biến cố thủ công</div>
-            <div style="font-size:13px;color:#5a6b74">Thay biến cố theo kịch bản của vòng đang chơi bằng biến cố bạn chọn.</div>
+            <div style="font:800 19px 'Baloo 2',sans-serif">{{ L.k52 }}</div>
+            <div style="font-size:13px;color:#5a6b74">{{ L.k28 }}</div>
             <select value="{{ fEvent }}" onChange="{{ onEvent }}" style="padding:10px;border-radius:12px;border:2px solid #e6d6bf;background:#fff;font-weight:600">
               <sc-for list="{{ eventOpts }}" as="o" hint-placeholder-count="7"><option value="{{ o.v }}">{{ o.l }}</option></sc-for>
             </select>
-            <input type="text" value="{{ fMsg }}" onChange="{{ onMsg }}" placeholder="Thông báo cho cả lớp (tùy chọn)" style="padding:10px 12px;border-radius:12px;border:2px solid #e6d6bf"></input>
-            <button type="button" onClick="{{ saveEvent }}" style="border:0;background:#e8843a;color:#fff;border-radius:14px;padding:10px;font:800 15px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #b8611f;cursor:pointer">Áp dụng cho lớp</button>
+            <input type="text" value="{{ fMsg }}" onChange="{{ onMsg }}" placeholder="{{ L.a08 }}" style="padding:10px 12px;border-radius:12px;border:2px solid #e6d6bf"></input>
+            <button type="button" onClick="{{ saveEvent }}" style="border:0;background:#e8843a;color:#fff;border-radius:14px;padding:10px;font:800 15px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #b8611f;cursor:pointer">{{ L.k40 }}</button>
           </div>
           <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:10px" data-panel="journey">
-            <div style="font:800 19px 'Baloo 2',sans-serif">🧭 Hành trang hành trình 3 bậc</div>
+            <div style="font:800 19px 'Baloo 2',sans-serif">{{ L.k89 }}</div>
             <div style="font-size:13px;color:#5a6b74">{{ jCarryNote }}</div>
             <div style="display:flex;gap:6px;flex-wrap:wrap">
               <sc-for list="{{ jCarryBtns }}" as="b" hint-placeholder-count="2"><button type="button" onClick="{{ b.go }}" style="border:3px solid {{ b.border }};background:{{ b.bg }};color:{{ b.fg }};border-radius:12px;padding:8px 11px;font-weight:700;cursor:pointer">{{ b.label }}</button></sc-for>
             </div>
-            <div style="display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px;font-weight:700;padding-top:6px;border-top:1px solid #eadcc6"><span>{{ ctHead }}</span><span style="display:flex;gap:6px;flex-wrap:wrap"><button type="button" onClick="{{ exportCt }}" style="border:0;background:#3f8a44;color:#fff;border-radius:12px;padding:7px 12px;font-weight:700;cursor:pointer;box-shadow:0 3px 0 #2b6330">⬇ CSV bài tình huống</button><a href="cham-tinh-huong.html" target="_blank" rel="noopener" style="display:inline-block;border:2px solid #e6d6bf;background:#fff;color:#1f4a55;border-radius:12px;padding:6px 12px;font-weight:700;text-decoration:none">🧮 Chấm rubric</a><button type="button" onClick="{{ exportPack }}" style="border:0;background:#1f4a55;color:#fff;border-radius:12px;padding:7px 12px;font-weight:700;cursor:pointer;box-shadow:0 3px 0 #10303a">📦 Gói dữ liệu nghiên cứu (ZIP)</button></span></div>
+            <div style="display:flex;justify-content:space-between;gap:8px;align-items:center;flex-wrap:wrap;font-size:13px;font-weight:700;padding-top:6px;border-top:1px solid #eadcc6"><span>{{ ctHead }}</span><span style="display:flex;gap:6px;flex-wrap:wrap"><button type="button" onClick="{{ exportCt }}" style="border:0;background:#3f8a44;color:#fff;border-radius:12px;padding:7px 12px;font-weight:700;cursor:pointer;box-shadow:0 3px 0 #2b6330">{{ L.k56 }}</button><a href="cham-tinh-huong.html" target="_blank" rel="noopener" style="display:inline-block;border:2px solid #e6d6bf;background:#fff;color:#1f4a55;border-radius:12px;padding:6px 12px;font-weight:700;text-decoration:none">{{ L.k90 }}</a><button type="button" onClick="{{ exportPack }}" style="border:0;background:#1f4a55;color:#fff;border-radius:12px;padding:7px 12px;font-weight:700;cursor:pointer;box-shadow:0 3px 0 #10303a">{{ L.k81 }}</button></span></div>
             <div style="font-size:13px;font-weight:700">{{ jpHead }}</div>
             <sc-for list="{{ jpRows }}" as="r" hint-placeholder-count="3"><div style="display:flex;justify-content:space-between;gap:8px;font-size:13px;padding:6px 0;border-top:1px solid #eadcc6"><span>{{ r.team }} · {{ r.email }}</span><span style="white-space:nowrap">{{ r.tiers }} · {{ r.when }}</span></div></sc-for>
           </div>
           <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:10px" data-panel="explain">
-            <div style="font:800 19px 'Baloo 2',sans-serif">🔬 Giải thích cơ chế (nhánh nghiên cứu)</div>
+            <div style="font:800 19px 'Baloo 2',sans-serif">{{ L.k85 }}</div>
             <div style="font-size:13px;color:#5a6b74">{{ xNote }}</div>
             <div style="display:flex;gap:6px;flex-wrap:wrap">
               <sc-for list="{{ xBtns }}" as="b" hint-placeholder-count="2"><button type="button" onClick="{{ b.go }}" style="border:3px solid {{ b.border }};background:{{ b.bg }};color:{{ b.fg }};border-radius:12px;padding:8px 11px;font-weight:700;cursor:pointer">{{ b.label }}</button></sc-for>
             </div>
           </div>
           <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:10px">
-            <div style="font:800 19px 'Baloo 2',sans-serif">💸 Cấp / trừ vốn</div>
+            <div style="font:800 19px 'Baloo 2',sans-serif">{{ L.k70 }}</div>
             <select value="{{ gTeam }}" onChange="{{ onGTeam }}" style="padding:10px;border-radius:12px;border:2px solid #e6d6bf;background:#fff;font-weight:600">
-              <option value="*">Cả lớp</option>
+              <option value="*">{{ L.k08 }}</option>
               <sc-for list="{{ teamOptions }}" as="o" hint-placeholder-count="3"><option value="{{ o }}">{{ o }}</option></sc-for>
             </select>
-            <div style="display:flex;gap:8px"><input value="{{ gAmt }}" onChange="{{ onGAmt }}" type="number" placeholder="Triệu ₫, âm = trừ" style="flex:1;min-width:0;padding:10px 12px;border-radius:12px;border:2px solid #e6d6bf"></input><input type="text" value="{{ gReason }}" onChange="{{ onGReason }}" placeholder="Lý do" style="flex:1.4;min-width:0;padding:10px 12px;border-radius:12px;border:2px solid #e6d6bf"></input></div>
-            <button type="button" onClick="{{ doGrant }}" style="border:0;background:#2f8a8c;color:#fff;border-radius:14px;padding:10px;font:800 15px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #1b5a5a;cursor:pointer">Gửi</button>
+            <div style="display:flex;gap:8px"><input value="{{ gAmt }}" onChange="{{ onGAmt }}" type="number" placeholder="{{ L.a09 }}" style="flex:1;min-width:0;padding:10px 12px;border-radius:12px;border:2px solid #e6d6bf"></input><input type="text" value="{{ gReason }}" onChange="{{ onGReason }}" placeholder="{{ L.a03 }}" style="flex:1.4;min-width:0;padding:10px 12px;border-radius:12px;border:2px solid #e6d6bf"></input></div>
+            <button type="button" onClick="{{ doGrant }}" style="border:0;background:#2f8a8c;color:#fff;border-radius:14px;padding:10px;font:800 15px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #1b5a5a;cursor:pointer">{{ L.k12 }}</button>
             <div style="display:flex;flex-direction:column;gap:4px;max-height:160px;overflow:auto;font-size:13px">
               <sc-for list="{{ grants }}" as="g" hint-placeholder-count="2"><div style="display:flex;justify-content:space-between;gap:8px;border-bottom:1px dashed #e6d6bf;padding:4px 0"><span>{{ g.team }} · {{ g.reason }}</span><b style="color:{{ g.color }}">{{ g.amt }}</b></div></sc-for>
             </div>
           </div>
           <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:10px">
-            <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><div style="font:800 19px 'Baloo 2',sans-serif">⏱ Tính giờ thi</div><span style="display:flex;gap:6px;flex-wrap:wrap"><a href="Bang Xep Hang Ben Phu Sa.dc.html?class={{ code }}" target="_blank" style="font:800 13px 'Baloo 2',sans-serif;color:#fff;background:#e8762d;border-radius:999px;padding:6px 14px;text-decoration:none">🏆 Chiếu BXH Bến Phù Sa</a><a href="man-hinh-lop-hoc.html?lop={{ code }}" target="_blank" style="font:800 13px 'Baloo 2',sans-serif;color:#fff;background:#1f4a55;border-radius:999px;padding:6px 14px;text-decoration:none">📽 Màn hình lớp học 3D</a><a href="nhan-xet-vong.html?lop={{ code }}" target="_blank" style="font:800 13px 'Baloo 2',sans-serif;color:#fff;background:#2f8a8c;border-radius:999px;padding:6px 14px;text-decoration:none">💬 Nhận xét cuối vòng</a></span></div>
-            <div style="font-size:13px;color:#5a6b74;text-wrap:pretty">Dùng chung cho cả Bật Nghiệp và Hộ Chiếu Thương Hiệu 3D của lớp này. Đội/sinh viên đi nhanh hơn lịch phải chờ; hết giờ mà chưa chốt thì hệ thống tự chốt theo lựa chọn hiện có.</div>
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><div style="font:800 19px 'Baloo 2',sans-serif">{{ L.k49 }}</div><span style="display:flex;gap:6px;flex-wrap:wrap"><a href="Bang Xep Hang Ben Phu Sa.dc.html?class={{ code }}" target="_blank" style="font:800 13px 'Baloo 2',sans-serif;color:#fff;background:#e8762d;border-radius:999px;padding:6px 14px;text-decoration:none">{{ L.k66 }}</a><a href="man-hinh-lop-hoc.html?lop={{ code }}" target="_blank" style="font:800 13px 'Baloo 2',sans-serif;color:#fff;background:#1f4a55;border-radius:999px;padding:6px 14px;text-decoration:none">{{ L.k83 }}</a><a href="nhan-xet-vong.html?lop={{ code }}" target="_blank" style="font:800 13px 'Baloo 2',sans-serif;color:#fff;background:#2f8a8c;border-radius:999px;padding:6px 14px;text-decoration:none">{{ L.k69 }}</a></span></div>
+            <div style="font-size:13px;color:#5a6b74;text-wrap:pretty">{{ L.k11 }}</div>
             <div style="font-weight:700;color:{{ examColor }}">{{ examStatus }}</div>
             <sc-if value="{{ examNotRunning }}" hint-placeholder-val="{{ true }}">
               <div style="display:flex;gap:8px">
-                <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74;flex:1">Phút chuẩn bị
+                <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74;flex:1">{{ L.k24 }}
                   <input value="{{ exSetup }}" onChange="{{ onExSetup }}" type="number" min="0" max="60" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
                 </label>
-                <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74;flex:1">Phút mỗi vòng/quý
+                <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74;flex:1">{{ L.k25 }}
                   <input value="{{ exRound }}" onChange="{{ onExRound }}" type="number" min="2" max="60" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
                 </label>
               </div>
             </sc-if>
             <div style="display:flex;gap:8px;flex-wrap:wrap">
-              <sc-if value="{{ examRunning }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ stopExam }}" style="border:3px solid #c0443a;background:#fff;color:#c0443a;border-radius:12px;padding:9px 14px;font-weight:700;cursor:pointer">⏹ Hủy tính giờ</button></sc-if>
-              <sc-if value="{{ examNotRunning }}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{ startExam }}" style="border:0;background:#1f4a55;color:#fff;border-radius:14px;padding:9px 14px;font:800 15px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #10303a;cursor:pointer">▶️ Bắt đầu tính giờ</button></sc-if>
+              <sc-if value="{{ examRunning }}" hint-placeholder-val="{{ false }}"><button type="button" onClick="{{ stopExam }}" style="border:3px solid #c0443a;background:#fff;color:#c0443a;border-radius:12px;padding:9px 14px;font-weight:700;cursor:pointer">{{ L.k50 }}</button></sc-if>
+              <sc-if value="{{ examNotRunning }}" hint-placeholder-val="{{ true }}"><button type="button" onClick="{{ startExam }}" style="border:0;background:#1f4a55;color:#fff;border-radius:14px;padding:9px 14px;font:800 15px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #10303a;cursor:pointer">{{ L.k51 }}</button></sc-if>
             </div>
           </div>
           <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:10px">
-            <div style="font:800 19px 'Baloo 2',sans-serif">📜 Chứng nhận chính thức</div>
-            <div style="font-size:13px;color:#5a6b74;text-wrap:pretty">Áp dụng cho cả 3 game của lớp này. Sinh viên sẽ thấy nút tải «🎓 Chứng nhận chính thức» cạnh chứng chỉ BizOn mặc định, dùng đúng mã môn/tên môn/ngày học bạn nhập dưới đây. Mặc định chứng nhận do BizOn cấp; muốn mang tên trường bạn thì điền phần «Đơn vị cấp» bên dưới.</div>
-            <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">Mã môn
-              <input type="text" value="{{ certCode }}" onChange="{{ onCertCode }}" placeholder="VD: KT330H (để trống nếu không có)" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
+            <div style="font:800 19px 'Baloo 2',sans-serif">{{ L.k79 }}</div>
+            <div style="font-size:13px;color:#5a6b74;text-wrap:pretty">{{ L.k39 }}</div>
+            <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">{{ L.k16 }}
+              <input type="text" value="{{ certCode }}" onChange="{{ onCertCode }}" placeholder="{{ L.a11 }}" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
             </label>
-            <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">Tên môn
+            <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">{{ L.k33 }}
               <input type="text" value="{{ certName }}" onChange="{{ onCertName }}" placeholder="BizOn Bật Nghiệp" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
             </label>
-            <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">Ngày học (hiển thị nguyên văn trên chứng nhận)
+            <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">{{ L.k20 }}
               <input type="text" value="{{ certDates }}" onChange="{{ onCertDates }}" placeholder="4th, 10th and 11th March 2026" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
             </label>
             <div style="display:flex;align-items:center;gap:10px">
-              <button type="button" onClick="{{ saveCertConfig }}" style="border:0;background:#1f4a55;color:#fff;border-radius:14px;padding:9px 16px;font:800 15px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #10303a;cursor:pointer">💾 Lưu</button>
-              <sc-if value="{{ certSaved }}" hint-placeholder-val="{{ false }}"><span style="color:#1f9a63;font-weight:800;font-size:13px">✅ Đã lưu</span></sc-if>
+              <button type="button" onClick="{{ saveCertConfig }}" style="border:0;background:#1f4a55;color:#fff;border-radius:14px;padding:9px 16px;font:800 15px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #10303a;cursor:pointer">{{ L.k71 }}</button>
+              <sc-if value="{{ certSaved }}" hint-placeholder-val="{{ false }}"><span style="color:#1f9a63;font-weight:800;font-size:13px">{{ L.k53 }}</span></sc-if>
             </div>
             <div style="border-top:2px dashed #e6d6bf;margin-top:6px;padding-top:12px;display:flex;flex-direction:column;gap:9px">
-              <div style="font:800 17px 'Baloo 2',sans-serif">🏛️ Đơn vị cấp chứng nhận (tuỳ chọn)</div>
-              <div style="font-size:12.5px;color:#5a6b74;text-wrap:pretty">Để trống = chứng nhận do BizOn cấp (logo BizOn, chữ ký in của người sáng lập). Điền tên đơn vị để chứng nhận mang tên trường bạn: tên đơn vị, đơn vị trực thuộc, đường dẫn logo (ảnh trên web, ví dụ assets/docs/ctu-logo.png), logo thứ hai cho khoa/trường thành viên (ví dụ assets/docs/soe-logo.png; trống thì góc phải là logo BizOn), người ký và chức danh. Chỉ áp dụng cho lớp này và chỉ bạn sửa được.</div>
-              <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">Tên đơn vị cấp
-                <input type="text" value="{{ certOrgName }}" onChange="{{ onCertOrgName }}" placeholder="VD: Trường Đại học Cần Thơ" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
+              <div style="font:800 17px 'Baloo 2',sans-serif">{{ L.k67 }}</div>
+              <div style="font-size:12.5px;color:#5a6b74;text-wrap:pretty">{{ L.k45 }}</div>
+              <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">{{ L.k34 }}
+                <input type="text" value="{{ certOrgName }}" onChange="{{ onCertOrgName }}" placeholder="{{ L.a14 }}" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
               </label>
-              <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">Đơn vị trực thuộc (khoa / trường thành viên)
-                <input type="text" value="{{ certOrgSub }}" onChange="{{ onCertOrgSub }}" placeholder="VD: Trường Kinh tế" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
+              <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">{{ L.k42 }}
+                <input type="text" value="{{ certOrgSub }}" onChange="{{ onCertOrgSub }}" placeholder="{{ L.a13 }}" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
               </label>
-              <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">Đường dẫn logo (tuỳ chọn)
-                <input type="text" value="{{ certOrgLogo }}" onChange="{{ onCertOrgLogo }}" placeholder="VD: assets/docs/ctu-logo.png hoặc https://…/logo.png" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
+              <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">{{ L.k43 }}
+                <input type="text" value="{{ certOrgLogo }}" onChange="{{ onCertOrgLogo }}" placeholder="{{ L.a15 }}" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
               </label>
-              <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">Đường dẫn logo thứ hai (khoa / trường thành viên, tuỳ chọn)
+              <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">{{ L.k44 }}
                 <input type="text" value="{{ certOrgLogo2 }}" onChange="{{ onCertOrgLogo2 }}" placeholder="VD: assets/docs/soe-logo.png" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
               </label>
-              <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">Người ký
-                <input type="text" value="{{ certSignerName }}" onChange="{{ onCertSignerName }}" placeholder="VD: PGS.TS. Nguyễn Văn A" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
+              <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">{{ L.k21 }}
+                <input type="text" value="{{ certSignerName }}" onChange="{{ onCertSignerName }}" placeholder="{{ L.a12 }}" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
               </label>
-              <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">Chức danh / đơn vị của người ký
-                <input type="text" value="{{ certSignerTitle }}" onChange="{{ onCertSignerTitle }}" placeholder="VD: Giảng viên, Trường Kinh tế" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
+              <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">{{ L.k06 }}
+                <input type="text" value="{{ certSignerTitle }}" onChange="{{ onCertSignerTitle }}" placeholder="{{ L.a10 }}" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
               </label>
               <div style="display:flex;align-items:center;gap:10px">
-                <button type="button" onClick="{{ saveCertIssuer }}" style="border:0;background:#1f4a55;color:#fff;border-radius:14px;padding:9px 16px;font:800 15px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #10303a;cursor:pointer">💾 Lưu đơn vị cấp</button>
-                <sc-if value="{{ certIssuerSaved }}" hint-placeholder-val="{{ false }}"><span style="color:#1f9a63;font-weight:800;font-size:13px">✅ Đã lưu</span></sc-if>
+                <button type="button" onClick="{{ saveCertIssuer }}" style="border:0;background:#1f4a55;color:#fff;border-radius:14px;padding:9px 16px;font:800 15px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #10303a;cursor:pointer">{{ L.k73 }}</button>
+                <sc-if value="{{ certIssuerSaved }}" hint-placeholder-val="{{ false }}"><span style="color:#1f9a63;font-weight:800;font-size:13px">{{ L.k53 }}</span></sc-if>
               </div>
             </div>
             <div style="border-top:2px dashed #e6d6bf;margin-top:6px;padding-top:12px;display:flex;flex-direction:column;gap:9px">
-              <div style="font:800 17px 'Baloo 2',sans-serif">✍️ Giảng viên cấp chứng nhận (chữ ký thật)</div>
-              <div style="font-size:12.5px;color:#5a6b74;text-wrap:pretty">Cùng mẫu chứng nhận ở trên, chữ ký của giảng viên cấp chứng nhận (tên và chức danh lấy từ «Đơn vị cấp»; để trống thì là chứng nhận BizOn). Ảnh chữ ký thật chỉ lưu trong trình duyệt của máy này – không tải lên web hay máy chủ. Bản sinh viên tự tải vẫn dùng chữ ký in.</div>
+              <div style="font:800 17px 'Baloo 2',sans-serif">{{ L.k54 }}</div>
+              <div style="font-size:12.5px;color:#5a6b74;text-wrap:pretty">{{ L.k07 }}</div>
               <sc-if value="{{ hasSig }}" hint-placeholder-val="{{ false }}">
                 <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
                   <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" sc-camel-src="{{ sigTu }}" alt="Chữ ký đã chọn" style="height:52px;max-width:220px;object-fit:contain;background:#fff;border:2px solid #e6d6bf;border-radius:10px;padding:4px 10px"></img>
-                  <button type="button" onClick="{{ clearSig }}" style="border:2px solid #c0443a;background:#fff;color:#c0443a;border-radius:10px;padding:6px 12px;font-weight:700;cursor:pointer">🗑 Xoá khỏi máy này</button>
+                  <button type="button" onClick="{{ clearSig }}" style="border:2px solid #c0443a;background:#fff;color:#c0443a;border-radius:10px;padding:6px 12px;font-weight:700;cursor:pointer">{{ L.k86 }}</button>
                 </div>
               </sc-if>
               <label style="display:flex;flex-direction:column;gap:4px;font-size:11px;font-weight:700;color:#5a6b74">{{ sigPickLabel }}
                 <input type="file" accept="image/png,image/jpeg,image/webp" onChange="{{ onSigFile }}" style="font-size:13px"></input>
               </label>
-              <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">Danh sách sinh viên – mỗi dòng một người (dán thẳng từ Excel: STT, Họ và tên, MSSV…; dùng chung với danh sách lớp ở tab Chấm điểm)
+              <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">{{ L.k10 }}
                 <textarea value="{{ rosterText }}" onChange="{{ onRosterText }}" placeholder="1&#9;Nguyễn Văn A&#9;B2400001" rows="4" style="width:100%;box-sizing:border-box;padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf;font-family:monospace;font-size:12px"></textarea>
               </label>
               <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
                 <button type="button" onClick="{{ saveRoster }}" style="border:0;background:#2f8a8c;color:#fff;border-radius:10px;padding:7px 14px;font-weight:700;cursor:pointer">{{ rosterSaveLabel }}</button>
-                <button type="button" onClick="{{ issueAll }}" style="border:0;background:#1f4a55;color:#fff;border-radius:14px;padding:8px 14px;font:800 15px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #10303a;cursor:pointer">📚 In cả lớp ({{ certCount }}) → PDF</button>
+                <button type="button" onClick="{{ issueAll }}" style="border:0;background:#1f4a55;color:#fff;border-radius:14px;padding:8px 14px;font:800 15px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #10303a;cursor:pointer">{{ L.certAll }} ({{ certCount }}) → PDF</button>
               </div>
               <sc-if value="{{ certMsg }}" hint-placeholder-val="{{ false }}"><div style="font-size:12.5px;font-weight:700;color:#1f4a55">{{ certMsg }}</div></sc-if>
               <div style="max-height:320px;overflow:auto;display:flex;flex-direction:column;gap:4px">
@@ -353,23 +353,23 @@ input,select,textarea,button{font-family:inherit}
                   <div style="display:flex;align-items:center;gap:10px;background:#fff;border:2px solid #eadcc6;border-radius:12px;padding:6px 10px">
                     <div style="flex:1;min-width:0;font-weight:700;font-size:13.5px">{{ st.name }}</div>
                     <div style="font-family:monospace;font-size:12px;color:#5a6b74">{{ st.mssv }}</div>
-                    <button type="button" onClick="{{ st.dl }}" style="border:0;background:#f39a33;color:#1f3f4a;border-radius:10px;padding:6px 10px;font-weight:800;cursor:pointer">📜 Tải</button>
+                    <button type="button" onClick="{{ st.dl }}" style="border:0;background:#f39a33;color:#1f3f4a;border-radius:10px;padding:6px 10px;font-weight:800;cursor:pointer">{{ L.k80 }}</button>
                   </div>
                 </sc-for>
               </div>
             </div>
           </div>
           <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:8px">
-            <div style="font:800 19px 'Baloo 2',sans-serif">📄 Tài liệu chấm &amp; thi</div>
-            <div style="font-size:13px;color:#5a6b74">Mở trực tiếp hoặc in (Ctrl+P). Gửi các file «Sinh viên» cho lớp trước buổi thi.</div>
+            <div style="font:800 19px 'Baloo 2',sans-serif">{{ L.k74 }}</div>
+            <div style="font-size:13px;color:#5a6b74">{{ L.k18 }}</div>
             <div style="display:flex;flex-direction:column;gap:5px;font-size:13px">
-              <a href="Thang%20Diem%20Chi%20Tiet.dc.html" target="_blank" rel="noopener" style="color:#1f6f8a;font-weight:700">📘 Hướng dẫn chấm chi tiết (giảng viên)</a>
-              <a href="Thang%20Diem%20Danh%20Gia.dc.html" target="_blank" rel="noopener" style="color:#1f6f8a;font-weight:700">📗 Bảng tổng hợp thang điểm (giảng viên)</a>
-              <a href="Thang%20Diem%20Bat%20Nghiep%20-%20Sinh%20Vien.dc.html" target="_blank" rel="noopener" style="color:#1f6f8a;font-weight:700">🇻🇳 Thang điểm Bật Nghiệp – sinh viên (VI)</a>
-              <a href="Grading%20Scale%20Bat%20Nghiep%20-%20Student%20EN.dc.html" target="_blank" rel="noopener" style="color:#1f6f8a;font-weight:700">🇬🇧 Bật Nghiệp grading scale – student (EN)</a>
-              <a href="Thang%20Diem%20Ho%20Chieu%20-%20Sinh%20Vien.dc.html" target="_blank" rel="noopener" style="color:#1f6f8a;font-weight:700">🇻🇳 Thang điểm Hộ Chiếu – sinh viên (VI)</a>
-              <a href="Grading%20Scale%20Ho%20Chieu%20-%20Student%20EN.dc.html" target="_blank" rel="noopener" style="color:#1f6f8a;font-weight:700">🇬🇧 Hộ Chiếu grading scale – student (EN)</a>
-              <a href="Thang%20Diem%20Ho%20Chieu%20Mini.dc.html" target="_blank" rel="noopener" style="color:#1f6f8a;font-weight:700">🎓 Thang điểm Hộ Chiếu Mini (VI/EN/Bahasa)</a>
+              <a href="Thang%20Diem%20Chi%20Tiet.dc.html" target="_blank" rel="noopener" style="color:#1f6f8a;font-weight:700">{{ L.k78 }}</a>
+              <a href="Thang%20Diem%20Danh%20Gia.dc.html" target="_blank" rel="noopener" style="color:#1f6f8a;font-weight:700">{{ L.k77 }}</a>
+              <a href="Thang%20Diem%20Bat%20Nghiep%20-%20Sinh%20Vien.dc.html" target="_blank" rel="noopener" style="color:#1f6f8a;font-weight:700">{{ L.k61 }}</a>
+              <a href="Grading%20Scale%20Bat%20Nghiep%20-%20Student%20EN.dc.html" target="_blank" rel="noopener" style="color:#1f6f8a;font-weight:700">{{ L.k59 }}</a>
+              <a href="Thang%20Diem%20Ho%20Chieu%20-%20Sinh%20Vien.dc.html" target="_blank" rel="noopener" style="color:#1f6f8a;font-weight:700">{{ L.k62 }}</a>
+              <a href="Grading%20Scale%20Ho%20Chieu%20-%20Student%20EN.dc.html" target="_blank" rel="noopener" style="color:#1f6f8a;font-weight:700">{{ L.k60 }}</a>
+              <a href="Thang%20Diem%20Ho%20Chieu%20Mini.dc.html" target="_blank" rel="noopener" style="color:#1f6f8a;font-weight:700">{{ L.k64 }}</a>
             </div>
           </div>
         </section>
@@ -377,8 +377,8 @@ input,select,textarea,button{font-family:inherit}
 
       <sc-if value="{{ tabGrading }}" hint-placeholder-val="{{ false }}">
         <section style="display:flex;flex-direction:column;gap:10px">
-          <div style="font-size:13px;color:#5a6b74;text-wrap:pretty">Thang 10 theo «Hướng dẫn chấm điểm chi tiết»: B1 xếp hạng lợi nhuận, B2 thị phần, B3 vận hành (OEE/lỗi/quick ratio), B4 thành tựu, B5 đóng góp (🤖 tự động nếu có Nhật ký thành viên, không thì bạn nhập số vòng đóng góp 0–6), B6 ứng biến biến cố (🤖 tự động nếu có nhật ký, không thì đánh dấu có chuẩn bị trước hay không). Nhận xét bỏ trống sẽ tự điền theo điểm đạt được khi xuất Excel. <a href="Thang%20Diem%20Chi%20Tiet.dc.html" target="_blank" rel="noopener" style="color:#1f6f8a;font-weight:700">📄 Xem/in hướng dẫn chấm chi tiết</a> · thêm tài liệu ở tab «🎛 Điều khiển lớp».</div>
-          <div class="scroll-hint">↔️ Vuốt ngang để xem đủ cột</div>
+          <div style="font-size:13px;color:#5a6b74;text-wrap:pretty">{{ L.k27 }} <a href="Thang%20Diem%20Chi%20Tiet.dc.html" target="_blank" rel="noopener" style="color:#1f6f8a;font-weight:700">{{ L.k75 }}</a> {{ L.k37 }}</div>
+          <div class="scroll-hint">{{ L.k48 }}</div>
           <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:22px;overflow:auto">
             <div style="display:grid;grid-template-columns:minmax(130px,1.2fr) repeat(6,minmax(78px,1fr)) 70px 60px minmax(140px,1.4fr) 90px;min-width:1180px;align-items:center">
               <sc-for list="{{ gradeHead }}" as="h" hint-placeholder-count="11"><div style="padding:11px 8px;border-bottom:2px solid #e6d6bf;font-size:11px;font-weight:700;color:#5a6b74">{{ h }}</div></sc-for>
@@ -391,7 +391,7 @@ input,select,textarea,button{font-family:inherit}
                   <div style="padding:10px 8px;border-bottom:1px solid #eadcc6">{{ r.b4 }}</div>
                   <div style="padding:6px 8px;border-bottom:1px solid #eadcc6">
                     <div style="font-weight:700">{{ r.b5 }}</div>
-                    <sc-if value="{{ r.showManual }}" hint-placeholder-val="{{ true }}"><input value="{{ r.reasoning }}" onChange="{{ r.onR }}" type="number" min="0" max="6" step="1" placeholder="0–6 vòng" style="width:70px;padding:5px;margin-top:3px;border-radius:8px;border:2px solid #e6d6bf;font-size:11px"></input></sc-if>
+                    <sc-if value="{{ r.showManual }}" hint-placeholder-val="{{ true }}"><input value="{{ r.reasoning }}" onChange="{{ r.onR }}" type="number" min="0" max="6" step="1" placeholder="{{ L.a01 }}" style="width:70px;padding:5px;margin-top:3px;border-radius:8px;border:2px solid #e6d6bf;font-size:11px"></input></sc-if>
                   </div>
                   <div style="padding:6px 8px;border-bottom:1px solid #eadcc6">
                     <div style="font-weight:700">{{ r.b6 }}</div>
@@ -406,16 +406,16 @@ input,select,textarea,button{font-family:inherit}
             </div>
           </div>
           <sc-if value="{{ hasMini }}" hint-placeholder-val="{{ false }}">
-            <div style="font:800 15px 'Baloo 2',sans-serif;color:#1f4a55;margin-top:6px">🌍 Hộ Chiếu Mini (điểm tự tính trong game)</div>
+            <div style="font:800 15px 'Baloo 2',sans-serif;color:#1f4a55;margin-top:6px">{{ L.k63 }}</div>
             <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:16px;padding:10px 12px;margin:6px 0 10px">
-              <div style="font-size:12px;font-weight:700;color:#1f4a55;margin-bottom:4px">📋 Danh sách lớp (để ghép MSSV) – dán STT, Họ và tên, MSSV, Email, Nhóm (mỗi sinh viên một dòng, cách nhau bằng Tab hoặc dấu phẩy – dán thẳng từ Excel/Sheets cũng được)</div>
+              <div style="font-size:12px;font-weight:700;color:#1f4a55;margin-bottom:4px">{{ L.k76 }}</div>
               <textarea value="{{ rosterText }}" onChange="{{ onRosterText }}" placeholder="1&#9;Nguyễn Văn A&#9;B2400001&#9;vanab2400001@student.ctu.edu.vn&#9;DOI-A" rows="4" style="width:100%;box-sizing:border-box;padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf;font-family:monospace;font-size:11.5px"></textarea>
               <div style="display:flex;align-items:center;gap:10px;margin-top:6px;flex-wrap:wrap">
                 <button type="button" onClick="{{ saveRoster }}" style="border:0;background:#2f8a8c;color:#fff;border-radius:10px;padding:7px 14px;font-weight:700;cursor:pointer">{{ rosterSaveLabel }}</button>
                 <div style="font-size:11.5px;color:#5a6b74">{{ rosterHint }}</div>
               </div>
             </div>
-            <div class="scroll-hint">↔️ Vuốt ngang để xem đủ cột</div>
+            <div class="scroll-hint">{{ L.k48 }}</div>
             <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:22px;overflow:auto">
               <div style="display:grid;grid-template-columns:minmax(120px,1fr) 100px minmax(150px,1.2fr) minmax(170px,1.3fr) minmax(100px,0.7fr) 90px minmax(160px,1.1fr) 70px 80px minmax(130px,1fr);min-width:1380px;align-items:center">
                 <sc-for list="{{ miniHead }}" as="h" hint-placeholder-count="10"><div style="padding:11px 8px;border-bottom:2px solid #e6d6bf;font-size:11px;font-weight:700;color:#5a6b74">{{ h }}</div></sc-for>
@@ -440,13 +440,13 @@ input,select,textarea,button{font-family:inherit}
       </sc-if>
       <sc-if value="{{ tabMembers }}" hint-placeholder-val="{{ false }}">
         <section style="display:flex;flex-direction:column;gap:10px">
-          <div style="font-size:13px;color:#5a6b74;text-wrap:pretty">Điểm B5 cá nhân (🤖 tự động) từ Nhật ký thành viên: mỗi vai gửi đề xuất/biên bản/Nếu–Thì trong game Bật Nghiệp. 🟢 đề xuất được CEO áp dụng · 🟡 có tham gia vòng đó · ⚪ chưa ghi nhận.</div>
-          <sc-if value="{{ noMembers }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px;color:#5a6b74;padding:16px">Chưa có dữ liệu Nhật ký thành viên cho lớp này. Sinh viên cần đăng nhập bằng Mã lớp thật (không phải Đội Demo) và mỗi vai chơi trên máy riêng để hệ thống ghi nhận.</div></sc-if>
-          <div class="scroll-hint">↔️ Vuốt ngang để xem đủ cột</div>
+          <div style="font-size:13px;color:#5a6b74;text-wrap:pretty">{{ L.k41 }}</div>
+          <sc-if value="{{ noMembers }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px;color:#5a6b74;padding:16px">{{ L.k03 }}</div></sc-if>
+          <div class="scroll-hint">{{ L.k48 }}</div>
           <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:22px;overflow:auto">
             <div style="display:grid;grid-template-columns:minmax(120px,1.2fr) minmax(120px,1.2fr) 70px repeat(6,44px) 70px 70px 60px 90px;min-width:920px;align-items:center">
-              <div style="padding:11px 8px;border-bottom:2px solid #e6d6bf;font-size:11px;font-weight:700;color:#5a6b74">Đội</div>
-              <div style="padding:11px 8px;border-bottom:2px solid #e6d6bf;font-size:11px;font-weight:700;color:#5a6b74">Thành viên</div>
+              <div style="padding:11px 8px;border-bottom:2px solid #e6d6bf;font-size:11px;font-weight:700;color:#5a6b74">{{ L.k46 }}</div>
+              <div style="padding:11px 8px;border-bottom:2px solid #e6d6bf;font-size:11px;font-weight:700;color:#5a6b74">{{ L.k29 }}</div>
               <div style="padding:11px 8px;border-bottom:2px solid #e6d6bf;font-size:11px;font-weight:700;color:#5a6b74">Vai</div>
               <div style="padding:11px 4px;border-bottom:2px solid #e6d6bf;font-size:10px;font-weight:700;color:#5a6b74;text-align:center">V1</div>
               <div style="padding:11px 4px;border-bottom:2px solid #e6d6bf;font-size:10px;font-weight:700;color:#5a6b74;text-align:center">V2</div>
@@ -455,8 +455,8 @@ input,select,textarea,button{font-family:inherit}
               <div style="padding:11px 4px;border-bottom:2px solid #e6d6bf;font-size:10px;font-weight:700;color:#5a6b74;text-align:center">V5</div>
               <div style="padding:11px 4px;border-bottom:2px solid #e6d6bf;font-size:10px;font-weight:700;color:#5a6b74;text-align:center">V6</div>
               <div style="padding:11px 8px;border-bottom:2px solid #e6d6bf;font-size:11px;font-weight:700;color:#5a6b74">Tham gia</div>
-              <div style="padding:11px 8px;border-bottom:2px solid #e6d6bf;font-size:11px;font-weight:700;color:#5a6b74">Áp dụng</div>
-              <div style="padding:11px 8px;border-bottom:2px solid #e6d6bf;font-size:11px;font-weight:700;color:#5a6b74">Nếu–Thì</div>
+              <div style="padding:11px 8px;border-bottom:2px solid #e6d6bf;font-size:11px;font-weight:700;color:#5a6b74">{{ L.k38 }}</div>
+              <div style="padding:11px 8px;border-bottom:2px solid #e6d6bf;font-size:11px;font-weight:700;color:#5a6b74">{{ L.k22 }}</div>
               <div style="padding:11px 8px;border-bottom:2px solid #e6d6bf;font-size:11px;font-weight:700;color:#5a6b74">B5 /1,5</div>
               <sc-for list="{{ memberRows }}" as="m" hint-placeholder-count="4">
                 <div style="display:contents">
@@ -478,22 +478,22 @@ input,select,textarea,button{font-family:inherit}
       </sc-if>
       <sc-if value="{{ tabActivity }}" hint-placeholder-val="{{ false }}">
         <section style="display:flex;flex-direction:column;gap:14px">
-          <div style="font-size:13px;color:#5a6b74;text-wrap:pretty">Ma trận tham gia theo đội/vai từ Nhật ký thành viên (đề xuất, biên bản, Nếu–Thì, hỏi Lumina, chốt vòng) – <b>bằng chứng số để bạn tham khảo, không phải điểm chấm</b> (khác B5 ở tab «Chấm điểm»). «Chỉ số đồng đội» = 100 trừ chênh lệch điểm tham gia cao nhất–thấp nhất trong đội.</div>
+          <div style="font-size:13px;color:#5a6b74;text-wrap:pretty">{{ L.k15 }} <b>{{ L.k35 }}</b> {{ L.k01 }}</div>
           <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:22px;padding:16px;display:flex;flex-direction:column;gap:10px">
-            <div style="font:800 17px 'Baloo 2',sans-serif">🏷️ Nhãn 4 mức rubric (tự đặt tên, áp dụng toàn lớp)</div>
-            <div style="font-size:12px;color:#5a6b74">Mức 1 = chỉ số đồng đội ≥ 85 · Mức 2 = 65–84 · Mức 3 = 45–64 · Mức 4 = dưới 45.</div>
+            <div style="font:800 17px 'Baloo 2',sans-serif">{{ L.k68 }}</div>
+            <div style="font-size:12px;color:#5a6b74">{{ L.k19 }}</div>
             <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px">
-              <input type="text" value="{{ rLv1 }}" onChange="{{ onRLv1 }}" placeholder="Rất cân bằng" style="padding:9px 12px;border-radius:12px;border:2px solid #e6d6bf"></input>
-              <input type="text" value="{{ rLv2 }}" onChange="{{ onRLv2 }}" placeholder="Khá cân bằng" style="padding:9px 12px;border-radius:12px;border:2px solid #e6d6bf"></input>
-              <input type="text" value="{{ rLv3 }}" onChange="{{ onRLv3 }}" placeholder="Lệch rõ" style="padding:9px 12px;border-radius:12px;border:2px solid #e6d6bf"></input>
-              <input type="text" value="{{ rLv4 }}" onChange="{{ onRLv4 }}" placeholder="Lệch nhiều" style="padding:9px 12px;border-radius:12px;border:2px solid #e6d6bf"></input>
+              <input type="text" value="{{ rLv1 }}" onChange="{{ onRLv1 }}" placeholder="{{ L.a07 }}" style="padding:9px 12px;border-radius:12px;border:2px solid #e6d6bf"></input>
+              <input type="text" value="{{ rLv2 }}" onChange="{{ onRLv2 }}" placeholder="{{ L.a02 }}" style="padding:9px 12px;border-radius:12px;border:2px solid #e6d6bf"></input>
+              <input type="text" value="{{ rLv3 }}" onChange="{{ onRLv3 }}" placeholder="{{ L.a05 }}" style="padding:9px 12px;border-radius:12px;border:2px solid #e6d6bf"></input>
+              <input type="text" value="{{ rLv4 }}" onChange="{{ onRLv4 }}" placeholder="{{ L.a04 }}" style="padding:9px 12px;border-radius:12px;border:2px solid #e6d6bf"></input>
             </div>
             <div style="display:flex;align-items:center;gap:10px">
-              <button type="button" onClick="{{ saveRubric }}" style="border:0;background:#1f4a55;color:#fff;border-radius:14px;padding:9px 16px;font:800 15px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #10303a;cursor:pointer">💾 Lưu nhãn</button>
-              <sc-if value="{{ rubricSaved }}" hint-placeholder-val="{{ false }}"><span style="color:#1f9a63;font-weight:800;font-size:13px">✅ Đã lưu</span></sc-if>
+              <button type="button" onClick="{{ saveRubric }}" style="border:0;background:#1f4a55;color:#fff;border-radius:14px;padding:9px 16px;font:800 15px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #10303a;cursor:pointer">{{ L.k72 }}</button>
+              <sc-if value="{{ rubricSaved }}" hint-placeholder-val="{{ false }}"><span style="color:#1f9a63;font-weight:800;font-size:13px">{{ L.k53 }}</span></sc-if>
             </div>
           </div>
-          <sc-if value="{{ noActivity }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px;color:#5a6b74;padding:16px">Chưa có dữ liệu Nhật ký thành viên cho lớp này.</div></sc-if>
+          <sc-if value="{{ noActivity }}" hint-placeholder-val="{{ false }}"><div style="font-size:13px;color:#5a6b74;padding:16px">{{ L.k02 }}</div></sc-if>
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px">
             <sc-for list="{{ activityTeams }}" as="at" hint-placeholder-count="2">
               <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:22px;padding:16px;display:flex;flex-direction:column;gap:8px">
@@ -540,6 +540,10 @@ input,select,textarea,button{font-family:inherit}
 </div>
 </x-dc>
 <script type="text/x-dc" data-dc-script>
+// Nhãn tiếng Anh cho chữ do js/bizon-grading.js dựng (06/11/2026): chỉ để hiển thị, tệp Excel vẫn tiếng Việt
+const GV_DEC_EN = { 'Vòng': 'Round', 'Giá (k₫)': 'Price (k₫)', 'Sản lượng': 'Output', 'Nhân công': 'Workers', 'Vốn': 'Funding', 'Thị phần': 'Share', 'Lợi nhuận': 'Profit', 'Kết quả': 'Result', 'Vốn CSH': 'Equity', 'Vay': 'Loan', '🚩 Cắm cờ': '🚩 Flag', 'Có lãi': 'Profit', 'Lỗ': 'Loss' };
+const GV_EVENT_EN = { '': 'Scripted (no intervention)', 'EV_STABLE': '🌤️ Stable market', 'EV_GOLDEN': '🌟 Golden opportunity – demand up', 'EV_PRICEWAR': '⚔️ Price war – price-sensitive', 'EV_RECESSION': '⚡ Energy crisis', 'EV_SUPPLY': '🚢 Supply-chain crisis', 'EV_MILESTONE': '🐉 Dragon goes Vietnamese' };
+
 // Lịch thi dùng chung (game + Trang Giảng viên) — khớp js/exam-clock.js.
 function examPhase(ex, nowMs) {
   if (!ex || !ex.active || !ex.start_at) return null;
@@ -573,6 +577,118 @@ const GV_MIN_PASS = 8;
 class Component extends DCLogic {
   state = { view: 'login', mode: 'in', err: '', fEmail: '', fPass: '', fNewPass: '', recoveryToken: '', fCode: '', classes: [], adminClasses: [], code: '', tab: 'teams', subs: [], st: {}, memberLog: [], bpResults: [], exam: null, examNow: null, exSetup: '', exRound: '', selTeam: '', fEvent: '', fMsg: '', gTeam: '*', gAmt: '', gReason: '', edits: {}, saved: {}, board: false, ready: false, certCode: '', certName: '', certDates: '', certSaved: false, certOrgName: '', certOrgSub: '', certOrgLogo: '', certOrgLogo2: '', certSignerName: '', certSignerTitle: '', certIssuerSaved: false, rubric: {}, rLv1: '', rLv2: '', rLv3: '', rLv4: '', rubricSaved: false, rosterText: '', rosterSaved: false, sigTu: '', certMsg: '', lang: GV_LANG() };
   tr(vi, en) { return this.state.lang === 'en' ? en : vi; }
+  /* Bảng chữ tĩnh của giao diện (06/11/2026): markup dùng {{ L.kNN }} / {{ L.aNN }} */
+  L() {
+    const t = (vi, en) => this.tr(vi, en);
+    return {
+      certAll: t('📚 In cả lớp', '📚 Print the whole class'),
+      k01: t('(khác B5 ở tab «Chấm điểm»). «Chỉ số đồng đội» = 100 trừ chênh lệch điểm tham gia cao nhất–thấp nhất trong đội.', '(different from B5 in the “Grading” tab). “Team index” = 100 minus the gap between the highest and lowest participation score in the team.'),
+      k02: t('Chưa có dữ liệu Nhật ký thành viên cho lớp này.', 'No member-log data for this class yet.'),
+      k03: t('Chưa có dữ liệu Nhật ký thành viên cho lớp này. Sinh viên cần đăng nhập bằng Mã lớp thật (không phải Đội Demo) và mỗi vai chơi trên máy riêng để hệ thống ghi nhận.', 'No member-log data for this class yet. Students must sign in with the real class code (not the Demo team) and each role must play on its own device to be recorded.'),
+      k04: t('Chưa có giảng viên nào tạo lớp.', 'No instructor has created a class yet.'),
+      k05: t('Chưa có lớp nào. Tạo lớp đầu tiên ở ô phía trên rồi phát mã lớp cho sinh viên.', 'No classes yet. Create the first one above, then hand the class code to students.'),
+      k06: t('Chức danh / đơn vị của người ký', 'Signer title / unit'),
+      k07: t('Cùng mẫu chứng nhận ở trên, chữ ký của giảng viên cấp chứng nhận (tên và chức danh lấy từ «Đơn vị cấp»; để trống thì là chứng nhận BizOn). Ảnh chữ ký thật chỉ lưu trong trình duyệt của máy này – không tải lên web hay máy chủ. Bản sinh viên tự tải vẫn dùng chữ ký in.', 'Same certificate template as above, signed by the issuing instructor (name and title from “Issuing unit”; blank means a BizOn certificate). The real signature image stays in this browser only, never uploaded. Student self-downloads still use the printed signature.'),
+      k08: t('Cả lớp', 'Whole class'),
+      k09: t('Cờ', 'Flags'),
+      k10: t('Danh sách sinh viên – mỗi dòng một người (dán thẳng từ Excel: STT, Họ và tên, MSSV…; dùng chung với danh sách lớp ở tab Chấm điểm)', 'Student list, one per line (paste straight from Excel: No., Full name, Student ID…; shared with the roster in the Grading tab)'),
+      k11: t('Dùng chung cho cả Bật Nghiệp và Hộ Chiếu Thương Hiệu 3D của lớp này. Đội/sinh viên đi nhanh hơn lịch phải chờ; hết giờ mà chưa chốt thì hệ thống tự chốt theo lựa chọn hiện có.', 'Shared by Bật Nghiệp and Brand Passport 3D in this class. Teams ahead of schedule wait; when time runs out the system submits the current choices.'),
+      k12: t('Gửi', 'Send'),
+      k13: t('LN lũy kế', 'Cum. profit'),
+      k14: t('Lớp của tôi', 'My classes'),
+      k15: t('Ma trận tham gia theo đội/vai từ Nhật ký thành viên (đề xuất, biên bản, Nếu–Thì, hỏi Lumina, chốt vòng) –', 'Participation matrix by team/role from the member log (proposals, minutes, What-If, Lumina questions, round submits) –'),
+      k16: t('Mã môn', 'Course code'),
+      k17: t('Mở bảng điều khiển →', 'Open dashboard →'),
+      k18: t('Mở trực tiếp hoặc in (Ctrl+P). Gửi các file «Sinh viên» cho lớp trước buổi thi.', 'Open directly or print (Ctrl+P). Send the “Student” files to the class before the exam.'),
+      k19: t('Mức 1 = chỉ số đồng đội ≥ 85 · Mức 2 = 65–84 · Mức 3 = 45–64 · Mức 4 = dưới 45.', 'Level 1 = team index ≥ 85 · Level 2 = 65–84 · Level 3 = 45–64 · Level 4 = below 45.'),
+      k20: t('Ngày học (hiển thị nguyên văn trên chứng nhận)', 'Class date (printed verbatim on the certificate)'),
+      k21: t('Người ký', 'Signer'),
+      k22: t('Nếu–Thì', 'What-If'),
+      k23: t('Nộp gần nhất', 'Last submit'),
+      k24: t('Phút chuẩn bị', 'Prep minutes'),
+      k25: t('Phút mỗi vòng/quý', 'Minutes per round/quarter'),
+      k26: t('Quyết định và kết quả mỗi vòng, lấy từ bài nộp mới nhất của đội.', 'Decisions and results per round, from the team’s latest submission.'),
+      k27: t('Thang 10 theo «Hướng dẫn chấm điểm chi tiết»: B1 xếp hạng lợi nhuận, B2 thị phần, B3 vận hành (OEE/lỗi/quick ratio), B4 thành tựu, B5 đóng góp (🤖 tự động nếu có Nhật ký thành viên, không thì bạn nhập số vòng đóng góp 0–6), B6 ứng biến biến cố (🤖 tự động nếu có nhật ký, không thì đánh dấu có chuẩn bị trước hay không). Nhận xét bỏ trống sẽ tự điền theo điểm đạt được khi xuất Excel.', '10-point scale per the “Detailed grading guide”: B1 profit rank, B2 market share, B3 operations (OEE/defects/quick ratio), B4 achievements, B5 contribution (🤖 automatic with a member log, otherwise enter 0–6 contributing rounds), B6 event resilience (🤖 automatic with a log, otherwise tick whether the team prepared). Blank comments are filled from the score when exporting Excel.'),
+      k28: t('Thay biến cố theo kịch bản của vòng đang chơi bằng biến cố bạn chọn.', 'Replace the scripted event of the current round with one you choose.'),
+      k29: t('Thành viên', 'Members'),
+      k30: t('Thị phần', 'Share'),
+      k31: t('Tiến độ 6 vòng', 'Progress, 6 rounds'),
+      k32: t('Toàn bộ lớp đã triển khai trên mọi giảng viên – chỉ 2 tài khoản chủ dự án thấy được màn này.', 'All classes across every instructor. Only the two project-owner accounts can see this screen.'),
+      k33: t('Tên môn', 'Course name'),
+      k34: t('Tên đơn vị cấp', 'Issuing unit name'),
+      k35: t('bằng chứng số để bạn tham khảo, không phải điểm chấm', 'digital evidence for your reference, not a grade'),
+      k36: t('· Phát mã lớp cho sinh viên. Các đội nhập mã này ở màn đăng nhập của game để kết quả gửi về đây.', '· Hand the class code to students. Teams enter it on the game sign-in screen so results arrive here.'),
+      k37: t('· thêm tài liệu ở tab «🎛 Điều khiển lớp».', '· more documents in the “🎛 Class controls” tab.'),
+      k38: t('Áp dụng', 'Apply'),
+      k39: t('Áp dụng cho cả 3 game của lớp này. Sinh viên sẽ thấy nút tải «🎓 Chứng nhận chính thức» cạnh chứng chỉ BizOn mặc định, dùng đúng mã môn/tên môn/ngày học bạn nhập dưới đây. Mặc định chứng nhận do BizOn cấp; muốn mang tên trường bạn thì điền phần «Đơn vị cấp» bên dưới.', 'Applies to all three games of this class. Students see an “🎓 Official certificate” download next to the default BizOn certificate, using the course code/name/date you enter below. By default BizOn issues it; fill in “Issuing unit” to issue under your institution.'),
+      k40: t('Áp dụng cho lớp', 'Apply to class'),
+      k41: t('Điểm B5 cá nhân (🤖 tự động) từ Nhật ký thành viên: mỗi vai gửi đề xuất/biên bản/Nếu–Thì trong game Bật Nghiệp. 🟢 đề xuất được CEO áp dụng · 🟡 có tham gia vòng đó · ⚪ chưa ghi nhận.', 'Individual B5 (🤖 automatic) from the member log: each role sends proposals/minutes/What-If in Bật Nghiệp. 🟢 proposal adopted by the CEO · 🟡 took part in that round · ⚪ not recorded.'),
+      k42: t('Đơn vị trực thuộc (khoa / trường thành viên)', 'Parent unit (faculty / member school)'),
+      k43: t('Đường dẫn logo (tuỳ chọn)', 'Logo path (optional)'),
+      k44: t('Đường dẫn logo thứ hai (khoa / trường thành viên, tuỳ chọn)', 'Second logo path (faculty / member school, optional)'),
+      k45: t('Để trống = chứng nhận do BizOn cấp (logo BizOn, chữ ký in của người sáng lập). Điền tên đơn vị để chứng nhận mang tên trường bạn: tên đơn vị, đơn vị trực thuộc, đường dẫn logo (ảnh trên web, ví dụ assets/docs/ctu-logo.png), logo thứ hai cho khoa/trường thành viên (ví dụ assets/docs/soe-logo.png; trống thì góc phải là logo BizOn), người ký và chức danh. Chỉ áp dụng cho lớp này và chỉ bạn sửa được.', 'Blank = BizOn issues the certificate (BizOn logo, founder’s printed signature). Fill in a unit name to issue under your institution: unit name, parent unit, logo path (an image on the web, e.g. assets/docs/ctu-logo.png), a second logo for the faculty/member school (e.g. assets/docs/soe-logo.png; blank keeps the BizOn logo at right), signer and title. Applies to this class only and only you can edit it.'),
+      k46: t(this.tr('Đội', 'Team'), 'Team'),
+      k47: t('← Lớp của tôi', '← My classes'),
+      k48: t('↔️ Vuốt ngang để xem đủ cột', '↔️ Swipe sideways to see all columns'),
+      k49: t('⏱ Tính giờ thi', '⏱ Exam timer'),
+      k50: t('⏹ Hủy tính giờ', '⏹ Cancel timer'),
+      k51: t('▶️ Bắt đầu tính giờ', '▶️ Start timer'),
+      k52: t('⚡ Tung biến cố thủ công', '⚡ Trigger an event manually'),
+      k53: t('✅ Đã lưu', '✅ Saved'),
+      k54: t('✍️ Giảng viên cấp chứng nhận (chữ ký thật)', '✍️ Instructor-issued certificates (real signature)'),
+      k55: t('⟳ Tải lại', '⟳ Reload'),
+      k56: t('⬇ CSV bài tình huống', '⬇ Case-task CSV'),
+      k57: t('⬇ Xuất Excel', '⬇ Export Excel'),
+      k58: t('＋ Tạo lớp', '＋ Create class'),
+      k59: t('🇬🇧 Bật Nghiệp grading scale – student (EN)', '🇬🇧 Bật Nghiệp grading scale – student (EN)'),
+      k60: t('🇬🇧 Hộ Chiếu grading scale – student (EN)', '🇬🇧 Brand Passport grading scale – student (EN)'),
+      k61: t('🇻🇳 Thang điểm Bật Nghiệp – sinh viên (VI)', '🇻🇳 Bật Nghiệp grading scale – student (VI)'),
+      k62: t('🇻🇳 Thang điểm Hộ Chiếu – sinh viên (VI)', '🇻🇳 Brand Passport grading scale – student (VI)'),
+      k63: t('🌍 Hộ Chiếu Mini (điểm tự tính trong game)', '🌍 Passport Mini (scored in-game)'),
+      k64: t('🎓 Thang điểm Hộ Chiếu Mini (VI/EN/Bahasa)', '🎓 Passport Mini grading scale (VI/EN/Bahasa)'),
+      k65: t('🎮 Mở game sinh viên', '🎮 Open the student game'),
+      k66: t('🏆 Chiếu BXH Bến Phù Sa', '🏆 Project Bến Phù Sa leaderboard'),
+      k67: t('🏛️ Đơn vị cấp chứng nhận (tuỳ chọn)', '🏛️ Issuing unit (optional)'),
+      k68: t('🏷️ Nhãn 4 mức rubric (tự đặt tên, áp dụng toàn lớp)', '🏷️ Labels for the 4 rubric levels (your wording, whole class)'),
+      k69: t('💬 Nhận xét cuối vòng', '💬 End-of-round feedback'),
+      k70: t('💸 Cấp / trừ vốn', '💸 Grant / deduct capital'),
+      k71: t('💾 Lưu', '💾 Save'),
+      k72: t('💾 Lưu nhãn', '💾 Save labels'),
+      k73: t('💾 Lưu đơn vị cấp', '💾 Save issuing unit'),
+      k74: t('📄 Tài liệu chấm & thi', '📄 Grading & exam documents'),
+      k75: t('📄 Xem/in hướng dẫn chấm chi tiết', '📄 View/print the detailed grading guide'),
+      k76: t('📋 Danh sách lớp (để ghép MSSV) – dán STT, Họ và tên, MSSV, Email, Nhóm (mỗi sinh viên một dòng, cách nhau bằng Tab hoặc dấu phẩy – dán thẳng từ Excel/Sheets cũng được)', '📋 Class roster (to match student IDs): paste No., Full name, Student ID, Email, Team (one student per line, Tab- or comma-separated; pasting from Excel/Sheets works)'),
+      k77: t('📗 Bảng tổng hợp thang điểm (giảng viên)', '📗 Grading scale summary (instructor)'),
+      k78: t('📘 Hướng dẫn chấm chi tiết (giảng viên)', '📘 Detailed grading guide (instructor)'),
+      k79: t('📜 Chứng nhận chính thức', '📜 Official certificate'),
+      k80: t('📜 Tải', '📜 Download'),
+      k81: t('📦 Gói dữ liệu nghiên cứu (ZIP)', '📦 Research data pack (ZIP)'),
+      k82: t('📽 Chiếu bảng xếp hạng', '📽 Project leaderboard'),
+      k83: t('📽 Màn hình lớp học 3D', '📽 3D classroom screen'),
+      k84: t('🔒 Khóa vòng cho cả lớp', '🔒 Lock rounds for the class'),
+      k85: t('🔬 Giải thích cơ chế (nhánh nghiên cứu)', '🔬 Mechanism explanations (research arm)'),
+      k86: t('🗑 Xoá khỏi máy này', '🗑 Remove from this device'),
+      k87: t('🗑 Xóa lớp', '🗑 Delete class'),
+      k88: t('🛡️ Quản trị hệ thống', '🛡️ System admin'),
+      k89: t('🧭 Hành trang hành trình 3 bậc', '🧭 Three-tier journey carry-over'),
+      k90: t('🧮 Chấm rubric', '🧮 Rubric grading'),
+      a01: t('0–6 vòng', '0–6 rounds'),
+      a02: t('Khá cân bằng', 'Fairly balanced'),
+      a03: t('Lý do', 'Reason'),
+      a04: t('Lệch nhiều', 'Very uneven'),
+      a05: t('Lệch rõ', 'Clearly uneven'),
+      a06: t('Mã lớp mới, VD: QTKD-2026-A', 'New class code, e.g. QTKD-2026-A'),
+      a07: t('Rất cân bằng', 'Very balanced'),
+      a08: t('Thông báo cho cả lớp (tùy chọn)', 'Message to the class (optional)'),
+      a09: t('Triệu ₫, âm = trừ', 'Million ₫, negative = deduct'),
+      a10: t('VD: Giảng viên, Trường Kinh tế', 'e.g. Lecturer, School of Economics'),
+      a11: t('VD: KT330H (để trống nếu không có)', 'e.g. KT330H (blank if none)'),
+      a12: t('VD: PGS.TS. Nguyễn Văn A', 'e.g. Assoc. Prof. Dr. Nguyen Van A'),
+      a13: t('VD: Trường Kinh tế', 'e.g. School of Economics'),
+      a14: t('VD: Trường Đại học Cần Thơ', 'e.g. Can Tho University'),
+      a15: t('VD: assets/docs/ctu-logo.png hoặc https://…/logo.png', 'e.g. assets/docs/ctu-logo.png or https://…/logo.png'),
+    };
+  }
   setLang(l) { try { localStorage.setItem('bizon-lang', l); } catch (e) {} document.documentElement.lang = l; this.setState({ lang: l }); }
   api() { return window.BizOnInstructor; }
   P() { return window.BizOnInstructorPage; }
@@ -593,7 +709,7 @@ class Component extends DCLogic {
   async loadClasses() { try { const c = await this.api().myClasses(); this.setState({ classes: c || [], view: 'classes', err: '' }); } catch (e) { this.fail(e); } }
   async loadAdmin() { try { const c = await this.api().adminAllClasses(); this.setState({ adminClasses: c || [], view: 'admin', err: '' }); } catch (e) { this.fail(e); } }
   async removeClass(code) {
-    if (!confirm('Xóa lớp ' + code + '? Lớp sẽ hết thuộc quyền quản lý – dữ liệu bài nộp cũ của sinh viên vẫn được giữ nguyên, có thể đăng ký lại mã này sau.')) return;
+    if (!confirm(this.tr('Xóa lớp ', 'Delete class ') + code + this.tr('? Lớp sẽ hết thuộc quyền quản lý – dữ liệu bài nộp cũ của sinh viên vẫn được giữ nguyên, có thể đăng ký lại mã này sau.', '? The class leaves your management; students\u2019 earlier submissions are kept and the code can be registered again later.'))) return;
     try { await this.api().deleteClass(code); if (this.state.view === 'admin') this.loadAdmin(); else this.loadClasses(); } catch (e) { this.fail(e); } }
   async openClass(code) { this.setState({ code, view: 'class', tab: 'teams', err: '', edits: {}, saved: {}, exSetup: '', exRound: '', certCode: '', certName: '', certDates: '', certSaved: false, certOrgName: '', certOrgSub: '', certOrgLogo: '', certOrgLogo2: '', certSignerName: '', certSignerTitle: '', certIssuerSaved: false, rLv1: '', rLv2: '', rLv3: '', rLv4: '', rubricSaved: false, rosterText: this.getRosterText(code), rosterSaved: false }); await this.reload(code); }
   getRosterText(code) { try { return localStorage.getItem('bizon-gv-roster-' + code) || ''; } catch (e) { return ''; } }
@@ -627,14 +743,14 @@ class Component extends DCLogic {
   async claim() { try { await this.api().claimClass(this.state.fCode); this.setState({ fCode: '' }); this.loadClasses(); } catch (e) { this.fail(e); } }
   // Gói dữ liệu nghiên cứu ẩn danh (R4): vòng Bật Nghiệp + hộ chiếu + bài tình huống + phiếu khảo sát → ZIP các CSV, README, từ điển biến.
   async exportResearchPack() {
-    const s = this.state; if (!window.BizOnResearchPack || !window.BizOnZip) { alert('Thiếu mô-đun gói dữ liệu.'); return; }
+    const s = this.state; if (!window.BizOnResearchPack || !window.BizOnZip) { alert(this.tr('Thiếu mô-đun gói dữ liệu.', 'Research-pack module missing.')); return; }
     let surveys = []; try { surveys = await this.api().surveyExport(s.code); } catch (e) { surveys = []; }
     const pack = BizOnResearchPack.build({ classCode: s.code, submissions: s.subs || [], passports: s.jp || [], caseTasks: s.ct || [], surveys, caseTaskData: window.BizOnCaseTaskData, includeOpenText: false });
     const bytes = BizOnZip.zip(pack.files);
     window.__lastResearchPack = { stats: pack.stats, files: pack.files.map(f => f.name), bytes: bytes.length };
     const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([bytes], { type: 'application/zip' })); a.download = `BizOn-${s.code}-goi-du-lieu-nghien-cuu.zip`; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 2000);
   }
-  exportCaseTasks() { const rows = this.state.ct || []; if (!rows.length) { alert("Chưa có bài tình huống nào trong lớp này."); return; } try { this.P().caseTaskCsv(this.state.code, rows); } catch (e) { this.fail(e); } }
+  exportCaseTasks() { const rows = this.state.ct || []; if (!rows.length) { alert(this.tr('Chưa có bài tình huống nào trong lớp này.', 'No case tasks in this class yet.')); return; } try { this.P().caseTaskCsv(this.state.code, rows); } catch (e) { this.fail(e); } }
   async setExplainHidden(on) { try { await this.api().setExplainHidden(this.state.code, on); this.reload(); } catch (e) { this.fail(e); } }
   async setJourneyCarry(on) { try { await this.api().setJourneyCarry(this.state.code, on); this.reload(); } catch (e) { this.fail(e); } }
   async setLock(n) { try { const c = Object.assign({}, (this.state.st.controls || {}), { locked_round: n }); await this.api().setControls(this.state.code, c); this.reload(); } catch (e) { this.fail(e); } }
@@ -648,52 +764,52 @@ class Component extends DCLogic {
   pickSig(e) {
     const f = e.target.files && e.target.files[0]; e.target.value = '';
     if (!f) return;
-    if (!/^image\/(png|jpeg|webp)$/.test(f.type)) return this.setState({ certMsg: 'Chọn ảnh PNG, JPG hoặc WebP.' });
-    if (f.size > 8 * 1024 * 1024) return this.setState({ certMsg: 'Ảnh quá lớn (tối đa 8 MB).' });
+    if (!/^image\/(png|jpeg|webp)$/.test(f.type)) return this.setState({ certMsg: this.tr('Chọn ảnh PNG, JPG hoặc WebP.', 'Choose a PNG, JPG or WebP image.') });
+    if (f.size > 8 * 1024 * 1024) return this.setState({ certMsg: this.tr('Ảnh quá lớn (tối đa 8 MB).', 'Image too large (max 8 MB).') });
     const url = URL.createObjectURL(f), im = new Image();
     im.onload = () => {
       const k = Math.min(1, 1200 / im.naturalWidth, 400 / im.naturalHeight), cv = document.createElement('canvas');
       cv.width = Math.round(im.naturalWidth * k); cv.height = Math.round(im.naturalHeight * k);
       cv.getContext('2d').drawImage(im, 0, 0, cv.width, cv.height); URL.revokeObjectURL(url);
       const data = cv.toDataURL('image/png');
-      try { localStorage.setItem(SIG_KEY, data); } catch (err) { return this.setState({ certMsg: 'Trình duyệt không cho lưu ảnh (bộ nhớ đầy hoặc đang ở chế độ ẩn danh).' }); }
-      this.setState({ sigTu: data, certMsg: '✅ Đã lưu chữ ký trên máy này.' });
+      try { localStorage.setItem(SIG_KEY, data); } catch (err) { return this.setState({ certMsg: this.tr('Trình duyệt không cho lưu ảnh (bộ nhớ đầy hoặc đang ở chế độ ẩn danh).', 'The browser refused to store the image (storage full or private mode).') }); }
+      this.setState({ sigTu: data, certMsg: this.tr('✅ Đã lưu chữ ký trên máy này.', '✅ Signature saved on this device.') });
     };
-    im.onerror = () => { URL.revokeObjectURL(url); this.setState({ certMsg: 'Không đọc được ảnh này.' }); };
+    im.onerror = () => { URL.revokeObjectURL(url); this.setState({ certMsg: this.tr('Không đọc được ảnh này.', 'Could not read this image.') }); };
     im.src = url;
   }
   clearSig() {
-    if (!confirm('Xoá ảnh chữ ký khỏi máy này? Muốn cấp tiếp phải chọn lại tệp.')) return;
+    if (!confirm(this.tr('Xoá ảnh chữ ký khỏi máy này? Muốn cấp tiếp phải chọn lại tệp.', 'Remove the signature image from this device? You will need to pick the file again to issue more.'))) return;
     try { localStorage.removeItem(SIG_KEY); } catch (e) {}
     this.setState({ sigTu: '', certMsg: 'Đã xoá chữ ký khỏi máy này.' });
   }
   certOpts(st) { const s = this.state; return { name: st.name, courseCode: s.certCode || '', courseName: s.certName || 'BizOn Bật Nghiệp', courseDates: s.certDates || undefined, signature: s.sigTu, org: this.certIssuer(), filenamePrefix: (s.code || 'BizOn') + (st.mssv ? '-' + st.mssv : '') }; }
   issueOne(st) {
-    if (!this.state.sigTu) return this.setState({ certMsg: 'Chọn ảnh chữ ký thật trước khi cấp.' });
+    if (!this.state.sigTu) return this.setState({ certMsg: this.tr('Chọn ảnh chữ ký thật trước khi cấp.', 'Choose a real signature image before issuing.') });
     window.OfficialCert.download(this.certOpts(st)).catch(e => this.fail(e));
   }
   // Cả lớp: dựng từng chứng nhận rồi mở một trang in A4 ngang (mỗi trang một chứng nhận) – chọn «Lưu thành PDF».
   async issueAll() {
     const s = this.state, list = certStudentList(s.rosterText);
-    if (!s.sigTu) return this.setState({ certMsg: 'Chọn ảnh chữ ký thật trước khi cấp.' });
-    if (!list.length) return this.setState({ certMsg: 'Dán danh sách sinh viên trước.' });
+    if (!s.sigTu) return this.setState({ certMsg: this.tr('Chọn ảnh chữ ký thật trước khi cấp.', 'Choose a real signature image before issuing.') });
+    if (!list.length) return this.setState({ certMsg: this.tr('Dán danh sách sinh viên trước.', 'Paste the student list first.') });
     const w = window.open('', '_blank');
-    if (!w) return this.setState({ certMsg: 'Trình duyệt chặn cửa sổ mới – cho phép cửa sổ bật lên rồi bấm lại.' });
-    w.document.write('<p style="font:16px sans-serif;padding:24px">Đang dựng ' + list.length + ' chứng nhận…</p>');
-    this.setState({ certMsg: 'Đang dựng ' + list.length + ' chứng nhận…' });
+    if (!w) return this.setState({ certMsg: this.tr('Trình duyệt chặn cửa sổ mới – cho phép cửa sổ bật lên rồi bấm lại.', 'The browser blocked the new window. Allow pop-ups and try again.') });
+    w.document.write(this.tr('<p style="font:16px sans-serif;padding:24px">Đang dựng ', '<p style="font:16px sans-serif;padding:24px">Building ') + list.length + this.tr(' chứng nhận…</p>', ' certificates…</p>'));
+    this.setState({ certMsg: this.tr('Đang dựng ', 'Building ') + list.length + this.tr(' chứng nhận…', ' certificates…') });
     try {
       const pages = [];
       for (const st of list) pages.push((await window.OfficialCert.render(this.certOpts(st))).toDataURL('image/jpeg', 0.92));
       w.document.open();
-      w.document.write('<!doctype html><html lang="vi"><head><meta charset="utf-8"><title>Chứng nhận chính thức · ' + (s.code || '') + '</title><style>@page{size:A4 landscape;margin:0}html,body{margin:0}img{display:block;width:297mm;height:210mm;break-after:page}img:last-child{break-after:auto}@media screen{body{background:#4a4a4a;padding:12px}img{width:min(100%,1123px);height:auto;margin:0 auto 12px}}</style></head><body>'
-        + pages.map((src, i) => '<img alt="Chứng nhận ' + (i + 1) + '" src="' + src + '">').join('')
+      w.document.write(this.tr('<!doctype html><html lang="vi"><head><meta charset="utf-8"><title>Chứng nhận chính thức · ', '<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Official certificate · ') + (s.code || '') + '</title><style>@page{size:A4 landscape;margin:0}html,body{margin:0}img{display:block;width:297mm;height:210mm;break-after:page}img:last-child{break-after:auto}@media screen{body{background:#4a4a4a;padding:12px}img{width:min(100%,1123px);height:auto;margin:0 auto 12px}}</style></head><body>'
+        + pages.map((src, i) => this.tr('<img alt="Chứng nhận ', '<img alt="Certificate ') + (i + 1) + '" src="' + src + '">').join('')
         + '<script>window.onload=function(){setTimeout(function(){window.print()},300)}<\/script></body></html>');
       w.document.close();
-      this.setState({ certMsg: '✅ Đã mở bản in ' + list.length + ' chứng nhận – chọn «Lưu thành PDF» trong hộp thoại in.' });
+      this.setState({ certMsg: this.tr('✅ Đã mở bản in ', '✅ Opened a print view of ') + list.length + this.tr(' chứng nhận – chọn «Lưu thành PDF» trong hộp thoại in.', ' certificates. Choose “Save as PDF” in the print dialog.') });
     } catch (e) { try { w.close(); } catch (_) {} this.fail(e); }
   }
   async saveRubric() { const s = this.state; try { await this.api().setRubricConfig(s.code, { level1: s.rLv1, level2: s.rLv2, level3: s.rLv3, level4: s.rLv4 }); this.setState({ rubricSaved: true }); setTimeout(() => this.setState({ rubricSaved: false }), 2500); } catch (e) { this.fail(e); } }
-  async doGrant() { const s = this.state, a = +s.gAmt; if (!a) return this.fail('Nhập số tiền (triệu ₫).'); try { await this.api().grant(s.code, s.gTeam, a, s.gReason); this.setState({ gAmt: '', gReason: '' }); this.reload(); } catch (e) { this.fail(e); } }
+  async doGrant() { const s = this.state, a = +s.gAmt; if (!a) return this.fail(this.tr('Nhập số tiền (triệu ₫).', 'Enter an amount (million ₫).')); try { await this.api().grant(s.code, s.gTeam, a, s.gReason); this.setState({ gAmt: '', gReason: '' }); this.reload(); } catch (e) { this.fail(e); } }
   async saveScore(g) { const s = this.state; try { await this.api().saveScore(s.code, g.name, g.reasoning === '' ? null : +g.reasoning, g.teamwork === '' ? null : +g.teamwork, g.note); this.setState({ saved: Object.assign({}, s.saved, { [g.name]: true }) }); this.reload(); } catch (e) { this.fail(e); } }
   curRound() { const T = this.P().teams(this.state.subs); return Math.min(6, Math.max(1, ...T.map(t => t.rs.length + 1), 1)); }
   renderVals() {
@@ -707,19 +823,21 @@ class Component extends DCLogic {
     const rosterGroups = Object.keys(roster).length;
     const c = (s.st && s.st.controls) || {}, lock = c.locked_round;
     const ex = s.exam, ep = examPhase(ex, Date.now());
-    const examStatus = !ep ? 'Chưa bắt đầu tính giờ – chọn số phút rồi bấm «Bắt đầu tính giờ» khi cả lớp sẵn sàng vào phòng thi.'
-      : ep.phase === 'wait' ? `⏳ Sắp bắt đầu · còn ${examMMSS(ep.remainMs)}`
-      : ep.phase === 'setup' ? `⏳ Chuẩn bị đăng nhập · còn ${examMMSS(ep.remainMs)}`
-      : ep.phase === 'round' ? `🔵 Vòng/Quý ${ep.round} đang mở · còn ${examMMSS(ep.remainMs)}`
-      : `✅ Đã hết giờ thi (bắt đầu lúc ${new Date(ex.start_at).toLocaleTimeString('vi-VN')})`;
+    const examStatus = !ep ? this.tr('Chưa bắt đầu tính giờ – chọn số phút rồi bấm «Bắt đầu tính giờ» khi cả lớp sẵn sàng vào phòng thi.', 'Timer not started. Pick the minutes, then press “Start timer” when the whole class is ready.')
+      : ep.phase === 'wait' ? this.tr('⏳ Sắp bắt đầu · còn ', '⏳ Starting soon · ') + examMMSS(ep.remainMs)
+      : ep.phase === 'setup' ? this.tr('⏳ Chuẩn bị đăng nhập · còn ', '⏳ Sign-in window · ') + examMMSS(ep.remainMs)
+      : ep.phase === 'round' ? this.tr('🔵 Vòng/Quý ', '🔵 Round/Quarter ') + ep.round + this.tr(' đang mở · còn ', ' open · ') + examMMSS(ep.remainMs)
+      : this.tr('✅ Đã hết giờ thi (bắt đầu lúc ', '✅ Exam time is over (started at ') + new Date(ex.start_at).toLocaleTimeString(this.state.lang === 'en' ? 'en-GB' : 'vi-VN') + ')';
     const examColor = !ep ? '#5a6b74' : ep.phase === 'end' ? '#3f8a44' : '#1f4a55';
     const examRunning = !!(ex && ex.active);
-    const tabDefs = [['teams', '👥 Đội & tiến độ'], ['decisions', '🧾 Quyết định'], ['controls', '🎛 Điều khiển lớp'], ['grading', '📝 Chấm điểm'], ['members', '👤 Thành viên'], ['activity', '📊 Sổ điểm']];
+    const tabDefs = [['teams', this.tr('👥 Đội & tiến độ', '👥 Teams & progress')], ['decisions', this.tr('🧾 Quyết định', '🧾 Decisions')], ['controls', this.tr('🎛 Điều khiển lớp', '🎛 Class controls')], ['grading', this.tr('📝 Chấm điểm', '📝 Grading')], ['members', this.tr('👤 Thành viên', '👤 Members')], ['activity', this.tr('📊 Sổ điểm', '📊 Gradebook')]];
     const selTeam = s.selTeam || (T[0] && T[0].name) || '';
     const dec = ok ? P.decRows(T.find(t => t.name === selTeam)) : { head: [], cells: [] };
+    if (this.state.lang === 'en' && dec.head) { dec.head = dec.head.map(h => GV_DEC_EN[h] || h); dec.cells = (dec.cells || []).map(c => c && typeof c === 'object' && typeof c.v === 'string' && GV_DEC_EN[c.v] ? Object.assign({}, c, { v: GV_DEC_EN[c.v] }) : c); }
     const maxShare = Math.max(1, ...T.map(t => t.share));
     return {
-      subtitle: inClass ? 'Bảng điều khiển lớp' : inAdmin ? 'Quản trị hệ thống' : signedIn ? 'Quản lý lớp học' : tr('Đăng nhập giảng viên', 'Instructor sign-in'),
+      L: this.L(),
+      subtitle: inClass ? this.tr('Bảng điều khiển lớp', 'Class dashboard') : inAdmin ? this.tr('Quản trị hệ thống', 'System admin') : signedIn ? this.tr('Quản lý lớp học', 'My classes') : tr('Đăng nhập giảng viên', 'Instructor sign-in'),
       tHead: tr('BizOn · Giảng viên', 'BizOn · Instructors'), tSignOut: tr('Đăng xuất', 'Sign out'),
       tAuthNote: tr('Tài khoản giảng viên dùng Supabase Auth. Mỗi mã lớp chỉ thuộc về một giảng viên.', 'Instructor accounts use Supabase Auth. Each class code belongs to one instructor.'),
       tEmailPh: tr('giangvien@truong.edu.vn', 'instructor@university.edu'), tPass: tr('Mật khẩu', 'Password'), tNewPass: tr('Mật khẩu mới', 'New password'), tPassPh: tr('Tối thiểu 8 ký tự', 'At least 8 characters'),
@@ -745,7 +863,7 @@ class Component extends DCLogic {
       classes: (s.classes || []).map(x => ({ class_code: x.class_code, date: new Date(x.created_at).toLocaleDateString('vi-VN'), open: () => this.openClass(x.class_code), remove: e => { if (e && e.stopPropagation) e.stopPropagation(); this.removeClass(x.class_code); } })),
       adminClasses: (s.adminClasses || []).map(x => ({ class_code: x.class_code, date: new Date(x.created_at).toLocaleDateString('vi-VN'), ownerLine: '👤 ' + x.owner_email + ' · ' + x.team_count + ' đội · ' + x.submission_count + ' bài nộp', open: () => this.openClass(x.class_code), remove: e => { if (e && e.stopPropagation) e.stopPropagation(); this.removeClass(x.class_code); } })),
       code: s.code, refresh: () => this.reload(), exportXls: () => P.xls(s.code, T, G, BP, MB, AC, s.rubric, roster), openBoard: () => this.setState({ board: true }), closeBoard: () => this.setState({ board: false }),
-      classStats: `${T.length} đội · ${s.subs.length} bài nộp · ${lock != null ? 'Đang khóa sau vòng ' + lock : 'Không khóa vòng'}${c.forced_event ? ' · Biến cố GV: ' + c.forced_event : ''}${examRunning ? ' · ' + examStatus : ''}`,
+      classStats: `${T.length}${this.tr(' đội · ', ' teams · ')}${s.subs.length}${this.tr(' bài nộp · ', ' submissions · ')}${lock != null ? this.tr('Đang khóa sau vòng ', 'Locked after round ') + lock : this.tr('Không khóa vòng', 'No round lock')}${c.forced_event ? this.tr(' · Biến cố GV: ', ' · Instructor event: ') + c.forced_event : ''}${examRunning ? ' · ' + examStatus : ''}`,
       examStatus, examColor, examRunning, examNotRunning: !examRunning,
       exSetup: s.exSetup, onExSetup: e => this.setState({ exSetup: e.target.value }), exRound: s.exRound, onExRound: e => this.setState({ exRound: e.target.value }),
       startExam: () => this.startExam(), stopExam: () => this.stopExam(),
@@ -760,33 +878,33 @@ class Component extends DCLogic {
       teams: T.map(t => ({ name: t.name + (t.rs.some(r => r.result_json && r.result_json.journey) ? ' 🧭' : ''), share: t.share.toFixed(1) + '%', profit: money(t.profit), profitColor: t.profit >= 0 ? '#3f8a44' : '#c0443a', flags: '🚩 ' + t.flags + '/6',
         last: t.last ? new Date(t.last.created_at).toLocaleString('vi-VN') : '–',
         dots: [1, 2, 3, 4, 5, 6].map(n => { const r = t.rs.find(x => x.round_number === n), j = r ? (r.result_json || {}) : null;
-          return { n, tip: r ? `V${n}: ${(+j.share || 0).toFixed(1)}% · ${money(j.netProfit)}${j.win === true ? ' · 🚩 Cắm cờ' : j.win === false ? ' · ' + (j.winner ? j.winner + ' chiếm' : 'Chưa cắm cờ') : ''}${j.journey ? ' · 🧭 hành trình' + (j.journey.carryApplied ? ' (có hành trang)' : ' (không hành trang)') : ''}${j.explain === 'hidden' ? ' · 🔬 hộp đen' : ''}` : `V${n}: chưa nộp`, bg: !r ? '#d9cbb4' : j.win === true ? '#e8a22d' : (+j.netProfit >= 0 ? '#3f8a44' : '#c0443a') }; }) })),
+          return { n, tip: r ? `V${n}: ${(+j.share || 0).toFixed(1)}% · ${money(j.netProfit)}${j.win === true ? this.tr(' · 🚩 Cắm cờ', ' · 🚩 Flag won') : j.win === false ? ' · ' + (j.winner ? j.winner + this.tr(' chiếm', ' took it') : this.tr('Chưa cắm cờ', 'No flag yet')) : ''}${j.journey ? this.tr(' · 🧭 hành trình', ' · 🧭 journey') + (j.journey.carryApplied ? this.tr(' (có hành trang)', ' (carry-over)') : this.tr(' (không hành trang)', ' (no carry-over)')) : ''}${j.explain === 'hidden' ? ' · 🔬 hộp đen' : ''}` : `V${n}: ${this.tr('chưa nộp', 'not submitted')}`, bg: !r ? '#d9cbb4' : j.win === true ? '#e8a22d' : (+j.netProfit >= 0 ? '#3f8a44' : '#c0443a') }; }) })),
       teamOptions: T.map(t => t.name), selTeam, onSelTeam: e => this.setState({ selTeam: e.target.value }), decHead: dec.head, decCells: dec.cells,
-      lockNote: lock != null ? `Các đội không thể chốt vòng ${lock + 1} trở đi cho tới khi bạn mở khóa.` : 'Chọn vòng cuối cùng được phép chơi. Đội nào đi nhanh sẽ phải chờ cả lớp.',
+      lockNote: lock != null ? this.tr('Các đội không thể chốt vòng ', 'Teams cannot submit round ') + (lock + 1) + this.tr(' trở đi cho tới khi bạn mở khóa.', ' onwards until you unlock.') : this.tr('Chọn vòng cuối cùng được phép chơi. Đội nào đi nhanh sẽ phải chờ cả lớp.', 'Pick the last round teams may play. Fast teams wait for the class.'),
       lockBtns: [null, 0, 1, 2, 3, 4, 5].map(n => { const on = lock === n || (n === null && lock == null);
-        return { label: n === null ? '🔓 Mở' : n === 0 ? 'Chưa cho chơi' : 'Đến V' + n, go: () => this.setLock(n), bg: on ? '#1f4a55' : '#fff', fg: on ? '#fff' : '#1f4a55', border: on ? '#10303a' : '#e6d6bf' }; }),
-      jCarryNote: c.journey_carry === true ? 'Đang BẬT: đội có hộ chiếu hành trình được nhận hành trang (vốn, uy tín…) từ bậc trước khi vào game của lớp này.' : 'Đang TẮT (mặc định, công bằng khi chấm): mọi đội xuất phát y như chơi riêng; hộ chiếu vẫn ghi kết quả. Bật nếu lớp chơi xuyên suốt 3 bậc có nối tiếp.',
-      jCarryBtns: [[false, '🔒 Tắt hành trang'], [true, '🎒 Bật hành trang']].map(([v, label]) => { const on = (c.journey_carry === true) === v; return { label, go: () => this.setJourneyCarry(v), bg: on ? '#1f4a55' : '#fff', fg: on ? '#fff' : '#1f4a55', border: on ? '#10303a' : '#e6d6bf' }; }),
-      xNote: c.explain_hidden === true ? 'Đang ẨN (nhánh hộp đen): lớp này chơi không thấy lời giải cơ chế – gợi ý của Lumina/cố vấn, dự báo «Nếu – Thì», bài học cốt lõi, dòng giải thích hành trang. Engine, biến cố, luật và điểm giữ nguyên. Điều kiện được ghi vào mỗi kết quả nộp (🔬).' : 'Đang HIỆN (mặc định): sinh viên thấy đầy đủ lời giải cơ chế. Chỉ ẨN cho lớp thuộc nhánh đối chứng của nghiên cứu (docs/architecture/NHANH-HOP-DEN.md); đặt trước khi lớp bắt đầu chơi.',
-      xBtns: [[false, '💡 Hiện giải thích'], [true, '🔬 Ẩn giải thích']].map(([v, label]) => { const on = (c.explain_hidden === true) === v; return { label, go: () => this.setExplainHidden(v), bg: on ? '#1f4a55' : '#fff', fg: on ? '#fff' : '#1f4a55', border: on ? '#10303a' : '#e6d6bf' }; }),
-      ctHead: (() => { const r = s.ct || [], pre = r.filter(x => x.phase === 'pre').length, post = r.filter(x => x.phase === 'post').length; return 'Bài tình huống trước – sau: ' + pre + ' trước · ' + post + ' sau' + (r.length ? '' : ' (sinh viên làm ở bai-tinh-huong.html)'); })(),
+        return { label: n === null ? this.tr('🔓 Mở', '🔓 Open') : n === 0 ? this.tr('Chưa cho chơi', 'Not open yet') : this.tr('Đến V', 'Up to R') + n, go: () => this.setLock(n), bg: on ? '#1f4a55' : '#fff', fg: on ? '#fff' : '#1f4a55', border: on ? '#10303a' : '#e6d6bf' }; }),
+      jCarryNote: c.journey_carry === true ? this.tr('Đang BẬT: đội có hộ chiếu hành trình được nhận hành trang (vốn, uy tín…) từ bậc trước khi vào game của lớp này.', 'ON: teams with a journey passport carry assets (capital, reputation…) from the previous tier into this class.') : this.tr('Đang TẮT (mặc định, công bằng khi chấm): mọi đội xuất phát y như chơi riêng; hộ chiếu vẫn ghi kết quả. Bật nếu lớp chơi xuyên suốt 3 bậc có nối tiếp.', 'OFF (default, fair for grading): every team starts as in solo play; passports still record results. Turn on for a class playing all three tiers in sequence.'),
+      jCarryBtns: [[false, this.tr('🔒 Tắt hành trang', '🔒 Carry-over off')], [true, this.tr('🎒 Bật hành trang', '🎒 Carry-over on')]].map(([v, label]) => { const on = (c.journey_carry === true) === v; return { label, go: () => this.setJourneyCarry(v), bg: on ? '#1f4a55' : '#fff', fg: on ? '#fff' : '#1f4a55', border: on ? '#10303a' : '#e6d6bf' }; }),
+      xNote: c.explain_hidden === true ? this.tr('Đang ẨN (nhánh hộp đen): lớp này chơi không thấy lời giải cơ chế – gợi ý của Lumina/cố vấn, dự báo «Nếu – Thì», bài học cốt lõi, dòng giải thích hành trang. Engine, biến cố, luật và điểm giữ nguyên. Điều kiện được ghi vào mỗi kết quả nộp (🔬).', 'HIDDEN (black-box arm): this class plays without mechanism explanations (Lumina/advisor hints, What-If forecast, key lessons, carry-over notes). Engine, events, rules and scores are unchanged. The condition is recorded in every submission (🔬).') : this.tr('Đang HIỆN (mặc định): sinh viên thấy đầy đủ lời giải cơ chế. Chỉ ẨN cho lớp thuộc nhánh đối chứng của nghiên cứu (docs/architecture/NHANH-HOP-DEN.md); đặt trước khi lớp bắt đầu chơi.', 'SHOWN (default): students see full mechanism explanations. Hide only for the research control arm (docs/architecture/NHANH-HOP-DEN.md); set it before the class starts playing.'),
+      xBtns: [[false, this.tr('💡 Hiện giải thích', '💡 Show explanations')], [true, this.tr('🔬 Ẩn giải thích', '🔬 Hide explanations')]].map(([v, label]) => { const on = (c.explain_hidden === true) === v; return { label, go: () => this.setExplainHidden(v), bg: on ? '#1f4a55' : '#fff', fg: on ? '#fff' : '#1f4a55', border: on ? '#10303a' : '#e6d6bf' }; }),
+      ctHead: (() => { const r = s.ct || [], pre = r.filter(x => x.phase === 'pre').length, post = r.filter(x => x.phase === 'post').length; return this.tr('Bài tình huống trước – sau: ', 'Case tasks pre – post: ') + pre + this.tr(' trước · ', ' pre · ') + post + this.tr(' sau', ' post') + (r.length ? '' : this.tr(' (sinh viên làm ở bai-tinh-huong.html)', ' (students do them at bai-tinh-huong.html)')); })(),
       exportCt: () => this.exportCaseTasks(), exportPack: () => this.exportResearchPack(),
-      jpHead: 'Hộ chiếu đã đồng bộ lên lớp: ' + ((s.jp || []).length) + (((s.jp || []).length) ? '' : ' (sinh viên bấm «Đồng bộ ngay» trên trang Hành trình)'),
+      jpHead: this.tr('Hộ chiếu đã đồng bộ lên lớp: ', 'Passports synced to this class: ') + ((s.jp || []).length) + (((s.jp || []).length) ? '' : this.tr(' (sinh viên bấm «Đồng bộ ngay» trên trang Hành trình)', ' (students press “Sync now” on the Journey page)')),
       jpRows: (s.jp || []).slice(0, 30).map(r => { const tiers = (r.passport && r.passport.tiers) || {}; return { team: r.team_name, email: r.student_email || '—', tiers: ['t1', 't2', 't3'].map((k, i) => 'B' + (i + 1) + (tiers[k] && tiers[k].status === 'done' ? '✓' : '·')).join(' '), when: r.updated_at ? new Date(r.updated_at).toLocaleDateString('vi-VN') : '' }; }),
-      eventOpts: ok ? P.EVENTS.map(([v, l]) => ({ v, l })) : [], fEvent: s.fEvent, onEvent: e => this.setState({ fEvent: e.target.value }), fMsg: s.fMsg, onMsg: e => this.setState({ fMsg: e.target.value }), saveEvent: () => this.saveEvent(),
+      eventOpts: ok ? P.EVENTS.map(([v, l]) => ({ v, l: this.state.lang === 'en' ? (GV_EVENT_EN[v] || l) : l })) : [], fEvent: s.fEvent, onEvent: e => this.setState({ fEvent: e.target.value }), fMsg: s.fMsg, onMsg: e => this.setState({ fMsg: e.target.value }), saveEvent: () => this.saveEvent(),
       gTeam: s.gTeam, onGTeam: e => this.setState({ gTeam: e.target.value }), gAmt: s.gAmt, onGAmt: e => this.setState({ gAmt: e.target.value }), gReason: s.gReason, onGReason: e => this.setState({ gReason: e.target.value }), doGrant: () => this.doGrant(),
       grants: ((s.st && s.st.grants) || []).slice(0, 20).map(g => ({ team: g.team_name === '*' ? 'Cả lớp' : g.team_name, reason: g.reason || '—', amt: (g.amount > 0 ? '+' : '') + g.amount + ' tr₫', color: g.amount >= 0 ? '#3f8a44' : '#c0443a' })),
-      gradeHead: ['Đội', 'B1 Xếp hạng /2', 'B2 Thị phần /2', 'B3 Vận hành /2', 'B4 Thành tựu /1,5', 'B5 Đóng góp /1,5', 'B6 Ứng biến /1', 'Tổng /10', 'Điểm chữ', 'Nhận xét', ''],
+      gradeHead: [this.tr('Đội', 'Team'), this.tr('B1 Xếp hạng /2', 'B1 Rank /2'), this.tr('B2 Thị phần /2', 'B2 Share /2'), this.tr('B3 Vận hành /2', 'B3 Operations /2'), this.tr('B4 Thành tựu /1,5', 'B4 Achievements /1.5'), this.tr('B5 Đóng góp /1,5', 'B5 Contribution /1.5'), this.tr('B6 Ứng biến /1', 'B6 Resilience /1'), this.tr('Tổng /10', 'Total /10'), this.tr('Điểm chữ', 'Letter'), this.tr('Nhận xét', 'Comment'), ''],
       gradeRows: G.map(g => ({ name: g.name, b1: P.f1(g.b1), b2: P.f1(g.b2), b3: P.f1(g.b3), b4: P.f1(g.b4),
         b5: P.f1(g.b5) + (g.auto ? ' 🤖' : ''), b6: P.f1(g.b6) + (g.autoPrep ? ' 🤖' : ''),
         reasoning: g.auto ? '' : g.reasoning, teamwork: g.autoPrep != null ? '' : g.teamwork, note: g.note, notePh: g.autoNote, total: P.f1(g.total), letter: P.letter(g.total).l,
         showManual: !g.auto || g.autoPrep == null,
         onR: e => this.edit(g.name, 'reasoning', e.target.value), onT: e => this.edit(g.name, 'teamwork', e.target.value), onN: e => this.edit(g.name, 'note', e.target.value),
-        save: () => this.saveScore(g), saveLabel: s.saved[g.name] ? '✓ Đã lưu' : 'Lưu' })),
+        save: () => this.saveScore(g), saveLabel: s.saved[g.name] ? this.tr('✓ Đã lưu', '✓ Saved') : this.tr('Lưu', 'Save') })),
       hasMini: !!MINI.length,
-      rosterText: s.rosterText, onRosterText: e => this.setState({ rosterText: e.target.value }), saveRoster: () => this.saveRosterText(), rosterSaveLabel: s.rosterSaved ? '✓ Đã lưu' : 'Lưu danh sách',
-      rosterHint: rosterGroups ? `Đã nhận ${rosterGroups} nhóm từ danh sách dán bên dưới – điểm Hộ Chiếu Mini sẽ tự ghép MSSV theo tên nhóm đã nộp.` : 'Chưa có danh sách lớp – bảng và Excel sẽ hiện tên nhóm đã nộp, chưa có MSSV.',
-      miniHead: ['Nhóm/Đội', 'MSSV', 'Họ và tên', 'Email', 'Quốc gia xuất phát', 'Số thị trường', 'Hồ sơ nhà đầu tư', 'Điểm /10', 'Điểm chữ', 'Nộp lúc'],
+      rosterText: s.rosterText, onRosterText: e => this.setState({ rosterText: e.target.value }), saveRoster: () => this.saveRosterText(), rosterSaveLabel: s.rosterSaved ? this.tr('✓ Đã lưu', '✓ Saved') : this.tr('Lưu danh sách', 'Save list'),
+      rosterHint: rosterGroups ? this.tr('Đã nhận ', 'Received ') + rosterGroups + this.tr(' nhóm từ danh sách dán bên dưới – điểm Hộ Chiếu Mini sẽ tự ghép MSSV theo tên nhóm đã nộp.', ' groups from the pasted roster. Passport Mini scores will match student IDs by submitted team name.') : this.tr('Chưa có danh sách lớp – bảng và Excel sẽ hiện tên nhóm đã nộp, chưa có MSSV.', 'No class roster yet: the table and Excel show submitted team names without student IDs.'),
+      miniHead: [this.tr('Nhóm/Đội', 'Group/Team'), this.tr('MSSV', 'Student ID'), this.tr('Họ và tên', 'Full name'), 'Email', this.tr('Quốc gia xuất phát', 'Home country'), this.tr('Số thị trường', 'Markets'), this.tr('Hồ sơ nhà đầu tư', 'Investor profile'), this.tr('Điểm /10', 'Score /10'), this.tr('Điểm chữ', 'Letter'), this.tr('Nộp lúc', 'Submitted at')],
       miniRows: ok ? P.miniExport(BP, roster).map(r => ({ group: r.group, mssv: r.mssv, name: r.name, email: r.email, home: r.home, markets: r.markets, profile: r.profile, total: P.f1(r.total), letter: r.letter, when: r.when })) : [],
       memberRows: MB.map(m => ({ team: m.team, name: m.name, role: m.role,
         dots: m.dots.map((d, i) => ({ n: i + 1, bg: d === 2 ? '#3f8a44' : d === 1 ? '#e8a22d' : '#d9cbb4', tip: 'V' + (i + 1) + ': ' + (d === 2 ? 'đề xuất/biên bản được áp dụng' : d === 1 ? 'có tham gia' : 'chưa ghi nhận') })),
@@ -796,14 +914,14 @@ class Component extends DCLogic {
       rLv1: s.rLv1, onRLv1: e => this.setState({ rLv1: e.target.value }), rLv2: s.rLv2, onRLv2: e => this.setState({ rLv2: e.target.value }),
       rLv3: s.rLv3, onRLv3: e => this.setState({ rLv3: e.target.value }), rLv4: s.rLv4, onRLv4: e => this.setState({ rLv4: e.target.value }),
       saveRubric: () => this.saveRubric(), rubricSaved: s.rubricSaved,
-      hasSig: !!s.sigTu, sigTu: s.sigTu, sigPickLabel: s.sigTu ? 'Đổi ảnh chữ ký' : 'Chọn ảnh chữ ký thật (PNG nền trong suốt cho đẹp nhất)',
+      hasSig: !!s.sigTu, sigTu: s.sigTu, sigPickLabel: s.sigTu ? this.tr('Đổi ảnh chữ ký', 'Change signature image') : this.tr('Chọn ảnh chữ ký thật (PNG nền trong suốt cho đẹp nhất)', 'Choose a real signature image (transparent PNG looks best)'),
       onSigFile: e => this.pickSig(e), clearSig: () => this.clearSig(), certMsg: s.certMsg, issueAll: () => this.issueAll(),
       certStudents: certStudentList(s.rosterText).map(st => ({ name: st.name, mssv: st.mssv || '—', dl: () => this.issueOne(st) })),
       certCount: certStudentList(s.rosterText).length,
       activityTeams: AC.map(t => { const lv = ok ? P.rubricLevel(t.balance, s.rubric) : { label: '' };
         return { name: t.team, balance: t.balance, levelLabel: lv.label,
           members: t.members.slice().sort((a, b) => b.score - a.score).map(m => ({ name: m.name, role: m.role, score: m.score,
-            line: `${m.proposals} đề xuất · ${m.minutes} biên bản · ${m.whatif} Nếu–Thì · ${m.lumina} hỏi Lumina · ${m.commits} chốt vòng` + (m.overdraftRounds ? ` · ⚠️ ${m.overdraftRounds} vòng thấu chi` : '') })) }; }),
+            line: `${m.proposals}${this.tr(' đề xuất · ', ' proposals · ')}${m.minutes}${this.tr(' biên bản · ', ' minutes · ')}${m.whatif}${this.tr(' Nếu–Thì · ', ' What-If · ')}${m.lumina}${this.tr(' hỏi Lumina · ', ' Lumina questions · ')}${m.commits}${this.tr(' chốt vòng', ' round submits')}` + (m.overdraftRounds ? ` · ⚠️ ${m.overdraftRounds}${this.tr(' vòng thấu chi', ' overdraft rounds')}` : '') })) }; }),
       board: inClass && s.board,
       boardRows: T.slice().sort((a, b) => b.share - a.share || b.profit - a.profit).map((t, i) => ({ medal: ['🥇', '🥈', '🥉'][i] || String(i + 1), name: t.name, pct: (t.share / maxShare * 100).toFixed(0) + '%',
         val: t.share.toFixed(1) + '% · 🚩' + t.flags, bg: i === 0 ? 'rgba(243,154,51,.28)' : 'rgba(255,255,255,.08)' })),
