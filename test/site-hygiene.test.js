@@ -12,7 +12,8 @@ const tpl = JSON.parse(lines[lines.findIndex(l => l.trim() === '<script type="__
 assert.ok(!tpl.includes('src="{{ sb.img }}"'), 'ảnh sa bàn không dùng chuỗi mẫu trong src');
 
 const sm = read('sitemap.xml');
-for (const p of ['hanh-trinh.html', 'brand-passport-v2.html', 'lab/ho-chieu-sau-rieng-v2.html', 'ben-phu-sa-v2.html', 'nhac-ben-phu-sa.html']) assert.ok(sm.includes('https://bizonland.com/' + p + '<'), 'sitemap thiếu ' + p);
+// 07/11/2026 (rà soát đợt 2): bản phụ của game (brand-passport-v2, ho-chieu-sau-rieng-v2, ben-phu-sa-v2) ra khỏi sitemap, gắn noindex.
+for (const p of ['hanh-trinh.html', 'nhac-ben-phu-sa.html']) assert.ok(sm.includes('https://bizonland.com/' + p + '<'), 'sitemap thiếu ' + p);
 for (const m of sm.matchAll(/<loc>https:\/\/bizonland\.com\/([^<]*)<\/loc>/g)) {
   const f = decodeURIComponent(m[1]) || 'index.html';
   assert.ok(fs.existsSync(path.join(ROOT, f)), 'sitemap trỏ tới tệp không có: ' + f);
