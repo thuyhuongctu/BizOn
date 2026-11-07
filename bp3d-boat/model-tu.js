@@ -1,5 +1,5 @@
 import { kit } from './model-kit.js';
-// Thầy Tú – standing, blue jacket, black trousers, pushing a bamboo pole.
+// Thầy Tu Phan – standing, blue jacket, black trousers, pushing a bamboo pole.
 export function buildTu(THREE, M) {
   const { add, limb, face, scarf, buttons } = kit(THREE, M);
   const t = new THREE.Group(); t.name = 'tu'; t.position.set(0.6, 0.22, -0.2); t.rotation.y = 0.15;

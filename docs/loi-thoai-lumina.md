@@ -107,7 +107,7 @@ khớp với 3 đối thủ có tên trong game) nên **bản thu cũ không cò
 | *(đã có)* | HUONG_CUES | appelle Huong."], [2.39, 3.17, |
 | *(đã có)* | HUONG_CUES | ], [3.53, 4.17, |
 
-## Câu trích dẫn trong Nhật ký đội (3 giọng: Lumina, SEC, thầy Tú)
+## Câu trích dẫn trong Nhật ký đội (3 giọng: Lumina, SEC, thầy Tu Phan)
 
 | Tên file | Ngữ cảnh | Lời thoại |
 |---|---|---|
@@ -144,7 +144,7 @@ bảng tra cứu ở cuối tài liệu.
 | `voice/intro-01.mp3` | 🇻🇳 Việt Nam 2026 | Nền kinh tế đang vươn mình "Hóa Rồng". Đội của bạn điều hành một công ty đồ chơi đất sét – khởi nghiệp từ Miền Tây, khát vọng mở rộng cả thị trường nội địa và quốc tế. |
 | `voice/intro-02.mp3` | 🏺 Doanh nghiệp & sản phẩm của bạn | Bạn điều hành một xưởng đồ chơi đất sét thủ công tại Cần Thơ, vốn khởi điểm 500 triệu ₫. Sản phẩm chủ lực: «Bộ linh vật đất sét Việt» – dòng quà tặng & đồ sưu tầm, giá tham chiếu 150.000₫/bộ. Tên doanh nghiệp chính là tên đội bạn đặt khi đăng nhập! |
 | `voice/intro-03.mp3` | 🗺️ 6 vòng · 6 tỉnh thành | Mỗi vòng là một quý kinh doanh tại một tỉnh/thành trên bản đồ mới: Cần Thơ → TP. Hồ Chí Minh → Khánh Hòa → Đà Nẵng → Thanh Hóa → Hà Nội. Đội thắng vòng nào sẽ cắm cờ 🚩 lên tỉnh đó! ⏱️ Mỗi vòng 5–7 phút, cả ván ≈ 30–45 phút. |
-| `voice/intro-04.mp3` | 👥 Đội hình C-Suite | CEO chèo lái chiến lược, CFO giữ két sắt, CMO đánh chiếm thị trường, COO vận hành xưởng, SEC ghi biên bản – bên cạnh cố vấn Lumina và thầy Tú Phan. |
+| `voice/intro-04.mp3` | 👥 Đội hình C-Suite | CEO chèo lái chiến lược, CFO giữ két sắt, CMO đánh chiếm thị trường, COO vận hành xưởng, SEC ghi biên bản – bên cạnh cố vấn Lumina và thầy Tu Phan. |
 | `voice/intro-05.mp3` | 🌏 Sau đó: ra biển lớn | Chinh phục xong Việt Nam? BizOn Go Global đang chờ – chọn 1 trong 7 thị trường quốc tế, đàm phán với đối tác bản địa và thử sức 4 phương thức thâm nhập. |
 | `voice/intro-06.mp3` | 🏆 Mục tiêu của bạn | Cắm nhiều cờ nhất, đạt TOP 1 thị phần Việt Nam và nhận chứng nhận hoàn thành. Sẵn sàng Bật Nghiệp? 🚀 |
 
@@ -236,7 +236,7 @@ kinh doanh người học cần làm quen. Chỉ phần đọc mới thay bằng
 | `voice/quote-06.mp3` | `commit` → **chốt quyết định** | Đừng sợ **chốt quyết định** sai – hãy sợ việc không rút ra được bài học nào. |
 | `voice/intro-02.mp3` | `₫` → **đồng** · `150.000₫` → **150 nghìn đồng** · `&` → **và** | Bạn điều hành một xưởng đồ chơi đất sét thủ công tại Cần Thơ, vốn khởi điểm 500 triệu **đồng**. Sản phẩm chủ lực: «Bộ linh vật đất sét Việt» – dòng quà tặng **và** đồ sưu tầm, giá tham chiếu **150 nghìn đồng** một bộ. Tên doanh nghiệp chính là tên đội bạn đặt khi đăng nhập! |
 | `voice/intro-03.mp3` | `TP.` → **Thành phố** · `→` → **rồi đến** · `≈` → **khoảng** | Mỗi vòng là một quý kinh doanh tại một tỉnh/thành trên bản đồ mới: Cần Thơ **rồi đến Thành phố** Hồ Chí Minh **rồi đến** Khánh Hòa **rồi đến** Đà Nẵng **rồi đến** Thanh Hóa **rồi đến** Hà Nội. Đội thắng vòng nào sẽ cắm cờ lên tỉnh đó! Mỗi vòng 5–7 phút, cả ván **khoảng** 30–45 phút. |
-| `voice/intro-04.mp3` | `CEO` → **Giám đốc Điều hành** · `CFO` → **Giám đốc Tài chính** · `CMO` → **Giám đốc Marketing** · `COO` → **Giám đốc Vận hành** · `SEC` → **Thư ký** | **Giám đốc Điều hành** chèo lái chiến lược, **Giám đốc Tài chính** giữ két sắt, **Giám đốc Marketing** đánh chiếm thị trường, **Giám đốc Vận hành** vận hành xưởng, **Thư ký** ghi biên bản – bên cạnh cố vấn Lumina và thầy Tú Phan. |
+| `voice/intro-04.mp3` | `CEO` → **Giám đốc Điều hành** · `CFO` → **Giám đốc Tài chính** · `CMO` → **Giám đốc Marketing** · `COO` → **Giám đốc Vận hành** · `SEC` → **Thư ký** | **Giám đốc Điều hành** chèo lái chiến lược, **Giám đốc Tài chính** giữ két sắt, **Giám đốc Marketing** đánh chiếm thị trường, **Giám đốc Vận hành** vận hành xưởng, **Thư ký** ghi biên bản – bên cạnh cố vấn Lumina và thầy Tu Phan. |
 | `voice/intro-06.mp3` | `TOP 1` → **tốp một** | Cắm nhiều cờ nhất, đạt **tốp một** thị phần Việt Nam và nhận chứng nhận hoàn thành. Sẵn sàng Bật Nghiệp? |
 
 > Câu có `{…}`: đọc với một con số bất kỳ, ví dụ *"Tiền mặt chỉ còn 120 triệu đồng"*.

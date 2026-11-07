@@ -22,7 +22,7 @@
     ['HC_KL_04', 'Lần này các bạn thắng. Nhưng thị trường còn dài lắm.', 'You win this time. But the market is a long game.', 1],
     ['HC_KL_05', 'Kim Long dẫn trước. Lần sau nhớ đi nhanh hơn.', 'Kim Long stays ahead. Move faster next time.', 1],
   ] });
-  G.push({ title: '4.7 Chế độ thi (Thầy Tú Phan)', rows: [
+  G.push({ title: '4.7 Chế độ thi (Thầy Tu Phan)', rows: [
     ['HC_TP_10', 'Phòng thi đã mở. Các đội đăng nhập và chọn vai trong thời gian chuẩn bị.', 'The exam room is open. Teams, log in and choose roles during the setup time.'],
     ['HC_TP_11', 'Quý mới đã mở. Đồng hồ bắt đầu chạy.', 'The new quarter is open. The clock is running.'],
     ['HC_TP_12', 'Còn năm phút cho quý này.', 'Five minutes left in this quarter.'],
@@ -30,7 +30,7 @@
     ['HC_TP_14', 'Hết giờ. Hệ thống đã tự chốt lựa chọn hiện tại của bạn.', 'Time’s up. The system has locked in your current choice.'],
     ['HC_TP_15', 'Bài thi đã kết thúc. Kết quả của bạn đã được gửi cho giảng viên.', 'The exam is over. Your result has been sent to your lecturer.'],
   ] });
-  G.push({ title: '4.8 Kết thúc theo mức điểm (Thầy Tú Phan)', rows: [
+  G.push({ title: '4.8 Kết thúc theo mức điểm (Thầy Tu Phan)', rows: [
     ['HC_TP_20', 'Xuất sắc. Bạn mở rộng từng bước, học trước khi cam kết và giữ được tiền mặt. Đó chính là quốc tế hoá bài bản.', 'Excellent. You expanded step by step, learned before committing and protected your cash. That is textbook internationalisation.'],
     ['HC_TP_21', 'Rất tốt. Chiến lược vững, chỉ còn vài quyết định có thể tối ưu hơn. Xem lại quý bạn lỗ nhiều nhất.', 'Very good. A solid strategy, with a few decisions that could be sharper. Review the quarter where you lost the most.'],
     ['HC_TP_22', 'Khá. Bạn đã vào được thị trường, nhưng đôi lúc cam kết vốn trước khi đủ tri thức.', 'Good. You entered markets, but sometimes committed capital before you knew enough.'],
@@ -39,7 +39,7 @@
     ['HC_BSL_10', 'Con làm tốt lắm. Mùi thảo mộc Vàm Thịnh giờ đã đi khắp nơi rồi.', 'You did so well, my dear. The scent of Vàm Thịnh herbs has travelled everywhere now.'],
     ['HC_NAR_30', 'Hộ chiếu của bạn đã hoàn tất. Cảm ơn bạn đã chơi Hộ Chiếu Thương Hiệu.', 'Your passport is complete. Thank you for playing Brand Passport.'],
   ] });
-  G.push({ title: '4.9 Thẻ nhiệm vụ và "Hỏi thầy Tú" (MỚI)', rows: [
+  G.push({ title: '4.9 Thẻ nhiệm vụ và "Hỏi thầy Tu Phan" (MỚI)', rows: [
     ['HC_NAR_40', 'Nhiệm vụ quý này đã sẵn sàng.', 'This quarter’s mission is ready.', 1],
     ['HC_NAR_41', 'Hoàn thành nhiệm vụ! Bạn nhận được phần thưởng.', 'Mission complete! You’ve earned a reward.', 1],
     ['HC_TP_30', 'Thầy chỉ gợi ý một lần thôi nhé. Quyết định rủi ro nhất của em đang nằm ở đây.', 'I’ll only give one hint. Your riskiest decision is right here.', 1],

@@ -1,4 +1,4 @@
-/* BizOn Hộ Chiếu – lớp «dấu ấn»: lễ đóng dấu, Kim Long xuất hiện, thẻ nhiệm vụ, Hỏi thầy Tú, lồng tiếng.
+/* BizOn Hộ Chiếu – lớp «dấu ấn»: lễ đóng dấu, Kim Long xuất hiện, thẻ nhiệm vụ, Hỏi thầy Tu Phan, lồng tiếng.
  * Chỉ đọc window.__bp.S (ghi duy nhất cờ S.flags.askTu); không sửa luật chơi.
  * Giọng: Web Speech API (speechSynthesis) đọc trực tiếp text từ window.__HC_VOICE (ho-chieu-voice.js/-2.js,
  * nạp trước file này) — không có file mp3 ghi âm thật, trình duyệt không hỗ trợ speechSynthesis thì im lặng.
@@ -151,7 +151,7 @@
 
   function cnt(s) { return s.entered.filter(function (v) { return v !== null && v !== undefined; }).length; }
   window.addEventListener('bp3d-quest', function () { play('HC_NAR_41'); });
-  // 3. Hỏi thầy Tú (1 lần/ván)
+  // 3. Hỏi thầy Tu Phan (1 lần/ván)
   function riskiest() {
     var s = S(), b = B(), sel = s.sel;
     if (sel.enter != null) {
@@ -169,12 +169,12 @@
     var box = $('sg-asktu'); if (s.flags.askTu) { if (box) box.remove(); return; }
     if (box) return;
     box = document.createElement('div'); box.id = 'sg-asktu';
-    box.innerHTML = '<span>🎓 <b>' + T('Hỏi thầy Tú', 'Ask Prof. Tú') + '</b> · ' + T('chỉ dùng được 1 lần mỗi ván', 'one use per game') + '</span><button type="button">' + T('Hỏi ngay', 'Ask now') + '</button>';
+    box.innerHTML = '<span>🎓 <b>' + T('Hỏi thầy Tu Phan', 'Ask Prof. Tú') + '</b> · ' + T('chỉ dùng được 1 lần mỗi ván', 'one use per game') + '</span><button type="button">' + T('Hỏi ngay', 'Ask now') + '</button>';
     box.querySelector('button').onclick = function () {
       s.flags.askTu = true; box.remove();
-      overlay('<span class="sg-eb">🎓 ' + T('Gợi ý của thầy Tú Phan', 'A hint from Prof. Tú Phan') + '</span><h3>' + T('Quyết định rủi ro nhất lúc này', 'Your riskiest decision right now') + '</h3><p class="sg-q" style="animation-delay:.05s">' + riskiest() + '</p><p class="sg-q" style="font-size:12px;opacity:.75;animation-delay:.15s">' + T('Chi phí giao dịch: kiểm soát càng cao thì cam kết vốn càng lớn (Anderson & Gatignon, 1986).', 'Transaction costs: more control means more committed capital (Anderson & Gatignon, 1986).') + '</p>');
+      overlay('<span class="sg-eb">🎓 ' + T('Gợi ý của thầy Tu Phan', 'A hint from Prof. Tú Phan') + '</span><h3>' + T('Quyết định rủi ro nhất lúc này', 'Your riskiest decision right now') + '</h3><p class="sg-q" style="animation-delay:.05s">' + riskiest() + '</p><p class="sg-q" style="font-size:12px;opacity:.75;animation-delay:.15s">' + T('Chi phí giao dịch: kiểm soát càng cao thì cam kết vốn càng lớn (Anderson & Gatignon, 1986).', 'Transaction costs: more control means more committed capital (Anderson & Gatignon, 1986).') + '</p>');
       play('HC_TP_30'); play('HC_TP_31');
-      img('cast/tu-phan-lo.png', function (src) { var h = document.querySelector('.sg-page h3'); if (h) h.insertAdjacentHTML('beforebegin', '<img src="' + src + '" alt="Thầy Tú Phan" style="float:right;width:92px;height:92px;object-fit:contain;margin:0 0 6px 10px">'); });
+      img('cast/tu-phan-lo.png', function (src) { var h = document.querySelector('.sg-page h3'); if (h) h.insertAdjacentHTML('beforebegin', '<img src="' + src + '" alt="Thầy Tu Phan" style="float:right;width:92px;height:92px;object-fit:contain;margin:0 0 6px 10px">'); });
     };
     st.insertAdjacentElement('afterbegin', box);
   }
