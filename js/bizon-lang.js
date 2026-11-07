@@ -55,6 +55,12 @@
       box.remove();
     };
     document.head.appendChild(st); document.body.appendChild(box);
+    // Chừa chỗ dưới cùng bằng chiều cao gợi ý để nó không che nút cuối trang (06/11/2026)
+    var pad0 = document.body.style.paddingBottom;
+    function go() { pad0 = document.body.style.paddingBottom; document.body.style.paddingBottom = 'calc(' + (pad0 || '0px') + ' + ' + (box.offsetHeight + 20) + 'px)'; }
+    function done() { document.body.style.paddingBottom = pad0; }
+    go();
+    var rm = box.remove.bind(box); box.remove = function () { done(); rm(); };
     setTimeout(function () { if (box.isConnected) box.remove(); }, 15000);
   }
   // Điện thoại đang bật «Trang web dành cho máy tính» (Chrome nhớ theo từng site): trang dựng
