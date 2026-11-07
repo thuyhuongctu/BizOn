@@ -44,8 +44,8 @@
     g.fillText(text, 100, 68, 390);
     g.fillStyle = '#3E5A5C'; g.font = '600 32px "Be Vietnam Pro", system-ui, sans-serif'; g.fillText(sub, 100, 112, 390);
     const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 4;
-    const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: t, depthTest: false, transparent: true }));
-    s.scale.set(5.6, 1.58, 1); s.renderOrder = 10; return s;
+    const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: t, transparent: true, alphaTest: .05 }));
+    s.scale.set(5.6, 1.58, 1); return s;
   }
 
   function mount(canvas, opts) {
@@ -111,11 +111,16 @@
       s.center.set(.5, 0); s.scale.set(cao * p.tl, cao, 1);
       const ox = p.id === 'lumina' ? 0 : -p.w * .18, oz = p.id === 'lumina' ? .6 : .6;
       s.position.set(p.x + ox, .5, p.z + oz); s.userData.phong = p.id; scene.add(s); chon.push(s);
+      // viền tối mờ quanh người để tách nhân vật khỏi sàn phòng sáng màu (áo dài trắng trên sàn kem)
+      const vm = new THREE.SpriteMaterial({ map: t, color: 0x0B2E33, transparent: true, opacity: .5, depthWrite: false }); vatLieu.push(vm);
+      const vien = new THREE.Sprite(vm); vien.center.set(.5, .02); vien.scale.set(cao * p.tl * 1.09, cao * 1.05, 1);
+      vien.position.copy(s.position); vien.renderOrder = -1; scene.add(vien); s.userData.vien = vien;
+      s.userData.co = [cao * p.tl, cao];
       // bóng tròn dưới chân
       const bg = new THREE.CircleGeometry(.7, 24); hinh.push(bg);
       const bm = new THREE.MeshBasicMaterial({ color: 0x000000, transparent: true, opacity: .22, depthWrite: false }); vatLieu.push(bm);
       const bong = new THREE.Mesh(bg, bm); bong.rotation.x = -Math.PI / 2; bong.position.set(s.position.x, .51, s.position.z); scene.add(bong);
-      const n = nhan(p.ten[lang()], p.vai[lang()], p.sang); n.position.set(p.x, 5.9, p.z + .6); scene.add(n); tex.push(n.material.map); vatLieu.push(n.material);
+      const n = nhan(p.ten[lang()], p.vai[lang()], p.sang); n.position.set(p.x, 3.2, p.z - p.d / 2 + .2); scene.add(n); tex.push(n.material.map); vatLieu.push(n.material);
       nv.push({ s, n, p, y0: .5, pha: Math.random() * 6.28 });
     });
 
@@ -153,17 +158,19 @@
     }
 
     // Máy quay: nghiêng nhìn xuống, tự lắc nhẹ; kéo ngang để xoay
-    let goc = -.35, gocDich = goc, keo = null, rong = 1, cao = 1;
+    let goc = -.35, keo = null, rong = 1, cao = 1;
     function khung() {
       const w = canvas.clientWidth || 1, h = canvas.clientHeight || 1;
       rong = w; cao = h; renderer.setSize(w, h, false); cam.aspect = w / h; cam.updateProjectionMatrix();
       // khung dọc: máy quay lùi xa nên phóng bảng tên lên cho còn đọc được
-      const k = cam.aspect < 1 ? 1.7 : 1; nv.forEach(o => { o.n.scale.set(5.6 * k, 1.58 * k, 1); o.n.position.y = 4.9 + 1 * k; });
+      const k = cam.aspect < 1 ? 1.35 : 1; nv.forEach(o => { o.n.scale.set(5.6 * k, 1.58 * k, 1); o.n.position.y = 2.6 + .8 * k;
+        // khung dọc: máy quay lùi xa nên phóng người lên cho dễ nhìn (viền phóng theo)
+        const kn = cam.aspect < 1 ? 1.3 : 1, [cw, ch] = o.s.userData.co; o.s.scale.set(cw * kn, ch * kn, 1); o.s.userData.vien.scale.set(cw * kn * 1.09, ch * kn * 1.05, 1); });
     }
     function datMay(t) {
-      const a = goc + (tinh || keo ? 0 : Math.sin(t * .00012) * .28);
+      const a = goc + (tinh || keo ? 0 : Math.sin(t * .00012) * (cam.aspect < 1.2 ? .1 : .28));
       // khung dọc (điện thoại) cần lùi xa hơn để thấy đủ bảy phòng
-      const R = 46 * Math.max(1, 1.3 / Math.min(cam.aspect, 1.3));
+      const R = 46 * Math.max(1, 1.32 / Math.min(cam.aspect, 1.32));
       cam.position.set(Math.sin(a) * R * .62, R * .78, Math.cos(a) * R * .62 + 2);
       cam.lookAt(0, 0, 2.4);
     }
@@ -198,7 +205,7 @@
           else if (b.cot) { const k = .75 + .25 * Math.sin(t * .0015 + b.pha); b.m.scale.y = k; b.m.position.y = b.y0 + b.cot * k / 2; }
           else if (b.bang) { b.t = (b.t + dt * .12) % 1; b.m.position.x = b.x0 + b.t * b.dai; }
         });
-        nv.forEach(o => { o.s.position.y = o.y0 + Math.abs(Math.sin(t * .0016 + o.pha)) * .06; });
+        nv.forEach(o => { o.s.position.y = o.y0 + Math.abs(Math.sin(t * .0016 + o.pha)) * .06; o.s.userData.vien.position.y = o.s.position.y; });
       } else cham.forEach(datCham);
       renderer.render(scene, cam); thongKe.lanVe++; thongKe.tamGiac = renderer.info.render.triangles;
     }
