@@ -20,6 +20,7 @@ const html = read('BizOn Game 3D.html'), mod = read('js/game3d-rong.js');
 { const nen = fs.readFileSync(R('assets/illustrations/rong-bay-doi-bizon-nen.webp')); check(nen.subarray(0, 4).toString() === 'RIFF' && nen.length > 100000 && nen.length < 600000 && mod.includes("'assets/illustrations/rong-bay-doi-bizon-nen.webp'"), 'ảnh nền không rồng có, nhẹ, module trỏ tới'); }
 check(html.includes('<script type="module" src="js/game3d-rong.js"></script>') && html.indexOf('"imports"') < html.indexOf('game3d-rong.js'), 'trang nạp module sau importmap');
 check(html.includes("window.__l3Rong = Game3DRong.mount(document.getElementById('login3d'))") && html.includes('window.__l3Rong.dispose()'), 'gắn khi vào màn đăng nhập, gỡ khi vào game');
+check(html.includes("if (RONG_3D && !window.__l3Rong") && html.includes('window.BIZON_RONG_3D === true') && /\?&\]rong3d=1/.test(html), 'mặc định giữ tranh gốc v5; rồng 3D chỉ bật khi có cờ (07/11/2026)');
 check(mod.includes("'assets/models/rong-bay-doi-bizon.glb'") && mod.includes('OrthographicCamera') && mod.includes('prefers-reduced-motion'), 'module: nạp GLB, máy quay trực giao, tôn trọng giảm chuyển động');
 check(read('sw.js').includes("'./js/game3d-rong.js'") && +(/CACHE = 'bizon-v(\d+)'/.exec(read('sw.js')) || [])[1] >= 790, 'sw.js cache module, ≥ bizon-v790');
 check(read('assets/models/SOURCES.md').includes('rong-bay-doi-bizon.glb') && read('assets/models/SOURCES.md').includes('Meshy'), 'SOURCES.md ghi nguồn gốc và cách dựng');

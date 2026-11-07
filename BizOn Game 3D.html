@@ -834,8 +834,10 @@ function l3Show() {
   const g = id => W.document.getElementById(id);
   // Quả địa cầu nhỏ góc trên phải (góc dưới phải đã có bong bóng gợi ý); chỉ trên màn rộng (trên điện thoại thẻ thành bottom sheet, ẩn bằng CSS)
   if (!window.__l3Globe && window.Game3DGlobe && innerWidth > 760) window.__l3Globe = Game3DGlobe.mount(document.getElementById('l3Globe'));
-  // Thanh Long cưỡi mây 3D bay lượn trên ảnh nền (js/game3d-rong.js); không có WebGL thì chỉ còn ảnh nền
-  if (!window.__l3Rong && window.Game3DRong) window.__l3Rong = Game3DRong.mount(document.getElementById('login3d'));
+  // Màn đăng nhập mặc định là tranh gốc «Thanh Long cưỡi mây» v5 (chị chốt 07/11/2026: rồng 3D Meshy và nền đã xóa rồng không bằng tranh gốc).
+  // Rồng 3D (js/game3d-rong.js) chỉ bật khi trang đặt window.BIZON_RONG_3D = true hoặc có ?rong3d=1, như cờ GLB nhân vật (#1024).
+  const RONG_3D = window.BIZON_RONG_3D === true || /[?&]rong3d=1(&|$)/.test(location.search);
+  if (RONG_3D && !window.__l3Rong && window.Game3DRong) window.__l3Rong = Game3DRong.mount(document.getElementById('login3d'));
   [['l3Email', 'login-email'], ['l3Team', 'login-team'], ['l3Class', 'login-class']].forEach(([a, b]) => { const s = g(b); if (s && s.value && !document.getElementById(a).value) document.getElementById(a).value = s.value; });
   l3Focus();
 }
