@@ -66,7 +66,7 @@ GAME = {
                   ('Thư ký trinh sát cho cả đội. Có Thư ký thì khảo sát chợ được miễn phí.',
                    'The secretary scouts for the whole team. With a secretary, the market survey is free.'),
                   (('Ưu thế của Thư ký', 'Secretary perk'), [('📋 Khảo sát chợ miễn phí', '📋 Market survey is free')])),
-            nguoi('huong', 'bps-huong', ('Hương', 'Hương'), ('Nhà sáng lập · Đội Phù Sa', 'Founder · Phù Sa team'), ('Sạp Đội Phù Sa', 'Phù Sa team stall'), 'hang',
+            nguoi('huong', 'bps-huong-v2', ('Hương', 'Hương'), ('Nhà sáng lập · Đội Phù Sa', 'Founder · Phù Sa team'), ('Sạp Đội Phù Sa', 'Phù Sa team stall'), 'hang',
                   ('Người mở <em>Đội Phù Sa.</em>', 'The one who started <em>the Phù Sa team.</em>'),
                   ('Ngoài Đội Rồng Xanh, người chơi có thể chọn Đội Phù Sa. Hương là nhà sáng lập: gánh hàng rong của đội biết chắc khu nào đông nhất tuần sau.',
                    'Besides the Blue Dragon team, players can pick the Phù Sa team. Hương is its founder: the team’s street cart knows for sure the busiest spot next week.'),
@@ -139,12 +139,13 @@ GAME = {
         ]),
     # ---------------- Hộ Chiếu Sầu Riêng ----------------
     # Nguồn: lab/ho-chieu-sau-rieng-data.js:347-357 (đội 5 vai, nguyên văn), :411 + html:301 (hỏi Lumina tối đa 3),
-    # lab/ho-chieu-sau-rieng-3d.html:401 (NPC Bà Sáu Lành «Nhà vườn · cố vấn»).
+    # lab/ho-chieu-sau-rieng-3d.html:401 (NPC Bà Sáu Lành «Nhà vườn · cố vấn»; NPC thầy Tú: câu hỏi debrief trước khi CEO chốt,
+    # giải đáp «phương thức thâm nhập ngay trong nước», «kênh của đội thuộc phương thức nào», debrief cuối sáu vụ).
     'hc-sau-rieng': dict(
         tep='van-phong-hc-sau-rieng.html', choi='lab/ho-chieu-sau-rieng.html', game=('Hộ Chiếu Sầu Riêng', 'Durian Passport'),
         tieu=('Một đội, một chuỗi xuất khẩu sầu riêng.', 'One team, one durian export chain.'),
-        lead=('Đội 5 vai điều hành một mắt xích trong chuỗi xuất khẩu sầu riêng qua sáu vụ, từ ngày Trung Quốc mở chính ngạch năm 2022. Hai cố vấn đi cùng: Lumina và Bà Sáu Lành.',
-              'A team of 5 roles runs one link of the durian export chain over six seasons, from the day China opened official trade in 2022. Two advisors come along: Lumina and Bà Sáu Lành.'),
+        lead=('Đội 5 vai điều hành một mắt xích trong chuỗi xuất khẩu sầu riêng qua sáu vụ, từ ngày Trung Quốc mở chính ngạch năm 2022. Ba cố vấn đi cùng: Lumina, Bà Sáu Lành và thầy Tú.',
+              'A team of 5 roles runs one link of the durian export chain over six seasons, from the day China opened official trade in 2022. Three advisors come along: Lumina, Bà Sáu Lành and thầy Tú.'),
         ds=[
             nguoi('lumina', 'sr-lumina', ('Lumina', 'Lumina'), ('Cố vấn', 'Advisor'), ('Trạm Lumina', 'Lumina hub'), 'vong',
                   ('Hỏi tối đa ba lần, <em>Lumina hỏi ngược lại.</em>', 'Ask up to three times; <em>Lumina asks back.</em>'),
@@ -166,7 +167,7 @@ GAME = {
                   ('COO lo nguồn hàng: vùng trồng có mã số, hao hụt sau thu hoạch và sầu riêng nghịch vụ.',
                    'The COO handles sourcing: orchards with planting-area codes, post-harvest losses and off-season durian.'),
                   (('COO', 'COO'), [('Vùng trồng có mã', 'Coded planting areas'), ('Hao hụt · nghịch vụ', 'Losses · off-season')])),
-            nguoi('cfo', 'sr-cfo', ('Thu Hà', 'Thu Hà'), ('CFO', 'CFO'), ('Két tiền mặt', 'Cash vault'), 'ket',
+            nguoi('cfo', 'sr-cfo-v2', ('Thu Hà', 'Thu Hà'), ('CFO', 'CFO'), ('Két tiền mặt', 'Cash vault'), 'ket',
                   ('Tiền mặt, <em>chi phí tuân thủ.</em>', 'Cash, <em>compliance costs.</em>'),
                   ('CFO giữ tiền mặt, xếp thứ tự ưu tiên đầu tư và tính chi phí tuân thủ.',
                    'The CFO keeps cash, ranks investment priorities and counts compliance costs.'),
@@ -181,6 +182,11 @@ GAME = {
                   ('Bà Sáu Lành là nhà vườn và cố vấn của đội trong bản 3D: người ở ngay đầu chuỗi, nơi trái sầu riêng được trồng.',
                    'Bà Sáu Lành is a grower and the team’s advisor in the 3D edition: right at the start of the chain, where the durian is grown.'),
                   (('Cố vấn', 'Advisor'), [('Nhà vườn sầu riêng', 'Durian grower')])),
+            nguoi('thaytu', 'bps-tu', ('Thầy Tú', 'Thầy Tú'), ('Giảng viên · cố vấn lý thuyết', 'Lecturer · theory advisor'), ('Phòng debrief', 'Debrief room'), 'bang-trang',
+                  ('Câu hỏi debrief <em>trước khi chốt vụ.</em>', 'Debrief questions <em>before the season is committed.</em>'),
+                  ('Trong bản 3D, thầy Tú là giảng viên Trường Kinh tế, Đại học Cần Thơ. Mỗi vụ, trước khi CEO chốt, thầy hỏi đội mấy câu debrief; đội hỏi lại thì thầy giải thích lý thuyết, như kênh bán của đội thuộc phương thức thâm nhập nào. Hết sáu vụ, thầy dẫn buổi debrief: đội đã học được gì về kinh doanh quốc tế.',
+                   'In the 3D edition thầy Tú is a lecturer at the CTU School of Economics. Each season, before the CEO commits, he asks the team a few debrief questions; asked back, he explains the theory, such as which entry mode each sales channel is. After six seasons he leads the debrief: what the team learned about international business.'),
+                  (('Thầy Tú', 'Thầy Tú'), [('Câu hỏi debrief mỗi vụ', 'Debrief questions each season'), ('Kênh bán ↔ phương thức thâm nhập', 'Channel ↔ entry mode')])),
         ]),
 }
 

@@ -14,7 +14,7 @@ assert.ok(page.includes('<link rel="canonical" href="https://bizonland.com/van-p
 assert.ok(read('sitemap.xml').includes('<loc>https://bizonland.com/van-phong-doi.html</loc>'));
 const sw = read('sw.js');
 assert.ok(sw.includes("'./van-phong-doi.html'") && sw.includes("'./js/van-phong-doi-3d.js'"), 'sw.js chưa đệm trang');
-assert.ok(+sw.match(/bizon-v(\d+)/)[1] >= 804);
+assert.ok(+sw.match(/bizon-v(\d+)/)[1] >= 805);
 // Mọi ảnh nhân vật đều là ảnh gốc có sẵn; tỉ lệ khai trong sa bàn khớp đúng cỡ tệp
 const anh = [...new Set([...page.matchAll(/assets\/character\/solid\/([\w-]+)\.webp/g)].map(m => m[1]))];
 assert.equal(anh.length, 7, 'năm nhân vật và hai cố vấn');
@@ -33,7 +33,7 @@ assert.ok(read('universe.html').includes('href="van-phong-doi.html"'), 'trang V�
 assert.ok(read('js/app.js').includes('<a href="van-phong-doi.html" target="_blank"'), 'game Bật Nghiệp chưa có lối vào');
 assert.match(read('css/van-phong.css'), /prefers-reduced-motion:reduce/);
 // Ba game còn lại: trang sinh từ scripts/van-phong/tao-trang.py, ảnh cắt sát trong assets/character/van-phong/
-const TRANG = { 'van-phong-ben-phu-sa.html': ['ben-phu-sa.html', 8], 'van-phong-hc-thuong-hieu.html': ['brand-passport.html', 10], 'van-phong-hc-sau-rieng.html': ['lab/ho-chieu-sau-rieng.html', 7] };
+const TRANG = { 'van-phong-ben-phu-sa.html': ['ben-phu-sa.html', 8], 'van-phong-hc-thuong-hieu.html': ['brand-passport.html', 10], 'van-phong-hc-sau-rieng.html': ['lab/ho-chieu-sau-rieng.html', 8] };
 for (const [f, [game, n]] of Object.entries(TRANG)) {
   const t = read(f);
   assert.ok(t.includes('SINH TỰ ĐỘNG bởi scripts/van-phong/tao-trang.py'), f + ': thiếu dấu tệp sinh');
