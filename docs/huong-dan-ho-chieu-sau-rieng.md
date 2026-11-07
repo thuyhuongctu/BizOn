@@ -13,6 +13,8 @@ Sau buổi chơi, người học có thể:
 3. Đánh giá đánh đổi giữa chi phí tuân thủ và rủi ro bị chặn hàng, giữa lợi nhuận ngắn hạn và uy tín ngành (vụ «dán nhãn Thái»).
 4. Thảo luận nâng cấp chuỗi giá trị khi Việt Nam có thị phần lớn nhưng giá thấp hơn Thái Lan.
 
+> Chuẩn đầu ra SR-1…SR-6, chỉ số quan sát và tiêu chí đạt theo vụ: `docs/chuan-dau-ra-va-rubric.md` Mục 3c (06/11/2026).
+
 ## 2 · Cấu trúc ván chơi
 
 - **4 vai:** HTX nhà vườn Cai Lậy · Cơ sở đóng gói Đắk Lắk · Công ty xuất khẩu TP.HCM · Doanh nghiệp cấp đông Tiền Giang.
