@@ -20,7 +20,7 @@
   };
 
   /* ---------- Song ngữ Việt / Anh ---------- */
-  var EN = new Map([["🎮 Chơi bản 2D →","🎮 Play the 2D version →"],["🧊 Chơi bản 3D →","🧊 Play the 3D version →"],["Hệ thống game mô phỏng và mini-game của BizOn – từ chiến lược nhiều vòng đến phản xạ 30 giây. Chọn và chơi ngay!","BizOn's simulation games and mini-games – from multi-round strategy to 30-second reflexes. Pick one and play now!"],["BizOn xây dựng bộ công cụ học qua chơi cho môn khởi nghiệp và kinh doanh quốc tế – chạy hoàn toàn trên trình duyệt, miễn phí, không cần cài đặt.","BizOn builds a learn-through-play toolkit for entrepreneurship and international business – runs entirely in the browser, free, no install required."],["Mọi thứ dưới đây đều đang chạy thật và dùng được ngay – do nhóm BizOn tự thiết kế, lập trình và sản xuất.","Everything below is live and ready to use right now – designed, coded and produced by the BizOn team."],
+  var EN = new Map([["🎮 Chơi bản 2D →","🎮 Play the 2D version →"],["🧊 Chơi bản 3D →","🧊 Play the 3D version →"],["Hệ thống game mô phỏng và mini-game của BizOn – từ chiến lược nhiều vòng đến phản xạ 30 giây. Chọn và chơi ngay!","BizOn's simulation games and mini-games – from multi-round strategy to 30-second reflexes. Pick one and play now!"],["BizOn xây dựng bộ công cụ học qua chơi cho môn khởi nghiệp và kinh doanh quốc tế – chạy hoàn toàn trên trình duyệt, không cần cài đặt.","BizOn builds a learn-through-play toolkit for entrepreneurship and international business – runs entirely in the browser, no install required."],["Mọi thứ dưới đây đều đang chạy thật và dùng được ngay – do nhóm BizOn tự thiết kế, lập trình và sản xuất.","Everything below is live and ready to use right now – designed, coded and produced by the BizOn team."],
 [
 "Tính năng",
 "Features"
@@ -70,8 +70,8 @@
 "Play"
 ],
 [
-"🚀 Chơi miễn phí trên Web",
-"🚀 Play free on the Web"
+"🚀 Chơi trên Web",
+"🚀 Play on the Web"
 ],
 [
 "🕹️ Thử Mini-game",
@@ -322,8 +322,8 @@
 "Build your team, pick a role – CEO · CFO · COO · CMO – and conquer the #1 market share of Vietnam 2026."
 ],
 [
-"🚀 VÀO GAME NGAY – MIỄN PHÍ",
-"🚀 PLAY NOW – FREE"
+"🚀 VÀO GAME NGAY",
+"🚀 PLAY NOW"
 ],
 [
 "Game mô phỏng kinh doanh 3D Claymorphism dành cho thế hệ khởi nghiệp Việt Nam.",
@@ -1190,8 +1190,8 @@
 "You can erase all of this data at any time by clearing site data in your browser settings, or with the «Start over» button in the game."
 ],
 [
-"Bản chơi tự do luôn miễn phí. Các gói dưới đây dành cho triển khai có hỗ trợ trong khoa/trường/trung tâm đào tạo khởi nghiệp (giai đoạn pilot – giá dự kiến, liên hệ để chốt phạm vi).",
-"Free play is always free. The packages below are for supported rollouts in a faculty, school or entrepreneurship centre (pilot stage – indicative pricing, contact us to scope it)."
+"Arcade và Bến Phù Sa vẫn miễn phí; hai trụ cột được dùng thử một học kỳ (xem trang Chính sách). Các gói dưới đây dành cho triển khai có hỗ trợ trong khoa/trường/trung tâm đào tạo khởi nghiệp (giai đoạn pilot – giá dự kiến, liên hệ để chốt phạm vi).",
+"Arcade and Bến Phù Sa stay free; the two pillars have one trial semester (see the Policy page). The packages below are for supported rollouts in a faculty, school or entrepreneurship centre (pilot stage – indicative pricing, contact us to scope it)."
 ],
 [
 "Bản phối dài 4:43 · hợp cho buổi học chạy trọn 6 quý",
@@ -1362,8 +1362,8 @@
 "Presenting pose · lead image of the Classroom Scenario page"
 ],
 [
-"Dùng thử miễn phí ngay hôm nay, hoặc liên hệ nhóm để được hướng dẫn triển khai cho môn học của bạn.",
-"Try it free today, or contact the team for help rolling it out in your course."
+"Bắt đầu học kỳ dùng thử ngay hôm nay, hoặc liên hệ nhóm để được hướng dẫn triển khai cho môn học của bạn.",
+"Start a trial semester today, or contact the team for help rolling it out in your course."
 ],
 [
 "Dịch thuật & bản địa hóa",
@@ -1546,8 +1546,8 @@
 "Artwork for the Solar Panel item – ESG strategy in the game"
 ],
 [
-"Miễn phí cho lớp học & mã nguồn công khai",
-"Free for classrooms & source-available"
+"Dùng thử một học kỳ & mã nguồn công bố để kiểm chứng",
+"One trial semester & source published for verification"
 ],
 [
 "Màn chào & chứng nhận hoàn thành",
@@ -1578,8 +1578,8 @@
 "Teams of 3–5: CEO, CFO, CMO, COO and Compliance Officer."
 ],
 [
-"Mở game ngay trên trình duyệt hoặc cài lên điện thoại như app thật (PWA) – hoàn toàn miễn phí, không cần tài khoản. Học trên lớp thì nhập Class ID do giảng viên cung cấp khi đăng nhập.",
-"Open the game in your browser or install it on your phone like a real app (PWA) – completely free, no account needed. For classroom use, enter the Class ID your instructor gives you when you log in."
+"Mở game ngay trên trình duyệt hoặc cài lên điện thoại như app thật (PWA) – không cần tài khoản. Học trên lớp thì nhập Class ID do giảng viên cung cấp khi đăng nhập.",
+"Open the game in your browser or install it on your phone like a real app (PWA) – no account needed. For classroom use, enter the Class ID your instructor gives you when you log in."
 ],
 [
 "Nghe nhạc →",
@@ -4940,7 +4940,7 @@
 ],
 ]);
   var SPECIAL = [
-    { page: 'giai-phap', sel: '#gp-oss-note', en: "Free to use at the official URL for non-commercial teaching – no account needed. The source is published for academic transparency and verification; commercial exploitation rights remain with BizOn (see <a href=\"https://github.com/thuyhuongctu/BizOn/blob/main/LICENSE\" target=\"_blank\" rel=\"noopener\" class=\"underline font-bold\">LICENSE</a>)." },
+    { page: 'giai-phap', sel: '#gp-oss-note', en: "Arcade and Bến Phù Sa are free at the official URL, no account needed; the two pillars have one trial semester per institution. The source is published for academic transparency and verification; commercial exploitation rights remain with BizOn (see <a href=\"https://github.com/thuyhuongctu/BizOn/blob/main/LICENSE\" target=\"_blank\" rel=\"noopener\" class=\"underline font-bold\">LICENSE</a>)." },
     { page: 'ben-phu-sa', sel: 'header p.text-sm', en: "You are the founder of a street-food startup in <b>Bến Phù Sa</b> – a fictional river town inspired by Vietnam's Mekong Delta. Each week, pick <b>Method – Product – Location</b>. Goal: the highest total revenue after 5 weeks. The secret is to <b>test fast, then scale at the right moment</b>." },
     { page: 'ben-phu-sa', sel: '#ft-intro ul li:nth-child(1)', en: "⛵ <b>River vendor boat</b>: revenue <b>×3</b> – but product &amp; location are locked for the whole week. For when you already <i>know</i> the winning formula." },
     { page: 'ben-phu-sa', sel: '#ft-intro ul li:nth-child(2)', en: "🧺 <b>Street hawking</b>: ~1/3 the revenue – but you weave through every market lane and pick up <b>lots of market intel</b>. The experimenter's weapon." },
