@@ -84,6 +84,8 @@ const SHELL = [
   './games.html',
   './demo.html',
   './doi-ngu.html',
+  './van-phong-doi.html',
+  './js/van-phong-doi-3d.js',
   './global.html',
   './giai-phap.html',
   './lop-hoc.html',
