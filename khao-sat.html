@@ -65,6 +65,7 @@
 <link rel="stylesheet" href="css/clay-tool-skin.css">
 <link rel="stylesheet" href="css/clay-legacy.css">
 <script src="js/capture-guard.js"></script>
+<script src="js/khao-sat-bo2.js"></script>
 </head>
 <body>
 
@@ -336,6 +337,23 @@
 
 <p class="text-center text-[10px] font-semibold max-w-2xl mx-auto px-5 pt-2" style="color:rgba(100,116,125,.85)">✉️ Liên hệ · Contact: <a href="mailto:bricoleur@bizonland.com" style="color:inherit;text-decoration:underline">bricoleur@bizonland.com</a></p>
 <p class="text-center text-[10px] font-semibold max-w-2xl mx-auto px-5 pt-2 pb-6" style="color:rgba(100,116,125,.75)">🎓 Trang web chỉ phục vụ mục đích giáo dục và nghiên cứu, không đại diện cho bất kỳ tổ chức chính trị nào. Hình ảnh quốc kỳ, bản đồ chỉ mang ý nghĩa minh họa văn hóa – giáo dục. · This website serves educational and research purposes only and does not represent any political organization.</p>
+<script>
+// Phiếu in bộ 2: khao-sat.html?bo=batnghiep2 thay 5 câu (2, 3, 10, 13, 15) bằng câu vận dụng của js/khao-sat-bo2.js và ghi nhãn bộ trên cả hai phiếu.
+(function () {
+  let bo = ''; try { bo = new URLSearchParams(location.search).get('bo') || ''; } catch (e) {}
+  const B = window.BIZON_KS_BO2;
+  if (bo !== 'batnghiep2' || !B) return;
+  const esc = t => String(t).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const items = document.querySelectorAll('ol.q > li');
+  Object.keys(B.thay).forEach(n => {
+    const li = items[n - 1]; if (!li) return;
+    const it = B.thay[n];
+    li.innerHTML = esc(it.q) + '<div class="opts">' + it.o.map((o, j) => '<label><span class="box"></span>' + 'abcd'[j] + '. ' + esc(o) + '</label>').join('') + '</div>';
+  });
+  document.querySelectorAll('.badge').forEach(b => { b.textContent += ' · BỘ 2'; });
+  const h = document.querySelector('.sheet h2'); if (h) h.insertAdjacentHTML('afterend', '<p class="note">Bộ câu hỏi 2 (từ 11/2026): câu 2, 3, 10, 13, 15 là câu vận dụng cần tính từ số cho sẵn; có thể dùng máy tính.</p>');
+})();
+</script>
 <script src="js/site-ui.js" defer></script>
 <script src="js/site-vnmap.js" defer></script>
 <script src="js/site-dock.js" defer></script>
