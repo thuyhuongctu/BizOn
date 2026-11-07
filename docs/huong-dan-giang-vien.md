@@ -22,7 +22,7 @@
 | 5 | Dùng tab **🧑‍🏫 Giảng viên** trong game: khóa vòng chơi, cấp vốn thưởng, xem nhật ký cấp vốn |
 | 6 | Cuối buổi: so sánh các đội bằng ảnh chụp tab **Xếp hạng**, **Bản đồ chinh phục** (số cờ 🚩) và **báo cáo P&L** |
 
-**Chấm điểm gợi ý:** 45% lợi nhuận lũy kế · 35% số cờ chinh phục (thắng thị phần vòng) · 20% hợp tác vai trò & bài học rút ra (Nhật ký đội) — chi tiết rubric, cách chấm theo từng vòng và sổ điểm mẫu: xem `docs/chuan-dau-ra-va-rubric.md` §4.1 hoặc bản trích gọn `docs/cham-diem-bat-nghiep.md`.
+**Chấm điểm (chốt 07/11/2026):** 50% điểm game B1–B6 (Excel từ bảng điều khiển) · 30% rubric lập luận CLO-A…E · 20% hợp tác vai trò & bài học rút ra (Nhật ký đội) — chi tiết rubric, cách chấm theo từng vòng và sổ điểm mẫu: xem `docs/chuan-dau-ra-va-rubric.md` §4.1 hoặc bản trích gọn `docs/cham-diem-bat-nghiep.md`.
 
 ## 3. Ba đối thủ ảo – hành vi chính xác
 

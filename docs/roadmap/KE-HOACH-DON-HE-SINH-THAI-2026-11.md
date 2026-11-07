@@ -44,13 +44,20 @@ Những việc trên gom vào **Giai đoạn 3 (sau khi có giấy chứng nhậ
 ## 3. Việc chị cần làm (không phụ thuộc PR)
 
 - Bấm «Delete branch» trên GitHub sau mỗi lần gộp.
-- PR 5: chốt cơ cấu điểm và số câu của bộ đo trước–sau.
+- PR 5: ~~chốt cơ cấu điểm~~ đã chốt 50/30/20 ngày 07/11/2026; số câu bộ đo trước–sau đã sửa thành 15 + 8.
 - PR 7: xuất gói dữ liệu nghiên cứu (ZIP) đợt 10/2026 từ Trang Giảng Viên và gửi em.
-- PR 4: xác nhận 4 tệp SQL ngoài `supabase/migrations` đã áp trên production chưa.
+- PR 4: ~~xác nhận 4 tệp SQL~~ đã kiểm trên production 07/11/2026: cả bốn đã áp (bảng, hàm, cột, ràng buộc đều có), chuyển vào `supabase/da-ap-tay/`.
 
 ## 4. Theo dõi
 
 | PR | Nhánh | Trạng thái |
 |---|---|---|
-| 1 | `ke-hoach-don-he-sinh-thai` | đang mở |
-| 2–8 | | chưa bắt đầu |
+| 1 | #1026 | đã gộp 07/11/2026 |
+| 2 | #1027 | đã gộp 07/11/2026 |
+| 3 | #1028 | đã gộp 07/11/2026 |
+| 4 | #1029 | đã gộp 07/11/2026 |
+| 5 | #1030 | đã gộp 07/11/2026; cơ cấu điểm chốt 50/30/20 ở PR sau |
+| 6 | #1031 | đã gộp 07/11/2026 |
+| 7 | #1033 | đã gộp 07/11/2026; chờ gói ZIP đợt 10/2026 |
+| 8 | #1034 | đã gộp 07/11/2026 |
+| 5b | `co-cau-diem-50-50` | cơ cấu điểm 50/30/20, bốn tệp SQL đã áp chuyển vào `supabase/da-ap-tay/` |
