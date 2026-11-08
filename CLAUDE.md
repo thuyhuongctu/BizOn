@@ -47,6 +47,10 @@ Trang tĩnh bizonland.com: trò chơi mô phỏng học kinh doanh quốc tế (
 - Local-Specialty-Brand-Lab: cùng quy tắc tác giả, có dòng `Co-authored-by` của thầy Tu Phan khi gộp.
 - CHAM và Je-mappelle-Huong: tác giả chỉ thuyhuongctu, **không** có dòng `Co-authored-by` của thầy Tu Phan.
 
+## Văn phòng AI
+- Bảy agent trong `.claude/agents/` (chánh văn phòng, kỹ sư web, SEO, nội dung, kinh doanh, chăm sóc khách hàng, pháp lý–kế toán); luật chung ở `docs/van-phong-ai.md`. Tệp này thắng tệp agent khi hai bên khác nhau.
+- Agent chỉ soạn nháp: gửi, đăng, chi tiền, gộp PR, thay đổi cơ sở dữ liệu thật là việc của chị. Kho công khai: không ghi thông tin riêng hay dữ liệu khách hàng vào tệp agent hay tài liệu.
+
 ## Spec Kit (đặc tả trước, mã sau)
 - Tính năng mới cỡ M trở lên đi qua Spec Kit: `/speckit-specify` → (`/speckit-clarify`) → `/speckit-plan` → `/speckit-tasks` → `/speckit-implement`. Sửa chữ, sửa lỗi nhỏ thì làm thẳng như cũ.
 - Hiến chương ở `.specify/memory/constitution.md` (rút từ tệp này; tệp này thắng khi hai bên khác nhau). Đặc tả mỗi tính năng nằm trong `specs/NNN-tên/`, đi cùng PR của tính năng ấy.

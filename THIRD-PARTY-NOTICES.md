@@ -85,6 +85,10 @@ Lệnh `video-ngan` (`.claude/skills/video-ngan/`) và công cụ kiểm video `
 
 **Spec Kit** (`.specify/`, các lệnh `speckit-*` trong `.claude/skills/`) lấy nguyên từ **github/spec-kit** bản 0.9.5.dev0 (© GitHub, Inc., giấy phép **MIT**), cài qua bản sao `thuyhuongctu/spec-kit`; chỉ phần hiến chương `.specify/memory/constitution.md` là viết riêng cho BizOn. Đây là công cụ phát triển, không chạy trên trang web.
 
+Bộ **opc-vn-business-law** (`.claude/skills/opc-vn-business-law/`) chép nguyên từ **diginno-net/opc-vn-business-law** bản 1.2.0, commit `19c3e29` ngày 31/10/2026 (© 2026 Diginno). Văn bản theo giấy phép **CC BY 4.0**, script `so_sanh_thue.py` theo **MIT**; giữ nguyên `LICENSE` và `DISCLAIMER.md` của tác giả. Đây là tài liệu tham khảo cho agent pháp lý, không phải tư vấn pháp lý, không chạy trên trang web.
+
+Bảy agent trong `.claude/agents/` (văn phòng AI, xem `docs/van-phong-ai.md`) viết riêng cho BizOn, lấy ý tưởng tổ chức «mỗi nhân viên một vai trò, chỉ soạn nháp, nút cuối là của chủ» từ **markfulton/ai-employees** (© 2026 Mark Fulton, giấy phép **MIT**); không chép mã hay văn bản của kho đó.
+
 ## 7 · Nội dung được tạo với sự hỗ trợ của công cụ AI
 
 Một phần tài sản nghe nhìn của BizOn được dựng với công cụ AI rồi do nhóm tác giả biên tập, chọn lọc và tích hợp; nhóm **không** kê các phần máy tạo thuần tuý là tác phẩm của mình (phương án A, Mục F1 hồ sơ SHTT). Ghi ở đây để minh bạch với người dùng và cơ quan thẩm định:
