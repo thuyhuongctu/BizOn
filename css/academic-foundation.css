@@ -325,3 +325,14 @@
 .af-cmp td:last-child,.af-cmp thead th:last-child{background:rgba(253,161,39,.10)}
 .af-cmp tbody tr:last-child th,.af-cmp tbody tr:last-child td{border-bottom:0}
 .af-limgrid + .af-note{margin-top:14px}
+
+/* Vùng chạm ≥ 44 px (rà soát đợt 3, 07/11/2026): nút sao chép, mã, thẻ, chip giữ cỡ nhìn; lớp vô hình ở giữa nút
+   rộng/cao ít nhất 44 px làm vùng chạm. */
+.af-copy,.af-hash .row button{position:relative}
+.af-copy::after,.af-hash .row button::after{content:"";position:absolute;left:50%;top:50%;width:max(100%,44px);height:max(100%,44px);transform:translate(-50%,-50%)}
+/* Chip mã nằm sát nhau nhiều hàng: to hơn một chút và giãn hàng (cao 30 + khoảng 14 = bước 44) để lớp chạm không chồng nhau */
+.af-codes{gap:14px 8px}
+.af-codes button{position:relative;padding:8px 10px}
+.af-codes button::after{content:"";position:absolute;left:50%;top:50%;width:max(100%,44px);height:44px;transform:translate(-50%,-50%)}
+/* Thẻ và chip trong thanh cuộn ngang: lớp chạm bị thanh cuộn cắt, nên cho cao thật 44 px */
+.af-tabs button,.af-chips a{min-height:44px;display:inline-flex;align-items:center}

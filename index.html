@@ -125,6 +125,10 @@
   .hp-tool h4{margin:3px 0 0;font-family:var(--clay-head);font-size:20px;font-weight:800;color:var(--clay-ink)}
   .hp-tool p{margin:6px 0 0;font-size:14px;line-height:1.5;color:var(--clay-sub)}
   .hp-tool-links{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+  /* Vùng chạm ≥ 44 px (07/11/2026): liên kết «Bản khác» cao 44 px; pill công cụ giữ cỡ nhìn, hàng giãn 16 px (bước 44) và lớp chạm vô hình */
+  .hp-alt{row-gap:0}.hp-alt a{display:inline-flex;align-items:center;justify-content:center;min-height:44px;min-width:44px}
+  .hp-tool-links{row-gap:16px}.hp-tool-links a{position:relative}
+  .hp-tool-links a::after{content:"";position:absolute;left:50%;top:50%;width:max(100%,44px);height:44px;transform:translate(-50%,-50%)}
   .hp-tool-links a{padding:6px 12px;border-radius:999px;background:var(--clay-tray);font-size:13px;font-weight:800;color:var(--clay-ink);box-shadow:inset 0 -3px 0 rgba(0,0,0,.08)}
   /* Trailer phát ngay trong trang */
   .hp-vplay{position:absolute;right:14px;top:14px;width:50px;height:50px;border-radius:50%;background:var(--clay-gold);display:grid;place-items:center;color:var(--clay-ink);font-size:16px;box-shadow:inset 0 -5px 0 rgba(0,0,0,.18),0 8px 14px -6px rgba(0,0,0,.5)}
