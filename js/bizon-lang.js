@@ -36,9 +36,9 @@
     var st = document.createElement('style');
     st.textContent = '#bz-lang-hint{position:fixed;left:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:2147483000;display:flex;align-items:center;gap:8px;max-width:calc(100vw - 24px);box-sizing:border-box;padding:8px 8px 8px 14px;border-radius:999px;background:#fffbf4;color:#033337;font:600 13px/1.3 "Be Vietnam Pro",system-ui,sans-serif;box-shadow:inset 0 -3px 0 rgba(110,70,30,.12),0 10px 24px -10px rgba(3,51,55,.45);animation:bzLh .35s ease both}' +
       '#bz-lang-hint button{font:inherit;cursor:pointer;border:0;border-radius:999px}' +
-      '#bz-lang-hint .go{padding:7px 12px;background:#006687;color:#fff;font-weight:800}' +
+      '#bz-lang-hint .go{min-height:44px;padding:7px 14px;background:#006687;color:#fff;font-weight:800}' +
       '#bz-lang-hint .go:focus-visible,#bz-lang-hint .x:focus-visible{outline:3px solid #fda127;outline-offset:2px}' +
-      '#bz-lang-hint .x{width:30px;height:30px;background:transparent;color:#3e5a5c;font-size:18px;line-height:1}' +
+      '#bz-lang-hint .x{width:44px;height:44px;background:transparent;color:#3e5a5c;font-size:18px;line-height:1}' +
       '@keyframes bzLh{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}' +
       '@media (prefers-reduced-motion:reduce){#bz-lang-hint{animation:none}}' +
       '@media print{#bz-lang-hint{display:none}}';

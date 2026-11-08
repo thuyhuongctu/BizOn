@@ -193,6 +193,16 @@ main[tabindex="-1"]:focus{outline:none}
   #clay-footer .cf-cols{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px 16px}
 }
 
+/* Vùng chạm ≥ 44 px (rà soát đợt 3, 07/11/2026). Nút tròn và VI/EN giữ cỡ nhìn 40 px (36 px ở ≤ 360 px) để thanh nav
+   không tràn ngang; chỉ nới VÙNG CHẠM bằng một lớp vô hình quanh nút. Chân trang: logo và nút Google Play cao đủ 44 px. */
+#clay-nav .cn-dl,#clay-nav .cn-theme,#clay-nav .cn-refresh,#clay-nav .cn-lang button{position:relative}
+#clay-nav .cn-dl::after,#clay-nav .cn-theme::after,#clay-nav .cn-refresh::after{content:"";position:absolute;inset:-2px;border-radius:50%}
+/* VI/EN nằm sát nhau: chỉ nới theo chiều dọc (40 → 44), chiều ngang giữ nguyên để hai nút không giành vùng chạm của nhau */
+#clay-nav .cn-lang button::after{content:"";position:absolute;left:0;right:0;top:-2px;bottom:-2px}
+@media (max-width:360px){#clay-nav .cn-dl::after,#clay-nav .cn-theme::after{inset:-4px}}
+#clay-footer .cf-logo,#clay-footer .cf-gp{min-height:44px;box-sizing:border-box}
+#clay-footer .cf-gp{display:inline-flex;align-items:center}
+
 /* ============================================================================
    Hero đất sét dùng chung (mặt trời tia, nhân vật nổi, sóng teal dưới chân)
    ========================================================================== */
