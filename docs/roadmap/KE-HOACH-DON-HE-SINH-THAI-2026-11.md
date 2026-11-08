@@ -41,6 +41,7 @@ Những việc trên gom vào **Giai đoạn 3 (sau khi có giấy chứng nhậ
 6. Video, nhạc sang CDN hoặc YouTube; kho chỉ giữ bản mới nhất, bản cũ lưu Drive.
 7. Lumina: bỏ con số cụ thể trong lời khuyên (`luminaAdvice` trong `js/engine.js`).
 8. Đổi tên cũ của thầy («Thầy T.») thành «Thầy Tu Phan» trong 7 tệp hồ sơ còn giữ nguyên (07/11/2026): `doi-ngu.html`, `ben-phu-sa.html`, `ben-phu-sa-3d.html`, `Ho Chieu Thuong Hieu 3D.html`, ba tệp `docs/ip/ben-phu-sa/`.
+9. Thêm lối vào «Văn phòng đội» trên thanh đầu ba bản 3D thuộc hồ sơ (`BizOn Game 3D.html`, `ben-phu-sa-3d.html`, `Ho Chieu Thuong Hieu 3D.html`); trang chủ và bản 3D Sầu Riêng đã có từ 08/11/2026 (#1056).
 9. Rà soát SEO đợt 2 (07/11/2026) đã gắn noindex và rút khỏi sitemap các bản phụ không thuộc hồ sơ (`ben-phu-sa-v2`, `brand-passport-v2`, `lab/ho-chieu-sau-rieng-v2`, `lab/ho-chieu-sau-rieng-3d`). Ba bản phụ thuộc hồ sơ còn trong sitemap, chưa gắn noindex: `ben-phu-sa-v8.html`, `ben-phu-sa-3d.html`, `Ho Chieu Thuong Hieu 3D.html`; làm cùng mục 1.
 
 ## 3. Việc chị cần làm (không phụ thuộc PR)
