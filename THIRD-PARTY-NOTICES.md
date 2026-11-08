@@ -83,6 +83,8 @@ Bốn lệnh cho Claude Code trong `.claude/skills/` (`balance-check`, `playtest
 
 Lệnh `video-ngan` (`.claude/skills/video-ngan/`) và công cụ kiểm video `scripts/kiem-video.mjs` phỏng theo công thức kịch bản và `scripts/short_qa.py` của **Claude Animated Shorts** (© 2026 Mr omi, giấy phép **MIT**), viết lại bằng tiếng Việt và Node cho BizOn; không dùng ảnh tham khảo hay mã dựng hình của kho đó.
 
+**Spec Kit** (`.specify/`, các lệnh `speckit-*` trong `.claude/skills/`) lấy nguyên từ **github/spec-kit** bản 0.9.5.dev0 (© GitHub, Inc., giấy phép **MIT**), cài qua bản sao `thuyhuongctu/spec-kit`; chỉ phần hiến chương `.specify/memory/constitution.md` là viết riêng cho BizOn. Đây là công cụ phát triển, không chạy trên trang web.
+
 ## 7 · Nội dung được tạo với sự hỗ trợ của công cụ AI
 
 Một phần tài sản nghe nhìn của BizOn được dựng với công cụ AI rồi do nhóm tác giả biên tập, chọn lọc và tích hợp; nhóm **không** kê các phần máy tạo thuần tuý là tác phẩm của mình (phương án A, Mục F1 hồ sơ SHTT). Ghi ở đây để minh bạch với người dùng và cơ quan thẩm định:
