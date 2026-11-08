@@ -142,6 +142,26 @@
 </main>
 
 <script>
+/* Điền sẵn theo ý định từ trang Giải pháp (?y=…, đặc tả specs/001-giai-phap-cta): chỉ nhận 4 giá trị, chọn chủ đề
+   «Hợp tác giảng dạy», điền lời nhắn theo ngôn ngữ đang xem và chỉ khi ô còn trống. Chạy trong trình duyệt, không gửi gì. */
+(function(){
+  var y = (location.search.match(/[?&]y=([a-z-]+)(?:&|$)/) || [])[1];
+  var M = {
+    'dung-thu': ['Tôi muốn đăng ký một học kỳ dùng thử BizOn (Bật Nghiệp / Hộ Chiếu Thương Hiệu) cho lớp của mình.\nHọc phần: \nSố sinh viên dự kiến: \nHọc kỳ: ',
+                 'I would like to register a BizOn trial semester (Bật Nghiệp / Hộ Chiếu Thương Hiệu) for my class.\nCourse: \nExpected students: \nSemester: '],
+    'pilot': ['Tôi quan tâm gói Pilot Classroom (1 lớp, tối đa 60 sinh viên).\nHọc phần: \nSố sinh viên: \nThời gian dự kiến: ',
+              'I am interested in the Pilot Classroom package (1 class, up to 60 students).\nCourse: \nStudents: \nPlanned dates: '],
+    'instructor-pro': ['Tôi quan tâm gói Instructor Pro (theo giảng viên, theo năm).\nCác học phần tôi dạy: \nSố lớp mỗi năm: ',
+                       'I am interested in the Instructor Pro package (per instructor, per year).\nCourses I teach: \nClasses per year: '],
+    'institution': ['Tôi muốn đặt lịch demo gói Institution Pass cho đơn vị.\nKhoa / trường: \nThời gian thuận tiện: ',
+                    'I would like to book an Institution Pass demo for our unit.\nFaculty / university: \nConvenient times: ']
+  };
+  if (!y || !M.hasOwnProperty(y)) return;
+  var en = false; try { en = localStorage.getItem('bizon-lang') === 'en'; } catch (e) { en = document.documentElement.lang === 'en'; }
+  var sel = document.getElementById('lh-topic'), msg = document.getElementById('lh-msg');
+  if (sel) sel.selectedIndex = 0;
+  if (msg && !msg.value.trim()) msg.value = M[y][en ? 1 : 0];
+})();
 /* Biểu mẫu → soạn email (mailto), không thu thập dữ liệu */
 (function(){
   var f = document.getElementById('lh-form'); if(!f) return;
