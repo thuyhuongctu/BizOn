@@ -56,8 +56,10 @@ const khop = (ts, v, toc) => Math.abs(ts * v - toc) / toc;
       await ctx.close();
     }
     // ---- 2. Kho động tác không tải được: vẫn đi được, tốc độ hạ xuống để clip «đi» theo kịp
-    const c2 = await browser.newContext({ viewport: { width: 900, height: 560 } }), p2 = await c2.newPage();
-    await p2.route('**/dong-tac-v1.glb', r => r.abort());
+    // Chặn service worker ở ngữ cảnh này: khi sw.js đã nắm quyền trang, nó tự tải tệp và lệnh chặn của Playwright không còn tác dụng
+    // (CI gặp đúng tình huống đó: tệp vẫn tải được nên không thử được nhánh «kho hỏng»).
+    const c2 = await browser.newContext({ viewport: { width: 900, height: 560 }, serviceWorkers: 'block' }), p2 = await c2.newPage();
+    await c2.route('**/dong-tac-v1.glb', r => r.abort());
     check(await vao(p2, 'cmo'), 'kho hỏng: vẫn vào được');
     check(await until(p2, () => (window.__benBizon.info().dangDi || {}).khoHong === true), 'kho hỏng: nhận biết được');
     await p2.keyboard.down('KeyW');
