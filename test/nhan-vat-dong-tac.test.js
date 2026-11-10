@@ -29,10 +29,18 @@ const J = rows(p.attributes.JOINTS_0), W = rows(p.attributes.WEIGHTS_0), tay = n
 assert.ok(tay >= 0, 'có xương RightHand');
 const cung = J.filter((j, k) => j[0] === tay && W[k][1] === 0 && W[k][2] === 0 && W[k][3] === 0 && W[k][0] > 0).length;
 assert.ok(cung >= 400, 'la bàn phải buộc cứng vào bàn tay phải: mới có ' + cung + ' đỉnh');
+// bản thử hướng B (ceo-v3.glb): mô hình dựng lại từ ảnh mẫu mới, cùng tám clip, cùng bộ xương 24 khớp, có ảnh mẫu và prompt đi kèm
+const v3 = glb('assets/models/nhan-vat/ceo-v3.glb');
+assert.ok(v3.size > 5e5 && v3.size < 3e6, 'ceo-v3.glb nặng ' + (v3.size / 1e6).toFixed(2) + ' MB (cho phép 0,5–3 MB)');
+assert.deepEqual(v3.js.animations.map(a => a.name), ['Idle', 'Talk', 'Wave', 'Think', 'Cheer', 'Sit', 'Walk', 'Run'], 'ceo-v3: đủ tám clip');
+assert.equal(v3.js.skins[0].joints.length, 24, 'ceo-v3: bộ xương 24 khớp');
+assert.deepEqual(v3.js.skins[0].joints.map(i => v3.js.nodes[i].name), names, 'ceo-v3 dùng cùng tên xương với ceo-v2 (mã game dùng chung được)');
+assert.ok(fs.existsSync(R('assets/models/nhan-vat/nguon/ceo-huong-b.webp')), 'có ảnh mẫu của hướng B');
+assert.ok(read('docs/prompt-nhan-vat-3d.md').includes('Hướng B'), 'có tệp prompt');
 // tệp gốc giữ nguyên ba clip; script không chứa khóa; có ghi nguồn
 assert.deepEqual(glb('assets/models/nhan-vat/ceo.glb').js.animations.map(a => a.name), ['Idle', 'Talk', 'Walk'], 'ceo.glb gốc không đổi');
-for (const f of ['scripts/3d/meshy-dong-tac.py', 'scripts/3d/glb-do-vat-cung.py']) assert.ok(!/msy_[A-Za-z0-9]{8,}/.test(read(f)), f + ': không được chứa khóa API');
+for (const f of ['scripts/3d/meshy-dong-tac.py', 'scripts/3d/glb-do-vat-cung.py', 'scripts/3d/meshy-dung-nhan-vat.py', 'scripts/3d/meshy-anh.py', 'docs/prompt-nhan-vat-3d.md']) assert.ok(!/msy_[A-Za-z0-9]{8,}/.test(read(f)), f + ': không được chứa khóa API');
 assert.match(read('scripts/3d/meshy-dong-tac.py'), /os\.environ\['MESHY_API_KEY'\]/, 'khóa đọc từ biến môi trường');
-assert.ok(read('assets/models/SOURCES.md').includes('ceo-v2.glb'), 'SOURCES.md ghi nguồn ceo-v2.glb');
+assert.ok(read('assets/models/SOURCES.md').includes('ceo-v2.glb') && read('assets/models/SOURCES.md').includes('ceo-v3.glb'), 'SOURCES.md ghi nguồn ceo-v2.glb và ceo-v3.glb');
 assert.ok(+(read('sw.js').match(/bizon-v(\d+)/) || [])[1] >= 824);
 console.log('nhan-vat-dong-tac: ok');
