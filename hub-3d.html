@@ -49,7 +49,9 @@
   #bb-tag { z-index:2; background:#006687; color:#fff; }
   #bb-stage .dc-ui { z-index:4; }
   #bb-exit { position:absolute; z-index:5; left:max(12px,env(safe-area-inset-left,0px)); top:calc(12px + env(safe-area-inset-top,0px)); min-height:46px; padding:10px 16px; border:0; border-radius:999px; background:#fff; color:#033337; font-weight:800; font-size:14px; cursor:pointer; box-shadow:0 8px 20px -8px rgba(0,40,50,.5), inset 0 -3px 0 rgba(0,0,0,.08); }
-  #bb-exit:focus-visible { outline:3px solid #fda127; outline-offset:2px; }
+  #bb-exit:focus-visible, #bb-goc:focus-visible { outline:3px solid #fda127; outline-offset:2px; }
+  #bb-goc { position:absolute; z-index:5; left:max(12px,env(safe-area-inset-left,0px)); top:calc(66px + env(safe-area-inset-top,0px)); min-height:44px; padding:9px 14px; border:0; border-radius:999px; background:#fff; color:#033337; font-weight:800; font-size:13px; cursor:pointer; box-shadow:0 8px 20px -8px rgba(0,40,50,.5), inset 0 -3px 0 rgba(0,0,0,.08); }
+  #bb-goc[aria-pressed="true"] { background:#006687; color:#fff; }
   #bb-hint, #bb-note { position:absolute; z-index:3; left:50%; transform:translateX(-50%); width:max-content; max-width:calc(100% - 24px); margin:0; padding:7px 14px; border-radius:999px; font-size:12px; font-weight:700; text-align:center; pointer-events:none; }
   #bb-hint { top:calc(70px + env(safe-area-inset-top,0px)); background:rgba(3,51,55,.78); color:#fff; }
   #bb-note { top:calc(108px + env(safe-area-inset-top,0px)); background:#fff3da; color:#4a3210; box-shadow:0 4px 12px -5px rgba(0,40,50,.5); }
@@ -149,6 +151,7 @@
     <div id="bb-labels" aria-hidden="true"></div>
     <div id="bb-tag" aria-hidden="true"></div>
     <button type="button" id="bb-exit" data-en="✕ Exit">✕ Thoát</button>
+    <button type="button" id="bb-goc" aria-pressed="false" data-en="🎥 Top view">🎥 Nhìn từ trên</button>
     <p id="bb-hint" data-en="Drag to walk · go close, press “Enter”">Kéo cần để đi · tới gần rồi bấm «Vào»</p>
     <p id="bb-note" role="status" aria-live="polite" hidden></p>
     <div id="bb-dlg" role="dialog" aria-modal="true" aria-labelledby="bb-dlg-name">
