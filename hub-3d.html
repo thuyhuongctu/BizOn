@@ -6,8 +6,8 @@
 <meta name="robots" content="noindex"><!-- bản nháp/trang thử: không đưa lên kết quả tìm kiếm -->
 <script src="js/bizon-lang.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title data-en="3D Lobby (experimental) – BizOn">Sảnh 3D (thử nghiệm) – BizOn</title>
-<meta name="description" data-en-content="The first experimental BizOn 3D Lobby: walk freely and chat with Lumina – the seed of a 3D hub linking every game in the BizOn universe." content="Bản thử nghiệm đầu tiên của Sảnh 3D BizOn: đi lại tự do và trò chuyện với Lumina – hạt giống cho một hub 3D nối tới mọi trò chơi trong vũ trụ BizOn.">
+<title data-en="BizOn Wharf (experimental) – BizOn">Bến BizOn (thử nghiệm) – BizOn</title>
+<meta name="description" data-en-content="BizOn Wharf: a clay riverside in the Mekong Delta where you walk a 3D character to the market boat, the head office, the ship and the durian orchard to enter each BizOn game." content="Bến BizOn: một bến sông miền Tây bằng đất sét, nơi bạn điều khiển nhân vật 3D đi tới ghe chợ nổi, trụ sở, con tàu và vườn sầu riêng để vào từng game của BizOn.">
 <meta name="copyright" content="© 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.">
 <link rel="icon" type="image/png" href="assets/icons/icon-192.png">
 <script>try{if(localStorage.getItem('bizon-theme')==='dark')document.documentElement.dataset.theme='dark';}catch(e){}</script>
@@ -18,104 +18,160 @@
   html { background:#f4faff; }
   body { font-family:'Manrope', 'Manrope Fallback',sans-serif; background:transparent; color:#033337; }
   .clay-card { background:#fff; border-radius:24px; box-shadow:0 10px 30px -5px rgba(0,102,135,.08), inset 0 -4px 0 rgba(0,0,0,.05); }
-  .clay-btn { border-radius:24px; box-shadow:0 8px 20px -6px rgba(0,102,135,.35), inset 0 -4px 0 rgba(0,0,0,.12); transition:transform .12s ease; }
-  .clay-btn:active { transform:translateY(2px); }
 
-  #hub3d-stage { position:relative; width:100%; aspect-ratio:16/10; max-height:74vh; border-radius:28px; overflow:hidden; background:#bfe6ec; touch-action:none; }
-  #hub3d-canvas { position:absolute; inset:0; width:100%; height:100%; display:block; }
-  #hub3d-fallback { position:absolute; inset:0; align-items:center; justify-content:center; text-align:center; padding:24px; background:#0e2a33; color:#fff; font-weight:700; }
-  #hub3d-fallback:not([hidden]) { display:flex; }
+  /* màn chọn vai */
+  #bb-pick .opt { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:10px; margin-top:12px; }
+  @media (max-width:560px) { #bb-pick .opt { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+  #bb-pick button { display:flex; flex-direction:column; align-items:center; min-height:44px; background:#f4faff; border:2px solid #dbe9f0; border-radius:20px; padding:10px 6px 8px; cursor:pointer; transition:transform .15s ease, border-color .15s ease; }
+  #bb-pick button:hover, #bb-pick button:focus-visible, #bb-pick button.da-chon { border-color:#fda127; }
+  #bb-pick button:hover { transform:translateY(-3px); }
+  #bb-pick button:focus-visible { outline:3px solid #fda127; outline-offset:2px; }
+  #bb-pick img { width:100%; height:128px; object-fit:contain; object-position:bottom; }
+  #bb-pick .vai { display:block; font-size:13px; font-weight:800; margin-top:6px; color:#006687; }
+  #bb-pick .ten { display:block; font-size:11.5px; font-weight:700; color:#2c4a50; }
+  #bb-fallback { margin-top:12px; padding:12px 14px; border-radius:16px; background:#0e2a33; color:#fff; font-weight:700; font-size:13px; }
+  #bb-fallback[hidden] { display:none; }
+  #bb-links ul { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:8px; margin-top:10px; }
+  #bb-links a { display:flex; align-items:center; min-height:44px; padding:8px 14px; border-radius:14px; background:#f4faff; color:#005a78; font-weight:800; font-size:13.5px; }
+  #bb-links a:hover { background:#e0f4fb; }
 
-  #hub3d-hint { position:absolute; left:16px; top:16px; background:rgba(3,51,55,.55); color:#fff; font-size:11px; font-weight:700; padding:8px 12px; border-radius:14px; backdrop-filter:blur(6px); max-width:220px; line-height:1.4; }
+  /* cảnh 3D: chỉ hiện khi đã chọn vai, chiếm toàn màn hình */
+  #bb-stage { display:none; }
+  html.bb-play, html.bb-play body { overflow:hidden; }
+  #bb-stage:focus { outline:none; }
+  html.bb-play #bb-stage { display:block; position:fixed; inset:0; z-index:9000; width:100%; height:100%; background:#f7e3bf; overflow:hidden; touch-action:none; }
+  html.bb-play #bz-dock-btn, html.bb-play #bz-dock, html.bb-play #bz-lang-hint { display:none !important; }
+  #bb-canvas { position:absolute; inset:0; width:100%; height:100%; display:block; touch-action:none; }
+  #bb-labels, #bb-tag { position:absolute; left:0; top:0; pointer-events:none; }
+  #bb-labels { z-index:1; }
+  .bb-lb, #bb-tag { position:absolute; left:0; top:0; white-space:nowrap; font-size:11.5px; font-weight:800; padding:3px 9px; border-radius:999px; will-change:transform; }
+  .bb-lb { background:rgba(255,255,255,.92); color:#033337; box-shadow:0 3px 8px -3px rgba(0,40,50,.45); }
+  #bb-tag { z-index:2; background:#006687; color:#fff; }
+  #bb-stage .dc-ui { z-index:4; }
+  #bb-exit { position:absolute; z-index:5; left:max(12px,env(safe-area-inset-left,0px)); top:calc(12px + env(safe-area-inset-top,0px)); min-height:46px; padding:10px 16px; border:0; border-radius:999px; background:#fff; color:#033337; font-weight:800; font-size:14px; cursor:pointer; box-shadow:0 8px 20px -8px rgba(0,40,50,.5), inset 0 -3px 0 rgba(0,0,0,.08); }
+  #bb-exit:focus-visible { outline:3px solid #fda127; outline-offset:2px; }
+  #bb-hint, #bb-note { position:absolute; z-index:3; left:50%; transform:translateX(-50%); width:max-content; max-width:calc(100% - 24px); margin:0; padding:7px 14px; border-radius:999px; font-size:12px; font-weight:700; text-align:center; pointer-events:none; }
+  #bb-hint { top:calc(70px + env(safe-area-inset-top,0px)); background:rgba(3,51,55,.78); color:#fff; }
+  #bb-note { top:calc(108px + env(safe-area-inset-top,0px)); background:#fff3da; color:#4a3210; box-shadow:0 4px 12px -5px rgba(0,40,50,.5); }
+  #bb-hint[hidden], #bb-note[hidden] { display:none; }
 
-  #hub3d-prompt { position:absolute; left:50%; bottom:132px; transform:translateX(-50%); background:rgba(3,51,55,.7); color:#fff; font-size:12px; font-weight:800; padding:8px 16px; border-radius:999px; backdrop-filter:blur(6px); }
-  #hub3d-interact { position:absolute; right:18px; bottom:128px; background:#fda127; color:#033337; font-weight:800; font-size:12px; border-radius:999px; padding:10px 16px; box-shadow:0 8px 20px -6px rgba(0,0,0,.35); }
-  #hub3d-prompt[hidden], #hub3d-interact[hidden] { display:none; }
-
-  #hub3d-joy-base { position:absolute; left:22px; bottom:22px; width:104px; height:104px; border-radius:50%; background:rgba(3,51,55,.28); border:2px solid rgba(255,255,255,.5); touch-action:none; }
-  #hub3d-joy-knob { position:absolute; left:50%; top:50%; width:44px; height:44px; margin:-22px; border-radius:50%; background:rgba(255,255,255,.85); box-shadow:0 4px 10px rgba(0,0,0,.25); pointer-events:none; }
-  @media (min-width:781px) { #hub3d-joy-base { display:none; } }
-
-  #hub3d-dialogue { position:absolute; inset:0; display:none; align-items:flex-end; justify-content:center; background:rgba(2,20,24,.35); padding:18px; }
-  #hub3d-dialogue.on { display:flex; }
-  #hub3d-dlg-box { width:100%; max-width:520px; background:#fff; border-radius:22px; padding:18px 20px; box-shadow:0 20px 50px -15px rgba(0,0,0,.5); position:relative; }
-  #hub3d-dlg-close { position:absolute; top:10px; right:14px; font-weight:800; opacity:.4; }
-  #hub3d-dlg-avatar { width:40px; height:40px; border-radius:50%; object-fit:cover; object-position:top; float:left; margin-right:10px; background:#e8f2f8; }
-
-  #hub3d-charselect { position:absolute; inset:0; z-index:60; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:14px; background:linear-gradient(160deg,#033337,#02444d); color:#fff; padding:20px; text-align:center; }
-  #hub3d-charselect.off { display:none; }
-  #hub3d-charselect .opt { display:flex; gap:16px; }
-  #hub3d-charselect button { background:rgba(255,255,255,.08); border:2px solid rgba(255,255,255,.18); border-radius:20px; padding:10px; width:130px; transition:transform .15s ease, border-color .15s ease; }
-  #hub3d-charselect button:hover, #hub3d-charselect button:active { border-color:#fda127; transform:translateY(-3px); }
-  #hub3d-charselect img { width:100%; height:150px; object-fit:contain; object-position:bottom; }
-  #hub3d-charselect .name { display:block; font-size:11px; font-weight:800; margin-top:6px; }
-
-  #hub3d-fade { position:absolute; inset:0; z-index:55; background:#033337; opacity:0; pointer-events:none; transition:opacity .42s ease; }
-  #hub3d-fade.on { opacity:1; }
+  #bb-dlg { position:absolute; inset:0; z-index:6; display:none; align-items:flex-end; justify-content:center; background:rgba(2,20,24,.35); padding:18px; }
+  #bb-dlg.on { display:flex; }
+  #bb-dlg-box { width:100%; max-width:520px; background:#fff; border-radius:22px; padding:18px 20px; box-shadow:0 20px 50px -15px rgba(0,0,0,.5); position:relative; }
+  #bb-dlg-close { position:absolute; top:4px; right:6px; width:44px; height:44px; border:0; background:transparent; font-weight:800; font-size:16px; color:#2c4a50; cursor:pointer; }
+  #bb-dlg-avatar { width:44px; height:44px; border-radius:50%; object-fit:cover; object-position:top; float:left; margin-right:10px; background:#e8f2f8; }
+  #bb-dlg-name { margin:0 44px 0 0; font-weight:800; font-size:14px; color:#006687; }
+  #bb-dlg-text { margin:4px 0 0; font-size:14px; line-height:1.5; min-height:44px; }
+  #bb-dlg .row { display:flex; flex-wrap:wrap; gap:8px; justify-content:flex-end; margin-top:12px; clear:both; }
+  #bb-dlg .row a, #bb-dlg .row button { display:inline-flex; align-items:center; min-height:44px; padding:10px 16px; border:0; border-radius:16px; font:inherit; font-weight:800; font-size:13px; cursor:pointer; }
+  #bb-dlg-next { background:#006687; color:#fff; }
+  #bb-dlg-cta { background:#fda127; color:#033337; }
+  #bb-dlg-cta[hidden] { display:none; }
+  #bb-dlg .row a:focus-visible, #bb-dlg button:focus-visible { outline:3px solid #fda127; outline-offset:2px; }
+  #bb-fade { position:absolute; inset:0; z-index:7; background:#033337; opacity:0; pointer-events:none; transition:opacity .42s ease; }
+  #bb-fade.on { opacity:1; }
+  @media (prefers-reduced-motion: reduce) { #bb-fade, #bb-pick button { transition:none; } }
 
   html[data-theme="dark"] { background:#081a20; color-scheme:dark; }
   html[data-theme="dark"] body { color:#d6ecf0; }
   html[data-theme="dark"] .clay-card { background:#0e2a33; box-shadow:0 10px 30px -5px rgba(0,0,0,.45), inset 0 -4px 0 rgba(0,0,0,.3); }
-  html[data-theme="dark"] #hub3d-dlg-box { background:#0e2a33; color:#d6ecf0; }
+  html[data-theme="dark"] #bb-pick button, html[data-theme="dark"] #bb-links a { background:#143a45; border-color:#1f4d5a; color:#9fe0ee; }
+  html[data-theme="dark"] #bb-pick .vai { color:#9fe0ee; } html[data-theme="dark"] #bb-pick .ten { color:#b5d3d9; }
+  html[data-theme="dark"] #bb-dlg-box { background:#0e2a33; color:#d6ecf0; }
+  html[data-theme="dark"] #bb-dlg-name { color:#9fe0ee; } html[data-theme="dark"] #bb-dlg-close { color:#b5d3d9; }
 </style>
 <link rel="stylesheet" href="css/tw.css">
 <link rel="stylesheet" href="css/bizon-clay-chrome.css">
 <link rel="stylesheet" href="css/clay-tool-skin.css">
 <link rel="stylesheet" href="css/clay-legacy.css">
 <script src="js/capture-guard.js"></script>
+<script type="importmap">
+{ "imports": {
+  "three": "./js/vendor/three.module.js"
+} }
+</script>
 </head>
 <body>
 
 <main class="max-w-3xl mx-auto px-5 py-10">
   <div class="mb-5">
-    <p class="text-[11px] font-extrabold uppercase tracking-wide text-clay-gold" data-en="🧪 Experimental · v0">🧪 Bản thử nghiệm · v0</p>
-    <h1 class="font-display font-extrabold text-2xl sm:text-3xl mt-1" data-en="🏛️ BizOn 3D Lobby">🏛️ Sảnh 3D BizOn</h1>
-    <p class="text-sm text-deep-teal/60 mt-2" data-en="A 3D space linking every game in the BizOn universe: walk around freely, step through the 5 doors around the courtyard to jump straight into each game, chat with Lumina &amp; Mr Tú, play background music on the jukebox, read the notice board, or check the achievement board for how many games you have visited.">Một không gian 3D nối tới mọi trò chơi trong vũ trụ BizOn: đi lại tự do, bước qua 5 cánh cửa quanh sân để sang thẳng từng game, trò chuyện với Lumina &amp; Thầy Tu Phan, bật nhạc nền ở máy hát, đọc bảng thông tin, hoặc xem bảng thành tích đã ghé qua bao nhiêu game.</p>
+    <p class="text-[11px] font-extrabold uppercase tracking-wide text-clay-gold" data-en="🧪 Experimental · v1">🧪 Bản thử nghiệm · v1</p>
+    <h1 class="font-display font-extrabold text-2xl sm:text-3xl mt-1" data-en="🛶 BizOn Wharf">🛶 Bến BizOn</h1>
+    <p class="text-sm text-deep-teal/70 mt-2" data-en="A clay riverside in the Mekong Delta that leads into every BizOn game. Pick a role, walk with the joystick (or WASD / arrow keys), and go up to the market boat, the head office, the ship or the durian orchard, then press “Enter”. Lumina and Thầy Tu Phan wait on the wharf if you want to ask the way.">Một bến sông miền Tây bằng đất sét dẫn vào các game của BizOn. Chọn một vai, đi bằng cần điều khiển (hoặc WASD / phím mũi tên), tới ghe chợ nổi, trụ sở, con tàu hay vườn sầu riêng rồi bấm «Vào». Lumina và thầy Tu Phan đứng ở sân bến nếu bạn muốn hỏi đường.</p>
   </div>
 
-  <div class="clay-card p-3">
-    <div id="hub3d-stage">
-      <canvas id="hub3d-canvas"></canvas>
-      <div id="hub3d-fallback" hidden data-en="⚠️ This browser does not support WebGL yet, so the 3D Lobby cannot be shown.">⚠️ Trình duyệt này chưa hỗ trợ WebGL nên chưa xem được Sảnh 3D.</div>
-      <div id="hub3d-fade"></div>
-      <div id="hub3d-charselect">
-        <p class="font-display font-extrabold text-lg" data-en="🧑‍🎓 Choose your avatar">🧑‍🎓 Chọn đại diện của bạn</p>
-        <div class="opt">
-          <button type="button" id="hub3d-pick-nam" data-tex="assets/character/team/aodai-nam-diploma-cut.webp">
-            <img src="assets/character/team/aodai-nam-diploma-cut.webp" alt="Đại diện nam">
-            <span class="name" data-en="Avatar (male)">Đại diện (nam)</span>
-          </button>
-          <button type="button" id="hub3d-pick-nu" data-tex="assets/character/team/aodai-nu-lotus-cut.webp">
-            <img src="assets/character/team/aodai-nu-lotus-cut.webp" alt="Đại diện nữ">
-            <span class="name" data-en="Avatar (female)">Đại diện (nữ)</span>
-          </button>
-        </div>
-      </div>
-      <p id="hub3d-hint" data-en-html="🖥️ WASD / arrow keys to move · E to interact&lt;br&gt;📱 Joystick at bottom left · tap the button to interact">🖥️ WASD / mũi tên để đi · phím E để tương tác<br>📱 Cần điều khiển ở góc trái · chạm nút để tương tác</p>
-      <p id="hub3d-prompt" hidden data-en-html="Press &lt;b&gt;E&lt;/b&gt; or tap the button on the right to chat">Nhấn <b>E</b> hoặc chạm nút bên phải để trò chuyện</p>
-      <button type="button" id="hub3d-interact" hidden data-en="🗨️ Talk">🗨️ Nói chuyện</button>
-      <div id="hub3d-joy-base"><div id="hub3d-joy-knob"></div></div>
+  <section id="bb-pick" class="clay-card p-4" aria-labelledby="bb-pick-h">
+    <h2 id="bb-pick-h" class="font-display font-extrabold text-lg" data-en="Choose your role">Chọn vai của bạn</h2>
+    <div class="opt">
+      <button type="button" data-vai="ceo">
+        <img src="assets/character/solid/ceo-tex.webp" alt="" width="263" height="720">
+        <span class="vai">CEO</span>
+        <span class="ten">Minh Long</span>
+      </button>
+      <button type="button" data-vai="cfo">
+        <img src="assets/character/solid/cfo-tex.webp" alt="" width="233" height="720">
+        <span class="vai">CFO</span>
+        <span class="ten">Thu Hà</span>
+      </button>
+      <button type="button" data-vai="cmo">
+        <img src="assets/character/solid/cmo-tex.webp" alt="" width="336" height="720">
+        <span class="vai">CMO</span>
+        <span class="ten">Mạnh Chi</span>
+      </button>
+      <button type="button" data-vai="coo">
+        <img src="assets/character/solid/coo-tex.webp" alt="" width="245" height="720">
+        <span class="vai">COO</span>
+        <span class="ten">Bảo Ngọc</span>
+      </button>
+      <button type="button" data-vai="sec">
+        <img src="assets/character/solid/sec-tex.webp" alt="" width="257" height="720">
+        <span class="vai" data-en="Secretary">Thư ký</span>
+        <span class="ten">Gia Hân</span>
+      </button>
+    </div>
+    <p id="bb-fallback" hidden role="alert" data-en="⚠️ This browser cannot show 3D (no WebGL). Use the list below to go straight to a game.">⚠️ Trình duyệt này chưa xem được 3D (không có WebGL). Mời bạn dùng danh sách bên dưới để vào thẳng game.</p>
+  </section>
 
-      <div id="hub3d-dialogue">
-        <div id="hub3d-dlg-box">
-          <button type="button" id="hub3d-dlg-close" aria-label="Đóng" data-en-aria="Close">✕</button>
-          <img id="hub3d-dlg-avatar" src="assets/character/lumina-ao-dai-wave.webp" alt="">
-          <p id="hub3d-dlg-name" class="font-display font-extrabold text-sm text-primary"></p>
-          <p id="hub3d-dlg-text" class="text-sm mt-1"></p>
-          <div class="flex gap-2 justify-end mt-3">
-            <a id="hub3d-dlg-cta" href="brand-passport.html" hidden class="clay-btn bg-clay-gold text-deep-teal font-display font-extrabold px-4 py-2 text-xs" data-en="🛂 Play Brand Passport">🛂 Vào chơi Hộ Chiếu Thương Hiệu</a>
-            <button type="button" id="hub3d-dlg-next" class="clay-btn bg-primary text-white font-display font-extrabold px-4 py-2 text-xs" data-en="Continue ▸">Tiếp tục ▸</button>
-          </div>
+  <nav id="bb-links" class="clay-card p-4 mt-4" aria-labelledby="bb-links-h">
+    <h2 id="bb-links-h" class="font-display font-extrabold text-base" data-en="Go straight to a game">Đi thẳng tới game</h2>
+    <ul>
+      <li><a href="ben-phu-sa-3d.html" data-en="🛶 Bến Phù Sa 3D (free)">🛶 Bến Phù Sa 3D (miễn phí)</a></li>
+      <li><a href="BizOn Game 3D.html" data-en="🏢 Bật Nghiệp 3D (trial)">🏢 Bật Nghiệp 3D (dùng thử)</a></li>
+      <li><a href="Ho Chieu Thuong Hieu 3D.html" data-en="🚢 Brand Passport 3D (trial)">🚢 Hộ Chiếu Thương Hiệu 3D (dùng thử)</a></li>
+      <li><a href="lab/ho-chieu-sau-rieng-3d.html" data-en="🌳 Durian Passport 3D">🌳 Hộ Chiếu Sầu Riêng 3D</a></li>
+      <li><a href="games.html" data-en="🏮 BizOn Arcade (free)">🏮 BizOn Arcade (miễn phí)</a></li>
+      <li><a href="hanh-trinh.html" data-en="🧭 The 3-tier journey">🧭 Hành trình 3 bậc</a></li>
+    </ul>
+  </nav>
+
+  <section id="bb-stage" tabindex="-1" aria-label="Bến BizOn 3D" data-en-aria="BizOn Wharf 3D">
+    <canvas id="bb-canvas"></canvas>
+    <div id="bb-labels" aria-hidden="true"></div>
+    <div id="bb-tag" aria-hidden="true"></div>
+    <button type="button" id="bb-exit" data-en="✕ Exit">✕ Thoát</button>
+    <p id="bb-hint" data-en="Drag to walk · go close, press “Enter”">Kéo cần để đi · tới gần rồi bấm «Vào»</p>
+    <p id="bb-note" role="status" aria-live="polite" hidden></p>
+    <div id="bb-dlg" role="dialog" aria-modal="true" aria-labelledby="bb-dlg-name">
+      <div id="bb-dlg-box">
+        <button type="button" id="bb-dlg-close" aria-label="Đóng" data-en-aria="Close">✕</button>
+        <img id="bb-dlg-avatar" src="assets/character/lumina-ao-dai-wave.webp" alt="" width="44" height="44">
+        <p id="bb-dlg-name"></p>
+        <p id="bb-dlg-text"></p>
+        <div class="row">
+          <a id="bb-dlg-cta" href="hanh-trinh.html" hidden>🧭</a>
+          <button type="button" id="bb-dlg-next">Tiếp tục ▸</button>
         </div>
       </div>
     </div>
-  </div>
+    <div id="bb-fade"></div>
+  </section>
 
-  <p class="text-[11px] text-deep-teal/45 mt-4" data-en-html="The player characters use real clay sculpts (the 2 áo dài avatars from the Creative Library) instead of the earlier placeholders. Built with &lt;a href=&quot;https://threejs.org&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot; class=&quot;font-bold text-primary&quot;&gt;three.js&lt;/a&gt; (MIT licence), running straight in the browser with nothing to install.">Nhân vật người chơi dùng tạo hình đất nặn thật (2 đại diện áo dài trong Thư viện Sáng tạo) thay cho hình đặt chỗ bản trước. Dựng bằng <a href="https://threejs.org" target="_blank" rel="noopener" class="font-bold text-primary">three.js</a> (MIT license), chạy thẳng trong trình duyệt, không cần cài đặt.</p>
+  <p class="text-[11px] text-deep-teal/60 mt-4" data-en-html="The characters are rigged 3D models built from BizOn’s own clay art; the wharf is drawn in code with &lt;a href=&quot;https://threejs.org&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot; class=&quot;font-bold text-primary&quot;&gt;three.js&lt;/a&gt; (MIT licence) and runs in the browser with nothing to install. Nothing is sent to a server.">Nhân vật là mô hình 3D có xương dựng từ chính tranh đất sét của BizOn; bến sông vẽ bằng mã với <a href="https://threejs.org" target="_blank" rel="noopener" class="font-bold text-primary">three.js</a> (giấy phép MIT), chạy thẳng trong trình duyệt, không cần cài đặt. Trang không gửi gì lên máy chủ.</p>
 </main>
 
-<script src="js/vendor/three.min.js"></script>
-<script src="js/hub3d.js"></script>
+<script src="js/clay-light.js"></script>
+<script src="js/di-chuyen-3d.js"></script>
+<script type="module" src="js/ben-bizon.js"></script>
 <script src="js/site-dock.js" defer></script>
 <script src="js/bizon-clay-bridge.js" defer></script>
 <script src="js/bizon-clay-nav.js" defer></script>
