@@ -3,7 +3,7 @@
 'use strict';
 const fs = require('node:fs'), path = require('node:path'), assert = require('node:assert/strict');
 const R = f => path.join(__dirname, '..', f), read = f => fs.readFileSync(R(f), 'utf8');
-const MAU = ['ceo', 'cfo', 'cmo', 'coo', 'sec', 'lumina', 'tu'].flatMap(n => [n + '-tranh-dong-truoc-v1.jpg', n + '-tranh-dong-sau-v1.jpg']);   // năm vai đội và hai cố vấn
+const MAU = ['ceo', 'cfo', 'cmo', 'coo', 'sec', 'lumina', 'tu', 'teo'].flatMap(n => [n + '-tranh-dong-truoc-v1.jpg', n + '-tranh-dong-sau-v1.jpg']);   // năm vai đội, hai cố vấn và rồng Tèo Soi
 for (const f of MAU) {
   const b = fs.readFileSync(R('assets/models/nhan-vat/nguon/' + f));
   assert.ok(b[0] === 0xFF && b[1] === 0xD8, f + ' phải là JPEG (công cụ tạo video chỉ nhận JPG/PNG)');
