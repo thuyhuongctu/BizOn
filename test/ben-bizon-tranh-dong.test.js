@@ -39,6 +39,16 @@ const giu = async (pg, phim, fn, arg) => { await pg.keyboard.down(phim); const o
     const cv = (await st(pg)).coVanTranh;
     check(coVan.every((c, i) => c ? !!cv[i] : cv[i] === null), 'cố vấn: có tờ sprite thì dùng tranh động, chưa có thì vẫn dùng mô hình');
     if (coVan[0]) check(await until(pg, () => { const c = window.__benBizon.state().coVanTranh[0]; return c.sanSang && c.to === 'dung' && c.khung > 0; }), 'Lumina (tranh động): đứng thở, khung hình chạy');
+    if (coVan[1]) check(await until(pg, () => { const c = window.__benBizon.state().coVanTranh[1]; return c.sanSang && c.to === 'dung'; }), 'thầy Tu Phan (tranh động): tờ sprite đã tải, đứng thở');
+    // mở hội thoại với từng cố vấn: đang nói thì dùng tờ «noi», đóng hội thoại thì về «dung»
+    for (const [i, id] of [[0, 'lumina'], [1, 'thay-tu']]) {
+      if (!coVan[i] || !/\bnoi\b/.test(BO.split('\n').find(d => d.includes((i ? 'tu' : 'lumina') + ': [')) || '')) continue;
+      await pg.focus('.dc-goto-btn'); await pg.keyboard.press('Enter'); await pg.focus('.dc-goto [data-id="' + id + '"]'); await pg.keyboard.press('Enter');
+      await until(pg, x => window.__benBizon.state().near === x, id); await pg.click('.dc-card .dc-vao');
+      check(await until(pg, j => { const c = window.__benBizon.state().coVanTranh[j]; return document.querySelector('#bb-dlg.on') && c.to === 'noi' && c.khung > 0; }, i, 8000), id + ': mở hội thoại thì nói (tờ «noi», khung hình chạy)');
+      await pg.click('#bb-dlg-close');
+      check(await until(pg, j => window.__benBizon.state().coVanTranh[j].to === 'dung', i, 8000), id + ': đóng hội thoại thì về tờ «dung»');
+    }
     await pg.evaluate(() => window.__benBizon.dat(4.4, -6.6, 0));
     check(await until(pg, () => { const t = window.__benBizon.state().tranh; return t.to === 'dung' && t.dongTac === 'dung' && t.huong === 'truoc' && t.khung > 0; }), 'đứng yên: quay ra nhìn người chơi và thở nhẹ (tờ «dung», khung hình chạy)');
     let [ok, s] = await giu(pg, 'KeyW', () => { const t = window.__benBizon.state(); return t.speed > 1.2 && t.tranh.huong === 'sau' && t.tranh.khung > 2; });

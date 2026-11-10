@@ -14,7 +14,8 @@ const THU_MUC = 'assets/character/tranh-dong/';
 const DI = ['di-truoc', 'di-ngang', 'di-sau'];
 /* Tờ sprite đã có của từng nhân vật. Vai đội cần đủ ba hướng đi mới dùng làm người chơi; cố vấn chỉ cần «dung» (và «noi»). */
 export const BO_TRANH = {
-  ceo: [...DI, 'dung'], cfo: [...DI, 'dung'], cmo: [...DI, 'dung'], coo: [...DI, 'dung'],
+  ceo: [...DI, 'dung'], cfo: [...DI, 'dung'], cmo: [...DI, 'dung'], coo: [...DI, 'dung'], sec: [...DI, 'dung'],
+  lumina: ['dung', 'noi'], tu: ['dung', 'noi'],
 };
 export const diDuoc = id => !!BO_TRANH[id] && DI.every(t => BO_TRANH[id].includes(t));
 const gocGan = a => Math.atan2(Math.sin(a), Math.cos(a));
