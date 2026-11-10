@@ -1,32 +1,32 @@
 # Việc cần làm: Bến BizOn – đi bộ và chèo xuồng 3D cho các game BizOn
 
 Đặc tả: [spec.md](spec.md) · Kế hoạch: [plan.md](plan.md). `[US1]`… chỉ câu chuyện người dùng; `[P]` là việc làm song
-song được. Chưa việc nào bắt đầu: chờ chị duyệt.
+song được. Chị duyệt ngày 10/11/2026; giai đoạn 1 đang ở PR #1059.
 
 ## Giai đoạn 1 – Nền dùng chung và Bến BizOn đi bộ (câu chuyện 1, P1)
 
-- [ ] T001 [US1] Viết `test/ben-bizon-di-bo.test.js` (Playwright, 360 và 390 px, VI/EN) theo 7 kịch bản chấp nhận của
+- [X] T001 [US1] Viết `test/ben-bizon-di-bo.test.js` (Playwright, 360 và 390 px, VI/EN) theo 7 kịch bản chấp nhận của
   câu chuyện 1 và các trường hợp biên; kiểm thêm cảnh cao ≥ 90% màn hình (SC-002), không chồng lấn (SC-003), mọi
   địa điểm tới được bằng bàn phím (SC-007), không có yêu cầu mạng nào ra ngoài trang (FR-016), nhân vật không bao
   giờ nằm trên nước (FR-019); chạy và thấy hỏng
-- [ ] T002 [P] Viết `test/di-chuyen-3d-ho-so.test.js`: ba trang game thuộc hồ sơ và các tệp mã riêng của chúng không
+- [X] T002 [P] Viết `test/di-chuyen-3d-ho-so.test.js`: ba trang game thuộc hồ sơ và các tệp mã riêng của chúng không
   nhắc tới `di-chuyen-3d` (FR-015, SC-008); tệp dùng chung không chứa tên địa điểm hay bối cảnh nào (FR-020)
-- [ ] T003 [US1] `js/di-chuyen-3d.js`: điều khiển (cần điều khiển, WASD, mũi tên; hướng theo máy quay; dừng khi thả
+- [X] T003 [US1] `js/di-chuyen-3d.js`: điều khiển (cần điều khiển, WASD, mũi tên; hướng theo máy quay; dừng khi thả
   tay hoặc chuyển thẻ) và đi bộ có va chạm, dừng ở mép nước (FR-001, FR-003, FR-019)
-- [ ] T004 [US1] `js/di-chuyen-3d.js`: máy quay sau lưng, tránh vật cản, kéo ngang để nhìn quanh, tôn trọng «giảm
+- [X] T004 [US1] `js/di-chuyen-3d.js`: máy quay sau lưng, tránh vật cản, kéo ngang để nhìn quanh, tôn trọng «giảm
   chuyển động» (FR-002)
-- [ ] T005 [US1] `js/di-chuyen-3d.js`: thẻ «Vào» cho địa điểm gần nhất, phím E / Enter, `aria-live` (FR-004, FR-005)
-- [ ] T006 [US1] `js/di-chuyen-3d.js`: lối tắt «Đi tới…» dùng được bằng chạm, bàn phím, trình đọc màn hình (FR-006)
-- [ ] T007 [US1] `js/di-chuyen-3d.js`: cửa đọc trạng thái `state()` cho test; chú thích đầu tệp ghi nguồn cảm hứng
-- [ ] T008 [US1] `js/ben-bizon.js`: bối cảnh bến sông đất sét (bờ phù sa, hàng dừa, nhà sàn, cầu tàu, mặt nước, lục
+- [X] T005 [US1] `js/di-chuyen-3d.js`: thẻ «Vào» cho địa điểm gần nhất, phím E / Enter, `aria-live` (FR-004, FR-005)
+- [X] T006 [US1] `js/di-chuyen-3d.js`: lối tắt «Đi tới…» dùng được bằng chạm, bàn phím, trình đọc màn hình (FR-006)
+- [X] T007 [US1] `js/di-chuyen-3d.js`: cửa đọc trạng thái `state()` cho test; chú thích đầu tệp ghi nguồn cảm hứng
+- [X] T008 [US1] `js/ben-bizon.js`: bối cảnh bến sông đất sét (bờ phù sa, hàng dừa, nhà sàn, cầu tàu, mặt nước, lục
   bình) và các địa điểm theo bảng trong kế hoạch, bảng hiệu từ `assets/covers/`; bảng nhãn chính sách (FR-017, FR-020)
-- [ ] T009 [US1] `js/ben-bizon.js`: chọn 1 trong 5 vai đội (ảnh gốc), nhớ lựa chọn; nạp mô hình có xương qua
+- [X] T009 [US1] `js/ben-bizon.js`: chọn 1 trong 5 vai đội (ảnh gốc), nhớ lựa chọn; nạp mô hình có xương qua
   `bizon-characters.js` với cờ có sẵn; nhãn tên bằng chữ (FR-007, FR-008)
-- [ ] T010 [US1] `js/ben-bizon.js`: Lumina và thầy Tu Phan đứng ở sân bến với lời thoại của Sảnh cũ; máy hát, bảng
+- [X] T010 [US1] `js/ben-bizon.js`: Lumina và thầy Tu Phan đứng ở sân bến với lời thoại của Sảnh cũ; máy hát, bảng
   tin, bảng thành tích
-- [ ] T011 [US1] `hub-3d.html`: tiêu đề «Bến BizOn», toàn màn hình, `importmap`, trạng thái đang tải / lỗi / mất mạng,
+- [X] T011 [US1] `hub-3d.html`: tiêu đề «Bến BizOn», toàn màn hình, `importmap`, trạng thái đang tải / lỗi / mất mạng,
   song ngữ, đường lui khi không có WebGL hay mô hình lỗi (FR-012, FR-013, FR-014)
-- [ ] T012 [US1] html-validate 0 lỗi trên `hub-3d.html`; nâng `CACHE` trong `sw.js`; chạy test liên quan và các test
+- [X] T012 [US1] html-validate 0 lỗi trên `hub-3d.html`; nâng `CACHE` trong `sw.js`; chạy test liên quan và các test
   đang nhắc tới Sảnh 3D (`clay-factory-3d.html`, `strategy-table-3d.html` có liên kết «Về Sảnh 3D»); ghi vào mô tả PR
   rằng `git diff --stat origin/main` trên các tệp thuộc hồ sơ là rỗng (SC-008)
 - [ ] T013 [US1] Đo tay trên điện thoại: thời gian tới game đầu tiên (SC-001), thời gian hiện nhân vật (SC-004),
