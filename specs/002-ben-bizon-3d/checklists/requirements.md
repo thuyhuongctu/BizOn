@@ -1,4 +1,4 @@
-# Danh sách kiểm chất lượng đặc tả: Dạo phố 3D cho các game BizOn
+# Danh sách kiểm chất lượng đặc tả: Bến BizOn – đi bộ và chèo xuồng 3D cho các game BizOn
 
 **Mục đích**: Kiểm đặc tả đủ và rõ trước khi lập kế hoạch
 **Ngày tạo**: 2026-11-10
@@ -32,7 +32,8 @@
 ## Ghi chú
 
 - SC-009 là chỉ số theo dõi sau khi dùng trên lớp, không dùng để chặn PR.
-- Câu chuyện 4 và 5 hoãn tới khi có giấy chứng nhận quyền tác giả; lượt này làm câu chuyện 1, 2, 3.
+- Câu chuyện 5 và 6 hoãn tới khi có giấy chứng nhận quyền tác giả; lượt này làm câu chuyện 1 đến 4.
+- 10/11/2026: chị yêu cầu «không hẳn là dạo phố để có nét riêng của game» → bối cảnh bến sông miền Tây, thêm chèo xuồng (FR-018 đến FR-020, SC-010).
 - Kiểm theo hiến chương: I (không dạy trực tiếp chuẩn đầu ra nên có ràng buộc ngược: không làm chậm, không đổi luật),
   II (nhãn chính sách, không gọi nhân vật là AI), III (360–390 px, ngoại tuyến, song ngữ, trạng thái tải/lỗi),
   IV (có test), V (không thêm dữ liệu người học); ràng buộc hồ sơ quyền tác giả (FR-015, SC-008) và «nhân vật lấy
