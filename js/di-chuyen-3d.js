@@ -245,6 +245,8 @@
     return {
       update: update, goTo: goTo, dat: dat, lamMoiChu: lamMoiChu,
       setPlaces: function (list) { places = (list || []).slice(); near = null; lamMoiChu(); timGan(); },
+      // đổi góc máy khi đang chơi (xa, cao, điểm nhìn); bỏ trống thì giữ nguyên
+      mayQuay: function (m) { m = m || {}; if (m.xa > 0) XA = m.xa; if (m.cao > 0) CAO = m.cao; if (m.nhin >= 0) NHIN = m.nhin; camD = XA; datMay(true); return { xa: XA, cao: CAO, nhin: NHIN }; },
       dung: function (v) { dungLai = !!v; if (dungLai) { xoaPhim(); vx = vz = 0; } },
       state: function () {
         return { x: px, z: pz, yaw: yaw, camYaw: camYaw, camX: cam.position.x, camY: cam.position.y, camZ: cam.position.z,
