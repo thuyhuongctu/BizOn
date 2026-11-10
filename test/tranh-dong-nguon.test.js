@@ -12,6 +12,13 @@ const py = read('scripts/3d/tach-nen-sprite.py');
 assert.ok(!/msy_[A-Za-z0-9]{8,}|sk-[A-Za-z0-9]{12,}/.test(py), 'công cụ tách nền không được chứa khóa API');
 assert.ok(!/urllib|requests|http\.client|socket/.test(py), 'công cụ tách nền không gọi mạng');
 assert.match(py, /sys\.argv\[3\]/, 'tên sprite truyền qua tham số');
+// tờ sprite đã làm (trả tiền để vẽ nên phải nằm trong kho): WebP hợp lệ, JSON khớp số khung, đủ nhẹ
+for (const t of ['ceo-di-truoc', 'ceo-di-sau']) {
+  const w = fs.readFileSync(R('assets/character/tranh-dong/' + t + '.webp')), j = JSON.parse(read('assets/character/tranh-dong/' + t + '.json'));
+  assert.ok(w.subarray(0, 4).toString() === 'RIFF' && w.subarray(8, 12).toString() === 'WEBP', t + '.webp phải là WebP');
+  assert.ok(w.length < 600000, t + '.webp nặng ' + Math.round(w.length / 1024) + ' KB (cho phép < 600 KB)');
+  assert.ok(j.khung >= 12 && j.khung <= j.cot * j.hang && j.fps === 24 && j.cao === 256, t + '.json: số khung, lưới và nhịp hợp lệ');
+}
 const src = read('assets/models/SOURCES.md');
 assert.ok(src.includes('ceo-tranh-dong-truoc-v1.jpg') && /bỏ la bàn/.test(src), 'SOURCES.md ghi nguồn ảnh mẫu và việc bỏ la bàn');
 assert.ok(+(read('sw.js').match(/bizon-v(\d+)/) || [])[1] >= 827);
