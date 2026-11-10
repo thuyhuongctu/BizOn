@@ -2,7 +2,7 @@
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.
  *
  * Cách dùng: giữ nguyên thẻ ảnh tĩnh và thêm thuộc tính
- *   <img src="…ảnh tĩnh…" data-tranh-dong="assets/character/tranh-dong/teo-dung" [data-tranh-dong-noi="…/teo-noi"]>
+ *   <img src="…ảnh tĩnh…" data-tranh-dong="assets/character/tranh-dong/teo-dung" [data-tranh-dong-noi="…/teo-noi"] [data-tranh-dong-kieu="left:1%;width:29%"]>
  * Tệp này tự tìm các ảnh đó. Tờ sprite tải xong thì đặt một khung phát đúng vị trí, kích thước và kiểu dáng của ảnh (ảnh tĩnh ẩn đi);
  * tải hỏng, trình duyệt cũ hoặc người dùng chọn «giảm chuyển động» thì ảnh tĩnh ở nguyên, trang không đổi gì. Khung phát dừng khi
  * ra khỏi màn hình hoặc khi thẻ trình duyệt bị ẩn. Đổi động tác: phần tử ảnh có .tranhDong.dongTac('noi' | 'dung').
@@ -44,8 +44,11 @@
       var kieu = img.getAttribute('style') || '', cs = window.getComputedStyle(img), tuyet = cs.position === 'absolute' || cs.position === 'fixed';
       hop.setAttribute('style', kieu + ';display:block;background-repeat:no-repeat;pointer-events:none;aspect-ratio:' + to.dung.j.rong + ' / ' + to.dung.j.cao + ';');
       if (!tuyet) { var cha = img.parentNode; if (window.getComputedStyle(cha).position === 'static') cha.style.position = 'relative'; hop.style.position = 'absolute'; hop.style.left = img.offsetLeft + 'px'; hop.style.top = img.offsetTop + 'px'; hop.style.height = img.offsetHeight + 'px'; hop.style.width = 'auto'; hop.style.margin = '0'; }
-      else if (/(^|;)\s*width\s*:/.test(kieu) && !/(^|;)\s*height\s*:/.test(kieu)) hop.style.height = 'auto';
-      else if (/(^|;)\s*height\s*:/.test(kieu) && !/(^|;)\s*width\s*:/.test(kieu)) hop.style.width = 'auto';
+      else hop.style.position = cs.position;   // ảnh định vị bằng CSS của trang (không ghi trong style): khung phát định vị y như vậy
+      if (tuyet && /(^|;)\s*width\s*:/.test(kieu) && !/(^|;)\s*height\s*:/.test(kieu)) hop.style.height = 'auto';
+      else if (tuyet && /(^|;)\s*height\s*:/.test(kieu) && !/(^|;)\s*width\s*:/.test(kieu)) hop.style.width = 'auto';
+      // tờ sprite có lề và tỷ lệ khác ảnh tĩnh: data-tranh-dong-kieu chỉnh riêng khung phát (ví dụ "left:1%;width:29%")
+      var them = img.getAttribute('data-tranh-dong-kieu'); if (them) hop.style.cssText += ';' + them;
       img.parentNode.insertBefore(hop, img.nextSibling); img.style.visibility = 'hidden'; ve();
       song = true; api.sanSang = true;
       if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { thay = es[es.length - 1].isIntersecting; if (thay) chay(); else dung(); }).observe(hop);
