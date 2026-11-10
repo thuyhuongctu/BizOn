@@ -1,5 +1,5 @@
 # Vẽ lại ảnh nhân vật từ tranh gốc bằng Meshy Image to Image (để làm ảnh mẫu dựng 3D). Khóa đọc từ biến môi trường MESHY_API_KEY.
-# Dùng: MESHY_API_KEY=… python meshy-anh.py <tranh gốc.png> <thư mục ra> <mô hình, vd nano-banana-pro> <tệp.json gồm [{ten, prompt}]>
+# Dùng: MESHY_API_KEY=… python meshy-anh.py <tranh gốc.png> <thư mục ra> <mô hình, vd nano-banana-pro> <tệp.json gồm [{ten, prompt, anh hoặc anhs (tối đa 5 ảnh mẫu)}]>
 import os, sys, json, time, base64, urllib.request, urllib.error, concurrent.futures as cf
 K = os.environ['MESHY_API_KEY']; B = 'https://api.meshy.ai/openapi/v1'
 def goi(method, path, body=None):
@@ -8,10 +8,10 @@ def goi(method, path, body=None):
         with urllib.request.urlopen(req, timeout=90) as r: return r.status, json.loads(r.read() or b'{}')
     except urllib.error.HTTPError as e: return e.code, {'error': e.read().decode()[:500]}
 ref, out, model, jobs = sys.argv[1], sys.argv[2], sys.argv[3], json.load(open(sys.argv[4]))
-uri = 'data:image/png;base64,' + base64.b64encode(open(ref, 'rb').read()).decode()
+def uri_cua(f): return 'data:image/png;base64,' + base64.b64encode(open(f, 'rb').read()).decode()
 def lam(job):
-    ten, prompt = job['ten'], job['prompt']
-    st, j = goi('POST', '/image-to-image', {'ai_model': model, 'prompt': prompt, 'reference_image_urls': [uri], 'aspect_ratio': '3:4'})
+    ten, prompt = job['ten'], job['prompt']; uris = [uri_cua(f) for f in (job.get('anhs') or [job.get('anh') or ref])]
+    st, j = goi('POST', '/image-to-image', {'ai_model': model, 'prompt': prompt, 'reference_image_urls': uris, 'aspect_ratio': '3:4'})
     if st not in (200, 202): return ten, 'lỗi tạo ' + str(st) + ' ' + json.dumps(j)[:300]
     tid = j['result']; t0 = time.time()
     while time.time() - t0 < 420:

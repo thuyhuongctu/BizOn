@@ -73,6 +73,27 @@ Em viết theo tranh gốc; chị sửa nếu em tả sai chi tiết nào.
 Bảy ảnh hướng B vẽ bằng prompt trên nằm ở `assets/models/nhan-vat/nguon/<tên>-huong-b-v2.webp` (CEO, CFO, CMO, COO, Thư ký, Lumina, thầy Tu Phan).
 Bản `ceo-huong-b.webp` là ảnh thử đầu tiên, vân đất sét còn rõ nên lên 3D bị vệt trên áo; bản v2 đã thêm câu yêu cầu bề mặt áo trơn.
 
+### Riêng thầy Tu Phan
+
+Tranh gốc của thầy vốn đã là kiểu hoạt hình phim, nên **không dùng prompt hướng B** (bản `tu-huong-b-v2.webp` làm thầy trẻ đi và đổi
+nét mặt). Dùng cách «giữ nguyên, chỉ đổi tư thế», đính kèm ba tranh gốc: `anh-tu-ao-dai-smile.jpg` (đứng thẳng, toàn thân),
+`anh-tu-ao-dai-portrait-cut.webp` (cận mặt), `solid/tu-phan-tex-v3.webp`. Kết quả: `nguon/tu-giu-nguyen-v3.webp` (giữ nguyên) và
+`nguon/tu-dau-hoi-to-v3.webp` (đầu hơi to hơn).
+
+```
+The reference images all show the same 3D animated character, a Vietnamese man in a white ao dai. Redraw exactly this character
+as a clean character reference for 3D modelling. Do not change his identity, age or style: keep exactly the same adult face shape
+with a defined jaw, the same thick dark eyebrows, the same brown eyes at the same size, the same nose, the same wide open friendly
+smile showing his upper teeth, the same swept-up short black hair, the same adult body proportions (about 7 heads tall) and the
+same smooth 3D animated-film rendering style. He must look like the same adult man, not younger and not more childlike.
+Only change the pose. Full body, front view, standing straight and perfectly symmetrical in an A-pose: both arms straight and held
+about 35 degrees away from the body, open relaxed hands with fingers together, empty hands, legs slightly apart, feet flat.
+Keep the white knee-length men's Vietnamese ao dai with its mandarin collar and side slits, the small dark-red brooch shaped like
+the map of Vietnam on the left chest, the white trousers and the brown leather shoes. Smooth even white fabric without scratches,
+speckles or streaks. No props, no text, no logos. Plain flat light grey background, soft even studio lighting, no cast shadow on
+the background, whole figure inside the frame with a small margin, sharp focus, high detail on the face.
+```
+
 ## Muốn chỉnh thêm
 
 - Đầu to hơn nữa: đổi `about 3 heads tall` thành `about 2.5 heads tall`.
