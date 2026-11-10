@@ -33,6 +33,18 @@ jobs:
       - name: Tạo sw-manifest.json
         run: node scripts/release/sw-manifest.mjs
 
+      # Video 1080p gốc và các bản cũ không trang nào tải: giữ trong kho, không đưa lên web
+      # (gói ≈ 883 MB sát giới hạn 1 GB, deploy hết thời gian 3 lần liền – issue #1025).
+      # Danh sách và lý do: scripts/release/khong-deploy.txt; test/khong-deploy.test.js bảo vệ danh sách.
+      - name: Bỏ tệp không đưa lên web
+        run: |
+          n=0; b=0
+          while IFS= read -r f; do
+            case "$f" in ''|'#'*) continue;; esac
+            if [ -f "$f" ]; then b=$((b + $(stat -c%s "$f"))); rm -f "$f"; n=$((n + 1)); else echo "::warning::Không thấy $f (đã đổi tên?)"; fi
+          done < scripts/release/khong-deploy.txt
+          echo "Đã bỏ $n tệp, nhẹ đi $((b / 1048576)) MB"
+
       # Không trang nào tải tệp trong các thư mục này (chỉ được nhắc trong chú thích mã).
       # Giữ: kt330h/ (ứng dụng lớp KT330H), data/, vietlens/, gravity-lab/, logo/, .well-known/.
       - name: Chỉ giữ tệp của trang
