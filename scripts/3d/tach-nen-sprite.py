@@ -4,11 +4,12 @@ sáng, nên vải tối bị ánh nền hắt lên vẫn được giữ), co m�
 ra xa máy quay), tìm một vòng lặp bước đi không thấy mối nối, xuất khung hình trong suốt và tờ sprite WebP kèm JSON.
 
     ffmpeg -i doan-phim.mp4 khung/%03d.png
-    python3 scripts/3d/tach-nen-sprite.py khung/ ra/ ten-sprite KHUNG_DAU KHUNG_CUOI [nguong-dung-yen] [T0] [T1] [di|dung] [buoc] [dai-nhat] [xanh-la|xanh-duong]
+    python3 scripts/3d/tach-nen-sprite.py khung/ ra/ ten-sprite KHUNG_DAU KHUNG_CUOI [nguong-dung-yen] [T0] [T1] [di|dung] [buoc] [dai-nhat] [xanh-la|xanh-duong] [ty-le-rong]
 
 Chế độ «di» (mặc định) dành cho đoạn đi bộ. Chế độ «dung» dành cho đoạn đứng thở hoặc đứng nói: mọi khung dùng chung một khung
 cắt (giữ nguyên nhịp thở, không rung), lấy mỗi «buoc» khung một (mặc định 2), không tìm vòng lặp mà ghi "quaLai": true để game
-phát xuôi rồi phát ngược. «dai-nhat»: số khung tối đa của vòng lặp đi bộ (để tờ sprite không quá nặng; mặc định không giới hạn).
+phát xuôi rồi phát ngược. «dai-nhat»: số khung tối đa của vòng lặp đi bộ (để tờ sprite không quá nặng; mặc định không giới hạn). «ty-le-rong»: bề rộng khung cắt so với chiều cao nhân vật (mặc định 0.62; nhân vật
+có cánh, có đuôi thì nới ra, ví dụ 0.9).
 
 Cần Pillow và numpy. Không gọi mạng. Nhân vật không được có màu trùng màu nền: mặc định nền xanh lá; nhân vật mặc đồ xanh lá
 thì quay trên nền xanh dương và truyền «xanh-duong».
@@ -16,15 +17,15 @@ thì quay trên nền xanh dương và truyền «xanh-duong».
 import sys, glob, json, numpy as np
 from PIL import Image
 src, out, ten, a0, a1 = sys.argv[1], sys.argv[2], sys.argv[3], int(sys.argv[4]), int(sys.argv[5]); NGUONG = float(sys.argv[6]) if len(sys.argv) > 6 else 1.2; T0 = float(sys.argv[7]) if len(sys.argv) > 7 else 18; T1 = float(sys.argv[8]) if len(sys.argv) > 8 else 42
-CHE = sys.argv[9] if len(sys.argv) > 9 else 'di'; BUOC = int(sys.argv[10]) if len(sys.argv) > 10 else 2; DAI = int(sys.argv[11]) if len(sys.argv) > 11 else 999; NEN = 2 if len(sys.argv) > 12 and sys.argv[12] == 'xanh-duong' else 1
-fs = sorted(glob.glob(src + '/*.png'))[a0:a1]; CAO = 640; K = []; hs = []; RG = int(CAO * 0.62 / 1.05 / 2) * 2
+CHE = sys.argv[9] if len(sys.argv) > 9 else 'di'; BUOC = int(sys.argv[10]) if len(sys.argv) > 10 else 2; DAI = int(sys.argv[11]) if len(sys.argv) > 11 else 999; NEN = 2 if len(sys.argv) > 12 and sys.argv[12] == 'xanh-duong' else 1; TL = float(sys.argv[13]) if len(sys.argv) > 13 else 0.62
+fs = sorted(glob.glob(src + '/*.png'))[a0:a1]; CAO = 640; K = []; hs = []; RG = int(CAO * TL / 1.05 / 2) * 2
 def tach(f):
     a = np.asarray(Image.open(f).convert('RGB')).astype(np.float32); k = a[..., NEN]; khac = np.maximum(*[a[..., i] for i in range(3) if i != NEN])
     d = k - khac; al = 1 - np.clip((d - T0) / T1, 0, 1) * np.clip((k - 90) / 40, 0, 1); a[..., NEN] = np.where(d > 0, np.minimum(k, khac + 6), k)   # nền = đúng màu nền VÀ sáng; vải tối bị hắt màu nền thì giữ
     ys, xs = np.where(al > 0.5); y0, y1 = ys.min(), ys.max(); tren = ys < y0 + (y1 - y0) * 0.55
     return np.dstack([np.clip(a, 0, 255), al * 255]).astype(np.uint8), y0, y1, xs[tren].mean()
 def cat(rgba, y0, y1, cx):
-    h = y1 - y0; w2 = int(h * 0.62); x0 = int(round(cx - w2 / 2))
+    h = y1 - y0; w2 = int(h * TL); x0 = int(round(cx - w2 / 2))
     return np.asarray(Image.fromarray(rgba).crop((x0, y0 - int(h * 0.03), x0 + w2, y1 + int(h * 0.02))).resize((RG, CAO), Image.LANCZOS))
 T = [tach(f) for f in fs]; hs = [int(t[2] - t[1]) for t in T]
 if CHE == 'dung':   # một khung cắt chung: đỉnh đầu cao nhất, gót thấp nhất, tâm trung vị
