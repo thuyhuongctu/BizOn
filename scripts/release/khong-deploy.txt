@@ -1,0 +1,24 @@
+# Tệp giữ trong kho nhưng KHÔNG đưa lên bizonland.com (deploy-pages.yml xóa trước khi tải gói lên Pages).
+# Lý do: gói Pages ≈ 883 MB sát giới hạn 1 GB, bước deploy hết thời gian 3 lần liền (issue #1025, 10/11/2026).
+# Mỗi dòng một đường dẫn tính từ gốc kho; test/khong-deploy.test.js bảo đảm không trang nào tải các tệp này.
+#
+# Bản 1080p gốc của 5 trailer: trang chủ chỉ dùng bản -720p (#955). Giữ bản gốc trong kho để nén lại khi cần.
+assets/video/ben-phu-sa-trailer-v2.mp4
+assets/video/bizon-trailer-v3.mp4
+assets/video/bp-trailer-v2.mp4
+assets/video/gravity-lab-trailer.mp4
+assets/video/srp-trailer.mp4
+# Video mở đầu Hộ Chiếu Sầu Riêng: lab/ho-chieu-sau-rieng.html chỉ nạp bản -720p theo ngôn ngữ.
+assets/video/sau-rieng-ma-so-vi.mp4
+assets/video/sau-rieng-ma-so-en.mp4
+# Các bản cũ đã bị bản mới thay (trang chủ dùng bizon-trailer-v5-720p; universe dùng bizon-intro-en-v3, -vi-v4;
+# Hộ Chiếu Thương Hiệu dùng bp-huong-dan-choi-*-v4 và bp-huong-dan-chi-tiet-*-v5).
+assets/video/bizon-trailer-v2.mp4
+assets/video/bizon-trailer-v3-720p.mp4
+assets/video/bizon-trailer-v4-720p.mp4
+assets/video/bizon-intro-en-v4.mp4
+assets/video/bizon-intro-1min-en-v2.mp4
+assets/video/bp-huong-dan-chi-tiet-vi-v4.mp4
+assets/video/bp-huong-dan-chi-tiet-en-v4.mp4
+assets/video/bp-huong-dan-choi-vi-v3.mp4
+assets/video/bp-huong-dan-choi-en-v3.mp4
