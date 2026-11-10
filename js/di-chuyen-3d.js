@@ -15,7 +15,7 @@
  *   places: [{ id, bieuTuong, ten: {vi, en}, moTa: {vi, en}, nhan: {vi, en} | null, nut: {vi, en} | null, x, z, tam, huong }],
  *   diDuoc(x, z) → boolean,               // điểm này đứng được không (trong bờ, ngoài vật cản)
  *   cheMay(x, z) → boolean,               // điểm này có vật cao che máy quay không (tuỳ chọn)
- *   lang() → 'vi' | 'en', onEnter(place), giamChuyenDong, batDau: { x, z, yaw }, tocDo, camXa, camCao
+ *   lang() → 'vi' | 'en', onEnter(place), giamChuyenDong, batDau: { x, z, yaw }, tocDo (hoặc tocDoDi + tocDoChay, nguongChay, tocQuay), camXa, camCao
  * }) → { update(dt), goTo(id), dat(x, z, yaw), state(), setPlaces(list), lamMoiChu(), dung(bool), dispose() }
  */
 (function (root) {
@@ -64,7 +64,8 @@
     var lang = o.lang || function () { return 'vi'; };
     var diDuoc = o.diDuoc || function () { return true; }, cheMay = o.cheMay || function () { return false; };
     var giam = !!o.giamChuyenDong;
-    var TOC = o.tocDo || 3.4, XA = o.camXa || 3.6, CAO = o.camCao || 1.55, NHIN = o.camNhin || 0.95;
+    var TOC = o.tocDo || 3.4, TOC_DI = o.tocDoDi || TOC, TOC_CHAY = o.tocDoChay || TOC, NGUONG = o.nguongChay || 0.75, QUAY = o.tocQuay || 12, chay = false,
+      XA = o.camXa || 3.6, CAO = o.camCao || 1.55, NHIN = o.camNhin || 0.95;
     var bd = o.batDau || { x: 0, z: 0, yaw: 0 };
     var places = (o.places || []).slice();
     var T = function (k) { return CHU[k][lang() === 'en' ? 'en' : 'vi']; };
@@ -161,7 +162,10 @@
       var m = Math.hypot(ix, iy); if (m > 1) { ix /= m; iy /= m; m = 1; }
       // hướng đi tính theo máy quay: đẩy lên là đi ra xa máy quay
       var fx = Math.sin(camYaw), fz = Math.cos(camYaw), rx = -Math.cos(camYaw), rz = Math.sin(camYaw);
-      var tx_ = (fx * iy + rx * ix) * TOC, tz_ = (fz * iy + rz * ix) * TOC;
+      // hai nhịp: đẩy nhẹ cần (hoặc giữ Shift) là đi bộ, đẩy hết cần hay bấm phím là chạy; nơi gọi không đặt tocDoDi/tocDoChay thì chỉ có một tốc độ như cũ
+      chay = m >= NGUONG && !keys.shift;
+      var toc = m < 0.05 ? 0 : chay ? TOC_CHAY : TOC_DI * Math.max(0.55, Math.min(1, m / NGUONG)), dai = m || 1;
+      var tx_ = (fx * iy + rx * ix) / dai * toc, tz_ = (fz * iy + rz * ix) / dai * toc;
       var a = Math.min(1, dt * (m > 0.05 ? 9 : 12));
       vx += (tx_ - vx) * a; vz += (tz_ - vz) * a;
       var sp = Math.hypot(vx, vz);
@@ -175,7 +179,7 @@
       }
       if (sp > 0.25) {
         var want = Math.atan2(vx, vz);
-        yaw = gocGan(yaw + gocGan(want - yaw) * Math.min(1, dt * 12));
+        yaw = gocGan(yaw + gocGan(want - yaw) * Math.min(1, dt * QUAY));
         // máy quay xoay dần về sau lưng; không xoay khi nhân vật chạy về phía máy quay, khi người chơi vừa kéo nhìn quanh, hay khi giảm chuyển động
         var lech = gocGan(yaw - camYaw);
         if (!giam && Math.abs(lech) < 2.1 && now - lastDrag > 1.2) camYaw = gocGan(camYaw + lech * Math.min(1, dt * 1.5));
@@ -186,7 +190,7 @@
     }
 
     // ---- bàn phím
-    var PHIM = { KeyW: 'w', KeyA: 'a', KeyS: 's', KeyD: 'd', ArrowUp: 'up', ArrowDown: 'down', ArrowLeft: 'left', ArrowRight: 'right' };
+    var PHIM = { KeyW: 'w', KeyA: 'a', KeyS: 's', KeyD: 'd', ArrowUp: 'up', ArrowDown: 'down', ArrowLeft: 'left', ArrowRight: 'right', ShiftLeft: 'shift', ShiftRight: 'shift' };
     function dangGo(e) { var t = e.target; return t && (/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName) || t.isContentEditable); }
     function onKeyDown(e) {
       if (disposed || dangGo(e) || e.ctrlKey || e.metaKey || e.altKey) return;
@@ -247,10 +251,12 @@
       setPlaces: function (list) { places = (list || []).slice(); near = null; lamMoiChu(); timGan(); },
       // đổi góc máy khi đang chơi (xa, cao, điểm nhìn); bỏ trống thì giữ nguyên
       mayQuay: function (m) { m = m || {}; if (m.xa > 0) XA = m.xa; if (m.cao > 0) CAO = m.cao; if (m.nhin >= 0) NHIN = m.nhin; camD = XA; datMay(true); return { xa: XA, cao: CAO, nhin: NHIN }; },
+      // đổi tốc độ khi đang chơi (ví dụ kho động tác «chạy» không tải được thì hạ tốc độ chạy xuống mức clip «đi» theo kịp)
+      tocDo: function (m) { m = m || {}; if (m.di > 0) TOC_DI = m.di; if (m.chay > 0) TOC_CHAY = m.chay; return { di: TOC_DI, chay: TOC_CHAY }; },
       dung: function (v) { dungLai = !!v; if (dungLai) { xoaPhim(); vx = vz = 0; } },
       state: function () {
         return { x: px, z: pz, yaw: yaw, camYaw: camYaw, camX: cam.position.x, camY: cam.position.y, camZ: cam.position.z,
-          mode: mode, speed: Math.hypot(vx, vz), near: near ? near.id : null, giamChuyenDong: giam, dangDung: dungLai };
+          mode: mode, chay: chay && mode === 'walk', speed: Math.hypot(vx, vz), near: near ? near.id : null, giamChuyenDong: giam, dangDung: dungLai };
       },
       dispose: function () {
         disposed = true;
