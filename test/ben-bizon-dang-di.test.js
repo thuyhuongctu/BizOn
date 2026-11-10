@@ -17,7 +17,7 @@ check(!js.meshes && !js.images && !js.textures, 'kho chỉ có bộ xương và 
 check(['Hips', 'LeftFoot', 'RightHand', 'Head'].every(t => js.nodes.some(x => x.name === t)), 'kho giữ tên khớp (Hips, LeftFoot, RightHand, Head)');
 const dd = read('js/ben-bizon-dang-di.js'), dc = read('js/di-chuyen-3d.js'), bb = read('js/ben-bizon.js');
 check(!/fetch\(|XMLHttpRequest|https?:\/\//.test(dd), 'tệp dáng đi không gọi mạng ngoài');
-check(/tocDoDi: TOC_DI, tocDoChay: TOC_CHAY/.test(bb) && /TOC_DI = 1\.15, TOC_CHAY = 2\.1/.test(bb), 'Bến BizOn đặt tốc độ đi 1,15 và chạy 2,1 (không còn 3,4)');
+check(/tocDoDi: TOC_DI, tocDoChay: (tranh \? 1\.8 : )?TOC_CHAY/.test(bb) && /TOC_DI = 1\.15, TOC_CHAY = 2\.1/.test(bb), 'Bến BizOn đặt tốc độ đi 1,15 và chạy 2,1 (không còn 3,4)');
 check(/o\.tocDoDi \|\| TOC/.test(dc) && /o\.tocDoChay \|\| TOC/.test(dc), 'nơi khác không đặt tocDoDi/tocDoChay thì phần di chuyển vẫn một tốc độ như cũ');
 check(!/dang-di|dong-tac-v1/.test(read('bizon-characters.js')), 'bizon-characters.js không bị sửa vì việc này');
 check(read('sw.js').includes("'./js/ben-bizon-dang-di.js'"), 'sw.js lưu sẵn js/ben-bizon-dang-di.js');

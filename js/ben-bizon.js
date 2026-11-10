@@ -15,6 +15,7 @@ import * as THREE from 'three';
 import { makeCharacters } from '../bizon-characters.js';
 import { lamDayCanh } from './ben-bizon-canh.js';
 import { taoDangDi } from './ben-bizon-dang-di.js';
+import { taoTranhDong } from './ben-bizon-tranh-dong.js';
 
 window.BIZON_CHAR_GLB = true;   // bật mô hình có xương cho riêng trang này (mặc định của kho vẫn tắt, PR #1024)
 
@@ -107,6 +108,8 @@ const NUOC_Y = -0.34;
 // ---------------------------------------------------------------- dựng cảnh
 let renderer, scene, camera, sun, chars, dc = null, player = null, vai = null, raf = 0, dongHo = 0, tLast = 0, sanSang = false;
 let luminaObj, tuObj, noiChuyen = null, chiTiet = null, dangDi = null, daHaToc = false;
+let tranh = null;   // nhân vật «tranh động» (bản thử, chỉ bật khi đường dẫn có ?nv=tranh và vai có tờ sprite)
+const NV_TRANH = /[?&]nv=tranh\b/.test(window.location.search), CO_TRANH = { ceo: true };
 const TOC_DI = 1.15, TOC_CHAY = 2.1;   // đơn vị của cảnh mỗi giây, hợp với sải chân của clip đi và clip chạy ở cỡ nhân vật này
 const nenCu = [];   // lối đi và mảng cỏ phẳng của bản đầu: lớp chi tiết (ben-bizon-canh.js) thay bằng nền vẽ thì ẩn đi
 const dong = [];     // các hàm chạy mỗi khung hình (bập bềnh, trôi)
@@ -432,7 +435,8 @@ function ve(ms) {
   dc.update(dt);
   const s = dc.state(), rig = player.userData.rig || {};
   // dáng đi khớp tốc độ (ben-bizon-dang-di.js); mô hình có xương chưa tải xong thì vẫn dùng tranh dựng đứng như cũ
-  if (!dangDi || !dangDi.capNhat(dt, s.speed, s.yaw)) chars.animate(player, dongHo, s.mode === 'walk' ? 'walk' : 'idle');
+  if (tranh) tranh.capNhat(dt, s.speed, s.yaw, camera.position.x, camera.position.z);
+  else if (!dangDi || !dangDi.capNhat(dt, s.speed, s.yaw)) chars.animate(player, dongHo, s.mode === 'walk' ? 'walk' : 'idle');
   if (dangDi && dangDi.khoHong && !daHaToc) { daHaToc = true; dc.tocDo({ chay: 1.5 }); }
   // cố vấn quay về phía người chơi khi ở gần, nói khi đang mở hội thoại
   [luminaObj, tuObj].forEach((o, i) => {
@@ -487,9 +491,12 @@ function batDau(v) {
   vai = v; sanSang = false; tLoad = 0; tBatDau = performance.now(); daDi = false; hint.hidden = false;
   document.documentElement.classList.add('bb-play'); fade.classList.remove('on');
   if (dc) dc.dispose(); if (player) scene.remove(player);
-  player = chars.build(v); scene.add(player); dangDi = taoDangDi(player, { giam }); daHaToc = false;
+  if (tranh) { tranh.huy(); tranh = null; }
+  if (NV_TRANH && CO_TRANH[v]) { tranh = taoTranhDong(v, { cao: 1.2, tocDi: TOC_DI, giam }); player = tranh.root; scene.add(player); dangDi = null; }
+  else { player = chars.build(v); scene.add(player); dangDi = taoDangDi(player, { giam }); }
+  daHaToc = false;
   coGiu(); veNhan(); datNote(L(CHU.tai));
-  dc = window.BizOnDiChuyen.create({ THREE, camera, canvas, host: stage, player, places: NOI, diDuoc, cheMay, lang, onEnter: vaoNoi, giamChuyenDong: giam, batDau: { x: 0, z: -7, yaw: 0 }, tocDoDi: TOC_DI, tocDoChay: TOC_CHAY, tocQuay: 8, camXa: GOC[goc].xa, camCao: GOC[goc].cao, camNhin: GOC[goc].nhin });
+  dc = window.BizOnDiChuyen.create({ THREE, camera, canvas, host: stage, player, places: NOI, diDuoc, cheMay, lang, onEnter: vaoNoi, giamChuyenDong: giam, batDau: { x: 0, z: -7, yaw: 0 }, tocDoDi: TOC_DI, tocDoChay: tranh ? 1.8 : TOC_CHAY, tocQuay: 8, camXa: GOC[goc].xa, camCao: GOC[goc].cao, camNhin: GOC[goc].nhin });
   khoaNen(true); try { stage.focus({ preventScroll: true }); } catch (e) {}
   cancelAnimationFrame(raf); tLast = 0; raf = requestAnimationFrame(ve);
 }
@@ -514,7 +521,7 @@ try { const cu = localStorage.getItem('bizon-ben-vai'); const b = cu && document
 
 // cửa đọc trạng thái cho test (Playwright) và để gỡ lỗi
 window.__benBizon = {
-  state() { const s = dc ? dc.state() : {}, rig = (player && player.userData.rig) || {}; return Object.assign(s, { ready: !!(dc && sanSang), goc, dang: dangDi && dangDi.sanSang ? dangDi.thongSo().dang : null, char: vai, glb: !!rig.glb, clip: rig.glb ? rig.cur : s.mode }); },
+  state() { const s = dc ? dc.state() : {}, rig = (player && player.userData.rig) || {}; return Object.assign(s, { ready: !!(dc && sanSang), goc, dang: dangDi && dangDi.sanSang ? dangDi.thongSo().dang : null, tranh: tranh ? Object.assign({ sanSang: tranh.sanSang, hong: tranh.hong }, tranh.thongSo()) : null, char: vai, glb: !!rig.glb, clip: rig.glb ? rig.cur : s.mode }); },
   info: () => ({ canh: 'ben-song', nuoc: true, cauTau: true, diaDiem: NOI.map(p => p.id), chiTiet, goc, dangDi: dangDi && dangDi.sanSang ? Object.assign({ coChay: dangDi.coChay, khoHong: dangDi.khoHong }, dangDi.thongSo()) : null, veMoiKhung: renderer ? renderer.info.render.calls : 0 }),
   datGoc,
   laBo, dat: (x, z, yaw) => dc && dc.dat(x, z, yaw),
