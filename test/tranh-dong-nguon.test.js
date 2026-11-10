@@ -3,7 +3,8 @@
 'use strict';
 const fs = require('node:fs'), path = require('node:path'), assert = require('node:assert/strict');
 const R = f => path.join(__dirname, '..', f), read = f => fs.readFileSync(R(f), 'utf8');
-for (const f of ['ceo-tranh-dong-truoc-v1.jpg', 'ceo-tranh-dong-sau-v1.jpg']) {
+const MAU = ['ceo', 'cfo', 'cmo', 'coo', 'sec', 'lumina', 'tu'].flatMap(n => [n + '-tranh-dong-truoc-v1.jpg', n + '-tranh-dong-sau-v1.jpg']);   // năm vai đội và hai cố vấn
+for (const f of MAU) {
   const b = fs.readFileSync(R('assets/models/nhan-vat/nguon/' + f));
   assert.ok(b[0] === 0xFF && b[1] === 0xD8, f + ' phải là JPEG (công cụ tạo video chỉ nhận JPG/PNG)');
   assert.ok(b.length > 20000 && b.length < 300000, f + ' nặng ' + Math.round(b.length / 1024) + ' KB (cho phép 20–300 KB)');
