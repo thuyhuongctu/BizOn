@@ -42,6 +42,10 @@ assert.ok(+(fs.readFileSync(path.join(ROOT, 'sw.js'), 'utf8').match(/bizon-v(\d+
     assert.match(r.text, /Đỗ Thùy Hương/);
     assert.match(r.text, /1149/);
     assert.match(r.text, /thương cảng quốc tế đầu tiên của Đại Việt/, 'câu chữ đúng sử: «của Đại Việt», không phải «tại Việt Nam»');
+    // Rà soát sử liệu 10/11/2026: Toàn thư chép thời Lý thuyền buôn đã vào cửa Tha, cửa Viên (châu Diễn) trước đó,
+    // nên không nói ngoại thương «bắt đầu» ở Vân Đồn, và «đầu tiên» phải kèm «thường được coi là».
+    assert.doesNotMatch(r.title, /bắt đầu/);
+    assert.match(r.text, /thường được coi là thương cảng quốc tế đầu tiên/);
     assert.match(r.text, /16 tuổi/, 'game không dành cho trẻ em');
     assert.ok(r.afterMini, 'mục mở rộng nằm sau mục trò chơi nhỏ');
     await pg.close();
