@@ -32,7 +32,8 @@ with a small margin, sharp focus, high detail on the face.
 Redesign the character in the reference image as a stylised 3D animated-film character, appealing and expressive, for a 3D game.
 Keep the same person and identity: [NHÂN VẬT].
 Stylised proportions: about 4.5 heads tall, slightly large head, large warm eyes with clear eyebrows, soft simplified nose,
-confident friendly smile, slim simplified body, clean smooth shapes with a subtle matte clay finish and solid colours.
+confident friendly smile, slim simplified body, clean smooth shapes with a subtle matte clay finish.
+Clothing in smooth, even, solid colours close to the reference, without scratches, speckles, streaks or brush strokes.
 Full body, front view, standing straight and perfectly symmetrical in an A-pose: both arms straight and held about 35 degrees
 away from the body, open relaxed hands with fingers together, empty hands, legs slightly apart, feet flat.
 Remove any hand-held prop and remove the name badge: no props, no text, no logos.
@@ -64,8 +65,13 @@ Em viết theo tranh gốc; chị sửa nếu em tả sai chi tiết nào.
 | CMO Mạnh Chi | `cmo-tex.webp` | `same man with short brown hair and a cheerful open smile, same rust-orange jacket over a cream shirt, khaki trousers and brown shoes` |
 | COO Bảo Ngọc | `coo-tex.webp` | `same woman with a brown chin-length bob, same gentle face, same light blue shirt, blue knee-length skirt and light blue heels` |
 | Thư ký Gia Hân | `sec-tex.webp` | `same woman with dark skin and dark hair tied in a top bun, same warm face, same green shirt, green trousers and brown shoes` |
-| Lumina | `lumina-tex.webp` | `same young woman with long wavy auburn hair, same kind face, same cream-white Vietnamese ao dai with trousers` |
-| Thầy Tu Phan | `tu-phan-tex-v3.webp` | `same man with short black hair and glasses, same kind face, same cream-white men's Vietnamese ao dai with trousers` |
+| Lumina | `lumina-tex.webp` | `same young woman with long wavy auburn-brown hair and a small white flower hairpin, same kind face, same cream-white Vietnamese ao dai with matching trousers and cream flat shoes, same tiny red pin with a yellow star on the chest` |
+| Thầy Tu Phan | `tu-phan-tex-v3.webp` | `same man with short black hair, no glasses, same kind face with a wide friendly smile, same white knee-length men's Vietnamese ao dai with a small dark-red brooch on the chest, white trousers and brown leather shoes` |
+
+## Ảnh đã vẽ (10/11/2026)
+
+Bảy ảnh hướng B vẽ bằng prompt trên nằm ở `assets/models/nhan-vat/nguon/<tên>-huong-b-v2.webp` (CEO, CFO, CMO, COO, Thư ký, Lumina, thầy Tu Phan).
+Bản `ceo-huong-b.webp` là ảnh thử đầu tiên, vân đất sét còn rõ nên lên 3D bị vệt trên áo; bản v2 đã thêm câu yêu cầu bề mặt áo trơn.
 
 ## Muốn chỉnh thêm
 
