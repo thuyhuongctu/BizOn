@@ -13,7 +13,7 @@ assert.ok(!/msy_[A-Za-z0-9]{8,}|sk-[A-Za-z0-9]{12,}/.test(py), 'công cụ tách
 assert.ok(!/urllib|requests|http\.client|socket/.test(py), 'công cụ tách nền không gọi mạng');
 assert.match(py, /sys\.argv\[3\]/, 'tên sprite truyền qua tham số');
 // tờ sprite đã làm (trả tiền để vẽ nên phải nằm trong kho): WebP hợp lệ, JSON khớp số khung, đủ nhẹ
-for (const t of ['ceo-di-truoc', 'ceo-di-sau']) {
+for (const t of ['ceo-di-truoc', 'ceo-di-ngang', 'ceo-di-sau']) {
   const w = fs.readFileSync(R('assets/character/tranh-dong/' + t + '.webp')), j = JSON.parse(read('assets/character/tranh-dong/' + t + '.json'));
   assert.ok(w.subarray(0, 4).toString() === 'RIFF' && w.subarray(8, 12).toString() === 'WEBP', t + '.webp phải là WebP');
   assert.ok(w.length < 600000, t + '.webp nặng ' + Math.round(w.length / 1024) + ' KB (cho phép < 600 KB)');
