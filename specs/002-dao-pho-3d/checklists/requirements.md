@@ -13,7 +13,7 @@
 
 ## Độ đầy đủ của yêu cầu
 
-- [ ] Không còn dấu [CẦN LÀM RÕ] (còn 3: câu chuyện 4, FR-006, FR-010 – chờ chị trả lời)
+- [x] Không còn dấu [CẦN LÀM RÕ] (chị trả lời 10/11/2026, ghi ở mục «Làm rõ»)
 - [x] Yêu cầu kiểm được và không mơ hồ
 - [x] Tiêu chí thành công đo được
 - [x] Tiêu chí thành công không phụ thuộc công nghệ
@@ -32,6 +32,7 @@
 ## Ghi chú
 
 - SC-009 là chỉ số theo dõi sau khi dùng trên lớp, không dùng để chặn PR.
+- Câu chuyện 4 và 5 hoãn tới khi có giấy chứng nhận quyền tác giả; lượt này làm câu chuyện 1, 2, 3.
 - Kiểm theo hiến chương: I (không dạy trực tiếp chuẩn đầu ra nên có ràng buộc ngược: không làm chậm, không đổi luật),
   II (nhãn chính sách, không gọi nhân vật là AI), III (360–390 px, ngoại tuyến, song ngữ, trạng thái tải/lỗi),
   IV (có test), V (không thêm dữ liệu người học); ràng buộc hồ sơ quyền tác giả (FR-015, SC-008) và «nhân vật lấy

@@ -4,7 +4,7 @@
 
 **Ngày tạo**: 2026-11-10
 
-**Trạng thái**: Bản nháp, chờ chị duyệt
+**Trạng thái**: Đã làm rõ ngày 10/11/2026, chờ chị duyệt kế hoạch
 
 **Đầu vào**: «Tôi muốn game bizon nhân vật di chuyển thế này» (kèm trang vspeak.asia/flashcard và video quay màn hình
 «Thành phố 3D»): nhân vật 3D đi bộ, máy quay bám sau lưng, cần điều khiển ở góc trái dưới, bản đồ nhỏ ở góc phải, đi
@@ -26,7 +26,7 @@ phải; toà nhà có bảng tên; tới gần một điểm thì hiện thẻ (
 | Bật Nghiệp 3D (`BizOn Game 3D.html`): văn phòng đội | WASD, mũi tên, cần điều khiển, bấm sàn; tới gần bấm E | Tranh dựng đứng; mô hình có xương chỉ bật khi có cờ | Nhìn chéo từ trên | **Có** |
 | Bến Phù Sa 3D (`ben-phu-sa-3d.html`): «Văn phòng chiến lược» | Như trên; cảnh là tranh phẳng nhìn từ trên, không phải 3D thật | Ảnh nhân vật | Nhìn từ trên | **Có** |
 | Hộ Chiếu Thương Hiệu 3D (`Ho Chieu Thuong Hieu 3D.html`): «Văn phòng chiến lược» | Như Bến Phù Sa 3D (dùng chung một mô-đun) | Ảnh nhân vật | Nhìn từ trên | **Có** |
-| Hộ Chiếu Sầu Riêng 3D (`lab/ho-chieu-sau-rieng-3d.html`, trang thử) | Bấm chọn chặng; nhân vật tự đi tới | Tượng ảnh cắt nền | Toàn cảnh, xoay được | Không |
+| Hộ Chiếu Sầu Riêng 3D (`lab/ho-chieu-sau-rieng-3d.html`, trang thử) | WASD, mũi tên, cần điều khiển, bấm sàn; tới gần nhân vật có dấu «!» bấm E; thẻ «Việc tiếp theo» có nút dẫn đường | Người chơi là hình 3D đất sét (nông dân đội nón lá); người trong cảnh là tượng ảnh cắt nền | Đi theo người chơi nhưng ở xa và cao, không xoay theo hướng đi | Không |
 | Ra Khơi Cùng Lớp 3D (`ra-khoi-3d.html`) | Lái thuyền, nhiều người cùng lúc | Thuyền | Bám theo thuyền | Không |
 
 - Sảnh 3D trên điện thoại: khung 3D chỉ là một ô tỉ lệ 16:10 nằm giữa trang, không toàn màn hình: 348 × 218 px
@@ -35,9 +35,24 @@ phải; toà nhà có bảng tên; tới gần một điểm thì hiện thẻ (
 - Kho có 7 mô hình có xương (`assets/models/nhan-vat/`: CEO, CFO, CMO, COO, Thư ký, Lumina, thầy Tu Phan), mỗi tệp
   0,95–1,11 MB, tổng 6,96 MB, đủ ba động tác đứng, nói, đi. Dựng từ chính tranh gốc của game.
 - Các mô hình này **đang tắt mặc định** từ PR #1024 vì «nhòe mặt và bảng tên so với tranh gốc».
-- Không trang nào có máy quay bám sau lưng nhân vật. Không trang nào có bản đồ nhỏ.
+- Không trang nào có máy quay bám sát sau lưng và xoay theo hướng đi của nhân vật. Không trang nào có bản đồ nhỏ.
+  Không trang nào hiện thẻ có nút «Vào» khi tới gần (đang dùng phím E hoặc một nút «Nói chuyện»).
 - Ba game bản 3D đã nộp hồ sơ quyền tác giả (khóa ở commit `afbacd2`, 07/10/2026): không đổi tên, không sửa khối mã
   trong tệp trang của ba game này cho tới khi có giấy chứng nhận.
+
+## Làm rõ
+
+Chị trả lời ngày 10/11/2026:
+
+1. **Áp dụng ở đâu?** Tất cả game 3D.
+2. **Nhân vật?** 7 mô hình có xương sẵn trong kho.
+3. **Ba game thuộc hồ sơ quyền tác giả (Bật Nghiệp 3D, Bến Phù Sa 3D, Hộ Chiếu Thương Hiệu 3D)?** **Chờ có giấy chứng
+   nhận** rồi mới làm. Câu chuyện 4 và 5 vì vậy **hoãn**, giữ trong đặc tả để làm tiếp sau; lượt này chỉ làm câu
+   chuyện 1, 2, 3.
+4. **Đi bộ bắt buộc hay có lối tắt?** Luôn có lối tắt «Đi tới…».
+5. **Người chơi điều khiển ai?** Chỉ 5 vai đội (CEO, CFO, CMO, COO, Thư ký); Lumina và thầy Tu Phan là cố vấn đứng
+   trong cảnh.
+6. **Người qua lại là ai?** Nhân vật BizOn đi theo lối định sẵn; không cần mạng, không thêm dữ liệu người học.
 
 ## Kịch bản người dùng và kiểm thử *(bắt buộc)*
 
@@ -101,19 +116,19 @@ cùng quyết định.
 
 **Kịch bản chấp nhận**:
 
-1. **Cho** đội đang ở vụ 1, **khi** đi nhân vật tới trạm của một chặng, **thì** hiện thẻ tên chặng và nút «Vào»; bấm
-   thì mở đúng bảng việc của chặng như hiện nay.
+1. **Cho** đội đang ở vụ 1, **khi** đi nhân vật tới một trạm hay một người có việc, **thì** máy quay ở sát sau lưng,
+   hiện thẻ tên và nút «Vào»; bấm thì mở đúng hội thoại hay bảng việc mà phím E đang mở hiện nay.
 2. **Cho** cùng một bộ quyết định, **khi** chơi bằng đi bộ hay bằng lối tắt, **thì** điểm, cờ và báo cáo vụ giống hệt.
 3. **Cho** ván đang lưu từ trước khi có tính năng, **khi** mở lại, **thì** chơi tiếp được, không mất dữ liệu.
 4. **Cho** bản 2D và bản gọn của cùng game, **khi** chạy bộ test hiện có, **thì** không đổi kết quả.
 
 ---
 
-### Câu chuyện 4 – Bến Phù Sa 3D và Hộ Chiếu Thương Hiệu 3D: dạo «Văn phòng chiến lược» (Ưu tiên: P4)
+### Câu chuyện 4 – Bến Phù Sa 3D và Hộ Chiếu Thương Hiệu 3D: dạo «Văn phòng chiến lược» (Ưu tiên: P4, HOÃN)
 
 Trong hai game này, phần «Văn phòng chiến lược» (nơi đi gặp cố vấn và các góc chức năng) có thêm kiểu dạo phố: nhân
-vật 3D, máy quay sau lưng, thẻ «Vào». Cách đưa vào phải giữ đúng cam kết với hồ sơ quyền tác giả
-[CẦN LÀM RÕ: thêm làm chế độ tuỳ chọn, thay hẳn, hay chờ có giấy chứng nhận – xem câu hỏi 1].
+vật 3D, máy quay sau lưng, thẻ «Vào». **Hoãn tới khi có giấy chứng nhận quyền tác giả** (chị quyết 10/11/2026); khi
+làm sẽ hỏi lại chị cách đưa vào (thêm làm tuỳ chọn hay thay hẳn kiểu cũ).
 
 **Vì sao P4**: hai game dùng chung một phần «văn phòng» nên làm một lần được cả hai, nhưng vướng hồ sơ nên đi sau.
 
@@ -129,10 +144,11 @@ mở đúng hội thoại và đúng bảng như kiểu cũ.
 
 ---
 
-### Câu chuyện 5 – Bật Nghiệp 3D: dạo văn phòng đội (Ưu tiên: P5)
+### Câu chuyện 5 – Bật Nghiệp 3D: dạo văn phòng đội (Ưu tiên: P5, HOÃN)
 
 Trong văn phòng Bật Nghiệp 3D, người chơi là đúng nhân vật của vai mình (CEO, CFO, CMO, COO, Thư ký), đi tới bàn của
-từng bộ phận theo kiểu dạo phố; Lumina và thầy Tu Phan đứng trong cảnh để hỏi ý kiến.
+từng bộ phận theo kiểu dạo phố; Lumina và thầy Tu Phan đứng trong cảnh để hỏi ý kiến. **Hoãn tới khi có giấy chứng
+nhận quyền tác giả**, cùng lý do với câu chuyện 4.
 
 **Vì sao P5**: là game lớn nhất và thuộc hồ sơ; làm sau cùng khi phần dùng chung đã chín qua bốn câu chuyện trước.
 
@@ -173,22 +189,22 @@ từng bộ phận theo kiểu dạo phố; Lumina và thầy Tu Phan đứng tr
   «Vào»; ra khỏi tầm thì ẩn; nhiều điểm trong tầm thì chỉ hiện điểm gần nhất.
 - **FR-005**: Nút «Vào» (và phím E / Enter) PHẢI mở đúng hoạt động mà cách hiện tại mở ở cùng địa điểm đó.
 - **FR-006**: Mỗi cảnh dạo phố PHẢI có lối tắt «Đi tới…» liệt kê mọi địa điểm, dùng được bằng chạm, bàn phím và
-  trình đọc màn hình [CẦN LÀM RÕ: trong game, đi bộ là bắt buộc hay luôn có lối tắt – xem câu hỏi 2].
-- **FR-007**: Nhân vật PHẢI là 7 mô hình sẵn có dựng từ tranh gốc của BizOn; không dựng nhân vật mới.
+  trình đọc màn hình. Đi bộ không bao giờ là cách duy nhất.
+- **FR-007**: Nhân vật PHẢI là 7 mô hình sẵn có dựng từ tranh gốc của BizOn; không dựng nhân vật mới. Người chơi
+  chọn trong 5 vai đội (CEO, CFO, CMO, COO, Thư ký); Lumina và thầy Tu Phan là cố vấn đứng trong cảnh.
 - **FR-008**: Tên nhân vật PHẢI hiện bằng chữ rõ nét, không dựa vào bảng tên vẽ trên mô hình.
 - **FR-009**: Cảnh dạo phố PHẢI có bản đồ nhỏ cho thấy vị trí người chơi và các địa điểm; bấm một địa điểm thì có
   chỉ đường.
-- **FR-010**: Trên phố PHẢI có nhân vật khác đi lại và chào khi người chơi tới gần
-  [CẦN LÀM RÕ: là nhân vật BizOn đi theo lối định sẵn, hay bạn cùng lớp thật – xem câu hỏi 4]. Lời chào chỉ gợi
-  hướng, không chọn giúp, không đưa đáp án; không gọi các nhân vật này là AI.
+- **FR-010**: Trên phố PHẢI có nhân vật BizOn khác đi lại theo lối định sẵn và chào khi người chơi tới gần; không
+  cần mạng. Lời chào chỉ gợi hướng, không chọn giúp, không đưa đáp án; không gọi các nhân vật này là AI.
 - **FR-011**: Kiểu dạo phố KHÔNG ĐƯỢC đổi luật chơi, điểm số, dữ liệu lưu hay dữ liệu gửi lên lớp của bất kỳ game nào.
 - **FR-012**: Khi không dùng được 3D (không có WebGL, mô hình lỗi, mất mạng chưa lưu sẵn), hệ thống PHẢI quay về cách
   di chuyển hiện tại và báo một dòng; người chơi vẫn làm được mọi việc.
 - **FR-013**: Cảnh dạo phố PHẢI dùng được trên điện thoại 360–390 px: toàn màn hình, không tràn ngang, vùng chạm
   ≥ 44 px, chữ tương phản ≥ 4,5, song ngữ VI/EN.
 - **FR-014**: Có trạng thái đang tải (tên nhân vật đang tải), lỗi và mất mạng; sau lần đầu, cảnh dùng được ngoại tuyến.
-- **FR-015**: Tệp trang của ba game thuộc hồ sơ quyền tác giả KHÔNG ĐƯỢC đổi tên, xóa, chuyển hướng hay sửa khối mã
-  trong trang cho tới khi có giấy chứng nhận.
+- **FR-015**: Lượt này KHÔNG ĐƯỢC chạm vào ba game thuộc hồ sơ quyền tác giả: không sửa tệp trang, không sửa các
+  tệp mã mà chỉ ba game ấy dùng, và ba trang ấy không nạp phần dạo phố mới.
 - **FR-016**: Không thu thập thêm dữ liệu người học; vị trí nhân vật chỉ nằm trong trình duyệt của người chơi.
 - **FR-017**: Nhãn chính sách trên thẻ «Vào» PHẢI đúng trang Chính sách: Bến Phù Sa và Arcade «miễn phí»; Bật Nghiệp
   và Hộ Chiếu Thương Hiệu «dùng thử».
@@ -211,10 +227,11 @@ từng bộ phận theo kiểu dạo phố; Lumina và thầy Tu Phan đứng tr
   mọi nút ≥ 44 px.
 - **SC-004**: Nhân vật đầu tiên hiện ra trong 5 giây trên mạng 4G thông thường; lần mở sau dùng được khi mất mạng.
 - **SC-005**: Chuyển động mượt trên điện thoại tầm trung: không dưới 30 khung hình mỗi giây khi đi bộ.
-- **SC-006**: Với cùng bộ quyết định, kết quả ván chơi kiểu dạo phố và kiểu cũ giống nhau 100% (so bằng test) ở mọi
-  game áp dụng.
+- **SC-006**: Với cùng bộ quyết định, kết quả ván chơi Hộ Chiếu Sầu Riêng 3D khi đi bộ và khi dùng lối tắt giống
+  nhau 100% (so bằng test).
 - **SC-007**: 100% địa điểm của mỗi cảnh tới được bằng lối tắt «Đi tới…» chỉ với bàn phím.
-- **SC-008**: Khối mã trong tệp trang của ba game thuộc hồ sơ: 0 ký tự thay đổi (so bằng test).
+- **SC-008**: Ba trang game thuộc hồ sơ và các tệp mã riêng của chúng: 0 thay đổi trong lượt này; 0 trang trong ba
+  trang ấy nạp phần dạo phố (kiểm bằng test).
 - **SC-009** (theo dõi sau khi dùng trên lớp, không chặn PR): thời gian từ lúc vào game tới quyết định đầu tiên không
   tăng quá 20% so với kiểu cũ, theo báo cáo chơi thử.
 
@@ -228,13 +245,14 @@ bộ phận khác để hỏi. Vì không dạy trực tiếp, đặc tả đặ
 ## Giả định
 
 - «Tất cả game 3D» gồm: Bật Nghiệp 3D, Bến Phù Sa 3D, Hộ Chiếu Thương Hiệu 3D, Hộ Chiếu Sầu Riêng 3D, cộng Sảnh 3D
-  làm «Phố BizOn» (lối vào chung). **Ngoài phạm vi lượt này**: Ra Khơi Cùng Lớp 3D (đi thuyền, không đi bộ) và bốn
+  làm «Phố BizOn» (lối vào chung). Ba game đầu hoãn tới khi có giấy chứng nhận; **lượt này làm Phố BizOn và Hộ Chiếu
+  Sầu Riêng 3D**. **Ngoài phạm vi lượt này**: Ra Khơi Cùng Lớp 3D (đi thuyền, không đi bộ) và bốn
   trang thử (Phố Thị Trường 3D, Hộ Chiếu Mini 3D, Xưởng Gốm 3D, Bàn Họp Chiến Lược 3D).
 - Phần đi trên bản đồ lớn của từng game (ghe trên sông ở Bến Phù Sa 3D, quả địa cầu và phố thị trường ở Hộ Chiếu
   Thương Hiệu 3D) giữ nguyên; kiểu dạo phố chỉ áp vào phần «văn phòng» có đi bộ.
-- Người chơi chọn trong 5 nhân vật đội (CEO, CFO, CMO, COO, Thư ký); Lumina và thầy Tu Phan là cố vấn đứng trong
-  cảnh, đúng vai «gợi hướng, không chọn giúp» [xem câu hỏi 3].
 - Phố BizOn vẫn là trang thử (không vào sitemap, không thêm vào menu) cho tới khi chị xem và cho công khai.
+- Ở Hộ Chiếu Sầu Riêng 3D, người chơi **giữ nhân vật nông dân đội nón lá** hiện có của game (đã là hình 3D có lưng,
+  hợp bối cảnh vườn sầu riêng); 5 mô hình vai đội dùng ở Phố BizOn. Chị muốn đổi thì nói khi duyệt.
 - Mô hình bật riêng cho cảnh dạo phố; mặc định của Bật Nghiệp 3D theo PR #1024 (tranh gốc) không đổi ngoài kiểu dạo phố.
 - vspeak chỉ là mẫu tham khảo về **cách tương tác** (đi bộ, máy quay sau lưng, thẻ «Vào»); không chép mã, hình, nhân
   vật hay bản đồ của họ. Cảnh phố dựng bằng phong cách đất sét và tài sản của BizOn.
