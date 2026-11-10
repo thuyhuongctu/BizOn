@@ -37,6 +37,14 @@ assert.equal(v3.js.skins[0].joints.length, 24, 'ceo-v3: bộ xương 24 khớp')
 assert.deepEqual(v3.js.skins[0].joints.map(i => v3.js.nodes[i].name), names, 'ceo-v3 dùng cùng tên xương với ceo-v2 (mã game dùng chung được)');
 assert.ok(fs.existsSync(R('assets/models/nhan-vat/nguon/ceo-huong-b.webp')), 'có ảnh mẫu của hướng B');
 assert.ok(read('docs/prompt-nhan-vat-3d.md').includes('Hướng B'), 'có tệp prompt');
+// thầy Tu Phan dựng lại từ ảnh mẫu «bản 2» (tu-v3.glb): cùng tám clip, cùng bộ xương; tệp gốc tu.glb không đổi
+const tu = glb('assets/models/nhan-vat/tu-v3.glb');
+assert.ok(tu.size > 5e5 && tu.size < 3e6, 'tu-v3.glb nặng ' + (tu.size / 1e6).toFixed(2) + ' MB (cho phép 0,5–3 MB)');
+assert.deepEqual(tu.js.animations.map(a => a.name), ['Idle', 'Talk', 'Wave', 'Think', 'Cheer', 'Sit', 'Walk', 'Run'], 'tu-v3: đủ tám clip');
+assert.deepEqual(tu.js.skins[0].joints.map(i => tu.js.nodes[i].name), names, 'tu-v3 dùng cùng tên xương với ceo-v2');
+assert.ok(fs.existsSync(R('assets/models/nhan-vat/nguon/tu-dau-hoi-to-v3.webp')), 'có ảnh mẫu thầy Tu Phan bản 2');
+assert.deepEqual(glb('assets/models/nhan-vat/tu.glb').js.animations.map(a => a.name), ['Idle', 'Talk', 'Walk'], 'tu.glb gốc không đổi');
+assert.ok(read('assets/models/SOURCES.md').includes('tu-v3.glb'), 'SOURCES.md ghi nguồn tu-v3.glb');
 // tệp gốc giữ nguyên ba clip; script không chứa khóa; có ghi nguồn
 assert.deepEqual(glb('assets/models/nhan-vat/ceo.glb').js.animations.map(a => a.name), ['Idle', 'Talk', 'Walk'], 'ceo.glb gốc không đổi');
 for (const f of ['scripts/3d/meshy-dong-tac.py', 'scripts/3d/glb-do-vat-cung.py', 'scripts/3d/meshy-dung-nhan-vat.py', 'scripts/3d/meshy-anh.py', 'docs/prompt-nhan-vat-3d.md']) assert.ok(!/msy_[A-Za-z0-9]{8,}/.test(read(f)), f + ': không được chứa khóa API');
