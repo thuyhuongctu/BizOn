@@ -110,8 +110,9 @@ const NUOC_Y = -0.34;
 // ---------------------------------------------------------------- dựng cảnh
 let renderer, scene, camera, sun, chars, dc = null, player = null, vai = null, raf = 0, dongHo = 0, tLast = 0, sanSang = false;
 let luminaObj, tuObj, noiChuyen = null, chiTiet = null, dangDi = null, daHaToc = false;
-let tranh = null, tranhLui = null, tranhCoVan = [null, null];   // nhân vật «tranh động» (bản thử, chỉ bật khi đường dẫn có ?nv=tranh và nhân vật có tờ sprite)
-const NV_TRANH = /[?&]nv=tranh\b/.test(window.location.search);
+let tranh = null, tranhLui = null, tranhCoVan = [null, null];   // nhân vật «tranh động»: mặc định cho nhân vật có tờ sprite (chị duyệt 11/11/2026)
+// ?nv=3d: quay về mô hình 3D cũ (để so sánh hoặc khi máy không tải được tờ sprite)
+const NV_TRANH = !/[?&]nv=3d\b/.test(window.location.search);
 const CAO_TRANH = { ceo: 1.2, cfo: 1.12, cmo: 1.2, coo: 1.12, sec: 1.1, lumina: 1.14, tu: 1.18 };   // cùng chiều cao với mô hình; khung tranh có lề 5 %
 const taoTranh = id => taoTranhDong(id, { cao: (CAO_TRANH[id] || 1.15) * 1.05, tocDi: TOC_DI, giam });
 const TOC_DI = 1.15, TOC_CHAY = 2.1;   // đơn vị của cảnh mỗi giây, hợp với sải chân của clip đi và clip chạy ở cỡ nhân vật này
