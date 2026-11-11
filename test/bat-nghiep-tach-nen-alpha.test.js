@@ -10,7 +10,7 @@ const read = f => fs.readFileSync(path.join(goc, f), 'utf8');
 
 check(/alpha: 'solid\/alpha-full-tex-v2\.webp'/.test(read('bizon-characters.js')), 'bizon-characters.js dùng ảnh alpha-full-tex-v2.webp');
 check(fs.existsSync(path.join(goc, 'assets/character/solid/alpha-full-tex.webp')), 'ảnh gốc alpha-full-tex.webp vẫn còn (không ghi đè)');
-check(+(/CACHE = 'bizon-v(\d+)'/.exec(read('sw.js')) || [])[1] >= 834, 'sw.js ≥ bizon-v834');
+check(+(/CACHE = 'bizon-v(\d+)'/.exec(read('sw.js')) || [])[1] >= 835, 'sw.js ≥ bizon-v835');
 
 let chromium; try { chromium = require('playwright').chromium; } catch (e) { chromium = require('playwright-core').chromium; }
 (async () => {
