@@ -489,6 +489,16 @@ function datGoc(g) {
 }
 if (nutGoc) { nutGoc.setAttribute('aria-pressed', goc === 'cao' ? 'true' : 'false'); nutGoc.addEventListener('click', () => datGoc(goc === 'cao' ? 'sau' : 'cao')); }
 
+// Nhịp chạy/đi của cần điều khiển (specs/003, câu chuyện 2): «tự động» như cũ (đẩy nhẹ đi, đẩy hết chạy) hoặc «luôn chạy». Nhớ trong localStorage.
+let nhip = (() => { try { return localStorage.getItem('bizon-ben-nhip') === 'chay' ? 'chay' : 'tu-dong'; } catch (e) { return 'tu-dong'; } })();
+const nutChay = $('bb-chay');
+function datNhip(m) {
+  nhip = m === 'chay' ? 'chay' : 'tu-dong'; try { localStorage.setItem('bizon-ben-nhip', nhip); } catch (e) {}
+  if (nutChay) { nutChay.setAttribute('aria-pressed', nhip === 'chay' ? 'true' : 'false'); const i = nutChay.querySelector('span'); if (i) i.textContent = nhip === 'chay' ? '🏃' : '🚶'; }
+  if (dc && dc.nhip) dc.nhip(nhip);
+}
+if (nutChay) { datNhip(nhip); nutChay.addEventListener('click', () => datNhip(nhip === 'chay' ? 'tu-dong' : 'chay')); }
+
 function batDau(v) {
   if (!VAI[v]) return;
   if (!khoiTao()) { $('bb-fallback').hidden = false; $('bb-links').scrollIntoView({ block: 'nearest' }); return; }
@@ -502,6 +512,7 @@ function batDau(v) {
   daHaToc = false;
   coGiu(); veNhan(); datNote(L(CHU.tai));
   dc = window.BizOnDiChuyen.create({ THREE, camera, canvas, host: stage, player, places: NOI, diDuoc, cheMay, lang, onEnter: vaoNoi, giamChuyenDong: giam, batDau: { x: 0, z: -7, yaw: 0 }, tocDoDi: TOC_DI, tocDoChay: tranh ? 1.8 : TOC_CHAY, tocQuay: 8, camXa: GOC[goc].xa, camCao: GOC[goc].cao, camNhin: GOC[goc].nhin });
+  if (dc.nhip) dc.nhip(nhip);
   khoaNen(true); try { stage.focus({ preventScroll: true }); } catch (e) {}
   cancelAnimationFrame(raf); tLast = 0; raf = requestAnimationFrame(ve);
 }
@@ -528,6 +539,6 @@ try { const cu = localStorage.getItem('bizon-ben-vai'); const b = cu && document
 window.__benBizon = {
   state() { const s = dc ? dc.state() : {}, rig = ((tranhLui || player || {}).userData || {}).rig || {}; return Object.assign(s, { ready: !!(dc && sanSang), goc, dang: dangDi && dangDi.sanSang ? dangDi.thongSo().dang : null, tranh: tranh ? Object.assign({ sanSang: tranh.sanSang, hong: tranh.hong }, tranh.thongSo()) : null, coVanTranh: tranhCoVan.map(t => t ? Object.assign({ sanSang: t.sanSang, hong: t.hong }, t.thongSo()) : null), char: vai, glb: !!rig.glb, clip: rig.glb ? rig.cur : s.mode }); },
   info: () => ({ canh: 'ben-song', nuoc: true, cauTau: true, diaDiem: NOI.map(p => p.id), chiTiet, goc, dangDi: dangDi && dangDi.sanSang ? Object.assign({ coChay: dangDi.coChay, khoHong: dangDi.khoHong }, dangDi.thongSo()) : null, veMoiKhung: renderer ? renderer.info.render.calls : 0 }),
-  datGoc,
+  datGoc, datNhip, goTo: id => dc && dc.goTo(id),
   laBo, dat: (x, z, yaw) => dc && dc.dat(x, z, yaw),
 };

@@ -65,6 +65,7 @@
     var diDuoc = o.diDuoc || function () { return true; }, cheMay = o.cheMay || function () { return false; };
     var giam = !!o.giamChuyenDong;
     var TOC = o.tocDo || 3.4, TOC_DI = o.tocDoDi || TOC, TOC_CHAY = o.tocDoChay || TOC, NGUONG = o.nguongChay || 0.75, QUAY = o.tocQuay || 12, chay = false,
+      NHIP = o.nhip === 'chay' ? 'chay' : 'tu-dong',   // «tự động»: đẩy nhẹ đi, đẩy hết chạy; «chạy»: đẩy cần mức nào cũng chạy
       XA = o.camXa || 3.6, CAO = o.camCao || 1.55, NHIN = o.camNhin || 0.95;
     var bd = o.batDau || { x: 0, z: 0, yaw: 0 };
     var places = (o.places || []).slice();
@@ -163,7 +164,7 @@
       // hướng đi tính theo máy quay: đẩy lên là đi ra xa máy quay
       var fx = Math.sin(camYaw), fz = Math.cos(camYaw), rx = -Math.cos(camYaw), rz = Math.sin(camYaw);
       // hai nhịp: đẩy nhẹ cần (hoặc giữ Shift) là đi bộ, đẩy hết cần hay bấm phím là chạy; nơi gọi không đặt tocDoDi/tocDoChay thì chỉ có một tốc độ như cũ
-      chay = m >= NGUONG && !keys.shift;
+      chay = (NHIP === 'chay' ? m >= 0.05 : m >= NGUONG) && !keys.shift;
       var toc = m < 0.05 ? 0 : chay ? TOC_CHAY : TOC_DI * Math.max(0.55, Math.min(1, m / NGUONG)), dai = m || 1;
       var tx_ = (fx * iy + rx * ix) / dai * toc, tz_ = (fz * iy + rz * ix) / dai * toc;
       var a = Math.min(1, dt * (m > 0.05 ? 9 : 12));
@@ -254,9 +255,11 @@
       // đổi tốc độ khi đang chơi (ví dụ kho động tác «chạy» không tải được thì hạ tốc độ chạy xuống mức clip «đi» theo kịp)
       tocDo: function (m) { m = m || {}; if (m.di > 0) TOC_DI = m.di; if (m.chay > 0) TOC_CHAY = m.chay; return { di: TOC_DI, chay: TOC_CHAY }; },
       dung: function (v) { dungLai = !!v; if (dungLai) { xoaPhim(); vx = vz = 0; } },
+      // nhịp chạy/đi của cần điều khiển: 'tu-dong' (mặc định) hoặc 'chay'; bàn phím không đổi (Shift vẫn là đi chậm)
+      nhip: function (m) { if (m) NHIP = m === 'chay' ? 'chay' : 'tu-dong'; return NHIP; },
       state: function () {
         return { x: px, z: pz, yaw: yaw, camYaw: camYaw, camX: cam.position.x, camY: cam.position.y, camZ: cam.position.z,
-          mode: mode, chay: chay && mode === 'walk', speed: Math.hypot(vx, vz), near: near ? near.id : null, giamChuyenDong: giam, dangDung: dungLai };
+          mode: mode, chay: chay && mode === 'walk', nhip: NHIP, speed: Math.hypot(vx, vz), near: near ? near.id : null, giamChuyenDong: giam, dangDung: dungLai };
       },
       dispose: function () {
         disposed = true;
