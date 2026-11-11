@@ -79,7 +79,8 @@ const overlap = (a, b) => a && b && a.on && b.on && a.x < b.r - 0.5 && b.x < a.r
     n = await nvs(pg); check(n.xong.length === 5 && n.hoanThanh === true, 'xong cả 5 việc: nhiệm vụ hoàn thành');
     check(/Bến Phù Sa/.test(await pg.textContent('#bb-nv')) && (await rect(pg, '#bb-nv-tiep')).on, 'hiện lời chúc và nút tới Bến Phù Sa');
     await pg.click('#bb-nv-tiep'); check(await until(pg, () => window.__benBizon.state().near === 'ben-phu-sa', null, 8000), 'nút gợi ý đưa tới Bến Phù Sa');
-    check(!(await rect(pg, '#bb-nv-ds')).on && /Đã xong/.test(await pg.textContent('#bb-nv')), 'xong rồi: bảng thu thành một dòng «Đã xong»');
+    // câu chuyện 3: đóng lời chúc thì bảng chuyển sang nhiệm vụ thứ hai «Một vòng quanh bến» (0/6)
+    n = await nvs(pg); check(n.dangTheo === 'vong-quanh' && n.tong === 6 && n.tiepTheo === 'cau-ben-phu-sa' && /Một vòng quanh bến/.test(await pg.textContent('#bb-nv')), 'xong «Làm quen»: bảng chuyển sang «Một vòng quanh bến», 0/6');
     check(pg.errs.length === 0, 'không có lỗi trang' + (pg.errs[0] ? ': ' + pg.errs[0] : ''));
     await ctx.close();
 

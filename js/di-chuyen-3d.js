@@ -15,7 +15,7 @@
  *   places: [{ id, bieuTuong, ten: {vi, en}, moTa: {vi, en}, nhan: {vi, en} | null, nut: {vi, en} | null, x, z, tam, huong }],
  *   diDuoc(x, z) → boolean,               // điểm này đứng được không (trong bờ, ngoài vật cản)
  *   cheMay(x, z) → boolean,               // điểm này có vật cao che máy quay không (tuỳ chọn)
- *   lang() → 'vi' | 'en', onEnter(place), giamChuyenDong, batDau: { x, z, yaw }, tocDo (hoặc tocDoDi + tocDoChay, nguongChay, tocQuay), camXa, camCao
+ *   lang() → 'vi' | 'en', onEnter(place), nutPhu(place) → { nhan: {vi, en}, fn(place) } | null (nút phụ cạnh «Vào», tùy chọn), giamChuyenDong, batDau: { x, z, yaw }, tocDo (hoặc tocDoDi + tocDoChay, nguongChay, tocQuay), camXa, camCao
  * }) → { update(dt), goTo(id), dat(x, z, yaw), state(), setPlaces(list), lamMoiChu(), dung(bool), dispose() }
  */
 (function (root) {
@@ -41,6 +41,9 @@
     '.dc-card .dc-mo{font-size:12.5px;line-height:1.4;margin:2px 0 0;color:#2c4a50}',
     '.dc-card .dc-nhan{display:inline-block;margin:0 0 3px;padding:2px 9px;border-radius:999px;background:#e3f4ea;color:#0b5b3f;font-size:11px;font-weight:800}',
     '.dc-card .dc-nhan[hidden]{display:none}',
+    '.dc-nut{flex:0 0 auto;display:flex;flex-direction:column;align-items:stretch;gap:6px}',
+    '.dc-phu{min-height:44px;max-width:118px;padding:6px 10px;border-radius:14px;background:#fff3da;color:#4a3210;font-weight:800;font-size:12.5px;line-height:1.2}',
+    '.dc-phu[hidden]{display:none}',
     '.dc-vao{flex:0 0 auto;min-width:76px;min-height:48px;padding:10px 18px;border-radius:16px;background:#006687;color:#fff;font-weight:800;font-size:15px;box-shadow:inset 0 -4px 0 rgba(0,0,0,.18)}',
     '.dc-goto-btn{position:absolute;right:max(12px,env(safe-area-inset-right,0px));top:calc(12px + env(safe-area-inset-top,0px));min-height:46px;padding:10px 16px;border-radius:999px;background:#fff;color:#033337;font-weight:800;font-size:14px;box-shadow:0 8px 20px -8px rgba(0,40,50,.5),inset 0 -3px 0 rgba(0,0,0,.08);pointer-events:auto}',
     '.dc-goto{position:absolute;right:max(12px,env(safe-area-inset-right,0px));top:calc(66px + env(safe-area-inset-top,0px));width:min(300px,calc(100% - 24px));max-height:calc(100% - 90px);overflow:auto;display:none;flex-direction:column;gap:6px;background:#fff;border-radius:20px;padding:10px;box-shadow:0 18px 40px -12px rgba(0,40,50,.55);pointer-events:auto}',
@@ -87,7 +90,10 @@
     var card = el('div', 'dc-card', { role: 'region', 'aria-live': 'polite' });
     var ic = el('div', 'dc-ic', { 'aria-hidden': 'true' }), tx = el('div', 'dc-tx'), nhan = el('span', 'dc-nhan'), ten = el('p', 'dc-ten'), mo = el('p', 'dc-mo');
     var vao = el('button', 'dc-vao', { type: 'button' });
-    tx.appendChild(nhan); tx.appendChild(ten); tx.appendChild(mo); card.appendChild(ic); card.appendChild(tx); card.appendChild(vao);
+    // nút phụ cạnh «Vào» (tùy chọn nutPhu(place) → { nhan: {vi, en}, fn } | null), ví dụ «Câu hỏi nhanh»
+    var nutBo = el('div', 'dc-nut'), phu = el('button', 'dc-phu', { type: 'button' }), phuFn = null; phu.hidden = true;
+    nutBo.appendChild(phu); nutBo.appendChild(vao);
+    tx.appendChild(nhan); tx.appendChild(ten); tx.appendChild(mo); card.appendChild(ic); card.appendChild(tx); card.appendChild(nutBo);
     var gbtn = el('button', 'dc-goto-btn', { type: 'button', 'aria-expanded': 'false', 'aria-controls': 'dc-goto' });
     var glist = el('div', 'dc-goto', { id: 'dc-goto', role: 'dialog' });
     ui.appendChild(card); ui.appendChild(joyEl); ui.appendChild(gbtn); ui.appendChild(glist); host.appendChild(ui);
@@ -97,6 +103,7 @@
       ic.textContent = near.bieuTuong || '📍'; ten.textContent = L(near.ten); mo.textContent = L(near.moTa);
       var n = L(near.nhan); nhan.textContent = n; nhan.hidden = !n;
       vao.textContent = near.nut ? L(near.nut) : T('vao');
+      var np = o.nutPhu ? o.nutPhu(near) : null; phuFn = np ? np.fn : null; phu.hidden = !np; if (np) phu.textContent = L(np.nhan);
       card.setAttribute('aria-label', L(near.ten)); card.classList.add('on');
     }
     function veDanhSach() {
@@ -240,6 +247,7 @@
     if (cv) { cv.addEventListener('pointerdown', lookDown); cv.addEventListener('pointermove', lookMove); cv.addEventListener('pointerup', lookUp); cv.addEventListener('pointercancel', lookUp); }
 
     vao.addEventListener('click', vaoNoi);
+    phu.addEventListener('click', function () { if (near && phuFn) { xoaPhim(); phuFn(near); } });
     gbtn.addEventListener('click', function () { moDanhSach(!dangMo()); });
     glist.addEventListener('click', function (e) { var b = e.target.closest ? e.target.closest('button[data-id]') : null; if (b) goTo(b.getAttribute('data-id')); });
     window.addEventListener('keydown', onKeyDown); window.addEventListener('keyup', onKeyUp);
