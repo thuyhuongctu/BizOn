@@ -3,13 +3,15 @@
 **Đầu vào**: [spec.md](spec.md), [plan.md](plan.md) · **Định dạng**: `[Mã] [P?] [Câu chuyện] Mô tả` – `[P]` làm song song
 được (khác tệp, không phụ thuộc). Mỗi câu chuyện là một PR; test viết trước và phải thấy hỏng trước khi viết mã.
 
+> **Tình trạng (11/11/2026):** T001–T007 đã gộp ở PR #1068; T008–T013 đã gộp ở PR #1069; T014–T019 đã làm trong PR #1071 (chờ chị duyệt câu chữ và gộp).
+
 ## Giai đoạn 1 – Nhiệm vụ «Làm quen Bến BizOn» (câu chuyện 1, P1)
 
 **Mục tiêu**: người mới vào bến thấy «việc tiếp theo», làm theo «Dẫn đường», xong năm việc, tải lại vẫn nhớ.
 
 ### Test (viết trước, phải hỏng)
 
-- [ ] T001 [US1] Viết `test/ben-bizon-nhiem-vu.test.js` (Playwright, iPhone 13 và 1280 px):
+- [X] T001 [US1] Viết `test/ben-bizon-nhiem-vu.test.js` (Playwright, iPhone 13 và 1280 px):
   - xóa `localStorage` rồi vào bến: bảng hiện, «0/5», việc tiếp theo «Hỏi đường Lumina»;
   - «Dẫn đường» đưa tới Lumina (`near === 'lumina'`); mở hội thoại thì «1/5»;
   - làm việc không theo thứ tự (Bảng tin trước) vẫn được tích;
@@ -21,16 +23,16 @@
 
 ### Làm
 
-- [ ] T002 [US1] Tạo `js/ben-bizon-nhiem-vu.js`: dữ liệu nhiệm vụ «Làm quen» (5 việc ở plan.md), `taoNhiemVu({ host, L,
+- [X] T002 [US1] Tạo `js/ben-bizon-nhiem-vu.js`: dữ liệu nhiệm vụ «Làm quen» (5 việc ở plan.md), `taoNhiemVu({ host, L,
   goTo, daGhe, luu })` → `{ bao, state, lamMoiChu, dispose }`; lưu khóa `bizon-ben-nhiem-vu` trong `try/catch`.
-- [ ] T003 [US1] `hub-3d.html`: khung `<section id="bb-nv" aria-label>` ở cột trái trên; CSS bề rộng `min(300px, 100% -
+- [X] T003 [US1] `hub-3d.html`: khung `<section id="bb-nv" aria-label>` ở cột trái trên; CSS bề rộng `min(300px, 100% -
   150px)`, tự thu gọn khi cao < 420 px; bỏ `#bb-hint` khi có bảng; xếp `#bb-note` ngay dưới bảng; vùng `aria-live`.
-- [ ] T004 [US1] `js/ben-bizon.js`: tạo bảng sau khi cảnh sẵn sàng; gọi `nv.bao(...)` trong `moThoai`, `vaoNoi` và khi
+- [X] T004 [US1] `js/ben-bizon.js`: tạo bảng sau khi cảnh sẵn sàng; gọi `nv.bao(...)` trong `moThoai`, `vaoNoi` và khi
   thẻ `hanh-trinh` hiện; «Dẫn đường» dùng `dc.goTo`; thêm `nhiemVu` vào `window.__benBizon.state()`; `L()` đổi ngôn ngữ
   gọi `nv.lamMoiChu()`.
-- [ ] T005 [US1] Cập nhật `test/ben-bizon-canh.test.js` chỗ đo `#bb-hint` cho đúng bố cục mới (không bỏ kiểm tra chồng lấn).
-- [ ] T006 [US1] `sw.js`: nâng `CACHE`, thêm `./js/ben-bizon-nhiem-vu.js` vào danh sách lưu sẵn.
-- [ ] T007 [US1] Chạy `ben-bizon`, `di-chuyen`, `nhiem-vu`; `html-validate@8.24.1 hub-3d.html` 0 lỗi; quay video thử trên
+- [X] T005 [US1] Cập nhật `test/ben-bizon-canh.test.js` chỗ đo `#bb-hint` cho đúng bố cục mới (không bỏ kiểm tra chồng lấn).
+- [X] T006 [US1] `sw.js`: nâng `CACHE`, thêm `./js/ben-bizon-nhiem-vu.js` vào danh sách lưu sẵn.
+- [X] T007 [US1] Chạy `ben-bizon`, `di-chuyen`, `nhiem-vu`; `html-validate@8.24.1 hub-3d.html` 0 lỗi; quay video thử trên
   khổ điện thoại gửi chị.
 
 **Điểm dừng**: PR 1 tự dùng được; chờ chị nói «Gộp».
@@ -39,7 +41,7 @@
 
 ### Test (viết trước, phải hỏng)
 
-- [ ] T008 [US2] Viết `test/ben-bizon-dieu-khien.test.js`:
+- [X] T008 [US2] Viết `test/ben-bizon-dieu-khien.test.js`:
   - iPhone 13, Pixel 7, 360 px: `#bb-chay` và `#bb-goc` ở góc phải dưới, ≥ 44 × 44 px, không chồng cần gạt, bảng nhiệm
     vụ, thẻ «Vào», hộp thoại; không tràn ngang;
   - bấm `#bb-chay` → `state().nhip === 'chay'`, `aria-pressed="true"`; đẩy cần gạt 40 % → `state().chay === true`;
@@ -49,14 +51,14 @@
 
 ### Làm
 
-- [ ] T009 [P] [US2] `js/di-chuyen-3d.js`: thêm `nhip(m)` (`'tu-dong'` | `'chay'`) và `nhip` trong `state()`; không đổi
+- [X] T009 [P] [US2] `js/di-chuyen-3d.js`: thêm `nhip(m)` (`'tu-dong'` | `'chay'`) và `nhip` trong `state()`; không đổi
   hành vi mặc định.
-- [ ] T010 [US2] `hub-3d.html`: hàng nút góc phải dưới (`#bb-chay` mới, `#bb-goc` chuyển xuống, giữ `id` và
+- [X] T010 [US2] `hub-3d.html`: hàng nút góc phải dưới (`#bb-chay` mới, `#bb-goc` chuyển xuống, giữ `id` và
   `aria-pressed`), ≥ 48 px, tránh vùng an toàn; nâng thẻ «Vào» nếu chồng ở 360 px.
-- [ ] T011 [US2] `js/ben-bizon.js`: nút `#bb-chay` gọi `dc.nhip`, nhớ khóa `bizon-ben-nhip`; ẩn hai nút khi hộp thoại
+- [X] T011 [US2] `js/ben-bizon.js`: nút `#bb-chay` gọi `dc.nhip`, nhớ khóa `bizon-ben-nhip`; ẩn hai nút khi hộp thoại
   hoặc «Đi tới…» mở; thêm `nhip` vào `state()`.
-- [ ] T012 [US2] Cập nhật `test/ben-bizon-canh.test.js` chỗ đo vị trí `#bb-goc`.
-- [ ] T013 [US2] `sw.js` nâng `CACHE`; chạy `ben-bizon`, `di-chuyen`, `dieu-khien`; `html-validate` 0 lỗi; video thử.
+- [X] T012 [US2] Cập nhật `test/ben-bizon-canh.test.js` chỗ đo vị trí `#bb-goc`.
+- [X] T013 [US2] `sw.js` nâng `CACHE`; chạy `ben-bizon`, `di-chuyen`, `dieu-khien`; `html-validate` 0 lỗi; video thử.
 
 **Điểm dừng**: PR 2 tự dùng được; chờ chị nói «Gộp».
 
@@ -64,7 +66,7 @@
 
 ### Test (viết trước, phải hỏng)
 
-- [ ] T014 [US3] Viết `test/ben-bizon-cau-hoi.test.js`:
+- [X] T014 [US3] Viết `test/ben-bizon-cau-hoi.test.js`:
   - đủ 6 câu, mỗi câu 3 lựa chọn, có bản EN, đúng một đáp án;
   - thẻ Bến Phù Sa có nút «Câu hỏi nhanh» ≥ 44 px;
   - chọn sai: hiện gợi ý, không lộ đáp án, chọn lại được; chọn đúng: tích việc «Bến Phù Sa» trong nhiệm vụ «Một vòng
@@ -74,11 +76,11 @@
 
 ### Làm
 
-- [ ] T015 [P] [US3] Tạo `js/ben-bizon-cau-hoi.js`: 6 câu (VI/EN) soạn từ mô tả thẻ đang có; **chị duyệt câu chữ trong PR 3**.
-- [ ] T016 [P] [US3] `js/di-chuyen-3d.js`: tùy chọn chung `nutPhu(place) → { nhan, fn } | null` thêm một nút cạnh «Vào».
-- [ ] T017 [US3] `js/ben-bizon-nhiem-vu.js`: nhiệm vụ «Một vòng quanh bến» (6 việc, loại `cau-hoi`), mở sau «Làm quen».
-- [ ] T018 [US3] `js/ben-bizon.js`: câu hỏi mở trong `#bb-dlg` với 3 nút lựa chọn; đúng thì `nv.bao({ loai: 'cau-hoi', noi })`.
-- [ ] T019 [US3] `sw.js` nâng `CACHE`, lưu sẵn `./js/ben-bizon-cau-hoi.js`; chạy test; `html-validate` 0 lỗi; gửi chị bảng 6 câu để duyệt.
+- [X] T015 [P] [US3] Tạo `js/ben-bizon-cau-hoi.js`: 6 câu (VI/EN) soạn từ mô tả thẻ đang có; **chị duyệt câu chữ trong PR 3**.
+- [X] T016 [P] [US3] `js/di-chuyen-3d.js`: tùy chọn chung `nutPhu(place) → { nhan, fn } | null` thêm một nút cạnh «Vào».
+- [X] T017 [US3] `js/ben-bizon-nhiem-vu.js`: nhiệm vụ «Một vòng quanh bến» (6 việc, loại `cau-hoi`), mở sau «Làm quen».
+- [X] T018 [US3] `js/ben-bizon.js`: câu hỏi mở trong `#bb-dlg` với 3 nút lựa chọn; đúng thì `nv.bao({ loai: 'cau-hoi', noi })`.
+- [X] T019 [US3] `sw.js` nâng `CACHE`, lưu sẵn `./js/ben-bizon-cau-hoi.js`; chạy test; `html-validate` 0 lỗi; gửi chị bảng 6 câu để duyệt.
 
 **Điểm dừng**: chờ chị duyệt câu chữ rồi nói «Gộp».
 
