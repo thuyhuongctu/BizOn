@@ -39,7 +39,7 @@ check(read('assets/models/SOURCES.md').includes('rong-bay-doi-bizon.glb') && rea
     check(st.ready && !st.error, w + 'px: mô hình tải xong ' + (st.error || ''));
     check(/rong-bay-doi-bizon-nen\.webp/.test(st.nen), w + 'px: tải xong thì ảnh nền đổi sang bản không rồng');
     const tra = await p.evaluate(() => { window.__l3Rong.dispose(); window.__l3Rong = null; return getComputedStyle(document.getElementById('login3d')).backgroundImage; });
-    check(/rong-bay-doi-bizon-v5\.webp/.test(tra) && !(await p.$('#login3d canvas[data-rong]')), w + 'px: gỡ thì trả lại ảnh gốc có rồng, bỏ canvas');
+    check(/rong-bay-doi-bizon-v6\.webp/.test(tra) && !(await p.$('#login3d canvas[data-rong]')), w + 'px: gỡ thì trả lại ảnh gốc có rồng, bỏ canvas');
     await p.evaluate(() => { window.__l3Rong = Game3DRong.mount(document.getElementById('login3d')); });
     await p.waitForFunction(() => window.__l3Rong && window.__l3Rong.ready && window.__l3Rong.nen, null, { timeout: 120000 });
     check(st.canvas && st.first && st.cw === w && st.ch === h, w + 'px: canvas phủ cả màn, nằm dưới thẻ đăng nhập');

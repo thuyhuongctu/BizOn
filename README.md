@@ -53,7 +53,7 @@ A riverside street-vendor start-up on a Mekong floating market. Each week you pi
 [Play in 3D](https://bizonland.com/ben-phu-sa-3d.html) · [3D team play](https://bizonland.com/ben-phu-sa-v8.html) · [2D](https://bizonland.com/ben-phu-sa.html) · [Trailer](https://bizonland.com/assets/video/ben-phu-sa-trailer-v2-720p.mp4)
 </td>
 <td width="50%" valign="top">
-<a href="https://bizonland.com/BizOn%20Game%203D.html"><img src="assets/covers/bat-nghiep-3d-v3.webp" alt="Bật Nghiệp"></a>
+<a href="https://bizonland.com/BizOn%20Game%203D.html"><img src="assets/covers/bat-nghiep-3d-v4.webp" alt="Bật Nghiệp"></a>
 
 **Level 2 · Running a business — Bật Nghiệp**<br>
 Build and run a company through multi-round strategic decisions in a Vietnamese market. You face three rival CEOs, and the AI advisor Lumina guides you.<br>
