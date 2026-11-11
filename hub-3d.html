@@ -50,14 +50,18 @@
   #bb-stage .dc-ui { z-index:4; }
   #bb-exit { position:absolute; z-index:5; left:max(12px,env(safe-area-inset-left,0px)); top:calc(12px + env(safe-area-inset-top,0px)); min-height:46px; padding:10px 16px; border:0; border-radius:999px; background:#fff; color:#033337; font-weight:800; font-size:14px; cursor:pointer; box-shadow:0 8px 20px -8px rgba(0,40,50,.5), inset 0 -3px 0 rgba(0,0,0,.08); }
   #bb-exit:focus-visible, #bb-goc:focus-visible { outline:3px solid #fda127; outline-offset:2px; }
-  #bb-goc { position:absolute; z-index:5; left:max(12px,env(safe-area-inset-left,0px)); top:calc(66px + env(safe-area-inset-top,0px)); min-height:44px; padding:9px 14px; border:0; border-radius:999px; background:#fff; color:#033337; font-weight:800; font-size:13px; cursor:pointer; box-shadow:0 8px 20px -8px rgba(0,40,50,.5), inset 0 -3px 0 rgba(0,0,0,.08); }
+  /* Hai nút cho tay phải ở góc phải dưới (specs/003, câu chuyện 2): chạy/đi và góc nhìn */
+  #bb-nut-phai { position:absolute; z-index:5; right:max(16px,env(safe-area-inset-right,0px)); bottom:calc(18px + env(safe-area-inset-bottom,0px)); display:flex; flex-direction:column; gap:10px; }
+  #bb-chay, #bb-goc { width:52px; height:52px; padding:0; border:0; border-radius:50%; background:#fff; color:#033337; font-size:22px; line-height:52px; text-align:center; cursor:pointer; box-shadow:0 6px 16px -6px rgba(0,40,50,.55); }
+  #bb-chay:focus-visible { outline:3px solid #fda127; outline-offset:2px; }
+  #bb-chay[aria-pressed="true"] { background:#fda127; color:#033337; }
   #bb-goc[aria-pressed="true"] { background:#006687; color:#fff; }
   #bb-hint, #bb-note { position:absolute; z-index:3; left:50%; transform:translateX(-50%); width:max-content; max-width:calc(100% - 24px); margin:0; padding:7px 14px; border-radius:999px; font-size:12px; font-weight:700; text-align:center; pointer-events:none; }
   #bb-hint { top:calc(70px + env(safe-area-inset-top,0px)); background:rgba(3,51,55,.78); color:#fff; }
   #bb-note { top:calc(108px + env(safe-area-inset-top,0px)); background:#fff3da; color:#4a3210; box-shadow:0 4px 12px -5px rgba(0,40,50,.5); }
   #bb-hint[hidden], #bb-note[hidden] { display:none; }
-  /* Cột trái trên (specs/003, câu chuyện 1): bảng nhiệm vụ, dưới nó là dòng báo trạng thái tải */
-  #bb-cot { position:absolute; z-index:3; left:max(12px,env(safe-area-inset-left,0px)); top:calc(118px + env(safe-area-inset-top,0px)); width:min(300px, calc(100% - 24px)); display:flex; flex-direction:column; align-items:flex-start; gap:8px; pointer-events:none; }
+  /* Cột trái trên (specs/003, câu chuyện 1): bảng nhiệm vụ ngay dưới nút «Thoát» (chỗ cũ của nút góc nhìn), dưới nó là dòng báo trạng thái tải */
+  #bb-cot { position:absolute; z-index:3; left:max(12px,env(safe-area-inset-left,0px)); top:calc(66px + env(safe-area-inset-top,0px)); width:min(300px, calc(100% - 24px)); display:flex; flex-direction:column; align-items:flex-start; gap:8px; pointer-events:none; }
   #bb-cot #bb-note { position:static; transform:none; max-width:100%; }
   /* màn ngang thấp: thẻ «Vào» (rộng tối đa 430 px, giữa màn) nằm ngang tầm bảng, nên bảng chỉ chiếm khoảng trống bên trái thẻ */
   @media (max-height:420px) and (min-width:560px) { #bb-cot { width:max(120px, calc((100% - 430px) / 2 - 20px)); } }
@@ -179,7 +183,10 @@
     <div id="bb-labels" aria-hidden="true"></div>
     <div id="bb-tag" aria-hidden="true"></div>
     <button type="button" id="bb-exit" data-en="✕ Exit">✕ Thoát</button>
-    <button type="button" id="bb-goc" aria-pressed="false" data-en="🎥 Top view">🎥 Nhìn từ trên</button>
+    <div id="bb-nut-phai">
+      <button type="button" id="bb-chay" aria-pressed="false" aria-label="Luôn chạy" data-en-aria="Always run" title="Luôn chạy"><span aria-hidden="true">🚶</span></button>
+      <button type="button" id="bb-goc" aria-pressed="false" aria-label="Nhìn từ trên" data-en-aria="Top view" title="Nhìn từ trên"><span aria-hidden="true">🎥</span></button>
+    </div>
     <p id="bb-hint" data-en="Drag to walk · go close, press “Enter”">Kéo cần để đi · tới gần rồi bấm «Vào»</p>
     <div id="bb-cot">
       <section id="bb-nv" aria-label="Nhiệm vụ" data-en-aria="Quest"></section>
