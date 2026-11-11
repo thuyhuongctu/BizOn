@@ -60,6 +60,34 @@
   #bb-hint { top:calc(70px + env(safe-area-inset-top,0px)); background:rgba(3,51,55,.78); color:#fff; }
   #bb-note { top:calc(108px + env(safe-area-inset-top,0px)); background:#fff3da; color:#4a3210; box-shadow:0 4px 12px -5px rgba(0,40,50,.5); }
   #bb-hint[hidden], #bb-note[hidden] { display:none; }
+  /* Cột trái trên (specs/003, câu chuyện 1): bảng nhiệm vụ ngay dưới nút «Thoát» (chỗ cũ của nút góc nhìn), dưới nó là dòng báo trạng thái tải */
+  #bb-cot { position:absolute; z-index:3; left:max(12px,env(safe-area-inset-left,0px)); top:calc(66px + env(safe-area-inset-top,0px)); width:min(300px, calc(100% - 24px)); display:flex; flex-direction:column; align-items:flex-start; gap:8px; pointer-events:none; }
+  #bb-cot #bb-note { position:static; transform:none; max-width:100%; }
+  /* màn ngang thấp: thẻ «Vào» (rộng tối đa 430 px, giữa màn) nằm ngang tầm bảng, nên bảng chỉ chiếm khoảng trống bên trái thẻ */
+  @media (max-height:420px) and (min-width:560px) { #bb-cot { width:max(120px, calc((100% - 430px) / 2 - 20px)); } }
+  #bb-nv { pointer-events:auto; width:100%; box-sizing:border-box; background:rgba(255,255,255,.95); color:#033337; border-radius:18px; padding:4px 4px 8px 12px; box-shadow:0 6px 16px -8px rgba(0,40,50,.55); font-size:12.5px; line-height:1.4; }
+  #bb-nv:empty { display:none; }
+  #bb-nv .nv-dau { display:flex; align-items:center; justify-content:space-between; gap:4px; }
+  #bb-nv .nv-ten { margin:0; font-weight:800; font-size:13px; }
+  #bb-nv-tien { display:inline-block; margin-left:4px; padding:1px 8px; border-radius:999px; background:#e3f1f4; color:#006687; font-size:12px; }
+  #bb-nv-gon { flex:none; width:44px; height:44px; border:0; border-radius:50%; background:transparent; color:#006687; font-size:16px; font-weight:800; cursor:pointer; }
+  #bb-nv-than { padding-right:8px; }
+  #bb-nv-than[hidden], #bb-nv-ds[hidden], #bb-nv-chuc[hidden], #bb-nv button[hidden], #bb-nv-tiep-theo[hidden] { display:none; }
+  #bb-nv-tiep-theo { margin:0 0 4px; font-weight:700; color:#7a4a0e; }
+  #bb-nv-ds { list-style:none; margin:0; padding:0; }
+  #bb-nv-ds li { padding:1px 0; }
+  #bb-nv-ds li.xong { color:#3b6b55; }
+  #bb-nv-chuc { margin:0 0 4px; font-weight:700; }
+  #bb-nv .nv-nut { display:flex; flex-wrap:wrap; gap:8px; margin-top:6px; }
+  #bb-nv .nv-nut button { min-height:44px; padding:9px 14px; border:0; border-radius:999px; background:#006687; color:#fff; font:inherit; font-weight:800; cursor:pointer; }
+  #bb-nv-tiep { background:#fda127 !important; color:#033337 !important; }
+  #bb-nv button:focus-visible { outline:3px solid #fda127; outline-offset:2px; }
+  #bb-nv .nv-an { position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; margin:0; }
+  html[data-theme="dark"] #bb-nv { background:rgba(14,42,51,.95); color:#d6ecf0; }
+  html[data-theme="dark"] #bb-nv-tien { background:#123c48; color:#9fe0ee; }
+  html[data-theme="dark"] #bb-nv-tiep-theo { color:#ffd08a; }
+  html[data-theme="dark"] #bb-nv-gon { color:#9fe0ee; }
+  html[data-theme="dark"] #bb-nv-ds li.xong { color:#9fd8b8; }
 
   #bb-dlg { position:absolute; inset:0; z-index:6; display:none; align-items:flex-end; justify-content:center; background:rgba(2,20,24,.35); padding:18px; }
   #bb-dlg.on { display:flex; }
@@ -160,7 +188,10 @@
       <button type="button" id="bb-goc" aria-pressed="false" aria-label="Nhìn từ trên" data-en-aria="Top view" title="Nhìn từ trên"><span aria-hidden="true">🎥</span></button>
     </div>
     <p id="bb-hint" data-en="Drag to walk · go close, press “Enter”">Kéo cần để đi · tới gần rồi bấm «Vào»</p>
-    <p id="bb-note" role="status" aria-live="polite" hidden></p>
+    <div id="bb-cot">
+      <section id="bb-nv" aria-label="Nhiệm vụ" data-en-aria="Quest"></section>
+      <p id="bb-note" role="status" aria-live="polite" hidden></p>
+    </div>
     <div id="bb-dlg" role="dialog" aria-modal="true" aria-labelledby="bb-dlg-name">
       <div id="bb-dlg-box">
         <button type="button" id="bb-dlg-close" aria-label="Đóng" data-en-aria="Close">✕</button>
