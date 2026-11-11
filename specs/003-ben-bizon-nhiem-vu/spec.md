@@ -4,7 +4,7 @@
 
 **Ngày tạo**: 2026-11-11
 
-**Trạng thái**: Bản nháp, chờ chị trả lời phần làm rõ
+**Trạng thái**: Đã làm rõ ngày 11/11/2026, chờ chị duyệt kế hoạch
 
 **Đầu vào**: Chị gửi hai video quay một game khám phá thành phố 3D (tác giả Hoàng Phan, Nha Trang) và nói «Bạn tham
 khảo thêm các video này». Em đề xuất học hai cơ chế: **(1) bảng nhiệm vụ** có danh sách việc tích ô và «việc tiếp
@@ -38,7 +38,14 @@ chụp ảnh lưu niệm 0/1). Điện thoại: cần gạt ảo tròn ở góc 
 
 ## Làm rõ
 
-*(Chờ chị trả lời; xem các câu hỏi ở cuối thư em gửi kèm. Chỗ chưa rõ đang đánh dấu `[CẦN LÀM RÕ]`.)*
+Chị trả lời ngày 11/11/2026 («1a, 2a, 3a, 4a»):
+
+1. **Việc trong nhiệm vụ «Làm quen»**: năm việc theo thứ tự (1) Hỏi đường Lumina, (2) Đọc Bảng tin, (3) Ghé Hành
+   trình 3 bậc, (4) Hỏi thầy Tu Phan game dựng trên mô hình nào, (5) Xem Bảng thành tích; xong thì gợi ý vào Bến Phù Sa.
+2. **Câu hỏi nhanh ở mỗi điểm game**: em soạn 6 câu từ mô tả game đang có trên bến; chị duyệt câu chữ trong PR của
+   câu chuyện 3 trước khi gộp.
+3. **Tiến độ nhiệm vụ**: chỉ lưu trên máy sinh viên, không gửi đi đâu; không có migration Supabase.
+4. **Nút chạy/đi**: bấm để chuyển giữa nhịp «tự động» (như hiện nay) và «luôn chạy».
 
 **Thuật ngữ**: «nhiệm vụ» là một nhóm việc nhỏ có tên; «việc» là một dòng tích ô trong nhiệm vụ; «việc tiếp theo» là
 việc đầu tiên chưa xong của nhiệm vụ đang theo.
@@ -49,7 +56,7 @@ việc đầu tiên chưa xong của nhiệm vụ đang theo.
 
 Sinh viên mở Bến BizOn lần đầu trong giờ học. Góc trái trên hiện bảng nhiệm vụ «Làm quen Bến BizOn» với vài việc tích
 ô (ví dụ: hỏi đường Lumina, đọc Bảng tin, ghé một bậc game, hỏi thầy Tu Phan, xem Bảng thành tích)
-`[CẦN LÀM RÕ: danh sách việc chính thức]`. Bảng luôn ghi «việc tiếp theo» và tiến độ (ví dụ 2/5), kèm nút «Dẫn
+(danh sách chính thức: mục Làm rõ, câu 1). Bảng luôn ghi «việc tiếp theo» và tiến độ (ví dụ 2/5), kèm nút «Dẫn
 đường» đưa tới đúng điểm của việc đó (dùng lối tắt «Đi tới…» đã có). Làm xong việc nào thì dòng đó được tích; xong
 cả nhiệm vụ thì hiện lời chúc và gợi ý bước kế tiếp là vào Bậc 1 (Bến Phù Sa).
 
@@ -113,7 +120,7 @@ lâu), trả lời đúng thì tích việc của nhiệm vụ «Một vòng qua
 thẻ) và thử lại; không bị trừ gì.
 
 **Vì sao P3**: giúp sinh viên nắm bức tranh ba bậc trước khi chọn game, nhưng cần nội dung câu hỏi được duyệt
-`[CẦN LÀM RÕ: ai soạn và duyệt câu hỏi]`, nên đi sau.
+(em soạn, chị duyệt: mục Làm rõ, câu 2), nên đi sau.
 
 **Cách thử độc lập**: tới thẻ Bến Phù Sa, mở «Câu hỏi nhanh», chọn sai rồi chọn đúng → lần sai hiện gợi ý, lần đúng
 tích việc «Bến Phù Sa» trong nhiệm vụ «Một vòng quanh bến».
@@ -147,13 +154,13 @@ tích việc «Bến Phù Sa» trong nhiệm vụ «Một vòng quanh bến».
 
 - **FR-001**: Bến BizOn PHẢI hiện một bảng nhiệm vụ ở góc trái trên khi người chơi đã vào cảnh, gồm tên nhiệm vụ, tiến
   độ «đã xong/tổng số việc», «việc tiếp theo», nút «Dẫn đường» và nút thu gọn.
-- **FR-002**: Nhiệm vụ đầu tiên là «Làm quen Bến BizOn» gồm 4–6 việc, mỗi việc gắn với một điểm có sẵn trên bến và một
+- **FR-002**: Nhiệm vụ đầu tiên là «Làm quen Bến BizOn» gồm đúng 5 việc ở mục Làm rõ câu 1, mỗi việc gắn với một điểm có sẵn trên bến và một
   hành động đo được (mở hội thoại, đọc bảng, đứng ở thẻ, mở bảng thành tích, vào game).
 - **FR-003**: Một việc PHẢI được tích ngay khi hành động của nó xảy ra, bất kể thứ tự; «việc tiếp theo» là việc chưa
   xong đầu tiên trong danh sách.
 - **FR-004**: «Dẫn đường» PHẢI đưa người chơi tới đúng điểm của «việc tiếp theo» bằng cùng cơ chế với «Đi tới…».
 - **FR-005**: Tiến độ và trạng thái mở/gọn của bảng PHẢI được lưu trên máy người dùng và đọc lại khi mở trang; không gửi
-  đi đâu `[CẦN LÀM RÕ: có gửi tiến độ cho giảng viên khi có mã lớp không]`.
+  đi đâu (mục Làm rõ, câu 3).
 - **FR-006**: Xong nhiệm vụ thì hiện lời chúc và gợi ý bước kế tiếp; bảng thu gọn thành một dòng.
 - **FR-007**: Trên điện thoại, góc phải dưới PHẢI có nút «chạy/đi» và nút «góc nhìn», mỗi nút ≥ 44 × 44 px; nút
   «Góc nhìn» cũ ở góc trái trên được chuyển xuống đây (không để hai nút cùng việc).
@@ -203,7 +210,7 @@ Cố vấn Lumina và thầy Tu Phan vẫn chỉ gợi hướng, không chọn g
 
 - Chỉ áp dụng cho **Bến BizOn** (`hub-3d.html`); không đổi các game 3D khác.
 - Tiến độ chỉ lưu trên máy (giống «đã ghé» và «vai đã chọn» hiện nay), cho tới khi chị quyết khác.
-- Nhiệm vụ «Làm quen» (đề xuất, chờ chị duyệt): (1) Hỏi đường Lumina; (2) Đọc Bảng tin; (3) Ghé Hành trình 3 bậc;
+- Nhiệm vụ «Làm quen» (chị đã duyệt ngày 11/11/2026): (1) Hỏi đường Lumina; (2) Đọc Bảng tin; (3) Ghé Hành trình 3 bậc;
   (4) Hỏi thầy Tu Phan game dựng trên mô hình nào; (5) Xem Bảng thành tích. Bước kế tiếp sau khi xong: vào Bến Phù Sa.
 - Không học các phần khác trong video: ví tiền, năng lượng, mảnh ghép, taxi, ảnh 360°, thời tiết (có thể làm đặc tả
   riêng sau).

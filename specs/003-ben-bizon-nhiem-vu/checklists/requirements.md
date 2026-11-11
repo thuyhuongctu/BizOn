@@ -13,7 +13,7 @@
 
 ## Độ đầy đủ của yêu cầu
 
-- [ ] Không còn đánh dấu [CẦN LÀM RÕ] (còn 3, chờ chị trả lời)
+- [x] Không còn đánh dấu [CẦN LÀM RÕ] (chị trả lời ngày 11/11/2026)
 - [x] Yêu cầu kiểm được và không mơ hồ
 - [x] Tiêu chí thành công đo được
 - [x] Tiêu chí thành công không nói tới công nghệ
@@ -31,5 +31,4 @@
 
 ## Ghi chú
 
-- Ba chỗ [CẦN LÀM RÕ]: danh sách việc của nhiệm vụ «Làm quen» (đã có đề xuất ở mục Giả định), ai soạn và duyệt câu hỏi
-  nhanh, có gửi tiến độ cho giảng viên khi có mã lớp không. Hỏi chị trong lượt làm rõ.
+- Ba chỗ [CẦN LÀM RÕ] và câu về nút chạy/đi đã được chị trả lời ngày 11/11/2026 (1a, 2a, 3a, 4a), ghi ở mục Làm rõ.
