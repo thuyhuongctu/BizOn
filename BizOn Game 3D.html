@@ -78,7 +78,7 @@
   #frame{position:fixed;z-index:30;background:#f4faff;overflow:hidden;transition:transform .35s cubic-bezier(.3,1,.4,1)}
   #frame iframe{border:0;width:100%;height:100%;display:block}
   #frame.full{inset:0}
-  #login3d{position:fixed;z-index:40;inset:0;display:none;pointer-events:none;background:#2a2340 url('assets/illustrations/rong-bay-doi-bizon-v5.webp') center/cover no-repeat}
+  #login3d{position:fixed;z-index:40;inset:0;display:none;pointer-events:none;background:#2a2340 url('assets/illustrations/rong-bay-doi-bizon-v6.webp') center/cover no-repeat}
   @media (max-width:600px){ #login3d, #boot{background-position:58% 22% !important} } /* điện thoại dọc: giữ rồng + nhân vật trong khung thay vì nửa khuôn mặt */
   body.login3d #login3d{display:block} body.login3d #frame{visibility:hidden} body.login3d .hud,body.login3d #zones,body.login3d #more{display:none!important}
   body.diorama #cta,body.diorama #rail [data-tab],body.diorama #rgCo{display:none!important}
@@ -291,7 +291,7 @@
 <link rel="stylesheet" href="css/bn2-grade.css">
 </head>
 <body>
-<div id="boot" style="position:fixed;inset:0;z-index:200;background:#2a2340 url('assets/illustrations/rong-bay-doi-bizon-v5.webp') center/cover no-repeat;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;font-family:'Baloo 2','Be Vietnam Pro',sans-serif;color:#2b4a55;transition:opacity .5s">
+<div id="boot" style="position:fixed;inset:0;z-index:200;background:#2a2340 url('assets/illustrations/rong-bay-doi-bizon-v6.webp') center/cover no-repeat;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;font-family:'Baloo 2','Be Vietnam Pro',sans-serif;color:#2b4a55;transition:opacity .5s">
 
   <div style="font-size:26px;font-weight:800;letter-spacing:.5px;white-space:nowrap;text-align:center;color:#fff;text-shadow:0 3px 0 rgba(0,0,0,.35),0 8px 24px rgba(0,0,0,.4)">BẬT NGHIỆP</div>
   <div style="width:min(320px,70vw);height:14px;border-radius:10px;background:#dccbb0;border:2px solid #cbb797;overflow:hidden"><div id="bootBar" style="height:100%;width:4%;background:#2f8a8c;border-radius:10px;transition:width .35s"></div></div>
@@ -1140,7 +1140,7 @@ function confettiRoom() { const c = RM.cp ? RM.cl : new THREE.Vector3(); for (le
   m.position.set(c.x + (Math.random() - 0.5) * 5, 5 + Math.random() * 2, c.z + (Math.random() - 0.5) * 3); RM.scene.add(m); (RM.conf ??= []).push({ m, v: new THREE.Vector3((Math.random() - 0.5), -Math.random() * 0.5, (Math.random() - 0.5)), r: (Math.random() - 0.5) * 12, life: 5 }); } }
 const BUILD = { shop: buildShop, skills: buildSkills, achievements: buildAch, leaderboard: buildLB, minigame: buildMG };
 // Bàn quyết định không dùng ảnh minh họa: ảnh làm thẻ tiêu đề cao lên và che hàng núm trên cùng.
-const ROOM_SCENE = { reports: 'ceo-cfo-revenue-targets', journal: 'sec-compliance-checklist', market: 'ceo-sec-market-checkpoint-hstss', missions: 'goo-coo-production-planning', profile: 'team-holo-meeting', achievements: 'rong-bay-doi-bizon-v5', leaderboard: 'team-victory-celebration' };
+const ROOM_SCENE = { reports: 'ceo-cfo-revenue-targets', journal: 'sec-compliance-checklist', market: 'ceo-sec-market-checkpoint-hstss', missions: 'goo-coo-production-planning', profile: 'team-holo-meeting', achievements: 'rong-bay-doi-bizon-v6', leaderboard: 'team-victory-celebration' };
 function room3D(mode) { closeEvent(); if (RM.mode !== mode) RM.sel = null; RM.mode = mode; mgRes = null; BUILD[mode]();
   { const im = document.getElementById('rmScene'), k = ROOM_SCENE[mode]; if (k && innerWidth >= 760) { im.onerror = () => { im.style.display = 'none'; }; im.src = 'assets/illustrations/' + k + '.webp'; im.style.display = 'block'; } else im.style.display = 'none'; } RM.on = true; controls.enabled = false; document.body.classList.add('room'); resizeRoom(); }
 function closeRoom() { if (mgRun) { ev('endMinigame()'); mgRun = false; } RM.on = false; controls.enabled = true; document.body.classList.remove('room'); }
