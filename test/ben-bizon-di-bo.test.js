@@ -40,7 +40,7 @@ const overlap = (a, b) => a && b && a.on && b.on && a.x < b.r && b.x < a.r && a.
     if (o.init) await pg.addInitScript(o.init);
     await pg.route(/\.(mp3|m4a|mp4)(\?|$)/, r => r.abort());
     if (o.noGlb) await pg.route(/\.glb(\?|$)/, r => r.abort());
-    await pg.goto(BASE + '/hub-3d.html', { waitUntil: 'load', timeout: 60000 });
+    await pg.goto(BASE + '/hub-3d.html?nv=3d', { waitUntil: 'load', timeout: 60000 });   // kiểm mô hình 3D (tranh động là mặc định từ 11/11/2026)
     return pg;
   };
   const pick = async (pg, vai = 'ceo') => { await pg.click(`#bb-pick [data-vai="${vai}"]`); return until(pg, () => window.__benBizon && window.__benBizon.state().ready); };
