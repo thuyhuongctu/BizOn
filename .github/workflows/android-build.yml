@@ -1,30 +1,77 @@
-# Build Android App Bundle (.aab) từ PWA bằng Bubblewrap (Trusted Web Activity)
+# Đóng gói BizOn để đưa lên Google Play: .aab đã ký cho ứng dụng io.github.thuyhuongctu.bizon
+# (Trusted Web Activity bọc bizonland.com, dựng bằng Bubblewrap từ android/twa-manifest.json).
 #
-# Chạy thủ công (workflow_dispatch). Yêu cầu 4 secret của repo:
-#   KEYSTORE_BASE64   — tệp android.keystore mã hóa base64 (tạo cục bộ bằng keytool, KHÔNG commit vào repo)
+# Chạy tay: Actions → «Build Android (.aab) cho CH Play» → Run workflow.
+# Cần 4 secret của kho (Settings → Secrets and variables → Actions):
+#   KEYSTORE_BASE64   — tệp khóa tải lên (upload key) đã dùng cho bản 1.1.0, mã hóa base64:
+#                       base64 -w0 android.keystore   (macOS: base64 -i android.keystore)
 #   KEYSTORE_PASSWORD — mật khẩu keystore
-#   KEY_ALIAS         — bí danh khóa (mặc định: bizon)
+#   KEY_ALIAS         — bí danh khóa (twa-manifest ghi: bizon)
 #   KEY_PASSWORD      — mật khẩu khóa
+# KHÔNG commit keystore hay mật khẩu vào kho. KHÔNG tạo khóa mới: Play chỉ nhận bản ký bằng
+# khóa tải lên đã đăng ký (SHA-256 13:8A:…:1A:51); workflow tự dừng nếu khóa không khớp.
 #
-# Tạo keystore cục bộ (một lần, giữ tệp thật cẩn thận):
-#   keytool -genkeypair -v -keystore android.keystore -alias bizon \
-#     -keyalg RSA -keysize 2048 -validity 10000
-#   base64 -w0 android.keystore   # dán kết quả vào secret KEYSTORE_BASE64
+# Ghi chú: dự án Gradle trong android/app (vn.bizon.simulation) là bản thử cũ, không phải ứng
+# dụng trên Play; workflow này không dùng nó.
 
-name: Build Android (.aab)
+name: Build Android (.aab) cho CH Play
 
 on:
   workflow_dispatch:
+    inputs:
+      version_code:
+        description: versionCode mới (số nguyên, lớn hơn bản đã tải lên Play). Bỏ trống = lấy từ twa-manifest.json
+        required: false
+        type: string
+      version_name:
+        description: versionName hiển thị (ví dụ 1.2.1). Bỏ trống = lấy từ twa-manifest.json
+        required: false
+        type: string
 
-# Chỉ cần đọc mã nguồn; không ghi gì lên kho (rà soát 03/11/2026)
+# Chỉ cần đọc mã nguồn; không ghi gì lên kho
 permissions:
   contents: read
+
+env:
+  PACKAGE_ID: io.github.thuyhuongctu.bizon
+  # Vân tay SHA-256 của khóa tải lên đã đăng ký trên Play Console (có trong .well-known/assetlinks.json)
+  UPLOAD_KEY_SHA256: '13:8A:EC:DC:9D:89:F8:67:C0:2E:61:2E:E0:22:F2:9B:9B:3B:31:80:44:6A:21:79:4A:D4:9C:4F:6A:CA:1A:51'
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
+
+      - name: Kiểm tra secret và tham số
+        shell: bash
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          IN_VERSION_CODE: ${{ inputs.version_code }}
+          IN_VERSION_NAME: ${{ inputs.version_name }}
+        run: |
+          set -euo pipefail
+          for name in KEYSTORE_BASE64 KEYSTORE_PASSWORD KEY_ALIAS KEY_PASSWORD; do
+            test -n "${!name}" || { echo "::error::Thiếu secret $name (xem chú thích đầu workflow)"; exit 1; }
+          done
+          if [ -n "$IN_VERSION_CODE" ]; then
+            [[ "$IN_VERSION_CODE" =~ ^[1-9][0-9]*$ ]] || { echo '::error::version_code phải là số nguyên dương'; exit 1; }
+          fi
+          if [ -n "$IN_VERSION_NAME" ]; then
+            [[ "$IN_VERSION_NAME" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo '::error::version_name phải dạng 1.2.3'; exit 1; }
+          fi
+
+      - name: Kiểm tra Digital Asset Links trên bizonland.com
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fsSL https://bizonland.com/.well-known/assetlinks.json -o /tmp/assetlinks.json
+          grep -q "\"$PACKAGE_ID\"" /tmp/assetlinks.json || { echo '::error::assetlinks.json chưa khai báo package'; exit 1; }
+          grep -q "$UPLOAD_KEY_SHA256" /tmp/assetlinks.json || { echo '::error::assetlinks.json chưa có vân tay khóa tải lên'; exit 1; }
 
       - uses: actions/setup-node@v4
         with:
@@ -35,29 +82,78 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - name: Cài Bubblewrap CLI
-        run: npm install -g @bubblewrap/cli
+      - name: Cài Android SDK
+        uses: android-actions/setup-android@v3
+        with:
+          packages: 'platform-tools'
 
-      - name: Khôi phục keystore từ secret
-        working-directory: android
-        run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > android.keystore
+      - name: Cài Bubblewrap CLI
+        run: npm install -g @bubblewrap/cli@1.24.1
+
+      - name: Dựng dự án TWA từ twa-manifest.json
+        shell: bash
+        env:
+          IN_VERSION_CODE: ${{ inputs.version_code }}
+          IN_VERSION_NAME: ${{ inputs.version_name }}
+        run: |
+          set -euo pipefail
+          mkdir -p ~/.bubblewrap
+          printf '{"jdkPath":"%s","androidSdkPath":"%s"}\n' "$JAVA_HOME" "$ANDROID_HOME" > ~/.bubblewrap/config.json
+          mkdir -p "$RUNNER_TEMP/twa"
+          node - <<'JS'
+          const fs = require('fs');
+          const m = JSON.parse(fs.readFileSync('android/twa-manifest.json', 'utf8'));
+          if (m.packageId !== process.env.PACKAGE_ID) throw new Error('packageId trong twa-manifest.json không phải ' + process.env.PACKAGE_ID);
+          if (process.env.IN_VERSION_CODE) m.appVersionCode = Number(process.env.IN_VERSION_CODE);
+          if (process.env.IN_VERSION_NAME) m.appVersionName = m.appVersion = process.env.IN_VERSION_NAME;
+          fs.writeFileSync(process.env.RUNNER_TEMP + '/twa/twa-manifest.json', JSON.stringify(m, null, 2));
+          console.log(`Đóng gói ${m.packageId} ${m.appVersionName} (versionCode ${m.appVersionCode}), host ${m.host}`);
+          JS
+          cd "$RUNNER_TEMP/twa"
+          bubblewrap update --skipVersionUpgrade < /dev/null
+          chmod +x gradlew
 
       - name: Build .aab
-        working-directory: android
+        working-directory: ${{ runner.temp }}/twa
+        run: ./gradlew bundleRelease --no-daemon --stacktrace
+
+      - name: Ký .aab bằng khóa tải lên và đối chiếu vân tay
+        shell: bash
+        working-directory: ${{ runner.temp }}/twa
         env:
-          BUBBLEWRAP_KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-          BUBBLEWRAP_KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: |
-          bubblewrap build \
-            --skipPwaValidation \
-            --signingKeyPath ./android.keystore \
-            --signingKeyAlias "${{ secrets.KEY_ALIAS }}"
+          set -euo pipefail
+          printf '%s' "$KEYSTORE_BASE64" | base64 --decode > "$RUNNER_TEMP/upload.keystore"
+          chmod 600 "$RUNNER_TEMP/upload.keystore"
+          FP=$(keytool -list -v -keystore "$RUNNER_TEMP/upload.keystore" -storepass:env KEYSTORE_PASSWORD -alias "$KEY_ALIAS" \
+                 | sed -n 's/.*SHA256: *//p' | head -1 | tr -d '[:space:]')
+          if [ "$FP" != "$UPLOAD_KEY_SHA256" ]; then
+            echo "::error::Khóa trong secret có SHA-256 $FP, không phải khóa tải lên đã đăng ký trên Play ($UPLOAD_KEY_SHA256). Play sẽ từ chối bản này."
+            exit 1
+          fi
+          AAB=app/build/outputs/bundle/release/app-release.aab
+          jarsigner -sigalg SHA256withRSA -digestalg SHA-256 \
+            -keystore "$RUNNER_TEMP/upload.keystore" -storepass:env KEYSTORE_PASSWORD -keypass:env KEY_PASSWORD \
+            "$AAB" "$KEY_ALIAS"
+          jarsigner -verify "$AAB" | grep -q 'jar verified'
+          V=$(node -p "const m=require('./twa-manifest.json'); m.appVersionName+'-'+m.appVersionCode")
+          mkdir -p "$GITHUB_WORKSPACE/out"
+          cp "$AAB" "$GITHUB_WORKSPACE/out/BizOn-$V.aab"
+          (cd "$GITHUB_WORKSPACE/out" && sha256sum "BizOn-$V.aab" > "BizOn-$V.aab.sha256")
+          echo "Đã ký BizOn-$V.aab bằng khóa $FP" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Xóa keystore
+        if: always()
+        run: rm -f "$RUNNER_TEMP/upload.keystore"
 
       - name: Tải lên artifact
         uses: actions/upload-artifact@v4
         with:
           name: bizon-aab
-          path: |
-            android/app-release-bundle.aab
-            android/app-release-signed.apk
+          path: out/
           if-no-files-found: error
+          retention-days: 30

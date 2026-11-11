@@ -96,3 +96,33 @@ Android shell chỉ khai báo quyền Internet. Nội dung, save và offline beh
 - Từ khi kho có `CNAME` = `bizonland.com`, địa chỉ `thuyhuongctu.github.io/BizOn/…` chuyển hướng 301 sang `bizonland.com`. Bản 1.1.0 (versionCode 1) chỉ khai báo `thuyhuongctu.github.io`, nên khi bị chuyển sang tên miền mới Chrome không xác minh được và hiện thanh địa chỉ.
 - Sửa: `twa-manifest.json` đổi `host` sang `bizonland.com`, `startUrl` `/index.html`, versionCode 2 (1.2.0), minSdk 24 (thư viện TWA hiện hành yêu cầu). `.well-known/assetlinks.json` của `bizonland.com` khai khóa ký của Play (B1:A9:…:7C:42) và khóa tải lên (13:8A:…:1A:51).
 - Thứ tự: đẩy `assetlinks.json` lên web trước, kiểm `https://bizonland.com/.well-known/assetlinks.json` trả 200, rồi mới tải bản .aab versionCode 2 lên Play.
+
+## Đóng gói và đưa lên CH Play (cập nhật 11/11/2026)
+
+Workflow **«Build Android (.aab) cho CH Play»** (`.github/workflows/android-build.yml`) dựng `.aab` đã ký cho
+`io.github.thuyhuongctu.bizon` từ `android/twa-manifest.json` bằng Bubblewrap 1.24.1. Đã thử dựng trọn
+(Bubblewrap → Gradle → jarsigner) trên máy sạch: ra `app-release.aab` khoảng 1,3 MB, targetSdk 36, versionCode 2.
+
+**Một lần:** thêm 4 secret trong Settings → Secrets and variables → Actions, lấy từ đúng tệp khóa đã ký bản 1.1.0:
+
+| Secret | Giá trị |
+|---|---|
+| `KEYSTORE_BASE64` | `base64 -w0 android.keystore` (macOS: `base64 -i android.keystore`) |
+| `KEYSTORE_PASSWORD` | mật khẩu keystore |
+| `KEY_ALIAS` | `bizon` |
+| `KEY_PASSWORD` | mật khẩu khóa |
+
+Không tạo khóa mới. Workflow đối chiếu SHA-256 của khóa với khóa tải lên đã đăng ký
+(`13:8A:…:1A:51`) và dừng nếu khác. Mất khóa tải lên thì xin đặt lại trong Play Console
+(Thiết lập → Tính toàn vẹn của ứng dụng → Yêu cầu đặt lại khóa tải lên).
+
+**Mỗi lần phát hành:**
+
+1. Actions → «Build Android (.aab) cho CH Play» → Run workflow. Nhập `version_code` lớn hơn bản đã có trên Play
+   (bỏ trống thì dùng versionCode trong `twa-manifest.json`, hiện là 2) và `version_name` nếu muốn.
+2. Tải artifact `bizon-aab` (tệp `BizOn-<phiên bản>.aab` kèm `.sha256`).
+3. Play Console → BizOn → Kiểm thử nội bộ → Tạo bản phát hành → tải `.aab` lên → Lưu → Xem xét → Phát hành.
+4. Cài từ đường dẫn kiểm thử nội bộ, mở app: không được hiện thanh địa chỉ (nếu hiện, Digital Asset Links lỗi).
+5. Ổn thì «Thăng cấp bản phát hành» sang Sản xuất.
+
+Sau khi phát hành, nâng `appVersionCode` và `appVersionName` trong `twa-manifest.json` cho khớp bản vừa tải lên.
