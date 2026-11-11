@@ -81,13 +81,13 @@ async function vao(pg, vai = 'ceo') {
     const c2 = await browser.newContext({ viewport: { width: 360, height: 740 }, hasTouch: true, isMobile: true }), p2 = await c2.newPage();
     await p2.addInitScript(() => { try { localStorage.setItem('bizon-lang', 'en'); } catch (e) {} });
     check(await vao(p2, 'cmo'), '360 px: vào được');
-    const r = await p2.evaluate(() => { const q = s => { const e = document.querySelector(s); if (!e) return null; const b = e.getBoundingClientRect(); return { x: b.left, y: b.top, r: b.right, b: b.bottom, w: b.width, h: b.height, t: e.textContent.trim() }; };
+    const r = await p2.evaluate(() => { const q = s => { const e = document.querySelector(s); if (!e) return null; const b = e.getBoundingClientRect(); return { x: b.left, y: b.top, r: b.right, b: b.bottom, w: b.width, h: b.height, t: (e.getAttribute('aria-label') || e.textContent).trim() }; };
       return { goc: q('#bb-goc'), exit: q('#bb-exit'), goto: q('.dc-goto-btn'), hint: q('#bb-hint'), sw: document.documentElement.scrollWidth, iw: innerWidth }; });
     const de = (a, b) => a && b && a.x < b.r && b.x < a.r && a.y < b.b && b.y < a.b;
     check(r.goc && r.goc.h >= 44 && r.goc.w >= 44 && r.goc.r <= 360 && r.goc.x >= 0, '360 px: nút góc máy chạm ≥ 44 px và nằm trong màn hình');
     check(!de(r.goc, r.exit) && !de(r.goc, r.goto), '360 px: nút góc máy không đè nút Thoát và «Đi tới…»');
     check(r.sw <= r.iw, '360 px: trang không tràn ngang');
-    check(/Top view/.test(r.goc.t), 'tiếng Anh: nút ghi «Top view»');
+    check(/Top view/.test(r.goc.t), 'tiếng Anh: nút góc máy có nhãn «Top view» (nút tròn chỉ có biểu tượng từ specs/003)');
     check(((await info(p2)).chiTiet || {}).co >= 200, '360 px: lớp chi tiết vẫn có (bản nhẹ)');
     await c2.close();
 

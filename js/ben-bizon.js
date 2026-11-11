@@ -16,6 +16,8 @@ import { makeCharacters } from '../bizon-characters.js';
 import { lamDayCanh } from './ben-bizon-canh.js';
 import { taoDangDi } from './ben-bizon-dang-di.js';
 import { taoTranhDong, BO_TRANH, diDuoc as coTranhDi } from './ben-bizon-tranh-dong.js';
+import { taoNhiemVu } from './ben-bizon-nhiem-vu.js';
+import { CAU_HOI, CHU_CAU_HOI } from './ben-bizon-cau-hoi.js';
 
 window.BIZON_CHAR_GLB = true;   // bật mô hình có xương cho riêng trang này (mặc định của kho vẫn tắt, PR #1024)
 
@@ -372,6 +374,7 @@ const stage = $('bb-stage'), canvas = $('bb-canvas'), note = $('bb-note'), tag =
 const dlg = $('bb-dlg'), fade = $('bb-fade');
 const nho = Math.min(window.innerWidth, window.innerHeight) < 700;
 let noteGiu = '', noteT = 0, nhac = null, nhacBat = false, tLoad = 0, tBatDau = 0, daDi = false;
+let nv = null, ganTruoc = null;   // bảng nhiệm vụ (specs/003, câu chuyện 1) và điểm gần ở khung trước (để báo «đã tới thẻ»)
 const nhanNoi = [];
 
 function datNote(chu, tam) { note.textContent = chu || ''; note.hidden = !chu; if (tam) { clearTimeout(noteT); noteT = setTimeout(() => datNote(noteGiu), tam); } else noteGiu = chu || ''; }
@@ -392,14 +395,52 @@ function datLen(e, x, y, z, xaToiDa, px, pz) {
 // hội thoại của cố vấn, bảng tin, bảng thành tích
 let thoai = null, thoaiI = 0;
 function veThoai() {
+  if (thoai.cauHoi) return veCauHoi();
   const c = thoai.cau[thoaiI], cuoi = thoaiI === thoai.cau.length - 1;
   $('bb-dlg-name').textContent = L(thoai.ten); $('bb-dlg-text').textContent = typeof c === 'string' ? c : L(c);
   $('bb-dlg-avatar').src = thoai.anh; $('bb-dlg-next').textContent = L(cuoi ? CHU.dong : CHU.tiep);
   const a = $('bb-dlg-cta'); a.hidden = !(cuoi && thoai.cta); if (thoai.cta) { a.textContent = L(thoai.cta.nhan); a.href = thoai.cta.url; }
 }
 function moThoai(t, ai) { thoai = t; thoaiI = 0; noiChuyen = ai || null; veThoai(); dlg.classList.add('on'); if (dc) dc.dung(true); $('bb-dlg-next').focus(); }
-function dongThoai() { dlg.classList.remove('on'); thoai = null; noiChuyen = null; if (dc) dc.dung(false); const b = stage.querySelector('.dc-vao'); if (b && b.offsetParent) b.focus(); }
-$('bb-dlg-next').addEventListener('click', () => { if (!thoai) return; if (thoaiI < thoai.cau.length - 1) { thoaiI++; veThoai(); } else dongThoai(); });
+function dongThoai() { dlg.classList.remove('on'); thoai = null; noiChuyen = null; $('bb-dlg-chon').hidden = true; $('bb-dlg-phan').hidden = true; if (dc) dc.dung(false); const b = stage.querySelector('.dc-vao'); if (b && b.offsetParent) b.focus(); }
+$('bb-dlg-next').addEventListener('click', () => { if (!thoai) return; if (thoai.cauHoi || thoaiI >= thoai.cau.length - 1) dongThoai(); else { thoaiI++; veThoai(); } });
+
+// báo sự kiện cho bảng nhiệm vụ; có việc vừa tích (có thể vừa mở nhiệm vụ mới) thì vẽ lại thẻ để hiện nút «Câu hỏi nhanh»
+function baoNv(sk) { if (nv && nv.bao(sk) && dc) dc.lamMoiChu(); }
+
+// câu hỏi nhanh (specs/003, câu chuyện 3): mở sau khi «Làm quen» xong, trong cùng hộp thoại, 3 nút lựa chọn
+function nutPhu(p) { return CAU_HOI[p.id] && nv && nv.moCauHoi() ? { nhan: CHU_CAU_HOI.nut, fn: moCauHoi } : null; }
+function veCauHoi() {
+  const q = thoai.cauHoi, chon = $('bb-dlg-chon'), phan = $('bb-dlg-phan');
+  $('bb-dlg-name').textContent = L(CHU_CAU_HOI.tieuDe) + ' · ' + L(thoai.ten); $('bb-dlg-text').textContent = L(q.hoi);
+  $('bb-dlg-avatar').src = 'assets/character/lumina-ao-dai-wave.webp'; $('bb-dlg-cta').hidden = true; $('bb-dlg-next').textContent = L(CHU.dong);
+  chon.textContent = ''; chon.hidden = false;
+  q.chon.forEach((c, i) => {
+    const b = document.createElement('button'); b.type = 'button'; b.className = 'cq'; b.dataset.i = String(i); b.textContent = L(c);
+    if (thoai.sai.has(i)) { b.classList.add('sai'); b.disabled = true; }
+    if (thoai.dung) { b.disabled = true; if (i === q.dung) b.classList.add('dung'); }
+    b.addEventListener('click', () => chonCau(i)); chon.appendChild(b);
+  });
+  phan.hidden = !thoai.phan; phan.textContent = thoai.phan ? L(thoai.phan) : '';
+}
+function chonCau(i) {
+  if (!thoai || !thoai.cauHoi || thoai.dung) return;
+  const q = thoai.cauHoi;
+  if (i === q.dung) {
+    thoai.dung = true; thoai.phan = CHU_CAU_HOI.dung; veCauHoi();
+    baoNv({ loai: 'cau-hoi', noi: thoai.noi }); $('bb-dlg-next').focus();
+  } else {
+    // sai: chỉ gợi ý chỗ đọc lại, không lộ đáp án; lựa chọn sai bị mờ đi, chọn lại được các lựa chọn còn lại
+    thoai.sai.add(i); thoai.phan = { vi: CHU_CAU_HOI.sai.vi + q.goiY.vi, en: CHU_CAU_HOI.sai.en + q.goiY.en }; veCauHoi();
+    const con = $('bb-dlg-chon').querySelector('button:not(:disabled)'); if (con) con.focus();
+  }
+}
+function moCauHoi(p) {
+  const q = CAU_HOI[p.id]; if (!q) return;
+  thoai = { cauHoi: q, noi: p.id, ten: p.ten, sai: new Set(), dung: false, phan: null }; thoaiI = 0; noiChuyen = null;
+  veCauHoi(); dlg.classList.add('on'); if (dc) dc.dung(true);
+  const f = $('bb-dlg-chon').querySelector('button'); if (f) f.focus();
+}
 $('bb-dlg-close').addEventListener('click', dongThoai);
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && thoai) { dongThoai(); e.stopPropagation(); } });
 
@@ -420,6 +461,7 @@ function batNhac() {
   nhacBat = !nhacBat; datNote(L(nhacBat ? CHU.nhacBat : CHU.nhacTat), 2600);
 }
 function vaoNoi(p) {
+  baoNv({ loai: p.thoai ? 'thoai' : p.viec === 'thanh-tich' ? 'xem' : 'vao', noi: p.id });
   if (p.thoai) return moThoai(THOAI[p.thoai], p.thoai === 'lumina' ? luminaObj : p.thoai === 'tu' ? tuObj : null);
   if (p.viec === 'nhac') return batNhac();
   if (p.viec === 'thanh-tich') return moThoai(veThanhTich());
@@ -455,6 +497,7 @@ function ve(ms) {
   datLen(tag, s.x, 1.36, s.z, 99, s.x, s.z);
   for (let i = 0; i < nhanNoi.length; i++) { const n = nhanNoi[i]; datLen(n.e, n.p.mx, n.p.my, n.p.mz, 26, s.x, s.z); }
   if (!daDi && s.speed > 0.5) { daDi = true; hint.hidden = true; }
+  if (s.near !== ganTruoc) { ganTruoc = s.near; if (s.near) baoNv({ loai: 'gan', noi: s.near }); }
   // trạng thái tải mô hình: quá 10 giây (theo đồng hồ, không theo số khung hình) chưa có thì báo đang dùng tranh; có rồi thì gỡ dòng báo
   if (laTranh ? tranh.sanSang : rig.glb) { if (tLoad >= 0) { tLoad = -1; datNote(''); } }
   else if (tLoad >= 0 && tLoad < 99 && performance.now() - tBatDau > 10000) { tLoad = 99; datNote(L(navigator.onLine === false ? CHU.mang : CHU.tranh)); }
@@ -489,11 +532,21 @@ function datGoc(g) {
 }
 if (nutGoc) { nutGoc.setAttribute('aria-pressed', goc === 'cao' ? 'true' : 'false'); nutGoc.addEventListener('click', () => datGoc(goc === 'cao' ? 'sau' : 'cao')); }
 
+// Nhịp chạy/đi của cần điều khiển (specs/003, câu chuyện 2): «tự động» như cũ (đẩy nhẹ đi, đẩy hết chạy) hoặc «luôn chạy». Nhớ trong localStorage.
+let nhip = (() => { try { return localStorage.getItem('bizon-ben-nhip') === 'chay' ? 'chay' : 'tu-dong'; } catch (e) { return 'tu-dong'; } })();
+const nutChay = $('bb-chay');
+function datNhip(m) {
+  nhip = m === 'chay' ? 'chay' : 'tu-dong'; try { localStorage.setItem('bizon-ben-nhip', nhip); } catch (e) {}
+  if (nutChay) { nutChay.setAttribute('aria-pressed', nhip === 'chay' ? 'true' : 'false'); const i = nutChay.querySelector('span'); if (i) i.textContent = nhip === 'chay' ? '🏃' : '🚶'; }
+  if (dc && dc.nhip) dc.nhip(nhip);
+}
+if (nutChay) { datNhip(nhip); nutChay.addEventListener('click', () => datNhip(nhip === 'chay' ? 'tu-dong' : 'chay')); }
+
 function batDau(v) {
   if (!VAI[v]) return;
   if (!khoiTao()) { $('bb-fallback').hidden = false; $('bb-links').scrollIntoView({ block: 'nearest' }); return; }
   try { localStorage.setItem('bizon-ben-vai', v); } catch (e) {}
-  vai = v; sanSang = false; tLoad = 0; tBatDau = performance.now(); daDi = false; hint.hidden = false;
+  vai = v; sanSang = false; tLoad = 0; tBatDau = performance.now(); daDi = false; ganTruoc = null;
   document.documentElement.classList.add('bb-play'); fade.classList.remove('on');
   if (dc) dc.dispose(); if (player) scene.remove(player);
   if (tranh) { tranh.huy(); tranh = null; } tranhLui = null;
@@ -501,7 +554,12 @@ function batDau(v) {
   else { player = chars.build(v); scene.add(player); dangDi = taoDangDi(player, { giam }); }
   daHaToc = false;
   coGiu(); veNhan(); datNote(L(CHU.tai));
-  dc = window.BizOnDiChuyen.create({ THREE, camera, canvas, host: stage, player, places: NOI, diDuoc, cheMay, lang, onEnter: vaoNoi, giamChuyenDong: giam, batDau: { x: 0, z: -7, yaw: 0 }, tocDoDi: TOC_DI, tocDoChay: tranh ? 1.8 : TOC_CHAY, tocQuay: 8, camXa: GOC[goc].xa, camCao: GOC[goc].cao, camNhin: GOC[goc].nhin });
+  dc = window.BizOnDiChuyen.create({ THREE, camera, canvas, host: stage, player, places: NOI, diDuoc, cheMay, lang, onEnter: vaoNoi, nutPhu, giamChuyenDong: giam, batDau: { x: 0, z: -7, yaw: 0 }, tocDoDi: TOC_DI, tocDoChay: tranh ? 1.8 : TOC_CHAY, tocQuay: 8, camXa: GOC[goc].xa, camCao: GOC[goc].cao, camNhin: GOC[goc].nhin });
+  if (dc.nhip) dc.nhip(nhip);
+  // bảng nhiệm vụ thay cho dòng nhắc «Kéo cần để đi»: bảng đã nói việc tiếp theo
+  if (nv) nv.dispose();
+  nv = taoNhiemVu({ host: $('bb-nv'), L, goTo: id => dc && dc.goTo(id), daGhe });
+  hint.hidden = true;
   khoaNen(true); try { stage.focus({ preventScroll: true }); } catch (e) {}
   cancelAnimationFrame(raf); tLast = 0; raf = requestAnimationFrame(ve);
 }
@@ -519,15 +577,15 @@ function thoat() {
 
 document.querySelectorAll('#bb-pick [data-vai]').forEach(b => b.addEventListener('click', () => batDau(b.getAttribute('data-vai'))));
 $('bb-exit').addEventListener('click', thoat);
-window.addEventListener('bizon:langchange', () => { if (!dc) return; dc.lamMoiChu(); veNhan(); if (thoai) veThoai(); if (noteGiu) datNote(L(tLoad === 99 ? CHU.tranh : CHU.tai)); });
+window.addEventListener('bizon:langchange', () => { if (!dc) return; dc.lamMoiChu(); veNhan(); if (nv) nv.lamMoiChu(); if (thoai) veThoai(); if (noteGiu) datNote(L(tLoad === 99 ? CHU.tranh : CHU.tai)); });
 window.addEventListener('pageshow', e => { if (e.persisted) { fade.classList.remove('on'); if (dc) dc.dung(false); } });
 document.addEventListener('visibilitychange', () => { if (document.hidden) { cancelAnimationFrame(raf); raf = 0; } else if (dc && document.documentElement.classList.contains('bb-play') && !raf) { tLast = 0; raf = requestAnimationFrame(ve); } });
 try { const cu = localStorage.getItem('bizon-ben-vai'); const b = cu && document.querySelector('#bb-pick [data-vai="' + cu + '"]'); if (b) b.classList.add('da-chon'); } catch (e) {}
 
 // cửa đọc trạng thái cho test (Playwright) và để gỡ lỗi
 window.__benBizon = {
-  state() { const s = dc ? dc.state() : {}, rig = ((tranhLui || player || {}).userData || {}).rig || {}; return Object.assign(s, { ready: !!(dc && sanSang), goc, dang: dangDi && dangDi.sanSang ? dangDi.thongSo().dang : null, tranh: tranh ? Object.assign({ sanSang: tranh.sanSang, hong: tranh.hong }, tranh.thongSo()) : null, coVanTranh: tranhCoVan.map(t => t ? Object.assign({ sanSang: t.sanSang, hong: t.hong }, t.thongSo()) : null), char: vai, glb: !!rig.glb, clip: rig.glb ? rig.cur : s.mode }); },
+  state() { const s = dc ? dc.state() : {}, rig = ((tranhLui || player || {}).userData || {}).rig || {}; return Object.assign(s, { ready: !!(dc && sanSang), goc, dang: dangDi && dangDi.sanSang ? dangDi.thongSo().dang : null, tranh: tranh ? Object.assign({ sanSang: tranh.sanSang, hong: tranh.hong }, tranh.thongSo()) : null, coVanTranh: tranhCoVan.map(t => t ? Object.assign({ sanSang: t.sanSang, hong: t.hong }, t.thongSo()) : null), char: vai, glb: !!rig.glb, clip: rig.glb ? rig.cur : s.mode, nhiemVu: nv ? nv.state() : null }); },
   info: () => ({ canh: 'ben-song', nuoc: true, cauTau: true, diaDiem: NOI.map(p => p.id), chiTiet, goc, dangDi: dangDi && dangDi.sanSang ? Object.assign({ coChay: dangDi.coChay, khoHong: dangDi.khoHong }, dangDi.thongSo()) : null, veMoiKhung: renderer ? renderer.info.render.calls : 0 }),
-  datGoc,
+  datGoc, datNhip, goTo: id => dc && dc.goTo(id),
   laBo, dat: (x, z, yaw) => dc && dc.dat(x, z, yaw),
 };
