@@ -268,7 +268,7 @@ function dungTruSo() {   // trụ sở Bật Nghiệp ở Cần Thơ
   const ten = new THREE.Mesh(new THREE.PlaneGeometry(2.6, 0.62), new THREE.MeshBasicMaterial({ map: chuTrenBang('BizOn', '#ffffff', '#1f8a8a', 256, 64), toneMapped: false })); ten.position.set(2.0, 4.0, 1.86); g.add(ten);
   [[-3.2, 2.9], [3.2, 2.9]].forEach(([x, z]) => { khoi(tru(0.3, 0.24, 0.5, 10), M(0xc47a4a), x, 0.25, z, g); const c = khoi(cau(0.48, 10, 8), M(0x6aa858), x, 0.9, z, g); c.scale.y = 1.15; });
   chanHop(-13.6, -13.0, -6.4, -8.1); chan(-13.2, -7.7, 0.35); chan(-6.8, -7.7, 0.35);
-  bien('assets/covers/bat-nghiep-3d-v3.webp', 2.0, scene, -6.9, 1.5, -7.2, 0);
+  bien('assets/covers/bat-nghiep-3d-v4.webp', 2.0, scene, -6.9, 1.5, -7.2, 0);
   [[-7.6, -7.25], [-6.2, -7.25]].forEach(([x, z]) => khoi(tru(0.06, 0.07, 1.4, 6), M(0x8a5a34), x, 0.4, z));
   chan(-6.9, -7.2, 0.85);
 }
