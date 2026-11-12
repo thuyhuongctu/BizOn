@@ -1,5 +1,5 @@
 /* Bến BizOn – nhân vật «tranh động» (js/ben-bizon-tranh-dong.js, 10/11/2026, bản thử): vai đội là tấm tranh động dựng từ tranh gốc
- * (CEO đã bỏ la bàn), bật bằng hub-3d.html?nv=tranh. Kiểm: mặc định không đổi gì; có cờ thì vai có đủ tờ sprite dùng tranh động, chọn đúng
+ * (CEO đã bỏ la bàn), từ 11/11/2026 là mặc định (?nv=3d quay về mô hình 3D; ?nv=tranh vẫn chạy). Kiểm: ?nv=3d không dùng tranh; mặc định dùng tranh; có cờ thì vai có đủ tờ sprite dùng tranh động, chọn đúng
  * hướng nhìn (đi ra xa → «sau», đi về máy quay → «trước», sang phải/trái → «ngang» và lật gương), khung hình chạy khi đi, vừa dừng thì giữ
  * khung đầu rồi quay ra thở nhẹ (tờ «dung»), vai chưa đủ sprite vẫn dùng mô hình, cố vấn có tờ sprite thì đứng thở và nói khi mở hội thoại,
  * tờ sprite tải hỏng thì không lỗi trang, giảm chuyển động thì không chạy khung. */
@@ -12,7 +12,7 @@ const read = f => fs.readFileSync(path.join(__dirname, '..', f), 'utf8');
 const td = read('js/ben-bizon-tranh-dong.js');
 check(!/https?:\/\//.test(td) && !/XMLHttpRequest|sendBeacon/.test(td), 'tệp tranh động không gọi mạng ngoài trang');
 check(read('sw.js').includes("'./js/ben-bizon-tranh-dong.js'"), 'sw.js lưu sẵn js/ben-bizon-tranh-dong.js');
-check(/NV_TRANH = \/\[\?&\]nv=tranh/.test(read('js/ben-bizon.js')), 'chỉ bật khi đường dẫn có ?nv=tranh');
+check(/NV_TRANH = !\/\[\?&\]nv=3d/.test(read('js/ben-bizon.js')), 'tranh động là mặc định; ?nv=3d quay về mô hình 3D');
 check(!/tranh-dong/.test(read('bizon-characters.js')), 'bizon-characters.js không bị sửa');
 // vai nào đã khai báo đủ ba hướng đi, cố vấn nào đã có tờ sprite (đọc từ BO_TRANH để test không lỗi thời khi thêm nhân vật)
 const BO = /export const BO_TRANH = \{([\s\S]*?)\n\};/.exec(td)[1], coDi = [...BO.matchAll(/(\w+): \[\.\.\.DI/g)].map(m => m[1]);
@@ -30,7 +30,8 @@ const giu = async (pg, phim, fn, arg) => { await pg.keyboard.down(phim); const o
   try {
     const ctx = await browser.newContext({ viewport: { width: 900, height: 560 } }), pg = await ctx.newPage(), loi = [];
     pg.on('pageerror', e => loi.push(e.message));
-    check(await vao(pg, '', 'ceo') && (await st(pg)).tranh === null, 'mặc định (không có cờ): CEO vẫn như cũ, không dùng tranh động');
+    check(await vao(pg, '?nv=3d', 'ceo') && (await st(pg)).tranh === null, 'có ?nv=3d: CEO dùng mô hình 3D cũ, không dùng tranh động');
+    check(await vao(pg, '', 'ceo') && await until(pg, () => (window.__benBizon.state().tranh || {}).sanSang === true), 'mặc định (không có cờ): CEO dùng tranh động');
     if (chuaCo.length) check(await vao(pg, '?nv=tranh', chuaCo[0]) && (await st(pg)).tranh === null, 'có cờ nhưng vai chưa đủ tờ sprite (' + chuaCo[0] + '): vẫn dùng mô hình');
     for (const v of coDi.filter(x => x !== 'ceo')) check(await vao(pg, '?nv=tranh', v) && await until(pg, () => (window.__benBizon.state().tranh || {}).sanSang === true), 'có cờ, vai ' + v + ': các tờ sprite đã tải');
     check(await vao(pg, '?nv=tranh', 'ceo'), 'có cờ, vai CEO: vào được');

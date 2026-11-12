@@ -26,7 +26,8 @@ check(read('assets/models/SOURCES.md').includes('dong-tac-v1.glb'), 'SOURCES.md 
 const ARGS = ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'];
 const until = (pg, fn, arg, timeout = 30000) => pg.waitForFunction(fn, arg, { timeout, polling: 100 }).then(() => true, () => false);
 const doc = pg => pg.evaluate(() => { const s = window.__benBizon.state(), d = window.__benBizon.info().dangDi || {}; return Object.assign({ speed: s.speed, dang: s.dang, clip: s.clip, mode: s.mode }, d); });
-const vao = async (pg, vai) => { await pg.goto(BASE + '/hub-3d.html'); await pg.click('[data-vai="' + vai + '"]'); return until(pg, () => window.__benBizon && window.__benBizon.state().ready && window.__benBizon.state().glb, null, 60000); };
+// bộ này kiểm mô hình 3D có xương nên mở bằng ?nv=3d (tranh động là mặc định từ 11/11/2026)
+const vao = async (pg, vai) => { await pg.goto(BASE + '/hub-3d.html?nv=3d'); await pg.click('[data-vai="' + vai + '"]'); return until(pg, () => window.__benBizon && window.__benBizon.state().ready && window.__benBizon.state().glb, null, 60000); };
 const khop = (ts, v, toc) => Math.abs(ts * v - toc) / toc;
 
 (async () => {
