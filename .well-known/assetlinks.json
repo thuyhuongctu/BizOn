@@ -11,5 +11,17 @@
         "13:8A:EC:DC:9D:89:F8:67:C0:2E:61:2E:E0:22:F2:9B:9B:3B:31:80:44:6A:21:79:4A:D4:9C:4F:6A:CA:1A:51"
       ]
     }
+  },
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "io.github.thuyhuongctu.cham",
+      "sha256_cert_fingerprints": [
+        "9E:24:DD:B7:D8:73:68:96:3B:2F:C0:37:06:87:F8:40:3C:9D:CB:C8:1E:91:E5:F1:78:30:F0:15:20:2B:C2:86"
+      ]
+    }
   }
 ]
