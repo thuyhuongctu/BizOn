@@ -4,7 +4,7 @@
 
 **Ngày tạo**: 2026-11-12
 
-**Trạng thái**: Đã làm rõ ngày 12/11/2026, chờ chị duyệt kế hoạch
+**Trạng thái**: **Đã dừng** ngày 12/11/2026. Chị xem video thử và quyết định bỏ vì hình chưa đạt («Bỏ video vì xấu»). Bộ dựng của PR 1 (#1076) đã gỡ khỏi kho; PR 2 và PR 3 không làm. Muốn xem lại mã thì lấy từ commit 9f982c91 trong lịch sử git.
 
 **Đầu vào**: Chị gửi kho `thuann-vn/claude-3d-animated-shorts` (MIT). Em đề xuất học kỹ thuật dựng và render của kho
 đó để làm video ngắn dọc 3D với nhân vật đất sét có sẵn của BizOn, và làm thử một video về sầu riêng. Chị trả lời

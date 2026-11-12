@@ -3,6 +3,8 @@
 **Đầu vào**: [spec.md](spec.md), [plan.md](plan.md) · **Định dạng**: `[Mã] [P?] [Câu chuyện] Mô tả` – `[P]` làm song song
 được (khác tệp, không phụ thuộc). Mỗi câu chuyện là một PR; test viết trước và phải thấy hỏng trước khi viết mã.
 
+> **Đã dừng ngày 12/11/2026.** Chị xem video thử và bỏ vì hình chưa đạt. Bộ dựng PR 1 đã gỡ khỏi kho; PR 2, PR 3 không làm. Xem [spec.md](spec.md).
+
 ## Giai đoạn 1 – Bộ dựng video dọc 3D (câu chuyện 1, P1)
 
 **Mục tiêu**: một lệnh dựng được cảnh thử 10 giây thành mp4 dọc, tất định, không tốn phí.

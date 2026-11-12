@@ -34,7 +34,7 @@ jobs:
           npm install --no-save playwright@1.54.1
           npx playwright install --with-deps chromium
 
-      # Bộ dựng video dọc 3D (scripts/video/3d, test/video-3d-*.test.js) ghép khung thành mp4 bằng ffmpeg
+      # ffmpeg cho phần chạy thật của test/kiem-video.test.js và test/bia-trailer-bat-nghiep.test.js
       - name: Cài ffmpeg
         run: sudo apt-get update -q && sudo apt-get install -y -q ffmpeg
 
