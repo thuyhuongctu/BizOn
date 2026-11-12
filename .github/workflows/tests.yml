@@ -34,6 +34,10 @@ jobs:
           npm install --no-save playwright@1.54.1
           npx playwright install --with-deps chromium
 
+      # Bộ dựng video dọc 3D (scripts/video/3d, test/video-3d-*.test.js) ghép khung thành mp4 bằng ffmpeg
+      - name: Cài ffmpeg
+        run: sudo apt-get update -q && sudo apt-get install -y -q ffmpeg
+
       # scripts/run-tests.mjs tự bật máy chủ tĩnh ở 127.0.0.1:8899 cho các bộ test trình duyệt
       - name: npm test
         run: npm test
