@@ -4,7 +4,7 @@
 
 **Ngày tạo**: 2026-11-12
 
-**Trạng thái**: Bản nháp, chờ chị trả lời các câu hỏi làm rõ
+**Trạng thái**: Đã làm rõ ngày 12/11/2026, chờ chị duyệt kế hoạch
 
 **Đầu vào**: Chị gửi kho `thuann-vn/claude-3d-animated-shorts` (MIT). Em đề xuất học kỹ thuật dựng và render của kho
 đó để làm video ngắn dọc 3D với nhân vật đất sét có sẵn của BizOn, và làm thử một video về sầu riêng. Chị trả lời
@@ -43,7 +43,15 @@ riêng làm theo skill `video-ngan`:
 
 ## Làm rõ
 
-*(chờ chị trả lời; xem các câu hỏi ở cuối tin nhắn gửi chị)*
+### Phiên 12/11/2026 (chị chọn cả bốn phương án đề xuất)
+
+1. **Kịch bản video thử?** → Dùng kịch bản có sẵn «Một trái sầu riêng, cả vùng cùng sầu» (đã kiểm nguồn, giọng đã thu).
+   Không dùng tiêu đề «container bị trả về chỉ vì một con số» vì chưa có vụ có thật làm nguồn.
+2. **Độ dài?** → Bản khoảng 45 giây: giữ câu **1, 3, 4, 7, 10, 12, 14** của kịch bản (tổng giọng thô 45,5 giây trước khi
+   cắt khoảng lặng). Danh sách câu gửi chị duyệt lại trong PR của câu chuyện 2.
+3. **Anh Tư?** → Dùng một nhân vật GLB có sẵn đủ động tác (`ceo-v3.glb` hoặc `tu-v3.glb`), đội **nón lá đất sét** dựng
+   bằng khối 3D trong bộ dựng; không tạo mô hình mới, không tốn phí.
+4. **Phụ đề?** → **Đốt chữ từng chữ** vào hình (câu chuyện 3 giữ nguyên) **và** xuất `.vtt` VI/EN.
 
 ## Kịch bản người dùng và kiểm thử *(bắt buộc)*
 
@@ -76,7 +84,7 @@ số khung, dựng hai lần cho ra cùng khung hình, qua `scripts/kiem-video.m
 
 ### Câu chuyện 2 – Video thử «Một trái sầu riêng, cả vùng cùng sầu» bản dọc 3D (Ưu tiên: P2)
 
-Sinh viên xem trên điện thoại một video dọc khoảng 40–50 giây về mã số vùng trồng sầu riêng: nhân vật đất sét 3D trong
+Sinh viên xem trên điện thoại một video dọc khoảng 45 giây (7 câu: 1, 3, 4, 7, 10, 12, 14) về mã số vùng trồng sầu riêng: nhân vật đất sét 3D trong
 cảnh vườn, nhà đóng gói, phòng kiểm nghiệm, cảng container; lời đọc là giọng tác giả đã thu; nội dung đúng các sự thật
 đã có nguồn trong hồ sơ kịch bản. Giảng viên dùng làm video mở đầu buổi học về Hộ Chiếu Sầu Riêng.
 
@@ -134,8 +142,9 @@ nằm ngoài vùng an toàn.
 - **FR-003**: Nhân vật là các tệp GLB đất sét có sẵn trong `assets/models/nhan-vat/`; động tác lấy từ clip trong tệp hoặc
   `dong-tac-v1.glb`.
 - **FR-004**: Mỗi cảnh có ít nhất một chuyển động máy quay (đẩy vào, lia, nâng); cắt cứng khi đổi chỗ lớn.
-- **FR-005**: Lời đọc chỉ dùng câu đã có trong kịch bản đã duyệt; video thử dùng giọng tác giả đã thu (không tổng hợp
-  giọng mới khi chưa hỏi chị).
+- **FR-005**: Lời đọc chỉ dùng câu đã có trong kịch bản đã duyệt; video thử dùng giọng tác giả đã thu, gồm các câu 1, 3, 4,
+  7, 10, 12, 14 (không tổng hợp giọng mới khi chưa hỏi chị).
+- **FR-012**: Anh Tư là nhân vật GLB có sẵn đội nón lá đất sét dựng bằng khối 3D trong bộ dựng (không sửa tệp GLB gốc).
 - **FR-006**: Thành phẩm qua `scripts/kiem-video.mjs` không lỗi; âm lượng −14 đến −16 LUFS, đỉnh thật ≤ −1 dBTP.
 - **FR-007**: Xuất kèm poster (jpg, webp) và phụ đề `.vtt` VI/EN.
 - **FR-008**: Không sửa tệp thuộc hồ sơ quyền tác giả (Bật Nghiệp 3D, Bến Phù Sa 3D, Hộ Chiếu Thương Hiệu 3D và JS của
