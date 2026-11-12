@@ -84,7 +84,7 @@
     async submissions(code) { if (demo) return dRows(code);
       try { return await rpc('bizon_submissions_v2', { p_class_code: code }); }
       catch (e) { if (!missing(e)) throw e; api.needsMigration = true;
-        const rows = await rpc('bizon_feed_v2', { p_class_code: code, p_limit: 100 }) || [];
+        const rows = await rpc('bizon_feed_v2', { p_class_code: code, p_limit: 1000 }) || [];
         const seen = {}; return rows.filter(r => { const k = r.team_name + '#' + r.round_number; if (seen[k]) return false; seen[k] = 1; return true; })
           .map(r => ({ team_name: r.team_name, round_number: r.round_number, created_at: r.created_at, result_json: { share: +r.share || 0, netProfit: +r.net_profit || 0 } })); } },
     async state(code) { if (demo) return { controls: D.controls, grants: D.grants, scores: Object.values(D.scores) };
