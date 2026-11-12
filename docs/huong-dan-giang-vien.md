@@ -22,6 +22,18 @@
 | 5 | Dùng tab **🧑‍🏫 Giảng viên** trong game: khóa vòng chơi, cấp vốn thưởng, xem nhật ký cấp vốn |
 | 6 | Cuối buổi: so sánh các đội bằng ảnh chụp tab **Xếp hạng**, **Bản đồ chinh phục** (số cờ 🚩) và **báo cáo P&L** |
 
+### Lớp đông (trên 60 sinh viên, một mã lớp)
+
+Hệ thống không giới hạn số sinh viên hay số đội trong một mã lớp. Từ 12/11/2026 các trần hiển thị và tần suất đã nâng cho lớp 160–200 sinh viên (migration `20261112000000_gioi_han_lop_dong.sql`): phiếu khảo sát 500 phiếu/phút cho một mã lớp, bảng xếp hạng công khai 500 dòng, trang Giảng viên đọc tới 1000 lượt nộp. Việc cần làm trước buổi học:
+
+| Việc | Vì sao |
+|---|---|
+| Chia đội 5 người từ trước, dán danh sách (STT, họ tên, mã SV, email, đội) vào trang Giảng viên | Hệ thống không tự chia đội; danh sách dán chỉ lưu trên trình duyệt của máy đó |
+| Kiểm tên miền email của sinh viên đã được duyệt (quản trị thêm bằng `bizon_admin_set_student_domain`) | Email ngoài danh sách thì chơi được nhưng không nộp được kết quả lên lớp |
+| Cho sinh viên đăng ký tài khoản **trước buổi học ít nhất một ngày** | Email xác nhận gửi khoảng 100 thư/giờ; cả lớp đăng ký cùng lúc sẽ có bạn không nhận được thư |
+| Mỗi đội một máy thì chỉ người cầm máy cần tài khoản (32 đội = 32 tài khoản) | Giảm số email xác nhận và số máy cần mạng ổn định |
+| In chứng nhận theo đợt 40–50 tờ | Cả lớp dồn vào một cửa sổ in thì nặng máy |
+
 **Chấm điểm (chốt 07/11/2026):** 50% điểm game B1–B6 (Excel từ bảng điều khiển) · 30% rubric lập luận CLO-A…E · 20% hợp tác vai trò & bài học rút ra (Nhật ký đội) — chi tiết rubric, cách chấm theo từng vòng và sổ điểm mẫu: xem `docs/chuan-dau-ra-va-rubric.md` §4.1 hoặc bản trích gọn `docs/cham-diem-bat-nghiep.md`.
 
 ## 3. Ba đối thủ ảo – hành vi chính xác

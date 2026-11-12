@@ -40,9 +40,9 @@ select pg_temp.rs_fail($q$insert into public.survey_responses (phase, class_code
 select pg_temp.rs_fail($q$insert into public.survey_responses (phase, class_code, student_code, answers_a, score_a, likert_b)
   values ('pre', 'RS-TEST', 'AB12', ('{"k":"' || repeat('y', 20000) || '"}')::jsonb, 10, '{"1":4}')$q$, 'survey_responses_size_ck');
 reset role;
--- 3b. tần suất: 150 phiếu / phút / lớp
+-- 3b. tần suất: 500 phiếu / phút / lớp (20261104 đặt 150; 20261112000000_gioi_han_lop_dong.sql nâng lên 500 cho lớp đông)
 insert into public.survey_responses (phase, class_code, student_code, answers_a, score_a, likert_b)
-  select 'pre', 'RS-TEST-FLOOD', 'S' || g, '{"1":"a"}', 5, '{"1":3}' from generate_series(1, 150) g;
+  select 'pre', 'RS-TEST-FLOOD', 'S' || g, '{"1":"a"}', 5, '{"1":3}' from generate_series(1, 500) g;
 set role anon;
 select pg_temp.rs_fail($q$insert into public.survey_responses (phase, class_code, student_code, answers_a, score_a, likert_b)
   values ('pre', 'RS-TEST-FLOOD', 'S999', '{"1":"a"}', 5, '{"1":3}')$q$, 'Quá nhiều phiếu');

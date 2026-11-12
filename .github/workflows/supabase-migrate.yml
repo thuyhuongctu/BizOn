@@ -12,6 +12,7 @@ on:
         description: 'Migration cần áp (chọn trong danh sách)'
         type: choice
         options:
+          - 20261112000000_gioi_han_lop_dong.sql
           - 20261104000000_ra_soat_bao_mat.sql
           - 20261103000000_live_progress.sql
           - 20261024010000_normalize_survey_class_codes.sql

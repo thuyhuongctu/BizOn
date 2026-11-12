@@ -38,6 +38,18 @@ export const CHECKS = {
       ["exists (select 1 from public.student_email_domains where domain = 'gstudent.ctu.edu.vn')", 'có tên miền gstudent.ctu.edu.vn'],
     ],
   },
+  gioi_han_lop_dong: {
+    pre: [
+      ["exists (select 1 from pg_proc p join pg_namespace n on n.oid = p.pronamespace where n.nspname = 'public' and p.proname = 'bizon_rate_limit_guard')", 'migration rà soát bảo mật (ra_soat_bao_mat) đã áp'],
+      ["exists (select 1 from information_schema.columns where table_schema = 'public' and table_name = 'ft_results' and column_name = 'student_id')", 'ft_results đã có cột student_id'],
+    ],
+    post: [
+      ["position('n >= 500' in pg_get_functiondef('public.bizon_rate_limit_guard()'::regprocedure)) > 0", 'phiếu khảo sát: 500 phiếu / phút / mã lớp'],
+      ["position('limit 500' in pg_get_functiondef('public.ft_class_leaderboard(text)'::regprocedure)) > 0", 'bảng xếp hạng Bến Phù Sa trả tới 500 dòng'],
+      ["position('limit 500' in pg_get_functiondef('public.bp_class_leaderboard(text)'::regprocedure)) > 0", 'bảng xếp hạng Hộ Chiếu trả tới 500 dòng'],
+      ["position('1000' in pg_get_functiondef('public.bizon_feed_v2(text, integer)'::regprocedure)) > 0", 'bizon_feed_v2 cho xin tới 1000 dòng'],
+    ],
+  },
   revoke_anon_writes: {
     pre: [
       ["to_regclass('public.student_email_domains') is not null", 'migration A (require_student_login) đã được áp'],
