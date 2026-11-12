@@ -13,7 +13,7 @@ const exists = f => fs.existsSync(path.join(__dirname, '..', f));
 // ---- Kiểm tĩnh
 const html = read('hub-3d.html');
 check(+(/CACHE = 'bizon-v(\d+)'/.exec(read('sw.js')) || [])[1] >= 823, 'sw.js ≥ bizon-v823');
-check(/name="robots" content="noindex"/.test(html), 'hub-3d.html vẫn noindex (trang thử)');
+check(!/name="robots" content="noindex"/.test(html) && /<link rel="canonical" href="https:\/\/bizonland\.com\/hub-3d\.html">/.test(html), 'hub-3d.html đã mở cho tìm kiếm, có canonical (12/11/2026: đưa vào chân trang)');
 check(html.includes('"three": "./js/vendor/three.module.js"') && html.includes('js/di-chuyen-3d.js') && html.includes('js/ben-bizon.js'), 'trang nạp three.js bản mô-đun, di-chuyen-3d.js, ben-bizon.js');
 check(!html.includes('js/hub3d.js') && !html.includes('three.min.js'), 'trang không còn nạp hub3d.js và three.js bản toàn cục');
 check(exists('js/hub3d.js'), 'js/hub3d.js vẫn giữ trong kho');

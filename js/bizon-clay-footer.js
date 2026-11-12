@@ -21,12 +21,14 @@
 
   var GP = 'https://play.google.com/store/apps/details?id=io.github.thuyhuongctu.bizon';
   var cols =
+    /* Cột «Trò chơi» chỉ trỏ tới bản 3D mới nhất, theo Hành trình 3 bậc (chị duyệt 12/11/2026). Bản 2D cũ vẫn vào được
+       bằng đường dẫn cũ và từ trang giới thiệu từng game. Tên tệp có dấu cách thì mã hoá %20. */
     col('Trò chơi','Games',[
-      { href:'game.html', vi:'Bật Nghiệp', en:'Bật Nghiệp' },
-      { href:'ben-phu-sa.html', vi:'Bến Phù Sa', en:'Bến Phù Sa' },
-      { href:'brand-passport.html', vi:'Hộ Chiếu Thương Hiệu', en:'Brand Passport' },
-      { href:'ho-chieu-sau-rieng.html', vi:'Hộ Chiếu Sầu Riêng', en:'Durian Passport' },
-      { href:'games.html', vi:'BizOn Arcade', en:'BizOn Arcade' }
+      { href:'hub-3d.html', vi:'🧭 Bến BizOn 3D', en:'🧭 BizOn Wharf 3D' },
+      { href:'ben-phu-sa-3d.html', vi:'Bến Phù Sa 3D · Bậc 1', en:'Bến Phù Sa 3D · Tier 1' },
+      { href:'BizOn%20Game%203D.html', vi:'Bật Nghiệp 3D · Bậc 2', en:'Bật Nghiệp 3D · Tier 2' },
+      { href:'Ho%20Chieu%20Thuong%20Hieu%203D.html', vi:'Hộ Chiếu Thương Hiệu 3D · Bậc 3', en:'Brand Passport 3D · Tier 3' },
+      { href:'lab/ho-chieu-sau-rieng-3d.html', vi:'Hộ Chiếu Sầu Riêng 3D · Bậc 3', en:'Durian Passport 3D · Tier 3' }
     ])
     + col('Về BizOn','About',[
       { href:'doi-ngu.html', vi:'Giới thiệu & Đội ngũ', en:'About & team' },
@@ -38,7 +40,8 @@
     ])
     + col('Sáng tạo','Creative',[
       { href:'am-nhac.html', vi:'Kho Âm nhạc', en:'Music library' },
-      { href:'thu-vien.html', vi:'Thư viện Sáng tạo', en:'Creative library' }
+      { href:'thu-vien.html', vi:'Thư viện Sáng tạo', en:'Creative library' },
+      { href:'games.html', vi:'BizOn Arcade', en:'BizOn Arcade' }   // trò chơi nhỏ 2D: chuyển từ cột «Trò chơi» sang đây
     ])
     + col('Liên hệ','Contact',[
       { href:'lien-he.html', vi:'Liên hệ & Hợp tác', en:'Contact & partnerships' },
