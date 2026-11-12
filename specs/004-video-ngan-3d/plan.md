@@ -2,6 +2,8 @@
 
 **Nhánh**: `claude/video-ngan-3d` · **Ngày**: 2026-11-12 · **Đặc tả**: [spec.md](spec.md)
 
+> **Đã dừng ngày 12/11/2026.** Chị xem video thử và bỏ vì hình chưa đạt. Bộ dựng PR 1 đã gỡ khỏi kho; PR 2, PR 3 không làm. Xem [spec.md](spec.md).
+
 ## Tóm tắt
 
 Thêm một **công cụ dựng video** trong `scripts/video/3d/`, không thuộc trang web. Một trang HTML dựng cảnh three.js chạy

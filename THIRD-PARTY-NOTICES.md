@@ -83,7 +83,6 @@ Bốn lệnh cho Claude Code trong `.claude/skills/` (`balance-check`, `playtest
 
 Lệnh `video-ngan` (`.claude/skills/video-ngan/`) và công cụ kiểm video `scripts/kiem-video.mjs` phỏng theo công thức kịch bản và `scripts/short_qa.py` của **Claude Animated Shorts** (© 2026 Mr omi, giấy phép **MIT**), viết lại bằng tiếng Việt và Node cho BizOn; không dùng ảnh tham khảo hay mã dựng hình của kho đó.
 
-Bộ dựng video dọc 3D `scripts/video/3d/` (đặc tả `specs/004-video-ngan-3d`) học **ý tưởng kỹ thuật** của **Claude 3D Animated Shorts** (`thuann-vn/claude-3d-animated-shorts`, © 2026 thuann-vn, giấy phép **MIT**): render tất định từng khung trong trình duyệt rồi ghép bằng ffmpeg, viết cảnh theo mốc thời gian, kiểu chuyển động máy quay và phụ đề từng chữ. Mã viết mới bằng tiếng Việt cho BizOn; **không** chép mã, không dùng mô hình Xbot, đồ nội thất Kenney/KayKit hay phong cách nhân vật (theo một kênh YouTube) của kho đó. Nhân vật trong video là các mô hình đất sét có sẵn của BizOn. Đây là công cụ phát triển, không chạy trên trang web.
 
 **Spec Kit** (`.specify/`, các lệnh `speckit-*` trong `.claude/skills/`) lấy nguyên từ **github/spec-kit** bản 0.9.5.dev0 (© GitHub, Inc., giấy phép **MIT**), cài qua bản sao `thuyhuongctu/spec-kit`; chỉ phần hiến chương `.specify/memory/constitution.md` là viết riêng cho BizOn. Lệnh `dac-ta` (`.claude/skills/dac-ta/`) là lối vào tiếng Việt viết riêng cho BizOn, phỏng theo quy trình của Spec Kit, gọi lại các lệnh `speckit-*` chứ không chép mẫu. Đây là công cụ phát triển, không chạy trên trang web.
 
