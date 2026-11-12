@@ -40,6 +40,9 @@ phải; toà nhà có bảng tên; tới gần một điểm thì hiện thẻ (
   Không trang nào hiện thẻ có nút «Vào» khi tới gần (đang dùng phím E hoặc một nút «Nói chuyện»).
 - Ba game bản 3D đã nộp hồ sơ quyền tác giả (khóa ở commit `afbacd2`, 07/10/2026): không đổi tên, không sửa khối mã
   trong tệp trang của ba game này cho tới khi có giấy chứng nhận.
+  **Mở khóa một phần ngày 12/11/2026** (chị chọn «Mở khóa, làm Bật Nghiệp 3D»): bản đã nộp vẫn giữ nguyên ở commit
+  `afbacd2`; trang chạy thật được sửa để dùng nhân vật «tranh động», mỗi game một PR. Bật Nghiệp 3D làm trước.
+  Phần di chuyển dùng chung (`js/di-chuyen-3d.js`) vẫn chưa nạp vào ba game này.
 
 ## Làm rõ
 
