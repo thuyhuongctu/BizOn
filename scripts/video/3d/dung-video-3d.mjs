@@ -41,6 +41,20 @@ const ke = (await import(pathToFileURL(keTep).href)).default;
 if (!ke || !Array.isArray(ke.canh) || !ke.canh.length) loi('kế hoạch phải xuất mặc định { ten, nhanVat, canh: [...] } và có ít nhất một cảnh');
 const TEN = ke.ten || basename(keTep).replace(/\.mjs$/, ''), FPS = ke.fps || 30;
 for (const [id, p] of Object.entries(ke.nhanVat || {})) if (!existsSync(join(ROOT, p))) loi(`nhân vật «${id}»: không thấy tệp ${p}`);
+// Nhân vật cầm đồ vật trên tay: đồ vật dính vào nhiều xương nên bị kéo méo khi tay cử động (soát bằng mắt ngày 12/11/2026).
+// Chỉ cho các tổ hợp đã thấy sạch; còn lại dừng và báo, không dựng ra hình hỏng.
+const DO_CAM = {
+  'cfo.glb': { do: 'túi tiền', duoc: [] },                       // túi tiền méo cả khi nói
+  'cmo.glb': { do: 'cái loa', duoc: ['idle', 'talk', 'walk'] },
+  'coo.glb': { do: 'máy tính bảng', duoc: ['idle', 'talk', 'walk'] },
+  'sec.glb': { do: 'bìa kẹp hồ sơ', duoc: ['idle', 'talk', 'walk'] },
+};
+for (const c of ke.canh) {
+  for (const p of c.nguoi || []) {
+    const tep = basename((ke.nhanVat || {})[p.id] || ''), dc = DO_CAM[tep], dong = (p.dong || 'Idle').toLowerCase();
+    if (dc && !dc.duoc.includes(dong)) loi(`cảnh «${c.ten}»: nhân vật «${p.id}» (${tep}) cầm ${dc.do}, đồ vật bị kéo méo với động tác «${p.dong || 'Idle'}». ` + (dc.duoc.length ? 'Chỉ dùng: ' + dc.duoc.join(', ') + '.' : 'Dùng nhân vật khác (ceo-v3, tu-v3, lumina).'));
+  }
+}
 for (const c of ke.canh) {
   if (!(c.dai > 0)) loi(`cảnh «${c.ten}»: cần thời lượng dai > 0 (giây)`);
   if (!c.may || !c.may.tu || !c.may.nhin) loi(`cảnh «${c.ten}»: cần máy quay { tu, nhin }`);

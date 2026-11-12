@@ -46,14 +46,24 @@ check(fs.existsSync(kA(0)) && fs.existsSync(kA(15)) && md5(kA(0)) !== md5(kA(15)
 
 // ---- 2. Kế hoạch đủ dài, mỗi cảnh có máy quay chuyển động
 const kh = read('scripts/video/3d/ke-hoach-thu.mjs');
-check(/ceo/.test(kh) && /cfo/.test(kh), 'cảnh thử có CEO và CFO');
+check(/ceo-v3\.glb/.test(kh) && /lumina\.glb/.test(kh) && !/cfo\.glb/.test(kh.replace(/\/\*[\s\S]*?\*\//g, '')), 'cảnh thử dùng CEO bản v3 và Lumina (không cầm đồ vật bị méo)');
 
 // ---- 3. Kế hoạch gọi GLB không có: dừng, báo tiếng Việt
 const sai = path.join(tam, 'ke-hoach-sai.mjs');
-fs.writeFileSync(sai, kh.replace(/assets\/models\/nhan-vat\/cfo\.glb/, 'assets/models/nhan-vat/khong-co.glb'));
+fs.writeFileSync(sai, kh.replace(/assets\/models\/nhan-vat\/lumina\.glb/, 'assets/models/nhan-vat/khong-co.glb'));
 const rs = chay([sai, '--out', path.join(tam, 's'), '--rong', '270', '--cao', '480', '--tu', '0', '--den', '2']);
 check(rs.status !== 0 && /không thấy/i.test(rs.stderr + rs.stdout) && /khong-co\.glb/.test(rs.stderr + rs.stdout), 'GLB không có: dừng, thông báo tiếng Việt nêu tên tệp');
 check(!fs.existsSync(path.join(tam, 's', 'ke-hoach-sai.mp4')), 'GLB không có: không ra video hỏng');
+
+// ---- 4. Nhân vật cầm đồ vật với động tác làm méo đồ vật: dừng, báo tiếng Việt (lỗi chị thấy trong video thử 12/11/2026)
+const meo = path.join(tam, 'ke-hoach-meo.mjs');
+fs.writeFileSync(meo, kh.replace(/assets\/models\/nhan-vat\/lumina\.glb/, 'assets/models/nhan-vat/cfo.glb'));
+const rm = chay([meo, '--out', path.join(tam, 'm'), '--thu']);
+check(rm.status !== 0 && /túi tiền/.test(rm.stderr + rm.stdout) && !fs.existsSync(path.join(tam, 'm')), 'nhân vật cfo.glb (túi tiền bị kéo méo): dừng trước khi dựng, báo rõ');
+const sec = path.join(tam, 'ke-hoach-sec.mjs');
+fs.writeFileSync(sec, kh.replace(/assets\/models\/nhan-vat\/lumina\.glb/, 'assets/models/nhan-vat/sec.glb'));
+const rsec = chay([sec, '--out', path.join(tam, 'x'), '--thu']);
+check(rsec.status !== 0 && /bìa kẹp/.test(rsec.stderr + rsec.stdout) && /Wave/.test(rsec.stderr + rsec.stdout), 'Thư ký vẫy tay (bìa kẹp bị méo): dừng, báo động tác nào không dùng được');
 
 fs.rmSync(tam, { recursive: true, force: true });
 console.log(fails ? '\n' + fails + ' kiểm tra hỏng' : '\nvideo-3d-bo-dung: ok');
