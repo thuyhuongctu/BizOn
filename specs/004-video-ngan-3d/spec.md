@@ -52,6 +52,10 @@ riêng làm theo skill `video-ngan`:
 3. **Anh Tư?** → Dùng một nhân vật GLB có sẵn đủ động tác (`ceo-v3.glb` hoặc `tu-v3.glb`), đội **nón lá đất sét** dựng
    bằng khối 3D trong bộ dựng; không tạo mô hình mới, không tốn phí.
 4. **Phụ đề?** → **Đốt chữ từng chữ** vào hình (câu chuyện 3 giữ nguyên) **và** xuất `.vtt` VI/EN.
+5. **Giọng đọc?** (chị nhắn sau khi xem kế hoạch, 12/11/2026: «Giọng tôi sẽ chèn vào») → Lời đọc là **giọng của chị**,
+   chị tự thu và chèn vào. Bộ dựng nhận một thư mục giọng (mỗi câu một tệp `NN.mp3` hoặc `NN.wav`) và **tự canh độ dài
+   từng cảnh theo độ dài câu đọc**. Khi chưa có giọng mới, em dựng bản xem trước bằng giọng chị đã thu
+   (`assets/video/src/sau-rieng-ma-so/vi/`); khi chị gửi giọng mới chỉ cần chạy lại một lệnh. Không tổng hợp giọng máy.
 
 ## Kịch bản người dùng và kiểm thử *(bắt buộc)*
 
@@ -142,8 +146,8 @@ nằm ngoài vùng an toàn.
 - **FR-003**: Nhân vật là các tệp GLB đất sét có sẵn trong `assets/models/nhan-vat/`; động tác lấy từ clip trong tệp hoặc
   `dong-tac-v1.glb`.
 - **FR-004**: Mỗi cảnh có ít nhất một chuyển động máy quay (đẩy vào, lia, nâng); cắt cứng khi đổi chỗ lớn.
-- **FR-005**: Lời đọc chỉ dùng câu đã có trong kịch bản đã duyệt; video thử dùng giọng tác giả đã thu, gồm các câu 1, 3, 4,
-  7, 10, 12, 14 (không tổng hợp giọng mới khi chưa hỏi chị).
+- **FR-005**: Lời đọc chỉ dùng câu đã có trong kịch bản đã duyệt (video thử: câu 1, 3, 4, 7, 10, 12, 14) và là giọng của
+  chị; bộ dựng nhận thư mục giọng qua tham số `--giong <thư mục>`, mặc định là giọng đã thu; không tổng hợp giọng máy.
 - **FR-012**: Anh Tư là nhân vật GLB có sẵn đội nón lá đất sét dựng bằng khối 3D trong bộ dựng (không sửa tệp GLB gốc).
 - **FR-006**: Thành phẩm qua `scripts/kiem-video.mjs` không lỗi; âm lượng −14 đến −16 LUFS, đỉnh thật ≤ −1 dBTP.
 - **FR-007**: Xuất kèm poster (jpg, webp) và phụ đề `.vtt` VI/EN.

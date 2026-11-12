@@ -48,6 +48,7 @@
   - mỗi câu trong kế hoạch trùng chữ với câu tương ứng trong hồ sơ kịch bản;
   - kế hoạch không chứa chữ «chỉ vì một con số» và không có câu nào trong mục «Chưa xác minh»;
   - anh Tư có nón lá và dùng GLB có sẵn;
+  - đổi thư mục giọng (`--giong`) bằng tệp giọng giả dài khác → độ dài cảnh đổi theo, video dài đúng tổng giọng;
   - thành phẩm (nếu có trong kho):
     - 1080 × 1920, 30 khung/giây, dài 40–50 giây;
     - chạy `kiem-video.mjs` mã thoát 0;
@@ -63,6 +64,7 @@
   - ghép giọng, nhạc nền hạ khi có lời;
   - dựng, trộn tiếng, `loudnorm`;
   - poster, phụ đề `.vi.vtt`/`.en.vtt` theo mốc câu (như `dung-sau-rieng.mjs`), chạy `kiem-video.mjs`.
+  - tham số `--giong <thư mục>` để chị chèn giọng mới (mỗi câu một tệp); độ dài cảnh tự canh theo câu đọc.
 - [ ] T013 [US2] Dựng thành phẩm `assets/video/sau-rieng-ma-so-doc-3d-vi.mp4` + poster.
   - Gửi chị video và tờ khung hình để chị chấm (SC-004).
 - [ ] T014 [US2] `sw.js` nâng `CACHE`; chạy test.
