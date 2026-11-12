@@ -50,6 +50,8 @@ for (const c of ke.canh) {
   if (c.phong && !existsSync(join(ROOT, c.phong))) loi(`cảnh «${c.ten}»: không thấy ảnh phông ${c.phong}`);
 }
 if (GIONG && !existsSync(GIONG)) loi('không thấy tệp giọng ' + GIONG);
+// ffmpeg ghép khung thành mp4: kiểm trước khi vẽ để không mất công dựng rồi mới hỏng
+if (!THU && spawnSync('ffmpeg', ['-version'], { stdio: 'ignore' }).status !== 0) loi('không tìm thấy ffmpeg trên máy (cài bằng: sudo apt-get install -y ffmpeg, hoặc brew install ffmpeg)');
 
 // ---------- máy chủ tĩnh: gốc kho, cộng một đường dẫn riêng cho kế hoạch (kế hoạch có thể nằm ngoài kho) ----------
 const TYPES = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.mjs': 'text/javascript', '.webp': 'image/webp', '.png': 'image/png', '.jpg': 'image/jpeg', '.glb': 'model/gltf-binary', '.json': 'application/json', '.woff2': 'font/woff2' };
