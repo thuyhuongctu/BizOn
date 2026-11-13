@@ -17,6 +17,10 @@ export const BO_TRANH = {
   ceo: [...DI, 'dung'], cfo: [...DI, 'dung'], cmo: [...DI, 'dung'], coo: [...DI, 'dung'], sec: [...DI, 'dung'],
   lumina: ['dung', 'noi'], tu: ['dung', 'noi'],
 };
+/* Tờ đã làm lại thì nạp bản mới (tệp cũ giữ nguyên trong kho). Thầy Tu Phan v2 (13/11/2026): dựng thẳng từ tranh gốc áo dài
+ * assets/character/anh-tu-ao-dai-cut-v2.webp, vì bản đầu làm từ ảnh mẫu vẽ lại nên chưa giống. */
+export const BAN_MOI = { 'tu-dung': 'tu-dung-v2', 'tu-noi': 'tu-noi-v2' };
+const tep = (id, t) => THU_MUC + (BAN_MOI[id + '-' + t] || id + '-' + t);
 export const diDuoc = id => !!BO_TRANH[id] && DI.every(t => BO_TRANH[id].includes(t));
 const gocGan = a => Math.atan2(Math.sin(a), Math.cos(a));
 const CHO_QUAY = 0.45;   // giây đứng yên trước khi quay ra nhìn người chơi
@@ -30,8 +34,8 @@ export function taoTranhDong(id, { cao = 1.2, tocDi = 1.15, giam = false } = {})
   const bong = new THREE.Mesh(new THREE.CircleGeometry(0.26, 20), new THREE.MeshBasicMaterial({ color: 0x2a2010, transparent: true, opacity: 0.22, depthWrite: false }));
   bong.rotation.x = -Math.PI / 2; bong.position.y = 0.03; bong.scale.y = 0.6; root.add(bong);
   const nap = new THREE.TextureLoader();
-  Promise.all(bo.map(t => fetch(THU_MUC + id + '-' + t + '.json').then(r => { if (!r.ok) throw new Error(String(r.status)); return r.json(); })
-    .then(j => new Promise((ok, loi) => nap.load(THU_MUC + id + '-' + t + '.webp', tx => { tx.colorSpace = THREE.SRGBColorSpace; tx.wrapS = THREE.RepeatWrapping; to[t] = { t: tx, j }; ok(); }, undefined, loi)))))
+  Promise.all(bo.map(t => fetch(tep(id, t) + '.json').then(r => { if (!r.ok) throw new Error(String(r.status)); return r.json(); })
+    .then(j => new Promise((ok, loi) => nap.load(tep(id, t) + '.webp', tx => { tx.colorSpace = THREE.SRGBColorSpace; tx.wrapS = THREE.RepeatWrapping; to[t] = { t: tx, j }; ok(); }, undefined, loi)))))
     .then(() => { if (!bo.length) throw new Error('khong co to sprite'); san = true; tam.visible = true; dat(ten, 1, 0); }).catch(() => { hong = true; });
   /* số khung thứ k của một tờ: tờ «qua lại» đi 0…K−1 rồi K−2…1 */
   function khungCua(j, k) { const K = j.khung; if (!j.quaLai || K < 3) return ((k % K) + K) % K; const m = k % (2 * K - 2); return m < K ? m : 2 * K - 2 - m; }
