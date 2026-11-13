@@ -85,3 +85,12 @@ values ('student.truong-doi-tac.ac.id', 'Đối tác Indonesia');
 3. Muốn gỡ một tên miền: `delete from public.student_email_domains where domain = '...';`
 
 Trang đăng nhập tự đọc danh sách này. Không cần sửa code, cũng không cần gộp PR mới.
+
+Tên miền đã thêm bằng migration (áp bằng workflow «Supabase – áp migration lên production», không cần vào SQL Editor):
+
+| Tên miền | Trường | Migration |
+|---|---|---|
+| `gstudent.ctu.edu.vn` | Nghiên cứu sinh Đại học Cần Thơ | `20261024000000_add_gstudent_domain.sql` |
+| `umkendari.ac.id` | Universitas Muhammadiyah Kendari, Indonesia (lớp KT330H qua Zoom, 11/2026) | `20261113000000_add_umkendari_domain.sql` |
+
+Hệ thống so khớp đúng phần sau `@`: `ten.02@umkendari.ac.id` được nhận, `sv@febi.umkendari.ac.id` thì không. Khung đăng nhập của Bật Nghiệp vẫn ghi hai tên miền CTU trong nhãn; sinh viên trường bạn cứ nhập email trường của mình.

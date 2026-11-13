@@ -50,6 +50,15 @@ export const CHECKS = {
       ["position('1000' in pg_get_functiondef('public.bizon_feed_v2(text, integer)'::regprocedure)) > 0", 'bizon_feed_v2 cho xin tới 1000 dòng'],
     ],
   },
+  add_umkendari_domain: {
+    pre: [
+      ["to_regclass('public.student_email_domains') is not null", 'migration A (require_student_login) đã áp'],
+    ],
+    post: [
+      ["exists (select 1 from public.student_email_domains where domain = 'umkendari.ac.id')", 'có tên miền umkendari.ac.id'],
+      ["public.bizon_is_student_email('ten.02@umkendari.ac.id')", 'email sinh viên UM Kendari được nhận'],
+    ],
+  },
   revoke_anon_writes: {
     pre: [
       ["to_regclass('public.student_email_domains') is not null", 'migration A (require_student_login) đã được áp'],
