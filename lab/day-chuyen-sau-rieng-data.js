@@ -82,7 +82,7 @@
     hutChan:   { vat: 'stamp/ma-phc.webp',               canh: 'chain2/34-nha-may-che-bien.webp' },
     capDong:   { vat: 'stamp/chuoi-lanh-cap-dong.webp',  canh: 'durian/chang-4-cap-dong-iqf.webp' },
     dongThung: { vat: 'tool/thung-xuat-khau-grade-a.webp', canh: 'durian/chang-5-qr-kiem-dich.webp' },
-    kho:       { vat: 'tool/xe-tai-lanh.webp',           canh: 'chain2/12-dong-cont-lanh.webp' },
+    kho:       { vat: 'tool/xe-tai-lanh.webp',           canh: 'chain2/12-dong-cont-lanh-v2.webp' },
     kiemDich:  { vat: 'tool/con-dau-pass.webp',          canh: 'chain2/11-kiem-dich-noi-dia.webp' },
     don: { 'tuoi-cn': 'chain2/21-xe-lanh-cua-khau-huu-nghi.webp', 'dong-nguyen': 'durian/container-lanh-cang.webp',
            'mui-dong': 'chain2/36-quan-trang-mieng.webp', 'tuoi-nd': 'chain2/38-sieu-thi-gia-dinh.webp' },
