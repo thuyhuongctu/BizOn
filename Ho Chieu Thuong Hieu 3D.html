@@ -2441,6 +2441,30 @@
     'ho-chieu-p3-remix.mp3', 'ho-chieu-p3-remix2.mp3', 'ho-chieu-p3-remix3.mp3',
     'ho-chieu-p3-vietnam-to-the-world-en.mp3', 'ho-chieu-p3-en-remix.mp3',
   ];
+  /* Khách chọn tiếng Anh (sinh viên quốc tế): chỉ xoay vòng các bài lời tiếng Anh và tiếng Pháp (kiểm bằng máy nghe,
+   * 13/11/2026); bài lời Việt (Phần I, II, III bản Việt) chỉ phát khi chọn tiếng Việt. */
+  var SOUNDTRACK_VI = SOUNDTRACK;
+  var SOUNDTRACK_EN = [
+    'ho-chieu-p3-en-remix2.mp3', 'ho-chieu-p3-vietnam-to-the-world-en.mp3', 'ho-chieu-p3-en-remix.mp3',
+    'brand-passport.mp3', 'brand-passport-v2.mp3', 'brand-passport-remix.mp3', 'brand-passport-remix-25.mp3',
+    'stamps-beyond-borders.mp3', 'stamps-beyond-borders-v2.mp3', 'stamps-beyond-borders-extended.mp3',
+    'golden-silt-route.mp3',
+  ];
+  function chonNhac() { SOUNDTRACK = isEN() ? SOUNDTRACK_EN : SOUNDTRACK_VI; }
+  /* Trang này không nạp dock nhạc chung (js/site-dock.js) nên nút nhạc trước đây không phát được (phát hiện 13/11/2026).
+   * Có dock thì dùng dock; không có thì dùng trình phát nhỏ này: cùng các hàm play / pause / isPlaying / scope, hết bài
+   * thì sang bài kế trong tuyển tập, vòng lại đầu. */
+  if (!window.BizonDock) (function () {
+    var au = null, ds = [], i = 0;
+    function phat(f) { if (!au) { au = new Audio(); au.volume = 0.55; au.addEventListener('ended', function () { i = (i + 1) % (ds.length || 1); if (ds[i]) phat(ds[i]); }); }
+      au.src = 'assets/audio/' + f; au.play().catch(function () {}); }
+    window.BizonDock = {
+      play: function (f) { i = Math.max(0, ds.indexOf(f)); phat(f); return true; },
+      pause: function () { if (au && !au.paused) au.pause(); },
+      isPlaying: function () { return !!(au && !au.paused); },
+      scope: function (files) { ds = (files || []).slice(); return ds.length; },
+    };
+  })();
   function musicBtnSync(on) {
     var b = $('bp-music');
     if (b) b.textContent = on ? T('⏸️ Tạm dừng nhạc chủ đề', '⏸️ Pause the theme music') : T('🎵 Bật nhạc chủ đề', '🎵 Play the theme music');
@@ -2448,12 +2472,14 @@
   window.bpMusic = function () {
     var d = window.BizonDock;
     if (!d) return;
+    chonNhac();
     if (d.scope) d.scope(SOUNDTRACK, 'Hộ Chiếu Thương Hiệu');
     if (d.isPlaying()) { d.pause(); musicBtnSync(false); try { localStorage.setItem('bizon-bp-music', '0'); } catch (e) {} }
     else { d.play(THEME); musicBtnSync(true); try { localStorage.setItem('bizon-bp-music', '1'); } catch (e) {} }
   };
   function autoTheme() { // bấm Bắt đầu là cử chỉ người dùng → được phép phát
     try { if (localStorage.getItem('bizon-bp-music') !== '1') return; } catch (e) { return; }
+    chonNhac();
     if (window.BizonDock && !window.BizonDock.isPlaying()) {
       if (window.BizonDock.scope) window.BizonDock.scope(SOUNDTRACK, 'Hộ Chiếu Thương Hiệu');
       window.BizonDock.play(THEME); musicBtnSync(true);
