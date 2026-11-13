@@ -17,8 +17,8 @@
     },
     tuPhanLectureHall: {
       path: 'assets/illustrations/anh-tu-lecture-hall.webp',
-      viAlt: 'Tú Phan trong không gian giảng dạy và cố vấn học thuật',
-      enAlt: 'Tú Phan in an academic teaching and advisory setting'
+      viAlt: 'Tu Phan trong không gian giảng dạy và cố vấn học thuật',
+      enAlt: 'Tu Phan in an academic teaching and advisory setting'
     },
     luminaOfficePresent: {
       path: 'assets/character/lumina-office-present.webp',
@@ -119,7 +119,7 @@
         <h2>${lang === 'en' ? 'Learn through decisions and reflection' : 'Học qua quyết định và phản tư'}</h2>
         <p>${lang === 'en'
           ? 'Lumina helps learners question assumptions and interpret consequences. The deterministic engine remains the sole source of simulation outcomes.'
-          : 'Lumina hỗ trợ người học đặt câu hỏi, xem lại giả định và giải thích hệ quả. Engine xác định vẫn là nguồn duy nhất tạo kết quả mô phỏng.'}</p>
+          : 'Lumina hỗ trợ người học đặt câu hỏi, xem lại giả định và giải thích hệ quả. Engine tất định vẫn là nguồn duy nhất tạo kết quả mô phỏng.'}</p>
       </div>`);
 
     const tu = document.createElement('article');
@@ -128,7 +128,7 @@
     tu.appendChild(createImage('tuPhanLectureHall', { loading: 'eager', fetchPriority: 'high' }));
     tu.insertAdjacentHTML('beforeend', `
       <div class="bz-existing-person-copy">
-        <span class="bz-existing-badge">Tú Phan</span>
+        <span class="bz-existing-badge">Tu Phan</span>
         <small>${lang === 'en' ? 'Academic advisory' : 'Cố vấn học thuật'}</small>
         <h2>${lang === 'en' ? 'Connect gameplay with academic outcomes' : 'Kết nối trò chơi với chuẩn đầu ra học thuật'}</h2>
         <p>${lang === 'en'

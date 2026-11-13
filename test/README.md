@@ -15,7 +15,7 @@ node test/brand-passport.test.js  # cần dựng máy chủ trước, xem mục 
 ## `engine.test.js` — engine game mô phỏng chính
 
 Đây là engine dùng để **chấm điểm sinh viên**. Một sai số ở đây không chỉ làm
-game khó chịu mà làm điểm số sai, và làm hỏng luôn tuyên bố *«engine xác định,
+game khó chịu mà làm điểm số sai, và làm hỏng luôn tuyên bố *«engine tất định,
 kết quả tái lập được»* trong hồ sơ học thuật. Vì vậy bộ này đặt nặng hai thứ:
 tính tái lập và các đẳng thức kế toán.
 

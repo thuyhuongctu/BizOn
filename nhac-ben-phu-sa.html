@@ -85,7 +85,7 @@
         <span style="font-size:14px;font-weight:800;color:#FFD58A" data-en="Listen to the song · 5:49">Nghe bài hát · 5:49</span>
         <audio controls preload="none" src="assets/audio/bai-hat-ben-phu-sa.mp3" style="flex:1;min-width:240px"></audio>
       </div>
-      <p style="margin:16px 0 0;font-size:12px;line-height:1.6;color:#8FB7BA" data-en="Words &amp; music: Đỗ Thùy Hương · © 2026 Đỗ Thùy Hương &amp; Assoc. Prof. Phan Anh Tú. Used in the BizOn game Bến Phù Sa.">Lời và nhạc: Đỗ Thùy Hương · © 2026 Đỗ Thùy Hương &amp; PGS.TS. Phan Anh Tú. Bài hát được dùng trong game Bến Phù Sa của BizOn.</p>
+      <p style="margin:16px 0 0;font-size:12px;line-height:1.6;color:#8FB7BA" data-en="Words &amp; music: Đỗ Thùy Hương &amp; Phan Anh Tú · © 2026 Đỗ Thùy Hương &amp; Assoc. Prof. Phan Anh Tú. Used in the BizOn game Bến Phù Sa.">Lời và nhạc: Đỗ Thùy Hương &amp; Phan Anh Tú · © 2026 Đỗ Thùy Hương &amp; PGS.TS. Phan Anh Tú. Bài hát được dùng trong game Bến Phù Sa của BizOn.</p>
     </section>
   </div>
 </div>
@@ -124,7 +124,7 @@
       var body = s.stanzas.map(function(lines){
         return '<div style="display:flex;flex-direction:column;gap:2px">'+lines.map(function(l){ return '<div class="gsj-line" style="font-family:\'Plus Jakarta Sans\',\'PJS Fallback\',sans-serif;font-size:17px;font-weight:600;line-height:1.45;color:#E1F2F5">'+esc(l)+'</div>'; }).join('')+'</div>';
       }).join('');
-      return '<article data-si="'+i+'"><div style="display:flex;flex-wrap:wrap;gap:8px;align-items:baseline"><span class="gsj-tag" style="font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#FFD58A">'+esc(s.name)+'</span><span style="font-size:12px;font-style:italic;color:#8FB7BA">'+esc(s.dir)+'</span></div><div style="display:flex;flex-direction:column;gap:14px;margin-top:10px">'+body+'</div></article>';
+      return '<article data-si="'+i+'"><div style="display:flex;flex-wrap:wrap;gap:8px;align-items:baseline"><span class="gsj-tag" style="font-size:13px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#FFD58A">'+esc(s.name)+'</span></div><div style="display:flex;flex-direction:column;gap:14px;margin-top:10px">'+body+'</div></article>';
     }).join('');
     document.getElementById('gsj-chips').querySelectorAll('button[data-si]').forEach(function(b){ b.onclick = function(){ jump(+b.getAttribute('data-si')); }; });
     document.getElementById('gsj-sections').querySelectorAll('article[data-si]').forEach(function(a){ a.onclick = function(){ jump(+a.getAttribute('data-si')); }; });

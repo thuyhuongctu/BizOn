@@ -18,8 +18,8 @@
       "path": "assets/illustrations/anh-tu-lecture-hall.webp",
       "classification": "academic-advisor-scene",
       "allowed_pages": ["index.html", "app/release.html", "giang-vien.html", "app/instructor-studio.html", "gioi-thieu.html"],
-      "vi_alt": "Tú Phan trong không gian giảng dạy và cố vấn học thuật",
-      "en_alt": "Tú Phan in an academic teaching and advisory setting"
+      "vi_alt": "Tu Phan trong không gian giảng dạy và cố vấn học thuật",
+      "en_alt": "Tu Phan in an academic teaching and advisory setting"
     },
     "lumina_office_present": {
       "path": "assets/character/lumina-office-present.webp",

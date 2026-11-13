@@ -3,7 +3,7 @@
    Mục nào thiếu ở đây thì trang giữ nguyên bản tiếng Việt. */
 window.BZ_LIB_EN={
 /* mv */
-'mv3d/bia-brand-passport-3d.webp':['Cover of the MV «Brand Passport – Vietnam to the World»','The whole cast at the Mekong Island pier: Bà Sáu, the advisors, the firms, Lumina, Tú Phan and the captain · YouTube cover'],
+'mv3d/bia-brand-passport-3d.webp':['Cover of the MV «Brand Passport – Vietnam to the World»','The whole cast at the Mekong Island pier: Bà Sáu, the advisors, the firms, Lumina, Tu Phan and the captain · YouTube cover'],
 'mv3d/bia-durian-passport-3d.webp':['Cover of the MV «Durian Passport»','A Mekong floating market on durian harvest day · YouTube cover'],
 'mv3d/bp-roi-ben-mekong.webp':['Leaving Mekong Island','Opening of the Brand Passport MV · Bà Sáu, the advisors and the firms wave the boat off'],
 'mv3d/bp-dao-mekong.webp':['Mekong Island from above','The riverside village, the pier and a container port in the distance'],
@@ -12,17 +12,17 @@ window.BZ_LIB_EN={
 'mv3d/bp-chia-tay-ca-doi.webp':['Back at Mekong Island','The whole team welcomes the boat home at dusk · finale of the Brand Passport MV'],
 /* chars */
 'lumina-ao-dai-wave.webp':['Lumina in áo dài','In-game learning advisor (rule-based) · also the avatar of Đỗ Thùy Hương'],
-'lumina-office-present.webp':['Lumina in a white suit','In-game AI strategy advisor'],
-'anh-tu-ao-dai-welcome-cut-v2.webp':['Tú Phan','Academic advisor · appears at key moments'],
+'lumina-office-present.webp':['Lumina in a white suit','In-game strategy advisor (rule-based)'],
+'anh-tu-ao-dai-welcome-cut-v2.webp':['Tu Phan','Academic advisor · appears at key moments'],
 'lumina-vest.webp':['Lumina in a vest – original','Advisor chat-window avatar'],
 'lumina-ao-dai.webp':['Lumina in áo dài – original','Welcome screen & completion certificate'],
 'lumina-ao-dai-present.webp':['Lumina – the presenter','Presenting pose · lead image of the Classroom Playbook page'],
-'anh-tu-ao-dai-cut-v2.webp':['Tú Phan – white áo dài','Ceremonial dress · wearing the Vietnam-map pin'],
-'anh-tu-ao-dai-smile-cut.webp':['Tú Phan – winning smile','White áo dài & Vietnam pin · the cheerful version'],
-'anh-tu-ao-dai-point-cut.webp':['Tú Phan – guiding','Pointing to introduce the data board & game rules'],
-'anh-tu-ao-dai-explain-cut.webp':['Tú Phan – explaining','Open-handed gesture explaining a business concept'],
-'anh-tu-ao-dai-work-cut.webp':['Tú Phan – at the desk','Analysing simulation data on a laptop'],
-'anh-tu-suit-green.webp':['Tú Phan – moss-green suit','Arms open in welcome · Vietnam-map pin on the lapel'],
+'anh-tu-ao-dai-cut-v2.webp':['Tu Phan – white áo dài','Ceremonial dress · wearing the Vietnam-map pin'],
+'anh-tu-ao-dai-smile-cut.webp':['Tu Phan – winning smile','White áo dài & Vietnam pin · the cheerful version'],
+'anh-tu-ao-dai-point-cut.webp':['Tu Phan – guiding','Pointing to introduce the data board & game rules'],
+'anh-tu-ao-dai-explain-cut.webp':['Tu Phan – explaining','Open-handed gesture explaining a business concept'],
+'anh-tu-ao-dai-work-cut.webp':['Tu Phan – at the desk','Analysing simulation data on a laptop'],
+'anh-tu-suit-green.webp':['Tu Phan – moss-green suit','Arms open in welcome · Vietnam-map pin on the lapel'],
 'lumina-cheer-cut.webp':['Lumina – victory cheer','Both arms raised – the moment a new market flag is planted'],
 'lumina-casual.webp':['Lumina – everyday look','LR-embroidered shirt, jeans & round glasses – the casual version'],
 'lumina-sweater-huong-cut.webp':["Lumina – «Je m'appelle Hương»",'Sweater knitted with the music project’s name – a bridge between two ecosystems'],
@@ -105,7 +105,7 @@ window.BZ_LIB_EN={
 /* merch */
 'merch/pin-vietnam-clay3d.webp':['Vietnam-map badge','3D red clay with a gold rim and raised gold star, including the Hoàng Sa and Trường Sa archipelagos – symbol of the 6-round journey. Illustration, not to scale.'],
 'merch/pin-set.webp':['Trio: Red star · +84 · VIETNAM','The BizOn Go Global pin set – taking the +84 country code to the world'],
-'character/anh-tu-pin.webp':['Tú Phan with the Vietnam pin','The academic advisor wearing the Vietnam-map pin on his suit lapel'],
+'character/anh-tu-pin.webp':['Tu Phan with the Vietnam pin','The academic advisor wearing the Vietnam-map pin on his suit lapel'],
 /* Hộ Chiếu Sầu Riêng 3D */
 "dragon/teo-soi/wave.webp":["Tèo Soi – Waving","The «ask the dragon» button · greeting the player"],
 "dragon/teo-soi/walk.webp":["Tèo Soi – Walking","Follows the player across the stages"],

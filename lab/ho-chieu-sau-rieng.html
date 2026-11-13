@@ -483,7 +483,7 @@ footer{color:var(--faint)}
           <b>${a.emoji} ${esc(nm(a))}</b><span class="small muted">${LANG === 'en' ? a.roleEn : a.roleVi}</span></button>`).join('')}</div></div>
 
       <div class="card"><h2>${L('2a · Chọn doanh nghiệp của đội', '2a · Choose your firm')}</h2>
-        <p class="small muted">${L('Mỗi vai ở một nấc khác nhau trên trục tiểu thương → công ty XNK: nấc thấp giá rẻ nhưng chưa có mã số, nấc cao có mã số nhưng vốn vào nhiều hơn.', 'Each role sits at a different rung on the petty-trader → export-company ladder: lower rungs are cheaper but lack codes; higher rungs hold codes but need more capital.')}</p>
+        <p class="small muted">${L('Mỗi vai ở một nấc khác nhau trên trục tiểu thương → công ty XNK, khác nhau về quy mô, vốn và mã số: có vai đã có mã đóng gói, có vai nhiều vốn nhưng chưa có mã nào. Đọc kỹ từng thẻ trước khi chọn.', 'Each role sits at a different rung on the petty-trader → export-company ladder, with different scale, capital and codes: some already hold a packing code, some have plenty of capital but no codes yet. Read each card before choosing.')}</p>
         <div class="pick">${Object.entries(D.roles).map(([id, r]) => `<button type="button" data-role="${id}" class="${id === SETUP.roleId ? 'on' : ''}"><b>${r.emoji} ${nm(r)}</b>
           <span class="hint" style="display:block;font-weight:700">${LANG === 'en' ? r.scaleEn : r.scaleVi}</span>
           <span class="small muted">${LANG === 'en' ? r.descEn : r.descVi}</span></button>`).join('')}</div>

@@ -12,6 +12,7 @@
   var SCHEMA = 'bizon.learning.trace.v1';
   var STORAGE_PREFIX = 'bizon-bp-learning-v1:';
   var MAX_REFLECTION = 2000;
+  var PHASE_VI = { obs: 'quan sát', dec: 'ra quyết định', evt: 'biến cố', res: 'kết quả' };
   var gameFrame = document.getElementById('bp-game');
   var panel = document.getElementById('lumina-panel');
   var statusEl = document.getElementById('learning-status');
@@ -180,7 +181,7 @@
     coachEl.textContent = lastPrompt.coach;
     criticEl.textContent = lastPrompt.critic;
     if (statusEl) {
-      statusEl.textContent = state ? ('Quý ' + (state.q + 1) + ' · ' + (state.phase || 'observe')) : 'Đang kết nối';
+      statusEl.textContent = state ? ('Quý ' + (state.q + 1) + ' · ' + (PHASE_VI[state.phase] || state.phase || 'quan sát')) : 'Đang kết nối';
     }
   }
 
@@ -415,7 +416,7 @@
       resetSession: newSession
     };
 
-    statusEl.textContent = 'Đã kết nối · engine xác định được bảo vệ';
+    statusEl.textContent = 'Đã kết nối · engine tất định được bảo vệ';
     updatePrompt();
     renderTrace();
     document.documentElement.classList.add('learning-ready');
