@@ -17,6 +17,13 @@
     direct: [['hoicho', 'Hội chợ, phiên chợ', 'Fairs and markets'], ['ocop', 'Điểm OCOP, cửa hàng đặc sản', 'OCOP points, specialty shops'], ['taicho', 'Bán tại cơ sở, điểm du lịch', 'At the workshop, tourist spots']],
   };
   const PROMOS = [['cauchuyen', 'Câu chuyện sản phẩm', 'Product story'], ['video', 'Video ngắn', 'Short videos'], ['live', 'Livestream', 'Livestream'], ['koc', 'KOC / người dùng thật', 'KOCs / real users'], ['dungthu', 'Cho dùng thử', 'Free samples'], ['khaitruong', 'Ưu đãi khai trương', 'Launch offer'], ['hoicho', 'Gian hàng hội chợ', 'Fair booth']];
+  // Khách hàng mục tiêu ở đâu trên «con phố» Dollar Street (Gapminder): nhà xếp theo thu nhập, trái nghèo, phải giàu.
+  // Ô không bắt buộc, không tính vào mức hoàn thành; xem hoạt động lớp xuong-nhan-hieu-dollar-street.html.
+  // [mã, chữ trong ô chọn VI, EN, chữ trên thẻ VI, EN]
+  const STREET = [['trai', 'Bên trái (thu nhập thấp)', 'Left (lower income)', 'bên trái con phố', 'left of the street'],
+    ['giua', 'Ở giữa', 'Middle', 'giữa con phố', 'middle of the street'],
+    ['phai', 'Bên phải (thu nhập cao)', 'Right (higher income)', 'bên phải con phố', 'right of the street']];
+  const streetCard = (id, lang) => { const f = STREET.find(x => x[0] === id); return f ? T(lang, 'Khách ở ' + f[3], 'Customers: ' + f[4]) : ''; };
   const PRICES = [['tham-nhap', 'Thâm nhập (giá thấp để có khách đầu)', 'Penetration (low price to win first buyers)'], ['canh-tranh', 'Ngang giá thị trường', 'At market price'], ['gia-tri', 'Giá cao theo giá trị (quà tặng, thủ công)', 'Value-based premium (gifts, handmade)'], ['chi-phi', 'Chi phí cộng lãi', 'Cost-plus']];
 
   // Tên, slogan có sẵn trong đề – chỉ là ví dụ minh hoạ, không dùng lại.
@@ -67,6 +74,7 @@
     if (s.priceStrategy || norm(s.giaBan) || norm(s.priceReason)) {
       if (!s.priceStrategy) add('price', 'warn', 'Chọn một chiến lược giá.', 'Choose a pricing strategy.');
       if (!hasNumber(s.giaBan)) add('price', 'warn', 'Ghi giá bán dự kiến cho một quy cách, ví dụ 120.000 đ/hũ 500 g.', 'Give a planned price for one pack, e.g. 120,000 ₫ per 500 g jar.');
+      if (s.khachPho === 'trai' && s.priceStrategy === 'gia-tri') add('price', 'warn', 'Khách ở bên trái con phố chi tiêu ít; giá cao theo giá trị khó hợp, trừ khi người mua là người khác (mua làm quà). Nói rõ điều ấy trong lý do, hoặc xem lại chiến lược.', 'Customers on the left of the street spend little; a value-based premium rarely fits unless someone else buys it (as a gift). Say so in the reason, or rethink the strategy.');
       if (norm(s.priceReason) && (words(s.priceReason) < 12 || (has(s.priceReason, VAGUE) && !hasNumber(s.priceReason)))) add('price', 'warn', 'Lý do cần cụ thể: so với giá đối thủ, chi phí một sản phẩm hoặc khách mục tiêu.', 'Justify concretely: competitor prices, unit cost or the target buyer.');
     }
 
@@ -99,7 +107,9 @@
   function fnv(str, seed) { let h = seed >>> 0; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619) >>> 0; } return h >>> 0; }
   function code(s) {
     s = s || {};
-    const body = CONTENT.map(k => norm(s[k])).join('|') + '|' + (s.place || []).slice().sort().join(',') + '|' + (s.promo || []).slice().sort().join(',');
+    let body = CONTENT.map(k => norm(s[k])).join('|') + '|' + (s.place || []).slice().sort().join(',') + '|' + (s.promo || []).slice().sort().join(',');
+    // khachPho thêm sau (11/2026): chỉ băm khi có, để mã thẻ của bài làm trước đó không đổi.
+    if (s.khachPho) body += '|pho:' + s.khachPho;
     const hex = (fnv(body, 2166136261).toString(16).padStart(8, '0') + fnv(body, 2654435761).toString(16).padStart(8, '0')).toUpperCase();
     return 'XNH-' + hex.slice(0, 4) + '-' + hex.slice(4, 8);
   }
@@ -120,7 +130,7 @@
       why: s.giaiThich || '',
       p4: [
         [T(lang, 'Sản phẩm', 'Product'), s.product || ''],
-        [T(lang, 'Giá', 'Price'), [label(PRICES, s.priceStrategy, lang), s.giaBan, s.priceReason].filter(Boolean).join(' – ')],
+        [T(lang, 'Giá', 'Price'), [label(PRICES, s.priceStrategy, lang), s.giaBan, streetCard(s.khachPho, lang), s.priceReason].filter(Boolean).join(' – ')],
         [T(lang, 'Phân phối', 'Place'), [channelText(s, lang), s.placeNote].filter(Boolean).join('. ')],
         [T(lang, 'Truyền thông', 'Promotion'), [promoText(s, lang), s.promoNote].filter(Boolean).join('. ')],
       ],
@@ -189,5 +199,5 @@
   function png(canvas) { return new Promise((ok, fail) => canvas.toBlob(b => (b ? ok(b) : fail(new Error('toBlob'))), 'image/png')); }
   const fileName = s => 'the-thuong-hieu-' + (norm((s || {}).ten).normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/g, 'd').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'bizon') + '.png';
 
-  root.BizOnBrandLab = Object.freeze({ hints, progress, code, cardLines, draw, png, fileName, CHANNELS, PROMOS, PRICES });
+  root.BizOnBrandLab = Object.freeze({ hints, progress, code, cardLines, draw, png, fileName, CHANNELS, PROMOS, PRICES, STREET });
 })(typeof window !== 'undefined' ? window : globalThis);
