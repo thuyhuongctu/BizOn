@@ -42,6 +42,7 @@ phải; toà nhà có bảng tên; tới gần một điểm thì hiện thẻ (
   trong tệp trang của ba game này cho tới khi có giấy chứng nhận.
   **Mở khóa một phần ngày 12/11/2026** (chị chọn «Mở khóa, làm Bật Nghiệp 3D»): bản đã nộp vẫn giữ nguyên ở commit
   `afbacd2`; trang chạy thật được sửa để dùng nhân vật «tranh động», mỗi game một PR. Bật Nghiệp 3D làm trước.
+  Bến Phù Sa 3D (13/11/2026): cô Hương và thầy Tú ở bến nhà thành tranh động đứng thở, dựng từ tranh gốc của game.
   Phần di chuyển dùng chung (`js/di-chuyen-3d.js`) vẫn chưa nạp vào ba game này.
 
 ## Làm rõ
