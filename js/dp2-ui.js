@@ -126,7 +126,7 @@ const DP2 = (() => {
           <input class="bn2-input" name="cls" maxlength="24" autocomplete="off" value="${esc(su.cls)}" placeholder="KT330H-F1"></label>
         <label class="bn2-small" style="display:block;margin-top:10px"><b>${T('Mã đội', 'Team code')}</b> <span class="bn2-muted">${T('(không nhập họ tên)', '(no personal names)')}</span>
           <input class="bn2-input" name="team" maxlength="16" autocomplete="off" value="${esc(su.team)}" placeholder="TEAM_03"></label>
-        <p class="bn2-small" style="margin:12px 0 0"><b>${T('Doanh nghiệp của đội', 'Your firm')}</b> <span class="bn2-muted">${T('– nấc thấp giá rẻ nhưng chưa có mã số, nấc cao có mã số nhưng vốn vào nhiều hơn', '– lower rungs are cheap but hold no codes; higher rungs hold codes but need more capital')}</span></p>
+        <p class="bn2-small" style="margin:12px 0 0"><b>${T('Doanh nghiệp của đội', 'Your firm')}</b> <span class="bn2-muted">${T('– mỗi vai khác nhau về quy mô, vốn và mã số; có vai nhiều vốn nhưng chưa có mã nào', '– roles differ in scale, capital and codes; some have plenty of capital but no codes yet')}</span></p>
         <div class="dp2-firms">${Object.entries(D.roles).map(([id, r]) => `<button type="button" class="bp2-opt ${su.roleId === id ? 'on' : ''}" data-act="role" data-v="${id}" aria-pressed="${su.roleId === id}"><span class="ic">${r.emoji}</span><span>${esc(nm(r))}<span class="sc">${esc(lang() === 'en' ? r.scaleEn : r.scaleVi)}</span><small>${esc(lang() === 'en' ? r.descEn : r.descVi)}</small></span></button>`).join('')}</div>
         <button class="bn2-btn pri block" style="margin-top:16px" type="submit">${T('Bắt đầu 6 vụ', 'Start the 6 seasons')}</button>
       </form>
