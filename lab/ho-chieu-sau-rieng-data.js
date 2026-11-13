@@ -444,7 +444,7 @@
       roleVi: 'Nông hộ trồng sầu riêng, một nhà vườn khác', roleEn: 'Durian grower, another household' },
     { id: 'huong', emoji: '👩', vi: 'Lumina (Hương)', en: 'Lumina (Hương)', img: 'hc/cast/huong.webp',
       roleVi: 'Cố vấn BizOn · nhà sáng lập', roleEn: 'BizOn advisor · founder' },
-    { id: 'tuphan', emoji: '👨‍🏫', vi: 'Tú Phan', en: 'Tú Phan', img: 'hc/cast/tu-phan-avatar.webp',
+    { id: 'tuphan', emoji: '👨‍🏫', vi: 'Tu Phan', en: 'Tu Phan', img: 'hc/cast/tu-phan-avatar.webp',
       roleVi: 'Giảng viên, Trường Kinh tế – Đại học Cần Thơ', roleEn: 'Lecturer, CTU School of Economics' }
   ];
 

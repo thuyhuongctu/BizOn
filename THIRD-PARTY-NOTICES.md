@@ -94,7 +94,7 @@ Một phần tài sản nghe nhìn của BizOn được dựng với công cụ 
 |---|---|---|
 | Hình ảnh nhân vật, bối cảnh, sa bàn (`assets/`) | Tạo ảnh bằng công cụ AI | Ý tưởng, mô tả, chọn bản, tách nền, biên tập, hệ thống tạo hình thống nhất 760 × 1100 px |
 | Bản thu âm nhạc (`assets/audio/`) | Hoà âm và giọng hát bằng công cụ sản xuất nhạc có AI (ghi trong `docs/loi-bai-hat.md`) | Toàn bộ lời ca, thể loại, nhịp độ, cấu trúc bài, nghe chọn qua nhiều vòng |
-| Giọng Lumina và giọng Tú Phan | Mô hình giọng nhân bản | Giọng gốc là **giọng của chính hai tác giả**, tự đồng ý (xem `docs/ip/BIZON_EXTERNAL_MEDIA_PROVENANCE_phan-anh-tu-media_2026-08-04.md`) |
+| Giọng Lumina và giọng Tu Phan | Mô hình giọng nhân bản | Giọng gốc là **giọng của chính hai tác giả**, tự đồng ý (xem `docs/ip/BIZON_EXTERNAL_MEDIA_PROVENANCE_phan-anh-tu-media_2026-08-04.md`) |
 | Video giới thiệu (`assets/video/`) | Dựng hình bằng công cụ AI, ghép bằng ffmpeg | Kịch bản, lời dẫn, dựng, phụ đề |
 | Lời đọc trailer Bật Nghiệp bản v3 (`assets/video/bizon-trailer-v3.mp4`) | Giọng thần kinh `en-US-AvaMultilingualNeural` của Microsoft (dịch vụ đọc của Edge); nhạc nền tách từ bản v2 bằng Demucs | Kịch bản, chọn cách đọc từng tên riêng tiếng Việt, căn giờ, trộn — xem `docs/video/trailer-bat-nghiep-loi-doc.md` |
 | Video «Một trái sầu riêng, cả vùng cùng sầu» (`assets/video/sau-rieng-ma-so-*.mp4`) | Hình ghép từ ảnh Hộ Chiếu Sầu Riêng (đã tạo với công cụ AI, xem dòng đầu bảng) bằng `scripts/video/dung-sau-rieng.mjs`; nhạc nền không lời «Mekong Compass» của BizOn | Kịch bản và tra nguồn (`docs/video/kich-ban-sau-rieng-ma-so-vung-trong.md`), **giọng đọc VI/EN của tác giả Đỗ Thùy Hương** (tác giả cung cấp tệp), dựng cảnh, căn giờ |
