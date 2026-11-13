@@ -31,7 +31,10 @@ const bg = (pg, sel) => pg.evaluate(s => [...document.querySelectorAll(s)].map(e
     check((await bg(pg, '[role=button] .ts-td')).some(x => /teo-dung\.webp/.test(x)), 'nút «Hỏi Tèo» dùng tờ teo-dung');
     await pg.evaluate(() => window.__hsr3d.talkTo('dragon'));
     check(await until(pg, () => [...document.querySelectorAll('.ts-td')].some(e => /teo-noi/.test(getComputedStyle(e).backgroundImage))), 'mở hội thoại với Tèo: khung hội thoại dùng tờ teo-noi');
-    const a = (await bg(pg, '.ts-td')).join('|'); await pg.waitForTimeout(500); const b = (await bg(pg, '.ts-td')).join('|');
+    // Chờ tới khi vị trí nền đổi, tối đa 20 giây, thay vì chờ cứng 500 ms (máy CI chậm có lúc chưa kịp sang khung kế).
+    const a = (await bg(pg, '.ts-td')).join('|');
+    await pg.waitForFunction(truoc => [...document.querySelectorAll('.ts-td')].map(e => getComputedStyle(e).backgroundImage + ' @ ' + getComputedStyle(e).backgroundPosition).join('|') !== truoc, a, { timeout: 20000, polling: 100 }).catch(() => {});
+    const b = (await bg(pg, '.ts-td')).join('|');
     check(a !== b, 'khung hình chạy (vị trí nền đổi theo thời gian)');
     await pg.evaluate(() => window.__hsr3d.setState({ talk: { id: 'dragon', reply: 'thử', woke: 0 } }));
     check(await until(pg, () => !document.querySelector('.ts-td[aria-label="Tèo Soi"]:not([role=button] *)') || ![...document.querySelectorAll('.ts-td')].some(e => /teo-noi/.test(getComputedStyle(e).backgroundImage))), 'Tèo đang trả lời (dáng suy nghĩ): khung hội thoại về ảnh tĩnh');

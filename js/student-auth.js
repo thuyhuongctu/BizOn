@@ -33,6 +33,34 @@
     const SESSION_KEY = 'bizon-student-session';
     const state = { session: null, team: null };
 
+    // Song ngữ: T(vi, en) của js/app.js (script này nạp sau app.js). Trang không có T() thì giữ tiếng Việt.
+    const tr = (vi, en) => (typeof T === 'function' ? T(vi, en) : vi);
+    // Lỗi máy chủ (SQL, Supabase Auth) trả về bằng tiếng Việt hoặc tiếng Anh kỹ thuật; ở chế độ tiếng Anh thì đổi các câu
+    // sinh viên hay gặp sang lời dễ hiểu. Câu không có trong bảng thì giữ nguyên để còn tra được.
+    const ERR_EN = [
+      [/^Cần dùng đúng email trường/, 'Please use your school email address to join a team.'],
+      [/^Vai trò (\S+) của đội (.+) trong lớp (\S+) đã có người khác giữ\.?$/, 'The role $1 of team $2 in class $3 is already taken by someone else.'],
+      [/^Mã lớp cần 3-40 ký tự/, 'The Class ID needs 3–40 characters: capital letters, digits, underscore or hyphen.'],
+      [/^Tên đội cần 1-60 ký tự/, 'The team name needs 1–60 characters.'],
+      [/^Vai trò phải là một trong/, 'The role must be one of CEO, CFO, CMO, COO, SEC.'],
+      [/^Cần đăng nhập trước khi tham gia đội/, 'Please sign in before joining a team.'],
+      [/^Bạn chưa tham gia đội nào trong lớp này/, 'You have not joined a team in this class yet.'],
+      [/^Phiên đăng nhập đã hết/, 'Your session has expired, please sign in again'],
+      [/^Chưa đăng nhập$/, 'Not signed in'],
+      [/^Backend chưa được cấu hình$/, 'The server connection is not configured'],
+      [/^Máy chủ không trả về phiên đăng nhập hợp lệ/, 'The server did not return a valid session.'],
+      [/^Invalid login credentials$/i, 'wrong email or password'],
+      [/^Email not confirmed$/i, 'email not confirmed yet – open the link in the confirmation email first'],
+      [/^User already registered$/i, 'this email already has an account – use "Sign in"'],
+      [/rate limit/i, 'too many attempts right now – wait a few minutes and try again'],
+    ];
+    const errText = e => {
+      const m = String((e && e.message) || e || '');
+      if (tr('vi', 'en') !== 'en') return m;
+      for (const [re, en] of ERR_EN) if (re.test(m)) return m.replace(re, en);
+      return m;
+    };
+
     const setStatus = (message, kind) => {
       const el = $('sa-status');
       if (!el) return;
@@ -58,7 +86,7 @@
         if (saved && saved.accessToken && (saved.expiresAt > Date.now() || (saved.refreshToken && window.StudentLogin))) {
           state.session = saved;
           showTeamBlock();
-          setStatus('Đã khôi phục phiên đăng nhập. Nhập Mã lớp + Tên đội để tham gia.', 'success');
+          setStatus(tr('Đã khôi phục phiên đăng nhập. Nhập Mã lớp + Tên đội để tham gia.', 'Session restored. Enter the Class ID and team name to join.'), 'success');
         } else {
           sessionStorage.removeItem(SESSION_KEY);
         }
@@ -115,21 +143,21 @@
       const password = $('sa-password')?.value;
       if (window.StudentLogin && StudentLogin.loadDomains) await StudentLogin.loadDomains();
       if (!email || !password || password.length < 8 || (window.StudentLogin && !StudentLogin.isStudentEmail(email))) {
-        setStatus('Cần email trường hợp lệ (@student.ctu.edu.vn hoặc @gstudent.ctu.edu.vn) và mật khẩu tối thiểu 8 ký tự.', 'error');
+        setStatus(tr('Cần email trường hợp lệ (@student.ctu.edu.vn hoặc @gstudent.ctu.edu.vn) và mật khẩu tối thiểu 8 ký tự.', 'Use the email address issued by your school (a domain registered with BizOn) and a password of at least 8 characters.'), 'error');
         return;
       }
-      setStatus('Đang tạo tài khoản…');
+      setStatus(tr('Đang tạo tài khoản…', 'Creating your account…'));
       try {
         const data = await authRequest('signup', { email, password });
         if (data.access_token) {
           applyAuthResponse(data, email);
           showTeamBlock();
-          setStatus('Đã tạo tài khoản và đăng nhập. Nhập Mã lớp + Tên đội để tham gia.', 'success');
+          setStatus(tr('Đã tạo tài khoản và đăng nhập. Nhập Mã lớp + Tên đội để tham gia.', 'Account created and signed in. Enter the Class ID and team name to join.'), 'success');
         } else {
-          setStatus('Đã tạo tài khoản. Kiểm tra email để xác nhận, rồi bấm "Đăng nhập".', 'success');
+          setStatus(tr('Đã tạo tài khoản. Kiểm tra email để xác nhận, rồi bấm "Đăng nhập".', 'Account created. Check your email to confirm it, then press "Sign in".'), 'success');
         }
       } catch (e) {
-        setStatus(`Không tạo được tài khoản (${e.message}).`, 'error');
+        setStatus(tr(`Không tạo được tài khoản (${errText(e)}).`, `Could not create the account (${errText(e)}).`), 'error');
       } finally {
         if ($('sa-password')) $('sa-password').value = '';
       }
@@ -139,17 +167,17 @@
       const email = $('sa-email')?.value.trim();
       const password = $('sa-password')?.value;
       if (!email || !password) {
-        setStatus('Cần nhập email và mật khẩu.', 'error');
+        setStatus(tr('Cần nhập email và mật khẩu.', 'Please enter your email and password.'), 'error');
         return;
       }
-      setStatus('Đang đăng nhập…');
+      setStatus(tr('Đang đăng nhập…', 'Signing in…'));
       try {
         const data = await authRequest('token?grant_type=password', { email, password });
         applyAuthResponse(data, email);
         showTeamBlock();
-        setStatus('Đã đăng nhập. Nhập Mã lớp + Tên đội để tham gia.', 'success');
+        setStatus(tr('Đã đăng nhập. Nhập Mã lớp + Tên đội để tham gia.', 'Signed in. Enter the Class ID and team name to join.'), 'success');
       } catch (e) {
-        setStatus(`Không đăng nhập được (${e.message}).`, 'error');
+        setStatus(tr(`Không đăng nhập được (${errText(e)}).`, `Could not sign in (${errText(e)}).`), 'error');
       } finally {
         if ($('sa-password')) $('sa-password').value = '';
       }
@@ -163,7 +191,7 @@
       $('sa-auth-block')?.classList.remove('hidden');
       $('sa-start')?.classList.add('hidden');
       $('sa-delete-account')?.classList.add('hidden');
-      setStatus('Đã đăng xuất.');
+      setStatus(tr('Đã đăng xuất.', 'Signed out.'));
     }
 
     function showTeamBlock() {
@@ -171,7 +199,7 @@
       $('sa-team-block')?.classList.remove('hidden');
       $('sa-delete-account')?.classList.remove('hidden');
       const line = $('sa-account-line');
-      if (line) line.textContent = `Đã đăng nhập: ${state.session.email}`;
+      if (line) line.textContent = tr(`Đã đăng nhập: ${state.session.email}`, `Signed in: ${state.session.email}`);
     }
 
     // Xóa tài khoản Supabase Auth thật của chính người gọi (bizon_delete_my_account,
@@ -180,9 +208,10 @@
     // team_saves/round_submissions vì đó là kết quả chung của cả đội.
     async function deleteAccount() {
       if (!state.session) return;
-      const ok = window.confirm('Xóa tài khoản sẽ xóa vĩnh viễn đăng nhập email này và tư cách thành viên đội của bạn. Kết quả/tiến trình của cả đội KHÔNG bị xóa. Không thể hoàn tác. Tiếp tục?');
+      const ok = window.confirm(tr('Xóa tài khoản sẽ xóa vĩnh viễn đăng nhập email này và tư cách thành viên đội của bạn. Kết quả/tiến trình của cả đội KHÔNG bị xóa. Không thể hoàn tác. Tiếp tục?',
+        'Deleting your account permanently removes this email sign-in and your team membership. The results and progress of the whole team are NOT deleted. This cannot be undone. Continue?'));
       if (!ok) return;
-      setStatus('Đang xóa tài khoản…');
+      setStatus(tr('Đang xóa tài khoản…', 'Deleting your account…'));
       try {
         await rpc('bizon_delete_my_account', {});
         state.session = null;
@@ -192,9 +221,9 @@
         $('sa-auth-block')?.classList.remove('hidden');
         $('sa-start')?.classList.add('hidden');
         $('sa-delete-account')?.classList.add('hidden');
-        setStatus('Đã xóa tài khoản.', 'success');
+        setStatus(tr('Đã xóa tài khoản.', 'Account deleted.'), 'success');
       } catch (e) {
-        setStatus(`Không xóa được (${e.message}).`, 'error');
+        setStatus(tr(`Không xóa được (${errText(e)}).`, `Could not delete the account (${errText(e)}).`), 'error');
       }
     }
 
@@ -203,19 +232,19 @@
       const teamName = $('sa-team')?.value.trim();
       const role = $('sa-role')?.value;
       if (!classCode || !teamName) {
-        setStatus('Cần nhập Mã lớp và Tên đội.', 'error');
+        setStatus(tr('Cần nhập Mã lớp và Tên đội.', 'Please enter the Class ID and team name.'), 'error');
         return;
       }
-      setStatus('Đang tham gia đội…');
+      setStatus(tr('Đang tham gia đội…', 'Joining the team…'));
       try {
         const rows = await rpc('bizon_join_team', { p_class_code: classCode, p_team_name: teamName, p_role: role });
         const row = Array.isArray(rows) ? rows[0] : rows;
         state.team = row;
-        $('sa-team-label').textContent = `${row.team_name} · ${row.role} · lớp ${row.class_code}`;
+        $('sa-team-label').textContent = tr(`${row.team_name} · ${row.role} · lớp ${row.class_code}`, `${row.team_name} · ${row.role} · class ${row.class_code}`);
         $('sa-start')?.classList.remove('hidden');
-        setStatus('Đã tham gia đội. Bấm "Bắt đầu mô phỏng" để vào trò chơi.', 'success');
+        setStatus(tr('Đã tham gia đội. Bấm "Bắt đầu mô phỏng" để vào trò chơi.', 'You have joined the team. Press "Start the simulation" to enter the game.'), 'success');
       } catch (e) {
-        setStatus(`Không tham gia được (${e.message}).`, 'error');
+        setStatus(tr(`Không tham gia được (${errText(e)}).`, `Could not join the team (${errText(e)}).`), 'error');
       }
     }
 
