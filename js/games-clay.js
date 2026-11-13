@@ -66,7 +66,7 @@
     /* Game mở rộng: Vân Đồn 1149, sản phẩm riêng của tác giả, mở ở tab mới */
     set('ar-moretag', esc(t.moreTag));
     set('ar-moretitle', esc(t.moreTitle));
-    set('ar-more', '<a href="https://thuyhuongctu.github.io/ThuyHuong_Digital-2026-Games/van-don/" target="_blank" rel="noopener" style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;align-items:center;padding:22px;border-radius:28px;background:var(--clay-card);color:var(--clay-ink);box-shadow:var(--clay-night-shadow,inset 0 -8px 0 rgba(110,70,30,.08),inset 0 5px 0 #fff,0 20px 28px -22px rgba(110,70,30,.55))">'
+    set('ar-more', '<a href="https://thuyhuongctu.github.io/Vietnamese-History-Games/van-don/" target="_blank" rel="noopener" style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;align-items:center;padding:22px;border-radius:28px;background:var(--clay-card);color:var(--clay-ink);box-shadow:var(--clay-night-shadow,inset 0 -8px 0 rgba(110,70,30,.08),inset 0 5px 0 #fff,0 20px 28px -22px rgba(110,70,30,.55))">'
       + '<span style="flex:1 1 300px;display:block"><span style="display:flex;flex-wrap:wrap;gap:8px;align-items:center"><span style="font-family:var(--clay-head);font-size:22px;font-weight:800">🏮 '+esc(t.moreName)+'</span><span style="padding:3px 10px;border-radius:999px;background:var(--clay-amber-soft);color:#7A4A0E;font-size:11px;font-weight:800">'+esc(t.moreBadge)+'</span></span>'
       + '<span style="display:block;margin:6px 0 0;font-size:15px;line-height:1.55;color:var(--clay-ink-2)">'+esc(t.moreDesc)+'</span>'
       + '<span style="display:block;margin:6px 0 0;font-size:13px;line-height:1.5;color:var(--clay-sub)">'+esc(t.moreNote)+'</span></span>'
