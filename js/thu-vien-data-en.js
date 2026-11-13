@@ -12,7 +12,7 @@ window.BZ_LIB_EN={
 'mv3d/bp-chia-tay-ca-doi.webp':['Back at Mekong Island','The whole team welcomes the boat home at dusk · finale of the Brand Passport MV'],
 /* chars */
 'lumina-ao-dai-wave.webp':['Lumina in áo dài','In-game learning advisor (rule-based) · also the avatar of Đỗ Thùy Hương'],
-'lumina-office-present.webp':['Lumina in a white suit','In-game AI strategy advisor'],
+'lumina-office-present.webp':['Lumina in a white suit','In-game strategy advisor (rule-based)'],
 'anh-tu-ao-dai-welcome-cut-v2.webp':['Tú Phan','Academic advisor · appears at key moments'],
 'lumina-vest.webp':['Lumina in a vest – original','Advisor chat-window avatar'],
 'lumina-ao-dai.webp':['Lumina in áo dài – original','Welcome screen & completion certificate'],

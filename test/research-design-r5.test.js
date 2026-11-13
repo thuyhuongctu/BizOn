@@ -38,7 +38,7 @@ assert.equal((html.match(/<th scope="row" data-en="P__ · /g) || []).length, 4, 
 assert.ok(html.includes('Journal of Teaching in International Business') && html.includes('The International Journal of Management Education'));
 assert.ok(html.includes('data-en="Four manuscripts are planned from this design.'));
 for (const doi of ['10.1057/palgrave.jibs.8490676', '10.1057/jibs.2009.24', '10.5465/amr.2001.4378020', '10.2307/2529310', '10.1016/j.jcm.2016.02.012']) assert.ok(html.includes('doi:' + doi), 'thiếu DOI ' + doi);
-assert.ok(html.includes('cập nhật 27/10/2026'));
+assert.ok(html.includes('cập nhật 07/11/2026'));
 // song ngữ: mọi <p>, <h3>, <h4>, <li>, <td>, <tspan> trong mục mới có data-en (trừ <p> chỉ chứa công thức)
 for (const m of sec.matchAll(/<(p|h3|h4|li|td|tspan)\b([^>]*)>/g)) { const attrs = m[2]; if (/class="rd-eq"|style="margin-top:10px"/.test(sec.slice(m.index, m.index + 80)) && m[1] === 'p') continue; assert.ok(/\sdata-en=/.test(attrs), `thiếu data-en ở <${m[1]}${attrs.slice(0, 60)}>`); }
 { const sw = read('sw.js'); assert.match(sw, /const CACHE = 'bizon-v\d+';/); }
