@@ -721,14 +721,31 @@ const BGM_TRACKS = [
   'assets/audio/doi-phu-sa-remix.mp3',
   'assets/audio/doi-phu-sa-remix2.mp3',
 ];
+// Người chơi chọn tiếng Anh (sinh viên quốc tế): phát các bài lời tiếng Anh và tiếng Pháp của BizOn. Ngôn ngữ lời
+// kiểm bằng máy nghe hai đoạn 30 giây mỗi bài (13/11/2026); bài lời Việt và bản không lời chỉ nằm ở danh sách tiếng Việt.
+const BGM_TRACKS_EN = [
+  'assets/audio/bat-nghiep-mekong-sunfire-1.mp3', // BÀI CHÍNH khi mở game bằng tiếng Anh – Mekong Sunfire 1 (lời Anh)
+  'assets/audio/huong-and-the-world-en.mp3',
+  'assets/audio/bizon-lesprit-du-mekong.mp3',     // lời Anh – Pháp
+  'assets/audio/and-the-world-say-hello.mp3',
+  'assets/audio/huong-sans-frontieres-2.mp3',
+  'assets/audio/huong-on-return.mp3',
+  'assets/audio/mekong-compass.mp3',
+  'assets/audio/viet-nam-trong-tim.mp3',
+  'assets/audio/huong-on-return-remix.mp3',
+  'assets/audio/huong-sans-frontieres.mp3',
+  'assets/audio/huong-and-the-world-male.mp3',
+  'assets/audio/journey-golden-silt.mp3',         // lời Anh – Pháp
+];
+const dsNhac = () => currentLang() === 'en' ? BGM_TRACKS_EN : BGM_TRACKS;
 let bgm = null, bgmIdx = 0;
 function musicEnabled() { return localStorage.getItem('bizon-music') !== 'off'; }
 function ensureBgm(src) {
   if (!bgm) {
-    bgm = new Audio(src || BGM_TRACKS[bgmIdx]); bgm.volume = 0.22;
+    bgm = new Audio(src || dsNhac()[bgmIdx % dsNhac().length]); bgm.volume = 0.22;
     bgm.addEventListener('ended', () => {
-      bgmIdx = (bgmIdx + 1) % BGM_TRACKS.length;
-      bgm.src = BGM_TRACKS[bgmIdx];
+      const ds = dsNhac(); bgmIdx = (bgmIdx + 1) % ds.length;   // đổi ngôn ngữ giữa chừng thì bài sau theo danh sách mới
+      bgm.src = ds[bgmIdx];
       if (musicEnabled()) bgm.play().catch(() => {});
     });
   }
@@ -744,8 +761,8 @@ function startMusic() {
 let finaleThemePlayed = false;
 function playFinaleTheme() {
   if (finaleThemePlayed || !musicEnabled()) return;
-  const src = 'assets/audio/bat-nghiep-mekong-sunfire-2.mp3';
-  const i = BGM_TRACKS.indexOf(src);
+  const src = currentLang() === 'en' ? 'assets/audio/bat-nghiep-mekong-sunfire-1.mp3' : 'assets/audio/bat-nghiep-mekong-sunfire-2.mp3';
+  const i = dsNhac().indexOf(src);
   if (i < 0) return;
   bgmIdx = i;
   const a = ensureBgm(src);
