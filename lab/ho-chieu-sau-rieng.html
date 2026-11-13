@@ -94,6 +94,8 @@ h1{font-size:clamp(26px,4.4vw,38px);line-height:1.15;margin:10px 0}
 .quickstart{border:2px solid var(--accent);background:color-mix(in srgb,var(--accent) 8%,var(--panel))}
 .quickstart ol{margin:8px 0 0 18px;padding:0} .quickstart li{margin:4px 0;font-size:13.5px}
 .intro-video video{display:block;width:100%;max-width:880px;height:auto;aspect-ratio:16/9;margin:10px auto 6px;border-radius:12px;background:#1d1408}
+.intro-video .doc{margin-top:14px;padding-top:12px;border-top:1px dashed rgba(0,0,0,.15)}
+.intro-video .doc video{max-width:320px;aspect-ratio:9/16;background:#f3eadb}
 .refcard{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:4px 18px;margin-bottom:14px}
 .refcard summary{cursor:pointer;list-style:none;padding:14px 0;display:flex;align-items:center;flex-wrap:wrap;justify-content:space-between;gap:8px 10px}
 .refcard summary::-webkit-details-marker{display:none}
@@ -414,7 +416,12 @@ footer{color:var(--faint)}
         <track kind="subtitles" srclang="vi" label="Tiếng Việt" src="${v}subs/${n}.vi.vtt">
         <track kind="subtitles" srclang="en" label="English" src="${v}subs/${n}.en.vtt">
       </video>
-      <p class="hint">${L('Phụ đề: bấm nút CC trên trình phát. Video minh họa; anh Tư là nhân vật hư cấu.', 'Subtitles: tap CC on the player. Illustrative video; Anh Tư is a fictional character.')}</p></div>`;
+      <p class="hint">${L('Phụ đề: bấm nút CC trên trình phát. Video minh họa; anh Tư là nhân vật hư cấu.', 'Subtitles: tap CC on the player. Illustrative video; Anh Tư is a fictional character.')}</p>
+      <div class="doc"><h3>${L('📱 Bản ngắn 55 giây, khổ dọc, vẽ tay', '📱 Short version: 55 seconds, vertical, hand-drawn')}</h3>
+        <p class="small muted">${L('Cùng câu chuyện, gọn hơn, xem tiện trên điện thoại. Lời đọc tiếng Việt, phụ đề Việt và Anh in sẵn trên hình.', 'The same story, shorter and easy to watch on a phone. Vietnamese narration with Vietnamese and English subtitles on screen.')}</p>
+        <video id="introVideoDoc" controls preload="none" playsinline poster="${v}sau-rieng-ma-so-doc-ve-tay-poster.webp" width="720" height="1280">
+          <source src="${v}sau-rieng-ma-so-doc-ve-tay-vi-720p.mp4" type="video/mp4">
+        </video></div></div>`;
   };
 
   // ================= màn 1: lập đội =================

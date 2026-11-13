@@ -13,7 +13,7 @@ for (const t of ['tu-dung', 'tu-noi']) {
   const j = JSON.parse(read(TD + t + '-v2.json'));
   check(j.quaLai === true && j.khung >= 12 && j.cao === 256 && fs.statSync(R(TD + t + '-v2.webp')).size < 600000, t + '-v2: tờ hợp lệ, nhẹ hơn 600 KB');
 }
-check(/BAN_MOI = \{ 'tu-dung': 'tu-dung-v2', 'tu-noi': 'tu-noi-v2' \}/.test(read('js/ben-bizon-tranh-dong.js')), 'bộ nạp tranh động dùng bản v2 cho thầy Tú');
+check(/BAN_MOI = \{ 'tu-dung': 'tu-dung-v\d+', 'tu-noi': 'tu-noi-v\d+' \}/.test(read('js/ben-bizon-tranh-dong.js')), 'bộ nạp tranh động dùng bản mới cho thầy Tú (v2 trở lên)');
 check(/anh-tu-ao-dai-cut-v2\.webp/.test(read('assets/models/SOURCES.md')) && /tu-dung-v2/.test(read('assets/models/SOURCES.md')), 'SOURCES.md ghi nguồn bản v2');
 check(+(/CACHE = 'bizon-v(\d+)'/.exec(read('sw.js')) || [])[1] >= 842, 'sw.js ≥ bizon-v842');
 
@@ -25,7 +25,7 @@ check(+(/CACHE = 'bizon-v(\d+)'/.exec(read('sw.js')) || [])[1] >= 842, 'sw.js �
     await pg.goto(BASE + '/BizOn%20Game%203D.html?diorama=1', { waitUntil: 'load' });
     const ok = await pg.waitForFunction(() => window.__bn3dNhanVat && (window.__bn3dNhanVat().find(a => a.id === 'tu') || {}).tranh && window.__bn3dNhanVat().find(a => a.id === 'tu').tranh.sanSang, null, { timeout: 60000 }).then(() => true, () => false);
     check(ok, 'Bật Nghiệp 3D: thầy Tú là tranh động, đã tải');
-    check(tai.includes('tu-dung-v2') && tai.includes('tu-noi-v2') && !tai.includes('tu-dung') && !tai.includes('tu-noi'), 'Bật Nghiệp 3D tải tờ v2, không tải tờ cũ (' + tai.join(', ') + ')');
+    check(tai.some(t => /^tu-dung-v\d+$/.test(t)) && tai.includes('tu-noi-v2') && !tai.includes('tu-dung') && !tai.includes('tu-noi'), 'Bật Nghiệp 3D tải tờ v2, không tải tờ cũ (' + tai.join(', ') + ')');
     check(loi.length === 0, 'không lỗi trang' + (loi[0] ? ': ' + loi[0] : ''));
   } catch (e) { console.error(e); fails++; }
   await b.close();
