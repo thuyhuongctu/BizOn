@@ -135,8 +135,28 @@ const dock = new THREE.Group(); dock.position.set(-4, 0, 7.5); scene.add(dock);
 box(4.4, 0.35, 2, 0xb58a5a, 0, 0, 0, dock);
 box(0.4, 0.42, 0.4, 0x5a4632, 1.85, 0.35, -0.75, dock); lantern(1.85, 1.08, -0.75, dock); // đôn gỗ + đèn dầu bên bến
 // Ảnh toàn thân đã tách nền sạch (giống bản v8); tâm sprite ở giữa nên y = mặt bến + nửa chiều cao.
-const sTu = sprite('assets/character/phu-sa/tu-new.png', 3.1, 1.75); sTu.position.x = -1.05; dock.add(sTu);
-const sHg = sprite('assets/character/phu-sa/huong-new-v3.webp', 3.1, 1.75); sHg.position.x = 1.0; dock.add(sHg);
+// Từ 13/11/2026: hai người là «tranh động» đứng thở (tờ sprite dựng từ chính tranh gốc này, assets/character/tranh-dong/),
+// phát xuôi rồi ngược. ?nv=3d, «giảm chuyển động» hay tờ sprite tải hỏng thì giữ ảnh tĩnh như cũ.
+const NV_TRANH = !/[?&]nv=3d\b/.test(location.search);
+const GIAM = (() => { try { return matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { return false; } })();
+const TRANH = [];
+function tranhDong(ten, tinh, h, x) {
+  const s = new THREE.Sprite(new THREE.SpriteMaterial({ transparent: true, depthWrite: false, alphaTest: 0.5 })); s.visible = false; s.position.set(x, h / 2 + 0.2, 0); dock.add(s);
+  const tr = { s, ten, j: null, khung: 0, hong: false };
+  const veTinh = () => { tr.hong = true; dock.remove(s); const t = sprite(tinh, 3.1, 1.75); t.position.x = x; dock.add(t); tr.tinh = t; };
+  if (!NV_TRANH || GIAM) { veTinh(); return tr; }
+  fetch('assets/character/tranh-dong/' + ten + '.json').then(r => { if (!r.ok) throw new Error(String(r.status)); return r.json(); }).then(j => new Promise((ok, loi) => TL.load('assets/character/tranh-dong/' + ten + '.webp', tx => {
+    tx.colorSpace = THREE.SRGBColorSpace; tx.repeat.set(1 / j.cot, 1 / j.hang); s.material.map = tx; s.material.needsUpdate = true; s.scale.set(h * j.rong / j.cao, h, 1); tr.j = j; datKhung(tr, 0); s.visible = true; ok();
+  }, undefined, loi))).catch(veTinh);
+  TRANH.push(tr); return tr;
+}
+function datKhung(tr, k) {   // khung thứ k, tờ «quaLai» đi 0…K−1 rồi K−2…1
+  const j = tr.j, K = j.khung, m = j.quaLai && K > 2 ? k % (2 * K - 2) : k % K, n = m < K ? m : 2 * K - 2 - m;
+  tr.s.material.map.offset.set((n % j.cot) / j.cot, 1 - (Math.floor(n / j.cot) + 1) / j.hang); tr.khung = n;
+}
+const sTu = tranhDong('tu-ganh-dung', 'assets/character/phu-sa/tu-new.png', 3.25, -1.05);
+const sHg = tranhDong('huong-phusa-dung', 'assets/character/phu-sa/huong-new-v3.webp', 3.25, 1.0);
+window.__bps3dTranh = () => [sTu, sHg].map(t => ({ ten: t.ten, sanSang: !!t.j && t.s.visible, hong: t.hong, khung: t.khung }));
 const RIMG = ['assets/character/rivals/alpha.webp', 'assets/character/rivals/mekong.webp', 'assets/character/rivals/star-v2.webp'];
 const RC = [0x7a7f8a, 0x9a8a78, 0x3f8a44];
 const rivals = RC.map((c, k) => { const v = vessel(0, c); v.add(sprite(RIMG[k], 2.6, 2.6)); v.position.set(-40 + k * 3, 0, 34); v.visible = false; v.userData.home = v.position.clone(); return v; });
@@ -361,6 +381,7 @@ function frame() {
   // khỏi tranh CPU/GPU với animation loop của hub – xem js/clay-hub.js.
   if (document.hidden || window.__clayHubOpen) { requestAnimationFrame(frame); return; }
   const t = clock.getElapsedTime(), now = performance.now();
+  for (const tr of TRANH) if (tr.j) datKhung(tr, Math.floor(t * tr.j.fps));
   night += (nightT - night) * 0.05;
   scene.traverse(o => {
     if (o.userData.bob !== undefined) { o.position.y = 0.1 + Math.sin(t * 1.6 + o.userData.bob) * 0.12; o.rotation.z = Math.sin(t + o.userData.bob) * 0.04; }
