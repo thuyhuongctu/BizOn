@@ -508,7 +508,7 @@
         { img: 'hc/durian/cao-toc-ra-cang.webp', vi: 'Đoàn xe lạnh chạy cao tốc ra cảng quốc tế, còn 15 km tới bến xuất khẩu.', en: 'Reefer trucks on the expressway to the international seaport, 15 km from the export terminal.' },
         { img: 'hc/durian/tram-can-cong-cang.webp', vi: 'Trạm cân cổng cảng: xe 18,5 tấn đạt, nhiệt độ container −18 °C ổn định.', en: 'Port gate weigh station: 18.5 t verified, container holding a stable −18 °C.' },
         { img: 'hc/scene/xe-ra-cang.webp', vi: 'Xe container lạnh chở sầu riêng từ vùng trồng ra cảng biển.', en: 'Reefer trucks carry durian from the growing area to the seaport.' },
-        { img: 'hc/chain2/12-dong-cont-lanh.webp', vi: 'Đóng hàng vào container lạnh đạt chuẩn GACC tại kho.', en: 'Loading the cold container to GACC standard at the depot.' },
+        { img: 'hc/chain2/12-dong-cont-lanh-v2.webp', vi: 'Đóng hàng vào container lạnh đạt chuẩn GACC tại kho.', en: 'Loading the cold container to GACC standard at the depot.' },
         { img: 'hc/chain2/13-quet-qr-cont-lanh.webp', vi: 'Quét mã QR niêm phong container để truy xuất nguồn gốc.', en: "Scanning the container's sealed QR code for traceability." },
         { img: 'hc/chain2/14-xe-lanh-sac-dien.webp', vi: 'Đội xe lạnh sạc điện, giữ nhiệt ổn định trước khi lên đường.', en: 'The refrigerated fleet charges up, holding a steady temperature before departure.' },
         { img: 'hc/chain2/15-kho-lanh-trung-chuyen.webp', vi: 'Kho lạnh trung chuyển giữ 13,5°C, độ ẩm 85%.', en: 'A transit cold store holds 13.5°C at 85% humidity.' },
@@ -518,7 +518,7 @@
         { img: 'scenes/border-v2.webp', vi: 'Cửa khẩu biên giới: xe lạnh xếp hàng qua luồng xanh, cơ quan kiểm dịch thực vật kiểm tra trước khi thông quan.', en: 'Border gate: reefer trucks queue in the green lane; plant-quarantine officers inspect before clearance.' },
         { img: 'hc/chain2/17-tram-can-etc-wim.webp', vi: 'Qua trạm cân tải trọng tự động (WIM) và thu phí không dừng (ETC).', en: 'Passing automatic weigh-in-motion (WIM) and non-stop toll (ETC) stations.' },
         { img: 'hc/chain2/18-bien-bao-cua-khau.webp', vi: 'Biển chỉ dẫn hướng cửa khẩu quốc tế Hữu Nghị – Tân Thanh.', en: 'Road sign pointing to the Hữu Nghị–Tân Thanh international border gate.' },
-        { img: 'hc/chain2/19-doi-tai-xe-bien-gioi.webp', vi: 'Khu vực bàn giao xe và đổi tài xế biên giới.', en: 'The cross-border vehicle handover and driver-changeover zone.' },
+        { img: 'hc/chain2/19-doi-tai-xe-bien-gioi-v2.webp', vi: 'Khu vực bàn giao xe và đổi tài xế biên giới.', en: 'The cross-border vehicle handover and driver-changeover zone.' },
         { img: 'hc/chain2/20-cong-kiem-soat-bien-phong.webp', vi: 'Qua cổng kiểm soát biên phòng, làn xe hàng xuất khẩu.', en: 'Clearing the border-defence checkpoint on the export-cargo lane.' },
         { img: 'hc/chain2/21-xe-lanh-cua-khau-huu-nghi.webp', vi: 'Đoàn xe lạnh xếp hàng chờ qua cửa khẩu quốc tế ở Lạng Sơn.', en: 'The refrigerated convoy lines up at an international border gate in Lạng Sơn.' },
         { img: 'hc/chain2/22-hai-quan-trung-quoc-tiep-nhan.webp', vi: 'Hải quan Trung Quốc tiếp nhận và quét mã lô hàng.', en: 'Chinese customs receives and scans the shipment.' }
