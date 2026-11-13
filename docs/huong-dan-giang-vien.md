@@ -96,6 +96,7 @@ Bộ phiếu khảo sát trước–sau in được trên khổ A4 (kèm đáp �
 - **Phiếu trước** (đầu buổi, 10 phút): 15 câu kiến thức (Phần A) + 8 câu tự tin ra quyết định (Phần B, Likert 1–5)
 - **Phiếu sau** (cuối buổi, 12 phút): lặp lại A + B để đo chênh lệch, thêm phần C về trải nghiệm (5 câu), điểm giới thiệu 0–10 và 2 câu mở
 - Ẩn danh bằng mã tự đặt; bản online `khao-sat-online.html` tự chấm và lưu về lớp qua link giảng viên tạo ở Instructor Studio (tab Khảo sát)
+- **Lớp sinh viên quốc tế:** ở tab Khảo sát chọn «Phiếu tiếng Anh (lớp quốc tế)» trước khi chép link (link có thêm `lang=en`). Khi đó cả câu hỏi, phần đồng thuận và thông báo đều bằng tiếng Anh; đáp án, cách chấm và dữ liệu lưu về không đổi. Link không có `lang=en` luôn ra câu hỏi tiếng Việt, kể cả khi máy sinh viên để tiếng Anh, nên đừng trộn hai loại link trong cùng một lớp. Bản dịch nằm ở `js/khao-sat-en.js`.
 - **Từ 11/2026 có bộ câu hỏi 2** (`batnghiep2`, 5 câu vận dụng thay cho 5 câu quá dễ của bộ 1): đang thử trên một lớp trước khi dùng chung. Hướng dẫn từng bước cho lớp thử: `docs/research/HUONG-DAN-THU-BO-2-TREN-LOP.md`; nội dung và đáp án: `docs/research/BO-CAU-HOI-KIEN-THUC-V2.md`
 
 Dữ liệu trước–sau từ 2–3 lớp (~100 sinh viên) chính là bằng chứng hiệu quả học tập quan trọng nhất của dự án.
