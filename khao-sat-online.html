@@ -66,6 +66,7 @@
 <link rel="stylesheet" href="css/clay-legacy.css">
 <script src="js/capture-guard.js"></script>
 <script src="js/khao-sat-bo2.js"></script>
+<script src="js/khao-sat-en.js"></script>
 </head>
 <body>
 
@@ -84,17 +85,17 @@
   <section id="ks-form" class="space-y-6">
     <!-- BƯỚC 0: Đồng thuận tham gia (bắt buộc trước khi nộp) -->
     <div class="clay-card p-6" id="ks-consent-card">
-      <h2 class="font-display font-extrabold text-deep-teal text-lg mb-1">🔒 Đồng thuận tham gia khảo sát</h2>
-      <p class="text-xs opacity-70 font-semibold mb-3">Vui lòng đọc kỹ trước khi trả lời.</p>
+      <h2 class="font-display font-extrabold text-deep-teal text-lg mb-1" data-en="🔒 Consent to take part in the survey">🔒 Đồng thuận tham gia khảo sát</h2>
+      <p class="text-xs opacity-70 font-semibold mb-3" data-en="Please read carefully before answering.">Vui lòng đọc kỹ trước khi trả lời.</p>
       <ul class="text-[13px] font-semibold leading-relaxed" style="list-style:disc;padding-left:20px">
-        <li class="mb-1.5">Khảo sát nhằm cải tiến trò chơi giáo dục BizOn và phục vụ nghiên cứu khoa học về dạy–học; <b>không dùng để lấy điểm</b>.</li>
-        <li class="mb-1.5">Tham gia <b>hoàn toàn tự nguyện</b>; bạn có thể dừng bất cứ lúc nào mà không ảnh hưởng đến điểm số hay kết quả học tập.</li>
-        <li class="mb-1.5">Phiếu được thu thập <b>ẩn danh</b> qua mã tự đặt – không thu thập họ tên hay thông tin định danh cá nhân.</li>
-        <li>Dữ liệu ẩn danh có thể được dùng để phân tích và công bố khoa học.</li>
+        <li class="mb-1.5" data-en-html="The survey aims to improve the BizOn educational game and to support scientific research on teaching and learning; &lt;b&gt;it is not used for grading&lt;/b&gt;.">Khảo sát nhằm cải tiến trò chơi giáo dục BizOn và phục vụ nghiên cứu khoa học về dạy–học; <b>không dùng để lấy điểm</b>.</li>
+        <li class="mb-1.5" data-en-html="Participation is &lt;b&gt;entirely voluntary&lt;/b&gt;; you may stop at any time without any effect on your grades or academic results.">Tham gia <b>hoàn toàn tự nguyện</b>; bạn có thể dừng bất cứ lúc nào mà không ảnh hưởng đến điểm số hay kết quả học tập.</li>
+        <li class="mb-1.5" data-en-html="Responses are collected &lt;b&gt;anonymously&lt;/b&gt; through a self-chosen code – no names or personally identifying information are collected.">Phiếu được thu thập <b>ẩn danh</b> qua mã tự đặt – không thu thập họ tên hay thông tin định danh cá nhân.</li>
+        <li data-en="Anonymous data may be used for analysis and scientific publication.">Dữ liệu ẩn danh có thể được dùng để phân tích và công bố khoa học.</li>
       </ul>
       <label class="ks-opt mt-4" id="ks-consent-opt" style="font-weight:800">
         <input type="checkbox" id="ks-consent-chk">
-        <span>Đáp viên đã đọc, hiểu và <b>đồng thuận trả lời câu hỏi</b> của khảo sát này.</span>
+        <span data-en-html="The respondent has read, understood and &lt;b&gt;consents to answer the questions&lt;/b&gt; of this survey.">Đáp viên đã đọc, hiểu và <b>đồng thuận trả lời câu hỏi</b> của khảo sát này.</span>
       </label>
     </div>
 
@@ -102,33 +103,33 @@
       <h2 class="font-display font-extrabold text-deep-teal text-lg mb-4">📋 Thông tin phiếu</h2>
       <div class="grid sm:grid-cols-2 gap-4">
         <div class="sm:col-span-2">
-          <label class="block text-xs font-extrabold mb-1.5 opacity-70">Bộ câu hỏi (theo game lớp bạn sử dụng)</label>
+          <label class="block text-xs font-extrabold mb-1.5 opacity-70" data-en="Question set (according to the game your class uses)">Bộ câu hỏi (theo game lớp bạn sử dụng)</label>
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-            <label class="ks-opt !mt-0 justify-center"><input type="radio" name="instr" value="batnghiep" checked onchange="ksInstr()"> 🚀 Khởi nghiệp (Bật Nghiệp)</label>
-            <label class="ks-opt !mt-0 justify-center"><input type="radio" name="instr" value="batnghiep2" onchange="ksInstr()"> 🚀 Khởi nghiệp – bộ 2 (từ 11/2026)</label>
-            <label class="ks-opt !mt-0 justify-center"><input type="radio" name="instr" value="quocte" onchange="ksInstr()"> 🛂 KD quốc tế (Hộ Chiếu Thương Hiệu)</label>
+            <label class="ks-opt !mt-0 justify-center"><input type="radio" name="instr" value="batnghiep" checked onchange="ksInstr()"> <span data-en="🚀 Entrepreneurship (Bật Nghiệp)">🚀 Khởi nghiệp (Bật Nghiệp)</span></label>
+            <label class="ks-opt !mt-0 justify-center"><input type="radio" name="instr" value="batnghiep2" onchange="ksInstr()"> <span data-en="🚀 Entrepreneurship – set 2 (from 11/2026)">🚀 Khởi nghiệp – bộ 2 (từ 11/2026)</span></label>
+            <label class="ks-opt !mt-0 justify-center"><input type="radio" name="instr" value="quocte" onchange="ksInstr()"> <span data-en="🛂 International business (Brand Passport)">🛂 KD quốc tế (Hộ Chiếu Thương Hiệu)</span></label>
           </div>
         </div>
         <div>
           <label class="block text-xs font-extrabold mb-1.5 opacity-70">Bạn đang làm phiếu nào?</label>
           <div class="grid grid-cols-2 gap-2">
-            <label class="ks-opt !mt-0 justify-center"><input type="radio" name="phase" value="pre" checked onchange="ksPhase()"> Phiếu TRƯỚC</label>
-            <label class="ks-opt !mt-0 justify-center"><input type="radio" name="phase" value="post" onchange="ksPhase()"> Phiếu SAU</label>
+            <label class="ks-opt !mt-0 justify-center"><input type="radio" name="phase" value="pre" checked onchange="ksPhase()"> <span data-en="PRE survey">Phiếu TRƯỚC</span></label>
+            <label class="ks-opt !mt-0 justify-center"><input type="radio" name="phase" value="post" onchange="ksPhase()"> <span data-en="POST survey">Phiếu SAU</span></label>
           </div>
         </div>
         <div>
           <label class="block text-xs font-extrabold mb-1.5 opacity-70" for="ks-code">Mã tự đặt – 2 chữ cái + 2 số (nhớ dùng lại ở phiếu sau)</label>
-          <input type="text" id="ks-code" class="gv-input uppercase" placeholder="VD: HT25" maxlength="4" autocomplete="off">
+          <input type="text" id="ks-code" class="gv-input uppercase" placeholder="VD: HT25" data-en-ph="e.g. HT25" maxlength="4" autocomplete="off">
         </div>
         <div>
           <label class="block text-xs font-extrabold mb-1.5 opacity-70" for="ks-class">Mã lớp học (giảng viên phát)</label>
-          <input type="text" id="ks-class" class="gv-input uppercase" placeholder="VD: QTKD-2026-A" autocomplete="off">
+          <input type="text" id="ks-class" class="gv-input uppercase" placeholder="VD: QTKD-2026-A" data-en-ph="e.g. BUS-2026-A" autocomplete="off">
           <p id="ks-class-lock" class="hidden text-[11px] font-bold mt-1 opacity-70">🔒 Mã lớp lấy từ link giảng viên gửi – không cần gõ.</p>
         </div>
         <div id="ks-post-meta" class="hidden grid grid-cols-2 gap-3">
           <div>
             <label class="block text-xs font-extrabold mb-1.5 opacity-70" for="ks-role">Vai trò trong đội</label>
-            <select id="ks-role" class="gv-input"><option value="">– chọn –</option><option>CEO</option><option>CFO</option><option>CMO</option><option>COO</option><option>Thư ký</option></select>
+            <select id="ks-role" class="gv-input"><option value="" data-en="– select –">– chọn –</option><option>CEO</option><option>CFO</option><option>CMO</option><option>COO</option><option value="Thư ký" data-en="Secretary (SEC)">Thư ký</option></select>
           </div>
           <div>
             <label class="block text-xs font-extrabold mb-1.5 opacity-70" for="ks-rounds">Số vòng đã chơi</label>
@@ -140,7 +141,7 @@
 
     <div class="clay-card p-6">
       <h2 class="font-display font-extrabold text-deep-teal text-lg mb-1">🧠 Phần A – Kiến thức kinh doanh</h2>
-      <p class="text-xs opacity-60 font-semibold mb-4">Chọn một đáp án mỗi câu (15 câu).</p>
+      <p class="text-xs opacity-60 font-semibold mb-4" id="ks-a-note" data-en="Pick one answer per question (15 questions – in Vietnamese to keep the research instrument consistent).">Chọn một đáp án mỗi câu (15 câu).</p>
       <div id="ks-a"></div>
     </div>
 
@@ -180,9 +181,9 @@
   <!-- MÀN HÌNH XONG -->
   <section id="ks-done" class="hidden clay-card p-8 text-center">
     <p class="text-5xl">🎉</p>
-    <h2 class="font-display font-extrabold text-deep-teal text-2xl mt-3">Đã ghi nhận phiếu của bạn!</h2>
-    <p class="text-sm font-semibold opacity-70 mt-2" id="ks-done-note">Cảm ơn bạn đã tham gia nghiên cứu. Phiếu được lưu ẩn danh theo mã tự đặt.</p>
-    <a href="index.html" class="clay-btn inline-block bg-primary text-white font-display font-extrabold px-8 py-3 text-sm mt-6">🏠 Về trang chủ BizOn</a>
+    <h2 class="font-display font-extrabold text-deep-teal text-2xl mt-3" data-en="Your response has been recorded!">Đã ghi nhận phiếu của bạn!</h2>
+    <p class="text-sm font-semibold opacity-70 mt-2" id="ks-done-note" data-en="Thank you for taking part in the research. Your response is stored anonymously under your self-chosen code.">Cảm ơn bạn đã tham gia nghiên cứu. Phiếu được lưu ẩn danh theo mã tự đặt.</p>
+    <a href="index.html" class="clay-btn inline-block bg-primary text-white font-display font-extrabold px-8 py-3 text-sm mt-6" data-en="🏠 Back to the BizOn home page">🏠 Về trang chủ BizOn</a>
   </section>
 
 </main>
@@ -264,6 +265,15 @@
   ];
 
   const $ = id => document.getElementById(id);
+  // ===== Ngôn ngữ =====
+  // Chữ giao diện (nhãn, thông báo) theo ngôn ngữ của site. Riêng CÔNG CỤ ĐO (câu hỏi phần A, thang B, C) chỉ sang tiếng Anh
+  // khi link giảng viên gửi có «lang=en» (lớp sinh viên quốc tế): sinh viên Việt dùng trình duyệt tiếng Anh vẫn làm bản tiếng Việt,
+  // để số liệu các lớp đang thu không bị trộn hai bản.
+  const INSTR_EN = /[?&]lang=en(?:&|$)/.test(location.search) && !!window.BIZON_KS_EN;
+  const uiEn = () => { try { return localStorage.getItem('bizon-lang') === 'en'; } catch (e) { return INSTR_EN; } };
+  const L = (vi, en) => (uiEn() ? en : vi);
+  // Thông báo động: gỡ data-en (chữ tĩnh ban đầu) để bộ dịch không ghi đè lại khi người dùng đổi ngôn ngữ
+  const say = (el, vi, en) => { el.removeAttribute('data-en'); delete el.dataset.vi; el.textContent = L(vi, en); };
   const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
   // ===== Hai bộ câu hỏi – chọn theo game lớp sử dụng =====
@@ -274,7 +284,15 @@
     batnghiep2: { qa: BO2.qa, key: BO2.key, out: OUTCOMES, likb: LIKERT_B },
     quocte: { qa: QA_IB, key: KEY_IB, out: OUTCOMES_IB, likb: LIKERT_B_IB },
   };
+  // Bản tiếng Anh (js/khao-sat-en.js) chỉ thay CÂU CHỮ (qa, likb): thứ tự câu và lựa chọn giữ nguyên nên đáp án (key) và cụm chuẩn đầu ra (out) dùng chung
+  const EN = INSTR_EN ? window.BIZON_KS_EN : null;
+  if (EN) {
+    Object.assign(BANKS.batnghiep, { qa: EN.qa, likb: EN.likertB });
+    Object.assign(BANKS.batnghiep2, { qa: EN.ghep2(), likb: EN.likertB });
+    Object.assign(BANKS.quocte, { qa: EN.qaIb, likb: EN.likertBIb });
+  }
   const TEN_BO = { batnghiep: 'Khởi nghiệp', batnghiep2: 'Khởi nghiệp – bộ 2', quocte: 'KD quốc tế' };
+  const TEN_BO_EN = { batnghiep: 'Entrepreneurship', batnghiep2: 'Entrepreneurship – set 2', quocte: 'International business' };
   const curInstr = () => document.querySelector('input[name="instr"]:checked').value;
 
   // ===== Render =====
@@ -304,7 +322,8 @@
     $('ks-class-lock').classList.remove('hidden');
   }
   renderBank();
-  $('ks-c').innerHTML = likertRows(LIKERT_C, 'c');
+  $('ks-c').innerHTML = likertRows(EN ? EN.likertC : LIKERT_C, 'c');
+  if (EN) $('ks-a-note').dataset.en = 'Pick one answer per question (15 questions).';
 
   window.ksPhase = function () {
     const post = document.querySelector('input[name="phase"]:checked').value === 'post';
@@ -368,7 +387,8 @@
     }
     if (missing.length) {
       missing.forEach(el => el && el.classList.add('miss'));
-      $('ks-status').textContent = '⚠️ Còn ' + missing.length + ' mục chưa điền (viền cam) – vui lòng hoàn thành hết.';
+      say($('ks-status'), '⚠️ Còn ' + missing.length + ' mục chưa điền (viền cam) – vui lòng hoàn thành hết.',
+        '⚠️ ' + missing.length + (missing.length === 1 ? ' item is' : ' items are') + ' still unanswered (orange outline) – please complete everything.');
       missing[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
       return;
     }
@@ -377,7 +397,11 @@
     const B = BANKS[instr];
     const dupKey = 'bizon-survey-sent-' + instr + '-' + phase + '-' + klass + '-' + code;
     try {
-      if (localStorage.getItem(dupKey)) { $('ks-status').textContent = '⚠️ Thiết bị này đã nộp ' + (phase === 'pre' ? 'phiếu trước' : 'phiếu sau') + ' (bộ ' + (TEN_BO[instr] || instr) + ') với mã ' + code + ' rồi.'; return; }
+      if (localStorage.getItem(dupKey)) {
+        say($('ks-status'), '⚠️ Thiết bị này đã nộp ' + (phase === 'pre' ? 'phiếu trước' : 'phiếu sau') + ' (bộ ' + (TEN_BO[instr] || instr) + ') với mã ' + code + ' rồi.',
+          '⚠️ This device has already submitted the ' + (phase === 'pre' ? 'PRE' : 'POST') + ' survey (' + (TEN_BO_EN[instr] || instr) + ' set) with code ' + code + '.');
+        return;
+      }
     } catch (e) {}
     // Chấm điểm tự động theo bộ câu hỏi đang chọn
     let score = 0;
@@ -399,7 +423,8 @@
     try { localStorage.setItem(dupKey, '1'); } catch (e) {}
     $('ks-form').classList.add('hidden');
     $('ks-done').classList.remove('hidden');
-    $('ks-done-note').textContent = 'Cảm ơn bạn! Phiếu ' + (phase === 'pre' ? 'TRƯỚC' : 'SAU') + ' – mã ' + code + ', lớp ' + klass + ' đã được ghi nhận ẩn danh.' + (navigator.onLine ? '' : ' (Đang chờ mạng – phiếu sẽ tự gửi khi có kết nối, đừng xóa dữ liệu trình duyệt.)');
+    say($('ks-done-note'), 'Cảm ơn bạn! Phiếu ' + (phase === 'pre' ? 'TRƯỚC' : 'SAU') + ' – mã ' + code + ', lớp ' + klass + ' đã được ghi nhận ẩn danh.' + (navigator.onLine ? '' : ' (Đang chờ mạng – phiếu sẽ tự gửi khi có kết nối, đừng xóa dữ liệu trình duyệt.)'),
+      'Thank you! Your ' + (phase === 'pre' ? 'PRE' : 'POST') + ' survey – code ' + code + ', class ' + klass + ' – has been recorded anonymously.' + (navigator.onLine ? '' : ' (Waiting for a connection – it will be sent automatically once you are online; please do not clear your browser data.)'));
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 })();

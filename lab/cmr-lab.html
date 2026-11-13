@@ -512,7 +512,7 @@ function setVal(id, val) {
 function lensCopy(c, vi) {
   const { CM, CMR, BEP, FC, P } = c, f = fmt;
   if (vi) return [
-    ['Lăng kính Kế toán', `Mỗi SP bán ra đóng góp ${f(CM)}đ. ${CMR.toFixed(1)}% doanh thu dùng để trả định phí, phần còn lại là lãi.`],
+    ['Lăng kính Kế toán', `Mỗi SP bán ra đóng góp ${f(CM)}đ. ${CMR.toFixed(1).replace('.', ',')}% doanh thu là số dư đảm phí: bù hết định phí rồi mới thành lãi; phần còn lại của doanh thu là biến phí.`],
     ['Lăng kính Kinh doanh', `Cần bán ${f(BEP)} SP/tháng – khoảng ${f(BEP / 30)} SP/ngày – để bù ${f(FC)}đ định phí.`],
     ['Lăng kính Rủi ro', CMR > 70 ? 'CMR cao: lãi tăng nhanh khi doanh số tăng và giảm cũng nhanh khi doanh số giảm. Đòn bẩy hoạt động mạnh.' : CMR < 40 ? 'CMR thấp: lợi nhuận ít nhạy với doanh số, nhưng cần sản lượng lớn để hòa vốn.' : 'CMR trung bình: cân bằng giữa tốc độ hòa vốn và độ nhạy với doanh số.'],
     ['Lăng kính Chiến lược', CMR >= 50 ? 'Ưu tiên tăng sản lượng: mỗi SP tăng thêm đóng góp lớn. Khuyến mãi theo số lượng có thể hiệu quả.' : 'Tăng giá hoặc giảm biến phí trước khi mở rộng quy mô.'],

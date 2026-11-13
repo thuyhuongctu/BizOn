@@ -426,6 +426,7 @@
     url.searchParams.set('lop', state.classCode);
     url.searchParams.set('phieu', phase === 'post' ? 'sau' : 'truoc');
     const bo = $('bi-survey-instrument')?.value; if (bo && bo !== 'batnghiep') url.searchParams.set('bo', bo);   // 'quocte' hoặc 'batnghiep2'
+    if ($('bi-survey-lang')?.value === 'en') url.searchParams.set('lang', 'en');   // phiếu tiếng Anh cho lớp sinh viên quốc tế (js/khao-sat-en.js)
     return url.href;
   }
 
@@ -568,6 +569,7 @@
     $('bi-copy-survey-pre')?.addEventListener('click', () => copySurveyLink('pre'));
     $('bi-copy-survey-post')?.addEventListener('click', () => copySurveyLink('post'));
     $('bi-survey-instrument')?.addEventListener('change', () => renderSurveyLink());
+    $('bi-survey-lang')?.addEventListener('change', () => renderSurveyLink());
     renderSurveyLink();
     document.querySelectorAll('.bi-tab').forEach(button => button.addEventListener('click', () => selectTab(button)));
   });

@@ -36,6 +36,17 @@ assert.equal(L.code(full), L.code(Object.assign({}, full, { hoTen: 'A', mssv: '1
 assert.notEqual(L.code(full), L.code(Object.assign({}, full, { slogan: 'Khác' })));
 assert.equal(L.fileName(full), 'the-thuong-hieu-linh-mua-nuoc.png');
 
+// Ô «khách ở đâu trên con phố» (Dollar Street, 11/2026): không bắt buộc, không đổi mức hoàn thành,
+// không đổi mã thẻ của bài làm cũ, hiện trên thẻ, và nhắc khi khách bên trái mà chọn giá cao theo giá trị.
+assert.deepEqual(L.STREET.map(x => x[0]), ['trai', 'giua', 'phai']);
+assert.deepEqual(L.progress(Object.assign({}, full, { khachPho: 'giua' })), { done: 8, total: 8 });
+assert.equal(L.code(Object.assign({}, full, { khachPho: '' })), L.code(full), 'ô trống không được đổi mã thẻ cũ');
+assert.notEqual(L.code(Object.assign({}, full, { khachPho: 'giua' })), L.code(full));
+assert.match(L.cardLines(Object.assign({}, full, { khachPho: 'giua' }), 'vi').p4[1][1], /Khách ở giữa con phố/);
+assert.match(L.cardLines(Object.assign({}, full, { khachPho: 'phai' }), 'en').p4[1][1], /Customers: right of the street/);
+h = L.hints(Object.assign({}, full, { khachPho: 'trai', priceStrategy: 'gia-tri' })); assert.ok(h.price.some(m => /bên trái con phố/.test(m.vi)), 'khách bên trái + giá cao phải bị nhắc');
+h = L.hints(Object.assign({}, full, { khachPho: 'phai', priceStrategy: 'gia-tri' })); assert.ok(!(h.price || []).some(m => /con phố/.test(m.vi)));
+
 // Trang
 const s = read('xuong-nhan-hieu.html');
 for (const need of ['js/bizon-clay-nav.js', 'js/bizon-clay-footer.js', 'js/bizon-clay-i18n.js', 'js/xuong-nhan-hieu.js']) assert.ok(s.includes(need), 'thiếu ' + need);
@@ -45,7 +56,7 @@ assert.ok(read('giang-vien.html').includes('href="xuong-nhan-hieu.html"'), 'tran
 assert.ok(read('sitemap.xml').includes('https://bizonland.com/xuong-nhan-hieu.html<'), 'sitemap thiếu trang');
 assert.ok(s.includes('href="https://doi.org/10.5281/zenodo.23731421"'), 'thiếu DOI Zenodo');
 assert.ok(!s.includes('Chương 5 · Xây dựng nhãn hiệu'), 'đã bỏ dòng nhãn chương 5');
-assert.ok(+(read('sw.js').match(/bizon-v(\d+)/) || [])[1] >= 729);
+assert.ok(+(read('sw.js').match(/bizon-v(\d+)/) || [])[1] >= 849);
 
 (async () => {
   const b = await chromium.launch(); const errs = [];
@@ -58,14 +69,21 @@ assert.ok(+(read('sw.js').match(/bizon-v(\d+)/) || [])[1] >= 729);
       await pg.goto(BASE + '/xuong-nhan-hieu.html', { waitUntil: 'load', timeout: 60000 }); await pg.waitForTimeout(600);
       assert.equal((await pg.textContent('h1')).trim(), want, lang + ': tiêu đề');
       assert.equal(await pg.$$eval('[data-group="place"] input', l => l.length), 7);
+      assert.equal(await pg.$$eval('[name="khachPho"] option', l => l.length), 4, lang + ': ô con phố có 3 lựa chọn + trống');
       await pg.fill('[name="ten"]', 'Xanh Sạch');
       assert.ok(await pg.$eval('[data-for="ten"]', el => el.children.length > 0), lang + ': gợi ý tên hiện ngay khi gõ');
       await pg.fill('[name="sanPham"]', 'Mắm cá linh'); await pg.fill('[name="vung"]', 'An Giang'); await pg.check('[name="nhom"][value="nong-san"]');
       assert.match(await pg.textContent('#xn-progress'), /^2\/8$/, 'sản phẩm + tên = 2/8');
-      assert.ok(await pg.evaluate(() => JSON.parse(localStorage.getItem('bizon-xnh-v1')).ten === 'Xanh Sạch'), 'lưu nháp');
+      await pg.selectOption('[name="khachPho"]', 'giua');
+      assert.ok(await pg.evaluate(() => { const d = JSON.parse(localStorage.getItem('bizon-xnh-v1')); return d.ten === 'Xanh Sạch' && d.khachPho === 'giua'; }), 'lưu nháp, kể cả ô con phố');
       const [dl] = await Promise.all([pg.waitForEvent('download'), pg.click('#xn-png')]);
       assert.equal(dl.suggestedFilename(), 'the-thuong-hieu-xanh-sach.png');
       assert.ok(await pg.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1), lang + ': tràn ngang trên điện thoại');
+      // Đổi ngôn ngữ giữa chừng: gợi ý đang hiện phải vẽ lại bằng ngôn ngữ mới (trước đây nghe nhầm sự kiện trên document).
+      const other = lang === 'vi' ? 'en' : 'vi';
+      await pg.evaluate(l => window.clayApplyLang(l), other); await pg.waitForTimeout(300);
+      const tip = await pg.textContent('[data-for="ten"] li');
+      assert.ok(other === 'en' ? /example/.test(tip) : /ví dụ/.test(tip), lang + ' → ' + other + ': gợi ý chưa đổi ngôn ngữ: ' + tip);
       await ctx.close();
     }
   } finally { await b.close(); }
