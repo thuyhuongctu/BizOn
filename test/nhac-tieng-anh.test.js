@@ -21,7 +21,7 @@ for (const [ten, ds, goc] of [['Bật Nghiệp', en1, ''], ['Bến Phù Sa 3D', 
   check(!ds.some(laViet), ten + ': danh sách tiếng Anh không lẫn bài lời Việt');
 }
 const dock = read('js/site-dock.js');
-check(/if \(!window\.BizonDock\) \(function \(\)/.test(hc) && !/site-dock\.js/.test(hc), 'Hộ Chiếu Thương Hiệu 3D (không nạp dock chung) có trình phát dự phòng để nút nhạc phát được');
+check(/if \(!window\.BizonDock\) \(function \(\)/.test(hc) && !/src="js\/site-dock\.js"/.test(hc),'Hộ Chiếu Thương Hiệu 3D (không nạp dock chung) có trình phát dự phòng để nút nhạc phát được');
 check([...en2, ...en3].every(f => dock.includes("'" + f + "'")), 'mọi bài của Bến Phù Sa và Hộ Chiếu có trong kho nhạc của dock (scope mới nhận)');
 check(+(/CACHE = 'bizon-v(\d+)'/.exec(read('sw.js')) || [])[1] >= 843, 'sw.js ≥ bizon-v843');
 
