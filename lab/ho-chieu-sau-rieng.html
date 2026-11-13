@@ -355,7 +355,7 @@ footer{color:var(--faint)}
     $('exitBtn').hidden = !APP;
     $('exitBtn').textContent = L('⏏ Thoát ván', '⏏ Quit game');
     $('exitBtn').title = L('Về màn mở đầu: chơi tiếp ván đang lưu, xóa ván hoặc bắt đầu ván mới', 'Back to the start screen: resume the saved game, delete it or start a new one');
-    $('map3dLink').title = L('Bản đồ 3D: khám phá chuỗi cung ứng cùng Bà Sáu Lành', '3D map: explore the supply chain with Bà Sáu Lành');
+    $('map3dLink').title = L('Bản đồ 3D: khám phá chuỗi cung ứng cùng Bà Bảy Hiền', '3D map: explore the supply chain with Bà Bảy Hiền');
     $('langVI').classList.toggle('on', LANG === 'vi'); $('langEN').classList.toggle('on', LANG === 'en');
     $('musicBtn').title = L('Bật/tắt nhạc nền', 'Play/pause background music');
     $('trackBtn').textContent = BGM_TRACKS[TRACK].label;
@@ -435,7 +435,7 @@ footer{color:var(--faint)}
           'Đội 5 người điều hành một mắt xích trong chuỗi xuất khẩu sầu riêng, từ ngày Trung Quốc mở cửa chính ngạch (7/2022), và cạnh tranh với 3 đối thủ ảo. Mỗi vụ: đọc thị trường, họp đội theo vai, chạy tối đa 2 lần «Nếu – Thì», hỏi Lumina tối đa 3 câu, ghi phiếu quyết định, chốt vụ rồi viết nhật ký. Mục tiêu không chỉ là thắng cờ mà là giải thích được vì sao kết quả khác dự báo.',
           'A team of five runs one link of the durian export chain from the day China opens official trade (July 2022), competing with 3 virtual rivals. Each season: read the market, hold a role meeting, run up to 2 what-ifs, ask Lumina up to 3 questions, fill in a decision sheet, commit, then write the journal. The aim is not only to win flags but to explain why results differ from forecasts.')}</p>
         <span class="prov pub">${L('Sự kiện và quy định có trích nguồn tài liệu', 'Events and rules are cited from documents')}</span><span class="prov sim">${L('Khối lượng, hệ số giá, xác suất là minh họa', 'Volumes, price ratios and probabilities are illustrative')}</span>
-      </div><div class="hero-cast"><img src="${IMG('ba-sau-lanh-huong-welcome.webp')}" alt="${L('Bà Sáu Lành và Lumina (Hương)', 'Bà Sáu Lành and Lumina (Hương)')}"></div></div></section>
+      </div><div class="hero-cast"><img src="${IMG('ba-sau-lanh-huong-welcome.webp')}" alt="${L('Bà Bảy Hiền và Lumina (Hương)', 'Bà Bảy Hiền and Lumina (Hương)')}"></div></div></section>
 
       ${introVideoHTML()}
 
@@ -483,7 +483,7 @@ footer{color:var(--faint)}
           <b>${a.emoji} ${esc(nm(a))}</b><span class="small muted">${LANG === 'en' ? a.roleEn : a.roleVi}</span></button>`).join('')}</div></div>
 
       <div class="card"><h2>${L('2a · Chọn doanh nghiệp của đội', '2a · Choose your firm')}</h2>
-        <p class="small muted">${L('Mỗi vai ở một nấc khác nhau trên trục tiểu thương → công ty XNK: nấc thấp giá rẻ nhưng chưa có mã số, nấc cao có mã số nhưng vốn vào nhiều hơn.', 'Each role sits at a different rung on the petty-trader → export-company ladder: lower rungs are cheaper but lack codes; higher rungs hold codes but need more capital.')}</p>
+        <p class="small muted">${L('Mỗi vai ở một nấc khác nhau trên trục tiểu thương → công ty XNK, khác nhau về quy mô, vốn và mã số: có vai đã có mã đóng gói, có vai nhiều vốn nhưng chưa có mã nào. Đọc kỹ từng thẻ trước khi chọn.', 'Each role sits at a different rung on the petty-trader → export-company ladder, with different scale, capital and codes: some already hold a packing code, some have plenty of capital but no codes yet. Read each card before choosing.')}</p>
         <div class="pick">${Object.entries(D.roles).map(([id, r]) => `<button type="button" data-role="${id}" class="${id === SETUP.roleId ? 'on' : ''}"><b>${r.emoji} ${nm(r)}</b>
           <span class="hint" style="display:block;font-weight:700">${LANG === 'en' ? r.scaleEn : r.scaleVi}</span>
           <span class="small muted">${LANG === 'en' ? r.descEn : r.descVi}</span></button>`).join('')}</div>

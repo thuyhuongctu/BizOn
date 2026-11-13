@@ -84,7 +84,7 @@ assert.ok(
 );
 assert.ok(
   registry.assets.tu_phan_lecture_hall.allowed_pages.includes('app/instructor-studio.html'),
-  'Tú Phan scene must be explicitly approved for Instructor Studio.'
+  'Tu Phan scene must be explicitly approved for Instructor Studio.'
 );
 assert.match(unified, /\.\/instructor-studio\.html/);
 
