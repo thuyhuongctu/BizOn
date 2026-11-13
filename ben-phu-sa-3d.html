@@ -1234,14 +1234,21 @@ body:has(#ft-play:not(.hidden)) .vutru-goc{display:none!important}
 /* Nhạc chủ đề game Bến Phù Sa — anthem «Đội Phù Sa» (xoay vòng trong nhóm ca khúc
  * của đội, không lẫn nhạc game khác). Dùng chung dock toàn site (site-dock.js). */
 (function () {
-  var THEME = 'doi-phu-sa.mp3';
-  var SOUNDTRACK = ['doi-phu-sa.mp3', 'doi-phu-sa-remix.mp3', 'doi-phu-sa-remix2.mp3', 'doi-phu-sa-remix3.mp3'];
+  var THEME_VI = 'doi-phu-sa.mp3';
+  var SOUNDTRACK_VI = ['doi-phu-sa.mp3', 'doi-phu-sa-remix.mp3', 'doi-phu-sa-remix2.mp3', 'doi-phu-sa-remix3.mp3'];
+  /* Khách chọn tiếng Anh (sinh viên quốc tế): nhóm ca khúc «Golden Silt» lời tiếng Anh và tiếng Pháp (13/11/2026). */
+  var THEME_EN = 'journey-golden-silt.mp3';
+  var SOUNDTRACK_EN = ['journey-golden-silt.mp3', 'journey-golden-silt-remix.mp3', 'mekong-river-v2.mp3', 'mekong-river-remix.mp3', 'golden-silt-route.mp3'];
+  var en = function () { try { return localStorage.getItem('bizon-lang') === 'en'; } catch (e) { return false; } };
+  var THEME = THEME_VI, SOUNDTRACK = SOUNDTRACK_VI;
+  function chonNhac() { THEME = en() ? THEME_EN : THEME_VI; SOUNDTRACK = en() ? SOUNDTRACK_EN : SOUNDTRACK_VI; }
   function sync(on) {
     var b = document.getElementById('ft-music');
-    if (b) b.textContent = on ? T('⏸️ Tạm dừng nhạc «Đội Phù Sa»', '⏸️ Pause the «Đội Phù Sa» theme') : T('🎵 Bật nhạc chủ đề «Đội Phù Sa»', '🎵 Play theme song «Đội Phù Sa»');
+    if (b) b.textContent = on ? T('⏸️ Tạm dừng nhạc «Đội Phù Sa»', '⏸️ Pause the «Journey on the Golden Silt» theme') : T('🎵 Bật nhạc chủ đề «Đội Phù Sa»', '🎵 Play theme song «Journey on the Golden Silt»');
   }
   window.ftMusic = function () {
     var d = window.BizonDock; if (!d) return;
+    chonNhac();
     if (d.scope) d.scope(SOUNDTRACK, 'Đội Phù Sa');
     if (d.isPlaying()) { d.pause(); sync(false); try { localStorage.setItem('bizon-ft-music', '0'); } catch (e) {} }
     else { d.play(THEME); sync(true); try { localStorage.setItem('bizon-ft-music', '1'); } catch (e) {} }
@@ -1252,7 +1259,7 @@ body:has(#ft-play:not(.hidden)) .vutru-goc{display:none!important}
     if (!t || t.id === 'ft-music') return;
     if (!/ftStart\(\)/.test(t.getAttribute('onclick') || '')) return;
     try { if (localStorage.getItem('bizon-ft-music') !== '1') return; } catch (e2) { return; }
-    var d = window.BizonDock;
+    var d = window.BizonDock; chonNhac();
     if (d && !d.isPlaying()) { if (d.scope) d.scope(SOUNDTRACK, 'Đội Phù Sa'); d.play(THEME); sync(true); }
   });
 })();
