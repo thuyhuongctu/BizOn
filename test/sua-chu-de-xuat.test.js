@@ -31,6 +31,7 @@ assert.ok(!/130 (phiếu|forms)/.test(tk) && tk.includes('n = 125 phiếu'));
 
 // Vũ trụ: lộ trình khoa kinh doanh quốc tế đủ ba bậc
 assert.ok(R('universe.html').includes('data-en="Level 1 + Level 2 + Level 3">Bậc 1 + Bậc 2 + Bậc 3</span>'));
+{ const u = R('universe.html'); assert.ok(!u.includes('buổi học sống') && u.includes('>Bốn đầu vào, một buổi học trên lớp</h2>'), 'mục Hệ sinh thái'); }
 
 // Chính sách: có mục 1, không còn «mục 02»
 const cs = R('chinh-sach.html');
