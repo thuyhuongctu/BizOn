@@ -27,7 +27,7 @@ check(Object.keys(B2.thay).every(n => so(B2.thay[n].q) === so(E.thay[n].q) && B2
 // ----- Trang khảo sát và trang giảng viên -----
 const on = R('khao-sat-online.html');
 check(on.includes('src="js/khao-sat-en.js"') && /INSTR_EN = \/\[\?&\]lang=en\(\?:&\|\$\)\/\.test\(location\.search\)/.test(on), 'phiếu online nạp bản dịch, chỉ đổi công cụ đo khi URL có lang=en');
-check(on.includes('key: KEY, out: OUTCOMES, likb: EN ? EN.likertB : LIKERT_B') && on.includes('key: BO2.key') && on.includes('key: KEY_IB'), 'bản tiếng Anh dùng chung đáp án với bản tiếng Việt');
+check(on.includes('Object.assign(BANKS.batnghiep, { qa: EN.qa, likb: EN.likertB })') && on.includes('Object.assign(BANKS.batnghiep2, { qa: EN.ghep2(), likb: EN.likertB })') && on.includes('Object.assign(BANKS.quocte, { qa: EN.qaIb, likb: EN.likertBIb })') && !/Object\.assign\(BANKS\.[^)]*\b(key|out)\b/.test(on), 'bản tiếng Anh chỉ thay câu chữ, dùng chung đáp án và cụm chuẩn đầu ra với bản tiếng Việt');
 check(on.includes('<option value="Thư ký" data-en="Secretary (SEC)">Thư ký</option>'), 'vai trò Thư ký lưu cùng một giá trị ở hai ngôn ngữ');
 check(R('js/site-ui.js').includes("{ page: 'khao-sat-online', sel: 'header .max-w-3xl h1 + p'"), 'site-ui.js: câu giới thiệu tiếng Anh đặt đúng đoạn dưới tiêu đề (trước đây đè lên dòng nhãn nhỏ)');
 check(R('app/instructor-studio.html').includes('id="bi-survey-lang"') && R('js/app-shell/instructor-studio.js').includes("url.searchParams.set('lang', 'en')"), 'Instructor Studio tạo được link phiếu tiếng Anh');

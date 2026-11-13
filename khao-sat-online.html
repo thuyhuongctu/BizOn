@@ -279,13 +279,18 @@
   // ===== Hai bộ câu hỏi – chọn theo game lớp sử dụng =====
   // Bộ 2 (js/khao-sat-bo2.js): 10 câu neo của bộ 1 + 5 câu vận dụng thay cho câu 2, 3, 10, 13, 15; cùng cụm chuẩn đầu ra, cùng thang /15.
   const BO2 = window.BIZON_KS_BO2 ? window.BIZON_KS_BO2.ghep(QA, KEY) : { qa: QA, key: KEY };
-  // Bản tiếng Anh (js/khao-sat-en.js) giữ nguyên thứ tự câu và lựa chọn nên dùng chung đáp án (key) và cụm chuẩn đầu ra (out)
-  const EN = INSTR_EN ? window.BIZON_KS_EN : null;
   const BANKS = {
-    batnghiep: { qa: EN ? EN.qa : QA, key: KEY, out: OUTCOMES, likb: EN ? EN.likertB : LIKERT_B },
-    batnghiep2: { qa: EN ? EN.ghep2() : BO2.qa, key: BO2.key, out: OUTCOMES, likb: EN ? EN.likertB : LIKERT_B },
-    quocte: { qa: EN ? EN.qaIb : QA_IB, key: KEY_IB, out: OUTCOMES_IB, likb: EN ? EN.likertBIb : LIKERT_B_IB },
+    batnghiep: { qa: QA, key: KEY, out: OUTCOMES, likb: LIKERT_B },
+    batnghiep2: { qa: BO2.qa, key: BO2.key, out: OUTCOMES, likb: LIKERT_B },
+    quocte: { qa: QA_IB, key: KEY_IB, out: OUTCOMES_IB, likb: LIKERT_B_IB },
   };
+  // Bản tiếng Anh (js/khao-sat-en.js) chỉ thay CÂU CHỮ (qa, likb): thứ tự câu và lựa chọn giữ nguyên nên đáp án (key) và cụm chuẩn đầu ra (out) dùng chung
+  const EN = INSTR_EN ? window.BIZON_KS_EN : null;
+  if (EN) {
+    Object.assign(BANKS.batnghiep, { qa: EN.qa, likb: EN.likertB });
+    Object.assign(BANKS.batnghiep2, { qa: EN.ghep2(), likb: EN.likertB });
+    Object.assign(BANKS.quocte, { qa: EN.qaIb, likb: EN.likertBIb });
+  }
   const TEN_BO = { batnghiep: 'Khởi nghiệp', batnghiep2: 'Khởi nghiệp – bộ 2', quocte: 'KD quốc tế' };
   const TEN_BO_EN = { batnghiep: 'Entrepreneurship', batnghiep2: 'Entrepreneurship – set 2', quocte: 'International business' };
   const curInstr = () => document.querySelector('input[name="instr"]:checked').value;
