@@ -7,8 +7,10 @@ const assert = require('node:assert/strict');
 const BASE = process.env.BIZON_URL || 'http://127.0.0.1:8899';
 let chromium; try { chromium = require('playwright').chromium; } catch (e) { console.error('Cần cài playwright.'); process.exit(2); }
 const ROOT = path.join(__dirname, '..');
-const URL_VD = 'https://thuyhuongctu.github.io/ThuyHuong_Digital-2026-Games/van-don/';
-assert.ok(+(fs.readFileSync(path.join(ROOT, 'sw.js'), 'utf8').match(/bizon-v(\d+)/) || [])[1] >= 822);
+// 13/11/2026: kho game đổi tên từ ThuyHuong_Digital-2026-Games thành Vietnamese-History-Games; địa chỉ GitHub Pages cũ trả 404.
+const URL_VD = 'https://thuyhuongctu.github.io/Vietnamese-History-Games/van-don/';
+assert.ok(+(fs.readFileSync(path.join(ROOT, 'sw.js'), 'utf8').match(/bizon-v(\d+)/) || [])[1] >= 847);
+for (const f of ['js/games-clay.js', 'games.html', 'index.html', 'universe.html']) assert.doesNotMatch(fs.readFileSync(path.join(ROOT, f), 'utf8'), /ThuyHuong_Digital-2026-Games/, f + ' còn địa chỉ cũ của kho game sử Việt');
 
 (async () => {
   const b = await chromium.launch(); const errs = [];
