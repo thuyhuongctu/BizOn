@@ -56,7 +56,7 @@ assert.ok(read('giang-vien.html').includes('href="xuong-nhan-hieu.html"'), 'tran
 assert.ok(read('sitemap.xml').includes('https://bizonland.com/xuong-nhan-hieu.html<'), 'sitemap thiếu trang');
 assert.ok(s.includes('href="https://doi.org/10.5281/zenodo.23731421"'), 'thiếu DOI Zenodo');
 assert.ok(!s.includes('Chương 5 · Xây dựng nhãn hiệu'), 'đã bỏ dòng nhãn chương 5');
-assert.ok(+(read('sw.js').match(/bizon-v(\d+)/) || [])[1] >= 845);
+assert.ok(+(read('sw.js').match(/bizon-v(\d+)/) || [])[1] >= 849);
 
 (async () => {
   const b = await chromium.launch(); const errs = [];

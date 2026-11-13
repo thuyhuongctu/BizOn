@@ -78,7 +78,7 @@ window.BZ_LIB_EN={
 'event-vietnam-2026.webp':['The «Vietnam 2026» scenario','An economic-development gateway & a golden arrow – the final-round event image'],
 'solar-farm.webp':['Clean-energy field','Illustration for the Solar Panel item – the ESG strategy in the game'],
 'event-energy-crisis-cut.webp':['Energy crisis','Round-4 event image – a risk-management test for the COO & CFO'],
-'logo-bizon-dark.webp':['«Bo» logo – dark version','BizOn Bật Nghiệp brand identity · orange clay on navy'],
+'logo-bizon-dark.webp':['BizOn wordmark – dark version','BizOn brand identity · white lettering on black, gold dot in the O'],
 'lumina-holo-classroom.webp':['Hologram simulation classroom','Lumina runs the session in front of a data dashboard – lead image of the home page'],
 'anh-tu-lecture-hall.webp':['The BizOn lecture hall','Assoc. Prof. Phan Anh Tú between two lecterns & growth charts – lead image of the home page'],
 'anh-tu-library-study.webp':['Research hour in the library','Mr Tú with a laptop, open books and coffee – where the Model Cards were born'],

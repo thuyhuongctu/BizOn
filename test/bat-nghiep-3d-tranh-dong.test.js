@@ -27,7 +27,10 @@ const nv = pg => pg.evaluate(() => window.__bn3dNhanVat());
     await pg.goto(URL, { waitUntil: 'load' });
     check(await until(pg, () => window.__bn3dNhanVat && window.__bn3dNhanVat().length === 7 && window.__bn3dNhanVat().every(a => a.tranh && a.tranh.sanSang)), 'mặc định: cả 7 nhân vật là tranh động và đã tải tờ sprite');
     check(await until(pg, () => { const c = window.__bn3dNhanVat().find(a => a.id === 'coo'); return c.tranh.to.startsWith('di-'); }, 20000), 'COO đi tuần: dùng tờ đi bộ');
-    const k1 = (await nv(pg)).find(a => a.id === 'coo'); await pg.waitForTimeout(700); const k2 = (await nv(pg)).find(a => a.id === 'coo');
+    // Chờ tới khi khung hình (hoặc tờ) của COO đổi, tối đa 20 giây, thay vì chờ cứng 700 ms: máy CI dựng 3D bằng phần mềm có lúc chưa kịp vẽ khung kế.
+    const k1 = (await nv(pg)).find(a => a.id === 'coo');
+    await pg.waitForFunction(k => { const c = window.__bn3dNhanVat().find(a => a.id === 'coo'); return c.tranh.khung !== k.khung || c.tranh.to !== k.to; }, { khung: k1.tranh.khung, to: k1.tranh.to }, { timeout: 20000, polling: 100 }).catch(() => {});
+    const k2 = (await nv(pg)).find(a => a.id === 'coo');
     check(k1.tranh.khung !== k2.tranh.khung || k1.tranh.to !== k2.tranh.to, 'COO đi: khung hình chạy (' + k1.tranh.khung + ' → ' + k2.tranh.khung + ')');
     check((await nv(pg)).filter(a => a.id !== 'coo').every(a => a.tranh.dongTac !== 'di'), 'nhân vật đứng yên không phát tờ đi bộ');
     check(loi.length === 0, 'không lỗi trang' + (loi[0] ? ': ' + loi[0] : ''));

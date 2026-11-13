@@ -29,10 +29,9 @@ const st = pg => pg.evaluate(() => window.__bps3dTranh());
     let pg = await b.newPage({ viewport: { width: 900, height: 640 } }); const loi = []; pg.on('pageerror', e => loi.push(e.message));
     await pg.goto(URL, { waitUntil: 'load' });
     check(await until(pg, () => window.__bps3dTranh && window.__bps3dTranh().every(t => t.sanSang)), 'mặc định: cô Hương và thầy Tú là tranh động, đã tải');
-    // Chờ tới khi khung đổi (tối đa 15 giây) thay vì đúng 600 ms: trên máy CI vẽ bằng phần mềm, một khung hình có khi lâu hơn 600 ms,
-    // nên hai lần đọc cách 600 ms từng ra cùng khung 0 dù tranh động vẫn chạy (CI của PR #1088, hai lần liền).
+    // Chờ tới khi có khung hình đổi (tối đa 20 giây) thay vì chờ cứng 600 ms: máy CI dựng 3D bằng phần mềm có lúc chưa kịp vẽ khung kế trong 600 ms.
     const k1 = (await st(pg)).map(t => t.khung);
-    await pg.waitForFunction(k => window.__bps3dTranh().some((t, i) => t.khung !== k[i]), k1, { timeout: 15000, polling: 200 }).catch(() => {});
+    await pg.waitForFunction(k => window.__bps3dTranh().some((t, i) => t.khung !== k[i]), k1, { timeout: 20000, polling: 100 }).catch(() => {});
     const k2 = (await st(pg)).map(t => t.khung);
     check(k1.some((k, i) => k !== k2[i]), 'khung hình chạy (' + k1 + ' → ' + k2 + ')');
     check(loi.length === 0, 'không lỗi trang' + (loi[0] ? ': ' + loi[0] : ''));
