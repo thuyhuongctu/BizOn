@@ -18,7 +18,7 @@ const backend = read('js/backend-config.js');
 
 assert.match(page, /Planned|PLANNED/);
 assert.match(page, /Experimental|EXPERIMENTAL/);
-assert.match(page, /Engine xác định/);
+assert.match(page, /Engine tất định/);
 assert.match(page, /không phải cam kết rằng toàn bộ tầm nhìn đã được triển khai/i);
 assert.match(css, /@media\(max-width:620px\)/);
 assert.match(css, /prefers-reduced-motion/);
