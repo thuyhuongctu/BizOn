@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<!-- Xưởng Nhãn Hiệu Đặc Sản – hoạt động lớp 10 phút cho phần Price, dùng Dollar Street (Gapminder). © 2026 NCS. Đỗ Thùy Hương & PGS.TS. Phan Anh Tú. -->
+<html lang="vi" data-default-lang="vi">
+<head>
+<meta charset="UTF-8">
+<link rel="canonical" href="https://bizonland.com/xuong-nhan-hieu-dollar-street.html">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#006687">
+<link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+<script src="js/bizon-lang.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title data-en="Dollar Street class activity · Local Specialty Brand Lab · BizOn">Hoạt động Dollar Street · Xưởng Nhãn Hiệu Đặc Sản · BizOn</title>
+<meta name="description" data-en-content="A 10-minute class activity for the Price part of the Local Specialty Brand Lab: use Gapminder's Dollar Street to see what customers at different incomes buy, then choose a pricing strategy." content="Hoạt động lớp 10 phút cho phần Price của Xưởng Nhãn Hiệu Đặc Sản: dùng Dollar Street của Gapminder để thấy khách hàng ở các mức thu nhập khác nhau mua gì, rồi chọn chiến lược giá.">
+<link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<script src="js/bizon-boot.js"></script>
+<link rel="stylesheet" href="css/bizon-clay-fonts.css">
+<link rel="stylesheet" href="css/bizon-clay.css">
+<style>
+  .ds-hero{margin:28px 0 26px;border-radius:40px;background:var(--clay-cream-deep);box-shadow:inset 0 -10px 0 rgba(140,80,20,.1),inset 0 6px 0 rgba(255,255,255,.7);padding:clamp(22px,4vw,44px)}
+  .ds-hero h1{margin:12px 0 0;font-size:clamp(30px,5vw,50px);text-wrap:balance}
+  .ds-hero .lead{margin:14px 0 0;max-width:46em;font-size:17px;line-height:1.65;color:var(--clay-sub);text-wrap:pretty}
+  .ds-tag{display:inline-block;padding:6px 12px;border-radius:999px;background:var(--clay-card);font-size:14px;font-weight:700;color:var(--clay-ink-2)}
+  .ds-clock{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:18px}
+  .ds-clock output{font:800 34px/1 var(--clay-head);font-variant-numeric:tabular-nums;min-width:4ch;color:var(--clay-ink)}
+  .ds-clock a{font-weight:800;color:var(--clay-teal)}
+  .ds-steps{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:18px}
+  .ds-steps > li{border-radius:32px;background:var(--clay-card);padding:clamp(18px,3vw,28px);box-shadow:inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 rgba(255,255,255,.9);border:3px solid transparent;transition:border-color .2s}
+  .ds-steps > li.is-now{border-color:var(--clay-teal)}
+  .ds-steps h2{margin:0 0 6px;font-family:var(--clay-head);font-size:clamp(21px,2.8vw,28px);font-weight:800;line-height:1.2;display:flex;align-items:baseline;flex-wrap:wrap;gap:10px}
+  .ds-min{font:700 14px var(--clay-head);color:var(--clay-accent);background:var(--clay-amber-soft);border-radius:999px;padding:3px 10px}
+  .ds-steps p,.ds-steps li li{font-size:16px;line-height:1.6;color:var(--clay-ink-2)}
+  .ds-steps p{margin:6px 0 0}
+  .ds-steps ul{margin:6px 0 0;padding-left:22px}
+  .ds-wrap{overflow-x:auto}
+  .ds-table{width:100%;min-width:420px;border-collapse:collapse;margin-top:12px;font-size:15px}
+  .ds-table th,.ds-table td{border:1px solid rgba(110,70,30,.2);padding:8px 10px;text-align:left;vertical-align:top}
+  .ds-table thead th,.ds-table tbody th{background:var(--clay-tray)}
+  .ds-table tbody th{width:34%}
+  .ds-table td{height:2.4em}
+  .ds-note{margin:22px 0;border-radius:28px;background:var(--clay-card);padding:18px 22px;font-size:15px;line-height:1.6;color:var(--clay-sub)}
+  .ds-note p{margin:0}
+  .ds-note p + p{margin-top:10px}
+  .ds-lic{font-size:13.5px;color:var(--clay-sub);text-align:center;margin:8px 0 40px}
+  @media print{.ds-clock,.clay-nav,.clay-footer{display:none !important}.ds-steps > li{box-shadow:none;border:1px solid #999;break-inside:avoid}}
+</style>
+</head>
+<body class="clay">
+
+<main class="clay-main">
+  <section class="ds-hero">
+    <span class="ds-tag" data-en="Local Specialty Brand Lab · Price · class activity, 10 minutes">Xưởng Nhãn Hiệu Đặc Sản · Price · hoạt động lớp 10 phút</span>
+    <h1 data-en="Who buys your specialty, and what can they spend?">Ai mua đặc sản của bạn, và họ chi được bao nhiêu?</h1>
+    <p class="lead" data-en="Dollar Street (Gapminder) shows photos of real homes in many countries, sorted by income from left to right. Looking at what families at different incomes actually use helps you choose a price and a pack size that fit your target customers, instead of guessing.">Dollar Street (của Gapminder) là kho ảnh nhà ở thật của nhiều gia đình trên thế giới, xếp theo thu nhập từ trái sang phải. Nhìn xem các gia đình ở những mức thu nhập khác nhau thật sự dùng gì sẽ giúp bạn chọn giá và quy cách hợp với khách hàng mục tiêu, thay vì đoán.</p>
+    <div class="ds-clock">
+      <output id="ds-time">10:00</output>
+      <button type="button" class="clay-btn" id="ds-run">▶ Bắt đầu</button>
+      <button type="button" class="clay-btn clay-btn-orange" id="ds-reset">↺ Đặt lại</button>
+      <a href="https://www.gapminder.org/dollar-street" target="_blank" rel="noopener" data-en="Open Dollar Street ↗">Mở Dollar Street ↗</a>
+    </div>
+  </section>
+
+  <ol class="ds-steps" id="ds-steps">
+    <li data-min="1">
+      <h2><span data-en="1 · Read the street">1 · Đọc con phố</span><span class="ds-min" data-en="1 min">1 phút</span></h2>
+      <p data-en="Each home has a figure in dollars per month. It is the consumption available to each adult in the family, in US dollars adjusted for purchasing power parity (PPP), so countries with different costs of living can be compared. Poorest on the left, richest on the right.">Mỗi nhà có một con số đô-la mỗi tháng. Đó là mức tiêu dùng của mỗi người lớn trong gia đình, tính bằng đô-la Mỹ đã quy đổi theo sức mua tương đương (PPP), để so được các nước có giá cả sinh hoạt khác nhau. Nghèo nhất ở bên trái, giàu nhất ở bên phải.</p>
+    </li>
+    <li data-min="4">
+      <h2><span data-en="2 · Look at three homes">2 · Xem ba nhà</span><span class="ds-min" data-en="4 min">4 phút</span></h2>
+      <p data-en="Pick a topic close to your product (food, spices, snacks, kitchen, gifts or home decor for handicrafts; try another if one is missing). Filter to Vietnam if there are enough homes, otherwise keep all countries. Choose one home on the left, one in the middle, one on the right of the street, and note:">Chọn một chủ đề gần với sản phẩm của bạn (đồ ăn, gia vị, đồ ăn vặt, căn bếp, quà tặng hoặc đồ trang trí nhà nếu là hàng thủ công; chủ đề nào không có thì thử chủ đề khác). Lọc Việt Nam nếu đủ nhà, không thì để tất cả các nước. Chọn một nhà bên trái, một nhà ở giữa, một nhà bên phải con phố, rồi ghi:</p>
+      <div class="ds-wrap">
+        <table class="ds-table">
+          <thead><tr><td></td><th scope="col" data-en="Left">Bên trái</th><th scope="col" data-en="Middle">Ở giữa</th><th scope="col" data-en="Right">Bên phải</th></tr></thead>
+          <tbody>
+            <tr><th scope="row" data-en="$ per month">$ mỗi tháng</th><td></td><td></td><td></td></tr>
+            <tr><th scope="row" data-en="What they use, how it is packed">Họ dùng gì, đóng gói ra sao</th><td></td><td></td><td></td></tr>
+            <tr><th scope="row" data-en="Bought loose, small pack or gift box?">Mua lẻ, gói nhỏ hay hộp quà?</th><td></td><td></td><td></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </li>
+    <li data-min="3">
+      <h2><span data-en="3 · Decide in pairs">3 · Bàn theo cặp</span><span class="ds-min" data-en="3 min">3 phút</span></h2>
+      <ul>
+        <li data-en="Where on the street do your target customers live? (The case: mainly domestic customers, online and direct sales first.)">Khách hàng mục tiêu của bạn sống ở khoảng nào trên con phố? (Bối cảnh: khách hàng chủ yếu trong nước, ưu tiên bán trực tuyến và trực tiếp.)</li>
+        <li data-en="Which pack fits them: small packs bought often, a standard pack, or a gift box at a higher price?">Quy cách nào hợp với họ: gói nhỏ mua thường xuyên, gói tiêu chuẩn, hay hộp quà giá cao hơn?</li>
+        <li data-en="So which strategy in the Lab fits: penetration, at market price, value-based premium or cost-plus? Give one reason from what you saw.">Vậy chiến lược nào trong Xưởng hợp: thâm nhập, ngang giá thị trường, giá cao theo giá trị hay chi phí cộng lãi? Nêu một lý do từ những gì bạn vừa thấy.</li>
+      </ul>
+    </li>
+    <li data-min="2">
+      <h2><span data-en="4 · Back to the Lab">4 · Quay lại Xưởng</span><span class="ds-min" data-en="2 min">2 phút</span></h2>
+      <p data-en="In the Price part of the Local Specialty Brand Lab, choose or revise your strategy and your price per pack, and write the reason in “Why this price?”, for example: “Customers in the middle of the street; a 100 g pack so they can try it first.”">Trong phần Price của Xưởng Nhãn Hiệu Đặc Sản, chọn hoặc sửa chiến lược giá và giá cho một quy cách, rồi ghi lý do vào ô «Vì sao chọn mức giá này?», ví dụ: «Khách ở giữa con phố; gói 100 g để mua thử trước».</p>
+      <p><a class="clay-btn" href="xuong-nhan-hieu.html" data-en="Open the Lab →">Mở Xưởng Nhãn Hiệu →</a></p>
+    </li>
+  </ol>
+
+  <div class="ds-note">
+    <p data-en-html="&lt;b&gt;Do not convert the dollar figure straight into a price.&lt;/b&gt; It is consumption per adult, adjusted for purchasing power: it tells you which customer group you are talking about, not how many dong to charge. Your price still comes from your cost and your competitors."><b>Đừng đổi thẳng con số đô-la thành giá bán.</b> Đó là mức tiêu dùng mỗi người lớn đã quy theo sức mua: nó cho biết bạn đang nói về nhóm khách hàng nào, không cho biết nên bán bao nhiêu đồng. Giá bán vẫn tính từ chi phí và giá đối thủ.</p>
+    <p data-en="Needs an internet connection; show it live, no need to download photos. Dollar Street photos are free to reuse under Creative Commons BY 4.0: if you put one in a report, credit “Dollar Street, Gapminder”.">Cần mạng; chiếu trực tiếp, không cần tải ảnh về. Ảnh Dollar Street được dùng lại tự do theo giấy phép Creative Commons BY 4.0: đưa ảnh nào vào báo cáo thì ghi nguồn «Dollar Street, Gapminder».</p>
+  </div>
+
+  <p class="ds-lic" data-en="Assignment brief © 2026 PhD Candidate Đỗ Thùy Hương &amp; Assoc. Prof. Phan Anh Tú. Tool: BizOn. Dollar Street is a Gapminder project; this page only links to it.">Đề bài © 2026 NCS. Đỗ Thùy Hương &amp; PGS.TS. Phan Anh Tú. Công cụ: BizOn. Dollar Street là dự án của Gapminder; trang này chỉ liên kết tới đó.</p>
+</main>
+
+<script>
+(function(){
+  // Đồng hồ 10 phút cho giảng viên: viền bước đang tới theo số phút khai ở data-min.
+  var TOTAL = 600, left = TOTAL, timer = null;
+  var out = document.getElementById('ds-time'), run = document.getElementById('ds-run');
+  var steps = [].slice.call(document.querySelectorAll('#ds-steps > li'));
+  function en(){ return (window.clayCurrentLang ? window.clayCurrentLang() : document.documentElement.lang) === 'en'; }
+  function label(){
+    run.textContent = timer ? (en() ? '⏸ Pause' : '⏸ Tạm dừng') : (en() ? '▶ Start' : '▶ Bắt đầu');
+    document.getElementById('ds-reset').textContent = en() ? '↺ Reset' : '↺ Đặt lại';
+  }
+  function draw(){
+    out.textContent = Math.floor(left / 60) + ':' + String(left % 60).padStart(2, '0');
+    var gone = TOTAL - left, end = 0, started = timer !== null || left < TOTAL;
+    steps.forEach(function(li){
+      var from = end; end += (+li.dataset.min) * 60;
+      li.classList.toggle('is-now', started && gone >= from && gone < end);
+    });
+  }
+  run.addEventListener('click', function(){
+    if (timer) { clearInterval(timer); timer = null; label(); draw(); return; }
+    if (left <= 0) left = TOTAL;
+    timer = setInterval(function(){ left--; if (left <= 0) { left = 0; clearInterval(timer); timer = null; label(); } draw(); }, 1000);
+    label(); draw();
+  });
+  document.getElementById('ds-reset').addEventListener('click', function(){ clearInterval(timer); timer = null; left = TOTAL; label(); draw(); });
+  window.addEventListener('bizon:langchange', label);
+  document.addEventListener('DOMContentLoaded', label);
+  label(); draw();
+})();
+</script>
+<script src="js/bizon-clay-i18n.js" defer></script>
+<script src="js/bizon-clay-nav.js" defer></script>
+<script src="js/bizon-clay-footer.js" defer></script>
+</body>
+</html>
