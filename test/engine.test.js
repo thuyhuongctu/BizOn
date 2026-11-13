@@ -2,7 +2,7 @@
  *
  * Vì sao đáng làm trước những thứ khác: đây là engine dùng để CHẤM ĐIỂM sinh
  * viên. Một sai số ở đây không chỉ làm game khó chịu mà làm điểm số sai, và
- * làm hỏng luôn tuyên bố «engine xác định, kết quả tái lập được» trong hồ sơ
+ * làm hỏng luôn tuyên bố «engine tất định, kết quả tái lập được» trong hồ sơ
  * học thuật.
  *
  * js/engine.js không đụng tới DOM (không document, không window, không

@@ -9,7 +9,7 @@ const read = f => fs.readFileSync(path.join(__dirname, '..', f), 'utf8');
 
 const chinhSach = read('chinh-sach.html');
 assert.match(chinhSach, /Arcade và game bậc 1 \(Bến Phù Sa\): miễn phí/);
-assert.match(chinhSach, /Hai trụ cột: một học kỳ dùng thử/);
+assert.match(chinhSach, /Hai game trụ cột \(Bật Nghiệp và Hộ Chiếu Thương Hiệu\): một học kỳ dùng thử/);
 
 const CAM = [/luôn miễn phí/i, /Free play is always free/i, /dùng BizOn miễn phí/i, /use BizOn free/i,
   /Miễn phí cho giảng dạy/i, /Free for non-commercial teaching/i, /Dùng thử miễn phí/i, /Try it free/i,

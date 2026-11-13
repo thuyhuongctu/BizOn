@@ -119,7 +119,7 @@
         <h2>${lang === 'en' ? 'Learn through decisions and reflection' : 'Học qua quyết định và phản tư'}</h2>
         <p>${lang === 'en'
           ? 'Lumina helps learners question assumptions and interpret consequences. The deterministic engine remains the sole source of simulation outcomes.'
-          : 'Lumina hỗ trợ người học đặt câu hỏi, xem lại giả định và giải thích hệ quả. Engine xác định vẫn là nguồn duy nhất tạo kết quả mô phỏng.'}</p>
+          : 'Lumina hỗ trợ người học đặt câu hỏi, xem lại giả định và giải thích hệ quả. Engine tất định vẫn là nguồn duy nhất tạo kết quả mô phỏng.'}</p>
       </div>`);
 
     const tu = document.createElement('article');

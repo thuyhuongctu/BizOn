@@ -1330,8 +1330,8 @@
 "Clean energy field"
 ],
 [
-"Cố vấn chiến lược AI trong game",
-"AI strategy adviser in the game"
+"Cố vấn chiến lược trong game (chạy theo quy tắc)",
+"In-game strategy adviser (rule-based)"
 ],
 [
 "Cố vấn học thuật · xuất hiện ở khoảnh khắc then chốt",
@@ -1378,7 +1378,7 @@
 "Project"
 ],
 [
-"Game mô phỏng điều hành doanh nghiệp linh vật đất sét: 6 vòng kinh doanh, 5 vai trò, sự kiện thị trường, đấu trường đối thủ và cố vấn theo luật. Ứng dụng web PWA, chơi được cả khi ngoại tuyến.",
+"Game mô phỏng điều hành doanh nghiệp linh vật đất sét: 6 vòng kinh doanh, 5 vai trò, sự kiện thị trường, đấu trường đối thủ và cố vấn chạy theo quy tắc. Ứng dụng web PWA, chơi được cả khi ngoại tuyến.",
 "A business management simulation with clay mascots: 6 business rounds, 5 roles, market events, a rival arena and a rule-based adviser. A PWA web app that also runs offline."
 ],
 [
@@ -1618,7 +1618,7 @@
 "Go global →"
 ],
 [
-"Ra quyết định dưới điều kiện không chắc chắn. Học kinh doanh bằng hậu quả của chính lựa chọn của bạn – nền tảng mô phỏng kinh doanh AI-enhanced với engine xác định, giải thích được.",
+"Ra quyết định dưới điều kiện không chắc chắn. Học kinh doanh bằng hậu quả của chính lựa chọn của bạn – nền tảng mô phỏng kinh doanh AI-enhanced với engine tất định, giải thích được.",
 "Decide under uncertainty. Learn business through the consequences of your own choices – an AI-enhanced business simulation platform with a deterministic, explainable engine."
 ],
 [
@@ -2130,8 +2130,8 @@
 "🛂 The «Brand Passport» cast"
 ],
 [
-"Cố vấn AI · người dẫn chuyện suốt sáu quý chơi",
-"AI adviser · narrator across all six quarters"
+"Cố vấn chạy theo quy tắc · người dẫn chuyện suốt sáu quý chơi",
+"Rule-based adviser · narrator across all six quarters"
 ],
 [
 "Nhà sáng lập · giữ hồn nghề, tay nâng hũ đặc sản gia truyền",
