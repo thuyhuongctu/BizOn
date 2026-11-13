@@ -16,7 +16,7 @@ assert.match(py, /sys\.argv\[3\]/, 'tên sprite truyền qua tham số');
 // tờ sprite đã làm (trả tiền để vẽ nên phải nằm trong kho): WebP hợp lệ, JSON khớp số khung, đủ nhẹ
 const TD = 'assets/character/tranh-dong/', co = fs.readdirSync(R(TD)).filter(f => f.endsWith('.json')).map(f => f.slice(0, -5));
 for (const t of co) {
-  const w = fs.readFileSync(R(TD + t + '.webp')), j = JSON.parse(read(TD + t + '.json')), dung = /-(dung|noi)$/.test(t);
+  const w = fs.readFileSync(R(TD + t + '.webp')), j = JSON.parse(read(TD + t + '.json')), dung = /-(dung|noi)(-v\d+)?$/.test(t);
   assert.ok(w.subarray(0, 4).toString() === 'RIFF' && w.subarray(8, 12).toString() === 'WEBP', t + '.webp phải là WebP');
   assert.ok(w.length < 600000, t + '.webp nặng ' + Math.round(w.length / 1024) + ' KB (cho phép < 600 KB)');
   assert.ok(j.khung >= 12 && j.khung <= j.cot * j.hang && j.cao === 256 && j.rong > 100, t + '.json: số khung và lưới hợp lệ');
