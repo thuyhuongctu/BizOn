@@ -1518,8 +1518,8 @@
 "Contact →"
 ],
 [
-"Logo «Bo» – bản nền tối",
-"The «Bo» logo – dark background version"
+"Logo chữ BizOn – bản nền tối",
+"BizOn wordmark – dark background version"
 ],
 [
 "Là PWA nên vẫn chơi được khi mạng lớp học chập chờn – cài lên màn hình chính như ứng dụng.",
