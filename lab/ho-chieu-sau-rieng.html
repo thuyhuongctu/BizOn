@@ -488,7 +488,7 @@ footer{color:var(--faint)}
         <div class="body">
         <p class="small">${LANG === 'en' ? D.sourcingTheory.en : D.sourcingTheory.vi} <span class="src">[${D.sourcingTheory.src ? D.facts[D.sourcingTheory.src].src : ''}]</span></p>
         <p class="small">${LANG === 'en' ? D.formalization.en : D.formalization.vi} <span class="src">[${D.formalization.src ? D.facts[D.formalization.src].src : ''}]</span></p>
-        <div class="tblwrap"><table><tr><th>${L('Kênh', 'Channel')}</th><th>${L('Phương thức thâm nhập', 'Entry mode')}</th><th>${L('Khâu tới hiện diện ở host country', 'Stages to host-country presence')}</th></tr>
+        <div class="tblwrap"><table><tr><th>${L('Kênh', 'Channel')}</th><th>${L('Phương thức thâm nhập', 'Entry mode')}</th><th>${L('Các khâu cho tới khi có mặt ở nước nhập khẩu', 'Stages to host-country presence')}</th></tr>
           ${D.channels.map(c => `<tr><td>${c.emoji} ${nm(c)}</td><td>${nm(D.entryModes[c.entryMode])}</td><td class="small">${c.pipeline.map(p => LANG === 'en' ? p.en : p.vi).join(' → ')}</td></tr>`).join('')}
         </table></div></div></details>
 
@@ -770,7 +770,7 @@ footer{color:var(--faint)}
           ${D.channels.map(c => { const e = okIds.includes(c.id); const cap = c.cap === null ? '' : `${L('tối đa', 'max')} ${nf(c.id === 'BORDER' ? c.cap * (1 - (s.borderCut || 0)) : c.cap)} ${L('tấn', 't')}`;
             return `<div class="mrow"><span>${c.emoji} ${nm(c)}<br><span class="hint">${e ? cap : `<span class="lock">🔒 ${L('Chưa đủ điều kiện', 'Not yet eligible')}</span>`}</span></span>
             <input type="range" data-ch="${c.id}" min="0" max="100" step="5" value="${dec.alloc[c.id] || 0}" ${e ? '' : 'disabled'}><span class="num" id="pct-${c.id}">${e ? pct(norm[c.id]) : '—'}</span></div>
-            <details class="gv" style="margin:-4px 0 8px"><summary class="hint">${nm(D.entryModes[c.entryMode])} · ${L('khâu đến host country', 'stages to host country')}</summary>
+            <details class="gv" style="margin:-4px 0 8px"><summary class="hint">${nm(D.entryModes[c.entryMode])} · ${L('các khâu tới nước nhập khẩu', 'stages to host country')}</summary>
               <p class="small muted">${c.pipeline.map(p => LANG === 'en' ? p.en : p.vi).join(' → ')}</p></details>`; }).join('')}
           ${(() => { const coded = role.ownFarm ? 1 : Math.min(1, dec.linked + (g.linkedBonus || 0)); return okIds.includes('CN') && (norm.CN || 0) > coded + 1e-9 ? `<p class="hint" style="color:var(--neg)">⚠ ${L(`Chỉ ${pct(coded)} sản lượng (hàng từ vùng liên kết có mã) được đi chính ngạch; phần chính ngạch vượt (${pct((norm.CN || 0) - coded)}) sẽ chuyển sang nội địa. Tăng tỷ lệ vùng liên kết (COO) hoặc giảm tỷ trọng chính ngạch.`, `Only ${pct(coded)} of output (fruit from linked coded areas) may go official; the excess official share (${pct((norm.CN || 0) - coded)}) is sold domestically. Raise the linked share (COO) or lower the official share.`)}</p>` : ''; })()}
           <p class="hint">${fact('sampling')}</p>
