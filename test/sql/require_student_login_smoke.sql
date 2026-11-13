@@ -113,12 +113,14 @@ do $$ begin
   if not exists (select 1 from public.bizon_student_domains() d where d = 'student.ctu.edu.vn') then raise exception 'Phải liệt kê tên miền CTU'; end if;
   if not exists (select 1 from public.bizon_student_domains() d where d = 'gstudent.ctu.edu.vn') then raise exception 'Phải liệt kê tên miền nghiên cứu sinh CTU'; end if;
   if not exists (select 1 from public.bizon_student_domains() d where d = 'umkendari.ac.id') then raise exception 'Phải liệt kê tên miền UM Kendari'; end if;
+  if not exists (select 1 from public.bizon_student_domains() d where d = 'student.umkendari.ac.id') then raise exception 'Phải liệt kê tên miền con sinh viên UM Kendari'; end if;
 end $$;
 reset role;
 -- UM Kendari (20261113000000_add_umkendari_domain.sql): so khớp đúng phần sau @, không nhận tên miền con hay tên miền na ná
 do $$ begin
   if not public.bizon_is_student_email('Ica.Nur.02@UMKendari.ac.id') then raise exception 'Email sinh viên UM Kendari phải được nhận'; end if;
-  if public.bizon_is_student_email('sv@febi.umkendari.ac.id') then raise exception 'Tên miền con của UM Kendari chưa được duyệt thì không nhận'; end if;
+  if not public.bizon_is_student_email('arsih@student.umkendari.ac.id') then raise exception 'Email tên miền con student.umkendari.ac.id phải được nhận'; end if;
+  if public.bizon_is_student_email('sv@febi.umkendari.ac.id') then raise exception 'Tên miền con khác của UM Kendari chưa được duyệt thì không nhận'; end if;
   if public.bizon_is_student_email('sv@umkendari.ac.id.example.com') then raise exception 'Tên miền na ná không được nhận'; end if;
   if public.bizon_is_student_email('sv@gmail.com') then raise exception 'Gmail cá nhân không được nhận'; end if;
 end $$;

@@ -57,6 +57,7 @@ export const CHECKS = {
     post: [
       ["exists (select 1 from public.student_email_domains where domain = 'umkendari.ac.id')", 'có tên miền umkendari.ac.id'],
       ["public.bizon_is_student_email('ten.02@umkendari.ac.id')", 'email sinh viên UM Kendari được nhận'],
+      ["public.bizon_is_student_email('ten@student.umkendari.ac.id')", 'email tên miền con student.umkendari.ac.id được nhận'],
     ],
   },
   revoke_anon_writes: {
