@@ -18,6 +18,7 @@ const DOI = [
   ['lab/ho-chieu-sau-rieng-data.js', 'hc/durian/nem-thu-tai-cang.webp', 'hc/durian/nem-thu-tai-cang-v2.webp', 'cờ lạ trên bàn'],
   ['lab/ho-chieu-sau-rieng-data.js', 'hc/durian/ban-do-4-chang.webp', 'hc/durian/ban-do-4-chang-v2.webp', 'nhãn chữ tiếng Anh vô nghĩa'],
   ['giang-vien.html', 'giang-vien/bang-diem-csv.webp', 'giang-vien/bang-diem-csv-v2.webp', 'tên hãng thật Nike, Lego, Google, Rolex'],
+  ['giang-vien.html', 'giang-vien/so-diem-dong-bang.webp', 'giang-vien/so-diem-dong-bang-v2.webp', 'trùng tệp với ảnh bảng điểm CSV, có tên hãng thật'],
   ['lab/ho-chieu-sau-rieng-data.js', 'hc/pipeline/harvest.webp', 'hc/pipeline/harvest-v2.webp', 'tách nền hỏng, người mất nửa thân'],
   ['lab/ho-chieu-sau-rieng-data.js', 'hc/pipeline/payment.webp', 'hc/pipeline/payment-v2.webp', 'mảng chậu cây lơ lửng trên laptop'],
   ['js/thu-vien-data.js', 'rivals/star.webp', 'rivals/star-v2.webp', 'mảnh đất sét thừa dưới chân'],
