@@ -139,6 +139,8 @@
         <select class="clay-field" name="priceStrategy"><option value="" data-en="— choose —">— chọn —</option></select></label>
       <div class="xn-grid">
         <label class="clay-label"><span data-en="Planned price and pack">Giá bán dự kiến và quy cách</span><input type="text" class="clay-field" name="giaBan" maxlength="60" placeholder="120.000 đ/hũ 500 g" data-en-ph="120,000 ₫ per 500 g jar"></label>
+        <label class="clay-label"><span data-en="Where on Dollar Street do your target customers live? (optional)">Khách hàng mục tiêu ở đâu trên con phố Dollar Street? (không bắt buộc)</span>
+          <select class="clay-field" name="khachPho"><option value="" data-en="— not decided —">— chưa xác định —</option></select></label>
       </div>
       <label class="clay-label"><span data-en="Why this price?">Vì sao chọn mức giá này?</span><textarea class="clay-field" name="priceReason" maxlength="500"></textarea></label>
       <ul class="xn-hint" data-for="price"></ul>
@@ -222,6 +224,8 @@
   var fields = function () { return form.querySelectorAll('input[name],select[name],textarea[name]'); };
   var sel = form.querySelector('[name="priceStrategy"]');
   L.PRICES.forEach(function (p) { var o = document.createElement('option'); o.value = p[0]; o.textContent = p[1]; o.dataset.en = p[2]; sel.appendChild(o); });
+  var selPho = form.querySelector('[name="khachPho"]');
+  L.STREET.forEach(function (p) { var o = document.createElement('option'); o.value = p[0]; o.textContent = p[1]; o.dataset.en = p[2]; selPho.appendChild(o); });
 
   function read() {
     var s = {};
@@ -264,7 +268,7 @@
   try { var saved = JSON.parse(localStorage.getItem(KEY) || 'null'); if (saved) fill(saved); } catch (e) {}
   form.addEventListener('input', function () { update(true); });
   form.addEventListener('change', function () { update(true); });
-  document.addEventListener('bizon:langchange', function () { update(false); });
+  window.addEventListener('bizon:langchange', function () { update(false); });
   (document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(function () { update(false); });
   update(false);
 
