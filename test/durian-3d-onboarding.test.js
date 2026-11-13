@@ -64,7 +64,9 @@ D.eightSteps.steps.forEach(st => { if (st.img && st.img.startsWith('hc/durian/')
 assert.ok(used.size >= 33, 'ít nhất 33 ảnh mới được dùng, thấy ' + used.size);
 used.forEach(img => assert.ok(fs.existsSync(path.join(ROOT, 'assets', img)), 'thiếu ' + img));
 const onDisk = fs.readdirSync(path.join(ROOT, 'assets/hc/durian')).filter(f => f.endsWith('.webp'));
-onDisk.forEach(f => assert.ok(used.has('hc/durian/' + f), 'ảnh chưa dùng tới: ' + f));
+// Ảnh gốc đã có bản sửa «-vN» đang dùng thì được giữ lại (quy ước: không ghi đè ảnh gốc), không tính là ảnh thừa.
+const coBanMoi = f => onDisk.some(g => g !== f && g.startsWith(f.replace(/\.webp$/, '-v')) && used.has('hc/durian/' + g));
+onDisk.forEach(f => assert.ok(used.has('hc/durian/' + f) || coBanMoi(f), 'ảnh chưa dùng tới: ' + f));
 // bước 6 quy trình 8 bước nay có ảnh; chuỗi lạnh có thêm ảnh tàu, xe, vườn
 assert.equal(D.eightSteps.steps.find(s => s.n === 6).img, 'hc/durian/cau-container.webp');
 assert.ok(D.chain2.stages.find(s => s.id === 'rail-sea').items.some(it => it.img === 'hc/durian/tau-bao.webp'));

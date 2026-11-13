@@ -46,7 +46,7 @@
       { h:t.s[0], note:t.n[0], min:'180px', items:
         D.chars.map(function(a){ a = loc(a); return fig('character/'+a[0], a[1], a[2]); })
         /* Bộ C-suite mới: bảng 5 biểu cảm ghép từ assets/character/csuite/<vai>-<biểu cảm>.webp */
-        .concat(D.expr.map(function(k){ var cs = /^(ceo|cfo|coo|cmo|sec)$/.test(k); return Object.assign(fig(cs ? 'character/csuite/'+k+'-moods.webp' : 'character/expressions/'+k+'-expressions.webp', t.expr+' – '+t.roles[k], cs ? t.exprD5 : t.exprD), {ar:'4/3',fit:'contain',pos:'50% 50%',pad:'0',bg:'#FFFFFF'}); }))
+        .concat(D.expr.map(function(k){ var cs = /^(ceo|cfo|coo|cmo|sec)$/.test(k); return Object.assign(fig(cs ? 'character/csuite/'+k+'-moods.webp' : 'character/expressions/'+k+(k==='aodai-nam'?'-expressions-v2':'-expressions')+'.webp', t.expr+' – '+t.roles[k], cs ? t.exprD5 : t.exprD), {ar:'4/3',fit:'contain',pos:'50% 50%',pad:'0',bg:'#FFFFFF'}); }))
         .concat(D.sheets.slice(0,2).map(function(a){ return sheet(loc(a)); })) },
       { h:t.s[1], note:t.n[1], min:'160px', items:
         D.cast.map(function(a){ a = loc(a); return fig('character/'+a[0], a[1], a[2]); }).concat([sheet(loc(D.sheets[2]))]) },
