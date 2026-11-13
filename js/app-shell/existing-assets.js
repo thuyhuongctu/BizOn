@@ -17,8 +17,8 @@
     },
     tuPhanLectureHall: {
       path: 'assets/illustrations/anh-tu-lecture-hall.webp',
-      viAlt: 'Tú Phan trong không gian giảng dạy và cố vấn học thuật',
-      enAlt: 'Tú Phan in an academic teaching and advisory setting'
+      viAlt: 'Tu Phan trong không gian giảng dạy và cố vấn học thuật',
+      enAlt: 'Tu Phan in an academic teaching and advisory setting'
     },
     luminaOfficePresent: {
       path: 'assets/character/lumina-office-present.webp',
@@ -128,7 +128,7 @@
     tu.appendChild(createImage('tuPhanLectureHall', { loading: 'eager', fetchPriority: 'high' }));
     tu.insertAdjacentHTML('beforeend', `
       <div class="bz-existing-person-copy">
-        <span class="bz-existing-badge">Tú Phan</span>
+        <span class="bz-existing-badge">Tu Phan</span>
         <small>${lang === 'en' ? 'Academic advisory' : 'Cố vấn học thuật'}</small>
         <h2>${lang === 'en' ? 'Connect gameplay with academic outcomes' : 'Kết nối trò chơi với chuẩn đầu ra học thuật'}</h2>
         <p>${lang === 'en'

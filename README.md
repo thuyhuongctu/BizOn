@@ -168,7 +168,7 @@ If you use BizOn in teaching or research, please cite:
 
 **Proprietary software:** see [`LICENSE`](LICENSE). The authors **Do Thuy Huong & Phan Anh Tu** own:
 - the source code and the simulation-engine algorithms;
-- the character designs (**Lumina**, **Tú Phan**, the Demo Team);
+- the character designs (**Lumina**, **Tu Phan**, the Demo Team);
 - the original music library;
 - the **BizOn** name and identity.
 
