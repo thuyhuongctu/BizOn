@@ -438,7 +438,7 @@
 
   // ---------- Nhân vật đại diện (chọn 1 khi bắt đầu ván — thuần cosmetic, không đổi luật chơi) ----------
   const avatars = [
-    { id: 'basaulanh', emoji: '👵', vi: 'Bà Sáu Lành', en: 'Bà Sáu Lành', img: 'hc/cast/ba-sau-lanh-vui.webp',
+    { id: 'basaulanh', emoji: '👵', vi: 'Bà Bảy Hiền', en: 'Bà Bảy Hiền', img: 'hc/cast/ba-sau-lanh-vui.webp',
       roleVi: 'Nông hộ trồng sầu riêng, HTX Cai Lậy', roleEn: 'Durian grower, Cai Lậy co-op' },
     { id: 'bacba', emoji: '👴', vi: 'Bác Ba', en: 'Bác Ba', img: 'hc/cast/bac-ba.webp',
       roleVi: 'Nông hộ trồng sầu riêng, một nhà vườn khác', roleEn: 'Durian grower, another household' },
