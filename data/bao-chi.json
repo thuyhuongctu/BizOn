@@ -30,6 +30,16 @@
       "vi": "Tạp chí Một Thế Giới",
       "en": "Mot The Gioi magazine",
       "host": "1thegioi.vn"
+    },
+    "bnews": {
+      "vi": "Bnews (TTXVN)",
+      "en": "Bnews (Vietnam News Agency)",
+      "host": "bnews.vn"
+    },
+    "thanhuycantho": {
+      "vi": "Cổng thông tin điện tử Đảng bộ TP Cần Thơ",
+      "en": "Can Tho City Party Committee e-portal",
+      "host": "thanhuycantho.vn"
     }
   },
   "topics": {
@@ -65,6 +75,44 @@
     }
   },
   "articles": [
+    {
+      "id": "thanhuycantho-2026-11-13",
+      "date": "2026-11-13",
+      "outlet": "thanhuycantho",
+      "reporter": "",
+      "kind": "dua-tin",
+      "topics": [
+        "kinh-te-tu-nhan"
+      ],
+      "url": "https://thanhuycantho.vn/Default.aspx?tabid=1011&ndid=14106",
+      "title": {
+        "vi": "Phát triển kinh tế tư nhân - Đòn bẩy để thành phố Cần Thơ phát triển nhanh và bền vững trong kỷ nguyên mới",
+        "en": "Private-sector development – a lever for Can Tho to grow fast and sustainably in the new era"
+      },
+      "summary": {
+        "vi": "Đưa tin Diễn đàn kinh tế thường niên thành phố Cần Thơ năm 2026 (12/11): thành phố giao Viện Kinh tế - Xã hội tổng hợp ý kiến thành báo cáo khuyến nghị chính sách phát triển kinh tế tư nhân; GRDP chín tháng tăng 7,89%, đứng thứ hai vùng Đồng bằng sông Cửu Long. Ảnh phiên tọa đàm trong bài có PGS.TS. Phan Anh Tú (Phó Hiệu trưởng Trường Kinh tế, Đại học Cần Thơ) trên màn hình giới thiệu diễn giả; bài không trích lời ông.",
+        "en": "Coverage of the Can Tho City Annual Economic Forum 2026 (12 Nov): the city tasks its Institute for Socio-Economic Development with turning the discussion into a policy report on private-sector development; nine-month GRDP grew 7.89%, second in the Mekong Delta. The panel photo in the article shows Assoc. Prof. Phan Anh Tú (Vice Rector, School of Economics, Can Tho University) on the speaker screen; the article does not quote him."
+      }
+    },
+    {
+      "id": "bnews-2026-11-12",
+      "date": "2026-11-12",
+      "outlet": "bnews",
+      "reporter": "Nguyễn Văn Việt",
+      "kind": "dua-tin",
+      "topics": [
+        "kinh-te-tu-nhan"
+      ],
+      "url": "https://bnews.vn/can-tho-thuc-day-kinh-te-tu-nhan-huong-toi-tang-truong-ben-vung/444090.html",
+      "title": {
+        "vi": "Cần Thơ thúc đẩy kinh tế tư nhân, hướng tới tăng trưởng bền vững",
+        "en": "Can Tho promotes the private economy, aiming for sustainable growth"
+      },
+      "summary": {
+        "vi": "Đưa tin Diễn đàn kinh tế thường niên thành phố Cần Thơ năm 2026, chủ đề «Phát triển kinh tế tư nhân - Đòn bẩy để thành phố Cần Thơ phát triển nhanh và bền vững trong kỷ nguyên mới»: thành phố cam kết cải thiện môi trường đầu tư, tháo gỡ khó khăn về vốn, đất đai, công nghệ và thị trường. Ảnh «Các diễn giả tham gia phiên tọa đàm» có PGS.TS. Phan Anh Tú (Phó Hiệu trưởng Trường Kinh tế, Đại học Cần Thơ) trên màn hình giới thiệu diễn giả; bài không trích lời ông.",
+        "en": "Coverage of the Can Tho City Annual Economic Forum 2026, themed «Private-sector development – a lever for Can Tho to grow fast and sustainably in the new era»: the city commits to improving the investment environment and removing obstacles in capital, land, technology and markets. The photo of the panel speakers shows Assoc. Prof. Phan Anh Tú (Vice Rector, School of Economics, Can Tho University) on the speaker screen; the article does not quote him."
+      }
+    },
     {
       "id": "tuoitre-2026-10-22",
       "date": "2026-10-22",
