@@ -18,8 +18,9 @@ export const BO_TRANH = {
   lumina: ['dung', 'noi'], tu: ['dung', 'noi'],
 };
 /* Tờ đã làm lại thì nạp bản mới (tệp cũ giữ nguyên trong kho). Thầy Tu Phan v2 (13/11/2026): dựng thẳng từ tranh gốc áo dài
- * assets/character/anh-tu-ao-dai-cut-v2.webp, vì bản đầu làm từ ảnh mẫu vẽ lại nên chưa giống. */
-export const BAN_MOI = { 'tu-dung': 'tu-dung-v2', 'tu-noi': 'tu-noi-v2' };
+ * assets/character/anh-tu-ao-dai-cut-v2.webp, vì bản đầu làm từ ảnh mẫu vẽ lại nên chưa giống. Tờ đứng v3 (13/11/2026): đầu thu còn
+ * 80 % cho cân với thân (chị thấy đầu to hơn thân), tờ nói v2 giữ nguyên vì tỷ lệ đã cân. */
+export const BAN_MOI = { 'tu-dung': 'tu-dung-v3', 'tu-noi': 'tu-noi-v2' };
 const tep = (id, t) => THU_MUC + (BAN_MOI[id + '-' + t] || id + '-' + t);
 export const diDuoc = id => !!BO_TRANH[id] && DI.every(t => BO_TRANH[id].includes(t));
 const gocGan = a => Math.atan2(Math.sin(a), Math.cos(a));
