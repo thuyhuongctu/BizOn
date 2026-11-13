@@ -26,8 +26,10 @@
 <link rel="stylesheet" href="css/bizon-clay.css">
 <style>
   .bc-sec{padding:30px;border-radius:32px;background:var(--clay-card);box-shadow:var(--clay-night-shadow,inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 #fff,0 26px 36px -24px rgba(110,70,30,.5));margin-bottom:24px}
-  .bc-h2{margin:0 0 18px;font-size:28px;display:flex;align-items:center;gap:12px}
-  .bc-h2 .num{width:40px;height:40px;border-radius:14px;display:grid;place-items:center;font-size:18px;box-shadow:inset 0 -4px 0 rgba(0,0,0,.1)}
+  /* «.clay h2» (css/bizon-clay.css) đặt margin:0 và line-height:1.14, mạnh hơn «.bc-h2» đơn lẻ: tiêu đề nhiều dòng mất khoảng cách dưới,
+     dấu nặng và chân chữ g, p của dòng cuối bị khung bên dưới che. Viết «.clay .bc-h2» để khoảng cách và giãn dòng có hiệu lực. */
+  .clay .bc-h2{margin:0 0 18px;font-size:28px;line-height:1.24;display:flex;align-items:center;gap:12px;overflow-wrap:anywhere}
+  .bc-h2 .num{flex:0 0 40px;width:40px;height:40px;border-radius:14px;display:grid;place-items:center;font-size:18px;line-height:1;box-shadow:inset 0 -4px 0 rgba(0,0,0,.1)}
   .bc-ctx{display:grid;grid-template-columns:minmax(120px,200px) minmax(0,1fr);gap:16px;padding:14px 0;border-top:2px dashed #F0E2C8}
   .bc-ctx>div{min-width:0;overflow-wrap:break-word}
   @media (max-width:640px){.bc-ctx{grid-template-columns:minmax(0,1fr);gap:4px}} /* điện thoại: nhãn nằm trên, nội dung chiếm trọn bề ngang */ /* chuỗi dài không dấu cách (vd «CEO–CFO–CMO–COO») không đẩy tràn ngang ở máy 360px */
@@ -129,18 +131,22 @@
   </section>
 
   <section class="bc-sec">
-    <h2 class="bc-h2"><span class="num" style="background:var(--clay-c4)">4</span><span data-en="Two upcoming courses with integration plans">Hai học phần kế tiếp đã có kế hoạch tích hợp</span></h2>
+    <h2 class="bc-h2"><span class="num" style="background:var(--clay-c4)">4</span><span data-en="Three upcoming classes with integration plans">Ba lớp kế tiếp đã có kế hoạch tích hợp</span></h2>
     <div class="bc-courses">
       <div class="bc-course">
-        <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;align-items:baseline"><div style="font-family:var(--clay-head);font-size:22px;font-weight:800;line-height:1.14">KT330H – Entrepreneurship</div><span style="padding:4px 10px;border-radius:999px;background:var(--clay-card);font-size:12px;font-weight:800;color:var(--clay-teal)" data-en="Can Tho University">ĐH Cần Thơ</span></div>
+        <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;align-items:baseline"><div style="font-family:var(--clay-head);font-size:22px;font-weight:800;line-height:1.2">KT330H – Entrepreneurship</div><span style="padding:4px 10px;border-radius:999px;background:var(--clay-card);font-size:12px;font-weight:800;color:var(--clay-teal)" data-en="Can Tho University">ĐH Cần Thơ</span></div>
         <p style="margin:10px 0 0;font-size:14px;line-height:1.6;color:var(--clay-ink-2)" data-en="The second simulation in the «Simulation Games 10%» component; linked to the week-8 Excel break-even workshop; pre/post-test in weeks 2 and 11">Simulation thứ 2 trong cấu phần «Simulation Games 10%»; nối workshop hòa vốn Excel tuần 8; pre/post-test tuần 2 và 11</p>
       </div>
       <div class="bc-course">
-        <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;align-items:baseline"><div style="font-family:var(--clay-head);font-size:22px;font-weight:800;line-height:1.14">KT301H – FDI, Trade &amp; Geography (CLC)</div><span style="padding:4px 10px;border-radius:999px;background:var(--clay-card);font-size:12px;font-weight:800;color:var(--clay-teal)" data-en="Can Tho University">ĐH Cần Thơ</span></div>
+        <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;align-items:baseline"><div style="font-family:var(--clay-head);font-size:22px;font-weight:800;line-height:1.2">KT301H – FDI, Trade &amp; Geography (CLC)</div><span style="padding:4px 10px;border-radius:999px;background:var(--clay-card);font-size:12px;font-weight:800;color:var(--clay-teal)" data-en="Can Tho University">ĐH Cần Thơ</span></div>
         <p style="margin:10px 0 0;font-size:14px;line-height:1.6;color:var(--clay-ink-2)" data-en="Level 3 · Internationalisation for the Entry Modes chapter; a «comparative simulation» slide in case presentations; bilingual teaching">Bậc 3 · Quốc tế hóa cho chương Entry Modes; slide «mô phỏng đối chiếu» trong thuyết trình case; giảng dạy song ngữ</p>
       </div>
+      <div class="bc-course" id="lop-quoc-te-umk">
+        <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px;align-items:baseline"><div style="font-family:var(--clay-head);font-size:22px;font-weight:800;line-height:1.2" data-en="KT330H – Entrepreneurship (international class)">KT330H – Entrepreneurship (lớp quốc tế)</div><span style="padding:4px 10px;border-radius:999px;background:var(--clay-card);font-size:12px;font-weight:800;color:var(--clay-teal)" data-en="UM Kendari × Can Tho University">UM Kendari × ĐH Cần Thơ</span></div>
+        <p style="margin:10px 0 0;font-size:14px;line-height:1.6;color:var(--clay-ink-2)" data-en="International Credit Exchange Program with Universitas Muhammadiyah Kendari (Indonesia), taught online via Zoom by Assoc. Prof. Phan Anh Tú; about 160 students, planned for late 2026. Teams of five roles play Bật Nghiệp in breakout rooms; the game interface and the pre/post survey are in English">Chương trình trao đổi tín chỉ quốc tế với Universitas Muhammadiyah Kendari (Indonesia), học trực tuyến qua Zoom do PGS.TS. Phan Anh Tú giảng dạy; khoảng 160 sinh viên, dự kiến cuối năm 2026. Đội 5 vai chơi Bật Nghiệp trong phòng nhóm; giao diện game và phiếu khảo sát trước–sau bằng tiếng Anh</p>
+      </div>
     </div>
-    <p style="margin:16px 0 0;font-size:14px;line-height:1.6;color:var(--clay-ink-2)" data-en="Both pilots will add forms recording learners’ business decisions, their opportunity-validation steps (customer interviews, price tests, MVPs, partners) and where they choose to build their livelihood, so that decisions inside the simulation are kept separate from real-world action.">Cả hai thí điểm sẽ bổ sung phiếu ghi nhận quyết định kinh doanh, bước kiểm chứng cơ hội (phỏng vấn khách hàng, thử nghiệm giá, MVP, đối tác) và lựa chọn địa bàn lập nghiệp của người học, để tách quyết định trong mô phỏng khỏi hành động ngoài thực tế.</p>
+    <p style="margin:16px 0 0;font-size:14px;line-height:1.6;color:var(--clay-ink-2)" data-en="The two Can Tho University pilots will add forms recording learners’ business decisions, their opportunity-validation steps (customer interviews, price tests, MVPs, partners) and where they choose to build their livelihood, so that decisions inside the simulation are kept separate from real-world action.">Hai thí điểm tại ĐH Cần Thơ sẽ bổ sung phiếu ghi nhận quyết định kinh doanh, bước kiểm chứng cơ hội (phỏng vấn khách hàng, thử nghiệm giá, MVP, đối tác) và lựa chọn địa bàn lập nghiệp của người học, để tách quyết định trong mô phỏng khỏi hành động ngoài thực tế.</p>
   </section>
 
   <section class="bc-sec">
