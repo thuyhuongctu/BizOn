@@ -86,7 +86,7 @@ window.BZ_LIB_EN={
 'ceo-cfo-revenue-targets-v2.webp':['Revenue-target meeting','The CEO & CFO compare the Revenue Targets chart with quarterly cash flow'],
 'holo-strategy-briefing-v2.webp':['Hologram strategy briefing','Ceremonial áo dài, a Gantt board & growth charts floating in the meeting room'],
 'goo-coo-production-planning-v2.webp':['Production-capacity planning','A Production Capacity chart on a pinboard & a miniature route model'],
-'lumina-advisor-pro-scenario.webp':['Lumina Advisor Pro','What-if scenario analysis, profit & risk forecasts on a touch board'],
+'lumina-advisor-pro-scenario-v2.webp':['Lumina Advisor Pro','What-if scenario analysis, profit & risk forecasts on a touch board'],
 'strategy-notes-podium-v2.webp':['Simulation strategy notebook','Notes on «Cash-flow risk management» & «CVP cost optimisation» beside a compass'],
 'ceo-minh-long-expansion-compass-hstss-v2.webp':['Market-expansion compass','Expansion plan & a 6-round strategy – pins on Hà Nội, Đà Nẵng, TP.HCM'],
 'sec-compliance-checklist-v2.webp':['Governance & compliance log','The round’s compliance checklist beside a «Market Alert» sign'],

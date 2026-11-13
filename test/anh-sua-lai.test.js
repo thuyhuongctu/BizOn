@@ -26,7 +26,7 @@ const DOI = [
   ['js/thu-vien-data.js', 'firms/lam-viet-cut.webp', 'firms/lam-viet-cut-v2.webp', 'vệt mờ do tách nền'],
   ['js/thu-vien-data.js', 'hc/chain2/cast-doi-nguyen-cuu-vuon-v3.webp', 'hc/chain2/cast-doi-nguyen-cuu-vuon-v4.webp', 'quần, tóc bị khuyết'],
 ];
-const KHUNG = ['ceo-cfo-revenue-targets', 'ceo-minh-long-expansion-compass-hstss', 'ceo-sec-market-checkpoint-hstss', 'goo-coo-production-planning',
+const KHUNG = ['lumina-advisor-pro-scenario', 'ceo-cfo-revenue-targets', 'ceo-minh-long-expansion-compass-hstss', 'ceo-sec-market-checkpoint-hstss', 'goo-coo-production-planning',
   'holo-strategy-briefing', 'oee-logistics-tablet', 'sec-compliance-checklist', 'strategy-notes-podium', 'team-victory-celebration'];
 for (const k of KHUNG) DOI.push(['js/thu-vien-data.js', k + '.webp', k + '-v2.webp', 'còn khung tối của ảnh chụp màn hình']);
 
