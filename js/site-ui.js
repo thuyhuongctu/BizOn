@@ -902,48 +902,48 @@
 "French version · vocal recording"
 ],
 [
-"Tú Phan – Áo dài trắng",
-"Tú Phan – White áo dài"
+"Tu Phan – Áo dài trắng",
+"Tu Phan – White áo dài"
 ],
 [
 "Trang phục lễ nghi · đeo cài áo Bản đồ Việt Nam",
 "Ceremonial outfit · wearing the Vietnam Map lapel pin"
 ],
 [
-"Tú Phan – Nụ cười chiến thắng",
-"Tú Phan – Victory smile"
+"Tu Phan – Nụ cười chiến thắng",
+"Tu Phan – Victory smile"
 ],
 [
 "Áo dài trắng & cài áo Việt Nam · phiên bản tươi vui",
 "White áo dài & Vietnam pin · the cheerful version"
 ],
 [
-"Tú Phan – Chào đón",
-"Tú Phan – Welcome"
+"Tu Phan – Chào đón",
+"Tu Phan – Welcome"
 ],
 [
 "Dang rộng vòng tay chào người chơi mới",
 "Open arms welcoming new players"
 ],
 [
-"Tú Phan – Hướng dẫn",
-"Tú Phan – Guiding"
+"Tu Phan – Hướng dẫn",
+"Tu Phan – Guiding"
 ],
 [
 "Chỉ tay giới thiệu bảng số liệu & luật chơi",
 "Pointing out the data board & game rules"
 ],
 [
-"Tú Phan – Giảng giải",
-"Tú Phan – Explaining"
+"Tu Phan – Giảng giải",
+"Tu Phan – Explaining"
 ],
 [
 "Đưa tay diễn giải khái niệm kinh doanh",
 "Gesturing through a business concept"
 ],
 [
-"Tú Phan – Bàn làm việc",
-"Tú Phan – At the desk"
+"Tu Phan – Bàn làm việc",
+"Tu Phan – At the desk"
 ],
 [
 "Phân tích dữ liệu mô phỏng trên laptop",
@@ -1330,8 +1330,8 @@
 "Clean energy field"
 ],
 [
-"Cố vấn chiến lược AI trong game",
-"AI strategy adviser in the game"
+"Cố vấn chiến lược trong game (chạy theo quy tắc)",
+"In-game strategy adviser (rule-based)"
 ],
 [
 "Cố vấn học thuật · xuất hiện ở khoảnh khắc then chốt",
@@ -1378,7 +1378,7 @@
 "Project"
 ],
 [
-"Game mô phỏng điều hành doanh nghiệp linh vật đất sét: 6 vòng kinh doanh, 5 vai trò, sự kiện thị trường, đấu trường đối thủ và cố vấn theo luật. Ứng dụng web PWA, chơi được cả khi ngoại tuyến.",
+"Game mô phỏng điều hành doanh nghiệp linh vật đất sét: 6 vòng kinh doanh, 5 vai trò, sự kiện thị trường, đấu trường đối thủ và cố vấn chạy theo quy tắc. Ứng dụng web PWA, chơi được cả khi ngoại tuyến.",
 "A business management simulation with clay mascots: 6 business rounds, 5 roles, market events, a rival arena and a rule-based adviser. A PWA web app that also runs offline."
 ],
 [
@@ -1618,7 +1618,7 @@
 "Go global →"
 ],
 [
-"Ra quyết định dưới điều kiện không chắc chắn. Học kinh doanh bằng hậu quả của chính lựa chọn của bạn – nền tảng mô phỏng kinh doanh AI-enhanced với engine xác định, giải thích được.",
+"Ra quyết định dưới điều kiện không chắc chắn. Học kinh doanh bằng hậu quả của chính lựa chọn của bạn – nền tảng mô phỏng kinh doanh AI-enhanced với engine tất định, giải thích được.",
 "Decide under uncertainty. Learn business through the consequences of your own choices – an AI-enhanced business simulation platform with a deterministic, explainable engine."
 ],
 [
@@ -2130,8 +2130,8 @@
 "🛂 The «Brand Passport» cast"
 ],
 [
-"Cố vấn AI · người dẫn chuyện suốt sáu quý chơi",
-"AI adviser · narrator across all six quarters"
+"Cố vấn chạy theo quy tắc · người dẫn chuyện suốt sáu quý chơi",
+"Rule-based adviser · narrator across all six quarters"
 ],
 [
 "Nhà sáng lập · giữ hồn nghề, tay nâng hũ đặc sản gia truyền",
@@ -2190,8 +2190,8 @@
 "Management software · strong digital channel, high margin"
 ],
 [
-"Tú Phan – Vest xanh rêu",
-"Tú Phan – Moss-green suit"
+"Tu Phan – Vest xanh rêu",
+"Tu Phan – Moss-green suit"
 ],
 [
 "🐺 CEO Alpha Dynamics",
@@ -2286,7 +2286,7 @@
 "Where every decision converges: market-share charts, a strategy compass and the trophy for the winning team – data-driven management across every round."
 ],
 [
-"Tú Phan",
+"Tu Phan",
 "Tu Phan"
 ],
 [
@@ -2350,8 +2350,8 @@
 "The BizOn Go Global pin set – carrying the +84 dialing code to the world"
 ],
 [
-"Tú Phan với cài áo Việt Nam",
-"Tú Phan with the Vietnam pin"
+"Tu Phan với cài áo Việt Nam",
+"Tu Phan with the Vietnam pin"
 ],
 [
 "Cố vấn học thuật đeo cài áo bản đồ Việt Nam trên ve áo vest",

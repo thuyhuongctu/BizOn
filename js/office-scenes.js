@@ -12,7 +12,7 @@
   const CS = r => ['assets/character/csuite/' + r + '-smile.webp', 'assets/character/team/' + r + '-cut.webp'];
   const IMG = { coo: CS('coo'), sec: CS('sec'), ceo: CS('ceo'), cfo: CS('cfo'), cmo: CS('cmo'),
     lumina: ['assets/character/v2/lumina.webp', 'assets/character/advisors/lumina-vest-cut.webp'],
-    alpha: ['assets/character/rivals/alpha.webp'], mekong: ['assets/character/rivals/mekong.webp'], star: ['assets/character/rivals/star.webp'] };
+    alpha: ['assets/character/rivals/alpha.webp'], mekong: ['assets/character/rivals/mekong.webp'], star: ['assets/character/rivals/star-v2.webp'] };
   const img = (k, extra = '') => { const [a, b] = IMG[k] || IMG.lumina; return `<img src="${a}" ${b ? `onerror="this.onerror=null;this.src='${b}'"` : ''} alt="" ${extra}>`; };
   const RIV = { aggressive: { k: 'alpha', icon: '🐺', c: '#e8762d', base: [125, 90] }, balanced: { k: 'mekong', icon: '🐘', c: '#2e8b57', base: [150, 60] }, premium: { k: 'star', icon: '🦚', c: '#6a3fb5', base: [195, 75] } };
   const NAME = { coo: 'Bảo Ngọc · COO', sec: 'Gia Hân · SEC' };

@@ -103,8 +103,8 @@
       <div class="loading" aria-live="polite">
         <div class="loading-card">
           <img src="assets/icons/icon-192.png" alt="">
-          <h1>Đang kết nối Learning Layer</h1>
-          <p>Lumina chỉ đọc trạng thái và hỗ trợ phản tư. Engine xác định vẫn là nguồn duy nhất tính kết quả.</p>
+          <h1>Đang kết nối lớp học tập</h1>
+          <p>Lumina chỉ đọc trạng thái và hỗ trợ phản tư. Engine tất định vẫn là nguồn duy nhất tính kết quả.</p>
         </div>
       </div>
       <iframe id="bp-game" title="Brand Passport simulation game" src="about:blank"></iframe>
@@ -132,13 +132,13 @@
           </div>
 
           <section class="reflection">
-            <label for="reflection-text">✍️ Reflection của người học</label>
+            <label for="reflection-text">✍️ Phản tư của người học</label>
             <small>Giải thích lý do chọn, bằng chứng sử dụng, rủi ro quan trọng nhất và điều có thể khiến quyết định sai.</small>
             <textarea id="reflection-text" maxlength="2000" placeholder="Tôi chọn quyết định này vì… Bằng chứng chính là… Rủi ro lớn nhất là…"></textarea>
             <div class="button-row">
               <button class="small-btn save" id="save-reflection" type="button">Lưu phản tư</button>
               <button class="small-btn" type="button" onclick="document.getElementById('export-trace').click()">Xuất JSON</button>
-              <button class="small-btn danger" id="clear-trace" type="button">Xóa trace phiên này</button>
+              <button class="small-btn danger" id="clear-trace" type="button">Xóa nhật ký phiên này</button>
             </div>
           </section>
 
@@ -147,7 +147,7 @@
             <div class="trace-list" id="trace-list"></div>
           </section>
 
-          <p class="ethics-note"><b>Quản trị dữ liệu:</b> bản V1 lưu audit trail trên thiết bị hiện tại bằng localStorage. Không gửi reflection lên máy chủ. Khi triển khai lớp học thật cần consent, chính sách lưu giữ, quyền xóa và phân quyền giảng viên.</p>
+          <p class="ethics-note"><b>Quản trị dữ liệu:</b> bản V1 lưu nhật ký quyết định trên chính thiết bị này (localStorage), không gửi bài phản tư lên máy chủ. Khi dùng cho lớp học thật cần có sự đồng ý của người học, chính sách lưu giữ, quyền xóa và phân quyền cho giảng viên.</p>
         </div>
       </aside>
       <button class="lumina-fab" id="lumina-fab" type="button" onclick="document.getElementById('lumina-toggle').click()">✨ Lumina<span>Coach · Critic · Reflection</span></button>

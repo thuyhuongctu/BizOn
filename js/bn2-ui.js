@@ -69,7 +69,7 @@ function recordConquest(report) {
 const RIVALS = {
   aggressive: { img: 'assets/character/rivals/alpha.webp', color: '#e8762d', vi: 'Giá rẻ tốc chiến · ~130k, marketing ~85tr', en: 'Budget blitz · ~130k, marketing ~85m' },
   balanced: { img: 'assets/character/rivals/mekong.webp', color: '#00a0c8', vi: 'Cân bằng chắc chắn · ~150k, marketing ~60tr', en: 'Steady balance · ~150k, marketing ~60m' },
-  premium: { img: 'assets/character/rivals/star.webp', color: '#5a32a3', vi: 'Cao cấp thương hiệu · ~180k, marketing ~85tr', en: 'Premium brand · ~180k, marketing ~85m' },
+  premium: { img: 'assets/character/rivals/star-v2.webp', color: '#5a32a3', vi: 'Cao cấp thương hiệu · ~180k, marketing ~85tr', en: 'Premium brand · ~180k, marketing ~85m' },
 };
 const ROLES = ['CEO', 'CFO', 'CMO', 'COO', 'SEC'];
 const CSUITE = r => 'assets/character/csuite/' + r.toLowerCase() + '-smile.webp';
