@@ -418,6 +418,8 @@ import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { makeKit } from './bizon-3d-kit.js';
 import { makeCharacters } from './bizon-characters.js';
 import { makeHQ } from './bizon-hq-kit.js';
+// Nhân vật «tranh động» (12/11/2026, chị mở khóa hồ sơ cho việc này): trụ sở dùng tờ sprite đi bộ như Bến BizOn; ?nv=3d quay về mô hình cũ
+import { taoTranhDong, BO_TRANH } from './js/ben-bizon-tranh-dong.js';
 
 const canvas = document.getElementById('c');
 // ---------- song ngữ Việt / Anh cho khung Trụ sở 3D (phần game nhúng trong iframe do js/site-ui.js dịch)
@@ -553,6 +555,10 @@ const moon = new THREE.Mesh(new THREE.SphereGeometry(2.2, 32, 20), new THREE.Mes
 
 // ---------- characters
 const CH = 1.35, actors = [];
+const NV_TRANH = !/[?&]nv=3d\b/.test(location.search);
+const GIAM = (() => { try { return matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { return false; } })();
+const CAO_TRANH = { ceo: 1.2, cfo: 1.12, cmo: 1.2, coo: 1.12, sec: 1.1, lumina: 1.14, tu: 1.18 };   // cùng chiều cao với mô hình (như Bến BizOn); khung tranh có lề 5 %
+const taoTranh = id => NV_TRANH && BO_TRANH[id] ? taoTranhDong(id, { cao: (CAO_TRANH[id] || 1.15) * 1.05 * CH, tocDi: 1.15 * CH, giam: GIAM }) : null;
 const MOOD = { until: 0, kind: null }, MEET = { on: false, speaker: null };
 const CONF = [];
 function tickConfetti(dt) { for (let i = CONF.length - 1; i >= 0; i--) { const c = CONF[i]; c.v.y -= dt * 2.2; c.m.position.addScaledVector(c.v, dt); c.m.rotation.x += c.r * dt; c.m.rotation.z += c.r * 0.7 * dt; c.life -= dt;
@@ -564,13 +570,19 @@ function confetti3D(center, n = 160) { const cols = [0xf39a33, 0x2f8a8c, 0xd6453
 const CH_EN = { ceo: ['Minh Long', 'Strategy compass'], cfo: ['Thu Ha', 'Budget bag'], cmo: ['Manh Chi', 'Brand megaphone'], coo: ['Bao Ngoc', 'Tablet'], sec: ['Gia Han', 'Minutes board'],
   lumina: ['Strategy advisor', 'White áo dài · lotus'], tu: ['Academic advisor', 'White áo dài · certificate scroll'] };
 function actor(id, x, z, ry, mode, extra = {}) {
-  const r = chars.roster.find(c => c.id === id), o = chars.build(id); extra.ry0 = ry; o.scale.setScalar(CH); o.position.set(x, 0, z); o.rotation.y = ry;
-  if (r.acc) hq.dress(o, r.acc);
-  o.traverse(m => { if (m.isMesh) m.castShadow = true; });
+  const r = chars.roster.find(c => c.id === id), tranh = taoTranh(id), o = tranh ? tranh.root : chars.build(id); extra.ry0 = ry; o.position.set(x, 0, z); o.rotation.y = ry;
+  if (!tranh) { o.scale.setScalar(CH); if (r.acc) hq.dress(o, r.acc); o.traverse(m => { if (m.isMesh) m.castShadow = true; }); }
   const en = CH_EN[id] || []; // bizon-characters.js chỉ có chú thích tiếng Việt → bản EN cho chú thích khi chạm nhân vật
   o.userData.cid = id; o.userData.label = [(r.label || '') + (r.name ? ' · ' + r.name : ''), (r.label || '') + ((en[0] || r.name) ? ' · ' + (en[0] || r.name) : '')]; o.userData.role = [r.note || r.line || '', en[1] || r.note || r.line || ''];
-  world.add(o); const a = { o, mode, phase: Math.random() * 10, ...extra }; actors.push(a); return a;
+  world.add(o); const a = { o, mode, phase: Math.random() * 10, tranh, ...extra }; actors.push(a); return a;
 }
+// tờ sprite tải hỏng: thay tấm tranh bằng mô hình cũ ở đúng chỗ, giữ chú thích khi chạm
+function veMoHinh(a) {
+  const id = a.o.userData.cid, r = chars.roster.find(c => c.id === id), o = chars.build(id); o.scale.setScalar(CH); if (r && r.acc) hq.dress(o, r.acc);
+  o.traverse(m => { if (m.isMesh) m.castShadow = true; }); o.position.copy(a.o.position); o.rotation.y = a.o.rotation.y; Object.assign(o.userData, { cid: id, label: a.o.userData.label, role: a.o.userData.role });
+  world.remove(a.o); world.add(o); if (tipObj === a.o) tipObj = o; a.o = o; a.tranh = null;
+}
+window.__bn3dNhanVat = () => actors.map(a => ({ id: a.o.userData.cid, tranh: a.tranh ? Object.assign({ sanSang: a.tranh.sanSang, hong: a.tranh.hong }, a.tranh.thongSo()) : null, x: a.o.position.x, z: a.o.position.z }));
 actor('ceo', -0.75, -0.55, Math.PI / 2, 'talk', { duo: 'c', turn: 0 });
 actor('lumina', 0.15, -0.55, -Math.PI / 2, 'talk', { duo: 'c', turn: 1 });
 actor('cfo', -6.3, -1.9, Math.PI / 2, 'talk', { duo: 'f', turn: 0 });
@@ -662,7 +674,7 @@ function workArms(a, t) {
 function tick() {
   const dt = Math.min(clock.getDelta(), 0.05), t = clock.elapsedTime;
   for (const a of actors) {
-    let mode = a.mode;
+    let mode = a.mode; const x0 = a.o.position.x, z0 = a.o.position.z;
     if (a.duo) mode = Math.floor(t / 3.2) % 2 === a.turn ? 'talk' : 'idle';
     if (a.seat) { a.o.position.lerp(tmp.set(a.seat[0], 0, a.seat[1]), Math.min(1, dt * 5)); let dr = a.seat[2] - a.o.rotation.y; dr = Math.atan2(Math.sin(dr), Math.cos(dr)); a.o.rotation.y += dr * Math.min(1, dt * 6);
       mode = MEET.speaker === a.o.userData.cid ? 'talk' : 'idle'; }
@@ -676,6 +688,13 @@ function tick() {
       const want = on ? Math.atan2(camera.position.x - a.o.position.x, camera.position.z - a.o.position.z) : a.ry0; let dr = want - a.o.rotation.y; dr = Math.atan2(Math.sin(dr), Math.cos(dr)); a.o.rotation.y += dr * Math.min(1, dt * 4); }
     const cel = MOOD.until > performance.now() ? MOOD.kind : null;
     if (cel === 'win' && !a.path) mode = 'talk';
+    if (a.tranh && a.tranh.hong) veMoHinh(a);
+    if (a.tranh) {   // tấm tranh động: tốc độ và hướng lấy từ quãng vừa đi trong khung này
+      const dx = a.o.position.x - x0, dz = a.o.position.z - z0, toc = dt > 0 ? Math.hypot(dx, dz) / dt : 0;
+      a.tranh.noi(mode === 'talk'); a.tranh.capNhat(dt, toc, toc > 0.05 ? Math.atan2(dx, dz) : a.o.rotation.y, camera.position.x, camera.position.z);
+      a.o.position.y = cel === 'win' && !a.path ? Math.abs(Math.sin(t * 6 + a.phase)) * 0.16 : 0;
+      continue;
+    }
     chars.animate(a.o, t, mode === 'work' ? 'idle' : mode, a.phase);
     if (mode === 'work' && !cel) workArms(a, t + a.phase);
     a.o.position.y = cel === 'win' && !a.path ? Math.abs(Math.sin(t * 6 + a.phase)) * 0.16 : 0;
