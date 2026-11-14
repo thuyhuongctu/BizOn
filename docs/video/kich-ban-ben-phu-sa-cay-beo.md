@@ -2,9 +2,12 @@
 
 Video dọc 9:16, khoảng 60–70 giây, phong cách vẽ tay Tablet Sketch như video CHAM «Hòa vốn sau năm tháng». Có hai bản: tiếng Việt
 (phụ đề Việt trên Anh) và tiếng Anh (phụ đề Anh, chữ trên trang vẽ bằng tiếng Anh).
-Trạng thái: **kịch bản đã duyệt** (14/11/2026). Bước tiếp theo: chị Hương thu giọng 11 câu mỗi thứ tiếng
-(`assets/video/src/ben-phu-sa-cay-beo/vi/01.mp3` … `11.mp3` và `assets/video/src/ben-phu-sa-cay-beo/en/01.mp3` … `11.mp3`)
-→ dựng hình → âm thanh → kiểm bằng `scripts/kiem-video.mjs`.
+Trạng thái: **kịch bản đã duyệt** (14/11/2026). **Đã dựng** (14/11/2026) với giọng chị Hương cả hai thứ tiếng
+(`assets/video/src/ben-phu-sa-cay-beo/vi/01.mp3` … `11.mp3` và `.../en/01.mp3` … `11.mp3`): hai bản video
+`assets/video/ben-phu-sa-cay-beo-ve-tay-vi-720p.mp4` (≈ 84 giây, phụ đề Việt trên Anh) và
+`assets/video/ben-phu-sa-cay-beo-ve-tay-en-720p.mp4` (≈ 98 giây, phụ đề Anh, chữ trên trang vẽ bằng tiếng Anh). Hai bản dài hơn
+mức dự kiến vì giữ nguyên nhịp đọc thật. Gắn ở màn giới thiệu `ben-phu-sa-3d.html` (mục gập «Trước khi chơi»); khách chọn tiếng
+Anh thì phát bản tiếng Anh. Kiểm bằng `scripts/kiem-video.mjs` và `test/video-ben-phu-sa-ve-tay.test.js`.
 
 > Bến Phù Sa là thị trấn giả tưởng trong game. Video kể chuyện **có thật** ở chợ nổi Cái Răng (Cần Thơ) để mở bài học của game;
 > mọi con số trong lời đọc lấy từ nguồn báo chí và cơ quan nhà nước dưới đây, không phải chỉ số mô phỏng của game.

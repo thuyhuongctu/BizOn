@@ -34,6 +34,7 @@
 <script src="js/student-login.js"></script>
 <script src="js/live-progress.js"></script>
 <script src="js/error-log.js"></script>
+<script src="js/video-song-ngu.js" defer></script>
 <script src="js/game3d-login-gate.js"></script>
 <script>Game3DGate.mount({ backdrop: true, introId: 'ft-intro', ns: 'bps', title: 'Chào mừng tới Bến Phù Sa!', titleEn: 'Welcome to Bến Phù Sa!', subtitle: 'Điền nhanh thông tin đội rồi vào thẳng phần giới thiệu – bỏ trống vẫn chơi được trọn vẹn.', subtitleEn: 'Fill in your team details and go straight to the intro – leave it blank and you can still play the full game.' });</script>
 <!-- Phong tu host trong assets/fonts: khong con phu thuoc may chu phong ben ngoai,
@@ -204,6 +205,17 @@ body:has(#ft-play:not(.hidden)) .vutru-goc{display:none!important}
         <li data-en-html="Beat 3 rival teams on &lt;b&gt;profit&lt;/b&gt; after 5 weeks. Lumina guides your first week step by step.">Thắng 3 đội đối thủ về <b>lợi nhuận</b> sau 5 tuần. Lumina dẫn bạn đi từng bước ở tuần đầu.</li>
       </ol>
     </div>
+    <details id="bps-video" class="rounded-2xl p-4 mb-4" style="background:#f3eadb;border:2px solid #e4d6bd">
+      <summary class="font-display font-extrabold text-deep-teal cursor-pointer" style="min-height:44px;display:flex;align-items:center" data-en="🎬 Before you play: a true story from the floating market (98-second video)">🎬 Trước khi chơi: chuyện có thật ở chợ nổi (video 85 giây)</summary>
+      <video id="bpsVideo" class="mx-auto mt-3 rounded-xl" style="display:block;width:100%;max-width:320px;height:auto;aspect-ratio:9/16;background:#f3eadb" controls preload="none" playsinline width="720" height="1280"
+        poster="assets/video/ben-phu-sa-cay-beo-ve-tay-vi-poster.webp"
+        data-vi-src="assets/video/ben-phu-sa-cay-beo-ve-tay-vi-720p.mp4" data-en-src="assets/video/ben-phu-sa-cay-beo-ve-tay-en-720p.mp4"
+        data-vi-poster="assets/video/ben-phu-sa-cay-beo-ve-tay-vi-poster.webp" data-en-poster="assets/video/ben-phu-sa-cay-beo-ve-tay-en-poster.webp"
+        aria-label="Video vẽ tay: Thứ không treo lên sào được" data-vi-aria="Video vẽ tay: Thứ không treo lên sào được" data-en-aria="Hand-drawn video: What you can't hang on a pole">
+        <source src="assets/video/ben-phu-sa-cay-beo-ve-tay-vi-720p.mp4" type="video/mp4">
+      </video>
+      <p class="text-sm font-semibold text-deep-teal/80 mt-3" data-en="At Cái Răng floating market, tourists keep coming while river traders leave their boats. Same river, new customers: that is why the game asks you to test with a street cart before you load a whole boat. Voice: Đỗ Thùy Hương. Sources: Vietnam National Authority of Tourism (2021), Công Thương newspaper (2023), Tuổi Trẻ (2024).">Ở chợ nổi Cái Răng, khách du lịch đông thêm mà thương hồ lại bỏ ghe lên bờ. Bến sông vẫn vậy nhưng khách đã đổi: vì thế game cho bạn thử bằng gánh hàng rong trước khi đổ cả ghe. Giọng đọc: Đỗ Thùy Hương. Nguồn: Cục Du lịch Quốc gia (2021), Báo Công Thương (2023), Tuổi Trẻ (2024).</p>
+    </details>
     <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mb-1.5" data-en="Choose your team">Chọn đội của bạn</p>
     <div class="grid grid-cols-2 gap-2" id="ft-teams"></div>
     <p class="text-[11px] font-extrabold uppercase tracking-wide opacity-55 mt-4 mb-1.5" data-en="Choose your captain">Chọn thuyền trưởng</p>
