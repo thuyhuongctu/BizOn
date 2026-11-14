@@ -143,7 +143,7 @@
       const password = $('sa-password')?.value;
       if (window.StudentLogin && StudentLogin.loadDomains) await StudentLogin.loadDomains();
       if (!email || !password || password.length < 8 || (window.StudentLogin && !StudentLogin.isStudentEmail(email))) {
-        setStatus(tr('Cần email trường hợp lệ (@student.ctu.edu.vn hoặc @gstudent.ctu.edu.vn) và mật khẩu tối thiểu 8 ký tự.', 'Use the email address issued by your school (a domain registered with BizOn) and a password of at least 8 characters.'), 'error');
+        setStatus(tr('Cần email trường đã đăng ký với BizOn (vd @student.ctu.edu.vn, @gstudent.ctu.edu.vn, @umkendari.ac.id) và mật khẩu tối thiểu 8 ký tự.', 'Use the email address issued by your school (a domain registered with BizOn) and a password of at least 8 characters.'), 'error');
         return;
       }
       setStatus(tr('Đang tạo tài khoản…', 'Creating your account…'));

@@ -145,6 +145,10 @@ function applyGameStaticText() {
   setPh('login-team', 'VD: Rồng Xanh Corp', 'e.g. Green Dragon Corp');
   setPh('login-class', 'VD: QTKD-2026-A', 'e.g. BUS-2026-A');
   setPh('login-sync', '48 ký tự', '48 characters');
+  setPh('sa-class', 'VD: QTKD-2026-A', 'e.g. BUS-2026-A');
+  setPh('sa-team', 'VD: Rồng Xanh Corp', 'e.g. Green Dragon Corp');
+  const sec = document.querySelector('#sa-role option[value="SEC"]');
+  if (sec) sec.textContent = T('SEC (Thư ký)', 'SEC (Secretary)');
   setPh('chat-input', 'Trò chuyện với Lumina...', 'Chat with Lumina...');
   const term = $('in-term');
   if (term && term.options.length >= 3) {

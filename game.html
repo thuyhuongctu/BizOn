@@ -178,7 +178,7 @@
 <script src="js/capture-guard.js"></script>
 </head>
 <body class="min-h-screen">
-<a href="#main-content" class="bz-skip">Bỏ qua tới nội dung chính</a>
+<a href="#main-content" class="bz-skip" data-bn-en="Skip to main content">Bỏ qua tới nội dung chính</a>
 <!-- Bản đồ Việt Nam chìm dưới trang (theo M-AIDA) -->
 
 
@@ -227,7 +227,7 @@
         <p class="text-[11px] font-extrabold uppercase tracking-wider mb-1" style="color:#006687" data-bn-en="🔒 Sign in with your school email">🔒 Đăng nhập bằng email trường</p>
         <p class="text-[11px] text-deep-teal/55 mb-3" data-bn-en="Required for class play: results and contributions go to the instructor under your verified email, and nobody can take your team's name or role.">Bắt buộc khi chơi theo lớp: kết quả và đóng góp gửi về giảng viên theo email đã xác thực, không ai giành được tên đội hay vai của đội bạn.</p>
         <div id="sa-auth-block">
-          <label class="block text-xs font-bold text-deep-teal mb-1" data-bn-en="School email (@student.ctu.edu.vn or @gstudent.ctu.edu.vn)">Email trường (@student.ctu.edu.vn hoặc @gstudent.ctu.edu.vn)</label>
+          <label class="block text-xs font-bold text-deep-teal mb-1" data-bn-en="School email (e.g. @student.ctu.edu.vn, @gstudent.ctu.edu.vn or @umkendari.ac.id)">Email trường (vd @student.ctu.edu.vn, @gstudent.ctu.edu.vn hoặc @umkendari.ac.id)</label>
           <input id="sa-email" type="email" placeholder="b2400001@student.ctu.edu.vn" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-3 py-2.5 mb-2.5 text-sm outline-none focus:border-primary-container">
           <label class="block text-xs font-bold text-deep-teal mb-1" data-bn-en="Password (8+ characters)">Mật khẩu (≥ 8 ký tự)</label>
           <input id="sa-password" type="password" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-3 py-2.5 mb-3 text-sm outline-none focus:border-primary-container">
@@ -260,11 +260,11 @@
       <p class="text-[11px] font-extrabold uppercase tracking-wider text-deep-teal/40 mb-2" data-bn-en="✏️ Quick practice, no account (results stay on this device)">✏️ Chơi thử nhanh, không cần tài khoản (kết quả chỉ lưu trên máy)</p>
       <label class="block text-sm font-bold text-deep-teal mb-1">Email</label>
       <input id="login-email" type="email" placeholder="sinhvien@truong.edu.vn" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-4 py-3 mb-1.5 outline-none focus:border-primary-container">
-      <p class="text-[11px] text-deep-teal/55 mb-4 leading-snug"><span>Chơi thử: mọi dữ liệu chỉ lưu trên máy bạn. Chơi theo lớp (gửi kết quả và email về giảng viên): dùng khung đăng nhập email trường ở trên –</span> <a href="chinh-sach.html" target="_blank" rel="noopener" class="underline">Chính sách quyền riêng tư</a></p>
+      <p class="text-[11px] text-deep-teal/55 mb-4 leading-snug"><span data-bn-en="Practice: all data stays on your device. Class play (results and email go to the instructor): use the school-email sign-in box above –">Chơi thử: mọi dữ liệu chỉ lưu trên máy bạn. Chơi theo lớp (gửi kết quả và email về giảng viên): dùng khung đăng nhập email trường ở trên –</span> <a href="chinh-sach.html" target="_blank" rel="noopener" class="underline">Chính sách quyền riêng tư</a></p>
       <label class="block text-sm font-bold text-deep-teal mb-1">Tên đội – cũng là tên doanh nghiệp của bạn</label>
       <input id="login-team" type="text" placeholder="VD: Rồng Xanh Corp" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-4 py-3 mb-4 outline-none focus:border-primary-container">
       <label class="block text-sm font-bold text-deep-teal mb-1"><span>Mã lớp học – Class ID</span> <span class="font-normal text-deep-teal/40">(tùy chọn)</span></label>
-      <p class="text-[11px] text-deep-teal/55 mb-1.5 leading-snug"><span>Bỏ trống vẫn chơi được trọn 6 vòng ở chế độ</span> <b>chơi thử</b><span>. Muốn kết quả về lớp, hãy đăng nhập email trường ở khung trên rồi bấm «Tham gia đội».</span></p>
+      <p class="text-[11px] text-deep-teal/55 mb-1.5 leading-snug"><span data-bn-en="Leave it blank and you can still play all 6 rounds in">Bỏ trống vẫn chơi được trọn 6 vòng ở chế độ</span> <b>chơi thử</b><span data-bn-en=". To send results to your class, sign in with your school email in the box above, then press «Join team».">. Muốn kết quả về lớp, hãy đăng nhập email trường ở khung trên rồi bấm «Tham gia đội».</span></p>
       <input id="login-class" type="text" placeholder="VD: QTKD-2026-A" class="w-full rounded-clay border-2 border-primary/10 bg-surface-bright px-4 py-3 mb-4 outline-none focus:border-primary-container">
       <label class="block text-sm font-bold text-deep-teal mb-1"><span data-bn-en="Team sync code">Mã đồng bộ đội</span> <span class="font-normal text-deep-teal/40" data-bn-en="(optional)">(tùy chọn)</span></label>
       <p class="text-[11px] text-deep-teal/55 mb-1.5 leading-snug" data-bn-en="Only fill this in if your team has already played on another device: copy the code from &lt;b&gt;🔑 Team sync code&lt;/b&gt; in that device's settings menu."><span>Chỉ điền khi đội đã chơi trên máy khác: lấy mã ở mục</span> <b>🔑 Mã đồng bộ đội</b> <span>trong menu cài đặt của máy cũ.</span></p>
@@ -274,7 +274,7 @@
       <button type="button" onclick="doLogin()" class="clay-button-primary w-full text-white font-display font-bold py-4" style="background:#e8762d; box-shadow:0 6px 0 #b95618, 0 12px 24px rgba(184,86,24,.25)">Bắt đầu mô phỏng 🚀</button>
       <div class="clay-card overflow-hidden p-0 mt-4"><img src="assets/character/csuite/lineup.webp" alt="Đội Demo 5 nhân vật đất sét: COO, CFO, CEO, CMO, Thư ký pháp chế" class="w-full" style="display:block" loading="lazy"></div>
       <button type="button" onclick="doLoginDemo()" class="clay-button-secondary w-full text-deep-teal/80 font-display font-bold py-3.5 mt-3 rounded-clay">👥 Chơi thử với Đội Demo (5 nhân vật)</button>
-      <a href="BizOn%20Game%203D.html" class="block text-center text-sm font-bold text-primary mt-4">🧊 Thử bản 3D (mới) →</a>
+      <a href="BizOn%20Game%203D.html" class="block text-center text-sm font-bold text-primary mt-4" data-bn-en="🧊 Try the 3D version (new) →">🧊 Thử bản 3D (mới) →</a>
       </div>
     </div>
     <p class="text-center text-xs text-deep-teal/40 mt-6">© 2026 BizOn Bật Nghiệp · Đỗ Thùy Hương &amp; Phan Anh Tú</p>
