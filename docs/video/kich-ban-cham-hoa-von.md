@@ -2,9 +2,12 @@
 
 Video dọc 9:16, khoảng 55–60 giây, tiếng Việt, phụ đề Việt và Anh trên hình. Phong cách vẽ tay Tablet Sketch (như video vẽ tay
 «Một trái sầu riêng, cả vùng cùng sầu»).
-Trạng thái: **kịch bản đã duyệt** (13/11/2026). Bước tiếp theo theo lệnh `/video-ngan`: chị Hương thu giọng 11 câu (mỗi câu một tệp
-`assets/video/src/cham-hoa-von/vi/01.mp3` … `11.mp3`) → dựng hình → âm thanh → kiểm bằng `scripts/kiem-video.mjs`.
-Trong lúc chờ giọng thật, có thể dựng bản xem trước bằng giọng máy (không phát hành).
+Trạng thái: **kịch bản đã duyệt** (13/11/2026). **Đã dựng** (14/11/2026): chị Hương thu giọng cả hai thứ tiếng (mỗi câu một tệp,
+`assets/video/src/cham-hoa-von/vi/01.mp3` … `11.mp3` và `assets/video/src/cham-hoa-von/en/01.mp3` … `11.mp3`), nên có hai bản video:
+`assets/video/cham-hoa-von-ve-tay-vi-720p.mp4` (≈ 74,5 giây, phụ đề Việt trên Anh) và `assets/video/cham-hoa-von-ve-tay-en-720p.mp4`
+(≈ 84,5 giây, phụ đề Anh, chữ trên trang vẽ bằng tiếng Anh). Hai bản dài hơn mức 55–60 giây dự kiến vì giữ nguyên nhịp đọc thật.
+Gắn ở `cham/tham-dinh.html`: khách chọn tiếng Anh thì phát bản tiếng Anh. Kiểm bằng `scripts/kiem-video.mjs` và
+`test/video-cham-ve-tay.test.js`.
 
 > CHAM là dự án ở giai đoạn kế hoạch, chưa hoạt động. Mọi số liệu dưới đây lấy từ kế hoạch kinh doanh gốc 2017 và ghi chú thẩm định
 > trong học liệu CHAM của BizOn; đó là **số giả định của kế hoạch**, không phải kết quả hoạt động. Trên hình luôn có dòng
