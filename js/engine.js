@@ -372,7 +372,7 @@ function cmoBrain(s) {
 
   if (s.brandLoyalty < 60) return {
     status: 'RED', badge: T('ĐỎ · NGUY CẤP', 'RED · CRITICAL'), metric: T(`Brand Loyalty ${s.brandLoyalty}% < ngưỡng 60%`, `Brand Loyalty ${s.brandLoyalty}% < the 60% threshold`),
-    dialogue: T('Khách hàng đang dần rời bỏ chúng ta để sang đối thủ – dấu hiệu thương hiệu đang mất sức hút. Cân nhắc một chiến dịch tái định vị trước khi mất thêm thị phần.',
+    clip: 'adv-01', dialogue: T('Khách hàng đang dần rời bỏ chúng ta để sang đối thủ – dấu hiệu thương hiệu đang mất sức hút. Cân nhắc một chiến dịch tái định vị trước khi mất thêm thị phần.',
       'Customers are gradually leaving us for rivals – a sign the brand is losing its pull. Consider a repositioning campaign before losing more share.'),
     actions: [T('Kích hoạt Branding Premium', 'Activate Branding Premium'), T('Tăng R&D để tái định vị thương hiệu', 'Increase R&D to reposition the brand')],
   };

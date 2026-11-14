@@ -363,6 +363,7 @@
     <div class="rgm" id="rgmMore">
       <button type="button" class="btn" id="tourBtn"><i>❓</i><span data-en="Guide">Hướng dẫn</span></button>
       <button type="button" class="btn" id="musicBtn"><i>🎵</i><span>Nhạc nền</span></button>
+      <button type="button" class="btn" id="voiceBtn" style="display:none"><i>🗣️</i><span>Voice: On</span></button>
       <button type="button" class="btn" id="langBtn"><i>🌐</i><span>Tiếng Việt</span></button>
       <button type="button" class="btn" id="night">🌙 Ban đêm</button>
       <button type="button" class="btn" id="lowBtn"><i>⚡</i><span>Chi tiết thấp</span></button>
@@ -607,6 +608,16 @@ let paintMusic = () => {};
 { const mb = document.getElementById('musicBtn'), on = () => localStorage.getItem('bizon-music') !== 'off', paint = () => { mb.innerHTML = on() ? '<i>🎵</i><span>' + T('Nhạc: Bật', 'Music: On') + '</span>' : '<i>🔇</i><span>' + T('Nhạc: Tắt', 'Music: Off') + '</span>'; }; paint(); paintMusic = paint;
   mb.onclick = () => { try { ev('toggleMusic()'); } catch (e) { localStorage.setItem('bizon-music', on() ? 'off' : 'on'); } paint(); };
   addEventListener('pointerdown', () => { try { if (on()) ev('startMusic()'); } catch (e) {} }, { once: true }); }
+// Giọng thu tiếng Anh (11/2026): phát qua hàng đợi giọng của khung game (W.playVoice) – chỉ ở chế độ EN,
+// câu chưa có bản thu thì im. Mỗi cảnh mới dừng câu cũ trước khi đọc câu mới.
+function say3D(ids) { try { if (!W || typeof W.playVoice !== 'function') return; W.stopVoice(); (ids || []).forEach(id => id && W.playVoice(id)); } catch (e) {} }
+function hush3D() { try { if (W && W.stopVoice) W.stopVoice(); } catch (e) {} }
+let paintVoice = () => {};
+{ const vb = document.getElementById('voiceBtn'), isEn = () => { try { return localStorage.getItem('bizon-lang') === 'en'; } catch (e) { return false; } },
+    on = () => { try { return W && W.isEnVoiceOn ? W.isEnVoiceOn() : localStorage.getItem('bizon-voice-en') !== 'off'; } catch (e) { return true; } };
+  paintVoice = () => { vb.style.display = isEn() ? '' : 'none'; vb.innerHTML = on() ? '<i>🗣️</i><span>Voice: On</span>' : '<i>🔇</i><span>Voice: Off</span>'; vb.setAttribute('aria-pressed', on() ? 'true' : 'false'); };
+  paintVoice();
+  vb.onclick = () => { const v = !on(); if (W && W.setEnVoice) W.setEnVoice(v); else { try { localStorage.setItem('bizon-voice-en', v ? 'on' : 'off'); } catch (e) {} } paintVoice(); }; }
 applyLow();
 function setNight(on) {
   night = on; document.body.classList.toggle('night', on);
@@ -861,7 +872,7 @@ function l3Show() {
   l3Focus();
 }
 function l3Enter(demo) {
-  if (!W) return; const g = id => W.document.getElementById(id);
+  if (!W) return; hush3D(); const g = id => W.document.getElementById(id);
   ['screen-splash'].forEach(id => g(id) && g(id).classList.remove('active'));
   if (demo) { ev('doLoginDemo()'); }
   else {
@@ -888,6 +899,8 @@ function l3Enter(demo) {
 }
 document.getElementById('l3Go').onclick = () => l3Enter(false);
 document.getElementById('l3Demo').onclick = () => l3Enter(true);
+// Lời chào của thầy Tú (bản thu tiếng Anh): trình duyệt chỉ cho phát tiếng sau thao tác đầu tiên trên trang.
+document.getElementById('login3d').addEventListener('pointerdown', e => { if (!e.target.closest('#l3Go,#l3Demo,#l3Classic')) say3D(['tu-welcome-01']); }, { once: true });
 document.getElementById('l3Classic').onclick = e => { e.preventDefault(); L3.classic = true; document.body.classList.remove('login3d'); L3.on = false; setMode(); };
 if (DIORAMA) {
   setTimeout(() => { if (document.body.classList.contains('login3d')) l3Enter(true); }, 1000);
@@ -1343,13 +1356,14 @@ function finale3D() {
   showPanel(`${champ ? '<img src="assets/character/teo-soi-cut-v3.webp" alt="Tèo Soi ôm cúp" style="width:96px;align-self:center"><img src="assets/illustrations/team-victory-celebration-v2.webp" alt="Lễ trao cúp vô địch Bật Nghiệp" style="width:100%;border-radius:18px;border:3px solid #e6d6bf;display:block">' : ''}<span class="tag">${T('🏁 TỔNG KẾT MÙA GIẢI · 6 VÒNG', '🏁 SEASON WRAP-UP · 6 ROUNDS')}</span><h2>${champ ? T('Quán quân sàn đấu!', 'Champions of the arena!') : `${T('Hạng', 'Rank')} ${myRank}/4`} ${medal}</h2>
     <p class="d">${champ ? T(`${esc(s.profile.teamName)} cắm nhiều cờ nhất trên bản đồ Việt Nam. Đội Rồng Xanh lên bục cao nhất.`, `${esc(s.profile.teamName)} planted the most flags on the map of Vietnam. Team Green Dragon takes the top step.`) : T(`${esc(nm(rank[0].k))} dẫn đầu với ${rank[0].n} cờ. Đội bạn có ${mine} cờ – xem lại báo cáo để rút bài học.`, `${esc(nm(rank[0].k))} leads with ${rank[0].n} flags. Your team has ${mine} – review the reports for the lessons.`)}</p>
     <div class="imps"><div class="imp"><small>${T('Cờ cả mùa', 'Season flags')}</small><b>🚩 ${mine}/6</b></div><div class="imp"><small>${T('Lợi nhuận tích lũy', 'Cumulative profit')}</small><b style="color:${profit >= 0 ? '#3f8a44' : '#c0443a'}">${fmt(profit)}</b></div><div class="imp"><small>${T('Thị phần cuối', 'Final share')}</small><b>${(+last.share || 0).toFixed(1)}%</b></div><div class="imp"><small>${T('Số dư ví', 'Wallet balance')}</small><b>${fmt(s.balance)}</b></div></div>
-    <div class="say"><small>🤖 LUMINA</small>${champ ? T('Quán quân sàn đấu! Đội cắm nhiều cờ nhất trên bản đồ Việt Nam.', 'Champions of the arena! The team planted the most flags on the map of Vietnam.') : T('Sáu vòng là sáu bài học. Đọc lại nhật ký đội, rồi thử lại mùa mới nhé.', 'Six rounds, six lessons. Reread the team journal, then try a new season.')}</div>
+    <div class="say"><small>🎓 PHAN ANH TÚ</small>${champ ? T('Quán quân sàn đấu! Đội cắm nhiều cờ nhất trên bản đồ Việt Nam.', 'Champions of the arena! The team planted the most flags on the map of Vietnam.') : T('Sáu vòng là sáu bài học. Đọc lại nhật ký đội, rồi thử lại mùa mới nhé.', 'Six rounds, six lessons. Reread the team journal, then try a new season.')}</div>
     <div class="q">"${champ ? T('Một chiến lược được thực thi kỷ luật suốt sáu vòng – đó là điều đáng tự hào nhất.', 'A strategy executed with discipline for six rounds – that is the thing to be proudest of.') : T('Doanh nghiệp giỏi không phải doanh nghiệp không bao giờ sai, mà là doanh nghiệp sửa sai nhanh.', 'A good business is not one that never errs, but one that corrects its errors fast.')}" – <b>Phan Anh Tú</b></div>
     ${window.BN2Grade ? BN2Grade.html(s) : ''}
     <div class="row"><button class="btn primary" id="fnRep">${T('📊 Báo cáo mùa giải', '📊 Season report')}</button><button class="btn" id="fnAch">${T('🎖️ Thành tựu', '🎖️ Achievements')}</button></div>
     <button class="btn" id="fnNew">${T('🔄 Chơi lại mùa mới', '🔄 Play a new season')}</button>
     <p style="font-size:11px;color:#8a7a68;margin-top:4px;line-height:1.4">${s.profile.classId && s.profile.classId !== 'DEMO-2026' ? T('Phiên thi có mã lớp: không thể Reset – kết quả đã gửi về giảng viên.', 'Graded session with a class code: no reset – results were sent to the instructor.') : T('Chỉ Reset khi vòng chơi thật sự gặp lỗi.', 'Reset only if the game is truly broken.')}</p>`);
   // Bảng xếp hạng lớp (cho B1) đọc qua backend của khung game; vẽ lại riêng khung #bn2-grade khi có dữ liệu.
+  say3D(champ ? ['tu-wrap-01', 'tu-wrap-03'] : ['tu-wrap-02', 'tu-wrap-04']);   // lời tổng kết + câu trích của thầy Tú
   if (window.BN2Grade) BN2Grade.load(s, W.BizonBackend);
   evc.querySelector('#fnRep').onclick = () => { closeEvent(); ev("currentReport='season'"); force2D = true; W.showTab('reports'); force2D = false; };
   evc.querySelector('#fnAch').onclick = () => { closeEvent(); window.__openTab('achievements'); };
@@ -1379,7 +1393,7 @@ window.__meeting3D = () => {
   MEET.on = true; flyTable(false); meetI = 0; showSpeaker();
 };
 function showSpeaker() {
-  const m = meetSug[meetI]; MEET.speaker = SPK[meetI];
+  const m = meetSug[meetI]; MEET.speaker = SPK[meetI]; say3D(m.voice);
   showPanel(`<span class="tag">${T('🗣️ Cuộc họp đội – vòng', '🗣️ Team meeting – round')} ${ev('S.round')}</span>
     <div class="who"><img src="${m.img}" alt=""><div><b>${m.icon} ${m.name}</b><span>${meetI + 1}/4 ${T('thành viên đề xuất theo vai', 'members proposing by role')}</span></div></div>
     <div class="say">"${m.say}"</div>
@@ -1394,7 +1408,7 @@ function showSpeaker() {
   if (q('#tmEnd')) q('#tmEnd').onclick = () => { endMeeting(); window.__openTab('decisions'); };
   q('#tmClose').onclick = () => { endMeeting(); window.__openTab('decisions'); };
 }
-function endMeeting() { MEET.on = false; MEET.speaker = null; bub.style.display = 'none'; closeEvent();
+function endMeeting() { MEET.on = false; MEET.speaker = null; bub.style.display = 'none'; closeEvent(); hush3D();
   actors.forEach(a => { if (a.seat) { a.seat = null; a.o.position.set(a.home[0], 0, a.home[1]); a.o.rotation.y = a.home[2]; } }); }
 const bv = new THREE.Vector3();
 function bubTick() { if (MEET.on && MEET.speaker) { const a = actors.find(x => x.o.userData.cid === MEET.speaker); a.o.getWorldPosition(bv); bv.y += CH * 1.55; bv.project(camera);
@@ -1811,6 +1825,7 @@ const FO_ROUND = [
   [['Rủi ro đã được ghi nhận, hồ sơ đầy đủ.', 'Risks logged, files complete.'], ['Khủng hoảng là lúc chúng tôi giành thị phần.', 'A crisis is when we take market share.'], ['Chi phí điện tăng, cầu giảm. CFO để dành quỹ dự phòng, COO sắp lại lịch máy.', 'Power costs are up and demand is down. CFO, keep a reserve; COO, reschedule the machines.']],
   [['Mỗi đồng chi ra đều có kế hoạch thu về.', 'Every dong spent has a plan to come back.'], ['Kho của chúng tôi vẫn đầy.', 'Our warehouse is still full.'], ['Dây chuyền thiếu nguyên liệu. Họp khẩn: tăng ngân sách vận chuyển hay đàm phán lại thời gian giao?', 'The line is short of materials. Emergency meeting: raise the shipping budget or renegotiate delivery times?']],
   [['Sáu vòng, một hướng đi. Hà Nội là đích đến.', 'Six rounds, one direction. Hanoi is the destination.'], ['Chiếc cúp này đã có chủ.', 'This trophy already has an owner.'], ['Vòng quyết định. Thương hiệu được tính gấp rưỡi, đầu tư dài hạn giờ mới thấy giá trị.', 'The deciding round. Brand counts one and a half times; long-term investment finally shows its value.']]];
+const FO_VOICE = ['ceo-r1', 'cmo-r2', 'coo-r3', 'sec-r4', 'cfo-r5', 'ceo-r6'];   // câu của vai mình ở FO_ROUND[i][0]; lời thầy Tú FO_ROUND[i][2] là tu-round-0(i+1)
 const FO_TAUNT = { lead: ['Các bạn đang dẫn à? Vòng này sẽ khác.', 'Leading, are you? This round will be different.'], behind: ['Khoảng cách đang giãn ra đấy, BizOn.', 'The gap is widening, BizOn.'] };
 function foRival(s) { const H = (s && s.history) || [], L = H[H.length - 1], base = TL((FO_ROUND[(s.round - 1) % 6] || [])[1]); if (!L) return base; return L.share >= 30 ? TL(FO_TAUNT.lead) + ' ' + base : L.share < 20 ? TL(FO_TAUNT.behind) + ' ' + base : base; }
 function buildFaceoff() {
@@ -1838,10 +1853,12 @@ function buildFaceoff() {
   const dirIcon = d => ({ up: '📈', 'up-bad': '📈', down: '📉', 'down-good': '📉', flat: '➖' }[d] || '➖'), dirCol = d => d === 'up' || d === 'down-good' ? '#3f8a44' : d === 'flat' ? '#2c3552' : '#c0443a';
   // Thẻ biến cố ở trụ sở chỉ hiện ~1,4 giây trước khi chuyển sang phòng này – nhắc lại các ô tác động ở đây.
   const imps = (e.impacts || []).length ? `<div class="stats" style="grid-template-columns:repeat(${Math.min(4, e.impacts.length)},1fr)">${e.impacts.map(im => `<div><small>${im.icon} ${im.label}</small><b style="font-size:15px;color:${dirCol(im.dir)}">${dirIcon(im.dir)} ${im.value}</b></div>`).join('')}</div>` : '';
+  { const i = (s.round - 1) % 6; say3D([FO_VOICE[i], 'tu-round-0' + (i + 1)]); }
+  const tuBrief = TL((FO_ROUND[(s.round - 1) % 6] || [])[2]);
   rmCard.innerHTML = `<p class="k">${e.tag || T('BIẾN CỐ THỊ TRƯỜNG', 'MARKET EVENT')}</p><h3 style="${bad ? 'color:#c0443a' : ''}">${e.icon || '📣'} ${e.name || T('Đối thủ ra đòn', 'A rival strikes')}</h3><p>${e.desc || ''}</p>${imps}
-    ${e.luminaMsg ? `<p style="font-style:italic">🤖 Lumina: “${e.luminaMsg}”</p>` : ''}${shockNotes()}
+    ${e.luminaMsg ? `<p style="font-style:italic">🤖 Lumina: “${e.luminaMsg}”</p>` : ''}${tuBrief ? `<p style="font-style:italic">🎓 Phan Anh Tú: “${tuBrief}”</p>` : ''}${shockNotes()}
     <button class="btn primary" id="foGo">${e.cta ? e.cta.label : T('🎯 Nhập quyết định', '🎯 Enter decisions')}</button><button class="btn" id="foHome">${T('Về trụ sở', 'Back to HQ')}</button>`;
-  rmCard.querySelector('#foGo').onclick = () => { closeRoom(); window.__openTab(e.cta ? e.cta.tab : 'decisions', e.cta && e.cta.report); };
+  rmCard.querySelector('#foGo').onclick = () => { hush3D(); closeRoom(); window.__openTab(e.cta ? e.cta.tab : 'decisions', e.cta && e.cta.report); };
   rmCard.querySelector('#foHome').onclick = () => { closeRoom(); ev('showTab("home")'); };
 }
 BUILD.faceoff = buildFaceoff;
@@ -1850,7 +1867,7 @@ window.__faceoff = () => room3D('faceoff');
 // ================= NGÔN NGỮ =================
 const langBtn = document.getElementById('langBtn');
 function syncLangBtn() { let l = 'vi'; try { l = localStorage.getItem('bizon-lang') || 'vi'; } catch {} langBtn.querySelector('span').textContent = l === 'en' ? 'English' : 'Tiếng Việt'; }
-langBtn.onclick = () => { if (!W) return; W.toggleLang(); ev('renderAll()'); syncLangBtn(); applyHudLang(); applyLow(); setNight(night); paintMusic(); if (L3.on) l3Focus(); if (RM.on) BUILD[RM.mode](); if (document.body.classList.contains('evt') && evc.querySelector('#lmLog')) advisor3D(); };
+langBtn.onclick = () => { if (!W) return; hush3D(); W.toggleLang(); ev('renderAll()'); syncLangBtn(); applyHudLang(); applyLow(); setNight(night); paintMusic(); paintVoice(); if (L3.on) l3Focus(); if (RM.on) BUILD[RM.mode](); if (document.body.classList.contains('evt') && evc.querySelector('#lmLog')) advisor3D(); };
 syncLangBtn();
 { const mb = document.getElementById('moreBtn'), mp = document.getElementById('more'); mb.onclick = () => { mp.style.display = mp.style.display === 'flex' ? 'none' : 'flex'; }; addEventListener('pointerdown', e => { if (!mp.contains(e.target) && !mb.contains(e.target)) mp.style.display = 'none'; }); }
 

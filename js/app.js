@@ -1005,9 +1005,29 @@ function playClip(src, vol = 0.9) {
 // Câu thoại Lumina có bản thu người thật → ưu tiên hơn giọng máy (TTS). Phát nối
 // tiếp qua một hàng đợi để nhiều câu (VD kết quả vòng) không chồng tiếng lên nhau.
 let luminaVoiceEl = null, luminaVoiceQueue = [], voiceBusy = false;
+// Bản thu tiếng Anh (11/2026, assets/audio/voice/en/, cùng tên tệp với bản tiếng Việt): Lumina, thầy Tú
+// và các vai CMO/COO/Thư ký. Ở chế độ EN giọng thu BẬT mặc định (nút tắt lưu ở 'bizon-voice-en');
+// câu chưa có bản thu thì im lặng, không dùng giọng máy. Chế độ VI giữ nguyên voiceEnabled (đang tắt).
+const EN_VOICE = new Set(['adv-01', 'adv-02', 'adv-03', 'adv-04', 'adv-05', 'adv-06', 'adv-07', 'adv-08', 'adv-09', 'adv-10', 'adv-11', 'adv-12', 'adv-13', 'chat-03', 'chat-04', 'chat-05', 'chat-06', 'chat-07', 'chat-08', 'cmo-meet-01', 'cmo-meet-02', 'cmo-r2', 'coo-meet-01', 'coo-meet-02', 'coo-r3', 'glob-01', 'glob-02', 'glob-03', 'intro-01', 'intro-02', 'intro-03', 'intro-04', 'intro-05', 'intro-06', 'kpi-02', 'quote-01', 'quote-02', 'quote-03', 'quote-04', 'quote-05', 'quote-06', 'risk-01', 'risk-02', 'sec-meet-01', 'sec-meet-02', 'sec-r4', 'tu-round-01', 'tu-round-02', 'tu-round-03', 'tu-round-04', 'tu-round-05', 'tu-round-06', 'tu-welcome-01', 'tu-wrap-01', 'tu-wrap-02', 'tu-wrap-03', 'tu-wrap-04']);
+let enVoiceOn = (() => { try { return localStorage.getItem('bizon-voice-en') !== 'off'; } catch (e) { return true; } })();
+function voiceIsEn() { return currentLang() === 'en'; }
+function hasVoice(clip) { return voiceIsEn() ? enVoiceOn && EN_VOICE.has(clip) : voiceEnabled; }
+function setEnVoice(on) {
+  enVoiceOn = !!on;
+  try { localStorage.setItem('bizon-voice-en', enVoiceOn ? 'on' : 'off'); } catch (e) {}
+  if (!enVoiceOn) stopVoice();
+  return enVoiceOn;
+}
+function isEnVoiceOn() { return enVoiceOn; }
+// Dừng câu đang đọc và bỏ hàng đợi (đổi cảnh, bấm «Tiếp» nhanh) để giọng không trễ sau chữ.
+function stopVoice() {
+  luminaVoiceQueue = [];
+  if (luminaVoiceEl) { try { luminaVoiceEl.onended = luminaVoiceEl.onerror = null; luminaVoiceEl.pause(); } catch (e) {} }
+  voiceBusy = false;
+}
 function playVoice(clip) {
-  if (!clip || !voiceEnabled) return false;          // tôn trọng nút 🔊 Bật/Tắt như TTS
-  luminaVoiceQueue.push('assets/audio/voice/' + clip + '.mp3');
+  if (!clip || !hasVoice(clip)) return false;          // tôn trọng nút 🔊 Bật/Tắt như TTS
+  luminaVoiceQueue.push('assets/audio/voice/' + (voiceIsEn() ? 'en/' : '') + clip + '.mp3');
   if (!voiceBusy) drainVoiceQueue();
   return true;
 }
@@ -1568,6 +1588,14 @@ function teamSuggestions() {
               `Meeting summary: this round's event is «${ev.name || '–'}». ${ev.icon || ''} ${tight ? "CFO's top priority: protect cash safety. " : ''}I've logged the minutes – once the team agrees, the CEO can hit Commit!`) },
   ];
   ['cfo', 'cmo', 'coo', 'sec'].forEach((k, i) => { if (lead[k]) out[i].say = lead[k] + out[i].say; });
+  // Mã bản thu của câu mở đầu từng vai (cfo-meet-* chưa thu – hasVoice() bỏ qua); Thư ký đọc thêm câu kết.
+  const voice = {
+    cfo: S.balance < 150 ? ['cfo-meet-01'] : twoWins ? ['cfo-meet-02'] : [],
+    cmo: share < 20 ? ['cmo-meet-01'] : S.brand > 1.2 ? ['cmo-meet-02'] : [],
+    coo: last && last.inventory > 400 ? ['coo-meet-01'] : last && last.lostSales > 200 ? ['coo-meet-02'] : [],
+    sec: ['sec-meet-01', 'sec-meet-02'],
+  };
+  ['cfo', 'cmo', 'coo', 'sec'].forEach((k, i) => { out[i].voice = voice[k]; });
   return out;
 }
 function applySuggestion(i) {
@@ -1961,6 +1989,7 @@ function showIntro(onClose) {
   const paint = () => {
     const s = INTRO_SLIDES[idx];
     const last = idx === INTRO_SLIDES.length - 1;
+    stopVoice(); playVoice('intro-0' + (idx + 1));   // intro-01 … intro-06 theo thứ tự thẻ
     div.innerHTML = `
       <div class="clay-card max-w-sm w-full overflow-hidden text-center">
         ${s.img ? `<img src="${s.img}" alt="" class="w-full h-32 object-cover">` : ''}
@@ -1977,10 +2006,10 @@ function showIntro(onClose) {
         </div>
       </div>`;
     div.querySelector('#intro-next').onclick = () => {
-      if (last) { div.remove(); if (onClose) onClose(); } else { idx++; paint(); }
+      if (last) { stopVoice(); div.remove(); if (onClose) onClose(); } else { idx++; paint(); }
     };
     div.querySelector('#intro-skip').onclick = () => {
-      if (idx) { idx--; paint(); } else { div.remove(); if (onClose) onClose(); }
+      if (idx) { idx--; paint(); } else { stopVoice(); div.remove(); if (onClose) onClose(); }
     };
   };
   paint();
@@ -2329,7 +2358,7 @@ function sendChat() {
 function askLumina(topic) {
   const quota = AI_QUOTA_PER_ROUND + (hasSkill(S, 'SK_AI1') ? 2 : 0);
   if (S.aiUsed >= quota) {
-    pushLumina({ risk: 'medium', text: T('ERR_AI_LIMIT_REACHED – Lumina đang bận! Bạn đã dùng hết lượt tư vấn của vòng này. Lượt hỏi sẽ được làm mới sau khi commit quyết định.', "ERR_AI_LIMIT_REACHED – Lumina is busy! You've used all your advisor turns this round. Your quota refreshes after you commit decisions.") });
+    pushLumina({ risk: 'medium', clip: 'chat-08', text: T('ERR_AI_LIMIT_REACHED – Lumina đang bận! Bạn đã dùng hết lượt tư vấn của vòng này. Lượt hỏi sẽ được làm mới sau khi commit quyết định.', "ERR_AI_LIMIT_REACHED – Lumina is busy! You've used all your advisor turns this round. Your quota refreshes after you commit decisions.") });
     return;
   }
   S.aiUsed++;
