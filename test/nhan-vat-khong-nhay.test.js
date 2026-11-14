@@ -24,7 +24,7 @@ for (const [cu, moi] of DOI) {
 }
 check(['ceo', 'cfo', 'cmo', 'coo', 'sec'].every(k => hub.includes(`solid/${k}-tex-v2.webp`) && !hub.includes(`solid/${k}-tex.webp`)), 'Bến BizOn 3D dùng ảnh -v2');
 check(game.includes('solid/lumina-tex-v2.webp') && !game.includes('solid/lumina-tex.webp'), 'Game 3D: thẻ chào Lumina dùng ảnh -v2');
-check(+(/CACHE = 'bizon-v(\d+)'/.exec(R('sw.js')) || [])[1] >= 865, 'sw.js ≥ bizon-v865');
+check(+(/CACHE = 'bizon-v(\d+)'/.exec(R('sw.js')) || [])[1] >= 866, 'sw.js ≥ bizon-v866');
 
 let chromium; try { chromium = require('playwright').chromium; } catch (e) { chromium = require('playwright-core').chromium; }
 (async () => {
