@@ -1,4 +1,4 @@
-// Giọng thu tiếng Anh cho Bật Nghiệp (14/11/2026, lớp UM Kendari): 57 bản thu ở assets/audio/voice/en/ (cùng tên với bản tiếng Việt).
+// Giọng thu tiếng Anh cho Bật Nghiệp (14/11/2026, lớp UM Kendari): 62 bản thu ở assets/audio/voice/en/ (cùng tên với bản tiếng Việt).
 // Ở chế độ EN: lời chào thầy Tú ở màn đăng nhập, câu của vai mình + lời thầy Tú mở vòng ở phòng đối đầu, câu mở đầu từng vai trong
 // cuộc họp đội 3D; nút «Voice: On/Off» tắt được. Ở chế độ VI không tải bản thu tiếng Anh (giọng tiếng Việt vẫn tắt chờ thu lại).
 'use strict';
@@ -14,7 +14,7 @@ assert.ok(+(read('sw.js').match(/bizon-v(\d+)/) || [])[1] >= 870);
 // 1. Tệp: đủ bộ, mp3 hợp lệ, không tệp nào rỗng hay quá dài; danh sách EN_VOICE trong app.js khớp thư mục.
 const DIR = path.join(ROOT, 'assets/audio/voice/en');
 const files = fs.readdirSync(DIR).filter(f => f.endsWith('.mp3')).map(f => f.slice(0, -4)).sort();
-assert.equal(files.length, 57, 'đủ 57 bản thu');
+assert.equal(files.length, 62, 'đủ 62 bản thu');
 for (const id of files) {
   const b = fs.readFileSync(path.join(DIR, id + '.mp3'));
   assert.ok(b.length > 15000 && b.length < 400000, id + ' cỡ ' + b.length);
@@ -26,10 +26,10 @@ assert.ok(listed, 'EN_VOICE');
 assert.deepEqual(listed.match(/'[^']+'/g).map(s => s.slice(1, -1)).sort(), files, 'EN_VOICE khớp thư mục voice/en');
 for (const id of ['tu-welcome-01', 'tu-round-01', 'tu-round-06', 'tu-wrap-01', 'tu-wrap-04', 'sec-meet-01', 'sec-meet-02', 'cmo-r2', 'coo-r3', 'sec-r4', 'adv-01', 'intro-06', 'glob-03', 'chat-08'])
   assert.ok(files.includes(id), 'thiếu ' + id);
-// Câu chưa thu (CEO, CFO) không có trong danh sách → im lặng, không dùng giọng máy.
-assert.ok(!files.some(f => /^(ceo|cfo)-/.test(f)));
+// CEO và CFO thu bổ sung 14/11/2026 (tách từ hai tệp ghi liền).
+for (const id of ['ceo-r1', 'ceo-r6', 'cfo-r5', 'cfo-meet-01', 'cfo-meet-02']) assert.ok(files.includes(id), 'thiếu ' + id);
 // Mọi mã câu engine/app dùng đều có tệp tiếng Anh, trừ những câu đã biết là chưa thu.
-const known = new Set(['chat-02', 'adv-14', 'adv-15', 'adv-16', 'adv-17', 'kpi-01', 'kpi-03', 'ceo-r1', 'cfo-r5', 'ceo-r6', 'cfo-meet-01', 'cfo-meet-02']);
+const known = new Set(['chat-02', 'adv-14', 'adv-15', 'adv-16', 'adv-17', 'kpi-01', 'kpi-03']);
 for (const src of ['js/app.js', 'js/engine.js', 'BizOn Game 3D.html', 'global.html'])
   for (const m of read(src).matchAll(/'((?:adv|kpi|risk|chat|quote|glob|intro|tu|ceo|cfo|cmo|coo|sec)-(?:[a-z]+-)?\d+)'/g))
     if (!known.has(m[1]) && !/-0$/.test(m[1])) assert.ok(files.includes(m[1]), src + ': ' + m[1] + ' chưa có bản thu tiếng Anh');
@@ -59,7 +59,7 @@ assert.match(read('global.html'), /'assets\/audio\/voice\/' \+ \(en \? 'en\/' : 
     await click(p, '#l3Demo', 6000);
     for (const s of ['#t3Next', '#t3Next', '#t3End']) await click(p, s, 3000);
     await click(p, '#cdGo', 3000);
-    await waitVoice(voice, 'en/tu-round-01', 30000);
+    await waitVoice(voice, 'en/ceo-r1', 30000); await waitVoice(voice, 'en/tu-round-01', 30000);
     assert.match(await p.locator('#rmCard').textContent(), /Phan Anh Tú: “This round lays the foundation/);
     await click(p, '#foGo', 4000);
     await click(p, '#dcMeet', 3000);
