@@ -52,6 +52,10 @@ const d = R('lab/ho-chieu-sau-rieng-data.js');
 const nhom = id => (new RegExp("\\{ id: '" + id + "'[\\s\\S]*?\\] \\}").exec(d) || [''])[0];
 check(!nhom('border').includes('23-gacc-fast-track') && nhom('air').includes('23-gacc-fast-track'), 'Sầu Riêng: ảnh kho hàng không (PVG AIR CARGO HUB) chuyển sang nhóm «Đường hàng không»');
 check(!d.includes('cửa khẩu quốc tế Tân Thanh – Hữu Nghị'), 'Sầu Riêng: chú thích không gộp Tân Thanh và Hữu Nghị thành một cửa khẩu');
+// Rồng Xanh trong game Bật Nghiệp 3D: chị cho phép đổi trong tệp khóa (13/11/2026)
+{ const g = R('BizOn Game 3D.html'); check(!g.includes('character/teo-soi-cut.webp') && (g.match(/teo-soi-cut-v3\.webp/g) || []).length === 3, 'BizOn Game 3D: Rồng Xanh dùng teo-soi-cut-v3.webp (tách nền đủ chi tiết)'); }
+// Ảnh cả đội ăn mừng (màn vô địch, phòng Bảng xếp hạng): bỏ khung tối, chị đồng ý (14/11/2026)
+{ const g = R('BizOn Game 3D.html'); check(!/team-victory-celebration['.]/.test(g) && (g.match(/team-victory-celebration-v2/g) || []).length === 2, 'BizOn Game 3D: ảnh ăn mừng dùng team-victory-celebration-v2 (bỏ khung tối)'); }
 check(+(/CACHE = 'bizon-v(\d+)'/.exec(R('sw.js')) || [])[1] >= 849, 'sw.js ≥ bizon-v849');
 if (fails) { console.error(fails + ' kiểm tra thất bại'); process.exit(1); }
 console.log('anh-sua-lai: ok');
