@@ -64,9 +64,14 @@
   .rv-sum th,.rv-sum td{text-align:left;padding:10px 8px;border-bottom:1px solid rgba(255,255,255,.12);vertical-align:top}
   .rv-sum thead th{font:500 11.5px var(--ch-mono);letter-spacing:.06em;color:#bdb3a2}
   .rv-sum td.p{text-decoration:line-through;color:#bdb3a2}.rv-sum td.r{color:#ffd166;font-weight:800}
+  .rv-video{display:grid;grid-template-columns:minmax(0,320px) minmax(0,1fr);gap:22px;align-items:center;padding:clamp(16px,3vw,26px);border-radius:28px;background:var(--ch-raised);box-shadow:var(--ch-raise-sm)}
+  @media (max-width:640px){.rv-video{grid-template-columns:1fr}}
+  .rv-video video{display:block;width:100%;max-width:320px;height:auto;aspect-ratio:9/16;border-radius:16px;background:#f3eadb;margin:0 auto}
+  .rv-video h2{margin:6px 0 8px;font-size:clamp(22px,3vw,30px);color:#221f1a}
+  .rv-video p{margin:0 0 8px;font-size:15.5px;line-height:1.6;color:var(--ch-muted)}
   #rv-print{display:none}
   @media print{
-    .rv-top,.rv-grid,.ch-crumb,.rv-actions{display:none!important}
+    .rv-top,.rv-grid,.ch-crumb,.rv-actions,.rv-video{display:none!important}
     #rv-print{display:block}
     .rv-psec{break-inside:avoid;margin:0 0 18px;padding:0 0 12px;border-bottom:1px solid #ccc}
     .rv-psec h2{font-size:22px;margin:4px 0 8px}
@@ -91,6 +96,21 @@
     <p data-en="The CHAM Homestay business plan, 20 pages, read the way an investor would. Every flagged number is checked against the plan’s own tables. Turn the red pen off to read the original.">Kế hoạch kinh doanh CHAM Homestay, 20 trang, đọc theo cách của nhà đầu tư. Mọi con số bị đánh dấu đều được đối chiếu với chính các bảng trong kế hoạch. Tắt bút đỏ để đọc bản gốc.</p>
     <div class="ch-row rv-actions" style="margin-top:14px"><button type="button" class="ch-btn soft" id="rv-print-btn" data-en="Print / save as PDF">In / lưu PDF</button></div>
   </header>
+  <section class="rv-video" aria-labelledby="rv-video-h">
+    <video id="chamVideo" controls preload="none" playsinline width="720" height="1280"
+      poster="../assets/video/cham-hoa-von-ve-tay-vi-poster.webp"
+      data-vi-src="../assets/video/cham-hoa-von-ve-tay-vi-720p.mp4" data-en-src="../assets/video/cham-hoa-von-ve-tay-en-720p.mp4"
+      data-vi-poster="../assets/video/cham-hoa-von-ve-tay-vi-poster.webp" data-en-poster="../assets/video/cham-hoa-von-ve-tay-en-poster.webp"
+      aria-label="Video vẽ tay: Hòa vốn sau năm tháng" data-en-aria="Hand-drawn video: Break-even in five months">
+      <source src="../assets/video/cham-hoa-von-ve-tay-vi-720p.mp4" type="video/mp4">
+    </video>
+    <div>
+      <div class="ch-k" data-en="Before you read · 85-second video">Trước khi đọc · video 75 giây</div>
+      <h2 id="rv-video-h" data-en="Break-even in five months: reading a plan with a red pen">Hòa vốn sau năm tháng: đọc kế hoạch bằng bút đỏ</h2>
+      <p data-en="One number on page one, checked against the plan’s own tables: the payback formula, the salary lines, the 360-day calendar and the room rate. Voice: Đỗ Thùy Hương. Subtitles are on the picture.">Một con số ở trang đầu, đối chiếu với chính các bảng trong kế hoạch: công thức hòa vốn, dòng lương, lịch 360 ngày và giá phòng. Giọng đọc: Đỗ Thùy Hương. Phụ đề in trên hình.</p>
+      <p class="ch-note" data-en="A planned project; the figures in the video are the plan’s assumptions.">Dự án ở giai đoạn kế hoạch; số liệu trong video là giả định của kế hoạch.</p>
+    </div>
+  </section>
   <div class="rv-grid">
     <nav class="rv-toc" aria-labelledby="rv-toc-h"><div class="ch-k" id="rv-toc-h" data-en="Contents">Mục lục</div><ol id="rv-toc"></ol></nav>
     <article class="rv-paper" id="rv-paper" aria-live="polite"></article>
@@ -121,5 +141,6 @@
 <script src="../js/bizon-clay-footer.js" defer></script>
 <script src="../js/cham-kit.js" defer></script>
 <script src="../js/cham-review.js" defer></script>
+<script src="../js/cham-video.js" defer></script>
 </body>
 </html>
