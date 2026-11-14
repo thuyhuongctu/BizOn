@@ -12,19 +12,19 @@
 
   // Toạ độ (x, z) trên sàn; w × d là cỡ phòng. mau: màu sàn phòng (bộ màu đất sét), sang: màu viền sáng.
   const PHONG = [
-    { id: 'lumina', giua: true, do: 'vong', x: 0, z: 0, w: 6, d: 6, mau: 0xF3E6CF, sang: 0x7FD3DC, anh: 'lumina-tex', tl: 218 / 720,
+    { id: 'lumina', giua: true, do: 'vong', x: 0, z: 0, w: 6, d: 6, mau: 0xF3E6CF, sang: 0x7FD3DC, anh: 'lumina-tex-v2', tl: 218 / 720,
       ten: { vi: 'Trạm Lumina', en: 'Lumina hub' }, vai: { vi: 'Cố vấn học tập', en: 'Learning advisor' } },
-    { id: 'ceo', do: 'ban-tron', x: -10, z: -7, w: 7, d: 5.5, mau: 0xD9F0F2, sang: 0x7FD3DC, anh: 'ceo-tex', tl: 263 / 720,
+    { id: 'ceo', do: 'ban-tron', x: -10, z: -7, w: 7, d: 5.5, mau: 0xD9F0F2, sang: 0x7FD3DC, anh: 'ceo-tex-v2', tl: 263 / 720,
       ten: { vi: 'Phòng chiến lược', en: 'Strategy room' }, vai: { vi: 'CEO Minh Long', en: 'CEO Minh Long' } },
-    { id: 'cfo', do: 'ket', x: 10, z: -7, w: 7, d: 5.5, mau: 0xFFE6B8, sang: 0xFDA127, anh: 'cfo-tex', tl: 233 / 720,
+    { id: 'cfo', do: 'ket', x: 10, z: -7, w: 7, d: 5.5, mau: 0xFFE6B8, sang: 0xFDA127, anh: 'cfo-tex-v2', tl: 233 / 720,
       ten: { vi: 'Két & sổ sách', en: 'Vault & ledgers' }, vai: { vi: 'CFO Thu Hà', en: 'CFO Thu Hà' } },
-    { id: 'cmo', do: 'bang', x: -12, z: 4, w: 6.5, d: 5.5, mau: 0xFDE1CE, sang: 0xE8762D, anh: 'cmo-tex', tl: 336 / 720,
+    { id: 'cmo', do: 'bang', x: -12, z: 4, w: 6.5, d: 5.5, mau: 0xFDE1CE, sang: 0xE8762D, anh: 'cmo-tex-v2', tl: 336 / 720,
       ten: { vi: 'Studio thị trường', en: 'Market studio' }, vai: { vi: 'CMO Mạnh Chi', en: 'CMO Mạnh Chi' } },
-    { id: 'coo', do: 'bang-chuyen', x: 12, z: 4, w: 7.5, d: 5.5, mau: 0xDDF1E4, sang: 0xA9DCC4, anh: 'coo-tex', tl: 245 / 720,
+    { id: 'coo', do: 'bang-chuyen', x: 12, z: 4, w: 7.5, d: 5.5, mau: 0xDDF1E4, sang: 0xA9DCC4, anh: 'coo-tex-v2', tl: 245 / 720,
       ten: { vi: 'Xưởng đất sét', en: 'Clay workshop' }, vai: { vi: 'COO Bảo Ngọc', en: 'COO Bảo Ngọc' } },
-    { id: 'sec', do: 'tu', x: -5, z: 11, w: 6.5, d: 5, mau: 0xF4E1E6, sang: 0xF4B6C2, anh: 'sec-tex', tl: 257 / 720,
+    { id: 'sec', do: 'tu', x: -5, z: 11, w: 6.5, d: 5, mau: 0xF4E1E6, sang: 0xF4B6C2, anh: 'sec-tex-v2', tl: 257 / 720,
       ten: { vi: 'Văn thư – pháp chế', en: 'Records & compliance' }, vai: { vi: 'Thư ký Gia Hân', en: 'Secretary Gia Hân' } },
-    { id: 'thaytu', do: 'bang-trang', cao: 4.3, x: 6, z: 11, w: 7, d: 5, mau: 0xFFF3DA, sang: 0xFFD58A, anh: 'tu-phan-tex-v3', tl: 333 / 720,
+    { id: 'thaytu', do: 'bang-trang', cao: 4.3, x: 6, z: 11, w: 7, d: 5, mau: 0xFFF3DA, sang: 0xFFD58A, anh: 'tu-phan-tex-v4', tl: 333 / 720,
       ten: { vi: 'Phòng cố vấn học thuật', en: 'Academic advisor' }, vai: { vi: 'Thầy Tu Phan', en: 'Thầy Tu Phan' } },
   ];
   // Lối đi: từ trạm giữa ra từng phòng, gãy góc một lần (kiểu sơ đồ mạch) cho dễ đọc từ trên xuống.
@@ -365,7 +365,8 @@
           else if (b.cot) { const k = .75 + .25 * Math.sin(t * .0015 + b.pha); b.m.scale.y = k; b.m.position.y = b.y0 + b.cot * k / 2; }
           else if (b.bang) { b.t = (b.t + dt * .12) % 1; b.m.position.x = b.x0 + b.t * b.dai; }
         });
-        nv.forEach(o => { o.s.position.y = o.y0 + Math.abs(Math.sin(t * .0016 + o.pha)) * .06; o.s.userData.vien.position.y = o.s.position.y; });
+        // nhân vật đứng yên trên sàn, không nhún nhảy (chị dặn 14/11/2026)
+        nv.forEach(o => { o.s.position.y = o.y0; o.s.userData.vien.position.y = o.y0; });
         if (nuoc) {   // sóng nước
           const pa = nuoc.geometry.attributes.position, g0 = nuoc.userData.goc, k = t * .0012;
           for (let i = 0; i < pa.count; i++) { const x = g0[i * 3], z = g0[i * 3 + 2]; pa.array[i * 3 + 1] = Math.sin(x * .35 + k) * .09 + Math.cos(z * .42 + k * 1.3) * .07; }
