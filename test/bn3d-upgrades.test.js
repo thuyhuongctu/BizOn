@@ -29,8 +29,11 @@ assert.match(g3d, /function shockNotes\(\)/);
 assert.match(g3d, /BizonMarket\.activeShocks\(S\)/);
 assert.equal((g3d.match(/\$\{shockNotes\(\)\}/g) || []).length, 2, 'shockNotes ở 2 thẻ biến cố');
 
-// Đăng nhập 3D nhận cả email nghiên cứu sinh @gstudent.ctu.edu.vn.
-assert.match(g3d, /\/@g\?student\\\.ctu\\\.edu\\\.vn\$\/i/);
+// Đăng nhập 3D nhận cả email nghiên cứu sinh @gstudent.ctu.edu.vn và trường đối tác UM Kendari (@umkendari.ac.id, @student.umkendari.ac.id).
+assert.ok(g3d.includes('/@(g?student\\.ctu\\.edu\\.vn|(student\\.)?umkendari\\.ac\\.id)$/i.test(email)'));
+const re3d = /@(g?student\.ctu\.edu\.vn|(student\.)?umkendari\.ac\.id)$/i;
+for (const ok of ['b2400001@student.ctu.edu.vn', 'm2400001@gstudent.ctu.edu.vn', 'ana@umkendari.ac.id', 'ana@student.umkendari.ac.id']) assert.ok(re3d.test(ok), ok);
+for (const no of ['ana@gmail.com', 'ana@umkendari.ac.id.evil.com']) assert.ok(!re3d.test(no), no);
 
 // bn2-grade.js chạy được ở trang không có T()/currentLang() và nhận backend truyền vào.
 assert.match(grade, /localStorage\.getItem\('bizon-lang'\) === 'en'/);
