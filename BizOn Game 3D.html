@@ -874,7 +874,7 @@ function l3Enter(demo) {
       if (g('sa-class') && !g('sa-class').value) g('sa-class').value = classId;
       if (g('sa-team') && !g('sa-team').value) g('sa-team').value = team;
       if (g('sa-role')) g('sa-role').value = L3.role;
-      if (g('sa-email') && !g('sa-email').value && /@g?student\.ctu\.edu\.vn$/i.test(email)) g('sa-email').value = email;
+      if (g('sa-email') && !g('sa-email').value && /@(g?student\.ctu\.edu\.vn|(student\.)?umkendari\.ac\.id)$/i.test(email)) g('sa-email').value = email;
       L3.classic = true; document.body.classList.remove('login3d'); L3.on = false; setMode();
       const box = g('student-auth-panel'); if (box) setTimeout(() => box.scrollIntoView({ behavior: 'smooth', block: 'center' }), 50);
       return;
