@@ -7,7 +7,9 @@
 > tiếng Việt `assets/audio/voice/adv-02.mp3` → tiếng Anh `assets/audio/voice/en/adv-02.mp3`.
 > Nhờ vậy game chỉ cần đổi tiền tố thư mục theo nút VI/EN, không phải dò bảng.
 >
-> **Chưa thu câu nào.** 51/51 câu đang chờ.
+> **Đã thu (14/11/2026)** và gắn vào game ở chế độ tiếng Anh: Lumina 33 câu tĩnh, thầy Tú 13 câu, năm vai
+> CEO/CFO/CMO/COO/Thư ký 16 câu (62 tệp trong `assets/audio/voice/en/`). Còn chờ: các câu có số động
+> (`adv-14`…`adv-17`, `kpi-01`, `kpi-03`) và `chat-02`.
 
 ## Vì sao bản tiếng Anh ngắn hơn bản tiếng Việt một câu
 

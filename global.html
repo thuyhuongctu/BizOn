@@ -661,7 +661,8 @@ function gVoice(clip) {
   if (!clip) return;
   try {
     if (gVoiceEl) gVoiceEl.pause();
-    gVoiceEl = new Audio('assets/audio/voice/' + clip + '.mp3');
+    let en = false; try { en = localStorage.getItem('bizon-lang') === 'en'; } catch (e) {}
+    gVoiceEl = new Audio('assets/audio/voice/' + (en ? 'en/' : '') + clip + '.mp3');   // bản thu tiếng Anh 11/2026
     gVoiceEl.volume = 0.95;
     gVoiceEl.play().catch(() => {});
   } catch (e) {}

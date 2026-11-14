@@ -51,7 +51,8 @@ assert.equal(top.length, 5, 'năm mục tầng trên: ' + top.map(l => l.slice(0
 assert.equal((rail.match(/class="rg"/g) || []).length, 3);
 for (const id of ['homeBtn', 'musicBtn', 'instructorBtn', 'openRes', 'tourBtn', 'langBtn', 'night', 'lowBtn', 'moreBtn', 'bMis', 'bCo']) assert.match(rail, new RegExp(`id="${id}"`), id);
 for (const tab of ['advisor', 'reports', 'shop', 'skills', 'missions', 'achievements', 'leaderboard', 'minigame', 'profile', 'journal', 'settings']) assert.match(rail, new RegExp(`data-tab="${tab}"`), tab);
-assert.equal((rail.match(/<button/g) || []).length + (rail.match(/<a /g) || []).length, 20 + 3, '20 nút cũ (19 button + 1 link) + 3 nút nhóm');
+assert.equal((rail.match(/<button/g) || []).length + (rail.match(/<a /g) || []).length, 20 + 3 + 1, '20 nút cũ (19 button + 1 link) + 3 nút nhóm + nút «Voice» (giọng thu tiếng Anh, 11/2026)');
+assert.match(rail, /id="voiceBtn" style="display:none"/, 'nút Voice chỉ hiện ở chế độ EN');
 assert.match(rail, /class="btn rgb" aria-expanded="false" aria-controls="rgmPlan"/);
 // Nút nhóm mở/đóng, bấm nút con hoặc bấm ra ngoài thì đóng; huy hiệu nhiệm vụ nhân đôi lên nút nhóm Công ty.
 assert.match(g3d, /rail\.addEventListener\('click', e => \{ if \(e\.target\.closest\('\.rgm \.btn'\)\) closeGroups\(\); \}\);/);
