@@ -53,6 +53,7 @@ for (const f of ['index.html', 'academia3d-v2.html']) {
     assert.match(r.text, /Thương cảng ngoại thương đầu tiên của Đại Việt/);
     assert.match(r.text, /Trảo Oa, Lộ Lạc, Xiêm La/); // đúng như Toàn thư chép năm 1149
     assert.doesNotMatch(r.text, /Tám trăm năm/);
+    assert.match(r.text, /Hai trang, một hành trình/); // liên kết cổng game sử Việt và BizOn
     assert.match(r.text, /Mở cổng, ra bến Vân Đồn/);
     assert.match(r.text, /Năm 1149, cách nay gần 900 năm/);
     assert.ok(r.h > 0 && r.w > 0);
@@ -63,6 +64,7 @@ for (const f of ['index.html', 'academia3d-v2.html']) {
     assert.match(r.text, /Vietnamese History Game Portal/);
     assert.match(r.text, /Vân Đồn, a BizOn story from 1149/);
     assert.match(r.text, /first international trading port/);
+    assert.match(r.text, /Two sites, one journey/);
     assert.match(r.text, /Open the portal, sail to Vân Đồn/);
     await pg.close();
 
