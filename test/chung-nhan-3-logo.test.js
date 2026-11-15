@@ -61,6 +61,17 @@ assert.ok('assets/docs/ctu-logo.png | assets/docs/soe-logo-v2.png'.length <= 300
     const one = r.one.filter(d => /docs\/(ctu|soe)-logo/.test(d[0]));
     assert.equal(one.length, 2); assert.ok(one.every(d => d[1] > 115), 'một logo mỗi bên vẫn dùng khung 150 px như cũ');
     for (const l of LOGOS) assert.ok(got.includes(l), 'đã tải ' + l);
+    // Thầy Tú (15/11/2026): chức danh hai dòng «Vice Rector & Lecturer» / «School of Economics», nhập bằng dấu «|».
+    const lines = await p.evaluate(async () => {
+      const C = CanvasRenderingContext2D.prototype, f0 = C.fillText; const out = [];
+      C.fillText = function (t, x, y) { out.push([String(t), Math.round(x), Math.round(y)]); return f0.apply(this, arguments); };
+      await OfficialCert.render({ name: 'A', org: { org_name: 'Can Tho University', signer_name: 'Assoc. Prof. Dr. Phan Anh Tu', signer_title: 'Vice Rector & Lecturer | School of Economics' } });
+      C.fillText = f0; return out;
+    });
+    const l1 = lines.find(l => l[0] === 'Vice Rector & Lecturer'), l2 = lines.find(l => l[0] === 'School of Economics');
+    assert.ok(l1 && l2, 'chức danh tách thành 2 dòng: ' + JSON.stringify(lines.slice(-6)));
+    assert.ok(l1[1] === l2[1] && l2[2] > l1[2], 'dòng 2 nằm ngay dưới dòng 1');
+    assert.ok(!lines.some(l => l[0].includes('|')), 'không in dấu | lên chứng nhận');
     assert.deepEqual(errs, []);
     console.log('chung-nhan-3-logo: ok');
   } finally { await b.close(); }

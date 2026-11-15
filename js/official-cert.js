@@ -92,6 +92,7 @@
   }
   // Ô logo nhận tối đa 2 đường dẫn cách nhau bằng «|» (vd lớp liên kết: logo trường + logo khoa ở bên trái,
   // logo trường đối tác ở bên phải) – không phải đổi cột trong cơ sở dữ liệu.
+  function splitLines(v) { return String(v || '').split('|').map(function (x) { return x.trim(); }).filter(Boolean).slice(0, 3); }
   function splitLogos(v) { return String(v || '').split('|').map(function (x) { return x.trim(); }).filter(Boolean).slice(0, 2); }
   // Một logo: khung 150 px như cũ; hai logo: hai khung 115 px đặt cạnh nhau, chừa chỗ cho tiêu đề ở giữa.
   function drawLogos(g, imgs, right) {
@@ -173,7 +174,8 @@
         g.fillStyle = '#033337'; g.font = '800 15px "Hanken Grotesk", sans-serif';
         g.fillText(who, sx, sy + 34);
         g.font = '700 12px "Hanken Grotesk", sans-serif'; g.fillStyle = 'rgba(3,51,55,.6)';
-        g.fillText(role, sx, sy + 52);
+        // Chức danh nhập trên một ô một dòng: dấu «|» để xuống dòng (tối đa 3 dòng).
+        splitLines(role).forEach(function (line, i) { g.fillText(line, sx, sy + 52 + i * 17); });
       }
       if (I.signer2Name) signBlock(sig2, I.signer2Name, I.signer2Name, I.signer2Title, 400);
       signBlock(sig, I.signerName, I.signerName || I.name, I.signerTitle, 1000);
