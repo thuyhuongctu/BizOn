@@ -162,7 +162,9 @@
       g.font = '800 28px "Plus Jakarta Sans", sans-serif'; g.fillStyle = '#0a3d62';
       // Tên môn: phần sau dấu «|» là dòng phụ dưới tên môn (VD: «Credit Exchange Program»), tối đa 2 dòng phụ.
       var cLines = splitLines(courseName), cMain = cLines[0] || courseName, cExtra = cLines.slice(1, 3);
-      g.fillText('“' + cMain + (courseCode ? ' – Code ' + courseCode : '') + '”', 700, 490);
+      // Chứng nhận của đơn vị cấp (VD lớp UM Kendari): tên môn không đặt trong ngoặc kép (thầy Tú, 15/11/2026).
+      var cText = cMain + (courseCode ? ' – Code ' + courseCode : '');
+      g.fillText(I.custom ? cText : '“' + cText + '”', 700, 490);
       g.font = '700 21px "Plus Jakarta Sans", sans-serif'; g.fillStyle = '#1f7a4d';
       cExtra.forEach(function (line, i) { g.fillText(line, 700, 524 + i * 30); });
       g.font = '19px "Hanken Grotesk", sans-serif'; g.fillStyle = '#033337';
