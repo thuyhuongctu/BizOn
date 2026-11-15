@@ -55,7 +55,7 @@
   function issuer(cfg) {
     var c = norm(cfg || lastCfg || {}), name = (c.org_name || '').trim();
     if (!name) return { custom: false, name: 'BIZONLAND', logo2: '', sub: T('Hệ sinh thái mô phỏng kinh doanh BizOn', 'BizOn business simulation ecosystem'), logo: BIZON.logo, signerName: BIZON.signer, signerTitle: T('Người sáng lập BizOn', 'Founder, BizOn'), signerSig: BIZON.sig, signer2Name: BIZON.signer2, signer2Title: T('Đồng sáng lập · Cố vấn học thuật BizOn', 'Co-founder & Chief Academic Advisor, BizOn'), signer2Sig: BIZON.sig2, place: T('trên nền tảng BizOn · bizonland.com', 'on the BizOn platform · bizonland.com') };
-    return { custom: true, name: name, sub: (c.org_sub || '').trim(), logo: (c.org_logo || '').trim(), logo2: (c.org_logo2 || '').trim() || BIZON.logo, signerName: (c.signer_name || '').trim(), signerTitle: (c.signer_title || '').trim() || name, signerSig: (c.signer_sig || '').trim(), place: T('tại ', 'at ') + [(c.org_sub || '').trim(), name].filter(Boolean).join(', ') };
+    return { custom: true, name: name, sub: (c.org_sub || '').trim(), logo: (c.org_logo || '').trim(), logo2: (c.org_logo2 || '').trim() || BIZON.logo, signerName: (c.signer_name || '').trim(), signerTitle: (c.signer_title || '').trim() || name, signerSig: (c.signer_sig || '').trim() || printedSig(c.signer_name), place: T('tại ', 'at ') + [(c.org_sub || '').trim(), name].filter(Boolean).join(', ') };
   }
   // classCodeOverride: truyền thẳng mã lớp khi trang không dùng chung khoá
   // localStorage (vd: game.html lưu mã lớp riêng trong S.profile.classId).
@@ -92,6 +92,14 @@
   }
   // Ô logo nhận tối đa 2 đường dẫn cách nhau bằng «|» (vd lớp liên kết: logo trường + logo khoa ở bên trái,
   // logo trường đối tác ở bên phải) – không phải đổi cột trong cơ sở dữ liệu.
+  // Chữ ký in (phông chữ viết tay, không phải nét bút thật) cho người ký là hai nhà sáng lập BizOn – dùng khi
+  // không có ảnh chữ ký (bản sinh viên tự tải). Chữ ký thật chỉ đến từ Trang Giảng viên (opts.signature, lưu kín).
+  function printedSig(n) {
+    var k = String(n || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/gi, 'd').toLowerCase();
+    if (/phan\s+anh\s+tu\b/.test(k)) return BIZON.sig2;
+    if (/do\s+thuy\s+huong\b/.test(k)) return BIZON.sig;
+    return '';
+  }
   function splitLines(v) { return String(v || '').split('|').map(function (x) { return x.trim(); }).filter(Boolean).slice(0, 3); }
   function splitLogos(v) { return String(v || '').split('|').map(function (x) { return x.trim(); }).filter(Boolean).slice(0, 2); }
   // Một logo: khung 150 px như cũ; hai logo: hai khung 115 px đặt cạnh nhau, chừa chỗ cho tiêu đề ở giữa.

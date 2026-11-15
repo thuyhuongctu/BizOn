@@ -344,6 +344,15 @@ input,select,textarea,button{font-family:inherit}
                   <button type="button" onClick="{{ clearSig }}" style="border:2px solid #c0443a;background:#fff;color:#c0443a;border-radius:10px;padding:6px 12px;font-weight:700;cursor:pointer">{{ L.k86 }}</button>
                 </div>
               </sc-if>
+              <sc-if value="{{ sigCloud }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+                  <span style="color:#1f7a4d;font-weight:800;font-size:13px">{{ L.sigCloudOn }}</span>
+                  <button type="button" onClick="{{ delSigCloud }}" style="border:2px solid #c0443a;background:#fff;color:#c0443a;border-radius:10px;padding:5px 10px;font-weight:700;font-size:12px;cursor:pointer">{{ L.sigCloudDel }}</button>
+                </div>
+              </sc-if>
+              <sc-if value="{{ sigLocalOnly }}" hint-placeholder-val="{{ false }}">
+                <button type="button" onClick="{{ saveSigCloud }}" style="align-self:flex-start;border:0;background:#1f7a4d;color:#fff;border-radius:12px;padding:7px 14px;font:800 14px 'Baloo 2',sans-serif;box-shadow:0 3px 0 #145236;cursor:pointer">{{ L.sigCloudSave }}</button>
+              </sc-if>
               <label style="display:flex;flex-direction:column;gap:4px;font-size:11px;font-weight:700;color:#5a6b74">{{ sigPickLabel }}
                 <input type="file" accept="image/png,image/jpeg,image/webp" onChange="{{ onSigFile }}" style="font-size:13px"></input>
               </label>
@@ -603,7 +612,7 @@ class Component extends DCLogic {
       k04: t('Chưa có giảng viên nào tạo lớp.', 'No instructor has created a class yet.'),
       k05: t('Chưa có lớp nào. Tạo lớp đầu tiên ở ô phía trên rồi phát mã lớp cho sinh viên.', 'No classes yet. Create the first one above, then hand the class code to students.'),
       k06: t('Chức danh / đơn vị của người ký (xuống dòng bằng dấu |)', 'Signer title / unit (use | for a line break)'),
-      k07: t('Cùng mẫu chứng nhận ở trên, chữ ký của giảng viên cấp chứng nhận (tên và chức danh lấy từ «Đơn vị cấp»; để trống thì là chứng nhận BizOn). Ảnh chữ ký thật chỉ lưu trong trình duyệt của máy này – không tải lên web hay máy chủ. Bản sinh viên tự tải vẫn dùng chữ ký in.', 'Same certificate template as above, signed by the issuing instructor (name and title from “Issuing unit”; blank means a BizOn certificate). The real signature image stays in this browser only, never uploaded. Student self-downloads still use the printed signature.'),
+      k07: t('Cùng mẫu chứng nhận ở trên, chữ ký của giảng viên cấp chứng nhận (tên và chức danh lấy từ «Đơn vị cấp»; để trống thì là chứng nhận BizOn). Chọn ảnh chữ ký thật một lần: ảnh được lưu kín trên hệ thống cho lớp này – chỉ giảng viên lớp và quản trị BizOn mở được, lần sau mở lớp ở máy nào cũng tự nạp. Sinh viên không tải được ảnh này; bản sinh viên tự tải vẫn dùng chữ ký in.', 'Same certificate template as above, signed by the issuing instructor (name and title from “Issuing unit”; blank means a BizOn certificate). Pick the real signature image once: it is stored privately on the system for this class – only the class instructors and BizOn admins can open it, and it loads automatically on any device. Students cannot download it; their self-downloaded certificates still use the printed signature.'),
       k08: t('Cả lớp', 'Whole class'),
       k09: t('Cờ', 'Flags'),
       k10: t('Danh sách sinh viên – mỗi dòng một người (dán thẳng từ Excel: STT, Họ và tên, MSSV…; dùng chung với danh sách lớp ở tab Chấm điểm)', 'Student list, one per line (paste straight from Excel: No., Full name, Student ID…; shared with the roster in the Grading tab)'),
@@ -683,6 +692,9 @@ class Component extends DCLogic {
       k84: t('🔒 Khóa vòng cho cả lớp', '🔒 Lock rounds for the class'),
       k85: t('🔬 Giải thích cơ chế (nhánh nghiên cứu)', '🔬 Mechanism explanations (research arm)'),
       k86: t('🗑 Xoá khỏi máy này', '🗑 Remove from this device'),
+      sigCloudOn: t('☁️ Đã lưu kín trên hệ thống cho lớp này', '☁️ Stored privately on the system for this class'),
+      sigCloudSave: t('☁️ Lưu kín lên hệ thống cho lớp này', '☁️ Store privately for this class'),
+      sigCloudDel: t('Xoá khỏi hệ thống', 'Remove from the system'),
       k87: t('🗑 Xóa lớp', '🗑 Delete class'),
       k88: t('🛡️ Quản trị hệ thống', '🛡️ System admin'),
       k89: t('🧭 Hành trang hành trình 3 bậc', '🧭 Three-tier journey carry-over'),
@@ -726,7 +738,7 @@ class Component extends DCLogic {
   async removeClass(code) {
     if (!confirm(this.tr('Xóa lớp ', 'Delete class ') + code + this.tr('? Lớp sẽ hết thuộc quyền quản lý – dữ liệu bài nộp cũ của sinh viên vẫn được giữ nguyên, có thể đăng ký lại mã này sau.', '? The class leaves your management; students\u2019 earlier submissions are kept and the code can be registered again later.'))) return;
     try { await this.api().deleteClass(code); if (this.state.view === 'admin') this.loadAdmin(); else this.loadClasses(); } catch (e) { this.fail(e); } }
-  async openClass(code) { this.setState({ code, view: 'class', tab: 'teams', err: '', edits: {}, saved: {}, exSetup: '', exRound: '', certCode: '', certName: '', certDates: '', certSaved: false, certOrgName: '', certOrgSub: '', certOrgLogo: '', certOrgLogo2: '', certSignerName: '', certSignerTitle: '', certIssuerSaved: false, rLv1: '', rLv2: '', rLv3: '', rLv4: '', rubricSaved: false, rosterText: this.getRosterText(code), rosterSaved: false }); await this.reload(code); }
+  async openClass(code) { this.setState({ code, view: 'class', tab: 'teams', err: '', edits: {}, saved: {}, exSetup: '', exRound: '', certCode: '', certName: '', certDates: '', certSaved: false, certOrgName: '', certOrgSub: '', certOrgLogo: '', certOrgLogo2: '', certSignerName: '', certSignerTitle: '', certIssuerSaved: false, rLv1: '', rLv2: '', rLv3: '', rLv4: '', rubricSaved: false, rosterText: this.getRosterText(code), rosterSaved: false, sigTu: this.localSig(), sigCloud: false }); await this.reload(code); this.loadSigCloud(code); }
   getRosterText(code) { try { return localStorage.getItem('bizon-gv-roster-' + code) || ''; } catch (e) { return ''; } }
   saveRosterText() { const s = this.state; try { localStorage.setItem('bizon-gv-roster-' + s.code, s.rosterText); } catch (e) {} this.setState({ rosterSaved: true }); setTimeout(() => this.setState({ rosterSaved: false }), 2200); }
   async reload(code = this.state.code) {
@@ -796,17 +808,36 @@ class Component extends DCLogic {
       const k = Math.min(1, 1200 / im.naturalWidth, 400 / im.naturalHeight), cv = document.createElement('canvas');
       cv.width = Math.round(im.naturalWidth * k); cv.height = Math.round(im.naturalHeight * k);
       cv.getContext('2d').drawImage(im, 0, 0, cv.width, cv.height); URL.revokeObjectURL(url);
-      const data = cv.toDataURL('image/png');
+      let data = cv.toDataURL('image/png');
+      // Hệ thống nhận tối đa 700 000 ký tự: ảnh lớn thì thu nhỏ dần (giữ nền trong suốt).
+      for (let i = 0; data.length > 690000 && i < 4; i++) { const c2 = document.createElement('canvas'); c2.width = Math.round(cv.width * 0.75); c2.height = Math.round(cv.height * 0.75); c2.getContext('2d').drawImage(cv, 0, 0, c2.width, c2.height); cv.width = c2.width; cv.height = c2.height; cv.getContext('2d').drawImage(c2, 0, 0); data = cv.toDataURL('image/png'); }
       try { localStorage.setItem(SIG_KEY, data); } catch (err) { return this.setState({ certMsg: this.tr('Trình duyệt không cho lưu ảnh (bộ nhớ đầy hoặc đang ở chế độ ẩn danh).', 'The browser refused to store the image (storage full or private mode).') }); }
-      this.setState({ sigTu: data, certMsg: this.tr('✅ Đã lưu chữ ký trên máy này.', '✅ Signature saved on this device.') });
+      this.setState({ sigTu: data, sigCloud: false, certMsg: this.tr('✅ Đã lưu chữ ký trên máy này.', '✅ Signature saved on this device.') });
+      if (this.state.code) this.saveSigCloud(data);
     };
     im.onerror = () => { URL.revokeObjectURL(url); this.setState({ certMsg: this.tr('Không đọc được ảnh này.', 'Could not read this image.') }); };
     im.src = url;
   }
+  localSig() { try { return localStorage.getItem(SIG_KEY) || ''; } catch (e) { return ''; } }
+  // Chữ ký lưu kín trên hệ thống cho lớp đang mở (chỉ chủ lớp/quản trị) – có thì dùng thay ảnh trên máy.
+  async loadSigCloud(code) {
+    try { const sig = await this.api().getCertSignature(code); if (this.state.code !== code) return; if (sig) this.setState({ sigTu: sig, sigCloud: true }); else this.setState({ sigCloud: false }); }
+    catch (e) { this.setState({ sigCloud: false }); }
+  }
+  async saveSigCloud(data) {
+    const s = this.state, sig = data || s.sigTu; if (!s.code || !sig) return;
+    try { await this.api().setCertSignature(s.code, sig); this.setState({ sigTu: sig, sigCloud: true, certMsg: this.tr('✅ Đã lưu kín chữ ký trên hệ thống cho lớp ' + s.code + ' (chỉ giảng viên lớp và quản trị mở được).', '✅ Signature stored privately for class ' + s.code + ' (only the class instructors and admins can open it).') }); }
+    catch (e) { this.setState({ certMsg: this.tr('Đã lưu chữ ký trên máy này; chưa lưu được lên hệ thống: ', 'Saved on this device; could not store it on the system: ') + ((e && e.message) || e) }); }
+  }
+  async delSigCloud() {
+    const s = this.state; if (!s.code) return;
+    if (!confirm(this.tr('Xoá chữ ký đã lưu kín của lớp ' + s.code + ' khỏi hệ thống?', 'Remove the stored signature of class ' + s.code + ' from the system?'))) return;
+    try { await this.api().setCertSignature(s.code, ''); this.setState({ sigCloud: false, sigTu: this.localSig(), certMsg: this.tr('Đã xoá chữ ký khỏi hệ thống.', 'Signature removed from the system.') }); } catch (e) { this.fail(e); }
+  }
   clearSig() {
     if (!confirm(this.tr('Xoá ảnh chữ ký khỏi máy này? Muốn cấp tiếp phải chọn lại tệp.', 'Remove the signature image from this device? You will need to pick the file again to issue more.'))) return;
     try { localStorage.removeItem(SIG_KEY); } catch (e) {}
-    this.setState({ sigTu: '', certMsg: 'Đã xoá chữ ký khỏi máy này.' });
+    this.setState({ sigTu: this.state.sigCloud ? this.state.sigTu : '', certMsg: this.tr('Đã xoá chữ ký khỏi máy này.', 'Signature removed from this device.') });
   }
   certOpts(st) { const s = this.state; return { lang: s.certLang === 'vi' ? 'vi' : 'en', name: st.name, courseCode: s.certCode || '', courseName: s.certName || 'BizOn Bật Nghiệp', courseDates: s.certDates || undefined, signature: s.sigTu, org: this.certIssuer(), filenamePrefix: (s.code || 'BizOn') + (st.mssv ? '-' + st.mssv : '') }; }
   issueOne(st) {
@@ -941,7 +972,7 @@ class Component extends DCLogic {
       rLv3: s.rLv3, onRLv3: e => this.setState({ rLv3: e.target.value }), rLv4: s.rLv4, onRLv4: e => this.setState({ rLv4: e.target.value }),
       saveRubric: () => this.saveRubric(), rubricSaved: s.rubricSaved,
       hasSig: !!s.sigTu, sigTu: s.sigTu, sigPickLabel: s.sigTu ? this.tr('Đổi ảnh chữ ký', 'Change signature image') : this.tr('Chọn ảnh chữ ký thật (PNG nền trong suốt cho đẹp nhất)', 'Choose a real signature image (transparent PNG looks best)'),
-      onSigFile: e => this.pickSig(e), clearSig: () => this.clearSig(), certMsg: s.certMsg, issueAll: () => this.issueAll(),
+      onSigFile: e => this.pickSig(e), clearSig: () => this.clearSig(), sigCloud: !!s.sigCloud, sigLocalOnly: !!s.sigTu && !s.sigCloud && !!s.code, saveSigCloud: () => this.saveSigCloud(), delSigCloud: () => this.delSigCloud(), certMsg: s.certMsg, issueAll: () => this.issueAll(),
       certStudents: certStudentList(s.rosterText).map(st => ({ name: st.name, mssv: st.mssv || '—', dl: () => this.issueOne(st) })),
       certCount: certStudentList(s.rosterText).length,
       activityTeams: AC.map(t => { const lv = ok ? P.rubricLevel(t.balance, s.rubric) : { label: '' };
