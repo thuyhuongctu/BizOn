@@ -10,7 +10,7 @@ const ROOT = path.join(__dirname, '..'), read = f => fs.readFileSync(path.join(R
 assert.ok(+(read('sw.js').match(/bizon-v(\d+)/) || [])[1] >= 873);
 const cert = read('js/official-cert.js');
 assert.match(cert, /function splitLogos\(v\) \{ return String\(v \|\| ''\)\.split\('\|'\)[^\n]*\.slice\(0, 2\); \}/);
-assert.match(cert, /drawLogos\(g, leftLogos, false\);\s*drawLogos\(g, rightLogos, true\);/);
+assert.match(cert, /drawLogos\(g, leftLogos, false, smallLogos\);\s*drawLogos\(g, rightLogos, true, smallLogos\);/);
 const gv = read('Trang Giang Vien.dc.html');
 assert.match(gv, /k43: t\('Đường dẫn logo bên trái \(tuỳ chọn; hai logo thì cách nhau bằng dấu \|\)'/);
 assert.match(gv, /k44: t\('Đường dẫn logo bên phải [^']*cách nhau bằng dấu \|\)'/);
@@ -57,7 +57,10 @@ assert.ok('assets/docs/ctu-logo.png | assets/docs/soe-logo-v2.png'.length <= 300
     const logos = r.drawn.filter(d => /docs\/(ctu|soe|umk)-logo/.test(d[0]));
     assert.deepEqual(logos.map(d => d[0]), LOGOS, 'vẽ đủ 3 logo theo thứ tự trái → phải');
     assert.ok(logos.slice(0, 2).every(d => d[3] <= 115 && d[4] <= 115 && d[2] >= 60), 'hai logo bên trái thu về khung 115 px: ' + JSON.stringify(logos));
-    assert.ok(logos[2][4] > 115, 'một logo bên phải giữ khung 150 px');
+    // Thầy Tú (15/11/2026): canh 3 logo – cùng khung, cùng hàng, cách mép trái/phải bằng nhau.
+    assert.ok(logos[2][4] <= 115 && logos[2][3] <= 115, 'logo bên phải cùng khung 115 px với hai logo trái: ' + JSON.stringify(logos));
+    const mid = d => d[2] + d[4] / 2; assert.ok(logos.every(d => Math.abs(mid(d) - mid(logos[0])) <= 1), 'ba logo cùng đường tâm ngang');
+    assert.ok(Math.abs(logos[0][1] - (1400 - (logos[2][1] + logos[2][3]))) <= 6, 'lề trái và lề phải bằng nhau');
     assert.ok(logos[0][1] < logos[1][1] && logos[1][1] + logos[1][3] < 330, 'hai logo trái nằm cạnh nhau, không lấn tiêu đề');
     assert.ok(logos[2][1] > 1080, 'logo UM Kendari ở góc phải');
     const one = r.one.filter(d => /docs\/(ctu|soe)-logo/.test(d[0]));

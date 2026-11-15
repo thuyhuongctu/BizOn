@@ -95,10 +95,12 @@
   function splitLines(v) { return String(v || '').split('|').map(function (x) { return x.trim(); }).filter(Boolean).slice(0, 3); }
   function splitLogos(v) { return String(v || '').split('|').map(function (x) { return x.trim(); }).filter(Boolean).slice(0, 2); }
   // Một logo: khung 150 px như cũ; hai logo: hai khung 115 px đặt cạnh nhau, chừa chỗ cho tiêu đề ở giữa.
-  function drawLogos(g, imgs, right) {
+  // small = có bên nào đặt 2 logo: mọi logo (cả bên chỉ có 1) dùng chung khung 115 px, cùng hàng,
+  // cách mép trái/phải bằng nhau (72 px) – 3 logo thẳng hàng, đều cỡ (thầy Tú, 15/11/2026).
+  function drawLogos(g, imgs, right, small) {
     imgs = imgs.filter(Boolean);
-    if (imgs.length === 1) return drawFit(g, imgs[0], right ? 1160 : 90, 70, 150, 150);
-    var xs = right ? [1088, 1213] : [72, 197];
+    if (!small) { if (imgs[0]) drawFit(g, imgs[0], right ? 1160 : 90, 70, 150, 150); return; }
+    var xs = right ? (imgs.length === 2 ? [1088, 1213] : [1213]) : [72, 197];
     imgs.forEach(function (img, i) { drawFit(g, img, xs[i], 64, 115, 115); });
   }
   // Vẽ ảnh vừa khung (giữ tỷ lệ, căn giữa).
@@ -145,8 +147,9 @@
       g.strokeStyle = '#0a3d62'; g.lineWidth = 10; g.strokeRect(24, 24, 1352, 942);
       g.strokeStyle = '#c9a227'; g.lineWidth = 3; g.strokeRect(42, 42, 1316, 906);
 
-      drawLogos(g, leftLogos, false);
-      drawLogos(g, rightLogos, true);
+      var smallLogos = leftLogos.filter(Boolean).length > 1 || rightLogos.filter(Boolean).length > 1;
+      drawLogos(g, leftLogos, false, smallLogos);
+      drawLogos(g, rightLogos, true, smallLogos);
 
       g.fillStyle = '#0a3d62'; g.textAlign = 'center';
       g.font = '700 22px "Plus Jakarta Sans", sans-serif'; g.fillText(I.name.toUpperCase(), 700, 110);
