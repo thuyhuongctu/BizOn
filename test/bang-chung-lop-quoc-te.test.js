@@ -14,9 +14,10 @@ const R = f => fs.readFileSync(path.join(__dirname, '..', f), 'utf8');
 const bc = R('bang-chung.html');
 check(/\.clay \.bc-h2\{margin:0 0 18px;[^}]*line-height:1\.24/.test(bc), 'bang-chung: «.clay .bc-h2» thắng «.clay h2», có khoảng cách dưới và giãn dòng 1,24');
 check(/\.bc-h2 \.num\{flex:0 0 40px/.test(bc), 'bang-chung: ô số mục không bị bóp khi tiêu đề dài');
-const the = (/<div class="bc-course" id="lop-quoc-te-umk">[\s\S]*?<\/p>\s*<\/div>/.exec(bc) || [''])[0];
-check(the.includes('KT330H – Entrepreneurship (lớp quốc tế)') && the.includes('UM Kendari × ĐH Cần Thơ') && the.includes('Universitas Muhammadiyah Kendari (Indonesia)') && the.includes('khoảng 160 sinh viên') && the.includes('Zoom'), 'bang-chung: có thẻ lớp trao đổi tín chỉ quốc tế với UM Kendari');
-check((the.match(/data-en="/g) || []).length === 3 && the.includes('International Credit Exchange Program'), 'bang-chung: thẻ lớp quốc tế có đủ bản tiếng Anh');
+// Từ 15/11/2026 thẻ có thêm ảnh đón đoàn (figure) và ngày buổi chơi – lấy tới hết </figure>.
+const the = (/<div class="bc-course" id="lop-quoc-te-umk">[\s\S]*?<\/figure>/.exec(bc) || [''])[0];
+check(the.includes('KT330H – Entrepreneurship (lớp quốc tế)') && the.includes('UM Kendari × ĐH Cần Thơ') && the.includes('Universitas Muhammadiyah Kendari (Indonesia)') && the.includes('160 sinh viên, 32 đội') && the.includes('thứ Năm 19/11/2026') && the.includes('Zoom'), 'bang-chung: có thẻ lớp trao đổi tín chỉ quốc tế với UM Kendari');
+check((the.match(/data-en="/g) || []).length === 4 && the.includes('International Credit Exchange Program'), 'bang-chung: thẻ lớp quốc tế có đủ bản tiếng Anh');
 check(!/@|Titin|Rahim/i.test(the), 'bang-chung: thẻ lớp quốc tế không nêu tên hay email của phía đối tác');
 check((bc.match(/<div class="bc-course"/g) || []).length === 3 && bc.includes('Ba lớp kế tiếp đã có kế hoạch tích hợp') && bc.includes('Three upcoming classes with integration plans') && bc.includes('Hai thí điểm tại ĐH Cần Thơ sẽ bổ sung'), 'bang-chung: mục 4 ghi ba lớp, câu về phiếu bổ sung chỉ nói hai thí điểm tại ĐH Cần Thơ');
 check(+(/CACHE = 'bizon-v(\d+)'/.exec(R('sw.js')) || [])[1] >= 843, 'sw.js ≥ bizon-v843');
