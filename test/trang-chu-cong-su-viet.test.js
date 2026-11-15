@@ -11,7 +11,7 @@ const ROOT = path.join(__dirname, '..');
 const URL_CONG = 'https://thuyhuongctu.github.io/Vietnamese-History-Games/';
 const read = f => fs.readFileSync(path.join(ROOT, f), 'utf8');
 
-assert.ok(+(read('sw.js').match(/bizon-v(\d+)/) || [])[1] >= 876);
+assert.ok(+(read('sw.js').match(/bizon-v(\d+)/) || [])[1] >= 877);
 assert.equal(read('index.html'), read('academia3d-v2.html'), 'index.html phải giống hệt academia3d-v2.html');
 assert.ok(fs.existsSync(path.join(ROOT, 'assets/covers/cong-tro-choi-su-viet.webp')), 'thiếu ảnh bìa thẻ cổng game');
 for (const f of ['index.html', 'academia3d-v2.html']) {
@@ -50,6 +50,9 @@ for (const f of ['index.html', 'academia3d-v2.html']) {
     assert.match(r.text, /Cổng Trò Chơi Sử Việt/);
     assert.match(r.text, /Vân Đồn, câu chuyện BizOn từ năm 1149/); // 15/11: nói rõ Vân Đồn gắn với BizOn
     assert.match(r.text, /định thuế cảng, chọn mặt hàng/);
+    assert.match(r.text, /Thương cảng ngoại thương đầu tiên của Đại Việt/);
+    assert.match(r.text, /Trảo Oa, Lộ Lạc, Xiêm La/); // đúng như Toàn thư chép năm 1149
+    assert.doesNotMatch(r.text, /Tám trăm năm/);
     assert.match(r.text, /Mở cổng, ra bến Vân Đồn/);
     assert.match(r.text, /Vân Đồn năm 1149/);
     assert.ok(r.h > 0 && r.w > 0);
@@ -59,6 +62,7 @@ for (const f of ['index.html', 'academia3d-v2.html']) {
     r = await info(pg);
     assert.match(r.text, /Vietnamese History Game Portal/);
     assert.match(r.text, /Vân Đồn, a BizOn story from 1149/);
+    assert.match(r.text, /first international trading port/);
     assert.match(r.text, /Open the portal, sail to Vân Đồn/);
     await pg.close();
 
