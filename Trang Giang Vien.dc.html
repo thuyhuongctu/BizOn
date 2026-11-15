@@ -26,6 +26,7 @@
 <script src="js/core/decision-codes.js"></script>
 <script src="js/core/research-pack.js"></script>
 <script src="js/core/zip-store.js"></script>
+<script src="js/core/roster-file.js"></script>
 <script src="js/bizon-grading.js"></script>
 <script src="js/official-cert.js"></script>
 <style>
@@ -359,6 +360,10 @@ input,select,textarea,button{font-family:inherit}
               <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">{{ L.k10 }}
                 <textarea value="{{ rosterText }}" onChange="{{ onRosterText }}" placeholder="1&#9;Nguyễn Văn A&#9;B2400001" rows="4" style="width:100%;box-sizing:border-box;padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf;font-family:monospace;font-size:12px"></textarea>
               </label>
+              <label style="display:flex;flex-direction:column;gap:4px;font-size:11px;font-weight:700;color:#5a6b74">{{ L.rosterFileLabel }}
+                <input type="file" accept=".xlsx,.csv,.tsv,.txt,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/csv,text/plain" onChange="{{ onRosterFile }}" style="font-size:13px;max-width:100%"></input>
+              </label>
+              <sc-if value="{{ rosterFileMsg }}" hint-placeholder-val="{{ false }}"><div style="font-size:12.5px;font-weight:700;color:#1f7a4d">{{ rosterFileMsg }}</div></sc-if>
               <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
                 <label style="display:flex;align-items:center;gap:6px;font-weight:700">{{ L.certLangLabel }}
                   <select value="{{ certLangSel }}" onChange="{{ onCertLang }}" style="padding:6px 10px;border-radius:10px;border:2px solid #e6d6bf;background:#fff;font-weight:600"><option value="en">English</option><option value="vi">{{ L.certLangVi }}</option></select>
@@ -429,6 +434,10 @@ input,select,textarea,button{font-family:inherit}
             <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:16px;padding:10px 12px;margin:6px 0 10px">
               <div style="font-size:12px;font-weight:700;color:#1f4a55;margin-bottom:4px">{{ L.k76 }}</div>
               <textarea value="{{ rosterText }}" onChange="{{ onRosterText }}" placeholder="1&#9;Nguyễn Văn A&#9;B2400001&#9;vanab2400001@student.ctu.edu.vn&#9;DOI-A" rows="4" style="width:100%;box-sizing:border-box;padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf;font-family:monospace;font-size:11.5px"></textarea>
+              <label style="display:flex;flex-direction:column;gap:4px;margin-top:6px;font-size:11px;font-weight:700;color:#5a6b74">{{ L.rosterFileLabel }}
+                <input type="file" accept=".xlsx,.csv,.tsv,.txt,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/csv,text/plain" onChange="{{ onRosterFile }}" style="font-size:13px;max-width:100%"></input>
+              </label>
+              <sc-if value="{{ rosterFileMsg }}" hint-placeholder-val="{{ false }}"><div style="font-size:12.5px;font-weight:700;color:#1f7a4d;margin-top:4px">{{ rosterFileMsg }}</div></sc-if>
               <div style="display:flex;align-items:center;gap:10px;margin-top:6px;flex-wrap:wrap">
                 <button type="button" onClick="{{ saveRoster }}" style="border:0;background:#2f8a8c;color:#fff;border-radius:10px;padding:7px 14px;font-weight:700;cursor:pointer">{{ rosterSaveLabel }}</button>
                 <div style="font-size:11.5px;color:#5a6b74">{{ rosterHint }}</div>
@@ -614,6 +623,7 @@ class Component extends DCLogic {
       k06: t('Chức danh / đơn vị của người ký (xuống dòng bằng dấu |)', 'Signer title / unit (use | for a line break)'),
       k07: t('Cùng mẫu chứng nhận ở trên, chữ ký của giảng viên cấp chứng nhận (tên và chức danh lấy từ «Đơn vị cấp»; để trống thì là chứng nhận BizOn). Chọn ảnh chữ ký thật một lần: ảnh được lưu kín trên hệ thống cho lớp này – chỉ giảng viên lớp và quản trị BizOn mở được, lần sau mở lớp ở máy nào cũng tự nạp. Sinh viên không tải được ảnh này; bản sinh viên tự tải vẫn dùng chữ ký in.', 'Same certificate template as above, signed by the issuing instructor (name and title from “Issuing unit”; blank means a BizOn certificate). Pick the real signature image once: it is stored privately on the system for this class – only the class instructors and BizOn admins can open it, and it loads automatically on any device. Students cannot download it; their self-downloaded certificates still use the printed signature.'),
       k08: t('Cả lớp', 'Whole class'),
+      rosterFileLabel: t('📂 Hoặc chọn tệp Excel (.xlsx) / CSV – tự nhận cột Họ tên, MSSV, Email, Nhóm; chỉ đọc trên máy này, không gửi lên hệ thống', '📂 Or choose an Excel (.xlsx) / CSV file – Full name, Student ID, Email and Team columns are detected; read on this device only, never uploaded'),
       k09: t('Cờ', 'Flags'),
       k10: t('Danh sách sinh viên – mỗi dòng một người (dán thẳng từ Excel: STT, Họ và tên, MSSV…; dùng chung với danh sách lớp ở tab Chấm điểm)', 'Student list, one per line (paste straight from Excel: No., Full name, Student ID…; shared with the roster in the Grading tab)'),
       k11: t('Dùng chung cho cả Bật Nghiệp và Hộ Chiếu Thương Hiệu 3D của lớp này. Đội/sinh viên đi nhanh hơn lịch phải chờ; hết giờ mà chưa chốt thì hệ thống tự chốt theo lựa chọn hiện có.', 'Shared by Bật Nghiệp and Brand Passport 3D in this class. Teams ahead of schedule wait; when time runs out the system submits the current choices.'),
@@ -740,6 +750,22 @@ class Component extends DCLogic {
     try { await this.api().deleteClass(code); if (this.state.view === 'admin') this.loadAdmin(); else this.loadClasses(); } catch (e) { this.fail(e); } }
   async openClass(code) { this.setState({ code, view: 'class', tab: 'teams', err: '', edits: {}, saved: {}, exSetup: '', exRound: '', certCode: '', certName: '', certDates: '', certSaved: false, certOrgName: '', certOrgSub: '', certOrgLogo: '', certOrgLogo2: '', certSignerName: '', certSignerTitle: '', certIssuerSaved: false, rLv1: '', rLv2: '', rLv3: '', rLv4: '', rubricSaved: false, rosterText: this.getRosterText(code), rosterSaved: false, sigTu: this.localSig(), sigCloud: false }); await this.reload(code); this.loadSigCloud(code); }
   getRosterText(code) { try { return localStorage.getItem('bizon-gv-roster-' + code) || ''; } catch (e) { return ''; } }
+  // Nhập danh sách từ tệp Excel/CSV (đọc trong trình duyệt, không gửi đi), thay danh sách đang có rồi lưu trên máy này.
+  async importRosterFile(e) {
+    const f = e.target.files && e.target.files[0]; e.target.value = '';
+    if (!f) return;
+    if (f.size > 5 * 1024 * 1024) return this.setState({ rosterFileMsg: this.tr('Tệp quá lớn (tối đa 5 MB).', 'File too large (max 5 MB).') });
+    let r;
+    try { r = await window.BizOnRosterFile.read(f); }
+    catch (err) { return this.setState({ rosterFileMsg: (err && err.message) === 'xls-old' ? this.tr('Tệp .xls cũ: mở bằng Excel rồi «Lưu thành» .xlsx hoặc CSV.', 'Old .xls file: open it in Excel and save as .xlsx or CSV.') : this.tr('Không đọc được tệp này. Chọn tệp .xlsx hoặc CSV.', 'Could not read this file. Choose an .xlsx or CSV file.') }); }
+    if (!r.count) return this.setState({ rosterFileMsg: this.tr('Không thấy sinh viên nào trong tệp (cần cột Họ và tên / Full name).', 'No students found in the file (needs a Full name column).') });
+    const s = this.state;
+    if (s.rosterText.trim() && !window.confirm(this.tr('Thay danh sách hiện có bằng ' + r.count + ' sinh viên trong tệp?', 'Replace the current list with the ' + r.count + ' students in the file?'))) return;
+    try { localStorage.setItem('bizon-gv-roster-' + s.code, r.text); } catch (err) {}
+    this.setState({ rosterText: r.text });
+    const from = r.sheet ? this.tr(' (trang «' + r.sheet + '»)', ' (sheet “' + r.sheet + '”)') : '';
+    this.setState({ rosterFileMsg: this.tr('✅ Đã nhập ' + r.count + ' sinh viên' + from + ' và lưu trên máy này.', '✅ Imported ' + r.count + ' students' + from + ' and saved on this device.') });
+  }
   saveRosterText() { const s = this.state; try { localStorage.setItem('bizon-gv-roster-' + s.code, s.rosterText); } catch (e) {} this.setState({ rosterSaved: true }); setTimeout(() => this.setState({ rosterSaved: false }), 2200); }
   async reload(code = this.state.code) {
     try { const [subs, st, memberLog, bpResults, ef, cf, rf] = await Promise.all([this.api().submissions(code), this.api().state(code), this.api().memberLog(code), this.api().bpResults(code), this.api().examFeed(code), this.api().certFeed(code), this.api().rubricFeed(code)]);
@@ -959,7 +985,7 @@ class Component extends DCLogic {
         onR: e => this.edit(g.name, 'reasoning', e.target.value), onT: e => this.edit(g.name, 'teamwork', e.target.value), onN: e => this.edit(g.name, 'note', e.target.value),
         save: () => this.saveScore(g), saveLabel: s.saved[g.name] ? this.tr('✓ Đã lưu', '✓ Saved') : this.tr('Lưu', 'Save') })),
       hasMini: !!MINI.length,
-      rosterText: s.rosterText, onRosterText: e => this.setState({ rosterText: e.target.value }), saveRoster: () => this.saveRosterText(), rosterSaveLabel: s.rosterSaved ? this.tr('✓ Đã lưu', '✓ Saved') : this.tr('Lưu danh sách', 'Save list'),
+      rosterText: s.rosterText, onRosterText: e => this.setState({ rosterText: e.target.value }), onRosterFile: e => this.importRosterFile(e), rosterFileMsg: s.rosterFileMsg || '', saveRoster: () => this.saveRosterText(), rosterSaveLabel: s.rosterSaved ? this.tr('✓ Đã lưu', '✓ Saved') : this.tr('Lưu danh sách', 'Save list'),
       rosterHint: rosterGroups ? this.tr('Đã nhận ', 'Received ') + rosterGroups + this.tr(' nhóm từ danh sách dán bên dưới – điểm Hộ Chiếu Mini sẽ tự ghép MSSV theo tên nhóm đã nộp.', ' groups from the pasted roster. Passport Mini scores will match student IDs by submitted team name.') : this.tr('Chưa có danh sách lớp – bảng và Excel sẽ hiện tên nhóm đã nộp, chưa có MSSV.', 'No class roster yet: the table and Excel show submitted team names without student IDs.'),
       miniHead: [this.tr('Nhóm/Đội', 'Group/Team'), this.tr('MSSV', 'Student ID'), this.tr('Họ và tên', 'Full name'), 'Email', this.tr('Quốc gia xuất phát', 'Home country'), this.tr('Số thị trường', 'Markets'), this.tr('Hồ sơ nhà đầu tư', 'Investor profile'), this.tr('Điểm /10', 'Score /10'), this.tr('Điểm chữ', 'Letter'), this.tr('Nộp lúc', 'Submitted at')],
       miniRows: ok ? P.miniExport(BP, roster).map(r => ({ group: r.group, mssv: r.mssv, name: r.name, email: r.email, home: r.home, markets: r.markets, profile: r.profile, total: P.f1(r.total), letter: r.letter, when: r.when })) : [],
