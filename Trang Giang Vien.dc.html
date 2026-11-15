@@ -289,6 +289,13 @@ input,select,textarea,button{font-family:inherit}
           <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:10px">
             <div style="font:800 19px 'Baloo 2',sans-serif">{{ L.k79 }}</div>
             <div style="font-size:13px;color:#5a6b74;text-wrap:pretty">{{ L.k39 }}</div>
+            <div style="background:#eef7f1;border:2px dashed #7fbf98;border-radius:14px;padding:10px 12px;display:flex;flex-direction:column;gap:6px">
+              <div style="font-size:12.5px;color:#1f5a3a;font-weight:700;text-wrap:pretty">{{ L.umkHint }}</div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+                <button type="button" onClick="{{ fillUmkCert }}" style="border:0;background:#1f7a4d;color:#fff;border-radius:12px;padding:8px 14px;font:800 14px 'Baloo 2',sans-serif;box-shadow:0 3px 0 #145236;cursor:pointer">{{ L.umkBtn }}</button>
+                <sc-if value="{{ umkDone }}" hint-placeholder-val="{{ false }}"><span style="color:#1f9a63;font-weight:800;font-size:13px">{{ L.umkOk }}</span></sc-if>
+              </div>
+            </div>
             <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">{{ L.k16 }}
               <input type="text" value="{{ certCode }}" onChange="{{ onCertCode }}" placeholder="{{ L.a11 }}" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
             </label>
@@ -587,6 +594,9 @@ class Component extends DCLogic {
       certAll: t('📚 In cả lớp', '📚 Print the whole class'),
       certLangLabel: t('Ngôn ngữ chứng nhận', 'Certificate language'),
       certLangVi: t('Tiếng Việt', 'Vietnamese'),
+      umkHint: t('Lớp quốc tế UM Kendari (Indonesia) × Trường Đại học Cần Thơ: một lần bấm là điền và lưu sẵn mẫu chứng nhận thầy Tú đã duyệt (3 logo, Certificate of Completion, KT330H, 17–19/11/2026, chữ ký thầy Tú, tiếng Anh).', 'UM Kendari (Indonesia) × Can Tho University international class: one click fills in and saves the certificate template approved by Assoc. Prof. Phan Anh Tu (3 logos, Certificate of Completion, KT330H, 17–19 Nov 2026, English).'),
+      umkBtn: t('🇮🇩 Điền sẵn mẫu lớp quốc tế UM Kendari', '🇮🇩 Use UM Kendari international template'),
+      umkOk: t('✓ Đã điền và lưu mẫu lớp quốc tế', '✓ International template filled in and saved'),
       k01: t('(khác B5 ở tab «Chấm điểm»). «Chỉ số đồng đội» = 100 trừ chênh lệch điểm tham gia cao nhất–thấp nhất trong đội.', '(different from B5 in the “Grading” tab). “Team index” = 100 minus the gap between the highest and lowest participation score in the team.'),
       k02: t('Chưa có dữ liệu Nhật ký thành viên cho lớp này.', 'No member-log data for this class yet.'),
       k03: t('Chưa có dữ liệu Nhật ký thành viên cho lớp này. Sinh viên cần đăng nhập bằng Mã lớp thật (không phải Đội Demo) và mỗi vai chơi trên máy riêng để hệ thống ghi nhận.', 'No member-log data for this class yet. Students must sign in with the real class code (not the Demo team) and each role must play on its own device to be recorded.'),
@@ -763,6 +773,16 @@ class Component extends DCLogic {
   async startExam() { const s = this.state; try { await this.api().setExam(s.code, { active: true, start_at: new Date().toISOString(), setup_min: +s.exSetup || 10, round_min: +s.exRound || 8, capital: 500 }); this.reload(); } catch (e) { this.fail(e); } }
   async stopExam() { const s = this.state, ex = s.exam || {}; try { await this.api().setExam(s.code, { active: false, start_at: ex.start_at || null, setup_min: +s.exSetup || 10, round_min: +s.exRound || 8, capital: 500 }); this.reload(); } catch (e) { this.fail(e); } }
   async saveCertIssuer() { const s = this.state; try { await this.api().setCertIssuer(s.code, this.certIssuer()); this.setState({ certIssuerSaved: true }); setTimeout(() => this.setState({ certIssuerSaved: false }), 2500); } catch (e) { this.fail(e); } }
+  // Mẫu chứng nhận lớp quốc tế UM Kendari × Trường Đại học Cần Thơ (Credit Exchange Program, 17–19/11/2026) – theo góp ý của thầy Tú 15/11/2026.
+  // Một lần bấm: điền mọi ô và lưu luôn «Chứng nhận chính thức» + «Đơn vị cấp» cho lớp đang mở; ngôn ngữ chứng nhận chuyển sang English.
+  async fillUmkCert() {
+    const s = this.state;
+    if (!confirm(this.tr('Điền và lưu mẫu chứng nhận lớp quốc tế UM Kendari cho lớp ' + s.code + '? Các ô chứng nhận và đơn vị cấp hiện tại sẽ bị thay.', 'Fill in and save the UM Kendari international class certificate template for class ' + s.code + '? Current certificate and issuer fields will be replaced.'))) return;
+    const cfg = { course_code: '', course_name: 'KT330H - Entrepreneurship (03 credits) | Credit Exchange Program', course_dates: 'November 17–19, 2026' };
+    const org = { org_name: 'Can Tho University', org_sub: 'School of Economics', org_logo: 'assets/docs/ctu-logo.png | assets/docs/soe-logo-v2.png', org_logo2: 'assets/docs/umk-logo.png', signer_name: 'Assoc. Prof. Dr. Phan Anh Tu', signer_title: 'Vice Rector & Lecturer | School of Economics', signer_sig: s.certSignerSig || '' };
+    this.setState({ certCode: cfg.course_code, certName: cfg.course_name, certDates: cfg.course_dates, certOrgName: org.org_name, certOrgSub: org.org_sub, certOrgLogo: org.org_logo, certOrgLogo2: org.org_logo2, certSignerName: org.signer_name, certSignerTitle: org.signer_title, certLang: 'en', umkDone: false });
+    try { await this.api().setCertConfig(s.code, cfg); await this.api().setCertIssuer(s.code, org); this.setState({ umkDone: true }); setTimeout(() => this.setState({ umkDone: false }), 4000); } catch (e) { this.fail(e); }
+  }
   certIssuer() { const s = this.state; return { org_name: s.certOrgName || '', org_sub: s.certOrgSub || '', org_logo: s.certOrgLogo || '', org_logo2: s.certOrgLogo2 || '', signer_name: s.certSignerName || '', signer_title: s.certSignerTitle || '', signer_sig: s.certSignerSig || '' }; }
   async saveCertConfig() { const s = this.state; try { await this.api().setCertConfig(s.code, { course_code: s.certCode, course_name: s.certName, course_dates: s.certDates }); this.setState({ certSaved: true }); setTimeout(() => this.setState({ certSaved: false }), 2500); } catch (e) { this.fail(e); } }
   // Ảnh chữ ký thật: thu về tối đa 1200×400 (giữ nền trong suốt) rồi lưu localStorage của máy này.
@@ -878,7 +898,7 @@ class Component extends DCLogic {
       certLangSel: s.certLang === 'vi' ? 'vi' : 'en', onCertLang: e => this.setState({ certLang: e.target.value === 'vi' ? 'vi' : 'en' }),
       saveCertConfig: () => this.saveCertConfig(), certSaved: s.certSaved,
       certOrgName: s.certOrgName, onCertOrgName: e => this.setState({ certOrgName: e.target.value }), certOrgSub: s.certOrgSub, onCertOrgSub: e => this.setState({ certOrgSub: e.target.value }), certOrgLogo: s.certOrgLogo, onCertOrgLogo: e => this.setState({ certOrgLogo: e.target.value }), certOrgLogo2: s.certOrgLogo2, onCertOrgLogo2: e => this.setState({ certOrgLogo2: e.target.value }),
-      certSignerName: s.certSignerName, onCertSignerName: e => this.setState({ certSignerName: e.target.value }), certSignerTitle: s.certSignerTitle, onCertSignerTitle: e => this.setState({ certSignerTitle: e.target.value }), saveCertIssuer: () => this.saveCertIssuer(), certIssuerSaved: s.certIssuerSaved,
+      certSignerName: s.certSignerName, onCertSignerName: e => this.setState({ certSignerName: e.target.value }), certSignerTitle: s.certSignerTitle, onCertSignerTitle: e => this.setState({ certSignerTitle: e.target.value }), fillUmkCert: () => this.fillUmkCert(), umkDone: !!s.umkDone, saveCertIssuer: () => this.saveCertIssuer(), certIssuerSaved: s.certIssuerSaved,
       tabs: tabDefs.map(([k, l]) => ({ label: l, go: () => this.setState({ tab: k }), bg: s.tab === k ? '#2f8a8c' : '#fbf6ee', fg: s.tab === k ? '#fff' : '#1f4a55', border: s.tab === k ? '#23706f' : '#e6d6bf' })),
       tabTeams: s.tab === 'teams', tabDecisions: s.tab === 'decisions', tabControls: s.tab === 'controls', tabGrading: s.tab === 'grading', tabMembers: s.tab === 'members', tabActivity: s.tab === 'activity', noTeams: !T.length,
       teams: T.map(t => ({ name: t.name + (t.rs.some(r => r.result_json && r.result_json.journey) ? ' 🧭' : ''), share: t.share.toFixed(1) + '%', profit: money(t.profit), profitColor: t.profit >= 0 ? '#3f8a44' : '#c0443a', flags: '🚩 ' + t.flags + '/6',

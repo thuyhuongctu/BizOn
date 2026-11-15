@@ -32,6 +32,8 @@ const gv = read('Trang Giang Vien.dc.html');
 for (const k of ['certOrgName', 'certOrgSub', 'certOrgLogo', 'certOrgLogo2', 'certSignerName', 'certSignerTitle']) assert.ok(gv.includes('value="{{ ' + k + ' }}"') && gv.includes(k + ': s.' + k), 'Trang GV ' + k);
 assert.ok(gv.includes('saveCertIssuer: () => this.saveCertIssuer()') && gv.includes('org: this.certIssuer()'));
 assert.ok(!gv.includes('ĐHCT') && !gv.includes('ĐH Cần Thơ') && !gv.includes("'KT330H'"), 'Trang GV còn tham chiếu ĐHCT');
+// Ngoại lệ có chủ đích (15/11/2026): nút «Điền sẵn mẫu lớp quốc tế UM Kendari» – tên trường chỉ nằm trong hàm fillUmkCert, mặc định vẫn là BizOn.
+{ const fn = gv.slice(gv.indexOf('async fillUmkCert()'), gv.indexOf('certIssuer() { const s = this.state;')); assert.ok(fn.includes("org_name: 'Can Tho University'")); assert.equal(gv.split("'Can Tho University'").length - 1, 1, 'tên trường chỉ có trong mẫu UM Kendari'); }
 
 // --- 3 · nhãn nút: không còn «ĐHCT» / «CTU certificate» ở trang và template ---
 const pages = ['game.html', 'brand-passport.html', 'ben-phu-sa.html', 'ben-phu-sa-v8.html', 'ben-phu-sa-3d.html', 'Ho Chieu Thuong Hieu 3D.html', 'lab/ho-chieu-sau-rieng.html', 'Ho Chieu Mini.dc.html', 'giang-vien.html', 'js/app.js'];
