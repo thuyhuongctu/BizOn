@@ -50,6 +50,16 @@ export const CHECKS = {
       ["position('1000' in pg_get_functiondef('public.bizon_feed_v2(text, integer)'::regprocedure)) > 0", 'bizon_feed_v2 cho xin tới 1000 dòng'],
     ],
   },
+  add_ctu_staff_domain: {
+    pre: [
+      ["to_regclass('public.student_email_domains') is not null", 'migration A (require_student_login) đã áp'],
+    ],
+    post: [
+      ["exists (select 1 from public.student_email_domains where domain = 'ctu.edu.vn')", 'có tên miền ctu.edu.vn'],
+      ["public.bizon_is_student_email('patu@ctu.edu.vn')", 'email cán bộ CTU được nhận'],
+      ["not public.bizon_is_student_email('sv@abc.ctu.edu.vn')", 'tên miền con khác của CTU vẫn không được nhận'],
+    ],
+  },
   add_umkendari_domain: {
     pre: [
       ["to_regclass('public.student_email_domains') is not null", 'migration A (require_student_login) đã áp'],

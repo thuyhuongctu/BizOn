@@ -124,6 +124,14 @@ do $$ begin
   if public.bizon_is_student_email('sv@umkendari.ac.id.example.com') then raise exception 'Tên miền na ná không được nhận'; end if;
   if public.bizon_is_student_email('sv@gmail.com') then raise exception 'Gmail cá nhân không được nhận'; end if;
 end $$;
+-- Cán bộ CTU (20261115000000_add_ctu_staff_domain.sql): nhận đúng ...@ctu.edu.vn, không nhận tên miền con khác hay na ná
+do $$ begin
+  if not public.bizon_is_student_email('PATU@ctu.edu.vn') then raise exception 'Email cán bộ CTU phải được nhận'; end if;
+  if not public.bizon_is_student_email('b2400001@student.ctu.edu.vn') then raise exception 'Email sinh viên CTU vẫn được nhận'; end if;
+  if public.bizon_is_student_email('sv@abc.ctu.edu.vn') then raise exception 'Tên miền con khác của CTU không được nhận'; end if;
+  if public.bizon_is_student_email('sv@ctu.edu.vn.example.com') then raise exception 'Tên miền na ná CTU không được nhận'; end if;
+  if not exists (select 1 from public.bizon_student_domains() d where d = 'ctu.edu.vn') then raise exception 'Phải liệt kê tên miền cán bộ CTU'; end if;
+end $$;
 select set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-0000000000c1","email":"thuyhuongctu@gmail.com","role":"authenticated"}', false);
 set role authenticated;
 select public.bizon_admin_set_student_domain('@Student.DoiTac.ac.id', true, 'Đối tác Indonesia');
