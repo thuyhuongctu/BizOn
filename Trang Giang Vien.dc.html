@@ -315,7 +315,7 @@ input,select,textarea,button{font-family:inherit}
                 <input type="text" value="{{ certOrgLogo }}" onChange="{{ onCertOrgLogo }}" placeholder="{{ L.a15 }}" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
               </label>
               <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">{{ L.k44 }}
-                <input type="text" value="{{ certOrgLogo2 }}" onChange="{{ onCertOrgLogo2 }}" placeholder="VD: assets/docs/soe-logo.png" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
+                <input type="text" value="{{ certOrgLogo2 }}" onChange="{{ onCertOrgLogo2 }}" placeholder="VD: assets/docs/soe-logo-v2.png" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
               </label>
               <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">{{ L.k21 }}
                 <input type="text" value="{{ certSignerName }}" onChange="{{ onCertSignerName }}" placeholder="{{ L.a12 }}" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
@@ -630,7 +630,7 @@ class Component extends DCLogic {
       k42: t('Đơn vị trực thuộc (khoa / trường thành viên)', 'Parent unit (faculty / member school)'),
       k43: t('Đường dẫn logo bên trái (tuỳ chọn; hai logo thì cách nhau bằng dấu |)', 'Left logo path (optional; separate two logos with |)'),
       k44: t('Đường dẫn logo bên phải (khoa / trường đối tác, tuỳ chọn; hai logo thì cách nhau bằng dấu |)', 'Right logo path (faculty / partner school, optional; separate two logos with |)'),
-      k45: t('Để trống = chứng nhận do BizOn cấp (logo BizOn, chữ ký in của người sáng lập). Điền tên đơn vị để chứng nhận mang tên trường bạn: tên đơn vị, đơn vị trực thuộc, đường dẫn logo (ảnh trên web, ví dụ assets/docs/ctu-logo.png), logo thứ hai cho khoa/trường thành viên (ví dụ assets/docs/soe-logo.png; trống thì góc phải là logo BizOn), người ký và chức danh. Chỉ áp dụng cho lớp này và chỉ bạn sửa được.', 'Blank = BizOn issues the certificate (BizOn logo, founder’s printed signature). Fill in a unit name to issue under your institution: unit name, parent unit, logo path (an image on the web, e.g. assets/docs/ctu-logo.png), a second logo for the faculty/member school (e.g. assets/docs/soe-logo.png; blank keeps the BizOn logo at right), signer and title. Applies to this class only and only you can edit it.'),
+      k45: t('Để trống = chứng nhận do BizOn cấp (logo BizOn, chữ ký in của người sáng lập). Điền tên đơn vị để chứng nhận mang tên trường bạn: tên đơn vị, đơn vị trực thuộc, đường dẫn logo (ảnh trên web, ví dụ assets/docs/ctu-logo.png), logo thứ hai cho khoa/trường thành viên (ví dụ assets/docs/soe-logo-v2.png; trống thì góc phải là logo BizOn), người ký và chức danh. Chỉ áp dụng cho lớp này và chỉ bạn sửa được.', 'Blank = BizOn issues the certificate (BizOn logo, founder’s printed signature). Fill in a unit name to issue under your institution: unit name, parent unit, logo path (an image on the web, e.g. assets/docs/ctu-logo.png), a second logo for the faculty/member school (e.g. assets/docs/soe-logo-v2.png; blank keeps the BizOn logo at right), signer and title. Applies to this class only and only you can edit it.'),
       k46: t(this.tr('Đội', 'Team'), 'Team'),
       k47: t('← Lớp của tôi', '← My classes'),
       k48: t('↔️ Vuốt ngang để xem đủ cột', '↔️ Swipe sideways to see all columns'),

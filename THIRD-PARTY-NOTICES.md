@@ -108,7 +108,7 @@ Một phần tài sản nghe nhìn của BizOn được dựng với công cụ 
 
 ## 8 · Nhãn hiệu và tên gọi của bên thứ ba xuất hiện trong nội dung
 
-- **Trường Đại học Cần Thơ** và **Trường Kinh tế** (`assets/docs/ctu-logo.png`, `assets/docs/soe-logo.png`): logo thuộc nhà trường; chỉ xuất hiện trên chứng nhận của lớp có cấu hình đơn vị cấp là CTU và trong tư liệu lớp học KT330H; không phải tài sản của nhóm và không nằm trong đơn nhãn hiệu nào của BizOn.
+- **Trường Đại học Cần Thơ** và **Trường Kinh tế** (`assets/docs/ctu-logo.png`, `assets/docs/soe-logo.png`, bản nền trong suốt `assets/docs/soe-logo-v2.png`): logo thuộc nhà trường; chỉ xuất hiện trên chứng nhận của lớp có cấu hình đơn vị cấp là CTU và trong tư liệu lớp học KT330H; không phải tài sản của nhóm và không nằm trong đơn nhãn hiệu nào của BizOn.
 - Tên các nền tảng được nhắc tới để so sánh trong tài liệu học thuật (Capsim, Harvard Business Publishing, Forio…) là nhãn hiệu của chủ sở hữu tương ứng, dùng theo nghĩa mô tả.
 - Các thương hiệu trong trò chơi (Alpha, Star Clay, Mekong, Kim Long Exports, Lumina…) là **hư cấu**, do nhóm tạo ra.
 - Bộ học liệu CHAM (`cham/`) nhắc tên cơ sở và nền tảng có thật theo nghĩa mô tả, lấy từ thông tin đăng công khai: **Homestay Cẩm Lụa** (đối thủ trong Đấu trường Tân Lộc, giá theo thông tin đăng công khai, cần kiểm chứng), các vườn và di tích trên cù lao Tân Lộc, **Foody**, **Facebook**, **Zalo**. «Sơn Ca Garden» và «Green Lộc Retreat» trong Đấu trường là **hư cấu**.

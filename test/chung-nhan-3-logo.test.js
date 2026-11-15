@@ -21,8 +21,12 @@ assert.ok(gv.includes('<select value="{{ certLangSel }}" onChange="{{ onCertLang
 assert.ok(gv.includes("certLangLabel: t('Ngôn ngữ chứng nhận', 'Certificate language')"));
 const umk = fs.readFileSync(path.join(ROOT, 'assets/docs/umk-logo.png'));
 assert.equal(umk.slice(1, 4).toString(), 'PNG'); assert.equal(umk[25], 6, 'PNG có kênh alpha (nền trong suốt)');
-const LOGOS = ['assets/docs/ctu-logo.png', 'assets/docs/soe-logo.png', 'assets/docs/umk-logo.png'];
-assert.ok('assets/docs/ctu-logo.png | assets/docs/soe-logo.png'.length <= 300);
+const soe = fs.readFileSync(path.join(ROOT, 'assets/docs/soe-logo-v2.png'));
+assert.equal(soe.slice(1, 4).toString(), 'PNG'); assert.equal(soe[25], 6, 'logo Trường Kinh tế v2 có kênh alpha');
+assert.ok(fs.existsSync(path.join(ROOT, 'assets/docs/soe-logo.png')), 'giữ nguyên ảnh gốc soe-logo.png');
+assert.ok(fs.readFileSync(path.join(ROOT, 'Trang Giang Vien.dc.html'), 'utf8').includes('placeholder="VD: assets/docs/soe-logo-v2.png"'), 'gợi ý dùng bản nền trong suốt');
+const LOGOS = ['assets/docs/ctu-logo.png', 'assets/docs/soe-logo-v2.png', 'assets/docs/umk-logo.png'];
+assert.ok('assets/docs/ctu-logo.png | assets/docs/soe-logo-v2.png'.length <= 300);
 
 (async () => {
   const b = await chromium.launch(); const errs = [];
@@ -32,17 +36,20 @@ assert.ok('assets/docs/ctu-logo.png | assets/docs/soe-logo.png'.length <= 300);
     await p.goto(BASE + '/game.html?lang=en', { waitUntil: 'load', timeout: 60000 });
     await p.waitForFunction(() => window.OfficialCert, null, { timeout: 30000 });
     await p.evaluate(() => { window.BIZON_BACKEND = { enabled: false }; });
-    const org = { org_name: 'Can Tho University', org_sub: 'School of Economics', org_logo: 'assets/docs/ctu-logo.png | assets/docs/soe-logo.png', org_logo2: 'assets/docs/umk-logo.png', signer_name: 'Assoc. Prof. Dr. Phan Anh Tu', signer_title: 'Lecturer' };
+    const org = { org_name: 'Can Tho University', org_sub: 'School of Economics', org_logo: 'assets/docs/ctu-logo.png | assets/docs/soe-logo-v2.png', org_logo2: 'assets/docs/umk-logo.png', signer_name: 'Assoc. Prof. Dr. Phan Anh Tu', signer_title: 'Lecturer' };
     // Đếm số ảnh thật sự vẽ lên canvas (logo + chữ ký) bằng cách bọc drawImage.
     const r = await p.evaluate(async (org) => {
       const C = CanvasRenderingContext2D.prototype, d0 = C.drawImage; const drawn = [];
       C.drawImage = function (img, x, y, w, h) { drawn.push([img.src.replace(/^.*\/assets/, 'assets'), Math.round(x), Math.round(y), Math.round(w), Math.round(h)]); return d0.apply(this, arguments); };
       const cv = await OfficialCert.render({ name: 'Siti', courseCode: 'KT330H', courseName: 'Entrepreneurship', courseDates: '17–19 November 2026', org });
       const one = []; C.drawImage = function (img, x, y, w, h) { one.push([img.src.replace(/^.*\/assets/, 'assets'), Math.round(w)]); return d0.apply(this, arguments); };
-      await OfficialCert.render({ name: 'A', org: { org_name: 'X', org_logo: 'assets/docs/ctu-logo.png', org_logo2: 'assets/docs/soe-logo.png' } });
+      await OfficialCert.render({ name: 'A', org: { org_name: 'X', org_logo: 'assets/docs/ctu-logo.png', org_logo2: 'assets/docs/soe-logo-v2.png' } });
       C.drawImage = d0; return { w: cv.width, drawn, one };
     }, org);
     assert.equal(r.w, 1400);
+    // Góc logo Trường Kinh tế v2 phải trong suốt (không còn ô nền trắng trên chứng nhận màu kem).
+    const corner = await p.evaluate(() => new Promise(res => { const im = new Image(); im.onload = () => { const c = document.createElement('canvas'); c.width = im.width; c.height = im.height; const g = c.getContext('2d'); g.drawImage(im, 0, 0); res([g.getImageData(2, 2, 1, 1).data[3], g.getImageData(im.width / 2, im.height / 2, 1, 1).data[3]]); }; im.src = 'assets/docs/soe-logo-v2.png'; }));
+    assert.equal(corner[0], 0, 'góc logo trong suốt'); assert.equal(corner[1], 255, 'giữa logo vẫn đặc');
     const logos = r.drawn.filter(d => /docs\/(ctu|soe|umk)-logo/.test(d[0]));
     assert.deepEqual(logos.map(d => d[0]), LOGOS, 'vẽ đủ 3 logo theo thứ tự trái → phải');
     assert.ok(logos.slice(0, 2).every(d => d[3] <= 115 && d[4] <= 115 && d[2] >= 60), 'hai logo bên trái thu về khung 115 px: ' + JSON.stringify(logos));
