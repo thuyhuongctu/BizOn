@@ -72,6 +72,17 @@ assert.ok('assets/docs/ctu-logo.png | assets/docs/soe-logo-v2.png'.length <= 300
     assert.ok(l1 && l2, 'chức danh tách thành 2 dòng: ' + JSON.stringify(lines.slice(-6)));
     assert.ok(l1[1] === l2[1] && l2[2] > l1[2], 'dòng 2 nằm ngay dưới dòng 1');
     assert.ok(!lines.some(l => l[0].includes('|')), 'không in dấu | lên chứng nhận');
+    // Thầy Tú (15/11/2026): thêm dòng «Credit Exchange Program» dưới tên môn, nhập sau dấu «|» trong ô tên môn.
+    const cl = await p.evaluate(async () => {
+      const C = CanvasRenderingContext2D.prototype, f0 = C.fillText; const out = [];
+      C.fillText = function (t, x, y) { out.push([String(t), Math.round(x), Math.round(y)]); return f0.apply(this, arguments); };
+      await OfficialCert.render({ name: 'A', courseCode: '', courseName: 'KT330H - Entrepreneurship (03 credits) | Credit Exchange Program', courseDates: '19 November 2026', org: { org_name: 'Can Tho University', org_sub: 'School of Economics' } });
+      C.fillText = f0; return out;
+    });
+    const cMain = cl.find(l => l[0] === '“KT330H - Entrepreneurship (03 credits)”'), cSub = cl.find(l => l[0] === 'Credit Exchange Program'), cDate = cl.find(l => l[0].startsWith('On 19 November 2026'));
+    assert.ok(cMain && cSub && cDate, 'tên môn, dòng phụ, ngày: ' + JSON.stringify(cl.slice(0, 12)));
+    assert.ok(cMain[2] < cSub[2] && cSub[2] < cDate[2], 'dòng phụ nằm giữa tên môn và ngày');
+    assert.ok(!cl.some(l => l[0].includes('|')), 'không in dấu | ở tên môn');
     assert.deepEqual(errs, []);
     console.log('chung-nhan-3-logo: ok');
   } finally { await b.close(); }
