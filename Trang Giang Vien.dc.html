@@ -289,6 +289,13 @@ input,select,textarea,button{font-family:inherit}
           <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:10px">
             <div style="font:800 19px 'Baloo 2',sans-serif">{{ L.k79 }}</div>
             <div style="font-size:13px;color:#5a6b74;text-wrap:pretty">{{ L.k39 }}</div>
+            <div style="background:#eef7f1;border:2px dashed #7fbf98;border-radius:14px;padding:10px 12px;display:flex;flex-direction:column;gap:6px">
+              <div style="font-size:12.5px;color:#1f5a3a;font-weight:700;text-wrap:pretty">{{ L.umkHint }}</div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+                <button type="button" onClick="{{ fillUmkCert }}" style="border:0;background:#1f7a4d;color:#fff;border-radius:12px;padding:8px 14px;font:800 14px 'Baloo 2',sans-serif;box-shadow:0 3px 0 #145236;cursor:pointer">{{ L.umkBtn }}</button>
+                <sc-if value="{{ umkDone }}" hint-placeholder-val="{{ false }}"><span style="color:#1f9a63;font-weight:800;font-size:13px">{{ L.umkOk }}</span></sc-if>
+              </div>
+            </div>
             <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">{{ L.k16 }}
               <input type="text" value="{{ certCode }}" onChange="{{ onCertCode }}" placeholder="{{ L.a11 }}" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
             </label>
@@ -315,7 +322,7 @@ input,select,textarea,button{font-family:inherit}
                 <input type="text" value="{{ certOrgLogo }}" onChange="{{ onCertOrgLogo }}" placeholder="{{ L.a15 }}" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
               </label>
               <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">{{ L.k44 }}
-                <input type="text" value="{{ certOrgLogo2 }}" onChange="{{ onCertOrgLogo2 }}" placeholder="VD: assets/docs/soe-logo.png" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
+                <input type="text" value="{{ certOrgLogo2 }}" onChange="{{ onCertOrgLogo2 }}" placeholder="VD: assets/docs/soe-logo-v2.png" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
               </label>
               <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">{{ L.k21 }}
                 <input type="text" value="{{ certSignerName }}" onChange="{{ onCertSignerName }}" placeholder="{{ L.a12 }}" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
@@ -344,6 +351,9 @@ input,select,textarea,button{font-family:inherit}
                 <textarea value="{{ rosterText }}" onChange="{{ onRosterText }}" placeholder="1&#9;Nguyễn Văn A&#9;B2400001" rows="4" style="width:100%;box-sizing:border-box;padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf;font-family:monospace;font-size:12px"></textarea>
               </label>
               <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+                <label style="display:flex;align-items:center;gap:6px;font-weight:700">{{ L.certLangLabel }}
+                  <select value="{{ certLangSel }}" onChange="{{ onCertLang }}" style="padding:6px 10px;border-radius:10px;border:2px solid #e6d6bf;background:#fff;font-weight:600"><option value="en">English</option><option value="vi">{{ L.certLangVi }}</option></select>
+                </label>
                 <button type="button" onClick="{{ saveRoster }}" style="border:0;background:#2f8a8c;color:#fff;border-radius:10px;padding:7px 14px;font-weight:700;cursor:pointer">{{ rosterSaveLabel }}</button>
                 <button type="button" onClick="{{ issueAll }}" style="border:0;background:#1f4a55;color:#fff;border-radius:14px;padding:8px 14px;font:800 15px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #10303a;cursor:pointer">{{ L.certAll }} ({{ certCount }}) → PDF</button>
               </div>
@@ -582,12 +592,17 @@ class Component extends DCLogic {
     const t = (vi, en) => this.tr(vi, en);
     return {
       certAll: t('📚 In cả lớp', '📚 Print the whole class'),
+      certLangLabel: t('Ngôn ngữ chứng nhận', 'Certificate language'),
+      certLangVi: t('Tiếng Việt', 'Vietnamese'),
+      umkHint: t('Lớp quốc tế UM Kendari (Indonesia) × Trường Đại học Cần Thơ: một lần bấm là điền và lưu sẵn mẫu chứng nhận thầy Tú đã duyệt (3 logo, Certificate of Completion, KT330H, 17–19/11/2026, chữ ký thầy Tú, tiếng Anh).', 'UM Kendari (Indonesia) × Can Tho University international class: one click fills in and saves the certificate template approved by Assoc. Prof. Phan Anh Tu (3 logos, Certificate of Completion, KT330H, 17–19 Nov 2026, English).'),
+      umkBtn: t('🇮🇩 Điền sẵn mẫu lớp quốc tế UM Kendari', '🇮🇩 Use UM Kendari international template'),
+      umkOk: t('✓ Đã điền và lưu mẫu lớp quốc tế', '✓ International template filled in and saved'),
       k01: t('(khác B5 ở tab «Chấm điểm»). «Chỉ số đồng đội» = 100 trừ chênh lệch điểm tham gia cao nhất–thấp nhất trong đội.', '(different from B5 in the “Grading” tab). “Team index” = 100 minus the gap between the highest and lowest participation score in the team.'),
       k02: t('Chưa có dữ liệu Nhật ký thành viên cho lớp này.', 'No member-log data for this class yet.'),
       k03: t('Chưa có dữ liệu Nhật ký thành viên cho lớp này. Sinh viên cần đăng nhập bằng Mã lớp thật (không phải Đội Demo) và mỗi vai chơi trên máy riêng để hệ thống ghi nhận.', 'No member-log data for this class yet. Students must sign in with the real class code (not the Demo team) and each role must play on its own device to be recorded.'),
       k04: t('Chưa có giảng viên nào tạo lớp.', 'No instructor has created a class yet.'),
       k05: t('Chưa có lớp nào. Tạo lớp đầu tiên ở ô phía trên rồi phát mã lớp cho sinh viên.', 'No classes yet. Create the first one above, then hand the class code to students.'),
-      k06: t('Chức danh / đơn vị của người ký', 'Signer title / unit'),
+      k06: t('Chức danh / đơn vị của người ký (xuống dòng bằng dấu |)', 'Signer title / unit (use | for a line break)'),
       k07: t('Cùng mẫu chứng nhận ở trên, chữ ký của giảng viên cấp chứng nhận (tên và chức danh lấy từ «Đơn vị cấp»; để trống thì là chứng nhận BizOn). Ảnh chữ ký thật chỉ lưu trong trình duyệt của máy này – không tải lên web hay máy chủ. Bản sinh viên tự tải vẫn dùng chữ ký in.', 'Same certificate template as above, signed by the issuing instructor (name and title from “Issuing unit”; blank means a BizOn certificate). The real signature image stays in this browser only, never uploaded. Student self-downloads still use the printed signature.'),
       k08: t('Cả lớp', 'Whole class'),
       k09: t('Cờ', 'Flags'),
@@ -614,7 +629,7 @@ class Component extends DCLogic {
       k30: t('Thị phần', 'Share'),
       k31: t('Tiến độ 6 vòng', 'Progress, 6 rounds'),
       k32: t('Toàn bộ lớp đã triển khai trên mọi giảng viên – chỉ 2 tài khoản chủ dự án thấy được màn này.', 'All classes across every instructor. Only the two project-owner accounts can see this screen.'),
-      k33: t('Tên môn', 'Course name'),
+      k33: t('Tên môn (dòng phụ bên dưới sau dấu |)', 'Course name (sub-line below after |)'),
       k34: t('Tên đơn vị cấp', 'Issuing unit name'),
       k35: t('bằng chứng số để bạn tham khảo, không phải điểm chấm', 'digital evidence for your reference, not a grade'),
       k36: t('· Phát mã lớp cho sinh viên. Các đội nhập mã này ở màn đăng nhập của game để kết quả gửi về đây.', '· Hand the class code to students. Teams enter it on the game sign-in screen so results arrive here.'),
@@ -624,9 +639,9 @@ class Component extends DCLogic {
       k40: t('Áp dụng cho lớp', 'Apply to class'),
       k41: t('Điểm B5 cá nhân (🤖 tự động) từ Nhật ký thành viên: mỗi vai gửi đề xuất/biên bản/Nếu–Thì trong game Bật Nghiệp. 🟢 đề xuất được CEO áp dụng · 🟡 có tham gia vòng đó · ⚪ chưa ghi nhận.', 'Individual B5 (🤖 automatic) from the member log: each role sends proposals/minutes/What-If in Bật Nghiệp. 🟢 proposal adopted by the CEO · 🟡 took part in that round · ⚪ not recorded.'),
       k42: t('Đơn vị trực thuộc (khoa / trường thành viên)', 'Parent unit (faculty / member school)'),
-      k43: t('Đường dẫn logo (tuỳ chọn)', 'Logo path (optional)'),
-      k44: t('Đường dẫn logo thứ hai (khoa / trường thành viên, tuỳ chọn)', 'Second logo path (faculty / member school, optional)'),
-      k45: t('Để trống = chứng nhận do BizOn cấp (logo BizOn, chữ ký in của người sáng lập). Điền tên đơn vị để chứng nhận mang tên trường bạn: tên đơn vị, đơn vị trực thuộc, đường dẫn logo (ảnh trên web, ví dụ assets/docs/ctu-logo.png), logo thứ hai cho khoa/trường thành viên (ví dụ assets/docs/soe-logo.png; trống thì góc phải là logo BizOn), người ký và chức danh. Chỉ áp dụng cho lớp này và chỉ bạn sửa được.', 'Blank = BizOn issues the certificate (BizOn logo, founder’s printed signature). Fill in a unit name to issue under your institution: unit name, parent unit, logo path (an image on the web, e.g. assets/docs/ctu-logo.png), a second logo for the faculty/member school (e.g. assets/docs/soe-logo.png; blank keeps the BizOn logo at right), signer and title. Applies to this class only and only you can edit it.'),
+      k43: t('Đường dẫn logo bên trái (tuỳ chọn; hai logo thì cách nhau bằng dấu |)', 'Left logo path (optional; separate two logos with |)'),
+      k44: t('Đường dẫn logo bên phải (khoa / trường đối tác, tuỳ chọn; hai logo thì cách nhau bằng dấu |)', 'Right logo path (faculty / partner school, optional; separate two logos with |)'),
+      k45: t('Để trống = chứng nhận do BizOn cấp (logo BizOn, chữ ký in của người sáng lập). Điền tên đơn vị để chứng nhận mang tên trường bạn: tên đơn vị, đơn vị trực thuộc, đường dẫn logo (ảnh trên web, ví dụ assets/docs/ctu-logo.png), logo thứ hai cho khoa/trường thành viên (ví dụ assets/docs/soe-logo-v2.png; trống thì góc phải là logo BizOn), người ký và chức danh. Chỉ áp dụng cho lớp này và chỉ bạn sửa được.', 'Blank = BizOn issues the certificate (BizOn logo, founder’s printed signature). Fill in a unit name to issue under your institution: unit name, parent unit, logo path (an image on the web, e.g. assets/docs/ctu-logo.png), a second logo for the faculty/member school (e.g. assets/docs/soe-logo-v2.png; blank keeps the BizOn logo at right), signer and title. Applies to this class only and only you can edit it.'),
       k46: t(this.tr('Đội', 'Team'), 'Team'),
       k47: t('← Lớp của tôi', '← My classes'),
       k48: t('↔️ Vuốt ngang để xem đủ cột', '↔️ Swipe sideways to see all columns'),
@@ -681,7 +696,7 @@ class Component extends DCLogic {
       a07: t('Rất cân bằng', 'Very balanced'),
       a08: t('Thông báo cho cả lớp (tùy chọn)', 'Message to the class (optional)'),
       a09: t('Triệu ₫, âm = trừ', 'Million ₫, negative = deduct'),
-      a10: t('VD: Giảng viên, Trường Kinh tế', 'e.g. Lecturer, School of Economics'),
+      a10: t('VD: Phó Hiệu trưởng & Giảng viên | Trường Kinh tế', 'e.g. Vice Rector & Lecturer | School of Economics'),
       a11: t('VD: KT330H (để trống nếu không có)', 'e.g. KT330H (blank if none)'),
       a12: t('VD: PGS.TS. Nguyễn Văn A', 'e.g. Assoc. Prof. Dr. Nguyen Van A'),
       a13: t('VD: Trường Kinh tế', 'e.g. School of Economics'),
@@ -758,6 +773,16 @@ class Component extends DCLogic {
   async startExam() { const s = this.state; try { await this.api().setExam(s.code, { active: true, start_at: new Date().toISOString(), setup_min: +s.exSetup || 10, round_min: +s.exRound || 8, capital: 500 }); this.reload(); } catch (e) { this.fail(e); } }
   async stopExam() { const s = this.state, ex = s.exam || {}; try { await this.api().setExam(s.code, { active: false, start_at: ex.start_at || null, setup_min: +s.exSetup || 10, round_min: +s.exRound || 8, capital: 500 }); this.reload(); } catch (e) { this.fail(e); } }
   async saveCertIssuer() { const s = this.state; try { await this.api().setCertIssuer(s.code, this.certIssuer()); this.setState({ certIssuerSaved: true }); setTimeout(() => this.setState({ certIssuerSaved: false }), 2500); } catch (e) { this.fail(e); } }
+  // Mẫu chứng nhận lớp quốc tế UM Kendari × Trường Đại học Cần Thơ (Credit Exchange Program, 17–19/11/2026) – theo góp ý của thầy Tú 15/11/2026.
+  // Một lần bấm: điền mọi ô và lưu luôn «Chứng nhận chính thức» + «Đơn vị cấp» cho lớp đang mở; ngôn ngữ chứng nhận chuyển sang English.
+  async fillUmkCert() {
+    const s = this.state;
+    if (!confirm(this.tr('Điền và lưu mẫu chứng nhận lớp quốc tế UM Kendari cho lớp ' + s.code + '? Các ô chứng nhận và đơn vị cấp hiện tại sẽ bị thay.', 'Fill in and save the UM Kendari international class certificate template for class ' + s.code + '? Current certificate and issuer fields will be replaced.'))) return;
+    const cfg = { course_code: '', course_name: 'KT330H - Entrepreneurship (03 credits) | Credit Exchange Program', course_dates: 'November 17–19, 2026' };
+    const org = { org_name: 'Can Tho University', org_sub: 'School of Economics', org_logo: 'assets/docs/ctu-logo.png | assets/docs/soe-logo-v2.png', org_logo2: 'assets/docs/umk-logo.png', signer_name: 'Assoc. Prof. Dr. Phan Anh Tu', signer_title: 'Vice Rector & Lecturer | School of Economics', signer_sig: s.certSignerSig || '' };
+    this.setState({ certCode: cfg.course_code, certName: cfg.course_name, certDates: cfg.course_dates, certOrgName: org.org_name, certOrgSub: org.org_sub, certOrgLogo: org.org_logo, certOrgLogo2: org.org_logo2, certSignerName: org.signer_name, certSignerTitle: org.signer_title, certLang: 'en', umkDone: false });
+    try { await this.api().setCertConfig(s.code, cfg); await this.api().setCertIssuer(s.code, org); this.setState({ umkDone: true }); setTimeout(() => this.setState({ umkDone: false }), 4000); } catch (e) { this.fail(e); }
+  }
   certIssuer() { const s = this.state; return { org_name: s.certOrgName || '', org_sub: s.certOrgSub || '', org_logo: s.certOrgLogo || '', org_logo2: s.certOrgLogo2 || '', signer_name: s.certSignerName || '', signer_title: s.certSignerTitle || '', signer_sig: s.certSignerSig || '' }; }
   async saveCertConfig() { const s = this.state; try { await this.api().setCertConfig(s.code, { course_code: s.certCode, course_name: s.certName, course_dates: s.certDates }); this.setState({ certSaved: true }); setTimeout(() => this.setState({ certSaved: false }), 2500); } catch (e) { this.fail(e); } }
   // Ảnh chữ ký thật: thu về tối đa 1200×400 (giữ nền trong suốt) rồi lưu localStorage của máy này.
@@ -783,7 +808,7 @@ class Component extends DCLogic {
     try { localStorage.removeItem(SIG_KEY); } catch (e) {}
     this.setState({ sigTu: '', certMsg: 'Đã xoá chữ ký khỏi máy này.' });
   }
-  certOpts(st) { const s = this.state; return { name: st.name, courseCode: s.certCode || '', courseName: s.certName || 'BizOn Bật Nghiệp', courseDates: s.certDates || undefined, signature: s.sigTu, org: this.certIssuer(), filenamePrefix: (s.code || 'BizOn') + (st.mssv ? '-' + st.mssv : '') }; }
+  certOpts(st) { const s = this.state; return { lang: s.certLang === 'vi' ? 'vi' : 'en', name: st.name, courseCode: s.certCode || '', courseName: s.certName || 'BizOn Bật Nghiệp', courseDates: s.certDates || undefined, signature: s.sigTu, org: this.certIssuer(), filenamePrefix: (s.code || 'BizOn') + (st.mssv ? '-' + st.mssv : '') }; }
   issueOne(st) {
     if (!this.state.sigTu) return this.setState({ certMsg: this.tr('Chọn ảnh chữ ký thật trước khi cấp.', 'Choose a real signature image before issuing.') });
     window.OfficialCert.download(this.certOpts(st)).catch(e => this.fail(e));
@@ -870,9 +895,10 @@ class Component extends DCLogic {
       certCode: s.certCode, onCertCode: e => this.setState({ certCode: e.target.value }),
       certName: s.certName, onCertName: e => this.setState({ certName: e.target.value }),
       certDates: s.certDates, onCertDates: e => this.setState({ certDates: e.target.value }),
+      certLangSel: s.certLang === 'vi' ? 'vi' : 'en', onCertLang: e => this.setState({ certLang: e.target.value === 'vi' ? 'vi' : 'en' }),
       saveCertConfig: () => this.saveCertConfig(), certSaved: s.certSaved,
       certOrgName: s.certOrgName, onCertOrgName: e => this.setState({ certOrgName: e.target.value }), certOrgSub: s.certOrgSub, onCertOrgSub: e => this.setState({ certOrgSub: e.target.value }), certOrgLogo: s.certOrgLogo, onCertOrgLogo: e => this.setState({ certOrgLogo: e.target.value }), certOrgLogo2: s.certOrgLogo2, onCertOrgLogo2: e => this.setState({ certOrgLogo2: e.target.value }),
-      certSignerName: s.certSignerName, onCertSignerName: e => this.setState({ certSignerName: e.target.value }), certSignerTitle: s.certSignerTitle, onCertSignerTitle: e => this.setState({ certSignerTitle: e.target.value }), saveCertIssuer: () => this.saveCertIssuer(), certIssuerSaved: s.certIssuerSaved,
+      certSignerName: s.certSignerName, onCertSignerName: e => this.setState({ certSignerName: e.target.value }), certSignerTitle: s.certSignerTitle, onCertSignerTitle: e => this.setState({ certSignerTitle: e.target.value }), fillUmkCert: () => this.fillUmkCert(), umkDone: !!s.umkDone, saveCertIssuer: () => this.saveCertIssuer(), certIssuerSaved: s.certIssuerSaved,
       tabs: tabDefs.map(([k, l]) => ({ label: l, go: () => this.setState({ tab: k }), bg: s.tab === k ? '#2f8a8c' : '#fbf6ee', fg: s.tab === k ? '#fff' : '#1f4a55', border: s.tab === k ? '#23706f' : '#e6d6bf' })),
       tabTeams: s.tab === 'teams', tabDecisions: s.tab === 'decisions', tabControls: s.tab === 'controls', tabGrading: s.tab === 'grading', tabMembers: s.tab === 'members', tabActivity: s.tab === 'activity', noTeams: !T.length,
       teams: T.map(t => ({ name: t.name + (t.rs.some(r => r.result_json && r.result_json.journey) ? ' 🧭' : ''), share: t.share.toFixed(1) + '%', profit: money(t.profit), profitColor: t.profit >= 0 ? '#3f8a44' : '#c0443a', flags: '🚩 ' + t.flags + '/6',
