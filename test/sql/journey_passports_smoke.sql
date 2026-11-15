@@ -31,10 +31,10 @@ insert into auth.users (id, email) values
   ('00000000-0000-0000-0000-0000000000e1', 'jt.a@student.ctu.edu.vn'),
   ('00000000-0000-0000-0000-0000000000e2', 'jt.b@student.ctu.edu.vn'),
   ('00000000-0000-0000-0000-0000000000e3', 'jt.ngoai@gmail.com'),
-  ('00000000-0000-0000-0000-0000000000f1', 'jt.gv@ctu.edu.vn'),
-  ('00000000-0000-0000-0000-0000000000f2', 'jt.gv2@ctu.edu.vn')
+  ('00000000-0000-0000-0000-0000000000f1', 'jt.gv@giangvien.example'),
+  ('00000000-0000-0000-0000-0000000000f2', 'jt.gv2@giangvien.example')
 on conflict (id) do nothing;
-insert into public.instructor_allowlist (email, note, added_by) values ('jt.gv@ctu.edu.vn', 'test', 'test'), ('jt.gv2@ctu.edu.vn', 'test', 'test') on conflict (email) do nothing;
+insert into public.instructor_allowlist (email, note, added_by) values ('jt.gv@giangvien.example', 'test', 'test'), ('jt.gv2@giangvien.example', 'test', 'test') on conflict (email) do nothing;
 
 -- Hộ chiếu mẫu (lược đồ v1, xem js/core/journey.js)
 create temp table jt_p as select
@@ -86,7 +86,7 @@ select pg_temp.jt_fail($q$select public.bizon_journey_get('JT-TEST','Doi A')$q$,
 reset role;
 
 -- ---------- 5. Giảng viên: nhận lớp, bật cờ hành trang, xem hộ chiếu của lớp; giảng viên khác không được ----------
-select set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-0000000000f1","email":"jt.gv@ctu.edu.vn","role":"authenticated"}', false);
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-0000000000f1","email":"jt.gv@giangvien.example","role":"authenticated"}', false);
 set role authenticated;
 select public.bizon_claim_class('JT-TEST');
 select pg_temp.jt_eq((public.bizon_class_feed('JT-TEST','Doi A')->'controls'->>'journey_carry'), null, 'chưa đặt → null (game coi là tắt)');
@@ -100,7 +100,7 @@ select pg_temp.jt_eq((select student_email from public.bizon_journey_class('JT-T
 -- hộ chiếu của sinh viên không bị cờ lớp làm hỏng; hàm sinh viên không cho giảng viên (email không phải sinh viên) gọi
 select pg_temp.jt_fail($q$select public.bizon_journey_get('JT-TEST','Doi A')$q$, 'email trường');
 reset role;
-select set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-0000000000f2","email":"jt.gv2@ctu.edu.vn","role":"authenticated"}', false);
+select set_config('request.jwt.claims', '{"sub":"00000000-0000-0000-0000-0000000000f2","email":"jt.gv2@giangvien.example","role":"authenticated"}', false);
 set role authenticated;
 select pg_temp.jt_fail($q$select public.bizon_set_journey_carry('JT-TEST', true)$q$, 'quyền');
 select pg_temp.jt_eq((select count(*)::text from public.bizon_journey_class('JT-TEST')), '0', 'giảng viên khác không thấy gì');
