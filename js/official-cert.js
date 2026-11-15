@@ -87,6 +87,16 @@
     lines.forEach(function (l, i) { g.textAlign = align || 'center'; g.fillText(l, x, startY + i * lineHeight); });
     return lines.length;
   }
+  // Ô logo nhận tối đa 2 đường dẫn cách nhau bằng «|» (vd lớp liên kết: logo trường + logo khoa ở bên trái,
+  // logo trường đối tác ở bên phải) – không phải đổi cột trong cơ sở dữ liệu.
+  function splitLogos(v) { return String(v || '').split('|').map(function (x) { return x.trim(); }).filter(Boolean).slice(0, 2); }
+  // Một logo: khung 150 px như cũ; hai logo: hai khung 115 px đặt cạnh nhau, chừa chỗ cho tiêu đề ở giữa.
+  function drawLogos(g, imgs, right) {
+    imgs = imgs.filter(Boolean);
+    if (imgs.length === 1) return drawFit(g, imgs[0], right ? 1160 : 90, 70, 150, 150);
+    var xs = right ? [1088, 1213] : [72, 197];
+    imgs.forEach(function (img, i) { drawFit(g, img, xs[i], 64, 115, 115); });
+  }
   // Vẽ ảnh vừa khung (giữ tỷ lệ, căn giữa).
   function drawFit(g, img, x, y, w, h) {
     var k = Math.min(w / img.width, h / img.height), dw = img.width * k, dh = img.height * k;
@@ -118,8 +128,8 @@
 
     // Chờ font của khuôn (nếu trang có nạp) để canvas không vẽ bằng font dự phòng.
     var fonts = document.fonts && document.fonts.load ? Promise.all(['800 46px "Plus Jakarta Sans"', '21px "Hanken Grotesk"', 'italic 21px "Hanken Grotesk"', '800 15px "Hanken Grotesk"'].map(function (f) { return document.fonts.load(f).catch(function () {}); })) : Promise.resolve();
-    return Promise.all([loadImg(I.logo), loadImg(I.logo2), loadImg(sigSrc), I.signer2Name ? loadImg(I.signer2Sig) : null, fonts]).then(function (imgs) {
-      var orgLogo = imgs[0], rightLogo = imgs[1], sig = imgs[2], sig2 = imgs[3];
+    return Promise.all([Promise.all(splitLogos(I.logo).map(loadImg)), Promise.all(splitLogos(I.logo2).map(loadImg)), loadImg(sigSrc), I.signer2Name ? loadImg(I.signer2Sig) : null, fonts]).then(function (imgs) {
+      var leftLogos = imgs[0], rightLogos = imgs[1], sig = imgs[2], sig2 = imgs[3];
       var cv = document.createElement('canvas'); cv.width = 1400; cv.height = 990;
       var g = cv.getContext('2d');
 
@@ -127,8 +137,8 @@
       g.strokeStyle = '#0a3d62'; g.lineWidth = 10; g.strokeRect(24, 24, 1352, 942);
       g.strokeStyle = '#c9a227'; g.lineWidth = 3; g.strokeRect(42, 42, 1316, 906);
 
-      if (orgLogo) drawFit(g, orgLogo, 90, 70, 150, 150);
-      if (rightLogo) drawFit(g, rightLogo, 1160, 70, 150, 150);
+      drawLogos(g, leftLogos, false);
+      drawLogos(g, rightLogos, true);
 
       g.fillStyle = '#0a3d62'; g.textAlign = 'center';
       g.font = '700 22px "Plus Jakarta Sans", sans-serif'; g.fillText(I.name.toUpperCase(), 700, 110);
