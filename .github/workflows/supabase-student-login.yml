@@ -14,6 +14,7 @@ on:
       - 'test/sql/ra_soat_bao_mat_smoke.sql'
       - 'test/sql/class_feedback_smoke.sql'
       - 'test/sql/chu_ky_khong_cong_khai_smoke.sql'
+      - 'test/sql/chu_ky_luu_kin_smoke.sql'
       - 'test/sql/gioi_han_lop_dong_smoke.sql'
       - '.github/workflows/supabase-student-login.yml'
   pull_request:
@@ -28,6 +29,7 @@ on:
       - 'test/sql/ra_soat_bao_mat_smoke.sql'
       - 'test/sql/class_feedback_smoke.sql'
       - 'test/sql/chu_ky_khong_cong_khai_smoke.sql'
+      - 'test/sql/chu_ky_luu_kin_smoke.sql'
       - 'test/sql/gioi_han_lop_dong_smoke.sql'
       - '.github/workflows/supabase-student-login.yml'
 
@@ -75,6 +77,8 @@ jobs:
         run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -q -f test/sql/class_feedback_smoke.sql
       - name: Kiểm chữ ký không công khai (feed cho khách không trả ảnh chữ ký, chủ lớp lưu không kèm chữ ký)
         run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -q -f test/sql/chu_ky_khong_cong_khai_smoke.sql
+      - name: Kiểm chữ ký lưu kín theo lớp (chỉ chủ lớp đọc/ghi, khách và giảng viên khác không đọc được, feed vẫn rỗng)
+        run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -q -f test/sql/chu_ky_luu_kin_smoke.sql
       - name: Kiểm giới hạn lớp đông (160 phiếu cùng phút, bảng xếp hạng đủ 170 dòng, chủ lớp nhận đủ 192 lượt nộp)
         run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -q -f test/sql/gioi_han_lop_dong_smoke.sql
       # Chạy lại migration hành trình định nghĩa lại bizon_class_feed (mất explain_hidden, mất feedback) và bizon_purge_expired
@@ -95,3 +99,5 @@ jobs:
           psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -q -f supabase/migrations/20261106000000_class_feedback.sql
           psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -q -f test/sql/class_feedback_smoke.sql
           psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -q -f test/sql/explain_mode_smoke.sql
+          psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -q -f supabase/migrations/20261115010000_chu_ky_luu_kin.sql
+          psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -q -f test/sql/chu_ky_luu_kin_smoke.sql
