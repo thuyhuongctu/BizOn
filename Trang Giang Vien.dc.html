@@ -344,6 +344,9 @@ input,select,textarea,button{font-family:inherit}
                 <textarea value="{{ rosterText }}" onChange="{{ onRosterText }}" placeholder="1&#9;Nguyễn Văn A&#9;B2400001" rows="4" style="width:100%;box-sizing:border-box;padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf;font-family:monospace;font-size:12px"></textarea>
               </label>
               <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+                <label style="display:flex;align-items:center;gap:6px;font-weight:700">{{ L.certLangLabel }}
+                  <select value="{{ certLangSel }}" onChange="{{ onCertLang }}" style="padding:6px 10px;border-radius:10px;border:2px solid #e6d6bf;background:#fff;font-weight:600"><option value="en">English</option><option value="vi">Tiếng Việt</option></select>
+                </label>
                 <button type="button" onClick="{{ saveRoster }}" style="border:0;background:#2f8a8c;color:#fff;border-radius:10px;padding:7px 14px;font-weight:700;cursor:pointer">{{ rosterSaveLabel }}</button>
                 <button type="button" onClick="{{ issueAll }}" style="border:0;background:#1f4a55;color:#fff;border-radius:14px;padding:8px 14px;font:800 15px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #10303a;cursor:pointer">{{ L.certAll }} ({{ certCount }}) → PDF</button>
               </div>
@@ -582,6 +585,7 @@ class Component extends DCLogic {
     const t = (vi, en) => this.tr(vi, en);
     return {
       certAll: t('📚 In cả lớp', '📚 Print the whole class'),
+      certLangLabel: t('Ngôn ngữ chứng nhận', 'Certificate language'),
       k01: t('(khác B5 ở tab «Chấm điểm»). «Chỉ số đồng đội» = 100 trừ chênh lệch điểm tham gia cao nhất–thấp nhất trong đội.', '(different from B5 in the “Grading” tab). “Team index” = 100 minus the gap between the highest and lowest participation score in the team.'),
       k02: t('Chưa có dữ liệu Nhật ký thành viên cho lớp này.', 'No member-log data for this class yet.'),
       k03: t('Chưa có dữ liệu Nhật ký thành viên cho lớp này. Sinh viên cần đăng nhập bằng Mã lớp thật (không phải Đội Demo) và mỗi vai chơi trên máy riêng để hệ thống ghi nhận.', 'No member-log data for this class yet. Students must sign in with the real class code (not the Demo team) and each role must play on its own device to be recorded.'),
@@ -783,7 +787,7 @@ class Component extends DCLogic {
     try { localStorage.removeItem(SIG_KEY); } catch (e) {}
     this.setState({ sigTu: '', certMsg: 'Đã xoá chữ ký khỏi máy này.' });
   }
-  certOpts(st) { const s = this.state; return { name: st.name, courseCode: s.certCode || '', courseName: s.certName || 'BizOn Bật Nghiệp', courseDates: s.certDates || undefined, signature: s.sigTu, org: this.certIssuer(), filenamePrefix: (s.code || 'BizOn') + (st.mssv ? '-' + st.mssv : '') }; }
+  certOpts(st) { const s = this.state; return { lang: s.certLang === 'vi' ? 'vi' : 'en', name: st.name, courseCode: s.certCode || '', courseName: s.certName || 'BizOn Bật Nghiệp', courseDates: s.certDates || undefined, signature: s.sigTu, org: this.certIssuer(), filenamePrefix: (s.code || 'BizOn') + (st.mssv ? '-' + st.mssv : '') }; }
   issueOne(st) {
     if (!this.state.sigTu) return this.setState({ certMsg: this.tr('Chọn ảnh chữ ký thật trước khi cấp.', 'Choose a real signature image before issuing.') });
     window.OfficialCert.download(this.certOpts(st)).catch(e => this.fail(e));
@@ -870,6 +874,7 @@ class Component extends DCLogic {
       certCode: s.certCode, onCertCode: e => this.setState({ certCode: e.target.value }),
       certName: s.certName, onCertName: e => this.setState({ certName: e.target.value }),
       certDates: s.certDates, onCertDates: e => this.setState({ certDates: e.target.value }),
+      certLangSel: s.certLang === 'vi' ? 'vi' : 'en', onCertLang: e => this.setState({ certLang: e.target.value === 'vi' ? 'vi' : 'en' }),
       saveCertConfig: () => this.saveCertConfig(), certSaved: s.certSaved,
       certOrgName: s.certOrgName, onCertOrgName: e => this.setState({ certOrgName: e.target.value }), certOrgSub: s.certOrgSub, onCertOrgSub: e => this.setState({ certOrgSub: e.target.value }), certOrgLogo: s.certOrgLogo, onCertOrgLogo: e => this.setState({ certOrgLogo: e.target.value }), certOrgLogo2: s.certOrgLogo2, onCertOrgLogo2: e => this.setState({ certOrgLogo2: e.target.value }),
       certSignerName: s.certSignerName, onCertSignerName: e => this.setState({ certSignerName: e.target.value }), certSignerTitle: s.certSignerTitle, onCertSignerTitle: e => this.setState({ certSignerTitle: e.target.value }), saveCertIssuer: () => this.saveCertIssuer(), certIssuerSaved: s.certIssuerSaved,

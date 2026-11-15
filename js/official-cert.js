@@ -19,7 +19,7 @@
  *     Không có backend/mã lớp/lỗi mạng đều rơi về mặc định BizOn, không bao giờ
  *     reject. Kết quả gần nhất được nhớ lại để render() dùng phần đơn vị cấp.
  *   window.OfficialCert.render(opts) – Promise<canvas>. opts: name, courseCode,
- *     courseName, courseDates, verifyCode, signature (ảnh chữ ký thật, ghi đè),
+ *     courseName, courseDates, verifyCode, lang ('en' mặc định | 'vi'), signature (ảnh chữ ký thật, ghi đè),
  *     org (ghi đè đơn vị cấp: {org_name, org_sub, org_logo, org_logo2 (logo
  *     góc phải, trống = logo BizOn), signer_name, signer_title, signer_sig};
  *     mặc định lấy từ fetchConfig() gần nhất),
@@ -28,7 +28,10 @@
  *   window.OfficialCert.issuer(cfg?) – đơn vị cấp đã chuẩn hoá (để kiểm thử/xem trước).
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú. */
 (function () {
-  var isEN = function () { try { return (localStorage.getItem('bizon-lang') || 'vi') === 'en'; } catch (e) { return false; } };
+  // Chứng nhận mặc định in tiếng Anh (15/11/2026); giảng viên chọn tiếng Việt bằng opts.lang = 'vi'.
+  // certLang chỉ có giá trị trong lúc vẽ; ngoài lúc đó các hàm khác (issuer…) theo ngôn ngữ của trang.
+  var certLang = null;
+  var isEN = function () { if (certLang) return certLang === 'en'; try { return (localStorage.getItem('bizon-lang') || 'vi') === 'en'; } catch (e) { return false; } };
   function T(vi, en) { return isEN() ? en : vi; }
   var DEFAULTS = { course_code: '', course_name: 'BizOn Bật Nghiệp', course_dates: '', org_name: '', org_sub: '', org_logo: '', org_logo2: '', signer_name: '', signer_title: '', signer_sig: '' };
   var BIZON = { logo: 'assets/icons/icon-512.png', sig: 'assets/docs/sig-huong-in.png', signer: 'Đỗ Thùy Hương', sig2: 'assets/docs/sig-tu-in.png', signer2: 'PGS.TS. Phan Anh Tú' };
@@ -117,6 +120,8 @@
   // giảng viên tự chọn từ máy mình (chỉ lưu trong trình duyệt đó, không có trên web).
   function render(opts) {
     opts = opts || {};
+    var lang = opts.lang === 'vi' ? 'vi' : 'en';
+    certLang = lang;
     var I = issuer(opts.org);
     var name = opts.name || T('Học viên BizOn', 'BizOn Learner');
     var courseCode = (opts.courseCode || '').trim();
@@ -127,9 +132,11 @@
     var sigSrc = opts.signature || I.signerSig;
 
     // Chờ font của khuôn (nếu trang có nạp) để canvas không vẽ bằng font dự phòng.
+    certLang = null;
     var fonts = document.fonts && document.fonts.load ? Promise.all(['800 46px "Plus Jakarta Sans"', '21px "Hanken Grotesk"', 'italic 21px "Hanken Grotesk"', '800 15px "Hanken Grotesk"'].map(function (f) { return document.fonts.load(f).catch(function () {}); })) : Promise.resolve();
     return Promise.all([Promise.all(splitLogos(I.logo).map(loadImg)), Promise.all(splitLogos(I.logo2).map(loadImg)), loadImg(sigSrc), I.signer2Name ? loadImg(I.signer2Sig) : null, fonts]).then(function (imgs) {
       var leftLogos = imgs[0], rightLogos = imgs[1], sig = imgs[2], sig2 = imgs[3];
+      certLang = lang;
       var cv = document.createElement('canvas'); cv.width = 1400; cv.height = 990;
       var g = cv.getContext('2d');
 
@@ -174,6 +181,7 @@
       g.textAlign = 'left'; g.font = '11px "Hanken Grotesk", sans-serif'; g.fillStyle = 'rgba(3,51,55,.4)';
       g.fillText(T('Cấp ngày ', 'Issued on ') + new Date().toLocaleDateString(isEN() ? 'en-US' : 'vi-VN') + '  ·  bizonland.com', 60, 950);
       g.textAlign = 'right'; g.fillText(T('Mã xác thực ', 'Verification code ') + verifyCode, 1340, 950);
+      certLang = null;
 
       return cv;
     });
