@@ -20,7 +20,8 @@ jobs:
   test:
     # Ghim 24.04: ubuntu-latest đang chuyển sang Ubuntu 26, nơi `playwright@1.54.1 install --with-deps` không cài được gói hệ thống
     runs-on: ubuntu-24.04
-    timeout-minutes: 25
+    # Bộ test đầy đủ mất ~21 phút (11/2026); 25 phút quá sát, máy chậm là bị hủy giữa chừng
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v4
 
