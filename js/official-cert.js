@@ -55,7 +55,7 @@
   function issuer(cfg) {
     var c = norm(cfg || lastCfg || {}), name = (c.org_name || '').trim();
     if (!name) return { custom: false, name: 'BIZONLAND', logo2: '', sub: T('Hệ sinh thái mô phỏng kinh doanh BizOn', 'BizOn business simulation ecosystem'), logo: BIZON.logo, signerName: BIZON.signer, signerTitle: T('Người sáng lập BizOn', 'Founder, BizOn'), signerSig: BIZON.sig, signer2Name: BIZON.signer2, signer2Title: T('Đồng sáng lập · Cố vấn học thuật BizOn', 'Co-founder & Chief Academic Advisor, BizOn'), signer2Sig: BIZON.sig2, place: T('trên nền tảng BizOn · bizonland.com', 'on the BizOn platform · bizonland.com') };
-    return { custom: true, name: name, sub: (c.org_sub || '').trim(), logo: (c.org_logo || '').trim(), logo2: (c.org_logo2 || '').trim() || BIZON.logo, signerName: (c.signer_name || '').trim(), signerTitle: (c.signer_title || '').trim() || name, signerSig: (c.signer_sig || '').trim(), place: T('tại ', 'at ') + [(c.org_sub || '').trim(), name].filter(Boolean).join(', ') + T(' · trên nền tảng BizOn', ' · on the BizOn platform') };
+    return { custom: true, name: name, sub: (c.org_sub || '').trim(), logo: (c.org_logo || '').trim(), logo2: (c.org_logo2 || '').trim() || BIZON.logo, signerName: (c.signer_name || '').trim(), signerTitle: (c.signer_title || '').trim() || name, signerSig: (c.signer_sig || '').trim(), place: T('tại ', 'at ') + [(c.org_sub || '').trim(), name].filter(Boolean).join(', ') };
   }
   // classCodeOverride: truyền thẳng mã lớp khi trang không dùng chung khoá
   // localStorage (vd: game.html lưu mã lớp riêng trong S.profile.classId).

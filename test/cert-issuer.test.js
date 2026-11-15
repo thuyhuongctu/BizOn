@@ -71,14 +71,14 @@ assert.ok(!read('README.md').includes('are free for **Can Tho University**'));
   assert.equal(r1.file, 'BizOn-BatNghiep-ChungNhan-NguyenVanA.png');
   const r2 = await page.evaluate(async () => { window.__drawn = []; window.__imgs = []; await OfficialCert.render({ lang: 'vi', name: 'Trần Thị B', courseCode: 'KT330H', courseName: 'Entrepreneurship', courseDates: '4–11/3/2026', org: { org_name: 'Trường Đại học Cần Thơ', org_sub: 'Trường Kinh tế', org_logo: 'assets/docs/ctu-logo.png', org_logo2: 'assets/docs/soe-logo.png', signer_name: 'PGS.TS. Phan Anh Tú', signer_title: 'Trường Kinh tế, Đại học Cần Thơ', signer_sig: 'assets/docs/sig-tu-in.png' } }); return { drawn: window.__drawn, imgs: window.__imgs }; });
   for (const t of ['TRƯỜNG ĐẠI HỌC CẦN THƠ', 'TRƯỜNG KINH TẾ', 'CERTIFICATE OF COMPLETION', 'Trần Thị B', 'Entrepreneurship – Code KT330H', 'PGS.TS. Phan Anh Tú', 'Trường Kinh tế, Đại học Cần Thơ']) assert.ok(r2.drawn.includes(t), 'theo đơn vị thiếu: ' + t);
-  assert.ok(r2.drawn.some(t => t.includes('tại Trường Kinh tế, Trường Đại học Cần Thơ · trên nền tảng BizOn')));
+  assert.ok(r2.drawn.some(t => /tại Trường Kinh tế, Trường Đại học Cần Thơ$/.test(t)) && !r2.drawn.some(t => t.includes('trên nền tảng BizOn')));
   assert.ok(r2.imgs.includes('assets/docs/ctu-logo.png') && r2.imgs.includes('assets/docs/soe-logo.png') && r2.imgs.includes('assets/docs/sig-tu-in.png') && !r2.imgs.includes('assets/icons/icon-512.png'), 'mẫu CTU như cũ: logo CTU trái, logo Trường Kinh tế phải, chữ ký thầy, không logo BizOn: ' + r2.imgs.join(','));
   assert.ok(!r2.drawn.includes('Đỗ Thùy Hương'), 'mẫu CTU chỉ một người ký');
   // Từ 15/11/2026 chứng nhận mặc định in tiếng Anh dù trang đang tiếng Việt; lang: 'vi' mới ra bản tiếng Việt.
   const rEn = await page.evaluate(async () => { window.__drawn = []; await OfficialCert.render({ name: 'D', courseDates: '19/11/2026', org: { org_name: 'Can Tho University', org_sub: 'School of Economics' } }); return { drawn: window.__drawn, page: localStorage.getItem('bizon-lang') || 'vi', vi: OfficialCert.issuer({ org_name: 'X' }).place }; });
   assert.equal(rEn.page, 'vi', 'trang đang tiếng Việt');
   assert.ok(rEn.drawn.includes('This is to certify that') && !rEn.drawn.includes('Chứng nhận rằng'), 'mặc định tiếng Anh: ' + rEn.drawn.join(' | '));
-  assert.ok(rEn.drawn.some(t => t.includes('at School of Economics, Can Tho University · on the BizOn platform')));
+  assert.ok(rEn.drawn.some(t => /at School of Economics, Can Tho University$/.test(t)) && !rEn.drawn.some(t => t.includes('on the BizOn platform')));
   assert.match(rEn.vi, /^tại X/, 'ngoài lúc vẽ, issuer() vẫn theo ngôn ngữ của trang');
   // đơn vị có tên nhưng không có người ký: ghi tên đơn vị thay chữ ký, không vẽ ảnh chữ ký
   const r3 = await page.evaluate(async () => { window.__drawn = []; window.__imgs = []; await OfficialCert.render({ name: 'C', org: { org_name: 'Đại học X' } }); return { drawn: window.__drawn, imgs: window.__imgs }; });
