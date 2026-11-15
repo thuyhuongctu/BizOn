@@ -158,7 +158,7 @@
       g.strokeStyle = '#c9a227'; g.lineWidth = 2; g.beginPath(); g.moveTo(480, 370); g.lineTo(920, 370); g.stroke();
 
       g.fillStyle = '#033337'; g.font = '21px "Hanken Grotesk", sans-serif';
-      wrapText(g, I.custom ? T('đã hoàn thành các mô-đun mô phỏng kinh doanh của BizOn trong môn học', 'has successfully completed the BizOn business simulation modules of the course') : T('đã hoàn thành các mô-đun mô phỏng kinh doanh', 'has successfully completed the business simulation modules'), 700, 425, 1050, 30);
+      wrapText(g, I.custom ? T('đã hoàn thành môn học', 'has successfully completed the course') : T('đã hoàn thành các mô-đun mô phỏng kinh doanh', 'has successfully completed the business simulation modules'), 700, 425, 1050, 30);
       g.font = '800 28px "Plus Jakarta Sans", sans-serif'; g.fillStyle = '#0a3d62';
       // Tên môn: phần sau dấu «|» là dòng phụ dưới tên môn (VD: «Credit Exchange Program»), tối đa 2 dòng phụ.
       var cLines = splitLines(courseName), cMain = cLines[0] || courseName, cExtra = cLines.slice(1, 3);

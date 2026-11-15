@@ -26,6 +26,8 @@ assert.equal(soe.slice(1, 4).toString(), 'PNG'); assert.equal(soe[25], 6, 'logo 
 assert.ok(fs.existsSync(path.join(ROOT, 'assets/docs/soe-logo.png')), 'giữ nguyên ảnh gốc soe-logo.png');
 assert.ok(fs.readFileSync(path.join(ROOT, 'Trang Giang Vien.dc.html'), 'utf8').includes('placeholder="VD: assets/docs/soe-logo-v2.png"'), 'gợi ý dùng bản nền trong suốt');
 // Thầy Tú (15/11/2026): chứng nhận lớp ghi «Certificate of Completion», không còn «Participation».
+// Thầy Tú (15/11/2026, lần 2): bỏ cụm «the BizOn business simulation modules», chỉ giữ «has successfully completed the course».
+assert.ok(cert.includes("I.custom ? T('đã hoàn thành môn học', 'has successfully completed the course')") && !cert.includes('BizOn business simulation modules of the course'));
 assert.ok(cert.includes("var title = opts.title || 'CERTIFICATE OF COMPLETION';") && !cert.includes('PARTICIPATION') && !cert.includes('successfully participated'));
 const LOGOS = ['assets/docs/ctu-logo.png', 'assets/docs/soe-logo-v2.png', 'assets/docs/umk-logo.png'];
 assert.ok('assets/docs/ctu-logo.png | assets/docs/soe-logo-v2.png'.length <= 300);
