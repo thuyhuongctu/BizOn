@@ -1,5 +1,5 @@
 // Trang chủ có thẻ dẫn sang Cổng Trò Chơi Sử Việt (13/11/2026), đặt ngay dưới thẻ «Âm nhạc». Cổng game là sản phẩm
-// riêng của tác giả Đỗ Thùy Hương, nằm ngoài BizOn: thẻ phải nói rõ điều đó, mở tab mới, có bản VI/EN, không tràn ngang
+// riêng của tác giả Đỗ Thùy Hương, nằm ngoài BizOn; từ 15/11/2026 thẻ ghi rõ game Vân Đồn có liên quan đến BizOn, mở tab mới, có bản VI/EN, không tràn ngang
 // ở 360 px. index.html và academia3d-v2.html giống hệt nhau nên thẻ có ở cả hai.
 'use strict';
 const fs = require('node:fs');
@@ -11,7 +11,7 @@ const ROOT = path.join(__dirname, '..');
 const URL_CONG = 'https://thuyhuongctu.github.io/Vietnamese-History-Games/';
 const read = f => fs.readFileSync(path.join(ROOT, f), 'utf8');
 
-assert.ok(+(read('sw.js').match(/bizon-v(\d+)/) || [])[1] >= 854);
+assert.ok(+(read('sw.js').match(/bizon-v(\d+)/) || [])[1] >= 874);
 assert.equal(read('index.html'), read('academia3d-v2.html'), 'index.html phải giống hệt academia3d-v2.html');
 assert.ok(fs.existsSync(path.join(ROOT, 'assets/covers/cong-tro-choi-su-viet.webp')), 'thiếu ảnh bìa thẻ cổng game');
 for (const f of ['index.html', 'academia3d-v2.html']) {
@@ -48,7 +48,7 @@ for (const f of ['index.html', 'academia3d-v2.html']) {
     assert.equal(r.target, '_blank'); assert.match(r.rel || '', /noopener/);
     assert.ok(r.afterMusic, 'thẻ cổng game phải nằm ngay sau thẻ Âm nhạc');
     assert.match(r.text, /Cổng Trò Chơi Sử Việt/);
-    assert.match(r.text, /ngoài BizOn/);
+    assert.match(r.text, /game Vân Đồn có liên quan đến BizOn/); // 15/11: ghi rõ Vân Đồn liên quan BizOn
     assert.match(r.text, /Vân Đồn 1149/);
     assert.ok(r.h > 0 && r.w > 0);
     await pg.close();
@@ -56,7 +56,7 @@ for (const f of ['index.html', 'academia3d-v2.html']) {
     pg = await open('en', 1280);
     r = await info(pg);
     assert.match(r.text, /Vietnamese History Game Portal/);
-    assert.match(r.text, /outside BizOn/);
+    assert.match(r.text, /Vân Đồn is a game related to BizOn/);
     assert.match(r.text, /Open the history games/);
     await pg.close();
 
