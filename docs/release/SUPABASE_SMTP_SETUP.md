@@ -92,5 +92,6 @@ Tên miền đã thêm bằng migration (áp bằng workflow «Supabase – áp 
 |---|---|---|
 | `gstudent.ctu.edu.vn` | Nghiên cứu sinh Đại học Cần Thơ | `20261024000000_add_gstudent_domain.sql` |
 | `umkendari.ac.id`, `student.umkendari.ac.id` | Universitas Muhammadiyah Kendari, Indonesia (lớp KT330H qua Zoom, 11/2026) | `20261113000000_add_umkendari_domain.sql` |
+| `ctu.edu.vn` | Cán bộ, giảng viên Đại học Cần Thơ (chơi thử như sinh viên; quyền giảng viên vẫn do quản trị duyệt) | `20261115000000_add_ctu_staff_domain.sql` |
 
 Hệ thống so khớp đúng phần sau `@`: `ten.02@umkendari.ac.id` và `ten@student.umkendari.ac.id` được nhận, `sv@febi.umkendari.ac.id` thì không. Khung đăng nhập của Bật Nghiệp vẫn ghi hai tên miền CTU trong nhãn; sinh viên trường bạn cứ nhập email trường của mình.
