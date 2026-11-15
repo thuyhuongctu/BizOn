@@ -56,7 +56,7 @@
   .rk-modal { position:fixed; inset:0; z-index:6; display:flex; align-items:center; justify-content:center; padding:16px; background:rgba(3,40,48,.42); box-sizing:border-box; }
   .rk-modal[hidden] { display:none; }
   .rk-card { background:#fffdf8; border-radius:24px; padding:22px; width:min(520px, 100%); max-height:calc(100vh - 32px); overflow:auto; box-sizing:border-box; box-shadow:0 30px 60px -20px rgba(0,40,50,.55); }
-  .rk-card h1 { margin:0 0 4px; font-size:22px; }
+  .rk-card h1, .rk-card h2 { margin:0 0 4px; font-size:22px; }
   .rk-card p { margin:6px 0; font-size:14px; line-height:1.5; }
   .rk-card label { display:block; font-size:12px; font-weight:800; margin:14px 0 6px; text-transform:uppercase; letter-spacing:.06em; opacity:.75; }
   .rk-card input { width:100%; box-sizing:border-box; font:700 16px Manrope,sans-serif; padding:12px 14px; border:2px solid #cfe3e5; border-radius:14px; background:#fff; color:#033337; }
@@ -113,7 +113,7 @@
 <div id="rk-mkt" class="rk-modal" hidden role="dialog" aria-modal="true" aria-labelledby="rk-mkt-h">
   <div class="rk-card rk-mkt">
     <img id="rk-mkt-img" src="assets/illustrations/game/mkt-tan-cang.webp" alt="" width="640" height="360">
-    <h1 id="rk-mkt-h" style="margin-top:14px">Thị trường</h1>
+    <h2 id="rk-mkt-h" style="margin-top:14px">Thị trường</h2>
     <p id="rk-mkt-p"></p>
     <span class="dau" id="rk-mkt-dau"></span>
     <button class="rk-btn rk-go" type="button" id="rk-mkt-x" data-en="Back to sea">Ra khơi tiếp</button>

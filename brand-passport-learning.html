@@ -86,25 +86,25 @@
 <body>
   <div class="shell">
     <header class="topbar">
-      <a class="brand" href="index.html" aria-label="Về trang chủ BizOn">
+      <a class="brand" href="index.html" aria-label="Về trang chủ BizOn" data-en-aria="BizOn home">
         <img src="assets/icons/icon-192.png" alt="BizOn">
         <span><strong>Brand Passport</strong><small>Lumina Learning Edition</small></span>
       </a>
       <span class="engine-badge">Deterministic engine protected</span>
       <div class="team-field">
         <label for="team-id">Team</label>
-        <input type="text" id="team-id" maxlength="80" placeholder="Mã nhóm" autocomplete="off">
+        <input type="text" id="team-id" maxlength="80" placeholder="Mã nhóm" data-en-ph="Team code" autocomplete="off">
       </div>
-      <button class="top-action export" id="export-trace" type="button">Xuất audit JSON</button>
-      <button class="top-action primary" id="lumina-toggle" type="button" aria-controls="lumina-panel" aria-expanded="false">✨ Mở Lumina</button>
+      <button class="top-action export" id="export-trace" type="button" data-en="Export audit JSON">Xuất audit JSON</button>
+      <button class="top-action primary" id="lumina-toggle" type="button" aria-controls="lumina-panel" aria-expanded="false" data-en="✨ Open Lumina">✨ Mở Lumina</button>
     </header>
 
     <main class="workspace">
       <div class="loading" aria-live="polite">
         <div class="loading-card">
           <img src="assets/icons/icon-192.png" alt="">
-          <h1>Đang kết nối lớp học tập</h1>
-          <p>Lumina chỉ đọc trạng thái và hỗ trợ phản tư. Engine tất định vẫn là nguồn duy nhất tính kết quả.</p>
+          <h1 data-en="Connecting the learning layer">Đang kết nối lớp học tập</h1>
+          <p data-en="Lumina only reads the game state and supports reflection. The deterministic engine remains the only source of results.">Lumina chỉ đọc trạng thái và hỗ trợ phản tư. Engine tất định vẫn là nguồn duy nhất tính kết quả.</p>
         </div>
       </div>
       <iframe id="bp-game" title="Brand Passport simulation game" src="about:blank"></iframe>
@@ -114,31 +114,31 @@
           <div class="lumina-mark" aria-hidden="true">L</div>
           <div>
             <h2>Lumina Learning Coach</h2>
-            <p>Hỗ trợ thích ứng theo luật minh bạch; không chọn đáp án và không thay đổi điểm số.</p>
+            <p data-en="Adaptive support from transparent rules; it never picks an answer and never changes the score.">Hỗ trợ thích ứng theo luật minh bạch; không chọn đáp án và không thay đổi điểm số.</p>
             <span class="status" id="learning-status">Đang kết nối</span>
           </div>
-          <button class="close" id="lumina-close" type="button" aria-label="Đóng Lumina">×</button>
+          <button class="close" id="lumina-close" type="button" aria-label="Đóng Lumina" data-en-aria="Close Lumina">×</button>
         </div>
         <div class="panel-body">
           <div class="mode-grid">
             <section class="mode-card">
               <strong>🧭 Coach</strong>
-              <p id="coach-text">Lumina đang đọc bối cảnh của ván chơi.</p>
+              <p id="coach-text" data-en="Lumina is reading the context of the game.">Lumina đang đọc bối cảnh của ván chơi.</p>
             </section>
             <section class="mode-card">
               <strong>🔎 Critic</strong>
-              <p id="critic-text">Lumina sẽ chất vấn giả định và trade-off của quyết định.</p>
+              <p id="critic-text" data-en="Lumina will question the assumptions and trade-offs of your decision.">Lumina sẽ chất vấn giả định và trade-off của quyết định.</p>
             </section>
           </div>
 
           <section class="reflection">
-            <label for="reflection-text">✍️ Phản tư của người học</label>
-            <small>Giải thích lý do chọn, bằng chứng sử dụng, rủi ro quan trọng nhất và điều có thể khiến quyết định sai.</small>
-            <textarea id="reflection-text" maxlength="2000" placeholder="Tôi chọn quyết định này vì… Bằng chứng chính là… Rủi ro lớn nhất là…"></textarea>
+            <label for="reflection-text" data-en="✍️ Learner reflection">✍️ Phản tư của người học</label>
+            <small data-en="Explain why you chose it, the evidence you used, the biggest risk and what could make the decision wrong.">Giải thích lý do chọn, bằng chứng sử dụng, rủi ro quan trọng nhất và điều có thể khiến quyết định sai.</small>
+            <textarea id="reflection-text" maxlength="2000" placeholder="Tôi chọn quyết định này vì… Bằng chứng chính là… Rủi ro lớn nhất là…" data-en-ph="I chose this because… The main evidence is… The biggest risk is…"></textarea>
             <div class="button-row">
-              <button class="small-btn save" id="save-reflection" type="button">Lưu phản tư</button>
-              <button class="small-btn" type="button" onclick="document.getElementById('export-trace').click()">Xuất JSON</button>
-              <button class="small-btn danger" id="clear-trace" type="button">Xóa nhật ký phiên này</button>
+              <button class="small-btn save" id="save-reflection" type="button" data-en="Save reflection">Lưu phản tư</button>
+              <button class="small-btn" type="button" onclick="document.getElementById('export-trace').click()" data-en="Export JSON">Xuất JSON</button>
+              <button class="small-btn danger" id="clear-trace" type="button" data-en="Delete this session's log">Xóa nhật ký phiên này</button>
             </div>
           </section>
 
@@ -147,7 +147,7 @@
             <div class="trace-list" id="trace-list"></div>
           </section>
 
-          <p class="ethics-note"><b>Quản trị dữ liệu:</b> bản V1 lưu nhật ký quyết định trên chính thiết bị này (localStorage), không gửi bài phản tư lên máy chủ. Khi dùng cho lớp học thật cần có sự đồng ý của người học, chính sách lưu giữ, quyền xóa và phân quyền cho giảng viên.</p>
+          <p class="ethics-note" data-en-html="&lt;b&gt;Data governance:&lt;/b&gt; version 1 keeps the decision log on this device only (localStorage) and does not send reflections to a server. Real classroom use needs learner consent, a retention policy, the right to delete and instructor permissions."><b>Quản trị dữ liệu:</b> bản V1 lưu nhật ký quyết định trên chính thiết bị này (localStorage), không gửi bài phản tư lên máy chủ. Khi dùng cho lớp học thật cần có sự đồng ý của người học, chính sách lưu giữ, quyền xóa và phân quyền cho giảng viên.</p>
         </div>
       </aside>
       <button class="lumina-fab" id="lumina-fab" type="button" onclick="document.getElementById('lumina-toggle').click()">✨ Lumina<span>Coach · Critic · Reflection</span></button>

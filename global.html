@@ -309,6 +309,9 @@ async function wmLoad() {
 wmLoad();
 
 /* ================= BIZON GLOBAL – GAME ================= */
+/* Ngôn ngữ: phần dựng bằng mã có bản tiếng Anh cho màn đầu (hồ sơ, thẻ đối thủ) – rà soát 14/11/2026 */
+const gEN = () => { try { return localStorage.getItem('bizon-lang') === 'en'; } catch (e) { return false; } };
+const gL = (vi, en) => gEN() ? en : vi;
 const MARKETS = [
   { id: 'sea', flag: '🇸🇬', name: 'Đông Nam Á', hub: 'Singapore', x: 772, y: 258, size: 110000, ref: 10, elast: 2.4, tariff: 0.05, cult: 0.2, digital: 0.85, ai: 'Merlion Toys' },
   { id: 'eas', flag: '🇯🇵', name: 'Đông Á',     hub: 'Tokyo',     x: 878, y: 142, size: 140000, ref: 14, elast: 2.0, tariff: 0.10, cult: 0.5, digital: 0.95, ai: 'Sakura Craft' },
@@ -320,13 +323,20 @@ const MARKETS = [
 ];
 /* Hồ sơ CEO đối thủ bản địa (Rival Intelligence toàn cầu) */
 const RIVAL_CEOS = {
-  sea: { ceo: 'Wei Ming Tan',   tag: 'TRÙM HUB LOGISTICS', strength: 'Logistics tối ưu, thuế quan thấp, xoay hàng cực nhanh', weak: 'Thị trường nhỏ, phụ thuộc trung chuyển', counter: 'Đấu bằng bản sắc sản phẩm Việt và kênh số trực tiếp' },
-  eas: { ceo: 'Yuki Tanaka',    tag: 'CHẤT LƯỢNG THỦ CÔNG', strength: 'Hoàn thiện thủ công cao cấp, khách trung thành', weak: 'Giá cao, chậm ra mẫu mới', counter: 'Tung mẫu mới nhanh hơn với giá hợp lý, giữ chuẩn chất lượng' },
-  eu:  { ceo: 'Stefan Weber',   tag: 'TỰ ĐỘNG HÓA QUY MÔ', strength: 'Kỹ thuật chính xác, quy mô lớn, tiếp cận cả EU', weak: 'Cứng nhắc, bản địa hóa kém với đồ chơi văn hóa', counter: 'Kể câu chuyện văn hóa Việt mà dây chuyền không sao chép được' },
-  na:  { ceo: 'Jake Miller',    tag: 'ĐỔI MỚI VIRAL',       strength: 'Marketing viral, danh mục IP mạnh', weak: 'Chi phí cao, vòng đời trend ngắn', counter: 'Bền bỉ xây cộng đồng thay vì đua từng cơn sốt' },
-  me:  { ceo: 'Omar Al-Rashid', tag: 'VỐN SÂU',             strength: 'Tiềm lực vốn lớn, cửa ngõ trung chuyển toàn cầu', weak: 'Ít kinh nghiệm ngành đồ chơi', counter: 'Thắng bằng chuyên môn sản phẩm và quan hệ đối tác dài hạn' },
-  kr:  { ceo: 'Ji-Woo Park',    tag: 'NHÀ MÁY THÔNG MINH',  strength: 'Tích hợp nhà máy thông minh, dữ liệu vận hành tốt', weak: 'Khẩu vị thị trường thay đổi nhanh hơn dây chuyền', counter: 'Linh hoạt mẫu mã theo lô nhỏ, cá nhân hóa theo fan' },
-  af:  { ceo: 'David Kimani',   tag: 'TĂNG TRƯỞNG XANH',    strength: 'Vật liệu sinh thái, thống trị thị trường mới nổi', weak: 'Hạ tầng số và logistics còn yếu', counter: 'Hợp tác phân phối thay vì đối đầu; chuẩn ESG phải ngang ngửa' },
+  sea: { ceo: 'Wei Ming Tan',   tag: 'TRÙM HUB LOGISTICS', strength: 'Logistics tối ưu, thuế quan thấp, xoay hàng cực nhanh', weak: 'Thị trường nhỏ, phụ thuộc trung chuyển', counter: 'Đấu bằng bản sắc sản phẩm Việt và kênh số trực tiếp',
+         tagEn: 'LOGISTICS HUB BOSS', strengthEn: 'Optimised logistics, low tariffs, very fast stock turnover', counterEn: 'Compete on Vietnamese product identity and direct digital channels' },
+  eas: { ceo: 'Yuki Tanaka',    tag: 'CHẤT LƯỢNG THỦ CÔNG', strength: 'Hoàn thiện thủ công cao cấp, khách trung thành', weak: 'Giá cao, chậm ra mẫu mới', counter: 'Tung mẫu mới nhanh hơn với giá hợp lý, giữ chuẩn chất lượng',
+         tagEn: 'HANDCRAFTED QUALITY', strengthEn: 'Premium hand finishing, loyal customers', counterEn: 'Launch new designs faster at a fair price while keeping quality' },
+  eu:  { ceo: 'Stefan Weber',   tag: 'TỰ ĐỘNG HÓA QUY MÔ', strength: 'Kỹ thuật chính xác, quy mô lớn, tiếp cận cả EU', weak: 'Cứng nhắc, bản địa hóa kém với đồ chơi văn hóa', counter: 'Kể câu chuyện văn hóa Việt mà dây chuyền không sao chép được',
+         tagEn: 'AUTOMATION AT SCALE', strengthEn: 'Precision engineering, large scale, reach across the EU', counterEn: 'Tell a Vietnamese cultural story that an assembly line cannot copy' },
+  na:  { ceo: 'Jake Miller',    tag: 'ĐỔI MỚI VIRAL',       strength: 'Marketing viral, danh mục IP mạnh', weak: 'Chi phí cao, vòng đời trend ngắn', counter: 'Bền bỉ xây cộng đồng thay vì đua từng cơn sốt',
+         tagEn: 'VIRAL INNOVATION', strengthEn: 'Viral marketing, a strong IP portfolio', counterEn: 'Build a community steadily instead of chasing every craze' },
+  me:  { ceo: 'Omar Al-Rashid', tag: 'VỐN SÂU',             strength: 'Tiềm lực vốn lớn, cửa ngõ trung chuyển toàn cầu', weak: 'Ít kinh nghiệm ngành đồ chơi', counter: 'Thắng bằng chuyên môn sản phẩm và quan hệ đối tác dài hạn',
+         tagEn: 'DEEP POCKETS', strengthEn: 'Large capital base, a global transit gateway', counterEn: 'Win with product expertise and long-term partnerships' },
+  kr:  { ceo: 'Ji-Woo Park',    tag: 'NHÀ MÁY THÔNG MINH',  strength: 'Tích hợp nhà máy thông minh, dữ liệu vận hành tốt', weak: 'Khẩu vị thị trường thay đổi nhanh hơn dây chuyền', counter: 'Linh hoạt mẫu mã theo lô nhỏ, cá nhân hóa theo fan',
+         tagEn: 'SMART FACTORY', strengthEn: 'Integrated smart factories, strong operating data', counterEn: 'Stay flexible with small batches and fan-personalised designs' },
+  af:  { ceo: 'David Kimani',   tag: 'TĂNG TRƯỞNG XANH',    strength: 'Vật liệu sinh thái, thống trị thị trường mới nổi', weak: 'Hạ tầng số và logistics còn yếu', counter: 'Hợp tác phân phối thay vì đối đầu; chuẩn ESG phải ngang ngửa',
+         tagEn: 'GREEN GROWTH', strengthEn: 'Eco materials, dominant in emerging markets', counterEn: 'Partner on distribution instead of fighting; match their ESG standard' },
 };
 function renderRivalsGlobal() {
   const box = document.getElementById('rivals-global');
@@ -334,11 +344,11 @@ function renderRivalsGlobal() {
   const you = `<div class="clay-card overflow-hidden ring-2 ring-clay-gold">
       <div class="h-40 flex items-end justify-center" style="background:linear-gradient(180deg,#fdf1dc 0%,#f7d9a8 100%)"><img src="assets/character/csuite/ceo-smile.webp" alt="CEO đội Việt Nam" class="h-36 w-auto drop-shadow-lg" loading="lazy"></div>
       <div class="p-3">
-        <p class="font-display font-extrabold text-deep-teal text-xs">Đội của bạn 🇻🇳</p>
+        <p class="font-display font-extrabold text-deep-teal text-xs">${gL('Đội của bạn', 'Your team')} 🇻🇳</p>
         <p class="text-[10px] text-deep-teal/50">CEO Minh Long · Cần Thơ</p>
-        <p class="text-[9px] font-extrabold uppercase text-primary mt-1">XƯỞNG LINH VẬT ĐẤT SÉT VIỆT</p>
-        <p class="text-[10px] text-deep-teal/70 mt-1">💪 5 vai trò C-Suite + cố vấn Lumina</p>
-        <p class="text-[10px] text-deep-teal/70 mt-0.5">🎯 Chọn thị trường phía trên để xuất quân!</p>
+        <p class="text-[9px] font-extrabold uppercase text-primary mt-1">${gL('XƯỞNG LINH VẬT ĐẤT SÉT VIỆT', 'VIETNAMESE CLAY MASCOT WORKSHOP')}</p>
+        <p class="text-[10px] text-deep-teal/70 mt-1">💪 ${gL('5 vai trò C-Suite + cố vấn Lumina', '5 C-suite roles + Lumina the advisor')}</p>
+        <p class="text-[10px] text-deep-teal/70 mt-0.5">🎯 ${gL('Chọn thị trường phía trên để xuất quân!', 'Pick a market above to set sail!')}</p>
       </div>
     </div>`;
   box.innerHTML = you + MARKETS.map(m => {
@@ -348,14 +358,15 @@ function renderRivalsGlobal() {
       <div class="p-3">
         <p class="font-display font-extrabold text-deep-teal text-xs">${m.ai} ${m.flag}</p>
         <p class="text-[10px] text-deep-teal/50">CEO ${r.ceo} · ${m.hub}</p>
-        <p class="text-[9px] font-extrabold uppercase text-clay-orange mt-1">${r.tag}</p>
-        <p class="text-[10px] text-deep-teal/70 mt-1">💪 ${r.strength}</p>
-        <p class="text-[10px] text-deep-teal/70 mt-0.5">🎯 Khắc chế: ${r.counter}</p>
+        <p class="text-[9px] font-extrabold uppercase text-clay-orange mt-1">${gL(r.tag, r.tagEn)}</p>
+        <p class="text-[10px] text-deep-teal/70 mt-1">💪 ${gL(r.strength, r.strengthEn)}</p>
+        <p class="text-[10px] text-deep-teal/70 mt-0.5">🎯 ${gL('Khắc chế', 'How to beat them')}: ${gL(r.counter, r.counterEn)}</p>
       </div>
     </div>`;
   }).join('');
 }
 document.addEventListener('DOMContentLoaded', renderRivalsGlobal);
+window.addEventListener('bizon:langchange', () => { renderRivalsGlobal(); profRender(); });
 
 /* Phong cách đàm phán của đối tác bản địa (Module AI Negotiation) */
 const NEGO_STYLE = { sea: 'hợp tác', eas: 'thận trọng', eu: 'cứng rắn', na: 'mặc cả', me: 'quan hệ', kr: 'thận trọng', af: 'quan hệ' };
@@ -384,12 +395,12 @@ const G = { market: null, mode: null, q: 0, profit: 0, shareHist: [], done: fals
 /* ===== Bước 0: Hồ sơ doanh nghiệp (Module 1 AIBIS) ===== */
 const PROFILE_OPTS = {
   tech: [
-    { id: 'basic', icon: '🧰', name: 'Cơ bản', desc: 'Không phụ phí – marketing số hiệu quả chuẩn' },
-    { id: 'high',  icon: '🚀', name: 'Cao',    desc: '+10k USD vốn ban đầu · marketing số hiệu quả +12%' },
+    { id: 'basic', icon: '🧰', name: 'Cơ bản', desc: 'Không phụ phí – marketing số hiệu quả chuẩn', nameEn: 'Basic', descEn: 'No extra cost – standard digital-marketing effect' },
+    { id: 'high',  icon: '🚀', name: 'Cao',    desc: '+10k USD vốn ban đầu · marketing số hiệu quả +12%', nameEn: 'High', descEn: '+10k USD starting capital · digital marketing +12% more effective' },
   ],
   exp: [
-    { id: 'new', icon: '🌱', name: 'Mới ra khơi',     desc: 'Chưa từng xuất khẩu – mức chuẩn' },
-    { id: 'exp', icon: '⚓', name: 'Đã từng xuất khẩu', desc: 'Kinh nghiệm giúp bản địa hóa hiệu quả hơn (+12 điểm quy đổi)' },
+    { id: 'new', icon: '🌱', name: 'Mới ra khơi',     desc: 'Chưa từng xuất khẩu – mức chuẩn', nameEn: 'First voyage', descEn: 'Never exported before – standard level' },
+    { id: 'exp', icon: '⚓', name: 'Đã từng xuất khẩu', desc: 'Kinh nghiệm giúp bản địa hóa hiệu quả hơn (+12 điểm quy đổi)', nameEn: 'Exported before', descEn: 'Experience makes localisation more effective (+12 converted points)' },
   ],
 };
 const PROFILE = (() => { try { return Object.assign({ tech: 'basic', exp: 'new' }, JSON.parse(localStorage.getItem('bizon-global-profile') || '{}')); } catch (e) { return { tech: 'basic', exp: 'new' }; } })();
@@ -399,12 +410,12 @@ function profRender() {
     if (!el) return;
     el.innerHTML = PROFILE_OPTS[k].map(o => `
       <button onclick="profPick('${k}','${o.id}')" class="clay-sunken rounded-2xl p-2.5 text-center ${PROFILE[k] === o.id ? 'ring-2 ring-clay-orange' : ''}">
-        <p class="text-xl">${o.icon}</p><p class="text-[11px] font-extrabold text-deep-teal mt-0.5">${o.name}</p><p class="text-[9px] text-deep-teal/50">${o.desc}</p>
+        <p class="text-xl">${o.icon}</p><p class="text-[11px] font-extrabold text-deep-teal mt-0.5">${gL(o.name, o.nameEn)}</p><p class="text-[9px] text-deep-teal/50">${gL(o.desc, o.descEn)}</p>
       </button>`).join('');
   });
   const note = document.getElementById('prof-note');
-  if (note) note.textContent = 'Lumina: ' + (PROFILE.tech === 'high' ? 'đầu tư công nghệ trước khi quốc tế hóa là "lá chắn số" của bạn. ' : 'năng lực cơ bản vẫn ra khơi được – nhưng marketing số sẽ kém sắc hơn. ')
-    + (PROFILE.exp === 'exp' ? 'Kinh nghiệm xuất khẩu giúp bạn đọc thị trường bản địa nhanh hơn hẳn.' : 'Lần đầu ra khơi: chọn thị trường gần về văn hóa để học hỏi trước.');
+  if (note) note.textContent = 'Lumina: ' + (PROFILE.tech === 'high' ? gL('đầu tư công nghệ trước khi quốc tế hóa là "lá chắn số" của bạn. ', 'investing in technology before going international is your "digital shield". ') : gL('năng lực cơ bản vẫn ra khơi được – nhưng marketing số sẽ kém sắc hơn. ', 'basic capability can still set sail – but your digital marketing will be less sharp. '))
+    + (PROFILE.exp === 'exp' ? gL('Kinh nghiệm xuất khẩu giúp bạn đọc thị trường bản địa nhanh hơn hẳn.', 'Export experience helps you read local markets much faster.') : gL('Lần đầu ra khơi: chọn thị trường gần về văn hóa để học hỏi trước.', 'First voyage: pick a culturally close market to learn first.'));
 }
 function profPick(k, id) { PROFILE[k] = id; try { localStorage.setItem('bizon-global-profile', JSON.stringify(PROFILE)); } catch (e) {} profRender(); if (G.mode && !G.done) gUpdate(); }
 const gFlags = (() => { try { return JSON.parse(localStorage.getItem('bizon-global-flags') || '[]'); } catch (e) { return []; } })();
