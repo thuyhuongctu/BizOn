@@ -54,7 +54,7 @@ for (const f of ['index.html', 'academia3d-v2.html']) {
     assert.match(r.text, /Trảo Oa, Lộ Lạc, Xiêm La/); // đúng như Toàn thư chép năm 1149
     assert.doesNotMatch(r.text, /Tám trăm năm/);
     assert.match(r.text, /Mở cổng, ra bến Vân Đồn/);
-    assert.match(r.text, /Vân Đồn năm 1149/);
+    assert.match(r.text, /Năm 1149, cách nay gần 900 năm/);
     assert.ok(r.h > 0 && r.w > 0);
     await pg.close();
 
