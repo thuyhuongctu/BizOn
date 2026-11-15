@@ -345,7 +345,7 @@ input,select,textarea,button{font-family:inherit}
               </label>
               <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
                 <label style="display:flex;align-items:center;gap:6px;font-weight:700">{{ L.certLangLabel }}
-                  <select value="{{ certLangSel }}" onChange="{{ onCertLang }}" style="padding:6px 10px;border-radius:10px;border:2px solid #e6d6bf;background:#fff;font-weight:600"><option value="en">English</option><option value="vi">Tiếng Việt</option></select>
+                  <select value="{{ certLangSel }}" onChange="{{ onCertLang }}" style="padding:6px 10px;border-radius:10px;border:2px solid #e6d6bf;background:#fff;font-weight:600"><option value="en">English</option><option value="vi">{{ L.certLangVi }}</option></select>
                 </label>
                 <button type="button" onClick="{{ saveRoster }}" style="border:0;background:#2f8a8c;color:#fff;border-radius:10px;padding:7px 14px;font-weight:700;cursor:pointer">{{ rosterSaveLabel }}</button>
                 <button type="button" onClick="{{ issueAll }}" style="border:0;background:#1f4a55;color:#fff;border-radius:14px;padding:8px 14px;font:800 15px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #10303a;cursor:pointer">{{ L.certAll }} ({{ certCount }}) → PDF</button>
@@ -586,6 +586,7 @@ class Component extends DCLogic {
     return {
       certAll: t('📚 In cả lớp', '📚 Print the whole class'),
       certLangLabel: t('Ngôn ngữ chứng nhận', 'Certificate language'),
+      certLangVi: t('Tiếng Việt', 'Vietnamese'),
       k01: t('(khác B5 ở tab «Chấm điểm»). «Chỉ số đồng đội» = 100 trừ chênh lệch điểm tham gia cao nhất–thấp nhất trong đội.', '(different from B5 in the “Grading” tab). “Team index” = 100 minus the gap between the highest and lowest participation score in the team.'),
       k02: t('Chưa có dữ liệu Nhật ký thành viên cho lớp này.', 'No member-log data for this class yet.'),
       k03: t('Chưa có dữ liệu Nhật ký thành viên cho lớp này. Sinh viên cần đăng nhập bằng Mã lớp thật (không phải Đội Demo) và mỗi vai chơi trên máy riêng để hệ thống ghi nhận.', 'No member-log data for this class yet. Students must sign in with the real class code (not the Demo team) and each role must play on its own device to be recorded.'),

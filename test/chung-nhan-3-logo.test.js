@@ -17,7 +17,7 @@ assert.match(gv, /k44: t\('Đường dẫn logo bên phải [^']*cách nhau bằ
 // Ngôn ngữ chứng nhận: mặc định English, giảng viên chọn Tiếng Việt trước khi in (15/11/2026)
 assert.match(cert, /var lang = opts\.lang === 'vi' \? 'vi' : 'en';/);
 assert.ok(gv.includes("certOpts(st) { const s = this.state; return { lang: s.certLang === 'vi' ? 'vi' : 'en',"));
-assert.ok(gv.includes('<select value="{{ certLangSel }}" onChange="{{ onCertLang }}"') && gv.includes('<option value="en">English</option><option value="vi">Tiếng Việt</option>'));
+assert.ok(gv.includes('<select value="{{ certLangSel }}" onChange="{{ onCertLang }}"') && gv.includes('<option value="en">English</option><option value="vi">{{ L.certLangVi }}</option>'));
 assert.ok(gv.includes("certLangLabel: t('Ngôn ngữ chứng nhận', 'Certificate language')"));
 const umk = fs.readFileSync(path.join(ROOT, 'assets/docs/umk-logo.png'));
 assert.equal(umk.slice(1, 4).toString(), 'PNG'); assert.equal(umk[25], 6, 'PNG có kênh alpha (nền trong suốt)');
