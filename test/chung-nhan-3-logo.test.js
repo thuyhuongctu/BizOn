@@ -25,6 +25,8 @@ const soe = fs.readFileSync(path.join(ROOT, 'assets/docs/soe-logo-v2.png'));
 assert.equal(soe.slice(1, 4).toString(), 'PNG'); assert.equal(soe[25], 6, 'logo Trường Kinh tế v2 có kênh alpha');
 assert.ok(fs.existsSync(path.join(ROOT, 'assets/docs/soe-logo.png')), 'giữ nguyên ảnh gốc soe-logo.png');
 assert.ok(fs.readFileSync(path.join(ROOT, 'Trang Giang Vien.dc.html'), 'utf8').includes('placeholder="VD: assets/docs/soe-logo-v2.png"'), 'gợi ý dùng bản nền trong suốt');
+// Thầy Tú (15/11/2026): chứng nhận lớp ghi «Certificate of Completion», không còn «Participation».
+assert.ok(cert.includes("var title = opts.title || 'CERTIFICATE OF COMPLETION';") && !cert.includes('PARTICIPATION') && !cert.includes('successfully participated'));
 const LOGOS = ['assets/docs/ctu-logo.png', 'assets/docs/soe-logo-v2.png', 'assets/docs/umk-logo.png'];
 assert.ok('assets/docs/ctu-logo.png | assets/docs/soe-logo-v2.png'.length <= 300);
 
