@@ -6,28 +6,28 @@ Ký hiệu: `[P]` làm song song được (khác tệp). `[US1]`, `[US2]` là c�
 
 ## Giai đoạn 1 – Câu chuyện 1: Khu Cảng Cái Mép (P1) · PR 1 · gộp trước 19/11/2026
 
-- [ ] T001 [US1] Viết `test/cang-cai-mep-3d.test.js`, chạy và thấy hỏng. Test kiểm:
+- [X] T001 [US1] Viết `test/cang-cai-mep-3d.test.js`, chạy và thấy hỏng. Test kiểm:
   - có nút «🚢 Cảng Cái Mép» trong `#zones`;
   - bấm nút thì máy quay tới khu cảng;
   - 5 điểm chạm mở đúng 5 thẻ VI/EN, đổi ngôn ngữ thì thẻ vẽ lại;
   - không tràn ngang ở 390 px; không lỗi JS;
   - cùng hạt giống và cùng quyết định 6 vụ thì kết quả trùng với khi chưa có cảng (SC-002).
-- [ ] T002 [US1] Kiểm lại hai số liệu cảng (24.188 TEU năm 2023; hơn 20 tuyến đi thẳng) ngày làm; ghi nguồn vào đầu tệp.
-- [ ] T003 [US1] Tạo `js/cang-cai-mep-3d.js` (ES module):
+- [X] T002 [US1] Kiểm lại hai số liệu cảng (24.188 TEU năm 2023; hơn 20 tuyến đi thẳng) ngày làm; ghi nguồn vào đầu tệp.
+- [X] T003 [US1] Tạo `js/cang-cai-mep-3d.js` (ES module):
   - `buildPort(ctx)` dựng nền riêng ở x > 8, cần cẩu bờ, tàu container, bãi container, trạm hải quan có rào chắn, biển «CẢNG CÁI MÉP – THỊ VẢI»;
   - mỗi điểm chạm có `userData.label`/`role` [vi, en];
   - vật trang trí phụ đưa vào `LOWHIDE`.
-- [ ] T004 [US1] Trong `js/cang-cai-mep-3d.js`, thêm thẻ kiến thức: cầu cảng nước sâu, tàu container (TEU/FEU), bãi container và Incoterms (FOB/CIF), hải quan (bộ hồ sơ), «Khi cảng tắc». Có nút đóng, vẽ lại khi đổi VI/EN, vùng chạm ≥ 44 px.
-- [ ] T005 [US1] Trong `BizOn Game 3D.html`, thêm:
+- [X] T004 [US1] Trong `js/cang-cai-mep-3d.js`, thêm thẻ kiến thức: cầu cảng nước sâu, tàu container (TEU/FEU), bãi container và Incoterms (FOB/CIF), hải quan (bộ hồ sơ), «Khi cảng tắc». Có nút đóng, vẽ lại khi đổi VI/EN, vùng chạm ≥ 44 px.
+- [X] T005 [US1] Trong `BizOn Game 3D.html`, thêm:
   - một dòng `import { buildPort } from './js/cang-cai-mep-3d.js'`;
   - một lời gọi `buildPort(...)` sau khi dựng trụ sở;
   - một mục `ZONES` «🚢 Cảng Cái Mép / Cái Mép Port».
   - Không sửa dòng nào khác.
-- [ ] T006 [US1] `sw.js`: thêm `./js/cang-cai-mep-3d.js` vào SHELL; `CACHE` lấy số lớn nhất + 1.
-- [ ] T007 [US1] Chạy `cang-cai-mep-3d`, `bn3d-onboarding`, `bn3d-upgrades`, `nhan-vat-3d-ceo`, `bat-nghiep-3d-tranh-dong`, `chan-trang-game-3d`, `ip-ma-nguon-afbacd2`, `engine`. Chạy html-validate trên `BizOn Game 3D.html`.
-- [ ] T008 [US1] Chụp khu cảng ở 390 px và 1280 px gửi chị. Mở PR nháp; gộp khi chị nói «Gộp» và CI xanh, trước 19/11/2026.
+- [X] T006 [US1] `sw.js`: thêm `./js/cang-cai-mep-3d.js` vào SHELL; `CACHE` lấy số lớn nhất + 1.
+- [X] T007 [US1] Chạy `cang-cai-mep-3d`, `bn3d-onboarding`, `bn3d-upgrades`, `nhan-vat-3d-ceo`, `bat-nghiep-3d-tranh-dong`, `chan-trang-game-3d`, `ip-ma-nguon-afbacd2`, `engine`. Chạy html-validate trên `BizOn Game 3D.html`.
+- [X] T008 [US1] Chụp khu cảng ở 390 px và 1280 px gửi chị. Mở PR nháp; gộp khi chị nói «Gộp» và CI xanh, trước 19/11/2026.
 
-**Điểm dừng**: khu cảng dùng được, luật chơi không đổi. Lớp UMK chơi ngày 19/11 với bản này.
+**Điểm dừng**: khu cảng dùng được, luật chơi không đổi. Đã gộp ở PR #1127 ngày 16/11/2026; lớp UMK chơi ngày 19/11 với bản này.
 
 ## Giai đoạn 2 – Câu chuyện 2: Quyết định ở cảng vụ 5 (P2) · PR 2 · gộp sau 19/11/2026
 
