@@ -14,7 +14,8 @@ for (const n of ['ben-phu-sa-trailer-v2', 'bizon-trailer-v3', 'bp-trailer-v2', '
   assert.ok(b.includes('moov') && b.indexOf('moov') < (b.indexOf('mdat') < 0 ? Infinity : b.indexOf('mdat')) && b.includes('avc1') && b.includes('mp4a'), 'faststart, H.264 + AAC: ' + n);
   // Bật Nghiệp: từ 01/11/2026 trang chủ dùng bản v4 (giọng đọc của tác giả, chỉ có bản 720p); bản v3 giữ trong kho.
   // Từ 06/11/2026 dùng bản v5: hình và giọng của v4, trộn lại nhạc nền gốc (v4 mất nhạc).
-  const onHome = n === 'bizon-trailer-v3' ? 'assets/video/bizon-trailer-v5-720p.mp4' : s;
+  // Từ 16/11/2026 dùng bản v6: hình v5, giọng v4, nhạc nền không lời liền mạch tự hạ khi có lời.
+  const onHome = n === 'bizon-trailer-v3' ? 'assets/video/bizon-trailer-v6-720p.mp4' : s;
   assert.ok(home.includes(`data-trailer="${onHome}"`) && !home.includes(`"${o}"`), 'trang chủ dùng bản 720p: ' + n);
 }
 assert.ok(+(fs.readFileSync(R('sw.js'), 'utf8').match(/bizon-v(\d+)/) || [])[1] >= 698);
