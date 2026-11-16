@@ -423,6 +423,7 @@ import { makeCharacters } from './bizon-characters.js';
 import { makeHQ } from './bizon-hq-kit.js';
 // Nhân vật «tranh động» (12/11/2026, chị mở khóa hồ sơ cho việc này): trụ sở dùng tờ sprite đi bộ như Bến BizOn; ?nv=3d quay về mô hình cũ
 import { taoTranhDong, BO_TRANH } from './js/ben-bizon-tranh-dong.js';
+import { buildPort } from './js/cang-cai-mep-3d.js';
 
 const canvas = document.getElementById('c');
 // ---------- song ngữ Việt / Anh cho khung Trụ sở 3D (phần game nhúng trong iframe do js/site-ui.js dịch)
@@ -526,6 +527,8 @@ place('palletJack', 4.9, 5.2); place('exportCrate', 6.75, 5.0, -0.1); place('wat
 // sản phẩm & linh vật BizOn
 const showcaseObj = place('productShowcase', -2.45, -3.35, 0.45), mascotObj = place('mascotCollection', -2.7, 3.55, Math.atan2(-0.75, 0.6));
 const LOWHIDE = [showcaseObj, mascotObj, ...LOWHIDE_EXTRA];
+// Cảng Cái Mép – Thị Vải (specs/005-cang-cai-mep): khu riêng ngoài nền trụ sở, thẻ kiến thức, không chạm luật chơi
+LOWHIDE.push(...buildPort({ THREE, scene, hq, camera, canvas, T }).decor);
 // R&D
 place('labBench', -1.4, 2.5); place('printer3d', 0.7, 2.4); place('kiln', 2.3, 2.45); place('holoStation', 0.3, 5.05); place('formulaBoard', -1.6, 5.1, 0.15); place('materialRack', 2.5, 5.1, -0.3);
 const roverObj = place('rover', 1.2, 3.8);
@@ -643,6 +646,7 @@ document.getElementById('night').onclick = () => setNight(!night);
 const ZONES = [
   [['Toàn cảnh', 'Overview'], null], [['CEO · Ra quyết định', 'CEO · Decisions'], [0, 0.5, -3], 8, 'decisions'], [['Tài chính · Báo cáo', 'Finance · Reports'], [-5.5, 0.5, -3.5], 7, 'reports'], [['SEC · Nhật ký đội', 'SEC · Team journal'], [-5.5, 0.5, 1.2], 7, 'journal'],
   [['Marketing · Thị trường sống', 'Marketing · Live market'], [5.5, 0.5, -3.5], 7, 'market'], [['Vận hành · Xưởng đất sét', 'Operations · Clay workshop'], [5.6, 0.5, 2.5], 7.5, 'minigame'], [['R&D · Kỹ năng', 'R&D · Skills'], [0.4, 0.5, 3.7], 7, 'skills'], [['Sản phẩm · Cửa hàng', 'Products · Shop'], [-2.45, 0.8, -3.35], 4, 'shop'], [['Linh vật 4 đội', 'Four team mascots'], [-2.7, 0.5, 3.55], 3, 'achievements', [-0.75, 0.6, 0.6]], [['Sảnh cờ · Chinh phục', 'Flag hall · Conquest'], [-5.6, 1, 5], 6, '__map'],
+  [['🚢 Cảng Cái Mép', '🚢 Cái Mép Port'], [13.4, 1.0, -0.4], 18, null, [0.5, 0.62, 0.8]],
 ];
 let tween = null; const zb = document.getElementById('zones');
 const fly = i => zb.children[i].dataset.fly = '1';
