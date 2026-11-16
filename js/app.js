@@ -705,12 +705,12 @@ function showPremium() {
 // hợp với phần cuối ván chơi. Nhạc của Hộ Chiếu Thương Hiệu vẫn để riêng bên
 // brand-passport.html, không trộn vào đây.
 const BGM_TRACKS = [
-  'assets/audio/bat-nghiep-mekong-sunfire-rise.mp3', // BÀI CHÍNH khi mở game – Mekong Sunfire · Rise With The River
-  'assets/audio/bat-nghiep-mekong-sunfire-rise-2.mp3', // Mekong Sunfire · Rise With The River – bản 2 (song ngữ, 4:55)
+  'assets/audio/bat-nghiep-mekong-sunfire-rise-v2.mp3', // BÀI CHÍNH khi mở game – Mekong Sunfire · Rise With The River
+  'assets/audio/bat-nghiep-mekong-sunfire-rise-2-v2.mp3', // Mekong Sunfire · Rise With The River – bản 2 (song ngữ, 4:55)
   'assets/audio/bat-nghiep-mekong-sunfire-1.mp3', // Mekong Sunfire – bản 1 (song ngữ Anh–Việt, 4:26)
   'assets/audio/huong-and-the-world-en.mp3', // Hương & The World (bản tiếng Anh)
   'assets/audio/bat-nghiep-co-loi.mp3',   // ca khúc chủ đề, bản thu có lời
-  'assets/audio/bat-nghiep-thap-den-ben-song.mp3', // «Thắp đèn bên sông» – lời Việt, dân ca Nam Bộ, 5:00
+  'assets/audio/bat-nghiep-thap-den-ben-song-v2.mp3', // «Thắp đèn bên sông» – lời Việt, dân ca Nam Bộ, 5:00
   'assets/audio/bat-nghiep-rap-symphony.mp3', // bản rap symphony
   'assets/audio/bat-nghiep-mekong-sunfire-2.mp3', // Mekong Sunfire – bản đề xuất
   'assets/audio/bat-nghiep-mekong-sunfire.mp3',
@@ -730,7 +730,7 @@ const BGM_TRACKS = [
 const BGM_TRACKS_EN = [
   'assets/audio/bat-nghiep-mekong-sunfire-1.mp3', // BÀI CHÍNH khi mở game bằng tiếng Anh – Mekong Sunfire 1 (lời Anh)
   'assets/audio/huong-and-the-world-en.mp3',
-  'assets/audio/bizon-lesprit-du-mekong.mp3',     // lời Anh – Pháp
+  'assets/audio/bizon-lesprit-du-mekong-v2.mp3',     // lời Anh – Pháp
   'assets/audio/and-the-world-say-hello.mp3',
   'assets/audio/huong-sans-frontieres-2.mp3',
   'assets/audio/huong-on-return.mp3',

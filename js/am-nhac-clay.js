@@ -36,7 +36,10 @@
     if (/vietnam-map/.test(p)) return '#052A30 url(\''+esc(art(p))+'\') 50% 50%/contain no-repeat';
     return 'url(\''+esc(art(p))+'\') 50% 50%/cover no-repeat';
   }
-  function url(id){ return 'assets/audio/' + id + '.mp3'; }
+  // Bản nghe trên web nén 128 kbps (tệp «-v2», 16/11/2026); nút tải về vẫn đưa bản gốc chất lượng cao.
+  var LIGHT = ['bai-hat-ben-phu-sa', 'bat-nghiep-mekong-sunfire-rise-2', 'bat-nghiep-mekong-sunfire-rise', 'bat-nghiep-thap-den-ben-song', 'bizon-lesprit-du-mekong', 'brand-passport-remix-25', 'durian-passport', 'ho-chieu-p3-en-remix', 'ho-chieu-p3-en-remix2', 'ho-chieu-p3-remix', 'ho-chieu-p3-remix2', 'ho-chieu-p3-remix3', 'ho-chieu-p3-viet-nam-ra-the-gioi', 'ho-chieu-p3-vietnam-to-the-world-en', 'huong-ngot-phu-sa', 'huong-ngot-que-minh', 'stamps-beyond-borders-extended'];
+  function url(id){ return 'assets/audio/' + id + (LIGHT.indexOf(id) >= 0 ? '-v2' : '') + '.mp3'; }
+  function urlGoc(id){ return 'assets/audio/' + id + '.mp3'; }
   function mm(x){ x = Math.floor(x||0); return Math.floor(x/60) + ':' + String(x%60).padStart(2,'0'); }
 
   /* ---- Trạng thái ---- */
@@ -361,7 +364,7 @@
       /* tên file chỉ dùng ASCII (bỏ dấu, đ→d, bỏ emoji): một số trình duyệt bỏ qua thuộc tính download có ký tự Unicode */
       var fn = nm.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D')
         .replace(/[^A-Za-z0-9 ._-]+/g, ' ').trim().replace(/\s+/g, '-').replace(/-{2,}/g, '-') || item.f;
-      dl.setAttribute('href', url(item.f)); dl.setAttribute('download', 'BizOn-' + fn + '.mp3');
+      dl.setAttribute('href', urlGoc(item.f)); dl.setAttribute('download', 'BizOn-' + fn + '.mp3');
       dl.setAttribute('title', l.dl + ' · ' + nm); dl.setAttribute('aria-label', l.dl + ': ' + nm);
     }
     var lines = item && window.BZ_LYRICS && window.BZ_LYRICS[item.f];

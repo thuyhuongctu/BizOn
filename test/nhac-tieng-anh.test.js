@@ -35,7 +35,7 @@ const ghiDock = () => { const d = window.BizonDock; window.__ghi = []; const s =
       // Bật Nghiệp (game.html dùng js/app.js)
       let pg = await ctx.newPage(); await pg.goto(BASE + '/game.html', { waitUntil: 'load' });
       const ds = await pg.evaluate(() => typeof dsNhac === 'function' ? dsNhac() : null);
-      check(ds && (lang === 'en' ? ds[0].endsWith('bat-nghiep-mekong-sunfire-1.mp3') && !ds.some(f => f.includes('doi-phu-sa')) : ds[0].endsWith('bat-nghiep-mekong-sunfire-rise.mp3')), 'Bật Nghiệp, ' + lang + ': danh sách đúng ngôn ngữ (bài đầu ' + (ds && ds[0].split('/').pop()) + ')');
+      check(ds && (lang === 'en' ? ds[0].endsWith('bat-nghiep-mekong-sunfire-1.mp3') && !ds.some(f => f.includes('doi-phu-sa')) : /bat-nghiep-mekong-sunfire-rise(-v2)?\.mp3$/.test(ds[0])), 'Bật Nghiệp, ' + lang + ': danh sách đúng ngôn ngữ (bài đầu ' + (ds && ds[0].split('/').pop()) + ')');
       await pg.close();
       // Bến Phù Sa 3D
       pg = await ctx.newPage(); await pg.goto(BASE + '/ben-phu-sa-3d.html', { waitUntil: 'load' });
