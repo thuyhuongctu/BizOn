@@ -34,10 +34,10 @@ const SRC = ['Nguồn: VOV, SGGP (2023), Vietnamnet; biểu phí lưu container 
 export function buildPort(ctx) {
   const { THREE, scene, hq, camera, canvas, T } = ctx;
   const { B, Cy, G, mat, panel, TX } = hq;
-  const port = G('cai_mep_port', scene, 11.8, 0, 0.4);
+  const port = G('cai_mep_port', scene, 12.6, 0, 0.4);
   const decor = [];
   // Nền cảng (bê tông) và mặt nước phía ngoài
-  B(port, 'cm_quay', 4.6, 0.45, 11.6, mat(0xd2c8b6, 0.95), -0.9, -0.5, 0, 0.05);
+  B(port, 'cm_quay', 4.6, 0.45, 11.6, mat(0x8f9aa0, 0.95), -0.9, -0.5, 0, 0.05);
   B(port, 'cm_quay_edge', 0.18, 0.12, 11.6, mat(0xf2c14e, 0.8), 1.33, -0.05, 0, 0.02);
   B(port, 'cm_water', 3.4, 0.3, 12.6, mat(0x3f8fb0, 0.3), 3.15, -0.62, 0, 0.05);
   // Tàu container dọc cầu cảng
@@ -77,7 +77,7 @@ export function buildPort(ctx) {
   const name = G('cm_sign', port, -1.2, 0, 4.9, -0.25);
   Cy(name, 'cm_sign_post', 0.04, 0.04, 1.3, mat(0x6e4428, 0.9), -0.9, 0, 0, 6); Cy(name, 'cm_sign_post', 0.04, 0.04, 1.3, mat(0x6e4428, 0.9), 0.9, 0, 0, 6);
   panel(name, 'cm_sign_face', 2.2, 0.55, TX.sign('CẢNG CÁI MÉP – THỊ VẢI', '#1f6f8a', '#fff3e0', 'CAI MEP – THI VAI PORT'), 0, 1.25, 0.05);
-  const jam = G('cm_jam', port, -2.6, 0, -2.3, 0.5);
+  const jam = G('cm_jam', port, -0.3, 0, -5.3, 0.3);
   Cy(jam, 'cm_jam_post', 0.04, 0.04, 1.1, mat(0x6e4428, 0.9), 0, 0, 0, 6);
   panel(jam, 'cm_jam_face', 1.1, 0.55, TX.sign('⏳ CẢNG TẮC?', '#e2b04a', '#2c3552', 'PORT JAM?'), 0, 1.2, 0.05);
   port.traverse(o => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
