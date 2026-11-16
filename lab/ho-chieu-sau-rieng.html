@@ -275,10 +275,10 @@ footer{color:var(--faint)}
 </script>
 
 <footer class="wrap">
-  <p>© 2026 PGS.TS. Phan Anh Tú &amp; NCS. Đỗ Thùy Hương · Trường Kinh tế, Đại học Cần Thơ</p>
+  <p id="footCredit">© 2026 PGS.TS. Phan Anh Tú &amp; NCS. Đỗ Thùy Hương · Trường Kinh tế, Đại học Cần Thơ</p>
   <p id="footSrc"></p>
   <p>Cite (APA 7): Phan, A. T., &amp; Do, T. H. (2026). <i>Hộ Chiếu Sầu Riêng (Durian Passport): a 6-season durian-export simulation for Vietnam–China trade</i> [Computer software]. <a href="https://doi.org/10.5281/zenodo.23307827" target="_blank" rel="noopener">https://doi.org/10.5281/zenodo.23307827</a></p>
-  <p>⭐ Mã nguồn (tách từ BizOn): <a href="https://github.com/thuyhuongctu/Durian-Pasaport" target="_blank" rel="noopener">github.com/thuyhuongctu/Durian-Pasaport</a></p>
+  <p>⭐ <span id="footCode">Mã nguồn (tách từ BizOn):</span> <a href="https://github.com/thuyhuongctu/Durian-Pasaport" target="_blank" rel="noopener">github.com/thuyhuongctu/Durian-Pasaport</a></p>
 </footer>
 
 <script src="ho-chieu-sau-rieng-engine.js"></script>
@@ -361,6 +361,8 @@ footer{color:var(--faint)}
     $('trackBtn').textContent = BGM_TRACKS[TRACK].label;
     $('trackBtn').title = L('Đổi bài nền: «Hương Ngọt Phù Sa» (VI) · «Hương Ngọt Quê Mình» (VI2) · «Durian Passport» (EN)', 'Switch track: «Hương Ngọt Phù Sa» (VI) · «Hương Ngọt Quê Mình» (VI2) · «Durian Passport» (EN)');
     document.documentElement.lang = LANG;
+    $('footCredit').textContent = L('© 2026 PGS.TS. Phan Anh Tú & NCS. Đỗ Thùy Hương · Trường Kinh tế, Đại học Cần Thơ', '© 2026 Assoc. Prof. Phan Anh Tú & PhD Candidate Đỗ Thùy Hương · School of Economics, Can Tho University');
+    $('footCode').textContent = L('Mã nguồn (tách từ BizOn):', 'Source code (split from BizOn):');
     $('footSrc').textContent = L(
       'Quy định và sự kiện lấy từ Nghị định thư kiểm dịch MARD–GACC (2022), báo cáo thị trường rau quả của Bộ Công Thương (12/2023–02/2024), kết quả tra cứu của CESTI (04/2024) và các nghiên cứu chuỗi cung ứng tại Cai Lậy, Phong Điền, Thái Lan, Malaysia. Khối lượng, hệ số giá, xác suất và chiến lược của đối thủ ảo là minh họa.',
       'Rules and events come from the MARD–GACC phytosanitary protocol (2022), Ministry of Industry and Trade fruit market reports (Dec 2023–Feb 2024), CESTI search results (Apr 2024) and supply-chain studies in Cai Lậy, Phong Điền, Thailand and Malaysia. Volumes, price ratios, probabilities and virtual rival strategies are illustrative.');
