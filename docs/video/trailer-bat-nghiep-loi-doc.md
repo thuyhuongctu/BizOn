@@ -51,3 +51,7 @@ and finally Hà Nội». Máy nhận dạng không thay được tai người: n
 - Giọng đọc: tổng hợp bằng giọng thần kinh của Microsoft qua dịch vụ đọc của trình duyệt Edge. Đây là nội dung có công cụ AI
   tham gia (xem `THIRD-PARTY-NOTICES.md` Mục 7). Điều khoản dùng dịch vụ đọc của Edge cho sản phẩm phát hành chưa được rà; nếu
   cần chắc chắn về quyền, thu lại lời bằng giọng thật (thu âm) hoặc dùng Azure AI Speech có hợp đồng, theo đúng kịch bản trên.
+
+## Bản v6 (16/11/2026)
+
+Bản v5 lúc có tiếng lúc không: nhạc nền tách bằng Demucs từ bản cũ rất nhỏ ở những chỗ bản cũ có lời (giây 15–24, 49–53 xuống −40 đến −60 dB). Bản v6 giữ hình của v5 (không mã hoá lại), lấy lời đọc sạch của v4, trải nhạc không lời «Mekong Compass» (`assets/audio/mekong-compass.mp3`) suốt 90 giây, tự hạ nhạc khi có lời (`sidechaincompress`), vào 1,5 giây, ra 3,5 giây, cân −14 LUFS. Không còn đoạn nào dưới −35 dB dài quá 0,8 giây. Bản v4 và v5 giữ nguyên trong kho.

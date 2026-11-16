@@ -106,6 +106,9 @@
       return guard(rpc('bizon_set_cert_config', { p_class_code: code, p_course_code: c.course_code || '', p_course_name: c.course_name || '', p_course_dates: c.course_dates || '' })); },
     async setCertIssuer(code, c) { if (demo) { Object.assign(D.cert, c); return true; }
       return guard(rpc('bizon_set_cert_issuer', { p_class_code: code, p_org_name: c.org_name || '', p_org_sub: c.org_sub || '', p_org_logo: c.org_logo || '', p_org_logo2: c.org_logo2 || '', p_signer_name: c.signer_name || '', p_signer_title: c.signer_title || '', p_signer_sig: c.signer_sig || '' })); },
+    // Chữ ký thật lưu kín theo lớp (20261115010000_chu_ky_luu_kin.sql): chỉ chủ lớp/quản trị đọc, ghi; không qua feed công khai.
+    async getCertSignature(code) { if (demo) return D.sig || ''; try { return (await rpc('bizon_get_cert_signature', { p_class_code: code })) || ''; } catch (e) { if (missing(e)) return ''; throw e; } },
+    async setCertSignature(code, sig) { if (demo) { D.sig = sig || ''; return true; } return guard(rpc('bizon_set_cert_signature', { p_class_code: code, p_sig: sig || '' })); },
     async certFeed(code) { if (demo) return D.cert; try { return (await rpc('bizon_cert_feed', { p_class_code: code })) || D.cert; } catch (e) { if (missing(e)) return D.cert; throw e; } },
     async grant(code, team, amount, reason) { if (demo) { D.grants.unshift({ team_name: team, amount, reason, created_at: new Date().toISOString() }); return true; } return guard(rpc('bizon_grant', { p_class_code: code, p_team_name: team, p_amount: amount, p_reason: reason || '' })); },
     async saveScore(code, team, reasoning, teamwork, note) { if (demo) { D.scores[team] = { team_name: team, reasoning, teamwork, note }; return true; } return guard(rpc('bizon_save_score', { p_class_code: code, p_team_name: team, p_reasoning: reasoning, p_teamwork: teamwork, p_note: note || '' })); },

@@ -26,6 +26,7 @@
 <script src="js/core/decision-codes.js"></script>
 <script src="js/core/research-pack.js"></script>
 <script src="js/core/zip-store.js"></script>
+<script src="js/core/roster-file.js"></script>
 <script src="js/bizon-grading.js"></script>
 <script src="js/official-cert.js"></script>
 <style>
@@ -289,6 +290,13 @@ input,select,textarea,button{font-family:inherit}
           <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:10px">
             <div style="font:800 19px 'Baloo 2',sans-serif">{{ L.k79 }}</div>
             <div style="font-size:13px;color:#5a6b74;text-wrap:pretty">{{ L.k39 }}</div>
+            <div style="background:#eef7f1;border:2px dashed #7fbf98;border-radius:14px;padding:10px 12px;display:flex;flex-direction:column;gap:6px">
+              <div style="font-size:12.5px;color:#1f5a3a;font-weight:700;text-wrap:pretty">{{ L.umkHint }}</div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+                <button type="button" onClick="{{ fillUmkCert }}" style="border:0;background:#1f7a4d;color:#fff;border-radius:12px;padding:8px 14px;font:800 14px 'Baloo 2',sans-serif;box-shadow:0 3px 0 #145236;cursor:pointer">{{ L.umkBtn }}</button>
+                <sc-if value="{{ umkDone }}" hint-placeholder-val="{{ false }}"><span style="color:#1f9a63;font-weight:800;font-size:13px">{{ L.umkOk }}</span></sc-if>
+              </div>
+            </div>
             <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">{{ L.k16 }}
               <input type="text" value="{{ certCode }}" onChange="{{ onCertCode }}" placeholder="{{ L.a11 }}" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
             </label>
@@ -315,7 +323,7 @@ input,select,textarea,button{font-family:inherit}
                 <input type="text" value="{{ certOrgLogo }}" onChange="{{ onCertOrgLogo }}" placeholder="{{ L.a15 }}" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
               </label>
               <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">{{ L.k44 }}
-                <input type="text" value="{{ certOrgLogo2 }}" onChange="{{ onCertOrgLogo2 }}" placeholder="VD: assets/docs/soe-logo.png" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
+                <input type="text" value="{{ certOrgLogo2 }}" onChange="{{ onCertOrgLogo2 }}" placeholder="VD: assets/docs/soe-logo-v2.png" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
               </label>
               <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">{{ L.k21 }}
                 <input type="text" value="{{ certSignerName }}" onChange="{{ onCertSignerName }}" placeholder="{{ L.a12 }}" style="padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf"></input>
@@ -337,13 +345,29 @@ input,select,textarea,button{font-family:inherit}
                   <button type="button" onClick="{{ clearSig }}" style="border:2px solid #c0443a;background:#fff;color:#c0443a;border-radius:10px;padding:6px 12px;font-weight:700;cursor:pointer">{{ L.k86 }}</button>
                 </div>
               </sc-if>
+              <sc-if value="{{ sigCloud }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+                  <span style="color:#1f7a4d;font-weight:800;font-size:13px">{{ L.sigCloudOn }}</span>
+                  <button type="button" onClick="{{ delSigCloud }}" style="border:2px solid #c0443a;background:#fff;color:#c0443a;border-radius:10px;padding:5px 10px;font-weight:700;font-size:12px;cursor:pointer">{{ L.sigCloudDel }}</button>
+                </div>
+              </sc-if>
+              <sc-if value="{{ sigLocalOnly }}" hint-placeholder-val="{{ false }}">
+                <button type="button" onClick="{{ saveSigCloud }}" style="align-self:flex-start;border:0;background:#1f7a4d;color:#fff;border-radius:12px;padding:7px 14px;font:800 14px 'Baloo 2',sans-serif;box-shadow:0 3px 0 #145236;cursor:pointer">{{ L.sigCloudSave }}</button>
+              </sc-if>
               <label style="display:flex;flex-direction:column;gap:4px;font-size:11px;font-weight:700;color:#5a6b74">{{ sigPickLabel }}
                 <input type="file" accept="image/png,image/jpeg,image/webp" onChange="{{ onSigFile }}" style="font-size:13px"></input>
               </label>
               <label style="display:flex;flex-direction:column;gap:3px;font-size:11px;font-weight:700;color:#5a6b74">{{ L.k10 }}
                 <textarea value="{{ rosterText }}" onChange="{{ onRosterText }}" placeholder="1&#9;Nguyễn Văn A&#9;B2400001" rows="4" style="width:100%;box-sizing:border-box;padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf;font-family:monospace;font-size:12px"></textarea>
               </label>
+              <label style="display:flex;flex-direction:column;gap:4px;font-size:11px;font-weight:700;color:#5a6b74">{{ L.rosterFileLabel }}
+                <input type="file" accept=".xlsx,.csv,.tsv,.txt,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/csv,text/plain" onChange="{{ onRosterFile }}" style="font-size:13px;max-width:100%"></input>
+              </label>
+              <sc-if value="{{ rosterFileMsg }}" hint-placeholder-val="{{ false }}"><div style="font-size:12.5px;font-weight:700;color:#1f7a4d">{{ rosterFileMsg }}</div></sc-if>
               <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+                <label style="display:flex;align-items:center;gap:6px;font-weight:700">{{ L.certLangLabel }}
+                  <select value="{{ certLangSel }}" onChange="{{ onCertLang }}" style="padding:6px 10px;border-radius:10px;border:2px solid #e6d6bf;background:#fff;font-weight:600"><option value="en">English</option><option value="vi">{{ L.certLangVi }}</option></select>
+                </label>
                 <button type="button" onClick="{{ saveRoster }}" style="border:0;background:#2f8a8c;color:#fff;border-radius:10px;padding:7px 14px;font-weight:700;cursor:pointer">{{ rosterSaveLabel }}</button>
                 <button type="button" onClick="{{ issueAll }}" style="border:0;background:#1f4a55;color:#fff;border-radius:14px;padding:8px 14px;font:800 15px 'Baloo 2',sans-serif;box-shadow:0 4px 0 #10303a;cursor:pointer">{{ L.certAll }} ({{ certCount }}) → PDF</button>
               </div>
@@ -410,6 +434,10 @@ input,select,textarea,button{font-family:inherit}
             <div style="background:#fbf6ee;border:3px solid #e6d6bf;border-radius:16px;padding:10px 12px;margin:6px 0 10px">
               <div style="font-size:12px;font-weight:700;color:#1f4a55;margin-bottom:4px">{{ L.k76 }}</div>
               <textarea value="{{ rosterText }}" onChange="{{ onRosterText }}" placeholder="1&#9;Nguyễn Văn A&#9;B2400001&#9;vanab2400001@student.ctu.edu.vn&#9;DOI-A" rows="4" style="width:100%;box-sizing:border-box;padding:8px 10px;border-radius:10px;border:2px solid #e6d6bf;font-family:monospace;font-size:11.5px"></textarea>
+              <label style="display:flex;flex-direction:column;gap:4px;margin-top:6px;font-size:11px;font-weight:700;color:#5a6b74">{{ L.rosterFileLabel }}
+                <input type="file" accept=".xlsx,.csv,.tsv,.txt,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/csv,text/plain" onChange="{{ onRosterFile }}" style="font-size:13px;max-width:100%"></input>
+              </label>
+              <sc-if value="{{ rosterFileMsg }}" hint-placeholder-val="{{ false }}"><div style="font-size:12.5px;font-weight:700;color:#1f7a4d;margin-top:4px">{{ rosterFileMsg }}</div></sc-if>
               <div style="display:flex;align-items:center;gap:10px;margin-top:6px;flex-wrap:wrap">
                 <button type="button" onClick="{{ saveRoster }}" style="border:0;background:#2f8a8c;color:#fff;border-radius:10px;padding:7px 14px;font-weight:700;cursor:pointer">{{ rosterSaveLabel }}</button>
                 <div style="font-size:11.5px;color:#5a6b74">{{ rosterHint }}</div>
@@ -582,14 +610,20 @@ class Component extends DCLogic {
     const t = (vi, en) => this.tr(vi, en);
     return {
       certAll: t('📚 In cả lớp', '📚 Print the whole class'),
+      certLangLabel: t('Ngôn ngữ chứng nhận', 'Certificate language'),
+      certLangVi: t('Tiếng Việt', 'Vietnamese'),
+      umkHint: t('Lớp quốc tế UM Kendari (Indonesia) × Trường Đại học Cần Thơ: một lần bấm là điền và lưu sẵn mẫu chứng nhận thầy Tú đã duyệt (3 logo, Certificate of Completion, KT330H, 17–19/11/2026, chữ ký thầy Tú, tiếng Anh).', 'UM Kendari (Indonesia) × Can Tho University international class: one click fills in and saves the certificate template approved by Assoc. Prof. Phan Anh Tu (3 logos, Certificate of Completion, KT330H, 17–19 Nov 2026, English).'),
+      umkBtn: t('🇮🇩 Điền sẵn mẫu lớp quốc tế UM Kendari', '🇮🇩 Use UM Kendari international template'),
+      umkOk: t('✓ Đã điền và lưu mẫu lớp quốc tế', '✓ International template filled in and saved'),
       k01: t('(khác B5 ở tab «Chấm điểm»). «Chỉ số đồng đội» = 100 trừ chênh lệch điểm tham gia cao nhất–thấp nhất trong đội.', '(different from B5 in the “Grading” tab). “Team index” = 100 minus the gap between the highest and lowest participation score in the team.'),
       k02: t('Chưa có dữ liệu Nhật ký thành viên cho lớp này.', 'No member-log data for this class yet.'),
       k03: t('Chưa có dữ liệu Nhật ký thành viên cho lớp này. Sinh viên cần đăng nhập bằng Mã lớp thật (không phải Đội Demo) và mỗi vai chơi trên máy riêng để hệ thống ghi nhận.', 'No member-log data for this class yet. Students must sign in with the real class code (not the Demo team) and each role must play on its own device to be recorded.'),
       k04: t('Chưa có giảng viên nào tạo lớp.', 'No instructor has created a class yet.'),
       k05: t('Chưa có lớp nào. Tạo lớp đầu tiên ở ô phía trên rồi phát mã lớp cho sinh viên.', 'No classes yet. Create the first one above, then hand the class code to students.'),
-      k06: t('Chức danh / đơn vị của người ký', 'Signer title / unit'),
-      k07: t('Cùng mẫu chứng nhận ở trên, chữ ký của giảng viên cấp chứng nhận (tên và chức danh lấy từ «Đơn vị cấp»; để trống thì là chứng nhận BizOn). Ảnh chữ ký thật chỉ lưu trong trình duyệt của máy này – không tải lên web hay máy chủ. Bản sinh viên tự tải vẫn dùng chữ ký in.', 'Same certificate template as above, signed by the issuing instructor (name and title from “Issuing unit”; blank means a BizOn certificate). The real signature image stays in this browser only, never uploaded. Student self-downloads still use the printed signature.'),
+      k06: t('Chức danh / đơn vị của người ký (xuống dòng bằng dấu |)', 'Signer title / unit (use | for a line break)'),
+      k07: t('Cùng mẫu chứng nhận ở trên, chữ ký của giảng viên cấp chứng nhận (tên và chức danh lấy từ «Đơn vị cấp»; để trống thì là chứng nhận BizOn). Chọn ảnh chữ ký thật một lần: ảnh được lưu kín trên hệ thống cho lớp này – chỉ giảng viên lớp và quản trị BizOn mở được, lần sau mở lớp ở máy nào cũng tự nạp. Sinh viên không tải được ảnh này; bản sinh viên tự tải vẫn dùng chữ ký in.', 'Same certificate template as above, signed by the issuing instructor (name and title from “Issuing unit”; blank means a BizOn certificate). Pick the real signature image once: it is stored privately on the system for this class – only the class instructors and BizOn admins can open it, and it loads automatically on any device. Students cannot download it; their self-downloaded certificates still use the printed signature.'),
       k08: t('Cả lớp', 'Whole class'),
+      rosterFileLabel: t('📂 Hoặc chọn tệp Excel (.xlsx) / CSV – tự nhận cột Họ tên, MSSV, Email, Nhóm; chỉ đọc trên máy này, không gửi lên hệ thống', '📂 Or choose an Excel (.xlsx) / CSV file – Full name, Student ID, Email and Team columns are detected; read on this device only, never uploaded'),
       k09: t('Cờ', 'Flags'),
       k10: t('Danh sách sinh viên – mỗi dòng một người (dán thẳng từ Excel: STT, Họ và tên, MSSV…; dùng chung với danh sách lớp ở tab Chấm điểm)', 'Student list, one per line (paste straight from Excel: No., Full name, Student ID…; shared with the roster in the Grading tab)'),
       k11: t('Dùng chung cho cả Bật Nghiệp và Hộ Chiếu Thương Hiệu 3D của lớp này. Đội/sinh viên đi nhanh hơn lịch phải chờ; hết giờ mà chưa chốt thì hệ thống tự chốt theo lựa chọn hiện có.', 'Shared by Bật Nghiệp and Brand Passport 3D in this class. Teams ahead of schedule wait; when time runs out the system submits the current choices.'),
@@ -614,7 +648,7 @@ class Component extends DCLogic {
       k30: t('Thị phần', 'Share'),
       k31: t('Tiến độ 6 vòng', 'Progress, 6 rounds'),
       k32: t('Toàn bộ lớp đã triển khai trên mọi giảng viên – chỉ 2 tài khoản chủ dự án thấy được màn này.', 'All classes across every instructor. Only the two project-owner accounts can see this screen.'),
-      k33: t('Tên môn', 'Course name'),
+      k33: t('Tên môn (dòng phụ bên dưới sau dấu |)', 'Course name (sub-line below after |)'),
       k34: t('Tên đơn vị cấp', 'Issuing unit name'),
       k35: t('bằng chứng số để bạn tham khảo, không phải điểm chấm', 'digital evidence for your reference, not a grade'),
       k36: t('· Phát mã lớp cho sinh viên. Các đội nhập mã này ở màn đăng nhập của game để kết quả gửi về đây.', '· Hand the class code to students. Teams enter it on the game sign-in screen so results arrive here.'),
@@ -624,9 +658,9 @@ class Component extends DCLogic {
       k40: t('Áp dụng cho lớp', 'Apply to class'),
       k41: t('Điểm B5 cá nhân (🤖 tự động) từ Nhật ký thành viên: mỗi vai gửi đề xuất/biên bản/Nếu–Thì trong game Bật Nghiệp. 🟢 đề xuất được CEO áp dụng · 🟡 có tham gia vòng đó · ⚪ chưa ghi nhận.', 'Individual B5 (🤖 automatic) from the member log: each role sends proposals/minutes/What-If in Bật Nghiệp. 🟢 proposal adopted by the CEO · 🟡 took part in that round · ⚪ not recorded.'),
       k42: t('Đơn vị trực thuộc (khoa / trường thành viên)', 'Parent unit (faculty / member school)'),
-      k43: t('Đường dẫn logo (tuỳ chọn)', 'Logo path (optional)'),
-      k44: t('Đường dẫn logo thứ hai (khoa / trường thành viên, tuỳ chọn)', 'Second logo path (faculty / member school, optional)'),
-      k45: t('Để trống = chứng nhận do BizOn cấp (logo BizOn, chữ ký in của người sáng lập). Điền tên đơn vị để chứng nhận mang tên trường bạn: tên đơn vị, đơn vị trực thuộc, đường dẫn logo (ảnh trên web, ví dụ assets/docs/ctu-logo.png), logo thứ hai cho khoa/trường thành viên (ví dụ assets/docs/soe-logo.png; trống thì góc phải là logo BizOn), người ký và chức danh. Chỉ áp dụng cho lớp này và chỉ bạn sửa được.', 'Blank = BizOn issues the certificate (BizOn logo, founder’s printed signature). Fill in a unit name to issue under your institution: unit name, parent unit, logo path (an image on the web, e.g. assets/docs/ctu-logo.png), a second logo for the faculty/member school (e.g. assets/docs/soe-logo.png; blank keeps the BizOn logo at right), signer and title. Applies to this class only and only you can edit it.'),
+      k43: t('Đường dẫn logo bên trái (tuỳ chọn; hai logo thì cách nhau bằng dấu |)', 'Left logo path (optional; separate two logos with |)'),
+      k44: t('Đường dẫn logo bên phải (khoa / trường đối tác, tuỳ chọn; hai logo thì cách nhau bằng dấu |)', 'Right logo path (faculty / partner school, optional; separate two logos with |)'),
+      k45: t('Để trống = chứng nhận do BizOn cấp (logo BizOn, chữ ký in của người sáng lập). Điền tên đơn vị để chứng nhận mang tên trường bạn: tên đơn vị, đơn vị trực thuộc, đường dẫn logo (ảnh trên web, ví dụ assets/docs/ctu-logo.png), logo thứ hai cho khoa/trường thành viên (ví dụ assets/docs/soe-logo-v2.png; trống thì góc phải là logo BizOn), người ký và chức danh. Chỉ áp dụng cho lớp này và chỉ bạn sửa được.', 'Blank = BizOn issues the certificate (BizOn logo, founder’s printed signature). Fill in a unit name to issue under your institution: unit name, parent unit, logo path (an image on the web, e.g. assets/docs/ctu-logo.png), a second logo for the faculty/member school (e.g. assets/docs/soe-logo-v2.png; blank keeps the BizOn logo at right), signer and title. Applies to this class only and only you can edit it.'),
       k46: t(this.tr('Đội', 'Team'), 'Team'),
       k47: t('← Lớp của tôi', '← My classes'),
       k48: t('↔️ Vuốt ngang để xem đủ cột', '↔️ Swipe sideways to see all columns'),
@@ -668,6 +702,9 @@ class Component extends DCLogic {
       k84: t('🔒 Khóa vòng cho cả lớp', '🔒 Lock rounds for the class'),
       k85: t('🔬 Giải thích cơ chế (nhánh nghiên cứu)', '🔬 Mechanism explanations (research arm)'),
       k86: t('🗑 Xoá khỏi máy này', '🗑 Remove from this device'),
+      sigCloudOn: t('☁️ Đã lưu kín trên hệ thống cho lớp này', '☁️ Stored privately on the system for this class'),
+      sigCloudSave: t('☁️ Lưu kín lên hệ thống cho lớp này', '☁️ Store privately for this class'),
+      sigCloudDel: t('Xoá khỏi hệ thống', 'Remove from the system'),
       k87: t('🗑 Xóa lớp', '🗑 Delete class'),
       k88: t('🛡️ Quản trị hệ thống', '🛡️ System admin'),
       k89: t('🧭 Hành trang hành trình 3 bậc', '🧭 Three-tier journey carry-over'),
@@ -681,7 +718,7 @@ class Component extends DCLogic {
       a07: t('Rất cân bằng', 'Very balanced'),
       a08: t('Thông báo cho cả lớp (tùy chọn)', 'Message to the class (optional)'),
       a09: t('Triệu ₫, âm = trừ', 'Million ₫, negative = deduct'),
-      a10: t('VD: Giảng viên, Trường Kinh tế', 'e.g. Lecturer, School of Economics'),
+      a10: t('VD: Phó Hiệu trưởng & Giảng viên | Trường Kinh tế', 'e.g. Vice Rector & Lecturer | School of Economics'),
       a11: t('VD: KT330H (để trống nếu không có)', 'e.g. KT330H (blank if none)'),
       a12: t('VD: PGS.TS. Nguyễn Văn A', 'e.g. Assoc. Prof. Dr. Nguyen Van A'),
       a13: t('VD: Trường Kinh tế', 'e.g. School of Economics'),
@@ -711,8 +748,24 @@ class Component extends DCLogic {
   async removeClass(code) {
     if (!confirm(this.tr('Xóa lớp ', 'Delete class ') + code + this.tr('? Lớp sẽ hết thuộc quyền quản lý – dữ liệu bài nộp cũ của sinh viên vẫn được giữ nguyên, có thể đăng ký lại mã này sau.', '? The class leaves your management; students\u2019 earlier submissions are kept and the code can be registered again later.'))) return;
     try { await this.api().deleteClass(code); if (this.state.view === 'admin') this.loadAdmin(); else this.loadClasses(); } catch (e) { this.fail(e); } }
-  async openClass(code) { this.setState({ code, view: 'class', tab: 'teams', err: '', edits: {}, saved: {}, exSetup: '', exRound: '', certCode: '', certName: '', certDates: '', certSaved: false, certOrgName: '', certOrgSub: '', certOrgLogo: '', certOrgLogo2: '', certSignerName: '', certSignerTitle: '', certIssuerSaved: false, rLv1: '', rLv2: '', rLv3: '', rLv4: '', rubricSaved: false, rosterText: this.getRosterText(code), rosterSaved: false }); await this.reload(code); }
+  async openClass(code) { this.setState({ code, view: 'class', tab: 'teams', err: '', edits: {}, saved: {}, exSetup: '', exRound: '', certCode: '', certName: '', certDates: '', certSaved: false, certOrgName: '', certOrgSub: '', certOrgLogo: '', certOrgLogo2: '', certSignerName: '', certSignerTitle: '', certIssuerSaved: false, rLv1: '', rLv2: '', rLv3: '', rLv4: '', rubricSaved: false, rosterText: this.getRosterText(code), rosterSaved: false, sigTu: this.localSig(), sigCloud: false }); await this.reload(code); this.loadSigCloud(code); }
   getRosterText(code) { try { return localStorage.getItem('bizon-gv-roster-' + code) || ''; } catch (e) { return ''; } }
+  // Nhập danh sách từ tệp Excel/CSV (đọc trong trình duyệt, không gửi đi), thay danh sách đang có rồi lưu trên máy này.
+  async importRosterFile(e) {
+    const f = e.target.files && e.target.files[0]; e.target.value = '';
+    if (!f) return;
+    if (f.size > 5 * 1024 * 1024) return this.setState({ rosterFileMsg: this.tr('Tệp quá lớn (tối đa 5 MB).', 'File too large (max 5 MB).') });
+    let r;
+    try { r = await window.BizOnRosterFile.read(f); }
+    catch (err) { return this.setState({ rosterFileMsg: (err && err.message) === 'xls-old' ? this.tr('Tệp .xls cũ: mở bằng Excel rồi «Lưu thành» .xlsx hoặc CSV.', 'Old .xls file: open it in Excel and save as .xlsx or CSV.') : this.tr('Không đọc được tệp này. Chọn tệp .xlsx hoặc CSV.', 'Could not read this file. Choose an .xlsx or CSV file.') }); }
+    if (!r.count) return this.setState({ rosterFileMsg: this.tr('Không thấy sinh viên nào trong tệp (cần cột Họ và tên / Full name).', 'No students found in the file (needs a Full name column).') });
+    const s = this.state;
+    if (s.rosterText.trim() && !window.confirm(this.tr('Thay danh sách hiện có bằng ' + r.count + ' sinh viên trong tệp?', 'Replace the current list with the ' + r.count + ' students in the file?'))) return;
+    try { localStorage.setItem('bizon-gv-roster-' + s.code, r.text); } catch (err) {}
+    this.setState({ rosterText: r.text });
+    const from = r.sheet ? this.tr(' (trang «' + r.sheet + '»)', ' (sheet “' + r.sheet + '”)') : '';
+    this.setState({ rosterFileMsg: this.tr('✅ Đã nhập ' + r.count + ' sinh viên' + from + ' và lưu trên máy này.', '✅ Imported ' + r.count + ' students' + from + ' and saved on this device.') });
+  }
   saveRosterText() { const s = this.state; try { localStorage.setItem('bizon-gv-roster-' + s.code, s.rosterText); } catch (e) {} this.setState({ rosterSaved: true }); setTimeout(() => this.setState({ rosterSaved: false }), 2200); }
   async reload(code = this.state.code) {
     try { const [subs, st, memberLog, bpResults, ef, cf, rf] = await Promise.all([this.api().submissions(code), this.api().state(code), this.api().memberLog(code), this.api().bpResults(code), this.api().examFeed(code), this.api().certFeed(code), this.api().rubricFeed(code)]);
@@ -758,6 +811,16 @@ class Component extends DCLogic {
   async startExam() { const s = this.state; try { await this.api().setExam(s.code, { active: true, start_at: new Date().toISOString(), setup_min: +s.exSetup || 10, round_min: +s.exRound || 8, capital: 500 }); this.reload(); } catch (e) { this.fail(e); } }
   async stopExam() { const s = this.state, ex = s.exam || {}; try { await this.api().setExam(s.code, { active: false, start_at: ex.start_at || null, setup_min: +s.exSetup || 10, round_min: +s.exRound || 8, capital: 500 }); this.reload(); } catch (e) { this.fail(e); } }
   async saveCertIssuer() { const s = this.state; try { await this.api().setCertIssuer(s.code, this.certIssuer()); this.setState({ certIssuerSaved: true }); setTimeout(() => this.setState({ certIssuerSaved: false }), 2500); } catch (e) { this.fail(e); } }
+  // Mẫu chứng nhận lớp quốc tế UM Kendari × Trường Đại học Cần Thơ (Credit Exchange Program, 17–19/11/2026) – theo góp ý của thầy Tú 15/11/2026.
+  // Một lần bấm: điền mọi ô và lưu luôn «Chứng nhận chính thức» + «Đơn vị cấp» cho lớp đang mở; ngôn ngữ chứng nhận chuyển sang English.
+  async fillUmkCert() {
+    const s = this.state;
+    if (!confirm(this.tr('Điền và lưu mẫu chứng nhận lớp quốc tế UM Kendari cho lớp ' + s.code + '? Các ô chứng nhận và đơn vị cấp hiện tại sẽ bị thay.', 'Fill in and save the UM Kendari international class certificate template for class ' + s.code + '? Current certificate and issuer fields will be replaced.'))) return;
+    const cfg = { course_code: '', course_name: 'KT330H - Entrepreneurship (03 credits) | Credit Exchange Program', course_dates: 'November 17–19, 2026' };
+    const org = { org_name: 'Can Tho University', org_sub: 'School of Economics', org_logo: 'assets/docs/ctu-logo.png | assets/docs/soe-logo-v2.png', org_logo2: 'assets/docs/umk-logo.png', signer_name: 'Assoc. Prof. Dr. Phan Anh Tu', signer_title: 'Vice Rector & Lecturer | School of Economics', signer_sig: s.certSignerSig || '' };
+    this.setState({ certCode: cfg.course_code, certName: cfg.course_name, certDates: cfg.course_dates, certOrgName: org.org_name, certOrgSub: org.org_sub, certOrgLogo: org.org_logo, certOrgLogo2: org.org_logo2, certSignerName: org.signer_name, certSignerTitle: org.signer_title, certLang: 'en', umkDone: false });
+    try { await this.api().setCertConfig(s.code, cfg); await this.api().setCertIssuer(s.code, org); this.setState({ umkDone: true }); setTimeout(() => this.setState({ umkDone: false }), 4000); } catch (e) { this.fail(e); }
+  }
   certIssuer() { const s = this.state; return { org_name: s.certOrgName || '', org_sub: s.certOrgSub || '', org_logo: s.certOrgLogo || '', org_logo2: s.certOrgLogo2 || '', signer_name: s.certSignerName || '', signer_title: s.certSignerTitle || '', signer_sig: s.certSignerSig || '' }; }
   async saveCertConfig() { const s = this.state; try { await this.api().setCertConfig(s.code, { course_code: s.certCode, course_name: s.certName, course_dates: s.certDates }); this.setState({ certSaved: true }); setTimeout(() => this.setState({ certSaved: false }), 2500); } catch (e) { this.fail(e); } }
   // Ảnh chữ ký thật: thu về tối đa 1200×400 (giữ nền trong suốt) rồi lưu localStorage của máy này.
@@ -771,19 +834,38 @@ class Component extends DCLogic {
       const k = Math.min(1, 1200 / im.naturalWidth, 400 / im.naturalHeight), cv = document.createElement('canvas');
       cv.width = Math.round(im.naturalWidth * k); cv.height = Math.round(im.naturalHeight * k);
       cv.getContext('2d').drawImage(im, 0, 0, cv.width, cv.height); URL.revokeObjectURL(url);
-      const data = cv.toDataURL('image/png');
+      let data = cv.toDataURL('image/png');
+      // Hệ thống nhận tối đa 700 000 ký tự: ảnh lớn thì thu nhỏ dần (giữ nền trong suốt).
+      for (let i = 0; data.length > 690000 && i < 4; i++) { const c2 = document.createElement('canvas'); c2.width = Math.round(cv.width * 0.75); c2.height = Math.round(cv.height * 0.75); c2.getContext('2d').drawImage(cv, 0, 0, c2.width, c2.height); cv.width = c2.width; cv.height = c2.height; cv.getContext('2d').drawImage(c2, 0, 0); data = cv.toDataURL('image/png'); }
       try { localStorage.setItem(SIG_KEY, data); } catch (err) { return this.setState({ certMsg: this.tr('Trình duyệt không cho lưu ảnh (bộ nhớ đầy hoặc đang ở chế độ ẩn danh).', 'The browser refused to store the image (storage full or private mode).') }); }
-      this.setState({ sigTu: data, certMsg: this.tr('✅ Đã lưu chữ ký trên máy này.', '✅ Signature saved on this device.') });
+      this.setState({ sigTu: data, sigCloud: false, certMsg: this.tr('✅ Đã lưu chữ ký trên máy này.', '✅ Signature saved on this device.') });
+      if (this.state.code) this.saveSigCloud(data);
     };
     im.onerror = () => { URL.revokeObjectURL(url); this.setState({ certMsg: this.tr('Không đọc được ảnh này.', 'Could not read this image.') }); };
     im.src = url;
   }
+  localSig() { try { return localStorage.getItem(SIG_KEY) || ''; } catch (e) { return ''; } }
+  // Chữ ký lưu kín trên hệ thống cho lớp đang mở (chỉ chủ lớp/quản trị) – có thì dùng thay ảnh trên máy.
+  async loadSigCloud(code) {
+    try { const sig = await this.api().getCertSignature(code); if (this.state.code !== code) return; if (sig) this.setState({ sigTu: sig, sigCloud: true }); else this.setState({ sigCloud: false }); }
+    catch (e) { this.setState({ sigCloud: false }); }
+  }
+  async saveSigCloud(data) {
+    const s = this.state, sig = data || s.sigTu; if (!s.code || !sig) return;
+    try { await this.api().setCertSignature(s.code, sig); this.setState({ sigTu: sig, sigCloud: true, certMsg: this.tr('✅ Đã lưu kín chữ ký trên hệ thống cho lớp ' + s.code + ' (chỉ giảng viên lớp và quản trị mở được).', '✅ Signature stored privately for class ' + s.code + ' (only the class instructors and admins can open it).') }); }
+    catch (e) { this.setState({ certMsg: this.tr('Đã lưu chữ ký trên máy này; chưa lưu được lên hệ thống: ', 'Saved on this device; could not store it on the system: ') + ((e && e.message) || e) }); }
+  }
+  async delSigCloud() {
+    const s = this.state; if (!s.code) return;
+    if (!confirm(this.tr('Xoá chữ ký đã lưu kín của lớp ' + s.code + ' khỏi hệ thống?', 'Remove the stored signature of class ' + s.code + ' from the system?'))) return;
+    try { await this.api().setCertSignature(s.code, ''); this.setState({ sigCloud: false, sigTu: this.localSig(), certMsg: this.tr('Đã xoá chữ ký khỏi hệ thống.', 'Signature removed from the system.') }); } catch (e) { this.fail(e); }
+  }
   clearSig() {
     if (!confirm(this.tr('Xoá ảnh chữ ký khỏi máy này? Muốn cấp tiếp phải chọn lại tệp.', 'Remove the signature image from this device? You will need to pick the file again to issue more.'))) return;
     try { localStorage.removeItem(SIG_KEY); } catch (e) {}
-    this.setState({ sigTu: '', certMsg: 'Đã xoá chữ ký khỏi máy này.' });
+    this.setState({ sigTu: this.state.sigCloud ? this.state.sigTu : '', certMsg: this.tr('Đã xoá chữ ký khỏi máy này.', 'Signature removed from this device.') });
   }
-  certOpts(st) { const s = this.state; return { name: st.name, courseCode: s.certCode || '', courseName: s.certName || 'BizOn Bật Nghiệp', courseDates: s.certDates || undefined, signature: s.sigTu, org: this.certIssuer(), filenamePrefix: (s.code || 'BizOn') + (st.mssv ? '-' + st.mssv : '') }; }
+  certOpts(st) { const s = this.state; return { lang: s.certLang === 'vi' ? 'vi' : 'en', name: st.name, courseCode: s.certCode || '', courseName: s.certName || 'BizOn Bật Nghiệp', courseDates: s.certDates || undefined, signature: s.sigTu, org: this.certIssuer(), filenamePrefix: (s.code || 'BizOn') + (st.mssv ? '-' + st.mssv : '') }; }
   issueOne(st) {
     if (!this.state.sigTu) return this.setState({ certMsg: this.tr('Chọn ảnh chữ ký thật trước khi cấp.', 'Choose a real signature image before issuing.') });
     window.OfficialCert.download(this.certOpts(st)).catch(e => this.fail(e));
@@ -870,9 +952,10 @@ class Component extends DCLogic {
       certCode: s.certCode, onCertCode: e => this.setState({ certCode: e.target.value }),
       certName: s.certName, onCertName: e => this.setState({ certName: e.target.value }),
       certDates: s.certDates, onCertDates: e => this.setState({ certDates: e.target.value }),
+      certLangSel: s.certLang === 'vi' ? 'vi' : 'en', onCertLang: e => this.setState({ certLang: e.target.value === 'vi' ? 'vi' : 'en' }),
       saveCertConfig: () => this.saveCertConfig(), certSaved: s.certSaved,
       certOrgName: s.certOrgName, onCertOrgName: e => this.setState({ certOrgName: e.target.value }), certOrgSub: s.certOrgSub, onCertOrgSub: e => this.setState({ certOrgSub: e.target.value }), certOrgLogo: s.certOrgLogo, onCertOrgLogo: e => this.setState({ certOrgLogo: e.target.value }), certOrgLogo2: s.certOrgLogo2, onCertOrgLogo2: e => this.setState({ certOrgLogo2: e.target.value }),
-      certSignerName: s.certSignerName, onCertSignerName: e => this.setState({ certSignerName: e.target.value }), certSignerTitle: s.certSignerTitle, onCertSignerTitle: e => this.setState({ certSignerTitle: e.target.value }), saveCertIssuer: () => this.saveCertIssuer(), certIssuerSaved: s.certIssuerSaved,
+      certSignerName: s.certSignerName, onCertSignerName: e => this.setState({ certSignerName: e.target.value }), certSignerTitle: s.certSignerTitle, onCertSignerTitle: e => this.setState({ certSignerTitle: e.target.value }), fillUmkCert: () => this.fillUmkCert(), umkDone: !!s.umkDone, saveCertIssuer: () => this.saveCertIssuer(), certIssuerSaved: s.certIssuerSaved,
       tabs: tabDefs.map(([k, l]) => ({ label: l, go: () => this.setState({ tab: k }), bg: s.tab === k ? '#2f8a8c' : '#fbf6ee', fg: s.tab === k ? '#fff' : '#1f4a55', border: s.tab === k ? '#23706f' : '#e6d6bf' })),
       tabTeams: s.tab === 'teams', tabDecisions: s.tab === 'decisions', tabControls: s.tab === 'controls', tabGrading: s.tab === 'grading', tabMembers: s.tab === 'members', tabActivity: s.tab === 'activity', noTeams: !T.length,
       teams: T.map(t => ({ name: t.name + (t.rs.some(r => r.result_json && r.result_json.journey) ? ' 🧭' : ''), share: t.share.toFixed(1) + '%', profit: money(t.profit), profitColor: t.profit >= 0 ? '#3f8a44' : '#c0443a', flags: '🚩 ' + t.flags + '/6',
@@ -902,7 +985,7 @@ class Component extends DCLogic {
         onR: e => this.edit(g.name, 'reasoning', e.target.value), onT: e => this.edit(g.name, 'teamwork', e.target.value), onN: e => this.edit(g.name, 'note', e.target.value),
         save: () => this.saveScore(g), saveLabel: s.saved[g.name] ? this.tr('✓ Đã lưu', '✓ Saved') : this.tr('Lưu', 'Save') })),
       hasMini: !!MINI.length,
-      rosterText: s.rosterText, onRosterText: e => this.setState({ rosterText: e.target.value }), saveRoster: () => this.saveRosterText(), rosterSaveLabel: s.rosterSaved ? this.tr('✓ Đã lưu', '✓ Saved') : this.tr('Lưu danh sách', 'Save list'),
+      rosterText: s.rosterText, onRosterText: e => this.setState({ rosterText: e.target.value }), onRosterFile: e => this.importRosterFile(e), rosterFileMsg: s.rosterFileMsg || '', saveRoster: () => this.saveRosterText(), rosterSaveLabel: s.rosterSaved ? this.tr('✓ Đã lưu', '✓ Saved') : this.tr('Lưu danh sách', 'Save list'),
       rosterHint: rosterGroups ? this.tr('Đã nhận ', 'Received ') + rosterGroups + this.tr(' nhóm từ danh sách dán bên dưới – điểm Hộ Chiếu Mini sẽ tự ghép MSSV theo tên nhóm đã nộp.', ' groups from the pasted roster. Passport Mini scores will match student IDs by submitted team name.') : this.tr('Chưa có danh sách lớp – bảng và Excel sẽ hiện tên nhóm đã nộp, chưa có MSSV.', 'No class roster yet: the table and Excel show submitted team names without student IDs.'),
       miniHead: [this.tr('Nhóm/Đội', 'Group/Team'), this.tr('MSSV', 'Student ID'), this.tr('Họ và tên', 'Full name'), 'Email', this.tr('Quốc gia xuất phát', 'Home country'), this.tr('Số thị trường', 'Markets'), this.tr('Hồ sơ nhà đầu tư', 'Investor profile'), this.tr('Điểm /10', 'Score /10'), this.tr('Điểm chữ', 'Letter'), this.tr('Nộp lúc', 'Submitted at')],
       miniRows: ok ? P.miniExport(BP, roster).map(r => ({ group: r.group, mssv: r.mssv, name: r.name, email: r.email, home: r.home, markets: r.markets, profile: r.profile, total: P.f1(r.total), letter: r.letter, when: r.when })) : [],
@@ -915,7 +998,7 @@ class Component extends DCLogic {
       rLv3: s.rLv3, onRLv3: e => this.setState({ rLv3: e.target.value }), rLv4: s.rLv4, onRLv4: e => this.setState({ rLv4: e.target.value }),
       saveRubric: () => this.saveRubric(), rubricSaved: s.rubricSaved,
       hasSig: !!s.sigTu, sigTu: s.sigTu, sigPickLabel: s.sigTu ? this.tr('Đổi ảnh chữ ký', 'Change signature image') : this.tr('Chọn ảnh chữ ký thật (PNG nền trong suốt cho đẹp nhất)', 'Choose a real signature image (transparent PNG looks best)'),
-      onSigFile: e => this.pickSig(e), clearSig: () => this.clearSig(), certMsg: s.certMsg, issueAll: () => this.issueAll(),
+      onSigFile: e => this.pickSig(e), clearSig: () => this.clearSig(), sigCloud: !!s.sigCloud, sigLocalOnly: !!s.sigTu && !s.sigCloud && !!s.code, saveSigCloud: () => this.saveSigCloud(), delSigCloud: () => this.delSigCloud(), certMsg: s.certMsg, issueAll: () => this.issueAll(),
       certStudents: certStudentList(s.rosterText).map(st => ({ name: st.name, mssv: st.mssv || '—', dl: () => this.issueOne(st) })),
       certCount: certStudentList(s.rosterText).length,
       activityTeams: AC.map(t => { const lv = ok ? P.rubricLevel(t.balance, s.rubric) : { label: '' };

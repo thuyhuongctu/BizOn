@@ -50,6 +50,19 @@ export const CHECKS = {
       ["position('1000' in pg_get_functiondef('public.bizon_feed_v2(text, integer)'::regprocedure)) > 0", 'bizon_feed_v2 cho xin tới 1000 dòng'],
     ],
   },
+  chu_ky_luu_kin: {
+    pre: [
+      ["to_regclass('public.class_cert_config') is not null", 'đã có bảng class_cert_config (chứng nhận theo lớp)'],
+      ["exists (select 1 from pg_proc p join pg_namespace n on n.oid = p.pronamespace where n.nspname = 'public' and p.proname = 'bizon_owns_class')", 'có hàm bizon_owns_class'],
+    ],
+    post: [
+      ["to_regclass('public.class_cert_signature') is not null", 'có bảng class_cert_signature'],
+      ["(select relrowsecurity from pg_class where oid = 'public.class_cert_signature'::regclass)", 'bảng chữ ký đã bật RLS'],
+      ["not has_table_privilege('anon', 'public.class_cert_signature', 'select') and not has_table_privilege('authenticated', 'public.class_cert_signature', 'select')", 'anon/authenticated không đọc thẳng được bảng chữ ký'],
+      ["has_function_privilege('authenticated', 'public.bizon_get_cert_signature(text)', 'execute') and not has_function_privilege('anon', 'public.bizon_get_cert_signature(text)', 'execute')", 'chỉ người đăng nhập gọi được hàm đọc chữ ký'],
+      ["coalesce(public.bizon_cert_feed('UMK-2026') ->> 'signer_sig', '') = ''", 'feed công khai vẫn không trả chữ ký'],
+    ],
+  },
   add_ctu_staff_domain: {
     pre: [
       ["to_regclass('public.student_email_domains') is not null", 'migration A (require_student_login) đã áp'],

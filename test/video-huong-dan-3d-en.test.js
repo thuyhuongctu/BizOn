@@ -8,12 +8,16 @@ const BASE = process.env.BIZON_URL || 'http://127.0.0.1:8899';
 let chromium; try { chromium = require('playwright').chromium; } catch (e) { console.error('Cần cài playwright.'); process.exit(2); }
 const ROOT = path.join(__dirname, '..');
 assert.ok(+(fs.readFileSync(path.join(ROOT, 'sw.js'), 'utf8').match(/bizon-v(\d+)/) || [])[1] >= 868);
-const MP4 = 'assets/video/bat-nghiep-3d-huong-dan-en.mp4', POSTER = 'assets/video/bat-nghiep-3d-huong-dan-en-poster.webp';
+const MP4 = 'assets/video/bat-nghiep-3d-huong-dan-en-v2.mp4', POSTER = 'assets/video/bat-nghiep-3d-huong-dan-en-poster.webp';
 const mp4 = fs.readFileSync(path.join(ROOT, MP4));
 assert.ok(mp4.length > 5e6 && mp4.length < 25e6, 'cỡ video ' + mp4.length);
 assert.equal(mp4.slice(4, 8).toString(), 'ftyp', 'mp4 hợp lệ');
 assert.ok(mp4.indexOf('moov') < mp4.indexOf('mdat'), 'faststart: moov đứng trước mdat để phát ngay khi tải');
 assert.ok(fs.statSync(path.join(ROOT, POSTER)).size > 20000, 'poster');
+// 15/11/2026: bản v2 có nhạc nền không lời «Mekong Compass» (bản gốc không tiếng vẫn giữ, không ghi đè).
+assert.ok(mp4.includes(Buffer.from('soun')) && mp4.includes(Buffer.from('mp4a')), 'v2 có rãnh âm thanh AAC');
+assert.ok(fs.existsSync(path.join(ROOT, 'assets/video/bat-nghiep-3d-huong-dan-en.mp4')), 'giữ bản gốc');
+assert.ok(+(fs.readFileSync(path.join(ROOT, 'sw.js'), 'utf8').match(/bizon-v(\d+)/) || [])[1] >= 880, 'sw.js ≥ v880');
 
 (async () => {
   const b = await chromium.launch(); const errs = [];
