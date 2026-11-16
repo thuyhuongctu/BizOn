@@ -12,11 +12,15 @@ for (const f of ['js/games-clay.js', 'js/music-data.js', 'universe.html']) asser
 assert.ok(fs.existsSync(R('assets/covers/ho-chieu-thuong-hieu-3d.webp')), 'bìa cũ giữ nguyên');
 assert.ok(fs.statSync(R('assets/covers/ho-chieu-thuong-hieu-3d-v2.webp')).size < 150000, 'bìa v2 nhẹ');
 // 16/11/2026: ô «Bật Nghiệp» ở mục «Xem trước khi bắt đầu» chuyển sang video hướng dẫn 3D có nhạc; nút trailer ở thẻ game vẫn dùng v5.
-assert.ok((home.match(/data-trailer="assets\/video\/bizon-trailer-v5-720p\.mp4"/g) || []).length === 1 && !home.includes('bizon-trailer-v4-720p'), 'thẻ game Bật Nghiệp dùng trailer v5');
+// 16/11/2026: trailer v6 = hình v5 + giọng v4 + nhạc «Mekong Compass» liền mạch, tự hạ khi có lời (v5 lúc có tiếng lúc không).
+assert.ok((home.match(/data-trailer="assets\/video\/bizon-trailer-v6-720p\.mp4"/g) || []).length === 1 && !/bizon-trailer-v[45]-720p/.test(home), 'thẻ game Bật Nghiệp dùng trailer v6');
+for (const v of [4, 5]) assert.ok(fs.existsSync(R(`assets/video/bizon-trailer-v${v}-720p.mp4`)), 'giữ bản v' + v);
 assert.ok(home.includes('data-trailer="assets/video/bat-nghiep-3d-huong-dan-en-v2.mp4" data-poster="assets/video/bat-nghiep-3d-huong-dan-en-poster.webp"') && home.includes('phụ đề tiếng Anh · 3:09') && !home.includes('Đấu trường 6 vòng thị trường · thuyết minh tiếng Anh · 1:30'), 'ô Bật Nghiệp ở «Xem trước» phát video hướng dẫn 3D');
 assert.ok(+(read('sw.js').match(/bizon-v(\d+)/) || [])[1] >= 881, 'sw.js ≥ v881');
 const silences = f => { const r = spawnSync('ffmpeg', ['-nostats', '-i', R(f), '-af', 'silencedetect=n=-45dB:d=1.5', '-vn', '-f', 'null', '-'], { encoding: 'utf8' }); return r.error ? null : (r.stderr.match(/silence_start/g) || []).length; };
-const s5 = silences('assets/video/bizon-trailer-v5-720p.mp4');
-if (s5 === null) console.log('  (không có ffmpeg: bỏ qua kiểm tiếng)');
-else { assert.equal(s5, 0, 'trailer v5 có nhạc liền mạch'); assert.ok(silences('assets/video/bizon-trailer-v4-720p.mp4') > 3, 'v4 vẫn là bản chỉ có lời'); }
+// Không còn chỗ lặng: ngưỡng −35 dB, dài 0,8 giây (v5 bị hai chỗ ở mức này và nhiều đoạn nhạc rất nhỏ giữa các câu).
+const quiet = f => { const r = spawnSync('ffmpeg', ['-nostats', '-i', R(f), '-af', 'silencedetect=n=-35dB:d=0.8', '-vn', '-f', 'null', '-'], { encoding: 'utf8' }); return r.error ? null : (r.stderr.match(/silence_start/g) || []).length; };
+const s6 = silences('assets/video/bizon-trailer-v6-720p.mp4');
+if (s6 === null) console.log('  (không có ffmpeg: bỏ qua kiểm tiếng)');
+else { assert.equal(s6, 0, 'trailer v6 có nhạc liền mạch'); assert.ok(quiet('assets/video/bizon-trailer-v6-720p.mp4') <= 1, 'v6 không tụt tiếng giữa các câu'); assert.ok(silences('assets/video/bizon-trailer-v4-720p.mp4') > 3, 'v4 vẫn là bản chỉ có lời'); }
 console.log('bia-trailer-bat-nghiep: ok');
