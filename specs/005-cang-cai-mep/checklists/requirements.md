@@ -11,7 +11,7 @@
 - [x] Nối chuẩn đầu ra (CLO-C, CLO-E; CLO-D gián tiếp)
 
 ## Độ đầy đủ
-- [ ] Không còn câu hỏi làm rõ mở (còn 5 câu chờ chị)
+- [x] Không còn câu hỏi làm rõ mở (chị trả lời 16/11/2026)
 - [x] Yêu cầu kiểm được, không mơ hồ
 - [x] Tiêu chí thành công đo được
 - [x] Có trường hợp biên và giả định

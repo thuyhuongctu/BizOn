@@ -4,7 +4,7 @@
 
 **Ngày tạo**: 2026-11-16
 
-**Trạng thái**: Bản nháp, chờ chị trả lời phần «Câu hỏi làm rõ»
+**Trạng thái**: Đã làm rõ ngày 16/11/2026, chờ chị duyệt kế hoạch
 
 **Đầu vào**: Ngày 16/11/2026 chị nhắn «Hộ chiếu thương hiệu và thử đề xuất làm cảng cái Mép trong game bật nghiệp».
 Em đề xuất hai bước. Chị trả lời cùng ngày: «Cảng cái mép là cả 2 bước».
@@ -43,9 +43,19 @@ Từ 08/10/2026 đến nay đã có 41 commit sửa `BizOn Game 3D.html` và 5 c
 
 **Lịch dùng thật**: lớp UM Kendari (KT330H, 160 sinh viên, 32 đội) chơi Bật Nghiệp 3D ngày 19/11/2026.
 
-## Câu hỏi làm rõ (chờ chị trả lời)
+## Làm rõ
 
-Xem mục cuối «Câu hỏi gửi chị». Chỗ nào chị chưa trả lời, đặc tả đang theo phương án «(đề xuất)».
+Chị trả lời ngày 16/11/2026 («1a, 2b, 3a, 4.a (tìm minh chứng cho số liệu nếu được), 5.a»):
+
+1. **Cách làm Bước 2 (1A)**: luật cảng viết trong mô-đun riêng `js/cang-cai-mep.js`, móc vào `currentEvent` và
+   `simulateRound` giống `js/market-dynamic.js`; **không sửa dòng nào** trong `js/engine.js` và `js/app.js`. Gỡ một thẻ
+   `<script>` là trở lại luật cũ.
+2. **Thời điểm (2B)**: câu chuyện 1 (khu cảng, không đổi luật) gộp **trước** buổi UMK 19/11/2026 nếu CI xanh; câu chuyện 2
+   (đổi luật) gộp **sau** 19/11/2026.
+3. **Phạm vi (3A)**: áp cho cả ba biến cố vụ 5 (`EV_SUPPLY`, `EV_SUPPLY_B`, `EV_SUPPLY_C`), câu chữ theo từng trường hợp.
+4. **Số liệu (4A)**: em đặt số nháp, chạy `/balance-check`, gửi chị và thầy Tú bảng số duyệt trong PR câu chuyện 2;
+   mỗi số có minh chứng (mục «Nguồn số liệu» trong `plan.md`).
+5. **Điểm (5A)**: lựa chọn ở cảng không tính điểm riêng, chỉ dùng khi thảo luận sau ván.
 
 ## Kịch bản người dùng và kiểm thử *(bắt buộc)*
 
@@ -91,7 +101,7 @@ Thẻ không thay đổi bất kỳ con số nào trong ván.
 
 | Lựa chọn | Câu chữ cho người chơi | Tác động (số nháp, chốt sau `/balance-check`) |
 |---|---|---|
-| (a) Trả phí ưu tiên | Thuê cầu cảng ưu tiên và vận tải nhanh, giao đủ hàng | `fulfillMul` = 1,0; thêm phí một lần **P** triệu ₫ (nháp: 6–10 % doanh thu dự kiến của vụ) |
+| (a) Trả phí ưu tiên | Thuê cầu cảng ưu tiên và vận tải nhanh, giao đủ hàng | `fulfillMul` = 1,0; hệ số chi phí vụ **Ca** thay cho 1,25 (nháp 1,40) |
 | (b) Chờ hoặc đổi cảng | Chờ cầu trống hoặc chuyển cảng, không tốn thêm phí | Như luật hiện nay: `costMul` 1,25, `fulfillMul` 0,85 |
 | (c) Đàm phán lùi ngày giao | Xin khách lùi hạn, giữ phần lớn đơn nhưng mất uy tín | `fulfillMul` = 0,95; uy tín thương hiệu `brand` giảm **U** (nháp: 0,05–0,08), ảnh hưởng vụ 6 |
 
@@ -107,7 +117,7 @@ Thẻ không thay đổi bất kỳ con số nào trong ván.
 
 **Cách thử độc lập**: chạy engine không cần trình duyệt với cùng hạt giống và cùng quyết định cho vụ 1–5, lần lượt chọn (a), (b), (c) và «không chọn». Kỳ vọng:
 - «không chọn» trùng từng con số với (b) và với luật hiện nay;
-- (a) giao đủ hàng nhưng tốn thêm P;
+- (a) giao đủ hàng nhưng chi phí vụ cao hơn (Ca);
 - (c) giao 95% hàng và `brand` thấp hơn ở vụ 6;
 - `/balance-check` không thấy lựa chọn nào thắng ở mọi kịch bản.
 
@@ -115,7 +125,7 @@ Thẻ không thay đổi bất kỳ con số nào trong ván.
 
 1. **Cho** đội ở vụ 5 với biến cố A, B hoặc C, **khi** mở bảng Quyết định (2D, 3D, v2), **thì** thấy ô «Xử lý hàng kẹt ở Cái Mép» với ba lựa chọn, mặc định (b).
 2. **Cho** đội ở vụ khác vụ 5, **khi** mở bảng Quyết định, **thì** không thấy ô này.
-3. **Cho** đội chọn (a) và chốt vụ, **thì** số hàng bán không bị cắt 15%, chi phí vụ cộng thêm P, báo cáo vụ ghi một dòng «Phí ưu tiên cảng».
+3. **Cho** đội chọn (a) và chốt vụ, **thì** số hàng bán không bị cắt 15%, hệ số chi phí vụ là Ca thay cho 1,25, báo cáo vụ ghi một dòng «Phí ưu tiên cảng».
 4. **Cho** đội chọn (c) và chốt vụ, **thì** số hàng bán = 95% số bán được, `brand` giảm U trước khi tính vụ 6, báo cáo vụ ghi «Lùi ngày giao – uy tín giảm».
 5. **Cho** đội không chạm vào ô, **khi** chốt vụ, **thì** kết quả trùng từng con số với luật hiện nay.
 6. **Cho** đội có khiên bảo hiểm, **khi** chọn bất kỳ lựa chọn nào, **thì** phần bất lợi giảm một nửa như với các biến cố khác.
@@ -128,7 +138,7 @@ Thẻ không thay đổi bất kỳ con số nào trong ván.
 
 - Ván cũ lưu trước khi có tính năng, đang dở ở vụ 5: mở lại thì ô hiện với mặc định (b); kết quả không đổi nếu đội không chọn.
 - Đội tải lại trang sau khi đã chọn (a) nhưng chưa chốt: lựa chọn được giữ như các ô quyết định khác.
-- Tiền mặt không đủ trả phí P: phần thiếu đi vào thấu chi và tính lãi 8,5% như luật vay hiện có, không chặn lựa chọn.
+- Tiền mặt không đủ trả phần chi phí tăng thêm của (a): phần thiếu đi vào thấu chi và tính lãi 8,5% như luật vay hiện có, không chặn lựa chọn.
 - Chế độ thi đấu với đối thủ ảo: đối thủ ảo không chọn, giữ như luật hiện nay.
 - Bản 2D (`game.html`), bản gọn v2 (nếu có ô Quyết định riêng) và bản 3D phải hiện cùng một ô, cùng mặc định.
 - Cảnh 3D không tải được (lỗi WebGL): nút cảng ẩn; ô quyết định ở bảng 2D vẫn dùng được.
@@ -142,7 +152,7 @@ Thẻ không thay đổi bất kỳ con số nào trong ván.
 - **FR-003**: Câu chuyện 1 KHÔNG ĐƯỢC đổi bất kỳ con số nào trong mô phỏng, lượt chơi hay dữ liệu gửi đi.
 - **FR-004**: Ở vụ 5, khi biến cố là `EV_SUPPLY`, `EV_SUPPLY_B` hoặc `EV_SUPPLY_C`, bảng Quyết định PHẢI có ô ba lựa chọn (a)/(b)/(c), mặc định (b).
 - **FR-005**: Lựa chọn (b) và «không chọn» PHẢI cho kết quả trùng từng con số với luật hiện nay.
-- **FR-006**: Lựa chọn (a) đưa `fulfillMul` về 1 và cộng phí P. Lựa chọn (c) đặt `fulfillMul` 0,95 và giảm `brand` U. P và U chốt bằng `/balance-check`, chị duyệt bảng số trong PR.
+- **FR-006**: Lựa chọn (a) bỏ phần cắt đơn (`fulfillMul` về 1) và nâng hệ số chi phí lên Ca. Lựa chọn (c) đặt `fulfillMul` 0,95 và giảm `brand` U. Ca và U chốt bằng `/balance-check`, chị duyệt bảng số trong PR.
 - **FR-007**: Khiên bảo hiểm áp lên lựa chọn đã chọn theo cùng công thức `shieldedEvent`.
 - **FR-008**: Lumina và thầy Tu Phan chỉ đặt câu hỏi gợi ý, không chọn giúp, không nói lựa chọn nào tốt hơn.
 - **FR-009**: Lựa chọn ở cảng PHẢI nằm trong trạng thái ván (lưu, nộp, xuất Excel của giảng viên). Không thêm bảng hay RPC Supabase.
@@ -154,7 +164,7 @@ Thẻ không thay đổi bất kỳ con số nào trong ván.
 
 - **Khu cảng**: các vật thể 3D, mỗi chỗ chạm gắn với một thẻ kiến thức (mã, tiêu đề VI/EN, nội dung VI/EN, nguồn).
 - **Quyết định ở cảng**: một trường mới trong quyết định vụ 5, giá trị `a` | `b` | `c`, mặc định `b`.
-- **Tham số cảng**: P (phí ưu tiên), U (mức giảm uy tín), `fulfillMul` của (c). Đặt ở một chỗ để chỉnh cân bằng.
+- **Tham số cảng**: Ca (hệ số chi phí của (a)), U (mức giảm uy tín), `fulfillMul` của (c). Đặt ở đầu `js/cang-cai-mep.js` để chỉnh cân bằng.
 
 ## Tiêu chí thành công *(bắt buộc)*
 
@@ -167,7 +177,7 @@ Thẻ không thay đổi bất kỳ con số nào trong ván.
 ## Nối chuẩn đầu ra
 
 - **CLO-C · Quản trị vận hành (COO)**: cân đối chi phí hậu cần, tỷ lệ đáp ứng đơn và tồn kho khi chuỗi cung ứng đứt gãy.
-- **CLO-E · Hợp tác 5 vai**: COO đề xuất, CFO tính phí P so với doanh thu mất, CMO cân nhắc uy tín, CEO chốt dưới áp lực thời gian.
+- **CLO-E · Hợp tác 5 vai**: COO đề xuất, CFO so phần chi phí tăng của (a) với doanh thu mất, CMO cân nhắc uy tín, CEO chốt dưới áp lực thời gian.
 - **CLO-D (gián tiếp)**: thẻ Incoterms và hải quan chuẩn bị cho Bậc 3 «Quốc tế hóa», chưa đổi điểm CLO-D.
 
 ## Giả định
@@ -176,23 +186,8 @@ Thẻ không thay đổi bất kỳ con số nào trong ván.
 - Nút «🚢 Cảng Cái Mép» thêm vào `ZONES`, không thêm vào dải nút bên (rail), vì `bn3d-onboarding` đang đếm đúng 24 nút ở rail.
 - Không thêm ảnh hay nhân vật mới. Tàu, cần cẩu, container dựng bằng khối đất sét của `bizon-hq-kit.js`.
 - Không dùng logo hay tên thương mại của các bến cảng cụ thể (TCIT, Gemalink, CMIT), chỉ dùng tên địa danh «Cái Mép – Thị Vải».
-- Số nháp P và U chỉ là điểm khởi đầu. Số chính thức chốt sau `/balance-check` và chị duyệt.
+- Số nháp Ca và U chỉ là điểm khởi đầu. Số chính thức chốt sau `/balance-check` và chị duyệt.
 
-## Câu hỏi gửi chị (tối đa 5)
+## Câu hỏi gửi chị
 
-1. **Hồ sơ quyền tác giả và cách làm Bước 2.** Bước 2 đổi kết quả mô phỏng của Bật Nghiệp, tức tác phẩm đã nộp.
-   - **A (đề xuất)**: viết luật cảng trong một mô-đun riêng `js/cang-cai-mep.js`, móc vào `currentEvent` giống `js/market-dynamic.js`; không sửa dòng nào trong `js/engine.js`. Lý do: không đụng bản trích mã đã nộp, gỡ ra được trọn.
-   - B: hoãn Bước 2 tới khi có giấy chứng nhận, giờ chỉ làm Bước 1.
-   - C: sửa thẳng `js/engine.js`.
-2. **Thời điểm gộp.**
-   - **A (đề xuất)**: cả hai bước gộp sau buổi UMK ngày 19/11/2026. Lý do: không đổi trang đang dùng thật trong tuần học.
-   - B: Bước 1 gộp trước 19/11 nếu kịp CI, Bước 2 sau.
-3. **Áp cho biến cố nào ở vụ 5.**
-   - **A (đề xuất)**: cả ba trường hợp A, B, C, câu chữ theo từng trường hợp («tàu kẹt», «cảng tắc», «kho quá tải»). Lý do: đội nào cũng có quyền chọn, công bằng khi so sánh.
-   - B: chỉ trường hợp B («Cảng tắc nghẽn»), đúng tên Cái Mép nhất.
-4. **Mức phạt và ai chốt số.**
-   - **A (đề xuất)**: em đặt P, U nháp, chạy `/balance-check` rồi gửi chị và thầy Tú một bảng số để duyệt trong PR Bước 2.
-   - B: chị hoặc thầy đưa số luôn.
-5. **Lựa chọn ở cảng có tính vào điểm học phần không.**
-   - **A (đề xuất)**: không tính riêng, chỉ dùng để thảo luận (điểm vẫn theo kết quả và lập luận như rubric hiện nay).
-   - B: thêm một dòng rubric «giải thích lựa chọn ở cảng» trong phần lập luận.
+Đã trả lời ngày 16/11/2026, xem mục «Làm rõ».
