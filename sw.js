@@ -119,7 +119,6 @@ const SHELL = [
   './js/ben-bizon-canh.js',
   './js/ben-bizon-dang-di.js',
   './js/ben-bizon-tranh-dong.js',
-  './js/cang-cai-mep-3d.js',
   './js/ben-bizon-nhiem-vu.js',
   './js/ben-bizon-cau-hoi.js',
   './js/tranh-dong-2d.js',
