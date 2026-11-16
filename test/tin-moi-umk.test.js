@@ -23,7 +23,7 @@ assert.equal(b0.slice(8, 12).toString(), 'WEBP'); assert.ok(b0.length > 30000 &&
       await p.goto(BASE + '/index.html', { waitUntil: 'load', timeout: 60000 }); await p.waitForTimeout(800);
       const h = await p.evaluate(() => { const a = document.querySelector('.hp-hero .hp-news'); const r = a.getBoundingClientRect(); return { href: a.getAttribute('href'), t: a.textContent, vis: r.width > 0 && r.top < innerHeight, ov: document.documentElement.scrollWidth - innerWidth }; });
       assert.equal(h.href, 'bang-chung.html#lop-quoc-te-umk');
-      assert.match(h.t, lang === 'en' ? /^New19 Nov 2026 · 160 students from UM Kendari/ : /^Tin mới19\/11\/2026 · 160 sinh viên UM Kendari/);
+      assert.match(h.t, lang === 'en' ? /^New17–19 Nov 2026 · 160 students from UM Kendari/ : /^Tin mới17–19\/11\/2026 · 160 sinh viên UM Kendari/);
       assert.ok(h.vis, 'tin mới hiện ngay màn đầu'); assert.ok(h.ov <= 0, `trang chủ tràn ngang ${h.ov}px ở ${w}`);
       await p.goto(BASE + '/bang-chung.html', { waitUntil: 'load', timeout: 60000 }); await p.waitForTimeout(800);
       await p.locator('#lop-quoc-te-umk .bc-photo img').scrollIntoViewIfNeeded();
@@ -32,6 +32,7 @@ assert.equal(b0.slice(8, 12).toString(), 'WEBP'); assert.ok(b0.length > 30000 &&
       assert.equal(c.src, IMG); assert.equal(c.nw, 1039, 'ảnh tải được');
       assert.match(c.alt, /Phan Anh Tú/); assert.match(c.cap, lang === 'en' ? /13 November 2026/ : /13\/11\/2026/);
       assert.match(c.txt, lang === 'en' ? /Thursday 19 November 2026/ : /thứ Năm 19\/11\/2026/);
+      assert.match(c.txt, lang === 'en' ? /on 17–19 November 2026/ : /ngày 17–19\/11\/2026/); // 16/11/2026: lớp học 17–19/11, buổi chơi 19/11
       assert.deepEqual(c.links, ['huong-dan.html?lang=en#video-3d', 'BizOn%20Game%203D.html?lang=en']);
       assert.ok(c.iw <= c.kw, 'ảnh không rộng hơn thẻ'); assert.ok(c.ov <= 0, `bang-chung tràn ngang ${c.ov}px ở ${w}`);
       await p.close();
