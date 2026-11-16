@@ -270,6 +270,59 @@ islandBase(home, 4.4, 0x8cc27a, 0xeedbb0, -2);
 })();
 const homeLabel = makeLabel(4); homeLabel.position.set(HOME.x, 4.6, HOME.z - 1.6); scene.add(homeLabel);
 
+/* ---------- Trạm Hải quan Vàm Thịnh (16/11/2026): nhà đất sét mái ngói đỏ cạnh cầu tàu, cờ, rào chắn nâng hạ.
+ * Mọi lô hàng xuất đi các đảo thị trường đều qua đây; chạm vào để xem bộ hồ sơ xuất khẩu cần có. ---------- */
+const CUSTOMS_DOCS = [
+  ['📝', 'Hợp đồng & hóa đơn thương mại', 'Contract & commercial invoice', 'giá, điều kiện giao hàng (Incoterms)', 'price and delivery terms (Incoterms)'],
+  ['📦', 'Phiếu đóng gói & vận đơn', 'Packing list & bill of lading', 'hàng gì, bao nhiêu kiện, đi tàu nào', 'what, how many cartons, which vessel'],
+  ['🔢', 'Mã HS đúng', 'The right HS code', 'quyết định thuế suất và giấy phép cần có', 'sets the tariff rate and the licences needed'],
+  ['📜', 'Giấy chứng nhận xuất xứ (C/O)', 'Certificate of origin (C/O)', 'để hưởng thuế ưu đãi theo FTA', 'to claim FTA preferential tariffs'],
+  ['🌿', 'Kiểm dịch / chất lượng', 'Phytosanitary / quality certificates', 'khi thị trường đòi (nông sản, mỹ phẩm…)', 'where the market requires them (farm goods, cosmetics…)']];
+function openCustoms() {
+  const box = $('bp3d-act'); if (!box) return false;
+  box.innerHTML = '<button class="x" type="button" aria-label="' + tr('Đóng', 'Close') + '" data-x>✕</button><h4>🛃 ' + tr('Hải quan Vàm Thịnh', 'Vàm Thịnh Customs') + '</h4><p>' +
+    tr('Mọi lô hàng xuất đi các đảo thị trường đều qua đây. Bộ hồ sơ xuất khẩu cần có:', 'Every shipment to the market islands passes through here. The export file needs:') + '</p>' +
+    '<ul style="margin:0 0 8px;padding:0;list-style:none;display:grid;gap:5px">' + CUSTOMS_DOCS.map(d => '<li style="display:flex;gap:8px;font-size:12px;line-height:1.35"><span aria-hidden="true">' + d[0] + '</span><span><b>' + tr(d[1], d[2]) + '</b> – ' + tr(d[3], d[4]) + '</span></li>').join('') + '</ul>' +
+    '<p style="margin:0">' + tr('Thiếu một giấy là hàng bị giữ lại kiểm tra – tốn tiền hoặc lỡ mùa bán.', 'One missing paper and the goods are held for inspection – costing money or the selling season.') + '</p>';
+  box.hidden = false; box.dataset.m = 'customs'; return true;
+}
+const customs = (() => {
+  const g = grp(home, 3.05, 0, 2.55); g.rotation.y = -0.55;
+  P(GE.box, M(0xd9cfbf), g, 0, G0 + 0.06, 0, 1.95, 0.12, 1.5);
+  P(GE.box, M(0xf2d98c), g, 0, G0 + 0.58, -0.12, 1.6, 0.92, 1.0);
+  [-0.68, -0.23, 0.23, 0.68].forEach(x => P(GE.cyl, M(0xfbf7ee), g, x, G0 + 0.5, 0.56, 0.05, 0.86, 0.05));
+  P(GE.box, M(0xa8483a), g, 0, G0 + 0.95, 0.56, 1.78, 0.07, 0.46);
+  const rf = P(GE.cone4, M(0xb5553a), g, 0, G0 + 1.38, -0.12, 1.36, 0.62, 0.96); rf.rotation.y = Math.PI / 4;
+  P(GE.box, M(0x2f6f8f), g, 0, G0 + 0.44, 0.385, 0.32, 0.58, 0.03);
+  [-0.52, 0.52].forEach(x => P(GE.box, M(0x9fd4ef), g, x, G0 + 0.66, 0.385, 0.26, 0.26, 0.03));
+  const sign = P(GE.box, M(0xffffff), g, 0, G0 + 1.1, 0.8, 1.2, 0.26, 0.03);
+  sign.material = new THREE.MeshStandardMaterial({ map: emojiTex('🛃 HẢI QUAN · CUSTOMS', '#fff4e0', 640, 128, 50) });
+  // cột cờ + lá cờ đỏ sao vàng vẽ bằng canvas, phấp phới nhẹ
+  P(GE.cyl, M(0xf4f4f0), g, -1.05, G0 + 1.0, 0.45, 0.025, 2.0, 0.025);
+  const fc = document.createElement('canvas'); fc.width = 96; fc.height = 64; const fx = fc.getContext('2d');
+  fx.fillStyle = '#da251d'; fx.fillRect(0, 0, 96, 64); fx.fillStyle = '#ffdd00'; fx.beginPath();
+  for (let i = 0; i < 10; i++) { const r = i % 2 ? 9 : 22, a = -Math.PI / 2 + i * Math.PI / 5; fx.lineTo(48 + r * Math.cos(a), 33 + r * Math.sin(a)); }
+  fx.closePath(); fx.fill();
+  const ft = new THREE.CanvasTexture(fc); ft.colorSpace = THREE.SRGBColorSpace;
+  const flag = new THREE.Mesh(new THREE.PlaneGeometry(0.6, 0.4), new THREE.MeshStandardMaterial({ map: ft, side: THREE.DoubleSide, roughness: 0.9 }));
+  flag.position.set(-0.75, G0 + 1.78, 0.45); g.add(flag);
+  // rào chắn ở đầu cầu tàu: trụ + thanh sọc đỏ trắng nâng lên hạ xuống
+  const gate = grp(home, 2.2, 0, 4.05);
+  P(GE.box, M(0xe8e2d4), gate, 0, G0 + 0.3, 0, 0.18, 0.6, 0.18);
+  const arm = grp(gate, 0, G0 + 0.52, 0);
+  for (let k = 0; k < 4; k++) P(GE.box, M(k % 2 ? 0xffffff : 0xd6453a), arm, -0.18 - k * 0.27, 0, 0, 0.27, 0.07, 0.07);
+  [[3.05, 3.55, 0xe8604c], [3.5, 3.75, 0x3aa0d8], [3.25, 3.85, 0xf2a73b]].forEach(([x, z, c], i) => P(GE.box, M(c), home, x, G0 + 0.14 + (i === 2 ? 0.26 : 0), z, 0.42, 0.26, 0.3));
+  const hit = new THREE.Mesh(new THREE.SphereGeometry(1.15, 10, 8), new THREE.MeshBasicMaterial({ visible: false }));
+  hit.position.set(0, G0 + 0.7, 0); hit.userData.customs = true; g.add(hit); hits.push(hit);
+  const label = makeLabel(2.4); label.position.set(0, G0 + 2.25, 0); label.userData.set('🛃 ' + tr('Hải quan', 'Customs'), '', '#b5553a'); g.add(label);
+  anim.push(t => {
+    flag.rotation.y = Math.sin(t * 2.2) * 0.25; flag.position.x = -0.75 + Math.sin(t * 2.2) * 0.02;
+    arm.rotation.z = Math.max(0, Math.sin(t * 0.5)) * -1.25;
+    label.visible = homeLabel.visible;
+  });
+  return { g, hit, label, gate, flag };
+})();
+
 /* ---------- ban cố vấn ---------- */
 const CAST_FALLBACK = [
   ['Bà Sáu Lành', 'ba-sau-lanh-cut'], ['Minh Khang', 'minh-khang-cut'], ['An Nhiên', 'an-nhien-cut'],
@@ -774,6 +827,7 @@ R.domElement.addEventListener('pointerup', e => {
     say('🚚 ' + (pick ? pick.icon + ' ' + tr(pick.name, pick.nameEn) : kind), 4200);
     return;
   }
+  if (h.object.userData.customs) { userKey = 'home'; autoCam = true; if (!openCustoms()) say('🛃 ' + tr('Hải quan Vàm Thịnh', 'Vàm Thịnh Customs'), 4200); sfx('pop'); return; }
   const m = h.object.userData.m;
   if (m === -2) { userKey = 'home'; autoCam = true; say('🏡 Vàm Thịnh · ' + tr('Ban cố vấn: Bà Sáu Lành, Minh Khang, An Nhiên, Tu Phan, Lina Park, Lumina', 'Advisors: Bà Sáu Lành, Minh Khang, An Nhiên, Tu Phan, Lina Park, Lumina'), 4200); return; }
   if (m === undefined || m < 0) return;
@@ -861,7 +915,7 @@ $('bp3d-snd') && $('bp3d-snd').addEventListener('click', () => setMute(!window._
 addEventListener('pointerdown', function first() { removeEventListener('pointerdown', first); setMute.ready = true; if (!window.__bp3dMute) seaSnd(true); }, { once: true });
 setMute(window.__bp3dMute);
 window.__bp3dSfx = sfx;
-window.__bp3dKiosks = { kiosks, shipKiosks, updateKiosks, cam, IPOS, HOME, R, hits, ray, get userKey() { return userKey; } }; // hỗ trợ debug/kiểm thử, không ảnh hưởng game
+window.__bp3dKiosks = { kiosks, shipKiosks, customs, openCustoms, updateKiosks, cam, IPOS, HOME, R, hits, ray, get userKey() { return userKey; } }; // hỗ trợ debug/kiểm thử, không ảnh hưởng game
 const landBtn = $('bp3d-land'); const landTxt = () => { if (landBtn) landBtn.textContent = landMode === 'team' ? tr('👥 Cả đội lên đảo', '👥 Whole team lands') : tr('👤 CEO lên đảo', '👤 CEO lands'); };
 landTxt(); landBtn && landBtn.addEventListener('click', () => { landMode = landMode === 'team' ? 'ceo' : 'team'; localStorage.setItem('bizon-bp3d-land', landMode); landTxt(); islands.forEach(I => I.party && !I.pm && landParty(I, false)); });
 $('bp3d-full') && $('bp3d-full').addEventListener('click', () => { const on = document.body.classList.toggle('bp3d-full'); $('bp3d-full').textContent = on ? tr('▾ Thu nhỏ', '▾ Shrink') : tr('⤢ Mở rộng', '⤢ Expand'); resize(); });
@@ -1484,7 +1538,7 @@ addEventListener('bizon:langchange', () => {
   [...TB.children].forEach(b => { delete b.dataset.icon; delete b.dataset.full; }); compactTB();
   drawBadges(); qBox._h = null; drawIntroTitle(); drawCover(); drawInside(); drawPage();
   if (chPanel.style.display !== 'none') drawChart(); if (hbPanel.style.display !== 'none') drawHandbook(); if (sPanel.style.display !== 'none') drawStyle();
-  const ab = $('bp3d-act'); if (ab && !ab.hidden && ab.dataset.m !== undefined) openAct(+ab.dataset.m, true);
+  const ab = $('bp3d-act'); if (ab && !ab.hidden && ab.dataset.m !== undefined) { if (ab.dataset.m === 'customs') openCustoms(); else openAct(+ab.dataset.m, true); }
 });
 
 /* ---------- màn mở đầu & kết thúc điện ảnh ---------- */
