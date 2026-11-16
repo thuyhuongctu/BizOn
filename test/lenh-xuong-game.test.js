@@ -1,4 +1,4 @@
-// Bốn lệnh Claude Code phỏng theo Claude Code Game Studios (MIT): đủ frontmatter, tiếng Việt, ghi nguồn,
+// Các lệnh Claude Code phỏng theo Claude Code Game Studios (MIT): đủ frontmatter, tiếng Việt, ghi nguồn,
 // và THIRD-PARTY-NOTICES.md mục 6 có dòng ghi công tương ứng.
 'use strict';
 const fs = require('node:fs');
@@ -6,7 +6,9 @@ const path = require('node:path');
 const assert = require('node:assert/strict');
 const ROOT = path.join(__dirname, '..'), read = f => fs.readFileSync(path.join(ROOT, f), 'utf8');
 
-const SKILLS = ['balance-check', 'playtest-report', 'design-review', 'ux-review'];
+// 16/11/2026: thêm 7 lệnh từ bản 1.3.0 (security-audit, localize, asset-audit, perf-profile, smoke-check, patch-notes, prototype).
+const SKILLS = ['balance-check', 'playtest-report', 'design-review', 'ux-review',
+  'security-audit', 'localize', 'asset-audit', 'perf-profile', 'smoke-check', 'patch-notes', 'prototype'];
 for (const name of SKILLS) {
   const f = `.claude/skills/${name}/SKILL.md`;
   const s = read(f);
@@ -25,8 +27,8 @@ const sec6 = notes.slice(notes.indexOf('## 6 ·'), notes.indexOf('## 7 ·'));
 assert.ok(sec6.includes('Claude Code Game Studios') && sec6.includes('Donchitos') && sec6.includes('MIT'), 'mục 6 thiếu ghi công');
 for (const name of SKILLS) assert.ok(sec6.includes('`' + name + '`'), 'mục 6 thiếu ' + name);
 
-// Lệnh trỏ nhau phải trỏ tới lệnh có thật
+// Lệnh trỏ nhau phải trỏ tới lệnh có thật trong .claude/skills/
 for (const name of SKILLS) for (const m of read(`.claude/skills/${name}/SKILL.md`).matchAll(/`\/([a-z-]+)/g)) {
-  assert.ok(SKILLS.includes(m[1]), `${name} trỏ tới lệnh không có: /${m[1]}`);
+  assert.ok(fs.existsSync(path.join(ROOT, '.claude/skills', m[1], 'SKILL.md')), `${name} trỏ tới lệnh không có: /${m[1]}`);
 }
 console.log('lenh-xuong-game: ok');

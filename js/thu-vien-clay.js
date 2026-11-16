@@ -67,10 +67,12 @@
   function match(x){ var s = q.trim().toLowerCase(); return !s || (x.name+' '+x.desc).toLowerCase().indexOf(s) > -1; }
 
   /* ---- trình phát nhạc nhỏ ---- */
+  // Bản nghe nén 128 kbps (tệp «-v2», 16/11/2026), cùng danh sách với js/am-nhac-clay.js.
+  var LIGHT = ['bai-hat-ben-phu-sa', 'bat-nghiep-mekong-sunfire-rise-2', 'bat-nghiep-mekong-sunfire-rise', 'bat-nghiep-thap-den-ben-song', 'bizon-lesprit-du-mekong', 'brand-passport-remix-25', 'durian-passport', 'ho-chieu-p3-en-remix', 'ho-chieu-p3-en-remix2', 'ho-chieu-p3-remix', 'ho-chieu-p3-remix2', 'ho-chieu-p3-remix3', 'ho-chieu-p3-viet-nam-ra-the-gioi', 'ho-chieu-p3-vietnam-to-the-world-en', 'huong-ngot-phu-sa', 'huong-ngot-que-minh', 'stamps-beyond-borders-extended'];
   function play(f){
     if(cur === f && A){ A.pause(); cur = null; render(); return; }
     if(A) A.pause();
-    A = new Audio(art('audio/'+f+'.mp3')); A.volume = .6;
+    A = new Audio(art('audio/'+f+(LIGHT.indexOf(f) >= 0 ? '-v2' : '')+'.mp3')); A.volume = .6;
     A.onended = function(){ cur = null; render(); };
     A = A; cur = f; A.play().catch(function(){}); render();
   }

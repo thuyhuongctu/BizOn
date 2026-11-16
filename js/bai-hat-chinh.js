@@ -4,7 +4,7 @@
  * nổi ở góc phải dưới để tạm dừng / phát tiếp hoặc tắt hẳn mà không phải cuộn lên. Mở video giới
  * thiệu hay MV thì nhạc tự dừng. */
 (function () {
-  var SRC = 'assets/audio/bizon-lesprit-du-mekong.mp3';
+  var SRC = 'assets/audio/bizon-lesprit-du-mekong-v2.mp3';
   var nut = document.getElementById('bz-song');
   var thanh = document.getElementById('bz-song-bar');
   if (!nut || !thanh) return;

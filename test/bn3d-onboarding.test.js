@@ -77,8 +77,9 @@ assert.match(g3d, /getElementById\('ns2'\)\.onclick = \(\) => \{ if \(GS && !GS\
 assert.match(g3d, /paintNext\(s\);/);
 
 // 6. Nhạc chủ đề: bài mở game của Bật Nghiệp là «Mekong Sunfire · Rise With The River», ghi tên trong bước chào của tour, có nút bật nếu đang tắt.
-assert.match(app, /const BGM_TRACKS = \[\n  'assets\/audio\/bat-nghiep-mekong-sunfire-rise\.mp3'/);
-assert.ok(fs.existsSync(path.join(__dirname, '..', 'assets/audio/bat-nghiep-mekong-sunfire-rise.mp3')));
+// 16/11/2026: trang phát bản nén 128 kbps (-v2); bản gốc giữ nguyên trong kho.
+assert.match(app, /const BGM_TRACKS = \[\n  'assets\/audio\/bat-nghiep-mekong-sunfire-rise-v2\.mp3'/);
+for (const f of ['bat-nghiep-mekong-sunfire-rise.mp3', 'bat-nghiep-mekong-sunfire-rise-v2.mp3']) assert.ok(fs.existsSync(path.join(__dirname, '..', 'assets/audio/' + f)));
 assert.match(g3d, /const THEME_SONG = 'Mekong Sunfire · Rise With The River';/);
 assert.match(g3d, /class="song">🎵 <span>\$\{T\('Nhạc chủ đề', 'Theme song'\)\}: <b>\$\{THEME_SONG\}<\/b><\/span>\$\{musicOn\(\) \? '' : '<button class="btn" id="t3Music">/);
 assert.match(g3d, /q\('#t3Music'\)\.onclick = \(\) => \{ try \{ ev\('toggleMusic\(\)'\); ev\('startMusic\(\)'\); \}/);
