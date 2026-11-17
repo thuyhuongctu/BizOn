@@ -73,7 +73,7 @@
   <section class="rb-hero">
     <span class="clay-eyebrow" data-en="Evaluation study · rubric and inter-rater reliability">Nghiên cứu đánh giá · rubric và độ tin cậy liên chấm</span>
     <h1 data-en="Score the case task, blind">Chấm bài tình huống, chấm mù</h1>
-    <p class="lead" data-en="Load the case-task CSV exported from the instructor page. Each rater scores every reason (0–2) and the four criteria of the explanation (0–2) without seeing the phase or the class condition. Then load two raters' score files to get Cohen's κ per criterion, ICC for totals and the list of disagreements to reconcile. Everything runs in this browser; nothing is uploaded.">Nạp tệp CSV bài tình huống xuất từ Trang Giảng viên. Mỗi người chấm cho điểm từng lý do (0–2) và bốn tiêu chí của câu giải thích (0–2) mà không thấy giai đoạn hay điều kiện lớp. Sau đó nạp tệp điểm của hai người chấm để có κ Cohen theo tiêu chí, ICC cho tổng điểm và danh sách bất đồng cần hoà giải. Mọi thứ chạy trên máy này, không tải lên đâu.</p>
+    <p class="lead" data-en="Load the case-task CSV file exported from the instructor page. Each rater scores every reason (0–2) and the four criteria of the explanation (0–2). Raters do not see which phase a script comes from or which condition the class was in. Then load two raters' score files to see how far they agree: Cohen's κ (kappa) for each criterion, the ICC for total scores, and a list of disagreements to settle. Everything runs in this browser; nothing is uploaded.">Nạp tệp CSV bài tình huống xuất từ Trang Giảng viên. Mỗi người chấm cho điểm từng lý do (0–2) và bốn tiêu chí của câu giải thích (0–2). Người chấm không thấy bài thuộc giai đoạn nào hay lớp thuộc điều kiện nào. Sau đó nạp tệp điểm của hai người chấm để xem họ đồng thuận đến đâu: hệ số κ (kappa) Cohen cho từng tiêu chí, hệ số ICC cho tổng điểm, và danh sách chỗ lệch cần thống nhất lại. Mọi thứ chạy trên máy này, không tải lên đâu.</p>
   </section>
 
   <div class="rb-tabs" role="tablist">
@@ -84,7 +84,7 @@
   <div id="tab-grade">
     <section class="rb-box" id="rb-setup">
       <h2 data-en="Rater and file">Người chấm và tệp</h2>
-      <p class="sub" data-en="Rubric anchors: docs/architecture/RUBRIC-CHAM-TINH-HUONG.md. Score a calibration sample of about 10 scripts together first, then score independently.">Mốc điểm rubric: docs/architecture/RUBRIC-CHAM-TINH-HUONG.md. Chấm chung một mẫu hiệu chuẩn khoảng 10 bài trước, rồi mới chấm độc lập.</p>
+      <p class="sub" data-en-html="Score anchors for each rubric level: see the &lt;a href=&quot;https://github.com/thuyhuongctu/BizOn/blob/main/docs/architecture/RUBRIC-CHAM-TINH-HUONG.md&quot;&gt;case-task scoring guide&lt;/a&gt;. Before scoring independently, raters score a sample of about 10 scripts together to agree on how to score (calibration).">Mốc điểm cho từng mức của rubric: xem <a href="https://github.com/thuyhuongctu/BizOn/blob/main/docs/architecture/RUBRIC-CHAM-TINH-HUONG.md">hướng dẫn chấm bài tình huống</a>. Trước khi chấm độc lập, những người chấm cùng chấm chung khoảng 10 bài mẫu để thống nhất cách cho điểm (hiệu chuẩn).</p>
       <div class="rb-form">
         <label><span data-en="Rater name or id">Tên hoặc mã người chấm</span><input type="text" id="rb-rater" maxlength="40" placeholder="GV1" autocomplete="off"></label>
         <label><span data-en="Case-task CSV (from the instructor page)">CSV bài tình huống (từ Trang Giảng viên)</span><input type="file" id="rb-file" accept=".csv,text/csv"></label>
