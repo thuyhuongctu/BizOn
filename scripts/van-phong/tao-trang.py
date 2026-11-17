@@ -72,7 +72,7 @@ GAME = {
                   ('Ngoài Đội Rồng Xanh, người chơi có thể chọn Đội Phù Sa. Hương là nhà sáng lập: gánh hàng rong của đội biết chắc khu nào đông nhất tuần sau.',
                    'Besides the Blue Dragon team, players can pick the Phù Sa team. Hương is its founder: the team’s street cart knows for sure the busiest spot next week.'),
                   (('Ưu thế của nhà sáng lập', 'Founder perk'), [('🧺 Biết chắc khu đông nhất tuần sau', '🧺 Knows the busiest spot next week')])),
-            nguoi('thaytu', 'bps-tu', ('Thầy Tu Phan', 'Thầy Tu Phan'), ('Cố vấn học thuật', 'Academic advisor'), ('Chòi cố vấn học thuật', 'Academic advisor hut'), 'bang-trang',
+            nguoi('thaytu', 'bps-tu', ('Thầy Tu Phan', 'Tu Phan'), ('Cố vấn học thuật', 'Academic advisor'), ('Chòi cố vấn học thuật', 'Academic advisor hut'), 'bang-trang',
                   ('Mở đầu <em>mỗi tuần buôn bán.</em>', 'Opening <em>every trading week.</em>'),
                   ('PGS.TS. Phan Anh Tú là cố vấn học thuật. Đầu mỗi tuần trong năm tuần, thầy mở màn bằng một lời dẫn gợi mở cho tuần ấy.',
                    'Assoc. Prof. Phan Anh Tú is the academic advisor. At the start of each of the five weeks, he opens with a prompting line for that week.'),
@@ -133,11 +133,11 @@ GAME = {
                   ('Lina Park lo phân phối trong ban cố vấn, và có chân dung riêng ở màn nhiệm vụ của game.',
                    'Lina Park handles distribution on the advisory board, and has her own portrait on the game’s mission screen.'),
                   (('Ban cố vấn', 'Advisory board'), [('Phân phối', 'Distribution')])),
-            nguoi('thaytu', 'hcth-tu', ('Thầy Tu Phan', 'Thầy Tu Phan'), ('Cố vấn học thuật · Quốc tế hóa', 'Academic advisor · Internationalisation'), ('Phòng quốc tế hóa', 'Internationalisation room'), 'bang-trang',
-                  ('Hỏi thầy Tu Phan, <em>một lần mỗi ván.</em>', 'Ask thầy Tu Phan, <em>once a game.</em>'),
+            nguoi('thaytu', 'hcth-tu', ('Thầy Tu Phan', 'Tu Phan'), ('Cố vấn học thuật · Quốc tế hóa', 'Academic advisor · Internationalisation'), ('Phòng quốc tế hóa', 'Internationalisation room'), 'bang-trang',
+                  ('Hỏi thầy Tu Phan, <em>một lần mỗi ván.</em>', 'Ask Tu Phan, <em>once a game.</em>'),
                   ('Trong bản 3D, thầy Tu Phan ngồi ghế quốc tế hóa của ban cố vấn. Mỗi ván người chơi được hỏi thầy một lần, nên phải để dành câu hỏi cho lúc thật cần.',
-                   'In the 3D edition thầy Tu Phan holds the internationalisation seat on the board. Each game the player may ask him once, so the question is saved for when it matters.'),
-                  (('Ban cố vấn', 'Advisory board'), [('Hỏi thầy Tu Phan: 1 lần/ván', 'Ask thầy Tu Phan: once a game')])),
+                   'In the 3D edition Tu Phan holds the internationalisation seat on the board. Each game the player may ask him once, so the question is saved for when it matters.'),
+                  (('Ban cố vấn', 'Advisory board'), [('Hỏi thầy Tu Phan: 1 lần/ván', 'Ask Tu Phan: once a game')])),
         ]),
     # ---------------- Hộ Chiếu Sầu Riêng ----------------
     # Nguồn: lab/ho-chieu-sau-rieng-data.js:347-357 (đội 5 vai, nguyên văn), :411 + html:301 (hỏi Lumina tối đa 3),
@@ -148,7 +148,7 @@ GAME = {
         tep='van-phong-hc-sau-rieng.html', choi='lab/ho-chieu-sau-rieng.html', game=('Hộ Chiếu Sầu Riêng', 'Durian Passport'),
         tieu=('Một đội, một chuỗi xuất khẩu sầu riêng.', 'One team, one durian export chain.'),
         lead=('Đội 5 vai điều hành một mắt xích trong chuỗi xuất khẩu sầu riêng qua sáu vụ, từ ngày Trung Quốc mở chính ngạch năm 2022. Ba cố vấn đi cùng: Lumina, Bà Sáu Lành và thầy Tu Phan.',
-              'A team of 5 roles runs one link of the durian export chain over six seasons, from the day China opened official trade in 2022. Three advisors come along: Lumina, Bà Sáu Lành and thầy Tu Phan.'),
+              'A team of 5 roles runs one link of the durian export chain over six seasons, from the day China opened official trade in 2022. Three advisors come along: Lumina, Bà Sáu Lành and Tu Phan.'),
         ds=[
             nguoi('lumina', 'sr-lumina', ('Lumina', 'Lumina'), ('Cố vấn học tập', 'Learning advisor'), ('Trạm Lumina', 'Lumina hub'), 'vong',
                   ('Hỏi tối đa ba lần, <em>Lumina hỏi ngược lại.</em>', 'Ask up to three times; <em>Lumina asks back.</em>'),
@@ -185,13 +185,22 @@ GAME = {
                   ('Bà Sáu Lành là nhà vườn và cố vấn của đội trong bản 3D: người ở ngay đầu chuỗi, nơi trái sầu riêng được trồng.',
                    'Bà Sáu Lành is a grower and the team’s advisor in the 3D edition: right at the start of the chain, where the durian is grown.'),
                   (('Cố vấn', 'Advisor'), [('Nhà vườn sầu riêng', 'Durian grower')])),
-            nguoi('thaytu', 'bps-tu', ('Thầy Tu Phan', 'Thầy Tu Phan'), ('Cố vấn học thuật', 'Academic advisor'), ('Phòng debrief', 'Debrief room'), 'bang-trang',
+            nguoi('thaytu', 'bps-tu', ('Thầy Tu Phan', 'Tu Phan'), ('Cố vấn học thuật', 'Academic advisor'), ('Phòng debrief', 'Debrief room'), 'bang-trang',
                   ('Câu hỏi debrief <em>trước khi chốt vụ.</em>', 'Debrief questions <em>before the season is committed.</em>'),
                   ('Trong bản 3D, thầy Tu Phan là giảng viên Trường Kinh tế, Đại học Cần Thơ. Mỗi vụ, trước khi CEO chốt, thầy hỏi đội mấy câu debrief; đội hỏi lại thì thầy giải thích lý thuyết, như kênh bán của đội thuộc phương thức thâm nhập nào. Hết sáu vụ, thầy dẫn buổi debrief: đội đã học được gì về kinh doanh quốc tế.',
-                   'In the 3D edition thầy Tu Phan is a lecturer at the CTU School of Economics. Each season, before the CEO commits, he asks the team a few debrief questions; asked back, he explains the theory, such as which entry mode each sales channel is. After six seasons he leads the debrief: what the team learned about international business.'),
-                  (('Thầy Tu Phan', 'Thầy Tu Phan'), [('Câu hỏi debrief mỗi vụ', 'Debrief questions each season'), ('Kênh bán ↔ phương thức thâm nhập', 'Channel ↔ entry mode')])),
+                   'In the 3D edition Tu Phan is a lecturer at the CTU School of Economics. Each season, before the CEO commits, he asks the team a few debrief questions; asked back, he explains the theory, such as which entry mode each sales channel is. After six seasons he leads the debrief: what the team learned about international business.'),
+                  (('Thầy Tu Phan', 'Tu Phan'), [('Câu hỏi debrief mỗi vụ', 'Debrief questions each season'), ('Kênh bán ↔ phương thức thâm nhập', 'Channel ↔ entry mode')])),
         ]),
 }
+
+
+def ten_html(p, fig=False):
+    """Tên nhân vật; nếu bản EN khác bản VI (ví dụ «Thầy Tu Phan» → «Tu Phan») thì bọc data-en."""
+    vi, en = p['ten']
+    if vi == en:
+        return e(vi)
+    kieu = ' style="display:inline;color:inherit;font-weight:800"' if fig else ''
+    return f'<span data-en="{e(en)}"{kieu}>{e(vi)}</span>'
 
 
 def co(anh):
@@ -207,7 +216,7 @@ def muc(i, p, game):
       <span class="so">{i + 1:02d} · <span data-en="{e(p['vai'][1])}">{e(p['vai'][0])}</span></span>
       <h2 id="h-{p['id']}" data-en-html="{e(p['tieu'][1])}">{p['tieu'][0]}</h2>
       <p data-en="{e(p['doan'][1])}">{e(p['doan'][0])}</p>
-      <div class="ai"><i></i><span>{e(p['ten'][0])} · <span data-en="{e(p['vai'][1])}">{e(p['vai'][0])}</span></span></div>
+      <div class="ai"><i></i><span>{ten_html(p)} · <span data-en="{e(p['vai'][1])}">{e(p['vai'][0])}</span></span></div>
     </div>
     <div class="san">
       <img class="nv" src="{ANH}{p['anh']}.webp" alt="{e(p['ten'][0])} – {e(p['vai'][0])}" data-en-aria="{e(p['ten'][1])} – {e(p['vai'][1])}" width="{w}" height="{h}" loading="lazy">
@@ -227,7 +236,7 @@ def trang(key, g):
                           ten=dict(vi=p['phong'][0], en=p['phong'][1]), vai=dict(vi=p['ten'][0] + ' · ' + p['vai'][0], en=p['ten'][1] + ' · ' + p['vai'][1])))
     url = 'https://bizonland.com/' + g['tep']
     gv, ge = g['game']
-    hang = ''.join(f'''      <figure><a href="#{p['id']}"><img src="{ANH}{p['anh']}.webp" alt="{e(p['ten'][0])}" width="{co(p['anh'])[0]}" height="{co(p['anh'])[1]}" loading="lazy"></a><figcaption>{e(p['ten'][0])}<span data-en="{e(p['vai'][1])}">{e(p['vai'][0])}</span></figcaption></figure>
+    hang = ''.join(f'''      <figure><a href="#{p['id']}"><img src="{ANH}{p['anh']}.webp" alt="{e(p['ten'][0])}" width="{co(p['anh'])[0]}" height="{co(p['anh'])[1]}" loading="lazy"></a><figcaption>{ten_html(p, True)}<span data-en="{e(p['vai'][1])}">{e(p['vai'][0])}</span></figcaption></figure>
 ''' for p in ds)
     so_nguoi = len(ds)
     return f'''<!DOCTYPE html>

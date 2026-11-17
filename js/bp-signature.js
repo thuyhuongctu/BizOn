@@ -169,7 +169,7 @@
     var box = $('sg-asktu'); if (s.flags.askTu) { if (box) box.remove(); return; }
     if (box) return;
     box = document.createElement('div'); box.id = 'sg-asktu';
-    box.innerHTML = '<span>🎓 <b>' + T('Hỏi thầy Tu Phan', 'Ask Prof. Tú') + '</b> · ' + T('chỉ dùng được 1 lần mỗi ván', 'one use per game') + '</span><button type="button">' + T('Hỏi ngay', 'Ask now') + '</button>';
+    box.innerHTML = '<span>🎓 <b>' + T('Hỏi thầy Tu Phan', 'Ask Tu Phan') + '</b> · ' + T('chỉ dùng được 1 lần mỗi ván', 'one use per game') + '</span><button type="button">' + T('Hỏi ngay', 'Ask now') + '</button>';
     box.querySelector('button').onclick = function () {
       s.flags.askTu = true; box.remove();
       overlay('<span class="sg-eb">🎓 ' + T('Gợi ý của thầy Tu Phan', 'A hint from Prof. Tu Phan') + '</span><h3>' + T('Quyết định rủi ro nhất lúc này', 'Your riskiest decision right now') + '</h3><p class="sg-q" style="animation-delay:.05s">' + riskiest() + '</p><p class="sg-q" style="font-size:12px;opacity:.75;animation-delay:.15s">' + T('Chi phí giao dịch: kiểm soát càng cao thì cam kết vốn càng lớn (Anderson & Gatignon, 1986).', 'Transaction costs: more control means more committed capital (Anderson & Gatignon, 1986).') + '</p>');
