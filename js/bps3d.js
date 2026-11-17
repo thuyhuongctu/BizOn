@@ -140,12 +140,15 @@ box(0.4, 0.42, 0.4, 0x5a4632, 1.85, 0.35, -0.75, dock); lantern(1.85, 1.08, -0.7
 const NV_TRANH = !/[?&]nv=3d\b/.test(location.search);
 const GIAM = (() => { try { return matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { return false; } })();
 const TRANH = [];
+// Tờ nén lại cho nhẹ (16/11/2026): bản «-v2» WebP chất lượng 80, khung giữ nguyên; tờ gốc giữ trong kho.
+const TO_NEN = { 'tu-ganh-dung': 'tu-ganh-dung-v2', 'huong-phusa-dung': 'huong-phusa-dung-v2' };
 function tranhDong(ten, tinh, h, x) {
+  const tep = 'assets/character/tranh-dong/' + (TO_NEN[ten] || ten);
   const s = new THREE.Sprite(new THREE.SpriteMaterial({ transparent: true, depthWrite: false, alphaTest: 0.5 })); s.visible = false; s.position.set(x, h / 2 + 0.2, 0); dock.add(s);
   const tr = { s, ten, j: null, khung: 0, hong: false };
   const veTinh = () => { tr.hong = true; dock.remove(s); const t = sprite(tinh, 3.1, 1.75); t.position.x = x; dock.add(t); tr.tinh = t; };
   if (!NV_TRANH || GIAM) { veTinh(); return tr; }
-  fetch('assets/character/tranh-dong/' + ten + '.json').then(r => { if (!r.ok) throw new Error(String(r.status)); return r.json(); }).then(j => new Promise((ok, loi) => TL.load('assets/character/tranh-dong/' + ten + '.webp', tx => {
+  fetch(tep + '.json').then(r => { if (!r.ok) throw new Error(String(r.status)); return r.json(); }).then(j => new Promise((ok, loi) => TL.load(tep + '.webp', tx => {
     tx.colorSpace = THREE.SRGBColorSpace; tx.repeat.set(1 / j.cot, 1 / j.hang); s.material.map = tx; s.material.needsUpdate = true; s.scale.set(h * j.rong / j.cao, h, 1); tr.j = j; datKhung(tr, 0); s.visible = true; ok();
   }, undefined, loi))).catch(veTinh);
   TRANH.push(tr); return tr;
