@@ -24,7 +24,7 @@
     if (!DD) return null;
     const l = lang(), src = l === 'en' ? Object.assign({}, DD.sources, DD.sourcesEn) : DD.sources;
     const li = keys.filter(k => DD.facts[k]).map(k => { const f = DD.facts[k];
-      return el('li', null, (f.v ? f.v + ' · ' : '') + (l === 'en' ? f.en : f.vi), el('small', null, L('Nguồn: ', 'Source: ') + (src[f.src] || f.src))); });
+      return el('li', null, (f.v ? (l === 'en' && f.vEn ? f.vEn : f.v) + ' · ' : '') + (l === 'en' ? f.en : f.vi), el('small', null, L('Nguồn: ', 'Source: ') + (src[f.src] || f.src))); });
     return li.length ? el('details', { class: 'ht-dk' }, el('summary', null, L('📚 Dữ kiện có nguồn (', '📚 Sourced facts (') + li.length + ')'), el('ul', null, ...li)) : null;
   }
 

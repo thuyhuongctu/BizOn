@@ -98,8 +98,14 @@
   var btn = document.createElement('button');
   btn.id = 'bz-dock-btn';
   btn.textContent = '⋯';
-  btn.title = 'Tiện ích: nhạc · sáng/tối · VI/EN · đồng hồ · chia sẻ';
-  btn.setAttribute('aria-label', 'Mở bảng tiện ích BizOn');
+  /* Nhãn nút ⋯ theo ngôn ngữ đang chọn, đổi theo khi người dùng bấm VI/EN */
+  function btnLabel() {
+    var en = false; try { en = localStorage.getItem('bizon-lang') === 'en'; } catch (e) {}
+    btn.title = en ? 'Quick controls: music · light/dark · VI/EN · clocks · share' : 'Tiện ích: nhạc · sáng/tối · VI/EN · đồng hồ · chia sẻ';
+    btn.setAttribute('aria-label', en ? 'Open BizOn quick controls' : 'Mở bảng tiện ích BizOn');
+  }
+  btnLabel();
+  window.addEventListener('bizon:langchange', btnLabel);
 
   var dock = document.createElement('div');
   dock.id = 'bz-dock';
