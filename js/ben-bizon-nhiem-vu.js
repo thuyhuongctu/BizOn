@@ -20,7 +20,7 @@ export const NHIEM_VU = [{
     { id: 'hoi-lumina', noi: 'lumina', khi: ['thoai'], nhan: { vi: 'Hỏi đường Lumina', en: 'Ask Lumina the way' } },
     { id: 'doc-bang-tin', noi: 'bang-tin', khi: ['thoai'], nhan: { vi: 'Đọc Bảng tin', en: 'Read the notice board' } },
     { id: 'ghe-hanh-trinh', noi: 'hanh-trinh', khi: ['gan', 'vao'], url: 'hanh-trinh.html', nhan: { vi: 'Ghé Hành trình 3 bậc', en: 'Stop by the 3-tier journey' } },
-    { id: 'hoi-thay-tu', noi: 'thay-tu', khi: ['thoai'], nhan: { vi: 'Hỏi thầy Tu Phan game dựng trên mô hình nào', en: 'Ask Thầy Tu Phan which models the games are built on' } },
+    { id: 'hoi-thay-tu', noi: 'thay-tu', khi: ['thoai'], nhan: { vi: 'Hỏi thầy Tu Phan game dựng trên mô hình nào', en: 'Ask Tu Phan which models the games are built on' } },
     { id: 'xem-thanh-tich', noi: 'thanh-tich', khi: ['xem'], nhan: { vi: 'Xem Bảng thành tích', en: 'Look at the achievement board' } },
   ],
   chuc: { vi: '🎉 Bạn đã làm quen xong Bến BizOn! Bước tiếp theo: Bậc 1, Bến Phù Sa.', en: '🎉 You know your way around BizOn Wharf! Next step: Tier 1, Bến Phù Sa.' },
