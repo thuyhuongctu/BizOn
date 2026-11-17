@@ -26,6 +26,8 @@ function check(condition, message) {
   fs.mkdirSync('artifacts', { recursive: true });
   const browser = await chromium.launch({ headless: true });
   const page = await browser.newPage({ viewport: { width: 1200, height: 900 } });
+  // Bảng Lumina theo ngôn ngữ chung 'bizon-lang' (rà soát 14/11/2026): bài kiểm này đọc lời Coach/Critic tiếng Việt
+  await page.addInitScript(() => { try { localStorage.setItem('bizon-lang', 'vi'); } catch (e) {} });
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
   page.on('console', message => {

@@ -13,6 +13,10 @@
   var STORAGE_PREFIX = 'bizon-bp-learning-v1:';
   var MAX_REFLECTION = 2000;
   var PHASE_VI = { obs: 'quan sát', dec: 'ra quyết định', evt: 'biến cố', res: 'kết quả' };
+  var PHASE_EN = { obs: 'observe', dec: 'decide', evt: 'event', res: 'results' };
+  // Ngôn ngữ của bảng Lumina theo lựa chọn chung 'bizon-lang' (rà soát 14/11/2026). Nhật ký đã lưu giữ nguyên ngôn ngữ lúc ghi.
+  function isEN() { try { return localStorage.getItem('bizon-lang') === 'en'; } catch (e) { return false; } }
+  function L(vi, en) { return isEN() ? en : vi; }
   var gameFrame = document.getElementById('bp-game');
   var panel = document.getElementById('lumina-panel');
   var statusEl = document.getElementById('learning-status');
@@ -140,39 +144,39 @@
   }
 
   function coachFor(state) {
-    if (!state) return 'Lumina đang kết nối với ván chơi.';
+    if (!state) return L('Lumina đang kết nối với ván chơi.', 'Lumina is connecting to the game.');
     var sel = state.sel || {};
     if (state.phase !== 'dec') {
-      return 'Quan sát dữ liệu của quý, xác định điều gì đã thay đổi và chuẩn bị một giả thuyết cho quyết định tiếp theo.';
+      return L('Quan sát dữ liệu của quý, xác định điều gì đã thay đổi và chuẩn bị một giả thuyết cho quyết định tiếp theo.', 'Look at this quarter\'s data, work out what has changed and prepare a hypothesis for your next decision.');
     }
     if (sel.prio == null) {
-      return 'Xác định mục tiêu quan trọng nhất của quý trước khi chọn hành động. Mục tiêu đó liên hệ thế nào với tiền mặt, uy tín, năng lực và chống chịu?';
+      return L('Xác định mục tiêu quan trọng nhất của quý trước khi chọn hành động. Mục tiêu đó liên hệ thế nào với tiền mặt, uy tín, năng lực và chống chịu?', 'Name the most important goal of the quarter before choosing an action. How does that goal relate to cash, reputation, capability and resilience?');
     }
     if (sel.enter != null) {
-      return 'So sánh ba đánh đổi của phương thức thâm nhập: mức kiểm soát, vốn cần thiết và khả năng tạo tính chính danh địa phương.';
+      return L('So sánh ba đánh đổi của phương thức thâm nhập: mức kiểm soát, vốn cần thiết và khả năng tạo tính chính danh địa phương.', 'Compare the three trade-offs of the entry mode: degree of control, capital required and the ability to build local legitimacy.');
     }
-    return 'Giải thích vì sao quý này nên hoặc chưa nên vào thị trường mới. Đừng chỉ nhìn tăng trưởng; hãy kiểm tra thanh khoản và mức hiểu biết thị trường.';
+    return L('Giải thích vì sao quý này nên hoặc chưa nên vào thị trường mới. Đừng chỉ nhìn tăng trưởng; hãy kiểm tra thanh khoản và mức hiểu biết thị trường.', 'Explain why you should or should not enter a new market this quarter. Do not look only at growth; check liquidity and how well you know the market.');
   }
 
   function criticFor(state) {
-    if (!state) return 'Chưa đủ dữ liệu để chất vấn quyết định.';
+    if (!state) return L('Chưa đủ dữ liệu để chất vấn quyết định.', 'Not enough data yet to challenge the decision.');
     var sel = state.sel || {};
     if (state.cash < 2) {
-      return 'Phản biện: quyết định này có thể làm doanh nghiệp mất khả năng thanh toán trong hai quý liên tiếp không? Kế hoạch dự phòng là gì?';
+      return L('Phản biện: quyết định này có thể làm doanh nghiệp mất khả năng thanh toán trong hai quý liên tiếp không? Kế hoạch dự phòng là gì?', 'Challenge: could this decision leave the firm unable to pay its bills for two quarters in a row? What is the contingency plan?');
     }
     if (sel.enter != null && state.know && state.know[sel.enter] < 35) {
-      return 'Phản biện: bằng chứng thị trường hiện còn yếu. Điều gì có thể khiến nhận định về ' + marketName(sel.enter) + ' sai?';
+      return L('Phản biện: bằng chứng thị trường hiện còn yếu. Điều gì có thể khiến nhận định về ' + marketName(sel.enter) + ' sai?', 'Challenge: the market evidence is still weak. What could make your view of ' + marketName(sel.enter) + ' wrong?');
     }
     if (sel.enterMode === 2) {
-      return 'Phản biện: đối tác địa phương giúp tiếp cận mạng lưới, nhưng rủi ro phụ thuộc, hành vi cơ hội và kiểm soát thương hiệu đã được xử lý chưa?';
+      return L('Phản biện: đối tác địa phương giúp tiếp cận mạng lưới, nhưng rủi ro phụ thuộc, hành vi cơ hội và kiểm soát thương hiệu đã được xử lý chưa?', 'Challenge: a local partner opens up its network, but have you handled dependence risk, opportunistic behaviour and control of the brand?');
     }
     if (sel.enterMode === 1) {
-      return 'Phản biện: xuất khẩu trực tiếp tăng kiểm soát nhưng đòi hỏi vốn và năng lực vận hành. Doanh nghiệp đã đủ sức hấp thụ chi phí chưa?';
+      return L('Phản biện: xuất khẩu trực tiếp tăng kiểm soát nhưng đòi hỏi vốn và năng lực vận hành. Doanh nghiệp đã đủ sức hấp thụ chi phí chưa?', 'Challenge: direct export increases control but needs capital and operating capability. Can the firm absorb the cost yet?');
     }
     if (sel.enterMode === 0) {
-      return 'Phản biện: kênh số giảm vốn ban đầu, nhưng liệu sản phẩm có cần thích nghi địa phương hoặc chứng nhận mà nền tảng số không giải quyết được?';
+      return L('Phản biện: kênh số giảm vốn ban đầu, nhưng liệu sản phẩm có cần thích nghi địa phương hoặc chứng nhận mà nền tảng số không giải quyết được?', 'Challenge: a digital channel cuts the upfront capital, but does the product need local adaptation or certification that a platform cannot solve?');
     }
-    return 'Phản biện: bằng chứng nào có thể bác bỏ lựa chọn hiện tại? Hãy nêu ít nhất một kịch bản bất lợi trước khi chốt.';
+    return L('Phản biện: bằng chứng nào có thể bác bỏ lựa chọn hiện tại? Hãy nêu ít nhất một kịch bản bất lợi trước khi chốt.', 'Challenge: what evidence could refute the current choice? Name at least one unfavourable scenario before you lock in.');
   }
 
   function updatePrompt() {
@@ -181,7 +185,7 @@
     coachEl.textContent = lastPrompt.coach;
     criticEl.textContent = lastPrompt.critic;
     if (statusEl) {
-      statusEl.textContent = state ? ('Quý ' + (state.q + 1) + ' · ' + (PHASE_VI[state.phase] || state.phase || 'quan sát')) : 'Đang kết nối';
+      statusEl.textContent = state ? (L('Quý ', 'Quarter ') + (state.q + 1) + ' · ' + ((isEN() ? PHASE_EN : PHASE_VI)[state.phase] || state.phase || L('quan sát', 'observe'))) : L('Đang kết nối', 'Connecting');
     }
   }
 
@@ -285,8 +289,8 @@
   function saveDraftReflection() {
     if (pending) pending.student_reflection = currentReflection();
     persist();
-    saveReflectionBtn.textContent = '✓ Đã lưu phản tư';
-    window.setTimeout(function () { saveReflectionBtn.textContent = 'Lưu phản tư'; }, 1200);
+    saveReflectionBtn.textContent = L('✓ Đã lưu phản tư', '✓ Reflection saved');
+    window.setTimeout(function () { saveReflectionBtn.textContent = L('Lưu phản tư', 'Save reflection'); }, 1200);
   }
 
   function escapeHtml(text) {
@@ -298,7 +302,7 @@
   function renderTrace() {
     if (!audit || !traceEl) return;
     if (!audit.records.length) {
-      traceEl.innerHTML = '<p class="empty-trace">Chưa có quyết định hoàn tất. Sau khi chốt quý và xử lý biến cố, trace sẽ xuất hiện tại đây.</p>';
+      traceEl.innerHTML = '<p class="empty-trace">' + L('Chưa có quyết định hoàn tất. Sau khi chốt quý và xử lý biến cố, trace sẽ xuất hiện tại đây.', 'No completed decision yet. After you lock in a quarter and handle its event, the trace appears here.') + '</p>';
       return;
     }
     traceEl.innerHTML = audit.records.slice().reverse().map(function (r) {
@@ -416,11 +420,13 @@
       resetSession: newSession
     };
 
-    statusEl.textContent = 'Đã kết nối · engine tất định được bảo vệ';
+    statusEl.textContent = L('Đã kết nối · engine tất định được bảo vệ', 'Connected · deterministic engine protected');
     updatePrompt();
     renderTrace();
     document.documentElement.classList.add('learning-ready');
   }
+
+  window.addEventListener('bizon:langchange', function () { try { updatePrompt(); renderTrace(); } catch (e) {} });
 
   function connect() {
     gameWin = gameFrame && gameFrame.contentWindow;
@@ -436,7 +442,7 @@
       } catch (e) {}
       if (tries > 300) {
         window.clearInterval(timer);
-        statusEl.textContent = 'Không kết nối được với game';
+        statusEl.textContent = L('Không kết nối được với game', 'Could not connect to the game');
       }
     }, 50);
   }
@@ -455,7 +461,7 @@
   }
 
   function clearAudit() {
-    if (!window.confirm('Xóa toàn bộ decision trace của phiên hiện tại?')) return;
+    if (!window.confirm(L('Xóa toàn bộ decision trace của phiên hiện tại?', 'Delete the whole decision trace of this session?'))) return;
     audit.records = [];
     pending = null;
     reflectionEl.value = '';
