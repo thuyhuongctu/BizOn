@@ -3,7 +3,7 @@
  *  1. Không trang nào dùng bizon-clay-i18n.js đặt data-en trên phần tử có thẻ con (tệp dịch bỏ qua phần tử đó → chữ Việt còn sót);
  *     chỗ có thẻ con phải dùng data-en-html.
  *  2. Mỗi trang 3D chỉ có một H1 (Hộ Chiếu Thương Hiệu 3D: H1 nằm ở phần giới thiệu do js/bp-ib-ui.js dựng); Bật Nghiệp 3D và CMR Lab có thẻ mô tả.
- *  3. Trong trình duyệt, chọn tiếng Anh: Go Global (global.html) hiện hồ sơ doanh nghiệp và thẻ đối thủ bằng tiếng Anh; bảng Lumina
+ *  3. Trong trình duyệt, chọn tiếng Anh: bảng Lumina
  *     của Brand Passport Learning hiện tiếng Anh; ba đoạn có thẻ con (Trường học thuật, Thiết kế nghiên cứu, trang tải ứng dụng)
  *     đổi sang tiếng Anh. Chọn tiếng Việt thì giữ nguyên tiếng Việt. */
 'use strict';
@@ -47,15 +47,8 @@ const vn = /[ăâđêôơưạảấầẩẫậắằẳẵặẹẻẽếề�
     await pg.goto(BASE + '/' + u, { waitUntil: 'load' }); await pg.waitForTimeout(1500); return { ctx, pg, err }; };
   try {
     for (const lang of ['en', 'vi']) {
-      let { ctx, pg, err } = await mo('global.html', lang);
-      const g = await pg.evaluate(() => ({ prof: document.getElementById('prof-tech').textContent + document.getElementById('prof-exp').textContent + document.getElementById('prof-note').textContent,
-        riv: document.getElementById('rivals-global').textContent }));
-      check(lang === 'en' ? /Basic/.test(g.prof) && /First voyage/.test(g.prof) && !vn.test(g.prof.replace(/Lumina:/, '')) : /Cơ bản/.test(g.prof),
-        'global.html, ' + lang + ': hồ sơ doanh nghiệp đúng ngôn ngữ');
-      check(lang === 'en' ? /How to beat them/.test(g.riv) && /Your team/.test(g.riv) && !/Khắc chế/.test(g.riv) : /Khắc chế/.test(g.riv), 'global.html, ' + lang + ': thẻ đối thủ đúng ngôn ngữ');
-      check(err.length === 0, 'global.html, ' + lang + ': không lỗi trang' + (err[0] ? ': ' + err[0] : '')); await ctx.close();
-
-      ({ ctx, pg, err } = await mo('brand-passport-learning.html', lang));
+      // Go Global (global.html): bản tiếng Anh đầy đủ do PR #1130 làm, kiểm ở test/global-tieng-anh.test.js
+      let { ctx, pg, err } = await mo('brand-passport-learning.html', lang);
       const bp = await pg.evaluate(() => [...document.querySelectorAll('#lumina-panel label, #lumina-panel small, .ethics-note, #save-reflection, #export-trace')].map(e => e.textContent).join(' | '));
       check(lang === 'en' ? /Learner reflection/.test(bp) && /Data governance/.test(bp) && /Save reflection/.test(bp) && !/Phản tư của người học/.test(bp) : /Phản tư của người học/.test(bp),
         'brand-passport-learning.html, ' + lang + ': bảng Lumina đúng ngôn ngữ');
