@@ -43,8 +43,8 @@ assert.ok(read('brand-passport.html').includes('data-en="🎓 Official certifica
 { const lines = read('lab/ho-chieu-sau-rieng-3d.html').split('\n'); const tpl = JSON.parse(lines[lines.findIndex(l => l.trim() === '<script type="__bundler/template">') + 1]);
   assert.ok(tpl.includes("rpCertOfficial: '🎓 Chứng nhận chính thức'") && tpl.includes("rpCertOfficial: '🎓 Official certificate'") && !tpl.includes('ĐHCT'), 'template Sầu Riêng 3D'); }
 // chính sách + README: CTU dùng theo giấy phép, không còn «miễn phí cho CTU»
-assert.ok(read('chinh-sach.html').includes('Trường Đại học Cần Thơ sử dụng theo giấy phép bằng văn bản do tác giả cấp'));
-assert.ok(!read('chinh-sach.html').includes('miễn phí cho Trường Đại học Cần Thơ'));
+assert.ok(read('chinh-sach.html').includes('Đại học Cần Thơ sử dụng theo giấy phép bằng văn bản do tác giả cấp'));
+assert.ok(!read('chinh-sach.html').includes('miễn phí cho Đại học Cần Thơ'));
 assert.ok(read('README.md').includes('**Can Tho University** uses the two pillars under a written licence granted by the authors'));
 assert.ok(!read('README.md').includes('are free for **Can Tho University**'));
 { const sw = read('sw.js'); assert.match(sw, /const CACHE = 'bizon-v\d+';/); assert.ok(sw.includes("'./js/official-cert.js'")); }
@@ -71,9 +71,9 @@ assert.ok(!read('README.md').includes('are free for **Can Tho University**'));
   assert.ok(!r1.drawn.some(t => /CAN THO|Cần Thơ/.test(t)), 'mặc định không nhắc ĐHCT: ' + r1.drawn.join(' | '));
   assert.ok(r1.imgs.includes('assets/icons/icon-512.png') && r1.imgs.includes('assets/docs/sig-huong-in.png') && r1.imgs.includes('assets/docs/sig-tu-in.png'), 'logo BizOn + chữ ký in của hai nhà sáng lập: ' + r1.imgs.join(','));
   assert.equal(r1.file, 'BizOn-BatNghiep-ChungNhan-NguyenVanA.png');
-  const r2 = await page.evaluate(async () => { window.__drawn = []; window.__imgs = []; await OfficialCert.render({ lang: 'vi', name: 'Trần Thị B', courseCode: 'KT330H', courseName: 'Entrepreneurship', courseDates: '4–11/3/2026', org: { org_name: 'Trường Đại học Cần Thơ', org_sub: 'Trường Kinh tế', org_logo: 'assets/docs/ctu-logo.png', org_logo2: 'assets/docs/soe-logo.png', signer_name: 'PGS.TS. Phan Anh Tú', signer_title: 'Trường Kinh tế, Đại học Cần Thơ', signer_sig: 'assets/docs/sig-tu-in.png' } }); return { drawn: window.__drawn, imgs: window.__imgs }; });
-  for (const t of ['TRƯỜNG ĐẠI HỌC CẦN THƠ', 'TRƯỜNG KINH TẾ', 'CERTIFICATE OF COMPLETION', 'Trần Thị B', 'Entrepreneurship – Code KT330H', 'PGS.TS. Phan Anh Tú', 'Trường Kinh tế, Đại học Cần Thơ']) assert.ok(r2.drawn.includes(t), 'theo đơn vị thiếu: ' + t);
-  assert.ok(r2.drawn.some(t => /tại Trường Kinh tế, Trường Đại học Cần Thơ$/.test(t)) && !r2.drawn.some(t => t.includes('trên nền tảng BizOn')));
+  const r2 = await page.evaluate(async () => { window.__drawn = []; window.__imgs = []; await OfficialCert.render({ lang: 'vi', name: 'Trần Thị B', courseCode: 'KT330H', courseName: 'Entrepreneurship', courseDates: '4–11/3/2026', org: { org_name: 'Đại học Cần Thơ', org_sub: 'Trường Kinh tế', org_logo: 'assets/docs/ctu-logo.png', org_logo2: 'assets/docs/soe-logo.png', signer_name: 'PGS.TS. Phan Anh Tú', signer_title: 'Trường Kinh tế, Đại học Cần Thơ', signer_sig: 'assets/docs/sig-tu-in.png' } }); return { drawn: window.__drawn, imgs: window.__imgs }; });
+  for (const t of ['ĐẠI HỌC CẦN THƠ', 'TRƯỜNG KINH TẾ', 'CERTIFICATE OF COMPLETION', 'Trần Thị B', 'Entrepreneurship – Code KT330H', 'PGS.TS. Phan Anh Tú', 'Trường Kinh tế, Đại học Cần Thơ']) assert.ok(r2.drawn.includes(t), 'theo đơn vị thiếu: ' + t);
+  assert.ok(r2.drawn.some(t => /tại Trường Kinh tế, Đại học Cần Thơ$/.test(t)) && !r2.drawn.some(t => t.includes('trên nền tảng BizOn')));
   assert.ok(r2.imgs.includes('assets/docs/ctu-logo.png') && r2.imgs.includes('assets/docs/soe-logo.png') && r2.imgs.includes('assets/docs/sig-tu-in.png') && !r2.imgs.includes('assets/icons/icon-512.png'), 'mẫu CTU như cũ: logo CTU trái, logo Trường Kinh tế phải, chữ ký thầy, không logo BizOn: ' + r2.imgs.join(','));
   assert.ok(!r2.drawn.includes('Đỗ Thùy Hương'), 'mẫu CTU chỉ một người ký');
   // Từ 15/11/2026 chứng nhận mặc định in tiếng Anh dù trang đang tiếng Việt; lang: 'vi' mới ra bản tiếng Việt.

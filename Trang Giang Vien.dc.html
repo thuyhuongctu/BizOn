@@ -612,7 +612,7 @@ class Component extends DCLogic {
       certAll: t('📚 In cả lớp', '📚 Print the whole class'),
       certLangLabel: t('Ngôn ngữ chứng nhận', 'Certificate language'),
       certLangVi: t('Tiếng Việt', 'Vietnamese'),
-      umkHint: t('Lớp quốc tế UM Kendari (Indonesia) × Trường Đại học Cần Thơ: một lần bấm là điền và lưu sẵn mẫu chứng nhận thầy Tú đã duyệt (3 logo, Certificate of Completion, KT330H, 17–19/11/2026, chữ ký thầy Tú, tiếng Anh).', 'UM Kendari (Indonesia) × Can Tho University international class: one click fills in and saves the certificate template approved by Assoc. Prof. Phan Anh Tu (3 logos, Certificate of Completion, KT330H, 17–19 Nov 2026, English).'),
+      umkHint: t('Lớp quốc tế UM Kendari (Indonesia) × Đại học Cần Thơ: một lần bấm là điền và lưu sẵn mẫu chứng nhận thầy Tú đã duyệt (3 logo, Certificate of Completion, KT330H, 17–19/11/2026, chữ ký thầy Tú, tiếng Anh).', 'UM Kendari (Indonesia) × Can Tho University international class: one click fills in and saves the certificate template approved by Assoc. Prof. Phan Anh Tu (3 logos, Certificate of Completion, KT330H, 17–19 Nov 2026, English).'),
       umkBtn: t('🇮🇩 Điền sẵn mẫu lớp quốc tế UM Kendari', '🇮🇩 Use UM Kendari international template'),
       umkOk: t('✓ Đã điền và lưu mẫu lớp quốc tế', '✓ International template filled in and saved'),
       k01: t('(khác B5 ở tab «Chấm điểm»). «Chỉ số đồng đội» = 100 trừ chênh lệch điểm tham gia cao nhất–thấp nhất trong đội.', '(different from B5 in the “Grading” tab). “Team index” = 100 minus the gap between the highest and lowest participation score in the team.'),
@@ -722,7 +722,7 @@ class Component extends DCLogic {
       a11: t('VD: KT330H (để trống nếu không có)', 'e.g. KT330H (blank if none)'),
       a12: t('VD: PGS.TS. Nguyễn Văn A', 'e.g. Assoc. Prof. Dr. Nguyen Van A'),
       a13: t('VD: Trường Kinh tế', 'e.g. School of Economics'),
-      a14: t('VD: Trường Đại học Cần Thơ', 'e.g. Can Tho University'),
+      a14: t('VD: Đại học Cần Thơ', 'e.g. Can Tho University'),
       a15: t('VD: assets/docs/ctu-logo.png hoặc https://…/logo.png', 'e.g. assets/docs/ctu-logo.png or https://…/logo.png'),
     };
   }
@@ -811,7 +811,7 @@ class Component extends DCLogic {
   async startExam() { const s = this.state; try { await this.api().setExam(s.code, { active: true, start_at: new Date().toISOString(), setup_min: +s.exSetup || 10, round_min: +s.exRound || 8, capital: 500 }); this.reload(); } catch (e) { this.fail(e); } }
   async stopExam() { const s = this.state, ex = s.exam || {}; try { await this.api().setExam(s.code, { active: false, start_at: ex.start_at || null, setup_min: +s.exSetup || 10, round_min: +s.exRound || 8, capital: 500 }); this.reload(); } catch (e) { this.fail(e); } }
   async saveCertIssuer() { const s = this.state; try { await this.api().setCertIssuer(s.code, this.certIssuer()); this.setState({ certIssuerSaved: true }); setTimeout(() => this.setState({ certIssuerSaved: false }), 2500); } catch (e) { this.fail(e); } }
-  // Mẫu chứng nhận lớp quốc tế UM Kendari × Trường Đại học Cần Thơ (Credit Exchange Program, 17–19/11/2026) – theo góp ý của thầy Tú 15/11/2026.
+  // Mẫu chứng nhận lớp quốc tế UM Kendari × Đại học Cần Thơ (Credit Exchange Program, 17–19/11/2026) – theo góp ý của thầy Tú 15/11/2026.
   // Một lần bấm: điền mọi ô và lưu luôn «Chứng nhận chính thức» + «Đơn vị cấp» cho lớp đang mở; ngôn ngữ chứng nhận chuyển sang English.
   async fillUmkCert() {
     const s = this.state;
