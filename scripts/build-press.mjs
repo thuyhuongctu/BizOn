@@ -96,10 +96,11 @@ export function renderCredits(data, extra = ' class="bz-credit"') {
     if (!a.reporter) continue;
     const s = by.get(a.outlet) || new Set(); s.add(a.reporter); by.set(a.outlet, s);
   }
-  const part = lang => [...by].map(([k, s]) => data.outlets[k][lang] + ' – ' + (lang === 'vi' ? 'PV ' : 'reporter ') + [...s].join(', ')).join('; ');
+  // Câu ngắn: bản quyền trước, danh sách phóng viên tách thành câu riêng (không lồng ngoặc).
+  const part = lang => [...by].map(([k, s]) => data.outlets[k][lang] + ' – ' + [...s].join(', ')).join('; ');
   return bi('p', extra, {
-    vi: 'Các bài viết thuộc bản quyền của tòa soạn tương ứng' + (by.size ? ' (' + part('vi') + ')' : '') + '; BizOn chỉ dẫn nguồn và trích lược, không đăng lại toàn văn.',
-    en: 'Articles are copyright of their respective publications' + (by.size ? ' (' + part('en') + ')' : '') + '; BizOn only cites and summarises, and does not republish the full text.',
+    vi: 'Bản quyền mỗi bài viết thuộc về tòa soạn đăng bài. BizOn chỉ dẫn nguồn và tóm tắt, không đăng lại toàn văn.' + (by.size ? ' Phóng viên: ' + part('vi') + '.' : ''),
+    en: 'Each article is copyright of the publication that ran it. BizOn only cites and summarises, and does not republish the full text.' + (by.size ? ' Reporters: ' + part('en') + '.' : ''),
   });
 }
 
