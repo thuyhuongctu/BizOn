@@ -21,6 +21,9 @@ export const BO_TRANH = {
  * assets/character/anh-tu-ao-dai-cut-v2.webp, vì bản đầu làm từ ảnh mẫu vẽ lại nên chưa giống. Tờ đứng v3 (13/11/2026): đầu thu còn
  * 80 % cho cân với thân (chị thấy đầu to hơn thân), tờ nói v2 giữ nguyên vì tỷ lệ đã cân. */
 export const BAN_MOI = { 'tu-dung': 'tu-dung-v3', 'tu-noi': 'tu-noi-v2' };
+/* Tờ nén lại cho nhẹ (16/11/2026, rà soát dung lượng): 20 tờ của năm vai đội lưu bản «-v2» nén WebP chất lượng 80 (alpha 85), nhẹ hơn
+ * khoảng 27 %, khung và số khung giữ nguyên (tệp .json chép y nguyên); tờ gốc giữ trong kho. */
+['ceo', 'cfo', 'cmo', 'coo', 'sec'].forEach(v => [...DI, 'dung'].forEach(t => { BAN_MOI[v + '-' + t] = v + '-' + t + '-v2'; }));
 const tep = (id, t) => THU_MUC + (BAN_MOI[id + '-' + t] || id + '-' + t);
 export const diDuoc = id => !!BO_TRANH[id] && DI.every(t => BO_TRANH[id].includes(t));
 const gocGan = a => Math.atan2(Math.sin(a), Math.cos(a));
@@ -34,10 +37,17 @@ export function taoTranhDong(id, { cao = 1.2, tocDi = 1.15, giam = false } = {})
   const tam = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), vl); tam.visible = false; tam.renderOrder = 2; root.add(tam);
   const bong = new THREE.Mesh(new THREE.CircleGeometry(0.26, 20), new THREE.MeshBasicMaterial({ color: 0x2a2010, transparent: true, opacity: 0.22, depthWrite: false }));
   bong.rotation.x = -Math.PI / 2; bong.position.y = 0.03; bong.scale.y = 0.6; root.add(bong);
-  const nap = new THREE.TextureLoader();
-  Promise.all(bo.map(t => fetch(tep(id, t) + '.json').then(r => { if (!r.ok) throw new Error(String(r.status)); return r.json(); })
-    .then(j => new Promise((ok, loi) => nap.load(tep(id, t) + '.webp', tx => { tx.colorSpace = THREE.SRGBColorSpace; tx.wrapS = THREE.RepeatWrapping; to[t] = { t: tx, j }; ok(); }, undefined, loi)))))
-    .then(() => { if (!bo.length) throw new Error('khong co to sprite'); san = true; tam.visible = true; dat(ten, 1, 0); }).catch(() => { hong = true; });
+  const nap = new THREE.TextureLoader(), dangNap = {};
+  const napTo = t => dangNap[t] || (dangNap[t] = fetch(tep(id, t) + '.json').then(r => { if (!r.ok) throw new Error(String(r.status)); return r.json(); })
+    .then(j => new Promise((ok, loi) => nap.load(tep(id, t) + '.webp', tx => { tx.colorSpace = THREE.SRGBColorSpace; tx.wrapS = THREE.RepeatWrapping; to[t] = { t: tx, j }; ok(); }, undefined, loi))));
+  /* Nạp trước hai tờ cần ngay (đứng và hướng đi đầu tiên); các hướng còn lại nạp sau khi nhân vật đã hiện, hoặc ngay khi cần đến
+   * (16/11/2026: trang mở nhanh hơn vì không chờ đủ bốn tờ của mọi nhân vật). Tờ chưa về thì tạm dùng tờ đã có. */
+  const dau = coDi ? bo.filter(t => t === 'dung' || t === ten) : bo;
+  Promise.all(dau.map(napTo))
+    .then(() => { if (!bo.length) throw new Error('khong co to sprite'); san = true; tam.visible = true; dat(ten, 1, 0);
+      bo.filter(t => !to[t]).reduce((p, t) => p.then(() => napTo(t)).catch(() => {}), Promise.resolve()); })
+    .catch(() => { hong = true; });
+  const coSan = t => to[t] ? t : (napTo(t).catch(() => {}), t.startsWith('di-') && to['di-sau'] ? 'di-sau' : to.dung ? 'dung' : ten);
   /* số khung thứ k của một tờ: tờ «qua lại» đi 0…K−1 rồi K−2…1 */
   function khungCua(j, k) { const K = j.khung; if (!j.quaLai || K < 3) return ((k % K) + K) % K; const m = k % (2 * K - 2); return m < K ? m : 2 * K - 2 - m; }
   function dat(t, l, k) {   // chọn tờ sprite, hướng lật và khung hình
@@ -60,6 +70,7 @@ export function taoTranhDong(id, { cao = 1.2, tocDi = 1.15, giam = false } = {})
       if (coDi && toc > 0.08) {
         const lech = gocGan(yaw - (veMay + Math.PI)), a = Math.abs(lech);   // 0: đi ra xa máy quay; ±π: đi về phía máy quay
         t = a < Math.PI * 0.27 ? 'di-sau' : a > Math.PI * 0.73 ? 'di-truoc' : 'di-ngang'; l = t === 'di-ngang' ? (lech < 0 ? 1 : -1) : 1;
+        if (!to[t]) { t = coSan(t); l = 1; }
         if (t !== ten) dem = ten.startsWith('di-') ? dem % to[t].j.khung : 0;
         if (!giam) dem += dt * to[t].j.fps * Math.max(0.6, Math.min(1.7, toc / tocDi));
         dungLau = 0;
