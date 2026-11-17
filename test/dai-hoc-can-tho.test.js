@@ -18,5 +18,5 @@ assert.deepEqual(bad, [], 'còn tên cũ «Trường Đại học Cần Thơ»:\
 const home = fs.readFileSync(path.join(ROOT, 'index.html'), 'utf8');
 assert.ok(home.includes('Nghiên cứu sinh Quản trị Kinh doanh, Đại học Cần Thơ'), 'thẻ tác giả trên trang chủ dùng tên mới');
 assert.ok(home === fs.readFileSync(path.join(ROOT, 'academia3d-v2.html'), 'utf8'), 'index.html giống hệt academia3d-v2.html');
-assert.ok(+(fs.readFileSync(path.join(ROOT, 'sw.js'), 'utf8').match(/bizon-v(\d+)/) || [])[1] >= 895, 'sw.js ≥ v895');
+assert.ok(+(fs.readFileSync(path.join(ROOT, 'sw.js'), 'utf8').match(/bizon-v(\d+)/) || [])[1] >= 896, 'sw.js ≥ v896');
 console.log('dai-hoc-can-tho: ok');
