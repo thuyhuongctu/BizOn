@@ -3034,7 +3034,7 @@
 ["⚠️ Chưa gửi được – kiểm tra mạng rồi thử lại.", "⚠️ Could not send – check your connection and try again."],
 ["🧺 Bến Phù Sa – kết quả lớp", "🧺 Bến Phù Sa – class results"],
 ["Hộ Chiếu Thương Hiệu", "Brand Passport"],
-["Chọn 1 trong 4 doanh nghiệp, đưa thương hiệu Việt từ Vàm Thịnh ra 7 thị trường giả tưởng – sương mù thông tin, đàm phán đối tác, sự kiện bất định; thành công đo bằng 5 chiều: lợi nhuận, uy tín, năng lực, thích ứng, bền vững.", "Pick 1 of 4 companies and take a Vietnamese brand from Vàm Thịnh to 7 fictional markets – information fog, partner negotiation, uncertain events; success measured in 5 dimensions: profit, reputation, capability, adaptability, sustainability."],
+["Chọn 1 trong 4 doanh nghiệp, đưa thương hiệu Việt từ Vàm Thịnh ra 7 thị trường giả tưởng. Bạn ra quyết định khi chỉ thấy một phần thông tin thị trường («sương mù thông tin»), đàm phán với đối tác và đối phó sự kiện bất ngờ. Thành công đo bằng 5 chiều: lợi nhuận, uy tín, năng lực, thích ứng, bền vững.", "Pick 1 of 4 firms and take a Vietnamese brand from Vàm Thịnh to 7 fictional markets. You decide while seeing only part of the market («information fog»), negotiate with partners and face unexpected events. Success is measured on 5 dimensions: profit, reputation, capability, adaptation, sustainability."],
 ["Sinh viên nộp từ màn kết thúc của game (cùng Mã lớp). Mỗi người tính ván có hiệu suất cao nhất; hạng là thứ hạng so với 3 đối thủ ảo trong ván đó.", "Students submit from the game's end screen (same Class code). Each player counts their best-efficiency run; rank is their placing against the 3 virtual rivals in that run."],
 ["Sinh viên", "Student"],
 ["Hiệu suất", "Efficiency"],
