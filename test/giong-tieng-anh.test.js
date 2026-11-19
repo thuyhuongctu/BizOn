@@ -45,7 +45,8 @@ assert.match(read('global.html'), /'assets\/audio\/voice\/' \+ \(en \? 'en\/' : 
     p.on('request', r => { const m = /assets\/audio\/voice\/(en\/)?([\w-]+)\.mp3/.exec(r.url()); if (m) voice.push((m[1] || '') + m[2]); });
     await p.addInitScript(l => { try { localStorage.setItem('bizon-lang', l); localStorage.setItem('bizon-music', 'off'); } catch (e) {} }, lang);
     await p.goto(BASE + '/BizOn%20Game%203D.html?lang=' + lang, { waitUntil: 'domcontentloaded', timeout: 90000 });
-    await p.waitForSelector('#l3Team', { state: 'visible', timeout: 90000 });
+    // Màn vào mới (đặc tả 006): các ô chỉ hiện sau khi chọn «Tôi có mã lớp»; hai nút chọn đường hiện ngay.
+    await p.waitForSelector('#l3PathClass', { state: 'visible', timeout: 90000 });
     await p.waitForFunction(() => { const f = document.getElementById('gf'); return f && f.contentWindow && typeof f.contentWindow.playVoice === 'function'; }, null, { timeout: 90000 });
     return { p, ctx, voice };
   };
@@ -54,7 +55,7 @@ assert.match(read('global.html'), /'assets\/audio\/voice\/' \+ \(en \? 'en\/' : 
   try {
     // EN: chào → Demo → hướng dẫn → bốc thăm → đối đầu → bàn quyết định → họp đội
     const { p, ctx, voice } = await open('en');
-    await p.click('#l3Team'); await waitVoice(voice, 'en/tu-welcome-01');
+    await p.click('#login3d h1'); await waitVoice(voice, 'en/tu-welcome-01');
     assert.equal(await p.locator('#voiceBtn').textContent(), '🗣️Voice: On');
     await click(p, '#l3Demo', 6000);
     for (const s of ['#t3Next', '#t3Next', '#t3End']) await click(p, s, 3000);
@@ -77,7 +78,7 @@ assert.match(read('global.html'), /'assets\/audio\/voice\/' \+ \(en \? 'en\/' : 
     await ctx.close();
     // VI: không có nút giọng, không tải bản thu tiếng Anh
     const vi = await open('vi');
-    await vi.p.click('#l3Team'); await vi.p.waitForTimeout(1500);
+    await vi.p.click('#login3d h1'); await vi.p.waitForTimeout(1500);
     assert.equal(await vi.p.locator('#voiceBtn').isVisible(), false);
     assert.deepEqual(vi.voice, []);
     assert.equal(await vi.p.evaluate(() => document.getElementById('gf').contentWindow.playVoice('adv-02')), false);
