@@ -134,14 +134,14 @@
   body.arena #top,body.arena #rail,body.arena #cta,body.arena #zones,body.arena #sheetX,body.arena #tip{display:none!important}
   #arena .ah{position:absolute;top:16px;left:12px;right:12px;text-align:center;color:#fff}
   #arena .ah b{display:block;font:800 30px/1.2 "Baloo 2",sans-serif;text-shadow:0 3px 0 rgba(0,0,0,.25)}
-  #arena .ah span{display:block;font-size:14px;color:#d4ecef}
+  #arena .ah span{display:block;font-size:14px;color:#d4ecef;text-shadow:0 1px 3px rgba(0,0,0,.6)}
   #arena .ah em{display:block;font:800 13px "Baloo 2",sans-serif;font-style:normal;color:#ffc56a;margin-top:2px}
   #arena .ah .asov{display:block;margin-top:3px;font-size:10.5px;color:rgba(255,255,255,.72);text-shadow:0 1px 2px rgba(0,0,0,.45)}
-  #arena .lab{position:absolute;transform:translate(-50%,-100%);text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px}
-  #arena .lab b{font:800 13px/1.5 "Baloo 2",sans-serif;color:#fff;background:var(--c);border-radius:10px;padding:0 9px;white-space:nowrap;box-shadow:0 3px 0 rgba(0,0,0,.25)}
+  #arena .lab{position:absolute;transform:translateX(-50%);text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px;width:max-content;max-width:var(--lw,190px);transition:opacity .25s}
+  #arena .lab b{font:800 13px/1.25 "Baloo 2",sans-serif;color:#fff;background:var(--c);border-radius:10px;padding:2px 9px;max-width:100%;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;box-shadow:0 3px 0 rgba(0,0,0,.25)}
   #arena .lab i{font:800 26px/1 "Baloo 2",sans-serif;font-style:normal;color:#fff;text-shadow:0 2px 0 rgba(0,0,0,.4)}
   #arena .lab.me b{outline:3px solid #ffd28a}
-  #arena .af{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;gap:10px;align-items:center;width:min(560px,92vw);pointer-events:auto;opacity:0;transition:opacity .4s}
+  #arena .af{position:absolute;bottom:calc(18px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);display:flex;flex-direction:column;gap:10px;align-items:center;width:min(560px,92vw);pointer-events:auto;opacity:0;transition:opacity .4s}
   #arena .af.on{opacity:1}
   #arena .verdict{font:800 18px/1.3 "Baloo 2",sans-serif;color:#fff;background:rgba(8,38,46,.85);border:3px solid #2f8a95;border-radius:16px;padding:8px 16px;text-align:center;text-wrap:balance}
   #arena .btn{font-size:17px;padding:10px 22px}
@@ -184,7 +184,7 @@
   #evc .dots i{width:10px;height:10px;border-radius:50%;background:#e6d6bf}
   #evc .dots i.on{background:#2f8a8c}
   #evc .row{display:flex;gap:8px}#evc .row .btn{flex:1}
-  #evc .pic{width:100%;height:118px;object-fit:cover;border-radius:16px;border:3px solid #e6d6bf;background:#fff}
+  #evc .pic{width:100%;height:auto;aspect-ratio:1100/614;object-fit:contain;border-radius:16px;border:3px solid #e6d6bf;background:#fff}
   #evc .song{display:flex;gap:8px;align-items:center;font-size:12px;color:#4a4f5c;background:#fffaf2;border:2px dashed #e6d6bf;border-radius:12px;padding:6px 10px} #evc .song b{color:#1f6f8a} #evc .song .btn{font-size:12px;padding:4px 10px;margin-left:auto}
   #evc .cards{display:flex;gap:10px;justify-content:center;margin:4px 0} #evc .cards i{font:800 26px/1 "Baloo 2",sans-serif;font-style:normal;width:56px;height:72px;display:flex;align-items:center;justify-content:center;border-radius:14px;border:3px solid #e6d6bf;background:#fffaf2;color:#b9a98c;animation:cdFlip .5s ease both}
   #evc .cards i:nth-child(2){animation-delay:.15s} #evc .cards i:nth-child(3){animation-delay:.3s}
@@ -1455,14 +1455,18 @@ function event3D(force) {
 }
 
 // ================= ĐẤU TRƯỜNG 3D =================
-const AR = { on: false, scene: new THREE.Scene(), cam: new THREE.PerspectiveCamera(34, 1, 0.1, 200), pods: [], built: null, flags: [] };
+const AR = { on: false, scene: new THREE.Scene(), cam: new THREE.PerspectiveCamera(34, 1, 0.1, 200), pods: [], built: null, flags: [], sx: 1, k: 0 };
 AR.scene.background = new THREE.Color(0x0b3440); AR.scene.fog = new THREE.Fog(0x0b3440, 30, 70);
 if (window.BizOnClayLight) BizOnClayLight.rig(THREE, AR.scene, { distance: 11, intensity: 0.7 });
 { const hl = new THREE.HemisphereLight(0xfff4e6, 0x2a4a55, 1.15); const dl = new THREE.DirectionalLight(0xfff1dc, 2.3); dl.position.set(6, 14, 10); dl.castShadow = true; dl.shadow.mapSize.set(2048, 2048);
   Object.assign(dl.shadow.camera, { left: -11, right: 11, top: 11, bottom: -11, near: 1, far: 45 }); dl.shadow.bias = -0.0004; dl.shadow.normalBias = 0.02; AR.scene.add(hl, dl); }
 const AS = 0.026, AOX = -2.8, AOZ = -9.4, PODX = [-4.2, -1.4, 1.4, 4.2], PODZ = 4.6, CHS = 1.75;
+// Nhịp cảnh cắm cờ (giây): bục nhô lên → camera tiến về tỉnh → cờ rơi, nảy, tung đất sét → camera lùi về → hiện kết luận.
+const AT = { step: 0.25, rise: 1.1, push: 1.9, fall: 2.2, land: 2.7, back: 3.1, home: 3.9, show: 3.3 };
+const FLAG_NEW = 0.95, FLAG_OLD = 0.62, HEAD = CHS * 1.45;
 const APt = ll => { const [x, y] = P(ll); return new THREE.Vector3(x * AS + AOX, 0, y * AS + AOZ); };
 const RIVAL_ID = { aggressive: 'alpha', balanced: 'mekong', premium: 'starclay' };
+const clamp01 = v => Math.max(0, Math.min(1, v)), smooth = v => { v = clamp01(v); return v * v * (3 - 2 * v); };
 function buildArena() {
   if (AR.built) return AR.built;
   return AR.built = (async () => {
@@ -1482,10 +1486,21 @@ function buildArena() {
     [[112.33, 16.83], [111.62, 16.53], [111.75, 16.45], [112.55, 16.05], [111.2, 15.78], [112.9, 16.07]].forEach(q => { const p = APt(q); hq.S(S3, 'island', 0.11, isl, p.x, 0.03, p.z); });
     [[114.28, 11.06], [114.36, 10.38], [114.7, 10.5], [115.0, 9.9], [115.5, 9.0], [113.85, 8.85], [111.92, 8.64], [112.8, 9.2], [116.2, 10.2]].forEach(q => { const p = APt(q); hq.S(S3, 'island', 0.1, isl, p.x, 0.03, p.z); });
     AR.pins = STOPS.map((st, i) => { const p = APt(st.ll), g = G('pin_' + i, S3, p.x, 0.2, p.z); Cy(g, 'pin_base', 0.13, 0.15, 0.08, mat(0xfbf6ee, 0.8)); return g; });
-    const ring = new THREE.Mesh(new THREE.TorusGeometry(0.3, 0.04, 10, 40), new THREE.MeshBasicMaterial({ color: 0x3ff0e0 })); ring.rotation.x = Math.PI / 2; S3.add(ring); AR.ring = ring;
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(0.3, 0.04, 10, 40), new THREE.MeshBasicMaterial({ color: 0x3ff0e0, transparent: true })); ring.rotation.x = Math.PI / 2; S3.add(ring); AR.ring = ring;
     const crown = G('crown', S3); Cy(crown, 'crown_band', 0.16, 0.16, 0.09, mat(0xf2c14e, 0.35, 0.5));
     for (let i = 0; i < 5; i++) { const a = i / 5 * Math.PI * 2, c = hq.mesh(crown, 'crown_tip', new THREE.ConeGeometry(0.045, 0.12, 10), mat(0xf2c14e, 0.35, 0.5), Math.cos(a) * 0.14, 0.14, Math.sin(a) * 0.14); }
     crown.visible = false; AR.crown = crown;
+    // Hiệu ứng cắm cờ (đất sét): quầng sáng tỉnh, sóng xung kích, bụi đất, mảnh đất sét màu đội, vòng vàng trên bục đội dẫn đầu
+    const glow = new THREE.Mesh(new THREE.CircleGeometry(0.62, 40), new THREE.MeshBasicMaterial({ color: 0xffe08a, transparent: true, opacity: 0, depthWrite: false, polygonOffset: true, polygonOffsetFactor: -2 }));
+    glow.rotation.x = -Math.PI / 2; glow.name = 'arena_glow'; S3.add(glow); AR.glow = glow;
+    const shock = new THREE.Mesh(new THREE.TorusGeometry(0.5, 0.06, 8, 56), new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0, depthWrite: false }));
+    shock.rotation.x = Math.PI / 2; shock.visible = false; shock.name = 'arena_shock'; S3.add(shock); AR.shock = shock;
+    const halo = new THREE.Mesh(new THREE.TorusGeometry(0.84, 0.05, 10, 56), new THREE.MeshStandardMaterial({ color: 0xf2c14e, emissive: 0xf2a52e, emissiveIntensity: 0.6, roughness: 0.4, metalness: 0.3 }));
+    halo.rotation.x = Math.PI / 2; halo.visible = false; halo.name = 'arena_halo'; S3.add(halo); AR.halo = halo;
+    AR.confMats = [0, 1, 2, 3].map(() => new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.8 }));
+    const ball = new THREE.SphereGeometry(0.07, 10, 8), chip = new THREE.BoxGeometry(0.12, 0.05, 0.1), puff = new THREE.SphereGeometry(0.2, 12, 10);
+    AR.conf = Array.from({ length: 30 }, (_, i) => { const m = new THREE.Mesh(i % 3 ? ball : chip, AR.confMats[i % 4]); m.castShadow = true; m.visible = false; S3.add(m); return { m, v: new THREE.Vector3(), s: 1 }; });
+    AR.dust = Array.from({ length: 7 }, () => { const m = new THREE.Mesh(puff, new THREE.MeshStandardMaterial({ color: 0xf3e6d0, roughness: 1, transparent: true, opacity: 0, depthWrite: false })); m.visible = false; S3.add(m); return { m }; });
   })();
 }
 function podium(key, id, x) {
@@ -1496,20 +1511,46 @@ function podium(key, id, x) {
   const ch = chars.build(id); ch.scale.setScalar(CHS); ch.traverse(m => { if (m.isMesh) m.castShadow = true; }); g.add(ch);
   return { g, col3, top, ch, key, h: 0.05 };
 }
-const aLabs = document.getElementById('aLabs'), aFoot = document.getElementById('aFoot');
+// Tung mảnh đất sét + bụi + sóng xung kích tại chỗ cờ vừa cắm (màu đội thắng cờ). Vị trí tính thẳng theo thời gian
+// kể từ lúc cờ chạm đất (không cộng dồn theo khung hình) nên máy chậm hay nhanh đều ra cùng một cảnh.
+function arenaBurst(pos, hex) {
+  const c = new THREE.Color(hex);
+  [c, c.clone().offsetHSL(0, 0, 0.16), new THREE.Color(0xf2c14e), new THREE.Color(0xfbf6ee)].forEach((cc, i) => AR.confMats[i].color.copy(cc));
+  AR.burstAt = pos.clone();
+  AR.conf.forEach((p, i) => { const a = i / AR.conf.length * Math.PI * 2 + Math.random() * 0.4, r = 1.0 + Math.random() * 1.4;
+    p.v.set(Math.cos(a) * r, 2.6 + Math.random() * 2.2, Math.sin(a) * r); p.s = 0.8 + Math.random() * 0.6; p.m.visible = true; });
+  AR.shock.material.color.copy(c).offsetHSL(0, 0, 0.1);
+}
+function arenaFx(tau) {
+  const o = AR.burstAt; if (!o) return;
+  AR.conf.forEach(p => { const on = tau >= 0 && tau < 1.6; p.m.visible = on; if (!on) return;
+    const tf = 0.85 * (1 - Math.exp(-tau / 0.85));   // chậm dần như đất sét rơi xuống
+    const y = o.y + 0.25 + p.v.y * tau - 4.9 * tau * tau;
+    p.m.position.set(o.x + p.v.x * tf, Math.max(0.26, y), o.z + p.v.z * tf);
+    p.m.rotation.set(tau * 7, 0, tau * 5); p.m.scale.setScalar(p.s * (tau > 1.15 ? Math.max(0, 1 - (tau - 1.15) / 0.45) : 1)); });
+  AR.dust.forEach((d, i) => { const a = tau / 0.7, on = tau >= 0 && a < 1; d.m.visible = on; if (!on) return; const ang = i / AR.dust.length * Math.PI * 2, r = 0.25 + a * 0.45;
+    d.m.position.set(o.x + Math.cos(ang) * r, o.y + 0.12 + a * 0.18, o.z + Math.sin(ang) * r); d.m.scale.setScalar(0.4 + a * 1.4); d.m.material.opacity = 0.75 * (1 - a); });
+  const a = tau / 0.75; AR.shock.visible = tau >= 0 && a < 1;
+  if (AR.shock.visible) { AR.shock.position.set(o.x, o.y + 0.06, o.z); AR.shock.scale.setScalar(0.4 + a * 4); AR.shock.material.opacity = 0.9 * (1 - a); }
+}
+const aLabs = document.getElementById('aLabs'), aFoot = document.getElementById('aFoot'), aHead = document.querySelector('#arena .ah');
 async function arena3D(r, done) {
   await buildArena(); closeEvent(); const s = ev('S'); if (!s) { done(); return; }
   const stopI = r.round - 1, st = STOPS[stopI], cq = s.conquest || [], cur = cq[stopI] || {};
   const F = [{ key: 'star', id: 'ceo', name: s.profile.teamName, share: +r.share || 0, me: true },
     ...s.competitors.map(c => ({ key: KEY_OF[c.name] || 'wolf', id: RIVAL_ID[c.style] || 'alpha', name: c.name, share: +c.share || 25 }))];
   const order = [F[1], F[0], F[2], F[3]];
-  AR.pods.forEach(p => AR.scene.remove(p.g)); AR.pods = order.map((f, i) => Object.assign(podium(f.key, f.id, PODX[i]), f, { delay: i * 0.35, target: 0.3 + f.share / 40 * 2.1 }));
+  AR.pods.forEach(p => AR.scene.remove(p.g)); AR.pods = order.map((f, i) => Object.assign(podium(f.key, f.id, PODX[i]), f, { delay: i * AT.step, target: 0.3 + f.share / 40 * 2.1 }));
   AR.flags.forEach(f => f.parent && f.parent.remove(f)); AR.flags = [];
-  cq.slice(0, stopI).forEach((c, i) => { const k = c.win ? 'star' : KEY_OF[c.winner] || 'wolf', f = hq.teamFlag(k); f.scale.setScalar(0.5); AR.pins[i].add(f); AR.flags.push(f); });
+  AR.pins.forEach(p => { p.position.y = 0.2; p.children[0].scale.setScalar(1); });
+  // Cờ các vòng trước vẫn cắm trên bản đồ và tung bay
+  cq.slice(0, stopI).forEach((c, i) => { const k = c.win ? 'star' : KEY_OF[c.winner] || 'wolf', f = hq.teamFlag(k); f.scale.setScalar(FLAG_OLD); AR.pins[i].add(f); AR.flags.push(f); });
   const winKey = cur.win ? 'star' : KEY_OF[cur.winner] || AR.pods.reduce((a, b) => b.share > a.share ? b : a).key;
-  const nf = hq.teamFlag(winKey); nf.scale.setScalar(0.62); nf.position.y = 4; AR.pins[stopI].add(nf); AR.flags.push(nf); AR.drop = nf;
-  const rp = AR.pins[stopI].position; AR.ring.position.set(rp.x, 0.26, rp.z);
-  AR.crown.visible = false; AR.winner = AR.pods.reduce((a, b) => b.share > a.share ? b : a);
+  const nf = hq.teamFlag(winKey); nf.scale.setScalar(FLAG_NEW); nf.position.y = 4.5; AR.pins[stopI].add(nf); AR.flags.push(nf); AR.drop = nf; AR.dropKey = winKey; AR.pin = AR.pins[stopI];
+  const rp = AR.pin.position; AR.ring.position.set(rp.x, 0.26, rp.z); AR.ring.material.color.set(0x3ff0e0);
+  AR.glow.position.set(rp.x, 0.235, rp.z); AR.glow.material.color.set(TEAMS[winKey].color).offsetHSL(0, 0, 0.18); AR.glow.material.opacity = 0;
+  AR.conf.forEach(p => { p.m.visible = false; }); AR.dust.forEach(d => { d.m.visible = false; }); AR.shock.visible = false; AR.burstAt = null; AR.hold = null;
+  AR.crown.visible = false; AR.crown.scale.setScalar(1); AR.halo.visible = false; AR.winner = AR.pods.reduce((a, b) => b.share > a.share ? b : a);
   document.getElementById('aTitle').textContent = T('⚔️ ĐẤU TRƯỜNG ', '⚔️ ARENA ') + (st ? SN(st).toUpperCase() : T('VÒNG ', 'ROUND ') + r.round);
   document.getElementById('aSub').textContent = `${r.event.icon} ${r.event.name} – ${(n => T(`${n.toLocaleString('vi-VN')} khách hàng chờ trên khán đài`, `${n.toLocaleString('en-US')} customers waiting in the stands`))(Math.round((r.demandUnits || 0) * 100 / Math.max(0.1, +r.share || 25) / 100) * 100 || 12000)}`;
   document.getElementById('aZone').textContent = st ? '📍 ' + TL(st.zone) : '';
@@ -1518,33 +1559,123 @@ async function arena3D(r, done) {
   const v = document.getElementById('aVerdict');
   v.textContent = cur.win ? T(`🚩 ${s.profile.teamName} thắng sàn đấu – cắm cờ tại ${SN(st)}!`, `🚩 ${s.profile.teamName} wins the arena – flag planted in ${SN(st)}!`) : cur.hasTopShare ? T('⚠️ Thị phần cao nhất nhưng vòng này lỗ – cần có lãi mới cắm được cờ!', '⚠️ Highest market share but a loss this round – you need a profit to plant a flag!') : T(`🏴 ${AR.winner.name} giữ vị trí số 1 vòng này, cờ ${st ? SN(st) : ''} thuộc về họ`, `🏴 ${AR.winner.name} holds the number-one spot this round; the ${st ? SN(st) : ''} flag is theirs`);
   v.style.borderColor = cur.win ? '#f39a33' : '#2f8a95';
-  aFoot.classList.remove('on'); AR.t0 = performance.now(); AR.shown = false; AR.on = true; document.body.classList.add('arena');
+  // Giảm chuyển động: bỏ camera bay, bỏ tung đất sét, hiện ngay cảnh cuối
+  AR.rm = !!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches);
+  aFoot.classList.remove('on'); AR.t0 = performance.now() - (AR.rm ? 10000 : 0); AR.shown = false; AR.landed = AR.rm; AR.on = true; document.body.classList.add('arena');
   document.getElementById('aNext').onclick = () => { AR.on = false; document.body.classList.remove('arena'); done(); };
   resizeArena();
 }
-function resizeArena() { AR.cam.aspect = innerWidth / innerHeight; AR.cam.fov = innerWidth < innerHeight ? 52 : 34; AR.cam.updateProjectionMatrix(); }
+// Camera ôm vừa nội dung: 4 bục + nhân vật + biển tên nằm trọn chiều ngang (≤ 92% khi màn dọc), không lấn tiêu đề và khung kết luận;
+// góc nhìn ngẩng dần lên tới khi chốt tỉnh và lá cờ không bị bục hay nhân vật phía trước che.
+const fitP = new THREE.Vector3(), fitD = new THREE.Vector3();
+function arenaDir(el, lift) { el += lift; return fitD.set(0, Math.sin(el), Math.cos(el)); }
+function resizeArena() {
+  const vw = innerWidth, vh = innerHeight, port = vw < vh, cam = AR.cam;
+  cam.aspect = vw / vh; cam.fov = port ? 40 : 34; cam.clearViewOffset(); cam.updateProjectionMatrix();
+  if (!AR.on || !AR.pods.length) return;
+  AR.sx = port ? 0.8 : 1; AR.pods.forEach((p, i) => { p.g.position.x = PODX[i] * AR.sx; });
+  const lw = Math.round(port ? Math.min(150, (vw - 16) / 4 - 6) : Math.min(190, vw / 5)); aLabs.style.setProperty('--lw', lw + 'px');
+  const labH = Math.max(36, ...AR.labs.map(l => l.offsetHeight)) + 10, side = port ? 0.04 : 0.15;
+  const top0 = aHead.getBoundingClientRect().bottom + 6, bot0 = aFoot.getBoundingClientRect().top - 8;
+  const tgt = new THREE.Vector3(0, 1.2, PODZ - (port ? 2.6 : 2.2));
+  const V = (x, y, z) => new THREE.Vector3(x, y, z), X = i => PODX[i] * AR.sx;
+  const heads = AR.pods.map((p, i) => V(X(i), 0.28 + p.target + 0.04 + HEAD, PODZ));
+  const plates = AR.pods.map((p, i) => V(X(i), 0.28, PODZ + 0.84));   // biển tên đặt trên sân khấu, ngay dưới chân bục
+  const feet = AR.pods.flatMap((p, i) => [-0.84, 0.84].flatMap(dx => [V(X(i) + dx, 0.28, PODZ), V(X(i) + dx * 0.7, 0.28, PODZ + 0.6)]));
+  const pin = AR.pin.position, flagTop = V(pin.x, pin.y + 1.75 * FLAG_NEW, pin.z), pinBase = V(pin.x, pin.y + 0.08, pin.z), cloth = V(pin.x + 0.45 * FLAG_NEW, pin.y + 1.24 * FLAG_NEW, pin.z);
+  const px = v => { fitP.copy(v).project(cam); return [(fitP.x + 1) / 2 * vw, (1 - fitP.y) / 2 * vh]; };
+  const place = (dir, d) => { cam.position.copy(tgt).addScaledVector(dir, d); cam.lookAt(tgt); cam.updateMatrixWorld(); };
+  const measure = (dir, d) => {
+    place(dir, d);
+    const H = heads.map(px), Pl = plates.map(px), Fp = feet.map(px), ft = px(flagTop), pb = px(pinBase);
+    const okX = Pl[0][0] >= lw / 2 + 6 && Pl[3][0] <= vw - lw / 2 - 6 && Fp.every(([x]) => x >= vw * side && x <= vw * (1 - side));
+    const top = Math.min(...H.map(h => h[1] - 24), ft[1] - 8), bot = Math.max(...Pl.map(f => f[1] + labH), pb[1] + 8);
+    return { top, bot, ok: okX && bot - top <= bot0 - top0 };
+  };
+  // điểm q bị che nếu nằm trong khung (thân bục hoặc nhân vật) của một bục phía trước
+  const hidden = q => AR.pods.some((p, i) => {
+    const colTop = 0.28 + p.target + 0.04, [cx0] = px(V(X(i) - 0.84, 0.28, PODZ)), [cx1] = px(V(X(i) + 0.84, 0.28, PODZ)), [, cy0] = px(V(X(i), colTop, PODZ)), [, cy1] = px(V(X(i), 0.28, PODZ + 0.84));
+    const [hx0] = px(V(X(i) - 0.55, colTop, PODZ)), [hx1] = px(V(X(i) + 0.55, colTop, PODZ)), [, hy] = px(V(X(i), colTop + HEAD + 0.1, PODZ));
+    return (q[0] > cx0 && q[0] < cx1 && q[1] > cy0 && q[1] < cy1) || (q[0] > hx0 && q[0] < hx1 && q[1] > hy && q[1] <= cy0);
+  });
+  let best = null;
+  for (let el = port ? 0.8 : 0.6; el <= 1.16; el += 0.06) {
+    const dir = arenaDir(el, 0).clone();
+    let lo = 8, hi = 90;
+    if (!measure(dir, hi).ok) lo = hi; else for (let n = 0; n < 22; n++) { const mid = (lo + hi) / 2; if (measure(dir, mid).ok) hi = mid; else lo = mid; }
+    const d = Math.max(lo, hi), m = measure(dir, d);
+    best = { el, d, m };
+    if (!hidden(px(pinBase)) && !hidden(px(cloth))) break;
+  }
+  const { el, d, m } = best;
+  // Ưu tiên đặt hàng bục sát khung kết luận để bản đồ phía sau có thêm chỗ; nếu không vừa thì canh giữa
+  AR.fit = { tgt, d, el, off: m.bot - m.top <= bot0 - top0 ? m.bot - bot0 : (m.top + m.bot) / 2 - (top0 + bot0) / 2 };
+}
 addEventListener('resize', resizeArena);
-const av = new THREE.Vector3();
+const av = new THREE.Vector3(), camT = new THREE.Vector3(), pinT = new THREE.Vector3();
+function arenaCam(k, t) {
+  const f = AR.fit, cam = AR.cam, vw = innerWidth, vh = innerHeight; if (!f) return;
+  // camera tiến về tỉnh lúc cờ rơi rồi lùi về khung ôm vừa
+  const a = AR.rm ? 0 : smooth((k - AT.push) / (AT.fall + 0.3 - AT.push)) * (1 - smooth((k - AT.back) / (AT.home - AT.back)));
+  pinT.copy(AR.pin.position); pinT.y += 0.7;
+  camT.lerpVectors(f.tgt, pinT, a);
+  const dir = arenaDir(f.el, 0.25 * a), sw = AR.rm ? 0 : Math.sin(t * 0.18) * 0.05, dx = dir.z * Math.sin(sw), dz = dir.z * Math.cos(sw);
+  const d = f.d * (1 - 0.42 * a);
+  cam.position.set(camT.x + dx * d, camT.y + dir.y * d, camT.z + dz * d); cam.lookAt(camT);
+  cam.setViewOffset(vw, vh, 0, f.off * (1 - a), vw, vh); cam.updateProjectionMatrix();
+  return a;
+}
 window.__ARTICK = (dt, t) => {
   if (!AR.on) return RM.on ? roomTick(dt, t) : false;
-  const k = (performance.now() - AR.t0) / 1000, port = innerWidth < innerHeight;
-  AR.cam.position.set(Math.sin(t * 0.18) * 1.4, port ? 12 : 8.2, port ? 19 : 14.5); AR.cam.lookAt(0, 0.6, port ? -1.5 : -0.6);
+  const k = AR.k = AR.hold != null ? AR.hold : (performance.now() - AR.t0) / 1000, tt = AR.rm ? 0 : t;
+  const push = arenaCam(k, t) || 0, vw = innerWidth, vh = innerHeight;
+  const xs = [], ys = [];
   AR.pods.forEach((p, i) => {
-    const e = Math.max(0, Math.min(1, (k - 0.3 - p.delay) / 1.3)), ee = 1 - Math.pow(1 - e, 3);
+    const e = clamp01((k - 0.3 - p.delay) / AT.rise), ee = 1 - Math.pow(1 - e, 3);
     p.h = 0.05 + (p.target - 0.05) * ee; p.col3.scale.y = p.h; p.top.position.y = p.h; p.ch.position.y = p.h + 0.04;
-    const win = AR.shown && p === AR.winner;
-    chars.animate(p.ch, t, win ? 'talk' : 'idle', i * 1.3);
-    p.ch.getWorldPosition(av); av.y += CHS * 1.45; av.project(AR.cam);
-    const L = AR.labs[i]; L.style.left = (av.x + 1) / 2 * innerWidth + 'px'; L.style.top = (1 - av.y) / 2 * innerHeight - 6 + 'px';
-    L.firstChild.textContent = (p.share * ee).toFixed(1) + '%';
+    // đội dẫn đầu ăn mừng bằng cử chỉ, chân không rời bục (không nhảy)
+    chars.animate(p.ch, tt, AR.landed && p === AR.winner ? 'talk' : 'idle', i * 1.3);
+    p.g.getWorldPosition(av); av.z += 0.84; av.project(AR.cam);
+    xs.push((av.x + 1) / 2 * vw); ys.push((1 - av.y) / 2 * vh + 4);
+    AR.labs[i].firstChild.textContent = (p.share * ee).toFixed(1) + '%';
   });
-  AR.flags.forEach((f, i) => hq.waveFlag(f, t + i * 0.6));
-  AR.ring.scale.setScalar(1 + (t * 1.2 % 1) * 0.8); AR.ring.material.opacity = 1; 
-  const dk = Math.max(0, Math.min(1, (k - 2.4) / 0.6)); AR.drop.position.y = 4 * (1 - dk * dk) ;
-  if (k > 2.9 && !AR.shown) { AR.shown = true; aFoot.classList.add('on'); AR.crown.visible = true; }
-  if (AR.crown.visible) { const w = AR.winner; w.ch.getWorldPosition(av); AR.crown.position.set(av.x, av.y + CHS * 1.28, av.z); AR.crown.rotation.y = t; }
+  // Nhãn luôn nằm trong màn hình và không chồng nhau: đọc bề rộng một lượt, đẩy trái/phải rồi mới ghi vị trí
+  const ws = AR.labs.map(L => L.offsetWidth), hs = AR.labs.map(L => L.offsetHeight), n = xs.length;
+  for (let i = 0; i < n; i++) { xs[i] = Math.max(xs[i], ws[i] / 2 + 4); if (i) xs[i] = Math.max(xs[i], xs[i - 1] + (ws[i - 1] + ws[i]) / 2 + 4); }
+  for (let i = n - 1; i >= 0; i--) { xs[i] = Math.min(xs[i], vw - ws[i] / 2 - 4); if (i < n - 1) xs[i] = Math.min(xs[i], xs[i + 1] - (ws[i + 1] + ws[i]) / 2 - 4); }
+  AR.labs.forEach((L, i) => { L.style.left = xs[i] + 'px'; L.style.top = Math.max(4, Math.min(vh - hs[i] - 4, ys[i])) + 'px'; L.style.opacity = (1 - push).toFixed(2); });
+  AR.flags.forEach((f, i) => hq.waveFlag(f, tt + i * 0.6, AR.rm ? 0 : 1));
+  // Cờ rơi xoay một vòng, chạm đất thì bẹp rồi nảy nhẹ như đất sét
+  const fall = clamp01((k - AT.fall) / (AT.land - AT.fall)), tau = k - AT.land, fl = AR.drop;
+  if (tau < 0) { fl.position.y = 4.5 * (1 - fall * fall); fl.rotation.y = (1 - fall) * (1 - fall) * Math.PI * 1.5; fl.scale.setScalar(FLAG_NEW); }
+  else { const sq = Math.exp(-7 * tau) * Math.cos(15 * tau); fl.rotation.y = 0;
+    fl.position.y = tau > 0.06 && tau < 0.36 ? 0.2 * Math.sin(Math.PI * (tau - 0.06) / 0.3) : 0;
+    fl.scale.set(FLAG_NEW * (1 + 0.16 * sq), FLAG_NEW * (1 - 0.3 * sq), FLAG_NEW * (1 + 0.16 * sq)); }
+  if (!AR.landed && k >= AT.land) { AR.landed = true; arenaBurst(AR.pin.position, TEAMS[AR.dropKey].color); AR.ring.material.color.set(TEAMS[AR.dropKey].color); }
+  // Tỉnh đang tranh: quầng sáng hiện dần, chốt cắm nhô lên khi cờ chạm
+  const gl = smooth((k - AT.push) / 0.6);
+  AR.glow.material.opacity = gl * (AR.landed ? 0.55 + (AR.rm ? 0 : 0.15 * Math.sin(t * 3)) : 0.35); AR.glow.scale.setScalar(0.7 + 0.5 * gl);
+  if (tau >= 0) { AR.pin.position.y = 0.2 + 0.1 * smooth(tau / 0.3); AR.pin.children[0].scale.setScalar(1.3 + 0.4 * Math.exp(-6 * tau) * Math.cos(12 * tau)); }
+  AR.ring.scale.setScalar(1 + (tt * 1.2 % 1) * 0.8); AR.ring.material.opacity = AR.rm ? 0.8 : 1 - (tt * 1.2 % 1) * 0.6;
+  if (!AR.rm) arenaFx(tau);
+  if (k > AT.land + 0.15) { const w = AR.winner, c = smooth((k - AT.land - 0.15) / 0.05), ct = k - AT.land - 0.15;
+    AR.crown.visible = true; AR.crown.scale.setScalar(c * (1 + 0.45 * Math.exp(-5 * ct) * Math.cos(11 * ct)));
+    w.ch.getWorldPosition(av); AR.crown.position.set(av.x, av.y + CHS * 1.28, av.z); AR.crown.rotation.y = tt;
+    w.g.getWorldPosition(av); AR.halo.visible = true; AR.halo.position.set(av.x, av.y + w.h + 0.05, av.z); AR.halo.scale.setScalar(1 + (AR.rm ? 0 : 0.04 * Math.sin(t * 4))); }
+  if (k > AT.show && !AR.shown) { AR.shown = true; aFoot.classList.add('on'); }
   renderer.render(AR.scene, AR.cam);
   return true;
+};
+// Móc cho bộ kiểm thử: vị trí nhãn, nhân vật (chiếu lên màn), cờ và chốt tỉnh; __arenaHold(k) giữ cảnh ở giây k để chụp màn
+window.__arenaHold = k => { AR.hold = k == null ? null : +k; };
+window.__arenaState = () => {
+  if (!AR.pods.length) return null;
+  const vw = innerWidth, vh = innerHeight, sc = v => { const q = v.clone().project(AR.cam); return { x: (q.x + 1) / 2 * vw, y: (1 - q.y) / 2 * vh }; };
+  const rect = el => { const b = el.getBoundingClientRect(); return { left: b.left, right: b.right, top: b.top, bottom: b.bottom }; };
+  const fw = new THREE.Vector3(), pw = new THREE.Vector3(); AR.drop.getWorldPosition(fw); AR.pin.getWorldPosition(pw);
+  return { on: AR.on, k: AR.k, rm: AR.rm, shown: AR.shown, landed: AR.landed, labs: AR.labs.map(rect),
+    chars: AR.pods.map(p => { const f = new THREE.Vector3(); p.ch.getWorldPosition(f); const h = f.clone(); h.y += HEAD; return { feet: sc(f), head: sc(h) }; }),
+    flag: { x: fw.x, y: fw.y, z: fw.z, scr: sc(fw) }, pin: { x: pw.x, y: pw.y, z: pw.z }, crown: AR.crown.visible };
 };
 
 // ================= PHÒNG 3D (2): Ra quyết định · Báo cáo · Thị trường sống · Nhiệm vụ · Lumina chat =================
