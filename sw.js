@@ -164,6 +164,7 @@ const SHELL = [
   './js/engine.js',
   './js/core/seed-engine.js',
   './js/backend-config.js',
+  './js/nguon-mo-gate.js',
   './js/backend.js',
   './js/tro-ly-mau-cau.js',
   './nhan-xet-vong.html',
