@@ -42,6 +42,7 @@
   .hp-door-t{font-family:var(--clay-head);font-size:19px;font-weight:800;line-height:1.15;color:var(--clay-ink)}
   .hp-door-d{font-size:14px;line-height:1.45;color:var(--clay-ink-2)}
   .hp-door-go{margin-top:auto;font-weight:800;font-size:14px;color:var(--clay-ink)}
+  .hp-door-go .clay-go{margin:0 .35em 0 0;width:1.5em;height:1.5em;vertical-align:-.45em}
   .hp-door-more{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:12px;font-size:14px;font-weight:700}
   .hp-door-more a{display:inline-flex;align-items:center;min-height:44px;color:var(--clay-ink);text-decoration:underline;text-underline-offset:3px}
   @media (max-width:760px){
@@ -51,7 +52,8 @@
     .hp-door-t{font-size:17px}
     .hp-door-d{grid-column:2;font-size:13.5px;line-height:1.35}
     .hp-door-go{grid-column:3;grid-row:1/3;margin:0;font-size:20px}
-    .hp-door-go span{display:none}
+    .hp-door-go span:not(.clay-go){display:none}
+    .hp-door-go .clay-go{width:32px;height:32px;margin:0}
   }
   @media (prefers-reduced-motion:reduce){.hp-door{transition:none}.hp-door:hover{transform:none}}
   .hp-lead{margin:22px 0 0;max-width:33em;font-size:18px;line-height:1.65;color:var(--clay-sub);text-wrap:pretty}
