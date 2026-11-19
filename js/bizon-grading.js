@@ -258,15 +258,23 @@
     setTimeout(() => URL.revokeObjectURL(a.href), 2000);
     return lines;
   }
+  // Cảng Cái Mép (js/cang-cai-mep.js): lựa chọn của đội ở vụ 5 nằm trong quyết định đã nộp (decisions.portChoice).
+  // Không tính điểm, chỉ để giảng viên hỏi «vì sao đội chọn vậy?». Ván chơi trước khi có luật cảng để trống.
+  const PORT_LABEL = { a: 'a · Trả phí ưu tiên', b: 'b · Chờ hoặc đổi cảng', c: 'c · Đàm phán lùi ngày giao' };
+  function portOf(T, name) {
+    const t = (T || []).find(x => x.name === name), r5 = t && (t.rs || []).filter(r => +r.round_number === 5).pop();
+    const d = r5 ? (r0(r5).decisions || r0(r5).decision || {}) : {};
+    return PORT_LABEL[d.portChoice] || '';
+  }
   function xls(code, T, G, BP, MB, AC, rubric, roster) {
     const esc = v => String(v == null ? '' : v).replace(/&/g, '&amp;').replace(/</g, '&lt;');
     const row = c => '<Row>' + c.map(x => `<Cell><Data ss:Type="${typeof x === 'number' && isFinite(x) ? 'Number' : 'String'}">${esc(x)}</Data></Cell>`).join('') + '</Row>';
     const sheet = (n, rows) => `<Worksheet ss:Name="${esc(n)}"><Table>${rows.join('')}</Table></Worksheet>`;
     const r1 = v => v == null ? '' : Math.round(v * 100) / 100;
     const s1 = [row(['Đội', 'Số vòng', 'LN lũy kế (tr₫)', 'Thị phần V6 (%)', 'OEE TB', 'Lỗi V6 (%)', 'Quick ratio V6', 'Thành tựu', 'Vòng biến cố bất lợi', 'Vòng đóng góp (B5)', 'Chuẩn bị (B6)',
-      'B1 /2', 'B2 /2', 'B3 /2', 'B4 /1,5', 'B5 /1,5', 'B6 /1', 'Tổng /10', 'Điểm chữ', 'Thang 4', 'Tích lũy', 'Nhận xét'])]
+      'B1 /2', 'B2 /2', 'B3 /2', 'B4 /1,5', 'B5 /1,5', 'B6 /1', 'Tổng /10', 'Điểm chữ', 'Thang 4', 'Tích lũy', 'Nhận xét', 'Lựa chọn ở cảng (vụ 5)'])]
       .concat(G.map(g => row([g.name, g.rounds, Math.round(g.profit), g.share, r1(g.oee), r1(g.defect), r1(g.qr), g.ach ?? '', g.adv, g.reasoning === '' ? '' : +g.reasoning, g.teamwork ? 'Có' : 'Không',
-        r1(g.b1), r1(g.b2), r1(g.b3), r1(g.b4), r1(g.b5), r1(g.b6), rnd1(g.total), letter(g.total).l, letter(g.total).g4, letter(g.total).pass ? 'Đạt' : 'Không', g.note || g.autoNote])));
+        r1(g.b1), r1(g.b2), r1(g.b3), r1(g.b4), r1(g.b5), r1(g.b6), rnd1(g.total), letter(g.total).l, letter(g.total).g4, letter(g.total).pass ? 'Đạt' : 'Không', g.note || g.autoNote, portOf(T, g.name)])));
     const s2 = [row(['Đội', 'Vòng', 'Biến cố', 'Giá', 'Marketing', 'Sản lượng', 'R&D', 'Nhân công', 'Vốn', 'Thị phần (%)', 'Doanh thu (tr₫)', 'Lợi nhuận (tr₫)', 'Số dư (tr₫)', 'OEE', 'Lỗi (%)', 'Quick ratio', 'Nộp lúc'])];
     T.forEach(t => t.rs.forEach(r => { const j = r0(r), d = j.decision || j.decisions || j.input || {};
       s2.push(row([t.name, r.round_number, j.eventId || '', d.price ?? d.gia ?? '', d.marketing ?? '', d.production ?? '', d.rd ?? '', d.workers ?? '', d.funding ?? '', +(+j.share || 0).toFixed(1), Math.round(+j.revenue || 0), +(+j.netProfit || 0).toFixed(1), Math.round(+j.balance || 0), j.oee ?? '', j.defect ?? '', j.quickRatio ?? '', new Date(r.created_at).toLocaleString('vi-VN')])); }));
