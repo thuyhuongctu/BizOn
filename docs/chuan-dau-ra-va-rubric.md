@@ -243,6 +243,22 @@ Engine ghi lại **hơn 20 chỉ số mỗi vòng chơi**. Bản `result_json` g
 
 > 🚧 Bản nháp đầu tiên — chưa chấm thử thực tế, xem [Mục 9](#9--phần-còn-phát-triển).
 
+#### Đổi luật vụ 5: quyết định ở Cảng Cái Mép (áp dụng từ ngày gộp PR, sớm nhất 20/11/2026)
+
+- **Luật mới:** ở vụ 5, khi có biến cố hậu cần (trường hợp A, B hay C), đội chọn một trong ba cách xử lý hàng kẹt ở Cái Mép:
+  - (a) trả phí ưu tiên: giao đủ đơn, chi phí vụ ×1,30 thay cho ×1,25;
+  - (b) chờ hoặc đổi cảng: như luật cũ;
+  - (c) đàm phán lùi ngày giao: giao 95% đơn, thương hiệu giảm 0,06 trước vụ 6.
+- Không chọn thì tính là (b), cho kết quả trùng luật cũ. Đặc tả và nguồn số liệu ở `specs/005-cang-cai-mep/`.
+- **Ngày áp dụng:** luật chạy từ ngày PR luật cảng được gộp vào `main`, không sớm hơn 20/11/2026. Giảng viên ghi ngày ấy vào sổ điểm.
+  - Các lớp chơi trước ngày đó, kể cả lớp UM Kendari ngày 19/11/2026, chơi theo **luật cũ**.
+  - Khi so dữ liệu giữa các lớp (hiến chương I), ghi rõ lớp nào theo luật cũ, lớp nào theo luật mới.
+- **Không tính điểm riêng** (câu 5A trong đặc tả). Lựa chọn ở cảng không cộng hay trừ vào B1–B6 hay rubric. Nó chỉ ảnh hưởng điểm gián tiếp qua lợi nhuận và thị phần của đội.
+- **Câu hỏi thảo luận sau ván** (CLO-C, CLO-E):
+  - «Vì sao đội chọn (a)/(b)/(c)?» Xem cột «Lựa chọn ở cảng (vụ 5)» trong bản xuất Excel.
+  - «COO đề xuất gì? CFO so phần chi phí tăng của (a) với doanh thu mất ra sao? CMO cân nhắc uy tín vụ 6 thế nào?»
+  - «Nếu chơi lại với tồn kho và biên lợi nhuận của đội, đội có chọn khác không?»
+
 ---
 
 ## 4.2 · Rubric game Hộ Chiếu Thương Hiệu — BP-1 đến BP-6

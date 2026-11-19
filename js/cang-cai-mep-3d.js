@@ -1,6 +1,6 @@
 // Bật Nghiệp 3D · Khu Cảng Cái Mép – Thị Vải (specs/005-cang-cai-mep, câu chuyện 1).
 // Dựng bằng khối đất sét của bizon-hq-kit.js, đặt ngoài nền trụ sở (x > 8). Chạm từng chỗ mở thẻ kiến thức VI/EN.
-// Mô-đun này KHÔNG chạm luật chơi: không đọc/ghi ván, không gọi engine.
+// Mô-đun này KHÔNG chạm luật chơi: không ghi ván, không gọi engine. Câu chuyện 2 chỉ đọc qua window.BizonPort (js/cang-cai-mep.js).
 // Nguồn số liệu (tra 16/11/2026, xem specs/005-cang-cai-mep/plan.md):
 //  - Tàu 24.188 TEU cập cụm cảng Cái Mép – Thị Vải tháng 3/2023, lớn nhất từng cập cảng Việt Nam (VOV, SGGP).
 //  - Hơn 20 tuyến tàu mẹ đi thẳng sang châu Âu, bờ Đông và bờ Tây Hoa Kỳ (Vietnamnet).
@@ -95,6 +95,7 @@ export function buildPort(ctx) {
     const st = document.createElement('style'); st.id = 'cmStyle';
     st.textContent = '#cmCard{box-sizing:border-box;position:fixed;z-index:7;left:12px;bottom:64px;width:min(360px,calc(100vw - 24px));max-height:min(62vh,520px);overflow:auto;background:#fbf6ee;color:#2c3552;border:3px solid #e6d6bf;border-radius:18px;padding:12px 14px 12px;box-shadow:0 5px 0 #d9c5a8;font:14px/1.5 system-ui,sans-serif}'
       + '#cmCard[hidden]{display:none}#cmCard h4{margin:0 48px 6px 0;font-size:16px;color:#1f6f8a}#cmCard p{margin:0 0 8px}#cmCard .cm-q{background:#eef6f6;border-radius:12px;padding:6px 9px}#cmCard small{display:block;color:#6b5b47;font-size:12px}'
+      + '#cmCard .cm-go{display:block;width:100%;min-height:44px;margin:4px 0 8px;border:0;border-radius:14px;background:#1f6f8a;color:#fff;font:inherit;font-weight:800;cursor:pointer}'
       + '#cmCard .cm-x{position:absolute;top:6px;right:6px;width:44px;height:44px;border:0;border-radius:50%;background:#efe3cf;color:#2c3552;font-size:18px;cursor:pointer}'
       + 'body.room #cmCard,body.arena #cmCard,body.login3d #cmCard,body.evt #cmCard{display:none!important}';
     document.head.appendChild(st);
@@ -103,11 +104,20 @@ export function buildPort(ctx) {
   document.body.appendChild(card);
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const L = a => T(a[0], a[1]);
+  // Câu chuyện 2: ở vụ 5 (biến cố hậu cần), thẻ hải quan có nút «Ra quyết định» mở thẳng ô lựa chọn ở cảng trong bảng
+  // Quyết định của game.html (iframe #gf), qua cầu nối window.__openTab có sẵn. Mô-đun này chỉ ĐỌC trạng thái qua BizonPort.
+  const portApi = () => { try { const f = document.getElementById('gf'), w = f && f.contentWindow; return (w && w.BizonPort) || null; } catch (e) { return null; } };
+  const portOpen = () => { const P = portApi(); try { return !!(P && P.now && P.now()); } catch (e) { return false; } };
   function open(key) {
     const c = CARDS.find(x => x.key === key); if (!c) return false;
     card.dataset.k = key;
-    card.innerHTML = `<button type="button" class="cm-x" aria-label="${esc(T('Đóng', 'Close'))}">✕</button><h4>${c.icon} ${esc(L(c.t))}</h4><p>${esc(L(c.b))}</p><p class="cm-q">${esc(L(c.q))}</p><small>${esc(L(SRC))}</small>`;
+    const go = key === 'customs' && portOpen();
+    card.innerHTML = `<button type="button" class="cm-x" aria-label="${esc(T('Đóng', 'Close'))}">✕</button><h4>${c.icon} ${esc(L(c.t))}</h4><p>${esc(L(c.b))}</p>`
+      + (go ? `<button type="button" class="cm-go">${esc(T('🚢 Ra quyết định: xử lý hàng kẹt ở Cái Mép', '🚢 Make the decision: cargo stuck at Cái Mép'))}</button>` : '')
+      + `<p class="cm-q">${esc(L(c.q))}</p><small>${esc(L(SRC))}</small>`;
     card.querySelector('.cm-x').onclick = close;
+    const b = card.querySelector('.cm-go');
+    if (b) b.onclick = () => { close(); if (typeof window.__openTab === 'function') window.__openTab('decisions'); setTimeout(() => { const P = portApi(); if (P && P.focus) P.focus(); }, 450); };
     card.hidden = false; return true;
   }
   function close() { card.hidden = true; delete card.dataset.k; }
