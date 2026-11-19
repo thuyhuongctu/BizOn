@@ -4,7 +4,7 @@
 
 **Ngày tạo**: 2026-11-19
 
-**Trạng thái**: Bản nháp, chờ chị trả lời phần làm rõ
+**Trạng thái**: Đã làm rõ ngày 19/11/2026, chờ chị duyệt kế hoạch
 
 **Đầu vào**:
 - Kiểm tra trước buổi UMK (19/11/2026): Màn hình lớp học chưa có tab Bật Nghiệp, nên kế hoạch dạy phải dùng Trang Giảng viên → «Tiến độ 6 vòng».
@@ -29,7 +29,11 @@
 
 ## Làm rõ
 
-*(chờ chị trả lời, xem cuối tài liệu)*
+Chị trả lời ngày 19/11/2026 («1 A, 2. A, 3. A»):
+
+1. **Xếp hạng tab Bật Nghiệp (1A)**: theo lợi nhuận lũy kế, giống Trang Giảng viên (`js/bizon-grading.js`), để hai màn khớp nhau.
+2. **Trang tập huấn (2A)**: viết lại `truong-giang-vien.html` theo 6 bước của một buổi dạy, giữ địa chỉ cũ. Liên kết «Lần đầu? Hướng dẫn 5 bước» trên các trang khác đổi chữ cho khớp.
+3. **Lý do ra quyết định (3A)**: làm sau câu chuyện 1 và 2. Lý do **không bắt buộc** (có nút bỏ qua) và chỉ dùng để chấm trong lớp. Muốn dùng cho nghiên cứu thì cần phiếu đồng thuận riêng.
 
 ## Kịch bản người dùng và kiểm thử *(bắt buộc)*
 
@@ -77,7 +81,7 @@ Khi CEO bấm Chốt, đội chọn nhanh 1–2 lý do có sẵn, ví dụ «gi�
 **Cách thử độc lập**: chơi một ván lớp demo, chọn lý do ở mỗi vòng, mở Trang Giảng viên thấy đủ dòng thời gian.
 
 **Kịch bản nghiệm thu**:
-1. **Cho** đội đang chốt vòng, **khi** chọn lý do, **thì** việc chọn tốn ≤ 2 lần chạm và có thể bỏ qua (theo câu làm rõ 3).
+1. **Cho** đội đang chốt vòng, **khi** chọn lý do, **thì** việc chọn tốn ≤ 2 lần chạm và có nút bỏ qua (3A).
 2. **Cho** ván chơi thử không có mã lớp, **khi** chốt, **thì** không gửi gì lên máy chủ (nguyên tắc V).
 3. **Cho** cùng hạt giống và cùng quyết định, **khi** chơi, **thì** kết quả trùng từng con số với bản hiện nay.
 
@@ -91,10 +95,10 @@ Khi CEO bấm Chốt, đội chọn nhanh 1–2 lý do có sẵn, ví dụ «gi�
 
 ### Yêu cầu chức năng
 
-- **FR-001**: Màn hình lớp học có tab thứ tư «Bật Nghiệp / Bat Nghiep», đọc `bizon_submissions_v2`, vẽ tuyến 6 thành phố với mỗi đội ở chặng bằng vòng đã chốt, bảng 10 đội đầu xếp theo câu làm rõ 1. Có dữ liệu minh họa khi `demo=1`.
+- **FR-001**: Màn hình lớp học có tab thứ tư «Bật Nghiệp / Bat Nghiep», đọc `bizon_submissions_v2`, vẽ tuyến 6 thành phố với mỗi đội ở chặng bằng vòng đã chốt, bảng 10 đội đầu xếp theo lợi nhuận lũy kế (1A). Có dữ liệu minh họa khi `demo=1`.
 - **FR-002**: Tab Bật Nghiệp tự làm mới mỗi 20 giây, có trạng thái chưa đăng nhập, trống, lỗi và mất mạng như ba tab kia. VI/EN đủ.
-- **FR-003**: Có trang tập huấn giảng viên theo 6 bước của một buổi dạy, mỗi bước có ảnh chụp thật, việc cần làm và lỗi hay gặp, kèm bản in A4 và bản EN. Ảnh chụp sinh bằng script Playwright, dùng lớp demo.
-- **FR-004** (P3, phụ thuộc câu làm rõ 3): lúc chốt vòng có chọn nhanh lý do (danh sách cố định, VI/EN) và một dòng ghi chú. Lý do đi theo dữ liệu nộp vòng hiện có khi có mã lớp. Không gửi gì khi chơi thử.
+- **FR-003**: `truong-giang-vien.html` (giữ địa chỉ, 2A) thành trang tập huấn giảng viên theo 6 bước của một buổi dạy, mỗi bước có ảnh chụp thật, việc cần làm và lỗi hay gặp, kèm bản in A4 và bản EN. Ảnh chụp sinh bằng script Playwright, dùng lớp demo.
+- **FR-004** (P3, không bắt buộc theo 3A): lúc chốt vòng có chọn nhanh lý do (danh sách cố định, VI/EN) và một dòng ghi chú. Lý do đi theo dữ liệu nộp vòng hiện có khi có mã lớp. Không gửi gì khi chơi thử.
 - **FR-005** (P3): Trang Giảng viên có dòng thời gian theo đội (đề xuất, chạy thử, lý do, quyết định, kết quả). Chỉ chủ lớp xem được.
 - **FR-006**: Không sửa `js/engine.js`, `js/app.js`, `js/backend.js`. Không đổi luật hay điểm. Mỗi PR nâng `CACHE` trong `sw.js`, html-validate 0 lỗi.
 
@@ -114,16 +118,6 @@ Khi CEO bấm Chốt, đội chọn nhanh 1–2 lý do có sẵn, ví dụ «gi�
 - Trang tập huấn viết cho Bật Nghiệp trước. Các game khác thêm sau theo cùng khuôn.
 - «Toàn bộ quá trình của một sinh viên»: trong game, quyết định là của đội, còn đề xuất theo vai đã gắn với từng sinh viên qua `member-log`. Dòng thời gian vì thế xem theo đội, mỗi dòng ghi vai nào đề xuất.
 
-## Câu hỏi làm rõ (chờ chị trả lời)
+## Câu hỏi làm rõ
 
-1. **Bảng xếp hạng tab Bật Nghiệp xếp theo gì?**
-   - **A (đề xuất)**: lợi nhuận lũy kế, giống Trang Giảng viên (`bizon-grading.js`), để hai màn khớp nhau.
-   - B: doanh thu lũy kế.
-   - C: điểm tổng game tính ở cuối ván. Trước vòng 6, xếp theo lợi nhuận.
-2. **Trang tập huấn đặt ở đâu?**
-   - **A (đề xuất)**: viết lại `truong-giang-vien.html` theo 6 bước của một buổi dạy, giữ địa chỉ cũ (đã có liên kết «Lần đầu? Hướng dẫn 5 bước»).
-   - B: trang mới `tap-huan-giang-vien.html`, giữ nguyên trang cũ.
-3. **Phần «vì sao ra quyết định» (câu chuyện 3)**
-   - **A (đề xuất)**: làm sau câu chuyện 1 và 2, lý do **không bắt buộc** (có nút bỏ qua), chỉ dùng chấm trong lớp; muốn dùng cho nghiên cứu thì cần phiếu đồng thuận riêng.
-   - B: bắt buộc chọn lý do mới chốt được.
-   - C: chưa làm, chờ báo cáo rút kinh nghiệm buổi UMK.
+Đã trả lời ngày 19/11/2026, xem mục «Làm rõ» ở đầu tài liệu.
