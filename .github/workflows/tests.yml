@@ -38,10 +38,12 @@ jobs:
           npm install --no-save playwright@1.54.1
           npx playwright install --with-deps chromium
 
-      # ffmpeg cho phần chạy thật của test/kiem-video.test.js và test/bia-trailer-bat-nghiep.test.js
+      # ffmpeg cho phần chạy thật của test/kiem-video.test.js và test/bia-trailer-bat-nghiep.test.js.
+      # Máy chủ apt có lúc rất chậm: cài gọn, và nếu hết giờ thì vẫn chạy test (các test video tự bỏ qua khi thiếu ffmpeg).
       - name: Cài ffmpeg
         timeout-minutes: 8
-        run: sudo apt-get update -q && sudo apt-get install -y -q ffmpeg
+        continue-on-error: true
+        run: sudo apt-get update -q && sudo apt-get install -y -q --no-install-recommends ffmpeg
 
       # scripts/run-tests.mjs tự bật máy chủ tĩnh ở 127.0.0.1:8899 cho các bộ test trình duyệt
       - name: npm test
