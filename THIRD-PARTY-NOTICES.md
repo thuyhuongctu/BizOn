@@ -84,6 +84,8 @@ Mười một lệnh cho Claude Code trong `.claude/skills/` (`balance-check`, `
 Lệnh `video-ngan` (`.claude/skills/video-ngan/`) và công cụ kiểm video `scripts/kiem-video.mjs` phỏng theo công thức kịch bản và `scripts/short_qa.py` của **Claude Animated Shorts** (© 2026 Mr omi, giấy phép **MIT**), viết lại bằng tiếng Việt và Node cho BizOn; không dùng ảnh tham khảo hay mã dựng hình của kho đó.
 
 
+Lệnh `ffmpeg-skill` (`.claude/skills/ffmpeg-skill/`, thêm 19/11/2026) chép nguyên phần skill (`SKILL.md`, `scripts/`, `references/`, `templates/`) của **kajisho5/ffmpeg-skill** (© 2026 kajisho5, giấy phép **MIT**, toàn văn trong `LICENSE` cùng thư mục; nguồn và commit ghi ở `NGUON.md`): bộ script Python gọi ffmpeg trên máy để cắt, ghép, đổi khổ, gắn phụ đề, chuẩn độ to và kiểm video trước khi đăng. Đây là công cụ phát triển, không chạy trên trang web.
+
 **Spec Kit** (`.specify/`, các lệnh `speckit-*` trong `.claude/skills/`) lấy nguyên từ **github/spec-kit** bản 0.9.5.dev0 (© GitHub, Inc., giấy phép **MIT**), cài qua bản sao `thuyhuongctu/spec-kit`; chỉ phần hiến chương `.specify/memory/constitution.md` là viết riêng cho BizOn. Lệnh `dac-ta` (`.claude/skills/dac-ta/`) là lối vào tiếng Việt viết riêng cho BizOn, phỏng theo quy trình của Spec Kit, gọi lại các lệnh `speckit-*` chứ không chép mẫu. Đây là công cụ phát triển, không chạy trên trang web.
 
 ## 7 · Nội dung được tạo với sự hỗ trợ của công cụ AI
