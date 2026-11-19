@@ -88,6 +88,8 @@ Lệnh `ffmpeg-skill` (`.claude/skills/ffmpeg-skill/`, thêm 19/11/2026) chép n
 
 Lệnh `diagram-design` (`.claude/skills/diagram-design/`, thêm 19/11/2026) chép phần skill (`SKILL.md`, `references/`, `scripts/`, 7 tệp khuôn trong `assets/`) của **cathrynlavery/diagram-design** (© 2025 Cathryn Lavery, giấy phép **MIT**, toàn văn trong `LICENSE` cùng thư mục; nguồn, commit và quy tắc BizOn ghi ở `NGUON.md`): hướng dẫn và script để vẽ sơ đồ (lưu đồ, dòng thời gian, hành trình người dùng, sơ đồ dữ liệu…) thành tệp HTML/SVG tự chứa. Biểu tượng đi kèm thuộc Tabler Icons (MIT), Simple Icons (CC0), log-z/logos (MIT) và Devicon (MIT), kê ở `THIRD_PARTY_LICENSES.md`. Đây là công cụ phát triển, không chạy trên trang web; sơ đồ nó tạo ra là tác phẩm của nhóm tác giả.
 
+Lệnh `motion-design` (`.claude/skills/motion-design/`, thêm 19/11/2026) chép nguyên thư mục skill của **LottieFiles/motion-design-skill** (© 2025 LottieFiles, giấy phép **MIT**, toàn văn trong `LICENSE` cùng thư mục; nguồn, commit và quy tắc BizOn ghi ở `NGUON.md`): hướng dẫn căn thời gian, easing, dàn dựng và 12 nguyên tắc hoạt hình áp vào giao diện. Chỉ gồm tệp Markdown, không có script. Đây là công cụ phát triển, không chạy trên trang web.
+
 **Spec Kit** (`.specify/`, các lệnh `speckit-*` trong `.claude/skills/`) lấy nguyên từ **github/spec-kit** bản 0.9.5.dev0 (© GitHub, Inc., giấy phép **MIT**), cài qua bản sao `thuyhuongctu/spec-kit`; chỉ phần hiến chương `.specify/memory/constitution.md` là viết riêng cho BizOn. Lệnh `dac-ta` (`.claude/skills/dac-ta/`) là lối vào tiếng Việt viết riêng cho BizOn, phỏng theo quy trình của Spec Kit, gọi lại các lệnh `speckit-*` chứ không chép mẫu. Đây là công cụ phát triển, không chạy trên trang web.
 
 ## 7 · Nội dung được tạo với sự hỗ trợ của công cụ AI
