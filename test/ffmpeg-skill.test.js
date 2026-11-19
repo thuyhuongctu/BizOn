@@ -9,6 +9,9 @@ for (const f of ['SKILL.md', 'LICENSE', 'NGUON.md', 'scripts/check.py', 'scripts
 assert.match(read(T + 'SKILL.md'), /^---\nname: ffmpeg-skill\n/);
 assert.match(read(T + 'LICENSE'), /MIT License/);
 assert.match(read(T + 'NGUON.md'), /kajisho5\/ffmpeg-skill/);
+assert.match(read(T + 'NGUON.md'), /\+faststart/, 'NGUON.md có quy tắc faststart của BizOn');
+assert.match(read(T + 'NGUON.md'), /−14 đến −16 LUFS/, 'NGUON.md có mức âm lượng của BizOn');
+assert.match(read('.claude/skills/video-ngan/SKILL.md'), /ffmpeg-skill\/scripts\/loudness\.py/, 'video-ngan trỏ tới loudness.py');
 assert.match(read('THIRD-PARTY-NOTICES.md'), /kajisho5\/ffmpeg-skill/);
 const py = [];
 (function quet(d) { for (const e of fs.readdirSync(R(d), { withFileTypes: true })) e.isDirectory() ? quet(d + e.name + '/') : e.name.endsWith('.py') && py.push(d + e.name); })(T + 'scripts/');
