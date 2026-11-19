@@ -52,7 +52,7 @@ const RIVERS = [
   [[105.24, 10.80], [105.45, 10.62], [105.63, 10.46], [105.95, 10.34], [106.18, 10.33], [106.36, 10.36], [106.6, 10.27], [106.8, 10.2]],
 ];
 const ROUTE = [[105.78, 10.03], [105.97, 10.25], [106.36, 10.36], [106.70, 10.78], [107.03, 10.53]];
-const PLACES = [['Cần Thơ', 105.78, 10.03, 'home'], ['Vĩnh Long', 105.97, 10.25], ['Mỹ Tho', 106.36, 10.36], ['TP. Hồ Chí Minh', 106.70, 10.78], ['Cảng Cái Mép', 107.03, 10.53]];
+const PLACES = [['Cần Thơ', 105.78, 10.03, 'home'], ['Vĩnh Long', 105.97, 10.25], ['Mỹ Tho', 106.36, 10.36], ['TP. Hồ Chí Minh', 106.70, 10.78, '', 'Ho Chi Minh City'], ['Cảng Cái Mép', 107.03, 10.53, '', 'Cái Mép Port']];
 
 async function buildBps(ctx, data, night) {
   const { scene, camera } = ctx;
@@ -78,7 +78,7 @@ async function buildBps(ctx, data, night) {
     b.scale.setScalar(1.4); scene.add(b); return b;
   });
   if (teams.length) { const L = lotus(1.5); const p = route.getPointAt(Math.min(0.995, teams[0].progress)); L.position.set(p.x + 0.5, 0.66, p.z - 0.6); scene.add(L); ctx.spin.push(L); }
-  ctx.labels(PLACES.map(([vi, lon, lat, k]) => { const v = P(lon, lat); return { text: vi, cls: k || '', at: new THREE.Vector3(v.x, 0.9, v.y) }; }));
+  ctx.labels(PLACES.map(([vi, lon, lat, k, en]) => { const v = P(lon, lat); return { text: EN && en ? en : vi, cls: k || '', at: new THREE.Vector3(v.x, 0.9, v.y) }; }));
   const ff = night ? fireflies(scene, () => { const v = P(105.0 + Math.random() * 2.2, 9.6 + Math.random() * 1.3); return new THREE.Vector3(v.x, 0.9 + Math.random() * 0.9, v.y); }, 260) : null;
   ctx.tick = t => {
     boats.forEach((b, i) => { const u = Math.min(teams[i].progress * 0.97 + Math.sin(t * 0.6 + i) * 0.003, 0.995); const p = route.getPointAt(u), q = route.getTangentAt(u);
