@@ -135,6 +135,7 @@ const SHELL = [
   './tuyen-dung.html',
   './lien-he.html',
   './giang-vien.html',
+  './vao-lop.html',
   './bao-chi.html',
   './chinh-sach.html',
   './css/tw.css',

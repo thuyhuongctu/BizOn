@@ -32,7 +32,28 @@
   .hp-hero .wrap{max-width:1200px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr));gap:40px;align-items:center;position:relative;z-index:2}
   .hp-kicker{display:inline-flex;align-items:center;gap:10px;padding:8px 16px 8px 8px;border-radius:999px;background:var(--clay-card);box-shadow:0 10px 20px -12px rgba(110,70,30,.4),inset 0 -4px 0 rgba(0,0,0,.05);font-size:13px;font-weight:700;color:var(--clay-sub)}
   .hp-kicker .star{width:26px;height:26px;border-radius:50%;background:#DA251D;display:grid;place-items:center;color:#FFDD00;font-size:13px;box-shadow:inset 0 -3px 0 rgba(0,0,0,.18)}
-  .hp-h1{margin:22px 0 0;font-size:clamp(40px,5.6vw,74px);color:var(--clay-ink)}
+  .hp-h1{margin:18px 0 0;font-size:clamp(30px,4.2vw,56px);color:var(--clay-ink)}
+  /* Ba cửa (đặc tả 006, 19/11/2026): Sinh viên · Giảng viên · Khách, nằm trọn trong màn đầu ở 360–1280 px */
+  .hp-doors{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:22px}
+  .hp-door{display:flex;flex-direction:column;gap:6px;min-height:44px;padding:16px 16px 14px;border-radius:24px;color:var(--clay-ink);text-decoration:none;box-shadow:var(--clay-night-shadow,inset 0 -6px 0 rgba(0,0,0,.08),inset 0 4px 0 rgba(255,255,255,.55),0 16px 24px -16px rgba(110,70,30,.55));transition:transform .15s}
+  .hp-door:hover{transform:translateY(-2px);color:var(--clay-ink)}
+  .hp-door:focus-visible,.hp-door-more a:focus-visible{outline:3px solid var(--clay-teal);outline-offset:3px}
+  .hp-door-i{display:grid;place-items:center;flex:none;width:40px;height:40px;border-radius:14px;background:var(--clay-card);font-size:20px;box-shadow:inset 0 -4px 0 rgba(0,0,0,.08)}
+  .hp-door-t{font-family:var(--clay-head);font-size:19px;font-weight:800;line-height:1.15;color:var(--clay-ink)}
+  .hp-door-d{font-size:14px;line-height:1.45;color:var(--clay-ink-2)}
+  .hp-door-go{margin-top:auto;font-weight:800;font-size:14px;color:var(--clay-ink)}
+  .hp-door-more{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:12px;font-size:14px;font-weight:700}
+  .hp-door-more a{display:inline-flex;align-items:center;min-height:44px;color:var(--clay-ink);text-decoration:underline;text-underline-offset:3px}
+  @media (max-width:760px){
+    .hp-doors{grid-template-columns:1fr;gap:10px;margin-top:18px}
+    .hp-door{display:grid;grid-template-columns:40px minmax(0,1fr) auto;grid-template-rows:auto auto;column-gap:12px;row-gap:2px;align-items:center;padding:12px 14px;border-radius:20px}
+    .hp-door-i{grid-row:1/3}
+    .hp-door-t{font-size:17px}
+    .hp-door-d{grid-column:2;font-size:13.5px;line-height:1.35}
+    .hp-door-go{grid-column:3;grid-row:1/3;margin:0;font-size:20px}
+    .hp-door-go span{display:none}
+  }
+  @media (prefers-reduced-motion:reduce){.hp-door{transition:none}.hp-door:hover{transform:none}}
   .hp-lead{margin:22px 0 0;max-width:33em;font-size:18px;line-height:1.65;color:var(--clay-sub);text-wrap:pretty}
   .hp-cta{display:inline-flex;align-items:center;gap:10px;min-height:58px;padding:0 26px;border-radius:22px;font-family:var(--clay-head);font-size:19px;font-weight:700}
   .hp-intro{display:inline-flex;align-items:center;gap:12px;margin-top:18px;padding:6px 18px 6px 6px;border-radius:999px;font-family:var(--clay-head);font-size:16px;font-weight:800;color:var(--clay-ink);background:var(--clay-card);box-shadow:var(--clay-night-shadow,inset 0 -5px 0 rgba(110,70,30,.12),inset 0 3px 0 rgba(255,255,255,.9),0 12px 20px -14px rgba(110,70,30,.5))}
@@ -177,11 +198,21 @@
     <div class="wrap">
       <div style="padding-bottom:120px">
         <span class="hp-kicker"><span class="star" aria-hidden="true">★</span><span data-en="Designed in the Mekong Delta · Built for the World">Thiết kế tại Đồng bằng sông Cửu Long · Vươn ra thế giới</span></span>
-        <a class="hp-news" href="bang-chung.html#lop-quoc-te-umk"><b data-en="New">Tin mới</b><span data-en="17–19 Nov 2026 · 160 students from UM Kendari (Indonesia) learn and play Bật Nghiệp 3D on Zoom with Can Tho University →">17–19/11/2026 · 160 sinh viên UM Kendari (Indonesia) học và chơi Bật Nghiệp 3D qua Zoom cùng ĐH Cần Thơ →</span></a>
         <h1 class="hp-h1"><span data-en="Simulation-based business learning">Học kinh doanh qua mô phỏng</span> <span style="color:var(--clay-teal)" data-en="from Vietnam to the world.">từ Việt Nam ra thế giới.</span></h1>
+        <nav id="ba-cua" aria-label="Lối vào theo vai" data-en-aria="Choose your way in">
+          <div class="hp-doors">
+            <a class="hp-door" data-door="sinh-vien" href="vao-lop.html" style="background:var(--clay-c5)"><span class="hp-door-i" aria-hidden="true">🎓</span><span class="hp-door-t" data-en="I'm a student">Tôi là sinh viên</span><span class="hp-door-d" data-en="Join your class with the code from your instructor.">Vào lớp bằng mã giảng viên gửi.</span><span class="hp-door-go" aria-hidden="true">→<span data-en=" Join class"> Vào lớp</span></span></a>
+            <a class="hp-door" data-door="giang-vien" href="truong-giang-vien.html" style="background:var(--clay-c2)"><span class="hp-door-i" aria-hidden="true">🧑‍🏫</span><span class="hp-door-t" data-en="I'm an instructor">Tôi là giảng viên</span><span class="hp-door-d" data-en="Set up a class step by step.">Mở lớp theo từng bước.</span><span class="hp-door-go" aria-hidden="true">→<span data-en=" Guide"> Hướng dẫn</span></span></a>
+            <a class="hp-door" data-door="khach" href="ben-phu-sa.html" style="background:var(--clay-c4)"><span class="hp-door-i" aria-hidden="true">👀</span><span class="hp-door-t" data-en="Just looking">Tôi muốn xem thử</span><span class="hp-door-d" data-en="Play Bến Phù Sa free, no sign-in.">Chơi Bến Phù Sa miễn phí, không cần đăng nhập.</span><span class="hp-door-go" aria-hidden="true">→<span data-en=" Play"> Chơi thử</span></span></a>
+          </div>
+          <div class="hp-door-more">
+            <a data-door-extra="giang-vien" href="man-hinh-lop-hoc.html?demo=1" data-en="Instructors: try a sample class (no sign-in) →">Giảng viên: thử lớp demo (không cần đăng nhập) →</a>
+            <a data-door-extra="khach" href="assets/video/bizon-trailer-v6-720p.mp4" data-trailer="assets/video/bizon-trailer-v6-720p.mp4" data-poster="assets/video/bizon-trailer-poster.webp" data-title="Bật Nghiệp" data-title-en="Bật Nghiệp" data-en="▶ Watch the Bật Nghiệp 3D video">▶ Xem video Bật Nghiệp 3D</a>
+          </div>
+        </nav>
+        <a class="hp-news" href="bang-chung.html#lop-quoc-te-umk"><b data-en="New">Tin mới</b><span data-en="17–19 Nov 2026 · 160 students from UM Kendari (Indonesia) learn and play Bật Nghiệp 3D on Zoom with Can Tho University →">17–19/11/2026 · 160 sinh viên UM Kendari (Indonesia) học và chơi Bật Nghiệp 3D qua Zoom cùng ĐH Cần Thơ →</span></a>
         <p class="hp-lead" data-en="Business simulation games for learning, research and internationalization. The game explains why each decision leads to its result, and the same decisions always give the same result (a deterministic engine). A rule-based advisor helps learners draw their own lessons. BizOn follows open science: its methods are public so others can check them.">Trò chơi mô phỏng kinh doanh cho học tập, nghiên cứu và quốc tế hóa. Game giải thích vì sao mỗi quyết định dẫn tới kết quả đó, và cùng quyết định luôn cho cùng kết quả (engine tất định). Cố vấn chạy theo quy tắc giúp người học tự rút bài học. BizOn theo định hướng khoa học mở: công khai cách làm để người khác kiểm chứng.</p>
         <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:30px">
-          <a class="hp-cta" style="background:var(--clay-teal);color:#fff;box-shadow:inset 0 -7px 0 rgba(0,0,0,.2),inset 0 4px 0 rgba(255,255,255,.25),0 16px 24px -12px rgba(0,102,135,.8)" href="ben-phu-sa.html" data-en="Start with Bến Phù Sa →">Bắt đầu với Bến Phù Sa →</a>
           <a class="hp-cta" style="background:var(--clay-card);color:var(--clay-ink);box-shadow:var(--clay-night-shadow,inset 0 -7px 0 rgba(110,70,30,.12),inset 0 4px 0 rgba(255,255,255,.9),0 16px 24px -14px rgba(110,70,30,.45))" href="#cong" data-en="See all simulations">Xem tất cả trò chơi</a>
           <a class="hp-cta" style="background:var(--clay-ink);color:#FFD58A;font-size:17px;font-weight:800;box-shadow:inset 0 -7px 0 rgba(0,0,0,.3),inset 0 4px 0 rgba(255,255,255,.1),0 16px 24px -14px rgba(3,51,55,.7)" href="https://play.google.com/store/apps/details?id=io.github.thuyhuongctu.bizon" target="_blank" rel="noopener" data-en="▶ Get it on Google Play">▶ Tải trên Google Play</a>
         </div>
