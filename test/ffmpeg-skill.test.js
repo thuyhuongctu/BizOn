@@ -14,7 +14,7 @@ const py = [];
 (function quet(d) { for (const e of fs.readdirSync(R(d), { withFileTypes: true })) e.isDirectory() ? quet(d + e.name + '/') : e.name.endsWith('.py') && py.push(d + e.name); })(T + 'scripts/');
 assert.ok(py.length > 40, 'đủ script (' + py.length + ')');
 for (const f of py) assert.doesNotMatch(read(f), /import (urllib|requests|socket)|shell=True|os\.system\(/, f + ': không gọi mạng hay shell');
-assert.ok(+(read('sw.js').match(/bizon-v(\d+)/) || [])[1] >= 897, 'sw.js ≥ bizon-v897');
+assert.ok(+(read('sw.js').match(/bizon-v(\d+)/) || [])[1] >= 899, 'sw.js ≥ bizon-v899');
 const v = spawnSync('ffmpeg', ['-version'], { encoding: 'utf8' }), pv = spawnSync('python3', ['-c', 'import sys;print(sys.version_info>=(3,10))'], { encoding: 'utf8' });
 const m = /ffmpeg version n?(\d+)\.(\d+)/.exec(v.stdout || '');
 if (v.error || !m || +m[1] * 100 + +m[2] < 601 || (pv.stdout || '').trim() !== 'True') console.log('  (không có ffmpeg ≥ 6.1 hoặc Python ≥ 3.10: bỏ qua phần chạy thử)');

@@ -60,6 +60,19 @@
   .gv-src ul{margin:6px 0 0;padding:0;list-style:none;display:grid;gap:8px;flex:1}
   .gv-src li{font-size:14px;line-height:1.5;color:var(--clay-sub)}
   .gv-src li a{font-weight:800;color:var(--clay-teal)}
+  .gv-lock{display:flex;flex-direction:column;gap:10px;max-width:640px;padding:24px;border-radius:28px;background:var(--clay-card);color:var(--clay-ink);box-shadow:var(--clay-shadow)}
+  .gv-lock[hidden]{display:none}
+  .gv-lock h3{margin:4px 0 0;font-size:20px;line-height:1.25}
+  .gv-lock p{margin:0;font-size:14.5px;line-height:1.55;color:var(--clay-sub)}
+  .gv-lock-form{display:grid;gap:10px;margin-top:6px}
+  .gv-lock-form>label{font-size:14px;font-weight:800}
+  .gv-lock-form input[type=email]{width:100%;min-height:46px;padding:10px 14px;border:2px solid rgba(0,102,135,.18);border-radius:16px;background:#fff;color:var(--clay-ink);font:inherit;font-size:16px}
+  .gv-lock-form>.gv-lock-ok{display:flex;gap:10px;align-items:flex-start;font-weight:500;font-size:13.5px;line-height:1.5;color:var(--clay-sub)}
+  .gv-lock-ok input{flex:none;width:20px;height:20px;margin-top:1px}
+  .gv-lock-form button{justify-self:start;min-height:46px}
+  .gv-lock-msg:empty{display:none}
+  .gv-lock-msg.err{color:#b3261e;font-weight:700}
+  .gv-lock-alt a{font-weight:800;color:var(--clay-teal)}
   .gv-src-note{margin:18px 0 0;font-size:13.5px;line-height:1.55;color:var(--clay-sub);max-width:52em}
   .gv-help{margin:64px 0 72px;display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;padding:26px 30px;border-radius:32px;background:var(--clay-c4);box-shadow:var(--clay-night-shadow,inset 0 -9px 0 rgba(0,0,0,.07),inset 0 5px 0 rgba(255,255,255,.5),0 26px 36px -24px rgba(30,90,60,.5))}
   .gv-help-art{width:min(100%,260px);height:auto;border-radius:22px}
@@ -156,7 +169,7 @@
     <p data-en="Read once before your first session: setup steps, the classroom playbook and the pre/post survey.">Đọc một lần trước buổi đầu tiên: các bước mở lớp, kịch bản lớp học và phiếu khảo sát trước–sau.</p>
     <div class="gv-grid">
       <a class="gv-tool" href="truong-giang-vien.html">
-        <img class="th" src="assets/giang-vien/mo-lop-5-buoc.webp" alt="" width="512" height="512" loading="lazy">
+        <img class="th" src="assets/giang-vien/mo-lop-5-buoc-v2.webp" alt="" width="512" height="512" loading="lazy">
         <h3 data-en="Open a class in 5 steps">Mở lớp trong 5 bước</h3>
         <p data-en="Ready-to-download toolkit, five clear steps and transparent grading – no computer lab needed.">Bộ công cụ tải sẵn, năm bước rõ ràng và cách chấm minh bạch – không cần phòng máy.</p>
         <span class="go" data-en="Read →">Xem →</span>
@@ -242,6 +255,20 @@
   <section class="gv-sec" id="nguon-mo">
     <h2 data-en="Open data sources">Nguồn dữ liệu mở</h2>
     <p data-en="Live maps and open datasets that link the games to the real world. Open them on the projector when a round needs real figures.">Bản đồ trực tiếp và bộ dữ liệu mở giúp nối các game với thực tế. Mở trên máy chiếu khi một vòng chơi cần số liệu thật.</p>
+    <div class="gv-lock" id="nguon-mo-khoa">
+      <span class="ic" aria-hidden="true">🔒</span>
+      <h3 data-en="For students, instructors and registered guests">Dành cho sinh viên, giảng viên và khách đã đăng ký</h3>
+      <p data-en="Students and instructors: sign in with your school email (in a BizOn game or the class dashboard), then come back here. Guests: leave your email below to open the list.">Sinh viên và giảng viên: đăng nhập bằng email trường (trong một game BizOn hoặc bảng điều khiển lớp) rồi quay lại trang này. Khách: để lại email bên dưới để mở danh sách.</p>
+      <form class="gv-lock-form" id="nguon-mo-form" novalidate>
+        <label for="nguon-mo-email" data-en="Your email">Email của bạn</label>
+        <input id="nguon-mo-email" type="email" name="email" autocomplete="email" maxlength="254" required placeholder="ban@vidu.com" data-en-ph="you@example.com">
+        <label class="gv-lock-ok"><input id="nguon-mo-dongy" type="checkbox" name="consent" required> <span data-en="I agree that BizOn stores this email and may contact me about BizOn. I can ask for it to be deleted at any time.">Tôi đồng ý để BizOn lưu email này và liên hệ tôi về BizOn. Tôi có thể yêu cầu xóa bất cứ lúc nào.</span></label>
+        <button class="clay-btn clay-btn-pill clay-btn-orange" type="submit" data-en="Open the data sources">Mở nguồn dữ liệu</button>
+        <p class="gv-lock-msg" id="nguon-mo-msg" role="status" aria-live="polite"></p>
+      </form>
+      <p class="gv-lock-alt"><a href="Trang Giang Vien.dc.html" data-en="Instructor sign-in →">Giảng viên đăng nhập →</a></p>
+    </div>
+    <template id="nguon-mo-tpl">
     <div class="gv-grid">
       <div class="gv-tool gv-src">
         <span class="ic" aria-hidden="true">🚢</span>
@@ -290,6 +317,7 @@
         </ul>
       </div>
     </div>
+    </template>
     <p class="gv-src-note" data-en="External sites, not part of BizOn: check each site's terms before showing it in class. When you reuse World Bank or Our World in Data figures, cite the source (CC BY 4.0).">Đây là trang bên ngoài, không thuộc BizOn: xem điều khoản của từng trang trước khi chiếu trong lớp. Khi dùng lại số liệu World Bank hoặc Our World in Data, ghi nguồn (CC BY 4.0).</p>
   </section>
 
@@ -304,6 +332,8 @@
 </main>
 
 <script src="js/bizon-clay-i18n.js" defer></script>
+<script src="js/backend-config.js" defer></script>
+<script src="js/nguon-mo-gate.js" defer></script>
 <script src="js/bizon-clay-nav.js" defer></script>
 <script src="js/bizon-clay-footer.js" defer></script>
 </body>
