@@ -49,6 +49,7 @@
 .th-img{display:block;width:100%;height:auto;border:1px solid var(--rule);border-radius:10px;background:var(--band);box-shadow:0 12px 26px -20px rgba(0,0,0,.4)}
 .th-phone{max-width:300px;margin:0 auto}
 .chi-en{display:none} html[lang="en"] .chi-vi{display:none} html[lang="en"] .chi-en{display:block}
+.th-lang.chi-vi,html[lang="en"] .th-lang.chi-en{display:inline-flex} html[lang="en"] .th-lang.chi-vi{display:none}
 @media(max-width:820px){.buoc{grid-template-columns:minmax(0,1fr)}}
 @media print{
   #clay-nav,#clay-footer,#bz-dock,#bz-dock-btn,.cn-skip,.prog,.hero-cta,.th-muc,.cta2{display:none!important}
@@ -115,6 +116,8 @@
       <a class="btn btn-solid" href="Trang%20Giang%20Vien.dc.html" data-vi="Mở lớp mẫu DEMO-2026 →" data-en="Open the DEMO-2026 sample class →">Mở lớp mẫu DEMO-2026 →</a>
       <button type="button" class="btn btn-line" id="inTapHuan" data-vi="🖨 In tài liệu (A4)" data-en="🖨 Print this guide (A4)">🖨 In tài liệu (A4)</button>
       <a class="btn btn-line" href="#dang-ky" data-vi="Đăng ký buổi thử" data-en="Book a session">Đăng ký buổi thử</a>
+      <a class="btn btn-line th-lang chi-vi" href="?lang=en" hreflang="en" lang="en">🇬🇧 English version</a>
+      <a class="btn btn-line th-lang chi-en" href="?lang=vi" hreflang="vi" lang="vi">🇻🇳 Bản tiếng Việt</a>
     </div>
     <img class="tgv-art" src="assets/character/anh-tu-desk-laptop-cut-v2.webp" alt="" width="698" height="657" loading="lazy">
   </div>

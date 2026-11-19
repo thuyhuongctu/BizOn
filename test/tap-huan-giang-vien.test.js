@@ -55,10 +55,12 @@ check(/@media print\{[\s\S]*?#clay-nav,#clay-footer[\s\S]*?\.buoc\{break-inside:
       const r = await p.evaluate(() => {
         const shown = [...document.querySelectorAll('.th-img')].filter(i => getComputedStyle(i).display !== 'none').map(i => i.getAttribute('src'));
         const txt = [], tw = document.createTreeWalker(document.querySelector('main'), NodeFilter.SHOW_TEXT);
-        while (tw.nextNode()) { const t = tw.currentNode.textContent.trim(), el = tw.currentNode.parentElement; if (t && el.offsetParent !== null) txt.push(t); }
-        return { sw: document.documentElement.scrollWidth, shown, txt, n: document.querySelectorAll('article.buoc').length };
+        while (tw.nextNode()) { const t = tw.currentNode.textContent.trim(), el = tw.currentNode.parentElement; if (t && el.offsetParent !== null && !el.closest('[lang="vi"]')) txt.push(t); }
+        const sw2 = [...document.querySelectorAll('.th-lang')].filter(a => getComputedStyle(a).display !== 'none').map(a => a.getAttribute('href'));
+        return { sw: document.documentElement.scrollWidth, shown, txt, n: document.querySelectorAll('article.buoc').length, sw2 };
       });
       check(r.n === 6, '360 ' + lang.toUpperCase() + ': hiện 6 bước');
+      check(r.sw2.length === 1 && r.sw2[0] === (lang === 'vi' ? '?lang=en' : '?lang=vi'), '360 ' + lang.toUpperCase() + ': nút sang bản ' + (lang === 'vi' ? 'tiếng Anh' : 'tiếng Việt') + ' ' + JSON.stringify(r.sw2));
       check(r.sw <= 360, '360 ' + lang.toUpperCase() + ': không tràn ngang (' + r.sw + ')');
       check(r.shown.length === 6 && r.shown.every(s => s.endsWith('-' + lang + '.webp')), '360 ' + lang.toUpperCase() + ': hiện đúng 6 ảnh ' + lang.toUpperCase());
       if (lang === 'en') { const vi = r.txt.filter(t => VI.test(t.replace(NAMES, ''))); check(!vi.length, '360 EN: không còn chữ Việt ngoài tên riêng ' + JSON.stringify(vi.slice(0, 4))); }
