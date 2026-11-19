@@ -31,30 +31,30 @@ Ký hiệu: `[P]` làm song song được (khác tệp). `[US1]`, `[US2]` là c�
 
 ## Giai đoạn 2 – Câu chuyện 2: Quyết định ở cảng vụ 5 (P2) · PR 2 · gộp sau 19/11/2026
 
-- [ ] T009 [US2] Viết `test/cang-cai-mep-luat.test.js` (Node `vm`, nạp `engine.js` + `market-dynamic.js` + `cang-cai-mep.js`), chạy và thấy hỏng. Test kiểm, cho mỗi trường hợp A, B, C:
+- [X] T009 [US2] Viết `test/cang-cai-mep-luat.test.js` (Node `vm`, nạp `engine.js` + `market-dynamic.js` + `cang-cai-mep.js`), chạy và thấy hỏng. Test kiểm, cho mỗi trường hợp A, B, C:
   - «không chọn» và (b) trùng từng con số với luật cũ;
   - (a) không cắt đơn, `costMul` = Ca × hệ số thành phố;
   - (c) bán 95%, `brand` giảm U trước vụ 6;
   - khiên bảo hiểm giảm một nửa phần bất lợi;
   - vụ khác vụ 5 không bị ảnh hưởng;
   - đối thủ ảo không đổi.
-- [ ] T010 [US2] Tạo `js/cang-cai-mep.js`:
+- [X] T010 [US2] Tạo `js/cang-cai-mep.js`:
   - tham số Ca = 1,40, U = 0,06, `FULFILL_C` = 0,95 ở đầu tệp;
   - móc `currentEvent` và `simulateRound` như mục «Thiết kế luật cảng» trong `plan.md`;
   - ghi dòng báo cáo vụ cho (a) «Phí ưu tiên cảng» và (c) «Lùi ngày giao – uy tín giảm»;
   - lưu `state.portChoice`.
-- [ ] T011 [US2] Trong `js/cang-cai-mep.js`, chèn ô «🚢 Xử lý hàng kẹt ở Cái Mép» vào `#tab-decisions`:
+- [X] T011 [US2] Trong `js/cang-cai-mep.js`, chèn ô «🚢 Xử lý hàng kẹt ở Cái Mép» vào `#tab-decisions`:
   - ba lựa chọn, mặc định (b), câu chữ theo trường hợp A/B/C, VI/EN;
   - ô chỉ hiện ở vụ 5;
   - lựa chọn được giữ khi tải lại trang chưa chốt.
-- [ ] T012 [US2] Lumina: thêm một câu hỏi gợi mở ở vụ 5 (biên lợi nhuận, nhu cầu thương hiệu vụ 6), không chọn giúp (FR-008).
-- [ ] T013 [P] [US2] `game.html`, `bat-nghiep-v2.html`: thêm `<script src="js/cang-cai-mep.js"></script>` sau `market-dynamic.js`. html-validate 0 lỗi.
-- [ ] T014 [P] [US2] `js/cang-cai-mep-3d.js`: ở vụ 5, thẻ trạm hải quan có nút «Ra quyết định», mở tab `decisions` qua cầu nối có sẵn.
-- [ ] T015 [P] [US2] `Trang Giang Vien.dc.html`: bản xuất Excel thêm cột «Lựa chọn ở cảng (vụ 5)».
-- [ ] T016 [US2] `/balance-check` với ba kiểu đội (SC-003); chỉnh Ca, U nếu một lựa chọn luôn thắng. Gửi chị và thầy Tú bảng số kèm nguồn (`plan.md`).
-- [ ] T017 [P] [US2] `docs/chuan-dau-ra-va-rubric.md`: ghi ngày áp dụng luật cảng; thêm câu hỏi thảo luận «Vì sao đội chọn (a)/(b)/(c)?», không tính điểm riêng (5A).
-- [ ] T018 [US2] `sw.js`: thêm `./js/cang-cai-mep.js`, nâng `CACHE`. Chạy `cang-cai-mep-luat`, `engine`, `market-shock-lumina`, `bn2-grade`, `ip-ma-nguon-afbacd2`, `cang-cai-mep-3d`.
-- [ ] T019 [US2] Mở PR nháp; chỉ gộp sau 19/11/2026 khi chị nói «Gộp».
+- [X] T012 [US2] Lumina: thêm một câu hỏi gợi mở ở vụ 5 (biên lợi nhuận, nhu cầu thương hiệu vụ 6), không chọn giúp (FR-008).
+- [X] T013 [P] [US2] `game.html`, `bat-nghiep-v2.html`: thêm `<script src="js/cang-cai-mep.js"></script>` sau `market-dynamic.js`. html-validate 0 lỗi.
+- [X] T014 [P] [US2] `js/cang-cai-mep-3d.js`: ở vụ 5, thẻ trạm hải quan có nút «Ra quyết định», mở tab `decisions` qua cầu nối có sẵn.
+- [X] T015 [P] [US2] `Trang Giang Vien.dc.html`: bản xuất Excel thêm cột «Lựa chọn ở cảng (vụ 5)».
+- [X] T016 [US2] `/balance-check` với ba kiểu đội (SC-003); chỉnh Ca, U nếu một lựa chọn luôn thắng. Gửi chị và thầy Tú bảng số kèm nguồn (`plan.md`).
+- [X] T017 [P] [US2] `docs/chuan-dau-ra-va-rubric.md`: ghi ngày áp dụng luật cảng; thêm câu hỏi thảo luận «Vì sao đội chọn (a)/(b)/(c)?», không tính điểm riêng (5A).
+- [X] T018 [US2] `sw.js`: thêm `./js/cang-cai-mep.js`, nâng `CACHE`. Chạy `cang-cai-mep-luat`, `engine`, `market-shock-lumina`, `bn2-grade`, `ip-ma-nguon-afbacd2`, `cang-cai-mep-3d`.
+- [X] T019 [US2] Mở PR nháp; chỉ gộp sau 19/11/2026 khi chị nói «Gộp».
 
 ## Phụ thuộc
 
