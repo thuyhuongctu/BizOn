@@ -42,6 +42,7 @@ const SHELL = [
   './man-hinh-lop-hoc.html',
   './js/man-hinh-lop-hoc.js',
   './js/man-hinh-lop-hoc-data.js',
+  './js/bizon-grading.js',
   './js/live-progress.js',
   './nhac-ben-phu-sa.html',
   './lab/cmr-lab.html',
