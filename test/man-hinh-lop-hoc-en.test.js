@@ -1,5 +1,6 @@
 /* Màn hình lớp học ở tiếng Anh (19/11/2026, sau buổi UMK): khi chưa đăng nhập, nhãn đếm và tiêu đề bảng còn tiếng Việt
- * («nhóm đã nộp», «Xếp hạng các nhóm»), sa bàn Bến Phù Sa ghi «TP. Hồ Chí Minh», «Cảng Cái Mép». Kiểm cả ba tab ở EN. */
+ * («nhóm đã nộp», «Xếp hạng các nhóm»), sa bàn Bến Phù Sa ghi «TP. Hồ Chí Minh», «Cảng Cái Mép». Kiểm cả bốn tab ở EN
+ * (tab Bật Nghiệp thêm ngày 19/11/2026: tên tỉnh/thành ở EN viết «Can Tho, Ho Chi Minh City, Khanh Hoa, Da Nang, Thanh Hoa, Hanoi»). */
 'use strict';
 const assert = require('assert');
 const fs = require('fs');
@@ -13,7 +14,7 @@ const NAMES = /Bến Phù Sa|Cần Thơ|Vĩnh Long|Mỹ Tho|Cái Mép|Mekong|Đ�
 (async () => {
   const b = await chromium.launch(); const errs = [];
   try {
-    for (const g of ['bps', 'hcth', 'hcsr']) {
+    for (const g of ['bps', 'hcth', 'hcsr', 'bn']) {
       const p = await b.newPage({ viewport: { width: 1280, height: 800 } }); p.on('pageerror', e => errs.push(g + ': ' + e.message));
       await p.route(/supabase\.co/, r => r.fulfill({ status: 200, contentType: 'application/json', body: '[]' }));
       await p.route(/\.(woff2?|mp3|m4a|mp4)(\?|$)/, r => r.abort());
@@ -27,6 +28,7 @@ const NAMES = /Bến Phù Sa|Cần Thơ|Vĩnh Long|Mỹ Tho|Cái Mép|Mekong|Đ�
       });
       const vi = left.filter(t => VI.test(t.replace(NAMES, '')));
       assert.deepEqual(vi, [], g + ': còn chữ tiếng Việt ở chế độ EN');
+      if (g === 'bn') assert.ok(left.includes('Bat Nghiep') && left.some(t => t.startsWith('6. Hanoi')), 'bn: tên game, thành phố bằng tiếng Anh');
       if (g === 'bps') assert.ok(left.includes('Ho Chi Minh City') && left.includes('Cái Mép Port'), 'bps: tên cảng, thành phố bằng tiếng Anh');
       await p.close();
     }
