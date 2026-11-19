@@ -15,13 +15,13 @@
 <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
 <script src="js/bizon-lang.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title data-vi="BizOn – Cho giảng viên: mở lớp mà không cần gọi hỗ trợ" data-en="BizOn – For instructors: run a class without calling support">BizOn – Cho giảng viên: mở lớp mà không cần gọi hỗ trợ</title>
-<meta name="description" data-content-vi="Năm bước mở lớp, bộ công cụ tải sẵn (sổ tay, rubric bốn mức, ma trận chuẩn đầu ra, ngân hàng câu hỏi), cách chấm trên số liệu đã chốt của từng vòng. Chạy trên điện thoại sinh viên, ngoại tuyến, không cần phòng máy." data-content-en="Five steps to open a class, a ready-to-download toolkit (handbook, four-level rubric, learning-outcome matrix, question bank) and grading on frozen snapshots. Runs on students' phones, offline, no computer lab needed." content="Năm bước mở lớp, bộ công cụ tải sẵn (sổ tay, rubric bốn mức, ma trận chuẩn đầu ra, ngân hàng câu hỏi), cách chấm trên số liệu đã chốt của từng vòng. Chạy trên điện thoại sinh viên, ngoại tuyến, không cần phòng máy.">
+<title data-vi="BizOn – Tập huấn giảng viên: một buổi dạy, 6 bước" data-en="BizOn – Instructor training: one session in 6 steps">BizOn – Tập huấn giảng viên: một buổi dạy, 6 bước</title>
+<meta name="description" data-content-vi="Tập huấn giảng viên theo trình tự một buổi dạy với BizOn: tạo lớp, gửi mã cho sinh viên, chiếu Màn hình lớp học, theo dõi tiến độ, chốt số liệu và chấm, xuất kết quả và chứng nhận. Mỗi bước có ảnh màn hình thật và lỗi hay gặp; có bản in A4." data-content-en="Instructor training in the order of a BizOn session: create the class, send the code to students, project the classroom screen, follow progress, freeze the numbers and grade, export results and certificates. Each step has a real screenshot and a common mistake; printable A4 version." content="Tập huấn giảng viên theo trình tự một buổi dạy với BizOn: tạo lớp, gửi mã cho sinh viên, chiếu Màn hình lớp học, theo dõi tiến độ, chốt số liệu và chấm, xuất kết quả và chứng nhận. Mỗi bước có ảnh màn hình thật và lỗi hay gặp; có bản in A4.">
 <meta name="theme-color" content="#FFFFFF">
 <link rel="icon" type="image/svg+xml" href="assets/brand/bizon-favicon.svg">
 <meta property="og:type" content="website">
-<meta property="og:title" content="BizOn – Cho giảng viên">
-<meta property="og:description" content="Mở lớp mà không cần gọi hỗ trợ: năm bước, bộ công cụ tải sẵn, cách chấm minh bạch.">
+<meta property="og:title" content="BizOn – Tập huấn giảng viên">
+<meta property="og:description" content="Một buổi dạy với BizOn trong 6 bước, có ảnh màn hình thật, lỗi hay gặp và bản in A4.">
 <meta property="og:image" content="https://bizonland.com/assets/brand/og-truong.png">
 <link rel="stylesheet" href="css/bizon-institutional-fonts.css">
 <link rel="stylesheet" href="assets/css/shell.css">
@@ -32,11 +32,32 @@
 .hero-sm .lede{margin-top:1.1rem}
 .hero-sm .hero-cta{display:flex;gap:11px;margin-top:1.8rem;flex-wrap:wrap}
 
-.steps{counter-reset:s;display:grid;gap:1px;background:var(--rule);border:1px solid var(--rule)}
-.stp{background:var(--paper);padding:22px 24px;display:flex;gap:18px;align-items:flex-start}
-.stp::before{counter-increment:s;content:counter(s);font-family:var(--mono);font-weight:600;font-size:.9rem;color:var(--jade);border:1px solid var(--jade);border-radius:50%;width:30px;height:30px;display:grid;place-items:center;flex-shrink:0;margin-top:2px}
-.stp .t{font-weight:600;letter-spacing:-.01em}
-.stp .dur{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;color:var(--ink-2);text-transform:uppercase;display:block;margin-top:.35rem}
+/* Tập huấn 6 bước (đặc tả 007, câu chuyện 2): mỗi bước một khối chữ + ảnh màn hình thật; ảnh VI/EN đổi theo html[lang] */
+.th-muc{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;margin:0 0 26px;counter-reset:m}
+.th-muc li{counter-increment:m}
+.th-muc a{display:inline-flex;align-items:center;gap:7px;min-height:44px;padding:0 15px;border:1px solid var(--rule);border-radius:999px;background:var(--paper);color:var(--ink);text-decoration:none;font-weight:600}
+.th-muc a::before{content:counter(m);font-family:var(--mono);color:var(--jade)}
+.th-muc a:hover,.th-muc a:focus-visible{border-color:var(--jade)}
+.buoc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:clamp(18px,3vw,36px);align-items:start;padding:clamp(22px,3vw,34px) 0;border-top:1px solid var(--rule);scroll-margin-top:96px}
+.buoc-so{font-family:var(--mono);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--jade);margin:0 0 .45rem}
+.buoc h3{margin:0 0 .5rem}
+.buoc .k{font-weight:700;font-size:.92rem;margin:1.05rem 0 .25rem}
+.buoc-loi{margin-top:1.05rem;border-left:3px solid var(--silt);padding-left:14px}
+.buoc-loi .k{margin-top:0}
+.buoc-loi .sua{margin-top:.35rem}
+.buoc-anh{margin:0}
+.th-img{display:block;width:100%;height:auto;border:1px solid var(--rule);border-radius:10px;background:var(--band);box-shadow:0 12px 26px -20px rgba(0,0,0,.4)}
+.th-phone{max-width:300px;margin:0 auto}
+.chi-en{display:none} html[lang="en"] .chi-vi{display:none} html[lang="en"] .chi-en{display:block}
+@media(max-width:820px){.buoc{grid-template-columns:minmax(0,1fr)}}
+@media print{
+  #clay-nav,#clay-footer,#bz-dock,#bz-dock-btn,.cn-skip,.prog,.hero-cta,.th-muc,.cta2{display:none!important}
+  html,body{background:#fff!important}
+  section{padding-top:10px!important;padding-bottom:10px!important}
+  .buoc{break-inside:avoid;page-break-inside:avoid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);padding:12px 0;gap:16px}
+  .th-img{width:auto;max-width:100%;max-height:115mm;box-shadow:none}
+  .faq details>*{display:block}
+}
 
 .kit{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule)}
 .tool{background:var(--paper);padding:24px;display:flex;flex-direction:column}
@@ -46,10 +67,6 @@
 .tool .dl-btn{font-family:var(--mono);font-size:.72rem;letter-spacing:.05em;color:var(--jade);text-decoration:none;font-weight:500}
 .tool .dl-btn:hover{text-decoration:underline}
 .tool .soon{font-family:var(--mono);font-size:.62rem;letter-spacing:.09em;color:var(--gold);text-transform:uppercase}
-
-.grade{border:1px solid var(--rule);background:var(--band);padding:clamp(24px,3vw,34px)}
-.grade .em{color:var(--jade);font-weight:700}
-.grade .warn{margin-top:1.1rem;border-left:3px solid var(--silt);padding-left:16px}
 
 .reqs{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule)}
 .req{background:var(--paper);padding:22px 20px}
@@ -91,31 +108,86 @@
 <!-- ═══ HERO NHỎ ═══ -->
 <section class="hero-sm">
   <div class="shell">
-    <p class="tag" data-vi="Cho giảng viên" data-en="For instructors">Cho giảng viên</p>
-    <h1 data-vi="Mở lớp mà không cần gọi hỗ trợ" data-en="Open a class without calling support">Mở lớp mà không cần gọi hỗ trợ</h1>
-    <p class="lede" data-vi="Bộ công cụ tải sẵn, năm bước rõ ràng, và cách chấm minh bạch. Chạy trên điện thoại sinh viên, không cần phòng máy. Tiêu chí của chúng tôi: một giảng viên ngoài nhóm phát triển chạy trọn một buổi mà không phải hỏi ai." data-en="A ready-to-download toolkit, five clear steps, and transparent grading. Runs on students' phones, no computer lab. Our bar: an instructor outside the dev team runs a full session without asking anyone.">Bộ công cụ tải sẵn, năm bước rõ ràng, và cách chấm minh bạch. Chạy trên điện thoại sinh viên, không cần phòng máy. Tiêu chí của chúng tôi: một giảng viên ngoài nhóm phát triển chạy trọn một buổi mà không phải hỏi ai.</p>
+    <p class="tag" data-vi="Tập huấn giảng viên" data-en="Instructor training">Tập huấn giảng viên</p>
+    <h1 data-vi="Một buổi dạy với BizOn, 6 bước" data-en="One BizOn session in 6 steps">Một buổi dạy với BizOn, 6 bước</h1>
+    <p class="lede" data-vi="Đi theo đúng thứ tự một buổi học: tạo lớp, gửi mã cho sinh viên, chiếu Màn hình lớp học, theo dõi, chốt số liệu và chấm, rồi xuất kết quả và chứng nhận. Mỗi bước có ảnh màn hình thật, một việc cần làm và một lỗi hay gặp. Thử trước trên lớp mẫu DEMO-2026, không cần đăng nhập." data-en="Follow the order of a real session: create the class, send the code to students, project the classroom screen, follow progress, freeze the numbers and grade, then export results and certificates. Each step has a real screenshot, one thing to do and one common mistake. Rehearse on the DEMO-2026 sample class, no sign-in needed.">Đi theo đúng thứ tự một buổi học: tạo lớp, gửi mã cho sinh viên, chiếu Màn hình lớp học, theo dõi, chốt số liệu và chấm, rồi xuất kết quả và chứng nhận. Mỗi bước có ảnh màn hình thật, một việc cần làm và một lỗi hay gặp. Thử trước trên lớp mẫu DEMO-2026, không cần đăng nhập.</p>
     <div class="hero-cta">
-      <a class="btn btn-solid" href="#dang-ky" data-vi="Đăng ký buổi thử →" data-en="Book a session →">Đăng ký buổi thử →</a>
-      <a class="btn btn-line" href="#bo-cong-cu" data-vi="Xem bộ công cụ" data-en="See the toolkit">Xem bộ công cụ</a>
+      <a class="btn btn-solid" href="Trang%20Giang%20Vien.dc.html" data-vi="Mở lớp mẫu DEMO-2026 →" data-en="Open the DEMO-2026 sample class →">Mở lớp mẫu DEMO-2026 →</a>
+      <button type="button" class="btn btn-line" id="inTapHuan" data-vi="🖨 In tài liệu (A4)" data-en="🖨 Print this guide (A4)">🖨 In tài liệu (A4)</button>
+      <a class="btn btn-line" href="#dang-ky" data-vi="Đăng ký buổi thử" data-en="Book a session">Đăng ký buổi thử</a>
     </div>
     <img class="tgv-art" src="assets/character/anh-tu-desk-laptop-cut-v2.webp" alt="" width="698" height="657" loading="lazy">
   </div>
 </section>
 
-<!-- ═══ NĂM BƯỚC ═══ -->
-<section>
+<!-- ═══ SÁU BƯỚC ═══ -->
+<section id="sau-buoc">
   <div class="shell">
     <div class="head rv">
-      <p class="tag" data-vi="Chuẩn bị" data-en="Setup">Chuẩn bị</p>
-      <h2 data-vi="Năm bước mở lớp" data-en="Five steps to open a class">Năm bước mở lớp</h2>
+      <p class="tag" data-vi="Trình tự một buổi dạy" data-en="The order of a session">Trình tự một buổi dạy</p>
+      <h2 data-vi="Sáu bước" data-en="Six steps">Sáu bước</h2>
     </div>
-    <div class="steps rv">
-      <div class="stp"><div><span class="t" data-vi="Chọn cặp bậc hợp học phần: bậc 1 làm nhập môn, rồi bậc 2 (Bật Nghiệp) hoặc bậc 3 (Hộ Chiếu Thương Hiệu / Hộ Chiếu Sầu Riêng)." data-en="Pick the level pair for your course: Level 1 as onboarding, then Level 2 (Bật Nghiệp) or Level 3 (Brand Passport / Durian Passport).">Chọn cặp bậc hợp học phần: bậc 1 làm nhập môn, rồi bậc 2 (Bật Nghiệp) hoặc bậc 3 (Hộ Chiếu Thương Hiệu / Hộ Chiếu Sầu Riêng).</span><span class="dur" data-vi="≈ 5 phút" data-en="≈ 5 min">≈ 5 phút</span></div></div>
-      <div class="stp"><div><span class="t" data-vi="Tải sổ tay và rubric bốn mức ở mục dưới; đọc lướt một lượt." data-en="Download the handbook and four-level rubric below; skim once.">Tải sổ tay và rubric bốn mức ở mục dưới; đọc lướt một lượt.</span><span class="dur" data-vi="≈ 15 phút" data-en="≈ 15 min">≈ 15 phút</span></div></div>
-      <div class="stp"><div><span class="t" data-vi="Chia lớp thành đội; gửi đường dẫn game – sinh viên mở bằng điện thoại và đăng nhập bằng email để vào lớp." data-en="Split the class into teams; share the game link – students open it on phones and sign in with their email to join the class.">Chia lớp thành đội; gửi đường dẫn game – sinh viên mở bằng điện thoại và đăng nhập bằng email để vào lớp.</span><span class="dur" data-vi="≈ 5 phút" data-en="≈ 5 min">≈ 5 phút</span></div></div>
-      <div class="stp"><div><span class="t" data-vi="Chạy các vòng; sau mỗi vòng, cho đội trình bày lập luận đằng sau quyết định." data-en="Run the rounds; after each, have teams present the reasoning behind their decisions.">Chạy các vòng; sau mỗi vòng, cho đội trình bày lập luận đằng sau quyết định.</span><span class="dur" data-vi="≈ 45–90 phút" data-en="≈ 45–90 min">≈ 45–90 phút</span></div></div>
-      <div class="stp"><div><span class="t" data-vi="Nạp nhật ký lớp vào Sổ điểm; chấm lập luận theo rubric trên bằng chứng số đã chốt." data-en="Load the class log into the Gradebook; grade reasoning by the rubric on frozen numeric evidence.">Nạp nhật ký lớp vào Sổ điểm; chấm lập luận theo rubric trên bằng chứng số đã chốt.</span><span class="dur" data-vi="≈ 20 phút" data-en="≈ 20 min">≈ 20 phút</span></div></div>
-    </div>
+    <ol class="th-muc"><li><a href="#tao-lop" data-vi="Tạo lớp" data-en="Create the class">Tạo lớp</a></li><li><a href="#gui-ma" data-vi="Gửi mã hoặc link cho sinh viên" data-en="Send the code or link to students">Gửi mã hoặc link cho sinh viên</a></li><li><a href="#chieu" data-vi="Chiếu Màn hình lớp học" data-en="Project the classroom screen">Chiếu Màn hình lớp học</a></li><li><a href="#theo-doi" data-vi="Theo dõi tiến độ" data-en="Follow progress">Theo dõi tiến độ</a></li><li><a href="#cham" data-vi="Chốt số liệu và chấm" data-en="Freeze the numbers and grade">Chốt số liệu và chấm</a></li><li><a href="#xuat" data-vi="Xuất kết quả và chứng nhận" data-en="Export results and certificates">Xuất kết quả và chứng nhận</a></li></ol>
+    <article class="buoc" id="tao-lop" data-buoc="1">
+      <div class="buoc-txt">
+        <p class="buoc-so"><span data-vi="Bước 1" data-en="Step 1">Bước 1</span> · <span data-vi="≈ 3 phút" data-en="≈ 3 min">≈ 3 phút</span></p>
+        <h3 data-vi="Tạo lớp" data-en="Create the class">Tạo lớp</h3>
+        <p class="body" data-vi="Mỗi lớp có một mã lớp. Sinh viên dùng mã này để kết quả của đội về đúng lớp của bạn." data-en="Each class has a class code. Students use it so their team results reach your class.">Mỗi lớp có một mã lớp. Sinh viên dùng mã này để kết quả của đội về đúng lớp của bạn.</p>
+        <div class="buoc-viec"><p class="k" data-vi="Việc cần làm" data-en="What to do">Việc cần làm</p><p class="body" data-vi="Mở Trang Giảng viên và đăng nhập (lần đầu thì bấm «Chưa có tài khoản? Tạo mới»). Ở mục «Lớp của tôi», gõ mã lớp mới, ví dụ QTKD-2026-A, rồi bấm «＋ Tạo lớp». Muốn xem trước mà chưa có tài khoản: bấm «Dùng thử với lớp mẫu DEMO-2026»." data-en="Open the Instructor page and sign in (first time: “No account yet? Create one”). Under “My classes”, type a new class code such as QTKD-2026-A and press “＋ Create class”. To look around before you have an account, press “Try the sample class DEMO-2026”.">Mở Trang Giảng viên và đăng nhập (lần đầu thì bấm «Chưa có tài khoản? Tạo mới»). Ở mục «Lớp của tôi», gõ mã lớp mới, ví dụ QTKD-2026-A, rồi bấm «＋ Tạo lớp». Muốn xem trước mà chưa có tài khoản: bấm «Dùng thử với lớp mẫu DEMO-2026».</p></div>
+        <div class="buoc-loi"><p class="k" data-vi="Lỗi hay gặp" data-en="Common mistake">Lỗi hay gặp</p><p class="body loi" data-vi="Mã lớp có dấu tiếng Việt hoặc khoảng trắng, sinh viên gõ lại không khớp." data-en="The class code has Vietnamese accents or spaces, so students type it differently.">Mã lớp có dấu tiếng Việt hoặc khoảng trắng, sinh viên gõ lại không khớp.</p><p class="body sua" data-vi="Cách xử lý: Chỉ dùng chữ không dấu, số và dấu gạch ngang. Mã luôn được viết hoa." data-en="Fix: Use only unaccented letters, digits and hyphens. Codes are always upper-case.">Cách xử lý: Chỉ dùng chữ không dấu, số và dấu gạch ngang. Mã luôn được viết hoa.</p></div>
+      </div>
+      <figure class="buoc-anh"><img class="th-img chi-vi" src="assets/tap-huan/buoc-1-vi.webp" alt="Mục «Lớp của tôi» trên Trang Giảng viên: ô nhập mã lớp mới, nút Tạo lớp và thẻ lớp mẫu DEMO-2026" width="980" height="362" loading="lazy" decoding="async"><img class="th-img chi-en" src="assets/tap-huan/buoc-1-en.webp" alt="“My classes” on the Instructor page: the new class code box, the Create class button and the DEMO-2026 sample class card" width="980" height="362" loading="lazy" decoding="async"></figure>
+    </article>
+    <article class="buoc" id="gui-ma" data-buoc="2">
+      <div class="buoc-txt">
+        <p class="buoc-so"><span data-vi="Bước 2" data-en="Step 2">Bước 2</span> · <span data-vi="≈ 2 phút" data-en="≈ 2 min">≈ 2 phút</span></p>
+        <h3 data-vi="Gửi mã hoặc link cho sinh viên" data-en="Send the code or link to students">Gửi mã hoặc link cho sinh viên</h3>
+        <p class="body" data-vi="Sinh viên chơi trên điện thoại của mình, không cần phòng máy." data-en="Students play on their own phones; no computer lab needed.">Sinh viên chơi trên điện thoại của mình, không cần phòng máy.</p>
+        <div class="buoc-viec"><p class="k" data-vi="Việc cần làm" data-en="What to do">Việc cần làm</p><p class="body" data-vi="Gửi đường link bizonland.com/vao-lop.html?lop= kèm mã lớp của bạn ở cuối, ví dụ bizonland.com/vao-lop.html?lop=QTKD-2026-A (qua nhóm lớp, Zalo hay viết lên bảng). Sinh viên mở link thì mã lớp đã điền sẵn; các em chọn game lớp đang chơi. Chơi theo lớp thì sinh viên đăng nhập bằng email trường." data-en="Send the link bizonland.com/vao-lop.html?lop= followed by your class code, for example bizonland.com/vao-lop.html?lop=QTKD-2026-A (class group chat, or on the board). When students open it, the class code is already filled in; they pick the game the class is playing. For class play, students sign in with their school email.">Gửi đường link bizonland.com/vao-lop.html?lop= kèm mã lớp của bạn ở cuối, ví dụ bizonland.com/vao-lop.html?lop=QTKD-2026-A (qua nhóm lớp, Zalo hay viết lên bảng). Sinh viên mở link thì mã lớp đã điền sẵn; các em chọn game lớp đang chơi. Chơi theo lớp thì sinh viên đăng nhập bằng email trường.</p></div>
+        <div class="buoc-loi"><p class="k" data-vi="Lỗi hay gặp" data-en="Common mistake">Lỗi hay gặp</p><p class="body loi" data-vi="Sinh viên mở game từ trang chủ hoặc bấm «Chơi thử», nên không có mã lớp và kết quả không về lớp." data-en="Students open the game from the home page or press “Try it”, so there is no class code and results never reach the class.">Sinh viên mở game từ trang chủ hoặc bấm «Chơi thử», nên không có mã lớp và kết quả không về lớp.</p><p class="body sua" data-vi="Cách xử lý: Trước khi mở game, nhờ sinh viên kiểm dòng «Mã lớp … sẽ được mang vào game» trên trang Vào lớp." data-en="Fix: Before opening the game, ask students to check the line “Class code … will be carried into the game” on the Join page.">Cách xử lý: Trước khi mở game, nhờ sinh viên kiểm dòng «Mã lớp … sẽ được mang vào game» trên trang Vào lớp.</p></div>
+      </div>
+      <figure class="buoc-anh"><img class="th-img chi-vi th-phone" src="assets/tap-huan/buoc-2-vi.webp" alt="Trang Vào lớp trên điện thoại: mã lớp DEMO-2026 đã điền sẵn và các thẻ game" width="390" height="844" loading="lazy" decoding="async"><img class="th-img chi-en th-phone" src="assets/tap-huan/buoc-2-en.webp" alt="The Join page on a phone: class code DEMO-2026 already filled in and the game cards" width="390" height="844" loading="lazy" decoding="async"></figure>
+    </article>
+    <article class="buoc" id="chieu" data-buoc="3">
+      <div class="buoc-txt">
+        <p class="buoc-so"><span data-vi="Bước 3" data-en="Step 3">Bước 3</span> · <span data-vi="≈ 1 phút" data-en="≈ 1 min">≈ 1 phút</span></p>
+        <h3 data-vi="Chiếu Màn hình lớp học" data-en="Project the classroom screen">Chiếu Màn hình lớp học</h3>
+        <p class="body" data-vi="Cả lớp thấy cùng một màn hình: bao nhiêu đội đã nộp, ai đang dẫn đầu." data-en="The whole class sees one screen: how many teams have submitted and who leads.">Cả lớp thấy cùng một màn hình: bao nhiêu đội đã nộp, ai đang dẫn đầu.</p>
+        <div class="buoc-viec"><p class="k" data-vi="Việc cần làm" data-en="What to do">Việc cần làm</p><p class="body" data-vi="Trên máy chiếu, mở Màn hình lớp học với mã lớp của bạn (man-hinh-lop-hoc.html?lop= kèm mã lớp), chọn thẻ game lớp đang chơi rồi bấm «⛶ Toàn màn hình». Màn hình có mã QR để sinh viên quét vào game. Muốn xem thử trước buổi học: thêm ?demo=1 để thấy dữ liệu minh họa." data-en="On the projector, open the classroom screen with your class code (man-hinh-lop-hoc.html?lop= plus the code), pick the tab of the game the class is playing and press “⛶ Full screen”. The screen shows a QR code students can scan to open the game. To rehearse before class, add ?demo=1 to see sample data.">Trên máy chiếu, mở Màn hình lớp học với mã lớp của bạn (man-hinh-lop-hoc.html?lop= kèm mã lớp), chọn thẻ game lớp đang chơi rồi bấm «⛶ Toàn màn hình». Màn hình có mã QR để sinh viên quét vào game. Muốn xem thử trước buổi học: thêm ?demo=1 để thấy dữ liệu minh họa.</p></div>
+        <div class="buoc-loi"><p class="k" data-vi="Lỗi hay gặp" data-en="Common mistake">Lỗi hay gặp</p><p class="body loi" data-vi="Chọn nhầm thẻ game, màn hình báo 0 nhóm dù cả lớp đang chơi." data-en="The wrong game tab is selected, so the screen shows 0 teams while the class is playing.">Chọn nhầm thẻ game, màn hình báo 0 nhóm dù cả lớp đang chơi.</p><p class="body sua" data-vi="Cách xử lý: Bấm đúng thẻ game ở đầu màn hình; mã lớp hiện ở dòng tiêu đề để bạn đối chiếu." data-en="Fix: Press the right game tab at the top; the class code appears in the heading so you can check it.">Cách xử lý: Bấm đúng thẻ game ở đầu màn hình; mã lớp hiện ở dòng tiêu đề để bạn đối chiếu.</p></div>
+      </div>
+      <figure class="buoc-anh"><img class="th-img chi-vi" src="assets/tap-huan/buoc-3-vi.webp" alt="Màn hình lớp học với dữ liệu minh họa: số nhóm đã nộp và bảng xếp hạng" width="1280" height="720" loading="lazy" decoding="async"><img class="th-img chi-en" src="assets/tap-huan/buoc-3-en.webp" alt="The classroom screen with sample data: number of teams submitted and the leaderboard" width="1280" height="720" loading="lazy" decoding="async"></figure>
+    </article>
+    <article class="buoc" id="theo-doi" data-buoc="4">
+      <div class="buoc-txt">
+        <p class="buoc-so"><span data-vi="Bước 4" data-en="Step 4">Bước 4</span> · <span data-vi="suốt buổi" data-en="whole session">suốt buổi</span></p>
+        <h3 data-vi="Theo dõi tiến độ" data-en="Follow progress">Theo dõi tiến độ</h3>
+        <p class="body" data-vi="Biết đội nào đang chậm để tới giúp đúng lúc." data-en="Know which team is falling behind so you can help in time.">Biết đội nào đang chậm để tới giúp đúng lúc.</p>
+        <div class="buoc-viec"><p class="k" data-vi="Việc cần làm" data-en="What to do">Việc cần làm</p><p class="body" data-vi="Trên bảng điều khiển lớp, thẻ «👥 Đội &amp; tiến độ» cho biết mỗi đội đã nộp tới vòng nào (các ô số 1–6), thị phần, lợi nhuận lũy kế và giờ nộp gần nhất; bấm «⟳ Tải lại» để cập nhật. Muốn cả lớp đi cùng nhịp, mở thẻ «🎛 Điều khiển lớp»: «Khóa vòng cho cả lớp» chọn vòng cuối được chơi, «Tính giờ thi» đặt số phút mỗi vòng." data-en="On the class dashboard, the “👥 Teams &amp; progress” tab shows how far each team has submitted (boxes 1–6), market share, cumulative profit and last submission time; press “⟳ Reload” to refresh. To keep the class in step, open “🎛 Class controls”: “Round lock for the whole class” sets the last playable round, and the exam timer sets minutes per round.">Trên bảng điều khiển lớp, thẻ «👥 Đội &amp; tiến độ» cho biết mỗi đội đã nộp tới vòng nào (các ô số 1–6), thị phần, lợi nhuận lũy kế và giờ nộp gần nhất; bấm «⟳ Tải lại» để cập nhật. Muốn cả lớp đi cùng nhịp, mở thẻ «🎛 Điều khiển lớp»: «Khóa vòng cho cả lớp» chọn vòng cuối được chơi, «Tính giờ thi» đặt số phút mỗi vòng.</p></div>
+        <div class="buoc-loi"><p class="k" data-vi="Lỗi hay gặp" data-en="Common mistake">Lỗi hay gặp</p><p class="body loi" data-vi="Một đội đứng yên ở một vòng: ô số không đổi, giờ nộp đã cũ." data-en="A team is stuck on one round: its boxes do not change and its last submission is old.">Một đội đứng yên ở một vòng: ô số không đổi, giờ nộp đã cũ.</p><p class="body sua" data-vi="Cách xử lý: Tới hỏi đội đó. Thường là đội chưa bấm kết thúc vòng hoặc điện thoại mất mạng." data-en="Fix: Go and ask the team. Usually they have not ended the round yet, or the phone lost its connection.">Cách xử lý: Tới hỏi đội đó. Thường là đội chưa bấm kết thúc vòng hoặc điện thoại mất mạng.</p></div>
+      </div>
+      <figure class="buoc-anh"><img class="th-img chi-vi" src="assets/tap-huan/buoc-4-vi.webp" alt="Thẻ Đội và tiến độ của lớp mẫu: năm đội, tiến độ sáu vòng, thị phần, lợi nhuận lũy kế" width="1232" height="426" loading="lazy" decoding="async"><img class="th-img chi-en" src="assets/tap-huan/buoc-4-en.webp" alt="The Teams and progress tab of the sample class: five teams, six-round progress, market share, cumulative profit" width="1232" height="426" loading="lazy" decoding="async"></figure>
+    </article>
+    <article class="buoc" id="cham" data-buoc="5">
+      <div class="buoc-txt">
+        <p class="buoc-so"><span data-vi="Bước 5" data-en="Step 5">Bước 5</span> · <span data-vi="≈ 20 phút" data-en="≈ 20 min">≈ 20 phút</span></p>
+        <h3 data-vi="Chốt số liệu và chấm" data-en="Freeze the numbers and grade">Chốt số liệu và chấm</h3>
+        <p class="body" data-vi="Chấm trên số liệu đã chốt của từng vòng, không chấm trên trạng thái đang chạy, nên hai giảng viên chấm cùng một bài sẽ thấy cùng một con số." data-en="Grade on each round’s frozen numbers, never on live state, so two instructors grading the same work see the same numbers.">Chấm trên số liệu đã chốt của từng vòng, không chấm trên trạng thái đang chạy, nên hai giảng viên chấm cùng một bài sẽ thấy cùng một con số.</p>
+        <div class="buoc-viec"><p class="k" data-vi="Việc cần làm" data-en="What to do">Việc cần làm</p><p class="body" data-vi="Mở thẻ «📝 Chấm điểm». Thang 10: các cột B1–B4 tính sẵn từ số liệu đã chốt; B5 Đóng góp và B6 Ứng biến tự điền nếu có nhật ký, không thì bạn nhập. Ghi nhận xét rồi bấm «Lưu» từng đội. Phần lập luận chấm theo rubric bốn mức; thẻ «📊 Sổ điểm» giữ số liệu đã chốt của từng vòng." data-en="Open the “📝 Grading” tab. On the 10-point scale, columns B1–B4 are computed from the frozen numbers; B5 Contribution and B6 Adaptation fill in from the logs when available, otherwise you enter them. Write a comment and press “Save” for each team. Reasoning is graded with the four-level rubric; the “📊 Gradebook” tab keeps each round’s frozen numbers.">Mở thẻ «📝 Chấm điểm». Thang 10: các cột B1–B4 tính sẵn từ số liệu đã chốt; B5 Đóng góp và B6 Ứng biến tự điền nếu có nhật ký, không thì bạn nhập. Ghi nhận xét rồi bấm «Lưu» từng đội. Phần lập luận chấm theo rubric bốn mức; thẻ «📊 Sổ điểm» giữ số liệu đã chốt của từng vòng.</p></div>
+        <div class="buoc-loi"><p class="k" data-vi="Lỗi hay gặp" data-en="Common mistake">Lỗi hay gặp</p><p class="body loi" data-vi="Nghĩ rằng hệ thống tự chấm cả phần lập luận." data-en="Assuming the system also grades the reasoning.">Nghĩ rằng hệ thống tự chấm cả phần lập luận.</p><p class="body sua" data-vi="Cách xử lý: Hệ thống KHÔNG tự chấm rubric. Nó chỉ cấp bằng chứng số (thị phần, dòng tiền, chỉ số neo); điểm lập luận do giảng viên đặt." data-en="Fix: The system does NOT auto-grade the rubric. It only supplies numeric evidence (market share, cash flow, anchor indices); the reasoning grade is set by the instructor.">Cách xử lý: Hệ thống KHÔNG tự chấm rubric. Nó chỉ cấp bằng chứng số (thị phần, dòng tiền, chỉ số neo); điểm lập luận do giảng viên đặt.</p></div>
+      </div>
+      <figure class="buoc-anh"><img class="th-img chi-vi" src="assets/tap-huan/buoc-5-vi.webp" alt="Thẻ Chấm điểm của lớp mẫu: thang 10 với các cột B1 đến B6, tổng điểm, điểm chữ và ô nhận xét" width="1232" height="590" loading="lazy" decoding="async"><img class="th-img chi-en" src="assets/tap-huan/buoc-5-en.webp" alt="The Grading tab of the sample class: 10-point scale with columns B1 to B6, total, letter grade and comment box" width="1232" height="590" loading="lazy" decoding="async"></figure>
+    </article>
+    <article class="buoc" id="xuat" data-buoc="6">
+      <div class="buoc-txt">
+        <p class="buoc-so"><span data-vi="Bước 6" data-en="Step 6">Bước 6</span> · <span data-vi="≈ 10 phút" data-en="≈ 10 min">≈ 10 phút</span></p>
+        <h3 data-vi="Xuất kết quả và chứng nhận" data-en="Export results and certificates">Xuất kết quả và chứng nhận</h3>
+        <p class="body" data-vi="Bảng điểm cho học phần và chứng nhận cho từng sinh viên." data-en="A grade sheet for the course and a certificate for each student.">Bảng điểm cho học phần và chứng nhận cho từng sinh viên.</p>
+        <div class="buoc-viec"><p class="k" data-vi="Việc cần làm" data-en="What to do">Việc cần làm</p><p class="body" data-vi="Bấm «⬇ Xuất Excel» ở đầu bảng điều khiển để tải bảng điểm. Chứng nhận nằm ở thẻ «🎛 Điều khiển lớp», mục «Chứng nhận chính thức»: điền mã môn, tên môn, ngày học rồi bấm «💾 Lưu»; dán danh sách sinh viên từ Excel (STT, Họ tên, MSSV) hoặc chọn tệp, bấm «Lưu danh sách», rồi bấm «📚 In cả lớp → PDF»." data-en="Press “⬇ Export Excel” at the top of the dashboard to download the grade sheet. Certificates are under “🎛 Class controls”, in “Official certificate”: fill in the course code, course name and dates and press “💾 Save”; paste the student list from Excel (No., full name, student ID) or choose a file, press “Save list”, then “📚 Print the whole class → PDF”.">Bấm «⬇ Xuất Excel» ở đầu bảng điều khiển để tải bảng điểm. Chứng nhận nằm ở thẻ «🎛 Điều khiển lớp», mục «Chứng nhận chính thức»: điền mã môn, tên môn, ngày học rồi bấm «💾 Lưu»; dán danh sách sinh viên từ Excel (STT, Họ tên, MSSV) hoặc chọn tệp, bấm «Lưu danh sách», rồi bấm «📚 In cả lớp → PDF».</p></div>
+        <div class="buoc-loi"><p class="k" data-vi="Lỗi hay gặp" data-en="Common mistake">Lỗi hay gặp</p><p class="body loi" data-vi="Bấm «In cả lớp» khi chưa có danh sách: nút ghi (0) và không ra chứng nhận nào." data-en="Pressing “Print the whole class” before adding the list: the button shows (0) and no certificate comes out.">Bấm «In cả lớp» khi chưa có danh sách: nút ghi (0) và không ra chứng nhận nào.</p><p class="body sua" data-vi="Cách xử lý: Dán danh sách và bấm «Lưu danh sách» trước. Số trong ngoặc là số chứng nhận sẽ in." data-en="Fix: Paste the list and press “Save list” first. The number in brackets is how many certificates will print.">Cách xử lý: Dán danh sách và bấm «Lưu danh sách» trước. Số trong ngoặc là số chứng nhận sẽ in.</p></div>
+      </div>
+      <figure class="buoc-anh"><img class="th-img chi-vi th-phone" src="assets/tap-huan/buoc-6-vi.webp" alt="Mục chứng nhận trong Điều khiển lớp: danh sách sinh viên đã dán và nút In cả lớp ra PDF" width="359" height="313" loading="lazy" decoding="async"><img class="th-img chi-en th-phone" src="assets/tap-huan/buoc-6-en.webp" alt="The certificate section in Class controls: a pasted student list and the Print the whole class to PDF button" width="359" height="338" loading="lazy" decoding="async"></figure>
+    </article>
   </div>
 </section>
 
@@ -147,20 +219,6 @@
         <p class="body" data-vi="Bộ câu hỏi thảo luận và trắc nghiệm gắn với từng bậc – đang biên tập thành bản tải riêng." data-en="Discussion prompts and quizzes tied to each level – being edited into a standalone download.">Bộ câu hỏi thảo luận và trắc nghiệm gắn với từng bậc – đang biên tập thành bản tải riêng.</p>
         <div class="dlrow"><span class="soon" data-vi="Sắp có" data-en="Soon">Sắp có</span></div>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ CHẤM ĐIỂM ═══ -->
-<section>
-  <div class="shell">
-    <div class="head rv">
-      <p class="tag" data-vi="Chấm điểm" data-en="Grading">Chấm điểm</p>
-      <h2 data-vi="Chấm trên số liệu đã chốt" data-en="Grade on a frozen snapshot">Chấm trên số liệu đã chốt</h2>
-    </div>
-    <div class="grade rv">
-      <p class="body" data-vi="Sổ điểm chấm trên số liệu đã chốt của mỗi vòng – không chấm trên trạng thái đang chạy. Cùng một nhật ký luôn cho cùng một bằng chứng số, nên hai giảng viên chấm cùng một bài sẽ thấy cùng một con số." data-en="The Gradebook grades a frozen snapshot of each round – never live state. The same log always yields the same numeric evidence, so two instructors grading the same submission see the same numbers.">Sổ điểm chấm trên số liệu đã chốt của mỗi vòng – không chấm trên trạng thái đang chạy. Cùng một nhật ký luôn cho cùng một bằng chứng số, nên hai giảng viên chấm cùng một bài sẽ thấy cùng một con số.</p>
-      <p class="warn"><span class="em" data-vi="Hệ thống KHÔNG tự chấm rubric." data-en="The system does NOT auto-grade the rubric.">Hệ thống KHÔNG tự chấm rubric.</span> <span class="body" data-vi="Nó chỉ cấp bằng chứng số (thị phần, dòng tiền, chỉ số neo). Điểm rubric do giảng viên đặt, dựa trên phần lập luận của người học – chỗ mà máy không thay được." data-en="It only supplies numeric evidence (market share, cash flow, anchor indices). The rubric grade is set by the instructor, based on the learner's reasoning – the part a machine cannot replace.">Nó chỉ cấp bằng chứng số (thị phần, dòng tiền, chỉ số neo). Điểm rubric do giảng viên đặt, dựa trên phần lập luận của người học – chỗ mà máy không thay được.</span></p>
     </div>
   </div>
 </section>
@@ -218,6 +276,22 @@
 
 
 <script src="assets/js/shell.js"></script>
+<script>
+/* Bản in A4 (đặc tả 007): nạp hết ảnh của ngôn ngữ đang xem, mở các câu hỏi thường gặp rồi mới in */
+(function () {
+  function prep() {
+    document.querySelectorAll('.th-img').forEach(function (i) { i.loading = 'eager'; });
+    document.querySelectorAll('.faq details').forEach(function (d) { d.open = true; });
+  }
+  addEventListener('beforeprint', prep);
+  var b = document.getElementById('inTapHuan');
+  if (b) b.onclick = function () {
+    prep();
+    var imgs = [].slice.call(document.querySelectorAll('.th-img')).filter(function (i) { return i.offsetParent; });
+    Promise.race([Promise.all(imgs.map(function (i) { return i.decode().catch(function () {}); })), new Promise(function (r) { setTimeout(r, 3000); })]).then(function () { window.print(); });
+  };
+})();
+</script>
 <script src="js/bizon-clay-i18n.js" defer></script>
 <script src="js/bizon-clay-bridge.js" defer></script>
 <script src="js/bizon-clay-nav.js" defer></script>
