@@ -5,6 +5,8 @@
  *   bps  Bến Phù Sa           ft_class_leaderboard(mã lớp)  → team_name, total_revenue, efficiency, final_rank
  *   hcth Hộ Chiếu Thương Hiệu bizon_bp_results(mã lớp)       → company, player_name, total_score, detail_json.markets (7 thị trường)
  *   hcsr Hộ Chiếu Sầu Riêng   bizon_journey_class(mã lớp)    → passport.tiers.t3 (variant 'durian'): total, channelOrder
+ *   bn   Bật Nghiệp           bizon_submissions_v2(mã lớp)   → từng lượt nộp theo đội và vòng (1–6); xếp hạng bằng
+ *                             BizOnInstructorPage.teams() của js/bizon-grading.js (lợi nhuận lũy kế, giống Trang Giảng viên)
  * Không bao giờ trả về email: màn hình này chiếu cho cả lớp xem. */
 (function (root, factory) {
   const api = factory();
@@ -16,7 +18,17 @@
     bps: { vi: 'Bến Phù Sa', en: 'Ben Phu Sa', unit: 'triệu ₫' },
     hcth: { vi: 'Hộ Chiếu Thương Hiệu', en: 'Brand Passport', unit: 'điểm' },
     hcsr: { vi: 'Hộ Chiếu Sầu Riêng', en: 'Durian Passport', unit: 'điểm' },
+    bn: { vi: 'Bật Nghiệp', en: 'Bat Nghiep', unit: 'triệu ₫' },
   };
+  // Bật Nghiệp: vòng 1–6 ứng với sáu tỉnh/thành theo đúng thứ tự trong game (js/app.js, thẻ «Mỗi vòng là một quý…»)
+  const BN_CITIES = [
+    { vi: 'Cần Thơ', en: 'Can Tho', lon: 105.78, lat: 10.03 },
+    { vi: 'TP. Hồ Chí Minh', en: 'Ho Chi Minh City', lon: 106.70, lat: 10.78 },
+    { vi: 'Khánh Hòa', en: 'Khanh Hoa', lon: 109.19, lat: 12.24 },
+    { vi: 'Đà Nẵng', en: 'Da Nang', lon: 108.22, lat: 16.05 },
+    { vi: 'Thanh Hóa', en: 'Thanh Hoa', lon: 105.78, lat: 19.81 },
+    { vi: 'Hà Nội', en: 'Hanoi', lon: 105.85, lat: 21.03 },
+  ];
   // Thứ tự đúng như S.entered trong brand-passport.html (id 0–6)
   const BP_MARKETS = ['Hải Lam', 'Bắc Phong', 'Kim Sa', 'Lục Đảo', 'Nhật Quang', 'Tân Cảng', 'Hỏa Sơn'];
   // Kênh trong lab/ho-chieu-sau-rieng-data.js
@@ -109,9 +121,50 @@
       live: { count: live.length, playing: live.filter(t => !t.finished).length, min: Math.min(...rounds), max: Math.max(...rounds), total: live[0].total, unit: UNIT[game] } });
   }
 
+  // Bật Nghiệp: lượt nộp từng vòng (bizon_submissions_v2) → đội, chặng, lợi nhuận lũy kế.
+  // Xếp hạng KHÔNG tự tính ở đây: dùng chính teams() của Trang Giảng viên (rank, mặc định window.BizOnInstructorPage.teams)
+  // để hai màn luôn cùng thứ tự. Đội giảng viên chơi thử (staff) không chiếu lên màn lớp. Chặng = vòng lớn nhất đã nộp.
+  const moneyVi = v => (Math.abs(v) >= 1000 ? (v / 1000).toFixed(2).replace('.', ',') + ' tỷ ₫' : fmt(v) + ' triệu ₫');
+  const moneyEn = v => (Math.abs(v) >= 1000 ? '₫' + (v / 1000).toFixed(2) + 'bn' : '₫' + Math.round(v).toLocaleString('en-US') + 'm');
+  function fromBn(subs, rank) {
+    const P = typeof globalThis !== 'undefined' ? globalThis.BizOnInstructorPage : null;
+    rank = rank || (P && P.teams);
+    if (typeof rank !== 'function') throw new Error('Thiếu js/bizon-grading.js (BizOnInstructorPage.teams).');
+    const all = Array.from(rank(subs || [])).filter(t => !t.staff);
+    const top = Math.max(1, ...all.map(t => t.profit)), N = BN_CITIES.length;
+    const teams = all.map((t, i) => {
+      const round = Math.max(1, Math.min(N, Math.round(num(t.last && t.last.round_number)) || 1)), c = BN_CITIES[round - 1];
+      return { name: noEmail(text(t.name)) || 'Đội', rank: i + 1, round, stage: round - 1, score: t.profit,
+        progress: Math.max(0.04, Math.min(1, t.profit / top)),
+        label: moneyVi(t.profit), labelEn: moneyEn(t.profit),
+        sub: 'Vòng ' + round + '/' + N + ' · ' + c.vi, subEn: 'Round ' + round + '/' + N + ' · ' + c.en };
+    });
+    const stages = BN_CITIES.map((_, i) => teams.filter(t => t.stage === i).length);
+    const round = teams.length ? Math.max(...teams.map(t => t.round)) : 0;
+    const minRound = teams.length ? Math.min(...teams.map(t => t.round)) : 0;
+    // «N đội đã nộp vòng R»: R là vòng xa nhất cả lớp đã tới, N là số đội đã nộp vòng đó
+    return { game: 'bn', teams, submitted: teams.length, stages, round, minRound, atRound: stages[round - 1] || 0 };
+  }
+  // Minh họa Bật Nghiệp: 32 đội (lớp đông) ở các vòng 1–6, tên rõ là giả, số liệu cố định (không ngẫu nhiên)
+  const BN_DEMO_WORDS = ['Lotus', 'Bamboo', 'Sampan', 'Firefly', 'Delta', 'Coconut', 'Mangrove', 'Kite'];
+  const BN_DEMO_ROUNDS = [6, 6, 5, 5, 5, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 2, 2, 2, 2, 2, 2, 1, 1, 1];
+  function demoBnSubs() {
+    const subs = [];
+    BN_DEMO_ROUNDS.forEach((rounds, ti) => {
+      const name = 'Demo ' + BN_DEMO_WORDS[ti % 8] + ' ' + (1 + (ti >> 3)), k = 0.6 + ((ti * 37) % 23) / 23;
+      for (let r = 1; r <= rounds; r++) {
+        const np = Math.round(k * 55 + r * 12 - ((ti * 13 + r * 7) % 41) - (ti % 9 === 4 ? 60 : 0));
+        subs.push({ team_name: name, round_number: r, created_at: '2026-11-19T0' + r + ':' + String(10 + (ti % 50)).padStart(2, '0') + ':00Z',
+          result_json: { round: r, netProfit: np, share: +(12 + k * 8 + r).toFixed(1) } });
+      }
+    });
+    return subs;
+  }
+
   // Dữ liệu minh hoạ cố định (không ngẫu nhiên) để thử máy chiếu khi chưa có lớp thật: 4 nhóm đã xong, 6 nhóm đang chơi
   const DEMO_NAMES = ['Phù Sa', 'Sen Hồng', 'Cá Linh', 'Đom Đóm', 'Bông Điên Điển', 'Gió Chướng', 'Ghe Lườn', 'Lục Bình', 'Mù U', 'Bần Chua'];
-  function demo(game) {
+  function demo(game, rank) {
+    if (game === 'bn') return fromBn(demoBnSubs(), rank);
     const N = { bps: 5, hcth: 6, hcsr: 6 }[game] || 6, done = DEMO_NAMES.slice(0, 4), going = DEMO_NAMES.slice(4);
     const liveRows = going.map((n, i) => ({ team_name: (game === 'hcth' ? n + ' Foods' : 'Nhóm ' + n), round: Math.max(1, N - 1 - (i >> 1)), rounds_total: N,
       score: game === 'bps' ? 620 - i * 60 : 64 - i * 4, detail: game === 'hcth' ? { markets: [1, i < 3 ? 1 : 0, 1, 0, i < 2 ? 1 : 0, 1, 0] } : null }));
@@ -124,5 +177,5 @@
     return withLive(base, liveRows, game);
   }
 
-  return { GAMES, BP_MARKETS, DURIAN_CHANNELS, STAGES, fromFt, fromBp, fromJourney, withLive, demo };
+  return { GAMES, BP_MARKETS, DURIAN_CHANNELS, STAGES, BN_CITIES, fromFt, fromBp, fromJourney, fromBn, withLive, demo, demoBnSubs };
 });

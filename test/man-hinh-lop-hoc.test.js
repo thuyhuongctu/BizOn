@@ -3,6 +3,7 @@
 // 1. Bộ chuyển dữ liệu: gộp theo tên, xếp hạng, đếm thị trường, chỉ tính Sầu Riêng đã xong Bậc 3, không lộ email.
 // 2. Trang: noindex, lối vào từ Trang Giảng viên, sw.js có tệp mới.
 // 3. Trình duyệt (dữ liệu minh họa): ba cảnh dựng không lỗi, đổi trò, đổi ngày/đêm, chưa đăng nhập thì hiện hộp nhắc.
+// 19/11/2026: thêm tab thứ tư Bật Nghiệp (test riêng ở man-hinh-lop-hoc-bat-nghiep.test.js); ở đây chỉ đếm đủ bốn tab và chuyển qua được.
 'use strict';
 const fs = require('node:fs');
 const path = require('node:path');
@@ -121,11 +122,15 @@ let chromium; try { chromium = require('playwright').chromium; } catch (e) { con
     // Đổi trò và ngày/đêm ngay trên trang
     const pg = await open('demo=1&game=bps');
     await pg.waitForSelector('#tags .lab');
+    assert.deepEqual(await pg.$$eval('.tabs button', els => els.map(e => e.dataset.game)), ['bps', 'hcth', 'hcsr', 'bn'], 'bốn tab');
     await pg.click('#night'); assert.ok(await pg.evaluate(() => document.body.classList.contains('night')));
     await pg.click('.tabs button[data-game="hcsr"]');
     await pg.waitForFunction(() => document.querySelectorAll('#tags .st').length === 8, null, { timeout: 30000 });
     assert.equal(await pg.getAttribute('.tabs button[data-game="hcsr"]', 'aria-pressed'), 'true');
     assert.ok(pg.url().includes('game=hcsr'), 'URL giữ trò đang chiếu');
+    await pg.click('.tabs button[data-game="bn"]');
+    await pg.waitForFunction(() => document.querySelectorAll('#tags .lab').length === 6 && document.querySelectorAll('#rank li').length === 10, null, { timeout: 30000 });
+    assert.ok(pg.url().includes('game=bn'));
     await pg.close();
     // Máy chiếu 1280×720
     const sm = await open('demo=1&game=hcth', { width: 1280, height: 720 });
