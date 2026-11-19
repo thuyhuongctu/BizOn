@@ -96,6 +96,18 @@
   #login3d .alt{border:2px solid #cbb797;background:#fff;border-radius:14px;padding:10px;font:700 14px 'Be Vietnam Pro',sans-serif;color:#1f4a55;cursor:pointer}
   #login3d .links{display:flex;justify-content:space-between;gap:8px;font-size:13px;flex-wrap:wrap} #login3d .links a{color:#1f6f8a;font-weight:700;text-decoration:none}
   #login3d .rtip{position:absolute;right:clamp(12px,4vw,56px);bottom:28px;max-width:320px;background:rgba(251,246,238,.95);border:3px solid #e6d6bf;border-radius:18px;padding:12px 14px;font:600 14px 'Be Vietnam Pro',sans-serif;color:#1f4a55;pointer-events:none}
+  /* Màn vào chọn đường trước, điền sau (đặc tả 006, câu chuyện 2, 19/11/2026). body.goc (?giao-dien=goc) = bố cục bản đã nộp hồ sơ:
+     khối #l3Form thành display:contents nên các ô đứng y như cũ, ba phần tử mới ẩn hẳn. */
+  body.goc #l3Form{display:contents} body.goc #l3PathClass,body.goc #l3Back,body.goc #l3GocLink{display:none}
+  body:not(.goc) #l3Form{display:none;flex-direction:column;gap:inherit}
+  body:not(.goc) #login3d.dien #l3Form{display:flex} body:not(.goc) #login3d.dien #l3PathClass,body:not(.goc) #login3d.dien #l3Demo{display:none}
+  body:not(.goc) #login3d:not(.dien) .card>p+p,body:not(.goc) #login3d:not(.dien) #l3Back{display:none}
+  body:not(.goc) #login3d:not(.dien) .l3-path,body:not(.goc) #login3d:not(.dien) #l3Demo{min-height:56px;font-size:18px;margin-top:6px}
+  body:not(.goc) #login3d:not(.dien) #l3Demo{font-family:'Baloo 2',sans-serif;font-weight:800;border-width:3px;border-radius:18px;box-shadow:0 5px 0 #d9c5a8}
+  #login3d .l3-back{align-self:flex-start;min-height:44px;border:0;background:none;padding:0 4px;font:700 14px 'Be Vietnam Pro',sans-serif;color:#1f6f8a;cursor:pointer}
+  #login3d .go:focus-visible,#login3d .alt:focus-visible,#login3d .l3-back:focus-visible,#login3d .links a:focus-visible{outline:3px solid #2f8a8c;outline-offset:3px}
+  body:not(.goc) #login3d .links a{display:inline-flex;align-items:center;min-height:44px}
+  @media (max-width:760px){body:not(.goc) #l3Go{position:sticky;bottom:0;z-index:1;margin-bottom:2px} body:not(.goc) #login3d.dien .card>div:first-child+p{display:none} body:not(.goc) #login3d.dien .card{max-height:90vh}}
   @media (max-height:700px){#login3d .card{gap:5px;padding:16px 18px} #login3d .card>p{display:none} #login3d input{padding:8px 12px} #login3d .role img{height:44px} #login3d .go{padding:10px} #login3d .alt{padding:7px}}
   @media (max-width:760px){#login3d .card{top:auto;bottom:0;left:0;transform:none;width:100%;border-radius:26px 26px 0 0;max-height:78vh} #login3d .rtip{display:none}}
   #frame.sheet,#frame.hide{top:12px;right:12px;bottom:12px;width:min(480px,46vw);border-radius:26px;border:4px solid #e6d6bf;box-shadow:0 20px 60px rgba(20,28,56,.35);box-sizing:border-box}
@@ -313,6 +325,9 @@
     <div style="display:flex;align-items:center;gap:10px"><h1>Bật Nghiệp</h1></div>
     <p data-en="Welcome to BizOn headquarters in Can Tho. Over the next six rounds, your team will run a clay-goods workshop and travel from Can Tho all the way to Hanoi.">Chào mừng các bạn đến trụ sở BizOn ở Cần Thơ. Sáu vòng tới, đội mình sẽ điều hành một xưởng đồ đất sét và đi từ Cần Thơ ra tới Hà Nội.</p>
     <p style="font-size:13px" data-en="Pick your role first. The CEO holds the compass, the CFO the purse, the CMO the megaphone, the COO the workshop and the SEC the minutes.">Chọn vai của bạn trước nhé. CEO giữ la bàn, CFO giữ túi tiền, CMO giữ loa, COO giữ xưởng, SEC giữ biên bản.</p>
+    <button type="button" class="go l3-path" id="l3PathClass" data-en="🎟️ I have a class code">🎟️ Tôi có mã lớp</button>
+    <button type="button" class="l3-back" id="l3Back" data-en="← Back to the two choices">← Quay lại hai lựa chọn</button>
+    <div id="l3Form">
     <label for="l3Email">Email <span style="font-weight:400;color:#8a969c" data-en="(optional)">(tùy chọn)</span></label><input id="l3Email" type="email" placeholder="sinhvien@truong.edu.vn" autocomplete="email">
     <div style="font:500 11px/1.35 'Be Vietnam Pro',sans-serif;color:#8a969c;margin:-2px 0 2px"><span data-en="Trial play (no class code): all data stays on your device. With a class code: each round's results and this email are sent to the class server for instructor grading – see ">Chơi thử (không Mã lớp): mọi dữ liệu chỉ lưu trên máy bạn. Có Mã lớp: kết quả mỗi vòng và email này được gửi về máy chủ lớp học để giảng viên chấm điểm – xem </span><a href="chinh-sach.html" target="_blank" rel="noopener" style="color:#2f8a8c" data-en="Privacy policy">Chính sách quyền riêng tư</a>.</div>
     <label for="l3Team" data-en="Team name – also your company name">Tên đội – cũng là tên doanh nghiệp</label><input id="l3Team" type="text" placeholder="VD: Rồng Xanh Corp" data-en-ph="e.g. Green Dragon Corp">
@@ -321,8 +336,9 @@
     <label data-en="Your role">Vai trò của bạn</label>
     <div class="roles" id="l3Roles"></div>
     <button type="button" class="go" id="l3Go" data-en="Start ▶">Bắt đầu ▶</button>
+    </div>
     <button type="button" class="alt" id="l3Demo" data-en="👥 Try it with the Demo Team">👥 Chơi thử với Đội Demo</button>
-    <div class="links"><a href="Trang Giang Vien.dc.html" data-en="👩‍🏫 Instructor page">👩‍🏫 Trang Giảng viên</a><a href="#" id="l3Classic" data-en="Classic 2D interface">Giao diện 2D cũ</a></div>
+    <div class="links"><a href="Trang Giang Vien.dc.html" data-en="👩‍🏫 Instructor page">👩‍🏫 Trang Giảng viên</a><a href="#" id="l3Classic" data-en="Classic 2D interface">Giao diện 2D cũ</a><a href="?giao-dien=goc" id="l3GocLink" data-en="Registered-version layout">Giao diện bản hồ sơ</a></div>
   </div>
   <div class="rtip" id="l3Tip"></div>
   <div id="l3Globe" aria-hidden="true"></div>
@@ -908,6 +924,18 @@ document.getElementById('l3Demo').onclick = () => l3Enter(true);
 // Lời chào của thầy Tú (bản thu tiếng Anh): trình duyệt chỉ cho phát tiếng sau thao tác đầu tiên trên trang.
 document.getElementById('login3d').addEventListener('pointerdown', e => { if (!e.target.closest('#l3Go,#l3Demo,#l3Classic')) say3D(['tu-welcome-01']); }, { once: true });
 document.getElementById('l3Classic').onclick = e => { e.preventDefault(); L3.classic = true; document.body.classList.remove('login3d'); L3.on = false; setMode(); };
+// Màn vào chọn đường trước (đặc tả 006): ?giao-dien=goc giữ bố cục bản đã nộp hồ sơ; ?lop=MÃ điền sẵn mã lớp và mở thẳng đường «Tôi có mã lớp».
+// Chỉ là phần hiện/ẩn của giao diện; l3Enter và logic game không đổi.
+{ const lv = document.getElementById('login3d'), qs = new URLSearchParams(location.search);
+  if (qs.get('giao-dien') === 'goc') document.body.classList.add('goc');
+  const lop = String(qs.get('lop') || '').toUpperCase().replace(/\s+/g, '').replace(/[^A-Z0-9_-]/g, '').slice(0, 40);
+  qs.set('giao-dien', 'goc'); document.getElementById('l3GocLink').href = '?' + qs.toString();
+  const mo = (on, focus) => { lv.classList.toggle('dien', on); const c = lv.querySelector('.card'); if (c) c.scrollTop = 0;
+    if (focus) { const t = document.getElementById(on ? (innerWidth > 760 ? 'l3Email' : 'l3Back') : 'l3PathClass'); if (t) t.focus(); } };
+  if (lop) { document.getElementById('l3Class').value = lop; mo(true, false); }
+  document.getElementById('l3PathClass').onclick = () => mo(true, true);
+  document.getElementById('l3Back').onclick = () => mo(false, true);
+}
 if (DIORAMA) {
   setTimeout(() => { if (document.body.classList.contains('login3d')) l3Enter(true); }, 1000);
   // Tài khoản Demo luôn là ván mới (vòng 1) nên sẽ lần lượt gặp chuỗi màn giới thiệu 1 lần của
