@@ -227,6 +227,7 @@ const SHELL = [
   './js/quiz-bank.js',
   './js/quiz-bank-en.js',
   './js/games-clay.js',
+  './js/bao-loi-3d.js',
   './js/bps3d.js',
   './js/bps3d-v3.js',
   './js/bps3d-npc.js',
