@@ -41,7 +41,8 @@ for (const f of ['kt330h/index.html', 'BizOn Game 3D.html', 'Characters 3D.html'
 }
 assert.ok(read('bp3d-boat/three-d-stage.js').includes('unpkg.com/three@0.184.0') && notes.includes('three.js 0.184.0'));
 assert.ok(read('bp3d-explainer.html').includes('@babel/standalone@7.29.0') && notes.includes('@babel/standalone` 7.29.0'));
-assert.ok(read('lab/ho-chieu-sau-rieng-3d.html').includes('esm.sh/three@0.160.0') && notes.includes('three.js 0.160.0'));
+// Sầu Riêng 3D: three 0.160.0 nhúng trong gói trang; dự phòng là bản r184 trong kho, không gọi esm.sh (20/11/2026)
+assert.ok(!read('lab/ho-chieu-sau-rieng-3d.html').includes('esm.sh') && read('lab/ho-chieu-sau-rieng-3d.html').includes("import(new URL('../js/vendor/three.module.js', location.href).href)") && notes.includes('| 0.160.0 | MIT | nằm trong `lab/ho-chieu-sau-rieng-3d.html`'));
 assert.ok(!read('Trang Giang Vien.dc.html').includes('<script src="https://unpkg.com/react'), 'React phải nạp từ vendor/react, không từ unpkg');
 
 // --- 5 · tham chiếu chéo ---
