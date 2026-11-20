@@ -1,6 +1,6 @@
 /* Bến Phù Sa 3D – chế độ chèo ghe gặp NPC. Dựng lại bàn đất sét + sông của bps3d-v3.js (cùng toạ độ P, HOME),
    thêm ghe người chơi điều khiển được và NPC đứng to trên bàn, lại gần bấm E / chạm để nói chuyện. */
-import * as THREE from '../vendor/three/three.module.js';
+import * as THREE from './vendor/three.module.min.js';
 
 export const P = [[-26, -8], [-4, -2], [-20, 16], [12, 16], [30, -16], [24, 4], [-5, 25], [6, -23]];
 export const HOME = [-4, 10];

@@ -48,7 +48,7 @@ html,body{margin:0;height:100%;background:var(--night);color:var(--ink);font-fam
 <div class="markets" id="mk"></div>
 <div id="labels"></div>
 <script type="module">
-import * as THREE from '../../vendor/three/three.module.js';
+import * as THREE from '../../js/vendor/three.module.min.js';
 const C = { lon: 116, lat: 21 }, K = 0.62;
 const P = (lon, lat) => new THREE.Vector2((lon - C.lon) * K, -(lat - C.lat) * K);
 const R = new THREE.WebGLRenderer({ canvas: document.getElementById('stage'), antialias: true });
