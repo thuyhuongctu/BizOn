@@ -413,6 +413,8 @@ function frame() {
     declutter(explorePins.filter(p => p.lab.style.display !== 'none')); }
   requestAnimationFrame(frame);
 }
-window.__bps3d = { get me() { return me; }, rivals, get moving() { return anim.length; }, wakes };   // cho test: đọc tư thế ghe/người
+window.__bps3d = { get me() { return me; }, rivals, get moving() { return anim.length; }, wakes };
+// Bảng tinh chỉnh cho người làm game (?tinh-chinh=1); người chơi không thấy, không tải thêm gì
+if (/[?&]tinh-chinh=1(&|$)/.test(location.search)) import('./tinh-chinh-3d.js').then(m => m.gan({ ten: 'Bến Phù Sa 3D', renderer, scene, camera, controls }));   // cho test: đọc tư thế ghe/người
 const wait = () => { if (G()) { setWeek(G().S.week || 0); frame(); } else setTimeout(wait, 60); };
 wait();
