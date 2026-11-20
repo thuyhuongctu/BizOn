@@ -21,7 +21,10 @@ const html = read('BizOn Game 3D.html'), mod = read('js/game3d-rong.js');
 check(html.includes('<script type="module" src="js/game3d-rong.js"></script>') && html.indexOf('"imports"') < html.indexOf('game3d-rong.js'), 'trang nạp module sau importmap');
 check(html.includes("window.__l3Rong = Game3DRong.mount(document.getElementById('login3d'))") && html.includes('window.__l3Rong.dispose()'), 'gắn khi vào màn đăng nhập, gỡ khi vào game');
 check(html.includes("if (RONG_3D && !window.__l3Rong") && html.includes('window.BIZON_RONG_3D === true') && /\?&\]rong3d=1/.test(html), 'mặc định giữ tranh gốc v5; rồng 3D chỉ bật khi có cờ (07/11/2026)');
-check(mod.includes("'assets/models/rong-bay-doi-bizon.glb'") && mod.includes('OrthographicCamera') && mod.includes('prefers-reduced-motion'), 'module: nạp GLB, máy quay trực giao, tôn trọng giảm chuyển động');
+{ const v2 = fs.readFileSync(R('assets/models/rong-bay-doi-bizon-v2.glb')), j2 = JSON.parse(v2.subarray(20, 20 + v2.readUInt32LE(12)).toString());
+  check(v2.subarray(0, 4).toString() === 'glTF' && v2.length < glb.length * 0.5 && j2.images[0].mimeType === 'image/webp' && (j2.extensionsUsed || []).includes('KHR_mesh_quantization') && !(j2.extensionsUsed || []).some(e => /meshopt|draco/i.test(e)),
+    'bản nén -v2 (20/11/2026): ' + (v2.length / 1e6).toFixed(2) + ' MB, màu WebP, nén tọa độ, không cần bộ giải nén ngoài; tệp gốc còn'); }
+check(mod.includes("'assets/models/rong-bay-doi-bizon-v2.glb'") && mod.includes('OrthographicCamera') && mod.includes('prefers-reduced-motion'), 'module: nạp GLB, máy quay trực giao, tôn trọng giảm chuyển động');
 check(read('sw.js').includes("'./js/game3d-rong.js'") && +(/CACHE = 'bizon-v(\d+)'/.exec(read('sw.js')) || [])[1] >= 790, 'sw.js cache module, ≥ bizon-v790');
 check(read('assets/models/SOURCES.md').includes('rong-bay-doi-bizon.glb') && read('assets/models/SOURCES.md').includes('Meshy'), 'SOURCES.md ghi nguồn gốc và cách dựng');
 

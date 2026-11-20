@@ -20,6 +20,13 @@ for (const id of IDS) {
 }
 const bc = read('bizon-characters.js');
 check(IDS.every(id => bc.includes(id + ": '" + id + ".glb'")) && bc.includes("ceo: 'ceo.glb'"), 'bizon-characters.js: bảng GLB có đủ CEO và sáu nhân vật đội');
+const NHE = { ceo: 'ceo-v4', cfo: 'cfo-v2', cmo: 'cmo-v2', coo: 'coo-v2', sec: 'sec-v2', lumina: 'lumina-v2', tu: 'tu-v2' };
+for (const [id, f] of Object.entries(NHE)) {   // bản nén cho web (20/11/2026): cùng clip và xương, màu WebP, nhẹ hơn tệp gốc
+  const g0 = fs.readFileSync(R('assets/models/nhan-vat/' + id + '.glb')), g = fs.readFileSync(R('assets/models/nhan-vat/' + f + '.glb')), j = JSON.parse(g.subarray(20, 20 + g.readUInt32LE(12)).toString());
+  check(g.length < g0.length * 0.75 && JSON.stringify((j.animations || []).map(a => a.name)) === '["Idle","Talk","Walk"]' && j.skins && j.skins.length === 1 && j.images[0].mimeType === 'image/webp'
+    && bc.includes(id + ": '" + f + ".glb'"), f + '.glb: bản nén ' + (g.length / 1e6).toFixed(2) + ' MB (gốc ' + (g0.length / 1e6).toFixed(2) + ' MB), clip Idle/Talk/Walk, một bộ xương, màu WebP; bizon-characters.js nạp bản này');
+}
+check(bc.includes('loadGlb(GLBBASE + (GLB_NHE[id] || GLB[id]))'), 'bizon-characters.js ưu tiên bản nén, thiếu thì dùng tệp gốc');
 const src = read('assets/models/SOURCES.md');
 check(IDS.every(id => src.includes(id + '.glb')), 'SOURCES.md ghi nguồn sáu tệp');
 check(+(/CACHE = 'bizon-v(\d+)'/.exec(read('sw.js')) || [])[1] >= 793, 'sw.js ≥ bizon-v793');

@@ -19,7 +19,7 @@ const bc = read('bizon-characters.js');
 check(bc.includes("const GLB = { ceo: 'ceo.glb',") && bc.includes("'assets/models/nhan-vat/'") && bc.includes('skeletonClone(gltf.scene)') && bc.includes('AnimationMixer'), 'bizon-characters.js: nạp GLB, nhân bản xương, mixer');
 check(bc.includes("const build = id => (USE_GLB && GLB[id]) ? rigChar(id) : (USE_ART && ART[id]) ? artChar(id)"), 'ưu tiên GLB → ảnh gốc → khối đất sét');
 check(bc.includes("window.BIZON_CHAR_GLB === true") && !bc.includes("BIZON_CHAR_GLB === false"), 'mặc định dùng tranh gốc dựng đứng; GLB chỉ bật khi trang đặt BIZON_CHAR_GLB = true');
-check(bc.includes('sm.geometry.computeBoundingBox()') && bc.includes('gltf.scene.updateMatrixWorld(true)'), 'đo chiều cao bằng hình học tư thế gốc; cập nhật ma trận trước khi nhân bản');
+check(bc.includes('new THREE.Box3().setFromObject(m, true)') && bc.includes('gltf.scene.updateMatrixWorld(true)'), 'đo chiều cao trên hình được vẽ ở tư thế gốc (đúng cả với bản nén, 20/11/2026); cập nhật ma trận trước khi nhân bản');
 check(read('assets/models/SOURCES.md').includes('nhan-vat/ceo.glb') && read('THIRD-PARTY-NOTICES.md').includes('nhan-vat/'), 'ghi nguồn gốc');
 check(+(/CACHE = 'bizon-v(\d+)'/.exec(read('sw.js')) || [])[1] >= 791, 'sw.js ≥ bizon-v791');
 
@@ -56,7 +56,7 @@ window.__ready = 1;
     // Không tải được GLB (mạng chặn): vẫn là ảnh gốc dựng đứng, không lỗi
     const q = await b.newPage(); const loi3 = []; q.on('pageerror', e => loi3.push(e.message));
     await q.route(BASE + '/_nv3d.html', r => r.fulfill({ contentType: 'text/html', body: PAGE }));
-    await q.route(/nhan-vat\/ceo\.glb/, r => r.abort());
+    await q.route(/nhan-vat\/ceo(-v\d+)?\.glb/, r => r.abort());
     await q.goto(BASE + '/_nv3d.html'); await q.waitForFunction(() => window.__ready, null, { timeout: 60000 }); await q.waitForTimeout(1500);
     await q.evaluate(() => window.__step('walk', 10));
     const du = await q.evaluate(() => window.__rig());

@@ -345,6 +345,9 @@ export function makeCharacters(THREE) {
   // trong lúc tải, hay tải hỏng, dùng ảnh gốc dựng đứng như cũ.
   const GLB = { ceo: 'ceo.glb', cfo: 'cfo.glb', cmo: 'cmo.glb', coo: 'coo.glb', sec: 'sec.glb', lumina: 'lumina.glb', tu: 'tu.glb' };
   const GLBBASE = (typeof window !== 'undefined' && window.BIZON_GLB_BASE) || 'assets/models/nhan-vat/';
+  // Bản nén cho web (20/11/2026): cùng lưới, xương và clip, nén tọa độ (KHR_mesh_quantization) và màu vẽ WebP, nhẹ hơn khoảng 38 %.
+  // Tệp gốc ở bảng GLB giữ nguyên trong kho; ceo-v2, ceo-v3 là bản dựng khác nên bản nén của CEO mang số v4.
+  const GLB_NHE = { ceo: 'ceo-v4.glb', cfo: 'cfo-v2.glb', cmo: 'cmo-v2.glb', coo: 'coo-v2.glb', sec: 'sec-v2.glb', lumina: 'lumina-v2.glb', tu: 'tu-v2.glb' };
   // 06/11/2026: mô hình Meshy nhòe mặt và bảng tên so với tranh gốc, chị Hương chọn quay về tranh gốc dựng đứng. GLB vẫn giữ trong kho,
   // chỉ bật khi trang đặt window.BIZON_CHAR_GLB = true (hoặc ?glb=1 khi thử) để xem lại sau khi có bản đẹp hơn.
   const USE_GLB = typeof window !== 'undefined' && (window.BIZON_CHAR_GLB === true || /[?&]glb=1\b/.test(window.location.search));
@@ -353,12 +356,13 @@ export function makeCharacters(THREE) {
   function rigChar(id) {
     const root = artChar(id);   // ảnh gốc hiện ngay; thay bằng mô hình khi tải xong
     const r0 = root.userData.rig, h = ART_H[id] || 1.15;
-    loadGlb(GLBBASE + GLB[id]).then(gltf => {
+    loadGlb(GLBBASE + (GLB_NHE[id] || GLB[id])).then(gltf => {
       gltf.scene.updateMatrixWorld(true);   // SkeletonUtils.clone gắn xương theo matrixWorld lúc nhân bản: phải đúng tư thế gốc, không thì lưới phóng sai tỷ lệ
       const m = skeletonClone(gltf.scene);
-      // Lưới có xương được vẽ theo khớp xương, bỏ qua tỷ lệ 0,01 của nút Armature (glTF), nên đo kích thước bằng hình học ở tư thế gốc (mét)
-      let sm = null; m.traverse(o => { if (o.isSkinnedMesh && !sm) sm = o; });
-      const box = new THREE.Box3(); if (sm) { sm.geometry.computeBoundingBox(); box.copy(sm.geometry.boundingBox); } else box.setFromObject(m);
+      // Lưới có xương được vẽ theo khớp xương, bỏ qua tỷ lệ 0,01 của nút Armature (glTF), nên đo kích thước của hình được vẽ ở tư thế
+      // gốc (Box3 chính xác, đã áp xương). Bản nén lưu tọa độ dạng số nguyên, hệ số giải nén nằm trong ma trận xương, nên không đo
+      // thẳng trên hình học được (20/11/2026).
+      m.updateMatrixWorld(true); const box = new THREE.Box3().setFromObject(m, true);   // đo đúng hình được vẽ (đã áp xương)
       const size = box.getSize(new THREE.Vector3());
       const s = h / (size.y || 1); m.scale.setScalar(s);
       m.position.set(-(box.min.x + box.max.x) / 2 * s, -box.min.y * s, -(box.min.z + box.max.z) / 2 * s);

@@ -66,3 +66,14 @@ Từ 06/11/2026 mặc định **tắt** (chị Hương thấy mặt và bảng t
 Nạp trong `bizon-characters.js` (`rigChar`: GLTFLoader + SkeletonUtils.clone + AnimationMixer; clip chọn theo trạng thái idle/talk/walk của game).
 Nhân vật quay mặt về +z. Lưới có xương bỏ qua tỷ lệ 0,01 của nút Armature khi vẽ, nên đo chiều cao bằng hình học ở tư thế gốc.
 Nội dung có công cụ AI tham gia, xem `THIRD-PARTY-NOTICES.md` Mục 7.
+
+## Bản nén cho web (20/11/2026)
+
+Rồng màn đăng nhập và bảy nhân vật có xương được lưu thêm bản nén, tệp gốc giữ nguyên:
+`rong-bay-doi-bizon-v2.glb` (3,3 → 1,3 MB, lưới giảm từ 41,7 nghìn còn 28,2 nghìn tam giác) và `nhan-vat/ceo-v4.glb`,
+`cfo-v2.glb`, `cmo-v2.glb`, `coo-v2.glb`, `sec-v2.glb`, `lumina-v2.glb`, `tu-v2.glb` (mỗi tệp khoảng 1 MB → 0,6 MB, giữ nguyên
+lưới, bộ xương và ba clip). CEO mang số v4 vì `ceo-v2.glb`, `ceo-v3.glb` là các bản dựng khác. Công cụ: **glTF Transform**
+4.1.1 (giấy phép MIT), lệnh `optimize --compress quantize --texture-compress webp --texture-size 1024` (rồng thêm
+`--simplify-ratio 0.4 --simplify-error 0.002`, nhân vật `--simplify false`). Chỉ dùng phần mở rộng mà GLTFLoader của three.js
+đọc sẵn (KHR_mesh_quantization, EXT_texture_webp), không cần bộ giải nén ngoài. Đã dựng hình bản gốc và bản nén cạnh nhau
+để so: không thấy khác bằng mắt.

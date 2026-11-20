@@ -6,7 +6,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from './vendor/GLTFLoader.js';
 
 (function () {
-  var GLB = 'assets/models/rong-bay-doi-bizon.glb';
+  var GLB = 'assets/models/rong-bay-doi-bizon-v2.glb';   // bản nén cho web (20/11/2026): 28 nghìn tam giác, tọa độ nén, màu vẽ WebP; tệp gốc giữ trong kho
   // Ảnh nền không có rồng (Meshy vẽ lại từ tranh gốc, chỉ còn trời, biển, bản đồ): chỉ đổi sang khi mô hình đã tải xong,
   // để rồng 2D trong ảnh gốc không ló ra sau rồng 3D; máy không chạy được 3D vẫn thấy tranh gốc có rồng
   var NEN = 'assets/illustrations/rong-bay-doi-bizon-nen.webp';
