@@ -27,7 +27,7 @@ assert.ok(+(fs.readFileSync(path.join(__dirname, '..', 'sw.js'), 'utf8').match(/
       await p.route(/\.(mp3|m4a|mp4)(\?|$)/, r => r.abort());
       await p.goto(BASE + '/ben-phu-sa-3d.html', { waitUntil: 'load', timeout: 90000 });
       await p.waitForFunction(() => window.__bps3d && window.__bps3d.chatLuong, null, { timeout: 60000 });
-      await p.waitForTimeout(1200);
+      await p.waitForFunction(() => window.__bps3d.chatLuong.biChe === 'an', null, { timeout: 20000 }).catch(() => {});
       const a = await p.evaluate(() => window.__bps3d.chatLuong);
       if (mobile) { assert.ok(a.pr <= 1.25, ten + ': DPR ≤ 1,25 (' + a.pr + ')'); assert.equal(a.bongCo, 1024, ten + ': bóng 1024'); }
       else { assert.equal(a.pr, 2, ten + ': DPR 2 như cũ'); assert.equal(a.bongCo, 2048, ten + ': bóng 2048 như cũ'); }
@@ -37,15 +37,17 @@ assert.ok(+(fs.readFileSync(path.join(__dirname, '..', 'sw.js'), 'utf8').match(/
       await p.waitForTimeout(1200);
       // Ảnh sa bàn phủ kín khung 3D thì cảnh 3D không lộ ra: vẽ thưa; tắt sa bàn (về 3D) thì vẽ đủ
       const sb = await p.evaluate(() => { const s = document.getElementById('bps-saban'); return !!(s && getComputedStyle(s).display !== 'none'); });
-      if (sb) { assert.equal((await p.evaluate(() => window.__bps3d.chatLuong)).biChe, true, ten + ': ảnh sa bàn phủ kín thì vẽ thưa');
+      // Máy CI vẽ bằng phần mềm có khi > 1 giây một khung: chờ trạng thái đổi (tối đa 20 giây) thay vì chờ cứng
+      const cho = gt => p.waitForFunction(v => window.__bps3d.chatLuong.biChe === v, gt, { timeout: 20000 }).catch(() => {});
+      if (sb) { await cho(true); assert.equal((await p.evaluate(() => window.__bps3d.chatLuong)).biChe, true, ten + ': ảnh sa bàn phủ kín thì vẽ thưa');
         await p.evaluate(() => document.getElementById('bps-saban').style.display = 'none'); }
-      await p.waitForTimeout(2000);
+      await cho(false); await p.waitForFunction(() => window.__bps3d.chatLuong.dong > 5, null, { timeout: 20000 }).catch(() => {});
       const c = await p.evaluate(() => window.__bps3d.chatLuong);
       assert.equal(c.biChe, false, ten + ': vào ván, khung 3D không bị che thì vẽ đủ ' + JSON.stringify(c));
       assert.ok(c.dong > 5, ten + ': gom được vật hoạt cảnh (' + c.dong + ')');
       // Phủ một tấm che giữa khung: vẽ thưa
       await p.evaluate(() => { const d = document.createElement('div'); d.id = 'che-thu'; d.style.cssText = 'position:fixed;inset:0;z-index:9999;background:#fff'; document.body.appendChild(d); });
-      await p.waitForTimeout(1200);
+      await cho(true);
       assert.equal((await p.evaluate(() => window.__bps3d.chatLuong)).biChe, true, ten + ': bị che thì vẽ thưa');
       assert.deepEqual(loi, [], ten + ': không lỗi JS: ' + loi.join(' / '));
       await ctx.close();
