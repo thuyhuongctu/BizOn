@@ -66,3 +66,13 @@ Từ 06/11/2026 mặc định **tắt** (chị Hương thấy mặt và bảng t
 Nạp trong `bizon-characters.js` (`rigChar`: GLTFLoader + SkeletonUtils.clone + AnimationMixer; clip chọn theo trạng thái idle/talk/walk của game).
 Nhân vật quay mặt về +z. Lưới có xương bỏ qua tỷ lệ 0,01 của nút Armature khi vẽ, nên đo chiều cao bằng hình học ở tư thế gốc.
 Nội dung có công cụ AI tham gia, xem `THIRD-PARTY-NOTICES.md` Mục 7.
+
+## Bản nén của hai mô hình tám động tác (20/11/2026)
+
+`nhan-vat/ceo-v4.glb` (nén từ `ceo-v3.glb`, 2,29 → 1,21 MB) và `nhan-vat/tu-v4.glb` (nén từ `tu-v3.glb`, 2,32 → 1,25 MB): giữ nguyên
+lưới (khoảng 20,5 nghìn tam giác), bộ xương 24 khớp và tám clip (Idle, Talk, Wave, Think, Cheer, Sit, Walk, Run); tệp v3 giữ nguyên.
+Công cụ: **glTF Transform** 4.1.1 (giấy phép MIT), lệnh `optimize --compress quantize --texture-compress webp --texture-size 1024
+--simplify false`. Chỉ dùng phần mở rộng GLTFLoader của three.js đọc sẵn (KHR_mesh_quantization, EXT_texture_webp). Đã dựng hình
+v3 và v4 cạnh nhau, cả toàn thân và cận mặt: không thấy khác bằng mắt. Chưa trang nào nạp hai tệp này (như v3). Lưu ý khi nạp: tọa độ
+được lưu dạng số nguyên, hệ số giải nén nằm trong ma trận xương, nên đo chiều cao trên hình đã áp xương
+(`new THREE.Box3().setFromObject(model, true)`), không đo thẳng trên `geometry.boundingBox`.
