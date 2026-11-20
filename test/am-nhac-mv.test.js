@@ -26,4 +26,8 @@ assert.ok(fs.existsSync(R('ho-chieu-thuong-hieu.html')));
 // MV Durian Passport bản hoạt hình 3D (04/11/2026), cạnh bản lyric video
 assert.ok(ma.has('4Y07yX8BARU') && !ma.has('d-LuG6_eAR4') && s.includes('assets/video/mv-durian-passport-3d-poster.webp'), 'thiếu MV Durian Passport 3D');
 assert.ok(ma.has('Vy3dhR4ichs'), 'vẫn giữ bản lyric video Durian Passport');
+// MV «Ngọn hải đăng soi đường» (The Guiding Light), BizOnland tri ân Người Thầy 20/11/2026: có trong Kho âm nhạc và trang 20/11
+assert.ok(ma.has('hGpwZgAsx2I') && s.includes('id="ngon-hai-dang"') && s.includes('assets/video/mv-ngon-hai-dang-soi-duong-poster.webp'), 'thiếu MV Ngọn hải đăng soi đường');
+const le = fs.readFileSync(R('ngay-nha-giao-20-11.html'), 'utf8');
+assert.ok(le.includes('data-yt="hGpwZgAsx2I"') && le.includes('<script src="js/am-mv.js" defer></script>') && le.includes('href="am-nhac.html#ngon-hai-dang"') && le.includes('<a class="clay-link" href="#hai-dang">'), 'trang 20/11 có MV Ngọn hải đăng và liên kết về Kho âm nhạc');
 console.log('am-nhac-mv: ' + nut.length + ' nút MV, poster và mã YouTube đều hợp lệ');
