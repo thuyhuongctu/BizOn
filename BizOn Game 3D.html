@@ -580,7 +580,9 @@ const CH = 1.35, actors = [];
 const NV_TRANH = !/[?&]nv=3d\b/.test(location.search);
 const GIAM = (() => { try { return matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { return false; } })();
 const CAO_TRANH = { ceo: 1.2, cfo: 1.12, cmo: 1.2, coo: 1.12, sec: 1.1, lumina: 1.14, tu: 1.18 };   // cùng chiều cao với mô hình (như Bến BizOn); khung tranh có lề 5 %
-const taoTranh = id => NV_TRANH && BO_TRANH[id] ? taoTranhDong(id, { cao: (CAO_TRANH[id] || 1.15) * 1.05 * CH, tocDi: 1.15 * CH, giam: GIAM }) : null;
+// Tờ sprite nhân vật (~3,7 MB) chỉ tải khi trụ sở 3D lộ ra (đã vào game), không tải lúc còn ở màn đăng nhập; tờ đi bộ tải khi nhân vật bắt đầu đi
+let moCanh = null; const vaoCanh = new Promise(r => { moCanh = r; });
+const taoTranh = id => NV_TRANH && BO_TRANH[id] ? taoTranhDong(id, { cao: (CAO_TRANH[id] || 1.15) * 1.05 * CH, tocDi: 1.15 * CH, giam: GIAM, cho: vaoCanh, napHet: false }) : null;
 const MOOD = { until: 0, kind: null }, MEET = { on: false, speaker: null };
 const CONF = [];
 function tickConfetti(dt) { for (let i = CONF.length - 1; i >= 0; i--) { const c = CONF[i]; c.v.y -= dt * 2.2; c.m.position.addScaledVector(c.v, dt); c.m.rotation.x += c.r * dt; c.m.rotation.z += c.r * 0.7 * dt; c.life -= dt;
@@ -854,6 +856,7 @@ function overlayOn() {
 }
 function setMode() {
   const shell = W && W.document && W.document.getElementById('app-shell'); booted = !!shell && !shell.classList.contains('hidden');
+  if (booted && moCanh) { moCanh(); moCanh = null; }
   const gd0 = id => W && W.document && W.document.getElementById(id), onLogin = !booted && !L3.classic && [gd0('screen-login'), gd0('screen-splash')].some(e => e && e.classList.contains('active'));
   if (onLogin !== L3.on) { L3.on = onLogin; document.body.classList.toggle('login3d', onLogin); if (onLogin) l3Show(); else { if (window.__l3Globe) { window.__l3Globe.dispose(); window.__l3Globe = null; } if (window.__l3Rong) { window.__l3Rong.dispose(); window.__l3Rong = null; } } }
   const m = !booted || overlayOn() ? 'full' : sheetTab ? 'sheet' : 'hide';
