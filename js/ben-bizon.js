@@ -519,6 +519,8 @@ function khoiTao() {
   chars = makeCharacters(THREE);
   dungCanh();
   window.addEventListener('resize', () => { if (document.documentElement.classList.contains('bb-play')) coGiu(); });
+  // Bảng tinh chỉnh cho người làm game (?tinh-chinh=1); người chơi không thấy, không tải thêm gì
+  if (/[?&]tinh-chinh=1(&|$)/.test(location.search)) import('./tinh-chinh-3d.js').then(m => m.gan({ ten: 'Bến BizOn', renderer, scene, camera }));
   return true;
 }
 
