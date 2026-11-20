@@ -25,6 +25,7 @@ Cách duy trì: **mỗi khi thêm, nâng cấp hoặc gỡ một thư viện, ph
 | **QR Code Generator for JavaScript** · Kazuhiko Arase | bản 2009 (tệp gốc của tác giả) | MIT (ghi chú giấy phép ở đầu tệp). «QR Code» là nhãn hiệu của DENSO WAVE | `js/vendor/qrcode.js` | Mã QR mở từng sản phẩm trên trang tổng hợp CHAM (`cham/index.html`) |
 | **React** và **ReactDOM** · Meta Platforms | 18.3.1 | MIT | `vendor/react/react.production.min.js`, `vendor/react/react-dom.production.min.js` | Các trang tài liệu `*.dc.html`, Trang Giảng viên, trang thiết kế trong `design/`; các trang này ánh xạ URL unpkg sang bản cục bộ qua `window.__resources` nên **không gọi ra unpkg** |
 | **PeerJS** | 1.5.4 | MIT | `vendor/peerjs/peerjs.min.js` | Chơi theo nhóm ngang hàng trong «Ben Phu Sa Game v4 Nhom.dc.html» (kèm máy chủ tín hiệu công cộng của PeerJS, xem Mục 5) |
+| **Tweakpane** · cocopon | 4.0.5 | MIT (bản sao giấy phép: `vendor/tweakpane/LICENSE.txt`) | `vendor/tweakpane/tweakpane.min.js` | Bảng tinh chỉnh cảnh 3D cho người làm game (`js/tinh-chinh-3d.js`), chỉ nạp khi địa chỉ có `?tinh-chinh=1`; người chơi không tải tệp này |
 | **Tailwind CSS** · Tailwind Labs | bản dựng rút gọn | MIT | `css/tw.css` (44 KB, chỉ chứa lớp tiện ích được dùng) | 10 trang |
 | **Bản dựng Vite của trang lớp học KT330H** | — | React (MIT), biểu tượng **lucide-react** (ISC) và các gói phụ thuộc của chúng, đóng gói trong một tệp | `kt330h/assets/index-*.js` | `kt330h/index.html` |
 
