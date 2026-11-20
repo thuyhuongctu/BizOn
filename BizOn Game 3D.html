@@ -311,13 +311,20 @@
   <div style="width:min(320px,70vw);height:14px;border-radius:10px;background:#dccbb0;border:2px solid #cbb797;overflow:hidden"><div id="bootBar" style="height:100%;width:4%;background:#2f8a8c;border-radius:10px;transition:width .35s"></div></div>
   <div id="bootMsg" data-en="Loading the 3D library…" style="margin-bottom:8vh;background:rgba(251,246,238,.92);padding:4px 12px;border-radius:10px;text-align:center;font:600 14px 'Be Vietnam Pro',sans-serif;color:#5a6b74">Đang tải thư viện 3D…</div>
   <button type="button" id="bootLow" style="display:none;margin-top:6px;font:700 13px 'Baloo 2',sans-serif;background:#fbf6ee;border:2px solid #cbb797;border-radius:12px;padding:6px 12px;color:#2b4a55;cursor:pointer" data-en="Slow network? Play the light 2D version →">Mạng chậm? Chơi bản 2D nhẹ →</button>
+  <button type="button" id="bootRetry" style="display:none;margin-top:2px;font:700 13px 'Baloo 2',sans-serif;background:#2f8a8c;border:2px solid #24706f;border-radius:12px;padding:6px 14px;color:#fff;cursor:pointer" data-en="↻ Try again">↻ Thử lại</button>
 </div>
 <script>
 (function(){ const bar=document.getElementById('bootBar'), msg=document.getElementById('bootMsg'); let en=false; try{ en=localStorage.getItem('bizon-lang')==='en'; }catch(e){}
   if(en) document.querySelectorAll('#boot [data-en]').forEach(el=>{ el.textContent=el.dataset.en; });
   window.__boot=(p,m)=>{ if(!bar) return; bar.style.width=Math.round(p*100)+'%'; if(m) msg.textContent=m; if(p>=1){ const b=document.getElementById('boot'); if(b){ b.style.opacity='0'; setTimeout(()=>b.remove(),520);} } };
   setTimeout(()=>{ const b=document.getElementById('bootLow'); if(b&&document.getElementById('boot')){ b.style.display='inline-block'; b.onclick=()=>location.href='game.html'; } },9000);
-  addEventListener('error',e=>{ if(/three|unpkg|jsdelivr/i.test(e.message||'')||(e.target&&e.target.src&&/unpkg|jsdelivr/.test(e.target.src))){ msg.textContent=en?'Could not load the 3D library. Check your network or play the 2D version.':'Không tải được thư viện 3D. Kiểm tra mạng hoặc chơi bản 2D.'; document.getElementById('bootLow').style.display='inline-block'; } },true);
+  // Thư viện 3D hỏng hay mạng rớt: báo ngay, có «Thử lại» và lối sang bản 2D (trước đây chỉ bắt lỗi từ unpkg/jsdelivr,
+  // còn three.js tự lưu trữ hỏng thì màn chờ đứng mãi ở «Đang tải thư viện 3D…»). Thanh tải còn 4 % nghĩa là mã 3D chưa chạy.
+  const hien=(vi,en_)=>{ if(!document.getElementById('boot')) return; msg.textContent=en?en_:vi; msg.setAttribute('role','alert');
+    const lo=document.getElementById('bootLow'), re=document.getElementById('bootRetry'); lo.style.display=re.style.display='inline-block'; lo.onclick=()=>location.href='game.html'; re.onclick=()=>location.reload(); };
+  const hong=()=>hien('Không tải được thư viện 3D. Kiểm tra mạng rồi bấm «Thử lại», hoặc chơi bản 2D.','Could not load the 3D library. Check your network and tap “Try again”, or play the 2D version.');
+  addEventListener('error',e=>{ const t=e.target; if((t&&t.tagName==='SCRIPT'&&t.type==='module')||/three|unpkg|jsdelivr/i.test(e.message||'')||(t&&t.src&&/unpkg|jsdelivr/.test(t.src))) hong(); },true);
+  setTimeout(()=>{ if(bar&&bar.style.width==='4%') hien('Thư viện 3D tải lâu hơn bình thường. Bấm «Thử lại», hoặc chơi bản 2D.','The 3D library is taking longer than usual. Tap “Try again”, or play the 2D version.'); },25000);
 })();
 </script>
 <div id="login3d">
