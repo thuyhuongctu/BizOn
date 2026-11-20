@@ -1,5 +1,5 @@
 /* Viên liên kết đất sét .clay-link (20/11/2026, chị góp ý các dòng liên kết trơn «▶ …», «… →» trông xấu, «chỉnh cho các nội
- * dung tương tự»): Âm nhạc (4 + «Viết thiệp tri ân» dưới MV 20/11), Đội ngũ (1), Hộ Chiếu Sầu Riêng (2), Giảng viên (1). Kiểm ở 360 và 1280 px, VI/EN, sáng/tối:
+ * dung tương tự»): Âm nhạc (4), Đội ngũ (1), Hộ Chiếu Sầu Riêng (2), Giảng viên (1). Kiểm ở 360 và 1280 px, VI/EN, sáng/tối:
  * đủ số viên, có nền, cao ≥ 44 px, không gạch chân, chữ không tràn khỏi viên, đã dịch, trang không tràn ngang, không lỗi JS;
  * nhãn nhỏ .clay-chip cũ (universe, tuyển dụng, giảng viên) không bị đổi. */
 'use strict';
@@ -14,7 +14,7 @@ const css = read('css/bizon-clay.css');
 assert.match(css, /\.clay-link,body\.clay a\.clay-link\{/, 'css có .clay-link');
 assert.match(css, /\.clay-chip\{display:inline-flex;padding:3px 10px/, 'nhãn nhỏ .clay-chip giữ nguyên');
 assert.match(read('giang-vien.html'), /<span class="clay-chip"[^>]*>Ứng dụng chính/, 'nhãn «Ứng dụng chính» vẫn là .clay-chip');
-const PAGES = { 'am-nhac.html': 5, 'doi-ngu.html': 1, 'ho-chieu-sau-rieng.html': 2, 'giang-vien.html': 1 };
+const PAGES = { 'am-nhac.html': 4, 'doi-ngu.html': 1, 'ho-chieu-sau-rieng.html': 2, 'giang-vien.html': 1 };
 for (const f of Object.keys(PAGES)) assert.ok(!/>▶ (Nghe|Chơi)|Giảng viên đăng nhập →<|kịch bản lớp học →<|chỉ báo 2030 →</.test(read(f)), f + ': không còn dòng liên kết trơn cũ');
 
 (async () => {
