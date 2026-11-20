@@ -31,7 +31,7 @@ async function mo(b, url, chan, lang = 'vi') {
   const b = await chromium.launch({ args: ['--use-gl=angle', '--use-angle=swiftshader', '--enable-unsafe-swiftshader'] });
   try {
     // Bật Nghiệp 3D: màn chờ báo lỗi, hiện «Thử lại» và «bản 2D»
-    { const { ctx, p } = await mo(b, '/BizOn%20Game%203D.html', '**/js/vendor/three.module.js');
+    { const { ctx, p } = await mo(b, '/BizOn%20Game%203D.html', '**/js/vendor/three.module.min.js');
       await p.waitForFunction(() => /Không tải được thư viện 3D/.test(document.getElementById('bootMsg').textContent), null, { timeout: 8000 });
       const r = await p.evaluate(() => { const v = id => { const e = document.getElementById(id), q = e.getBoundingClientRect(); return getComputedStyle(e).display !== 'none' && q.height > 0; };
         return { re: v('bootRetry'), lo: v('bootLow'), role: document.getElementById('bootMsg').getAttribute('role') }; });
@@ -39,10 +39,10 @@ async function mo(b, url, chan, lang = 'vi') {
       await ctx.close(); }
     // Bến Phù Sa 3D, Hộ Chiếu Thương Hiệu 3D, Hộ Chiếu Mini 3D: thông báo trong khung 3D
     for (const [url, chan, khung, ban2d, lang] of [
-      ['/ben-phu-sa-3d.html', '**/vendor/three/three.module.js', 'bps3d', 'ben-phu-sa.html', 'vi'],
-      ['/Ho%20Chieu%20Thuong%20Hieu%203D.html', '**/js/vendor/three.module.js', 'bp3d-stage', 'brand-passport.html', 'vi'],
-      ['/Ho%20Chieu%20Thuong%20Hieu%203D.html', '**/js/vendor/three.module.js', 'bp3d-stage', 'brand-passport.html?lang=en', 'en'],
-      ['/Ho%20Chieu%20Mini%203D.html', '**/js/vendor/three.module.js', 'bp3d-stage', 'Ho%20Chieu%20Mini.dc.html', 'vi']]) {
+      ['/ben-phu-sa-3d.html', '**/js/vendor/three.module.min.js', 'bps3d', 'ben-phu-sa.html', 'vi'],
+      ['/Ho%20Chieu%20Thuong%20Hieu%203D.html', '**/js/vendor/three.module.min.js', 'bp3d-stage', 'brand-passport.html', 'vi'],
+      ['/Ho%20Chieu%20Thuong%20Hieu%203D.html', '**/js/vendor/three.module.min.js', 'bp3d-stage', 'brand-passport.html?lang=en', 'en'],
+      ['/Ho%20Chieu%20Mini%203D.html', '**/js/vendor/three.module.min.js', 'bp3d-stage', 'Ho%20Chieu%20Mini.dc.html', 'vi']]) {
       const { ctx, p } = await mo(b, url, chan, lang);
       await p.waitForSelector('#' + khung + ' #bao-loi-3d', { state: 'attached', timeout: 8000 });
       // Bến Phù Sa: khung 3D chỉ hiện khi đang chơi (#ft-play) – thông báo nằm trong khung nên hiện cùng lúc vào ván

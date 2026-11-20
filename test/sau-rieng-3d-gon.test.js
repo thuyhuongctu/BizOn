@@ -1,6 +1,6 @@
 /* Hộ Chiếu Sầu Riêng 3D gọn hơn (20/11/2026, đợt 2 sau rà soát game 3D trên điện thoại):
  * - bỏ preserveDrawingBuffer (không trang nào đọc lại canvas 3D; giữ bộ đệm tốn GPU điện thoại);
- * - dự phòng three.js là bản r184 trong kho (../js/vendor/three.module.js), không gọi esm.sh;
+ * - dự phòng three.js là bản r184 trong kho (../js/vendor/three.module.min.js), không gọi esm.sh;
  * - nhạc nền theo đường dẫn tương đối (../assets/audio/), chỉ khi mở tệp tải về (file://) mới dùng https://bizonland.com.
  * Kiểm chạy thật: không gọi máy chủ ngoài; ngữ cảnh WebGL không giữ bộ đệm; ép thiếu window.THREE thì cảnh vẫn dựng bằng bản trong kho. */
 'use strict';
@@ -9,7 +9,7 @@ const BASE = process.env.BIZON_URL || 'http://127.0.0.1:8899';
 let chromium; try { chromium = require('playwright').chromium; } catch (e) { chromium = require('playwright-core').chromium; }
 const html = fs.readFileSync(path.join(__dirname, '..', 'lab/ho-chieu-sau-rieng-3d.html'), 'utf8');
 assert.ok(!html.includes('preserveDrawingBuffer'), 'không giữ bộ đệm vẽ');
-assert.ok(!html.includes('esm.sh') && html.includes("this.T = window.THREE || await import(new URL('../js/vendor/three.module.js', location.href).href);"), 'dự phòng three.js trong kho');
+assert.ok(!html.includes('esm.sh') && html.includes("this.T = window.THREE || await import(new URL('../js/vendor/three.module.min.js', location.href).href);"), 'dự phòng three.js trong kho');
 assert.ok(!html.includes("'https://bizonland.com/assets/audio/'") && (html.match(/\(location\.protocol === 'file:' \? 'https:\/\/bizonland\.com' : '\.\.'\) \+ '\/assets\/audio\/'/g) || []).length === 3, 'nhạc theo đường dẫn tương đối');
 assert.ok(+(fs.readFileSync(path.join(__dirname, '..', 'sw.js'), 'utf8').match(/bizon-v(\d+)/) || [])[1] >= 920, 'sw.js ≥ bizon-v920');
 

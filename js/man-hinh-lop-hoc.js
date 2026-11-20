@@ -5,7 +5,7 @@
  *   hcsr Dòng phù sa 8 chặng (ảnh chặng thật của game): hạt đất sét mỗi nhóm đứng ở chặng ứng với điểm tổng.
  *   bn   Tuyến Bật Nghiệp 6 tỉnh/thành trên bản đồ Việt Nam đất sét: xe tải mỗi đội đứng ở thành phố của vòng đã nộp.
  * Chế độ đêm: nền tối, đèn ấm, đom đóm. Tự viết, chỉ dùng three.js (MIT) trong vendor/three. */
-import * as THREE from '../vendor/three/three.module.js';
+import * as THREE from './vendor/three.module.min.js';
 // 06/11/2026: nhãn song ngữ, theo lựa chọn ngôn ngữ của site (bizon-lang / bizon-clay-i18n)
 const EN = (() => { try { const q = new URLSearchParams(location.search).get('lang'); if (q === 'en') return true; if (q === 'vi') return false; return localStorage.getItem('bizon-lang') === 'en' && localStorage.getItem('bizon-lang-auto') !== '1'; } catch (e) { return false; } })();
 

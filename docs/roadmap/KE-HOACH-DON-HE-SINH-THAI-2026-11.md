@@ -12,7 +12,7 @@ Ba hồ sơ quyền tác giả (chương trình máy tính) đã nộp cho **B�
 | Đổi tên, xóa, chuyển hướng bất kỳ tệp nào hồ sơ nhắc tới: `BizOn Game 3D.html`, `game.html`, `ben-phu-sa.html`, `ben-phu-sa-v8.html`, `ben-phu-sa-3d.html`, `brand-passport.html`, `Ho Chieu Thuong Hieu 3D.html`, `games.html`, `universe.html`, `global.html`, `classic-home.html`, `gioi-thieu.html`, `doi-ngu.html`, `am-nhac.html`, `bohososhtt.html` | Địa chỉ công bố ghi trong Tờ khai |
 | Sửa logic trong `js/engine.js`, `js/backend.js`, `js/app.js`, `js/aibis/*`, khối script của `brand-passport.html` và `ben-phu-sa*.html` | Bản trích mã nguồn nộp kèm lấy nguyên văn từ các tệp này |
 | Xóa hay ghi đè ảnh nhân vật, logo, minh họa, nhạc, video (`assets/character`, `logo`, `assets/illustrations`, `assets/audio`, `assets/video`) | Tác phẩm mỹ thuật ứng dụng và âm nhạc trong hồ sơ; bản cũ là bằng chứng quá trình sáng tạo |
-| Gộp hai thư mục three.js (`js/vendor/three*` và `vendor/three/*`) | `ben-phu-sa-3d.html` và `-v8.html` đang nạp `vendor/three/`, đổi đường dẫn là sửa tệp đã nộp |
+| ~~Gộp hai thư mục three.js (`js/vendor/three*` và `vendor/three/*`)~~ **Đã làm 20/11/2026 theo quyết định của chị** (lỗi 6, `docs/ghi-chu-3d-dien-thoai.md`): mọi trang dùng `js/vendor/three.module.min.js`; bản đã nộp giữ nguyên trong lịch sử git | `ben-phu-sa-3d.html` và `-v8.html` đang nạp `vendor/three/`, đổi đường dẫn là sửa tệp đã nộp |
 | Giảm dung lượng `BizOn Game 3D.html` (10,4 MB, 116 request) bằng cách tách tài nguyên | Là tệp giao diện chính của tác phẩm đã nộp |
 | Chuyển video, nhạc ra CDN | Địa chỉ tệp đang ghi trong hồ sơ bằng chứng (`ip-evidence-manifest`) |
 
