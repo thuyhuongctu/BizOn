@@ -8,5 +8,5 @@ for (const h of ['## 1. Bối cảnh', '## 2. Vấn đề kinh doanh', '## 3. C�
 assert.equal((t.split('## 3.')[1].split('## 4.')[0].match(/^\d+\. /gm) || []).length, 8, 'đủ 8 câu hỏi');
 assert.equal(0.1 * 2000000, 200000); assert.match(t, /P\* = 2\.000\.000 đ/);
 assert.match(t, /không\*\* công bố học phí/, 'ghi rõ bài quảng cáo không có học phí');
-assert.ok(+(read('sw.js').match(/bizon-v(\d+)/) || [])[1] >= 920);
+assert.ok(+(read('sw.js').match(/bizon-v(\d+)/) || [])[1] >= 922);
 console.log('tinh-huong-blender: ok');
