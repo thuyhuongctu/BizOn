@@ -26,7 +26,7 @@
       },
       orcid: '0000-0002-7711-2487',
       osf: 'https://osf.io/m25qs/',
-      zenodo: '10.5281/zenodo.21282517',
+      zenodo: '10.5281/zenodo.21592241',   // DOI khái niệm của BizOn (CITATION.cff); 21282517 là của M-AIDA, không dùng ở đây
       github: 'thuyhuongctu',
     },
     tu: {
