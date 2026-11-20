@@ -43,8 +43,17 @@
   .hp-door-d{font-size:14px;line-height:1.45;color:var(--clay-ink-2)}
   .hp-door-go{margin-top:auto;font-weight:800;font-size:14px;color:var(--clay-ink)}
   .hp-door-go .clay-go{margin:0 .35em 0 0;width:1.5em;height:1.5em;vertical-align:-.45em}
-  .hp-door-more{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:12px;font-size:14px;font-weight:700}
-  .hp-door-more a{display:inline-flex;align-items:center;min-height:44px;color:var(--clay-ink);text-decoration:underline;text-underline-offset:3px}
+  /* Hai lối phụ dưới ba cửa (20/11/2026, chị góp ý hai dòng gạch chân trông xấu): hai viên đất sét cạnh nhau, biểu tượng tròn + chữ + chú thích */
+  .hp-door-more{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}
+  .hp-door-more a{display:flex;align-items:center;gap:10px;min-height:56px;padding:8px 12px 8px 8px;border-radius:20px;background:var(--clay-card);color:var(--clay-ink);text-decoration:none;box-shadow:var(--clay-night-shadow,inset 0 -4px 0 rgba(110,70,30,.1),inset 0 3px 0 rgba(255,255,255,.9),0 10px 18px -12px rgba(110,70,30,.5));transition:transform .15s}
+  .hp-door-more a:hover{transform:translateY(-2px);color:var(--clay-ink)}
+  .hp-more-i{display:grid;place-items:center;flex:none;width:40px;height:40px;border-radius:50%;background:var(--clay-c2);font-size:19px;box-shadow:inset 0 -4px 0 rgba(0,0,0,.12),inset 0 3px 0 rgba(255,255,255,.4)}
+  .hp-more-i.play{background:var(--clay-teal,#006687);color:#fff;font-size:14px;padding-left:2px}
+  .hp-more-x{display:flex;flex-direction:column;min-width:0;line-height:1.25}
+  .hp-more-t{font-family:var(--clay-head);font-size:15px;font-weight:800}
+  .hp-more-d{font-size:12.5px;font-weight:600;color:var(--clay-ink-2)}
+  @media (max-width:420px){.hp-door-more a{gap:8px;padding-right:8px}.hp-more-i{width:34px;height:34px;font-size:16px}.hp-more-i.play{font-size:12px}.hp-more-t{font-size:14px}.hp-more-d{font-size:12px}}
+  @media (prefers-reduced-motion:reduce){.hp-door-more a{transition:none}.hp-door-more a:hover{transform:none}}
   @media (max-width:760px){
     .hp-doors{grid-template-columns:1fr;gap:10px;margin-top:18px}
     .hp-door{display:grid;grid-template-columns:40px minmax(0,1fr) auto;grid-template-rows:auto auto;column-gap:12px;row-gap:2px;align-items:center;padding:12px 14px;border-radius:20px}
@@ -184,7 +193,7 @@
     html[data-theme="dark"] .hp-base{background:#C99A5C}
     html[data-theme="dark"] .cn-refresh{box-shadow:var(--clay-tray-shadow)}
   }
-.hp-news{display:flex;align-items:center;gap:10px;width:fit-content;max-width:100%;margin-top:14px;padding:8px 14px 8px 8px;border-radius:999px;background:var(--clay-card);color:var(--clay-ink);font-size:14px;font-weight:700;line-height:1.35;text-decoration:none;box-shadow:inset 0 -4px 0 rgba(110,70,30,.1),0 10px 18px -12px rgba(110,70,30,.5)}.hp-news b{flex:none;padding:4px 10px;border-radius:999px;background:#E8762D;color:#fff;font-size:12px;letter-spacing:.04em;text-transform:uppercase}.hp-news span{min-width:0}.hp-news:hover{color:var(--clay-teal)}
+.hp-news{display:flex;align-items:center;gap:10px;width:fit-content;max-width:100%;margin-top:14px;padding:8px 14px 8px 8px;border-radius:999px;background:var(--clay-card);color:var(--clay-ink);font-size:14px;font-weight:700;line-height:1.35;text-decoration:none;box-shadow:inset 0 -4px 0 rgba(110,70,30,.1),0 10px 18px -12px rgba(110,70,30,.5)}.hp-news b{flex:none;padding:4px 10px;border-radius:999px;background:#E8762D;color:#fff;font-size:12px;letter-spacing:.04em;text-transform:uppercase}.hp-news span{min-width:0}.hp-news:hover{color:var(--clay-teal)}.hp-news[hidden]{display:none}.hp-news.hp-le b{background:#2F8A8C}
 </style>
 <meta property="og:type" content="website">
 <meta property="og:title" content="BizOn – Business Decision Simulation Ecosystem">
@@ -208,10 +217,12 @@
             <a class="hp-door" data-door="khach" href="ben-phu-sa.html" style="background:var(--clay-c4)"><span class="hp-door-i" aria-hidden="true">👀</span><span class="hp-door-t" data-en="Just looking">Tôi muốn xem thử</span><span class="hp-door-d" data-en="Play Bến Phù Sa free, no sign-in.">Chơi Bến Phù Sa miễn phí, không cần đăng nhập.</span><span class="hp-door-go" aria-hidden="true">→<span data-en=" Play"> Chơi thử</span></span></a>
           </div>
           <div class="hp-door-more">
-            <a data-door-extra="giang-vien" href="man-hinh-lop-hoc.html?demo=1" data-en="Instructors: try a sample class (no sign-in) →">Giảng viên: thử lớp demo (không cần đăng nhập) →</a>
-            <a data-door-extra="khach" href="assets/video/bizon-trailer-v6-720p.mp4" data-trailer="assets/video/bizon-trailer-v6-720p.mp4" data-poster="assets/video/bizon-trailer-poster.webp" data-title="Bật Nghiệp" data-title-en="Bật Nghiệp" data-en="▶ Watch the Bật Nghiệp 3D video">▶ Xem video Bật Nghiệp 3D</a>
+            <a data-door-extra="giang-vien" href="man-hinh-lop-hoc.html?demo=1"><span class="hp-more-i" aria-hidden="true">🏫</span><span class="hp-more-x"><span class="hp-more-t" data-en="Sample class">Lớp demo</span><span class="hp-more-d" data-en="No sign-in needed">Không cần đăng nhập</span></span></a>
+            <a data-door-extra="khach" href="assets/video/bizon-trailer-v6-720p.mp4" data-trailer="assets/video/bizon-trailer-v6-720p.mp4" data-poster="assets/video/bizon-trailer-poster.webp" data-title="Bật Nghiệp" data-title-en="Bật Nghiệp"><span class="hp-more-i play" aria-hidden="true">▶</span><span class="hp-more-x"><span class="hp-more-t">Bật Nghiệp 3D</span><span class="hp-more-d" data-en="Watch the video">Xem video</span></span></a>
           </div>
         </nav>
+        <a class="hp-news hp-le" id="hp-le-20-11" href="ngay-nha-giao-20-11.html" data-tu="2026-11-10" data-den="2026-11-30" hidden><b>20/11</b><span data-en="Thank you, teachers · write a card for your teacher with the BizOn green dragon →">Tri ân thầy cô · viết thiệp gửi thầy cô cùng rồng xanh BizOn →</span></a>
+        <script>(function(){var a=document.getElementById('hp-le-20-11'),d=new Date(),k=d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2);if(a&&k>=a.dataset.tu&&k<=a.dataset.den)a.hidden=false;})();</script>
         <a class="hp-news" href="bang-chung.html#lop-quoc-te-umk"><b data-en="New">Tin mới</b><span data-en="17–19 Nov 2026 · 160 students from UM Kendari (Indonesia) learn and play Bật Nghiệp 3D on Zoom with Can Tho University →">17–19/11/2026 · 160 sinh viên UM Kendari (Indonesia) học và chơi Bật Nghiệp 3D qua Zoom cùng ĐH Cần Thơ →</span></a>
         <p class="hp-lead" data-en="Business simulation games for learning, research and internationalization. The game explains why each decision leads to its result, and the same decisions always give the same result (a deterministic engine). A rule-based advisor helps learners draw their own lessons. BizOn follows open science: its methods are public so others can check them.">Trò chơi mô phỏng kinh doanh cho học tập, nghiên cứu và quốc tế hóa. Game giải thích vì sao mỗi quyết định dẫn tới kết quả đó, và cùng quyết định luôn cho cùng kết quả (engine tất định). Cố vấn chạy theo quy tắc giúp người học tự rút bài học. BizOn theo định hướng khoa học mở: công khai cách làm để người khác kiểm chứng.</p>
         <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:30px">

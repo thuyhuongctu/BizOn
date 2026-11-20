@@ -18,8 +18,10 @@ const small = Math.min(innerWidth, innerHeight) < 600;
 const dark = document.documentElement.dataset.theme === 'dark';
 
 const R = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
-R.setPixelRatio(Math.min(devicePixelRatio, small ? 1.6 : 1.75));
-R.shadowMap.enabled = true; R.shadowMap.type = THREE.PCFSoftShadowMap;
+// Điện thoại (màn nhỏ): vào cảnh ở DPR 1,25 và chưa bật bóng – trước đây khởi đầu DPR 1,6 + bóng mềm, khung đầu chỉ ~0,5 fps
+// và phải chờ cơ chế tự hạ (dưới frame()) hạ dần mất ~8 s. Máy khỏe thì frame() bật lại bóng một lần khi khung hình dư.
+R.setPixelRatio(Math.min(devicePixelRatio, small ? 1.25 : 1.75));
+R.shadowMap.enabled = !small; R.shadowMap.type = THREE.PCFSoftShadowMap;
 R.outputColorSpace = THREE.SRGBColorSpace; R.toneMapping = THREE.ACESFilmicToneMapping; R.toneMappingExposure = 1.05;
 wrap.prepend(R.domElement);
 const scene = new THREE.Scene();
@@ -957,7 +959,7 @@ function fitDist(T, dir) {
 resize();
 drawCover(); drawInside(); drawPage();
 document.fonts && document.fonts.ready.then(() => { labels.forEach(l => l.userData.redraw()); drawCover(); drawInside(); drawPage(); });
-const perf = { n: 0, s: 0 };
+const perf = { n: 0, s: 0, up: false };
 const clock = new THREE.Clock(); let acc = 1, lastT = 0;
 const tmp = new THREE.Vector3(), boatGoal = new THREE.Vector3();
 camGoal('intro', 0); cam.position.copy(goalP); ctl.target.copy(goalT);
@@ -968,8 +970,10 @@ function frame() {
   if (document.hidden || window.__clayHubOpen) return;
   const dt = Math.min(clock.getDelta(), 0.05), t = clock.elapsedTime; U.t.value = t;
   acc += dt; if (acc > 0.25) { acc = 0; sync(t); updateKiosks(); if (window.__bp3dQReady && !LITE) { questTick(); badgeTick(); } }
-  perf.n++; perf.s += dt; if (perf.s > 2.5) { const fps = perf.n / perf.s; perf.n = perf.s = 0;
-    if (fps < 38 && t > 4) { const pr = R.getPixelRatio(); if (pr > 1.01) { R.setPixelRatio(Math.max(1, pr - 0.3)); resize(); } else if (R.shadowMap.enabled) { R.shadowMap.enabled = false; scene.traverse(o => o.material && (o.material.needsUpdate = true)); } } }
+  // Tự hạ chất lượng: màn nhỏ đo sớm hơn (sau 1,5 s, mỗi 1,2 s) để khỏi giật lâu lúc vào cảnh
+  perf.n++; perf.s += dt; if (perf.s > (small ? 1.2 : 2.5)) { const fps = perf.n / perf.s; perf.n = perf.s = 0;
+    if (small && !perf.up && fps > 55 && t > 6 && !R.shadowMap.enabled) { perf.up = true; R.shadowMap.enabled = true; scene.traverse(o => o.material && (o.material.needsUpdate = true)); }
+    else if (fps < 38 && t > (small ? 1.5 : 4)) { const pr = R.getPixelRatio(); if (pr > 1.01) { R.setPixelRatio(Math.max(1, pr - 0.3)); resize(); } else if (R.shadowMap.enabled) { R.shadowMap.enabled = false; scene.traverse(o => o.material && (o.material.needsUpdate = true)); } } }
   anim.forEach(f => f(t));
   { const ph = R.domElement.clientHeight || 300, fh = 2 * Math.tan(21 * Math.PI / 180);
     labels.forEach(l => { if (!l.parent || !l.userData.bw) return; l.getWorldPosition(tmp); const d = tmp.distanceTo(cam.position);

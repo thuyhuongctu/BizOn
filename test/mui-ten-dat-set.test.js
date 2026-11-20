@@ -10,7 +10,7 @@ let chromium; try { chromium = require('playwright').chromium; } catch (e) { chr
 const read = f => fs.readFileSync(path.join(__dirname, '..', f), 'utf8');
 assert.ok(+(read('sw.js').match(/bizon-v(\d+)/) || [])[1] >= 908, 'sw.js ≥ v908');
 assert.match(read('css/bizon-clay.css'), /\.clay-go\{/, 'css có .clay-go');
-assert.match(read('index.html'), /data-en="Instructors: try a sample class \(no sign-in\) →"/, 'chữ gốc trong HTML vẫn giữ «→»');
+assert.match(read('index.html'), /data-en="[^"]*→"/, 'chữ gốc trong HTML vẫn giữ «→»');
 
 const left = p => p.$$eval('a, button', els => els.filter(e => e.offsetParent !== null && /^\s*→|→\s*$/.test(e.textContent)).map(e => e.textContent.trim().slice(0, 60)));
 (async () => {
@@ -34,7 +34,7 @@ const left = p => p.$$eval('a, button', els => els.filter(e => e.offsetParent !=
       if (url === '/index.html' && w === 390) {
         const vis = await p.$$eval('#ba-cua .hp-door-go .clay-go', a => a.map(x => { const r = x.getBoundingClientRect(); return r.width > 20 && r.height > 20; }));
         assert.deepEqual(vis, [true, true, true], 'trang chủ điện thoại: ba cửa đều thấy viên mũi tên');
-        assert.equal(await p.$eval('[data-door-extra="giang-vien"]', e => e.dataset.en), 'Instructors: try a sample class (no sign-in) →', 'data-en vẫn giữ chữ gốc');
+        assert.match(await p.$eval('[data-door="giang-vien"] .hp-door-go [data-en]', e => e.dataset.en), /Guide/, 'data-en vẫn giữ chữ gốc');
       }
       assert.deepEqual(errs, [], tag + ': không lỗi JS');
       await p.close();

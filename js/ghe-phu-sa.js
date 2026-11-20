@@ -32,7 +32,7 @@ export async function mountGhe(el, opts = {}) {
     // được vào bất kỳ trang nào (trang chủ, giới thiệu...) không có importmap
     // đó, nên tự xoay model bằng tay thay vì orbit controls tương tác.
     const [THREE, { buildBoat }, { buildHuong }, { buildTu }] = await Promise.all([
-      import(new URL('../vendor/three/three.module.js', import.meta.url).href),
+      import(new URL('./vendor/three.module.min.js', import.meta.url).href),
       import(new URL('../bp3d-boat/model-boat.js', import.meta.url).href),
       import(new URL('../bp3d-boat/model-huong.js', import.meta.url).href),
       import(new URL('../bp3d-boat/model-tu.js', import.meta.url).href),
