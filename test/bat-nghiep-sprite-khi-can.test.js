@@ -7,7 +7,6 @@
  * Không đụng js/engine.js, js/app.js, js/backend.js. */
 'use strict';
 const fs = require('node:fs'), path = require('node:path'), assert = require('node:assert/strict');
-const { execSync } = require('node:child_process');
 const BASE = process.env.BIZON_URL || 'http://127.0.0.1:8899';
 let chromium; try { chromium = require('playwright').chromium; } catch (e) { chromium = require('playwright-core').chromium; }
 const read = f => fs.readFileSync(path.join(__dirname, '..', f), 'utf8');
@@ -15,8 +14,9 @@ const td = read('js/ben-bizon-tranh-dong.js'), g = read('BizOn Game 3D.html');
 assert.ok(td.includes('giam = false, cho = null, napHet = true } = {}') && td.includes('Promise.resolve(cho).then(() => Promise.all(dau.map(napTo)))') && td.includes('if (napHet) bo.filter'), 'bộ nạp có tuỳ chọn chờ và tải dần');
 assert.ok(g.includes("cho: vaoCanh, napHet: false })") && g.includes('if (booted && moCanh) { moCanh(); moCanh = null; }'), 'Bật Nghiệp chờ vào game mới tải tranh');
 assert.ok(!/cho:|napHet/.test(read('js/ben-bizon.js')), 'Bến BizOn giữ cách tải cũ');
-const doi = execSync('git diff --name-only origin/main -- js/engine.js js/app.js js/backend.js', { cwd: path.join(__dirname, '..'), encoding: 'utf8' }).trim();
-assert.equal(doi, '', 'không đụng ba tệp hồ sơ js/engine.js, js/app.js, js/backend.js');
+// Ba tệp hồ sơ quyền tác giả không đổi: so mã băm SHA-256 với bản ngày 20/11/2026 (máy CI chỉ tải nhánh PR, không có origin/main để so git diff)
+const HASH = { 'js/engine.js': '0927c799d863db5d698cfc2bff41e1ff54bb07a6c77c2f4f67ef90e7747b3e74', 'js/app.js': '1d340a84993294f9015b02ab405eef9591354db0bfb737909ba540fe75a9899d', 'js/backend.js': '454c490279b4d7a5b84501d529c243b0b51eb00ca3f84d810cc47e95f8d9ba82' };
+for (const [f, h] of Object.entries(HASH)) assert.equal(require('node:crypto').createHash('sha256').update(fs.readFileSync(path.join(__dirname, '..', f))).digest('hex'), h, 'không đụng tệp hồ sơ ' + f);
 assert.ok(+(read('sw.js').match(/bizon-v(\d+)/) || [])[1] >= 922, 'sw.js ≥ bizon-v922');
 
 (async () => {
