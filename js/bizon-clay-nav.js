@@ -12,6 +12,8 @@
   window.BIZON_NO_NAV = true; /* chặn site-nav.js cũ nếu vô tình được nạp */
 
   var LINKS = [
+    /* Mục chữ «Trang chủ» (20/11/2026): logo BizOn vẫn về trang chủ, nhưng nhiều người không biết bấm logo */
+    { href:'index.html',            vi:'Trang chủ', en:'Home' },
     { href:'universe.html',         vi:'Vũ trụ',    en:'Universe' },
     { href:'games.html',            vi:'Trò chơi',  en:'Games' },
     { href:'hanh-trinh.html',       vi:'Hành trình',en:'Journey' },
