@@ -1,6 +1,6 @@
 // Bản phác «Màn hình lớp học» – phần dùng chung: chiếu kinh/vĩ độ sang mặt phẳng, dựng khối Việt Nam từ assets/geo/vnm.json,
 // tuyến sông và địa danh đồng bằng (toạ độ gần đúng, chỉ để phác).
-import * as THREE from '../../vendor/three/three.module.js';
+import * as THREE from '../../js/vendor/three.module.min.js';
 export { THREE };
 export const C = { lon: 105.9, lat: 10.15 };           // tâm khung: giữa đồng bằng
 const K = 10;                                            // 1 độ ≈ 10 đơn vị

@@ -21,7 +21,7 @@ assert.equal(b0.slice(8, 12).toString(), 'WEBP'); assert.ok(b0.length > 30000 &&
       await p.addInitScript(l => { try { localStorage.setItem('bizon-lang', l); } catch (e) {} }, lang);
       await p.route(/\.(woff2?|mp3|m4a|mp4)(\?|$)/, r => r.abort());
       await p.goto(BASE + '/index.html', { waitUntil: 'load', timeout: 60000 }); await p.waitForTimeout(800);
-      const h = await p.evaluate(() => { const a = document.querySelector('.hp-hero .hp-news'); const r = a.getBoundingClientRect(); return { href: a.getAttribute('href'), t: a.textContent, vis: r.width > 0 && r.top < innerHeight, ov: document.documentElement.scrollWidth - innerWidth }; });
+      const h = await p.evaluate(() => { const a = document.querySelector('.hp-hero .hp-news:not(.hp-le)'); const r = a.getBoundingClientRect(); return { href: a.getAttribute('href'), t: a.textContent, vis: r.width > 0 && r.top < innerHeight, ov: document.documentElement.scrollWidth - innerWidth }; });
       assert.equal(h.href, 'bang-chung.html#lop-quoc-te-umk');
       assert.match(h.t, lang === 'en' ? /^New17–19 Nov 2026 · 160 students from UM Kendari/ : /^Tin mới17–19\/11\/2026 · 160 sinh viên UM Kendari/);
       assert.ok(h.vis, 'tin mới hiện ngay màn đầu'); assert.ok(h.ov <= 0, `trang chủ tràn ngang ${h.ov}px ở ${w}`);

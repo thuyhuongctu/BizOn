@@ -23,7 +23,7 @@ check(bc.includes('sm.geometry.computeBoundingBox()') && bc.includes('gltf.scene
 check(read('assets/models/SOURCES.md').includes('nhan-vat/ceo.glb') && read('THIRD-PARTY-NOTICES.md').includes('nhan-vat/'), 'ghi nguồn gốc');
 check(+(/CACHE = 'bizon-v(\d+)'/.exec(read('sw.js')) || [])[1] >= 791, 'sw.js ≥ bizon-v791');
 
-const PAGE = `<!DOCTYPE html><html><head><meta charset="utf-8"><script type="importmap">{"imports":{"three":"./js/vendor/three.module.js"}}</script></head>
+const PAGE = `<!DOCTYPE html><html><head><meta charset="utf-8"><script type="importmap">{"imports":{"three":"./js/vendor/three.module.min.js"}}</script></head>
 <body><script>window.BIZON_CHAR_GLB = true;</script><script type="module">
 import * as THREE from 'three'; import { makeCharacters } from './bizon-characters.js';
 const r = new THREE.WebGLRenderer(); r.setSize(300, 300); document.body.append(r.domElement);

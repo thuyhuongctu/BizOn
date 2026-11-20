@@ -24,7 +24,9 @@ const nv = pg => pg.evaluate(() => window.__bn3dNhanVat());
   try {
     // 1. mặc định
     let pg = await b.newPage({ viewport: { width: 900, height: 600 } }); const loi = []; pg.on('pageerror', e => loi.push(e.message));
+    await pg.route(/supabase\.co/, r => r.fulfill({ status: 200, contentType: 'application/json', body: '[]' })); 
     await pg.goto(URL, { waitUntil: 'load' });
+    /* từ 20/11/2026 tranh nhân vật chỉ tải khi đã vào game (test/bat-nghiep-sprite-khi-can.test.js) */ await pg.waitForFunction(() => { const f = document.getElementById('gf'); return !document.getElementById('boot') && f && f.contentWindow && typeof f.contentWindow.doLoginDemo === 'function'; }, null, { timeout: 60000 }); for (let k = 0; k < 3 && await pg.evaluate(() => document.body.classList.contains('login3d')); k++) { await pg.locator('#l3Demo').click({ force: true }); await pg.waitForTimeout(3000); }
     check(await until(pg, () => window.__bn3dNhanVat && window.__bn3dNhanVat().length === 7 && window.__bn3dNhanVat().every(a => a.tranh && a.tranh.sanSang)), 'mặc định: cả 7 nhân vật là tranh động và đã tải tờ sprite');
     check(await until(pg, () => { const c = window.__bn3dNhanVat().find(a => a.id === 'coo'); return c.tranh.to.startsWith('di-'); }, 20000), 'COO đi tuần: dùng tờ đi bộ');
     // Chờ tới khi khung hình (hoặc tờ) của COO đổi, tối đa 20 giây, thay vì chờ cứng 700 ms: máy CI dựng 3D bằng phần mềm có lúc chưa kịp vẽ khung kế.
@@ -37,13 +39,16 @@ const nv = pg => pg.evaluate(() => window.__bn3dNhanVat());
     await pg.close();
     // 2. ?nv=3d
     pg = await b.newPage({ viewport: { width: 900, height: 600 } });
+    await pg.route(/supabase\.co/, r => r.fulfill({ status: 200, contentType: 'application/json', body: '[]' })); 
     await pg.goto(URL + '&nv=3d', { waitUntil: 'load' });
     check(await until(pg, () => window.__bn3dNhanVat && window.__bn3dNhanVat().length === 7) && (await nv(pg)).every(a => a.tranh === null), '?nv=3d: cả 7 nhân vật dùng mô hình 3D cũ');
     await pg.close();
     // 3. tờ sprite tải hỏng
     const ctx = await b.newContext({ viewport: { width: 900, height: 600 } }); pg = await ctx.newPage(); const loi3 = []; pg.on('pageerror', e => loi3.push(e.message));
     await pg.route('**/assets/character/tranh-dong/**', r => r.abort());
+    await pg.route(/supabase\.co/, r => r.fulfill({ status: 200, contentType: 'application/json', body: '[]' })); 
     await pg.goto(URL, { waitUntil: 'load' });
+    /* từ 20/11/2026 tranh nhân vật chỉ tải khi đã vào game (test/bat-nghiep-sprite-khi-can.test.js) */ await pg.waitForFunction(() => { const f = document.getElementById('gf'); return !document.getElementById('boot') && f && f.contentWindow && typeof f.contentWindow.doLoginDemo === 'function'; }, null, { timeout: 60000 }); for (let k = 0; k < 3 && await pg.evaluate(() => document.body.classList.contains('login3d')); k++) { await pg.locator('#l3Demo').click({ force: true }); await pg.waitForTimeout(3000); }
     check(await until(pg, () => window.__bn3dNhanVat && window.__bn3dNhanVat().length === 7 && window.__bn3dNhanVat().every(a => a.tranh === null)), 'tờ sprite tải hỏng: thay bằng mô hình cũ');
     check(loi3.length === 0, 'tờ sprite tải hỏng: không lỗi trang' + (loi3[0] ? ': ' + loi3[0] : ''));
     await ctx.close();

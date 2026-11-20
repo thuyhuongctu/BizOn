@@ -84,7 +84,7 @@ for (const g of ['bps', 'hcth', 'hcsr']) {
 const page = read('man-hinh-lop-hoc.html');
 assert.ok(page.includes('<meta name="robots" content="noindex">'), 'trang giảng viên không lập chỉ mục');
 for (const s of ['js/backend-config.js', 'js/instructor-api.js', 'js/man-hinh-lop-hoc-data.js', './js/man-hinh-lop-hoc.js']) assert.ok(page.includes(s), 'trang nạp ' + s);
-assert.ok(read('js/man-hinh-lop-hoc.js').includes("from '../vendor/three/three.module.js'"), 'dùng three.js có sẵn trong kho');
+assert.ok(read('js/man-hinh-lop-hoc.js').includes("from './vendor/three.module.min.js'"), 'dùng three.js có sẵn trong kho');
 assert.ok(/async ftBoard\(code\)[^\n]*ft_class_leaderboard/.test(read('js/instructor-api.js')));
 assert.ok(read('Trang Giang Vien.dc.html').includes('href="man-hinh-lop-hoc.html?lop={{ code }}"'), 'lối vào từ Trang Giảng viên');
 const sw = read('sw.js');

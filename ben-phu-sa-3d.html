@@ -160,7 +160,7 @@ body.bps-saban-on #bps3d-hint{display:none!important}
 /* Lối nhỏ "Vũ trụ" (cố định góc trái dưới) đè thanh chế độ – ẩn khi đang chơi (như bản v8) */
 body:has(#ft-play:not(.hidden)) .vutru-goc{display:none!important}
 </style>
-<script type="importmap">{"imports":{"three":"./vendor/three/three.module.js","three/addons/controls/OrbitControls.js":"./vendor/three/OrbitControls.js"}}</script>
+<script type="importmap">{"imports":{"three":"./js/vendor/three.module.min.js","three/addons/controls/OrbitControls.js":"./js/vendor/OrbitControls.js"}}</script>
 <script type="module" src="js/game3d-globe.js"></script>
 <link rel="stylesheet" href="css/clay-tool-skin.css">
 <script src="js/capture-guard.js"></script>
@@ -1321,6 +1321,7 @@ body:has(#ft-play:not(.hidden)) .vutru-goc{display:none!important}
 <script src="js/bps-voice.js"></script>
 <script src="js/bps-cast.js"></script>
 <script src="js/bps-exam.js"></script>
+<script src="js/bao-loi-3d.js" data-khung="bps3d" data-tep="js/bps3d.js" data-ban-2d="ben-phu-sa.html"></script>
 <script type="module" src="js/bps3d.js"></script>
 <script>document.body.appendChild(document.getElementById('bps3d-wrap'));</script>
 </body>

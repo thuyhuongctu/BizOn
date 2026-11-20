@@ -29,8 +29,10 @@ export const diDuoc = id => !!BO_TRANH[id] && DI.every(t => BO_TRANH[id].include
 const gocGan = a => Math.atan2(Math.sin(a), Math.cos(a));
 const CHO_QUAY = 0.45;   // giây đứng yên trước khi quay ra nhìn người chơi
 
-/* id: mã nhân vật trong BO_TRANH; cao: chiều cao trong cảnh; tocDi: tốc độ đi mà vòng lặp phát đúng nhịp gốc */
-export function taoTranhDong(id, { cao = 1.2, tocDi = 1.15, giam = false } = {}) {
+/* id: mã nhân vật trong BO_TRANH; cao: chiều cao trong cảnh; tocDi: tốc độ đi mà vòng lặp phát đúng nhịp gốc.
+ * cho (tuỳ chọn, 20/11/2026): Promise; chỉ bắt đầu tải tờ sprite khi nó xong – trang còn ở màn đăng nhập thì chưa tải (Bật Nghiệp 3D).
+ * napHet (mặc định true): tải trước cả các tờ còn lại sau khi nhân vật đã hiện; false thì tờ còn lại chỉ tải khi cần đến (nhân vật bắt đầu đi). */
+export function taoTranhDong(id, { cao = 1.2, tocDi = 1.15, giam = false, cho = null, napHet = true } = {}) {
   const bo = BO_TRANH[id] || [], coDi = diDuoc(id), root = new THREE.Group(), to = {};
   let san = false, hong = false, ten = coDi ? 'di-sau' : 'dung', lat = 1, khung = 0, dem = 0, dungLau = 0, dangNoi = false;
   const vl = new THREE.MeshBasicMaterial({ transparent: true, alphaTest: 0.35, side: THREE.DoubleSide, toneMapped: false });
@@ -43,9 +45,9 @@ export function taoTranhDong(id, { cao = 1.2, tocDi = 1.15, giam = false } = {})
   /* Nạp trước hai tờ cần ngay (đứng và hướng đi đầu tiên); các hướng còn lại nạp sau khi nhân vật đã hiện, hoặc ngay khi cần đến
    * (16/11/2026: trang mở nhanh hơn vì không chờ đủ bốn tờ của mọi nhân vật). Tờ chưa về thì tạm dùng tờ đã có. */
   const dau = coDi ? bo.filter(t => t === 'dung' || t === ten) : bo;
-  Promise.all(dau.map(napTo))
+  Promise.resolve(cho).then(() => Promise.all(dau.map(napTo)))
     .then(() => { if (!bo.length) throw new Error('khong co to sprite'); san = true; tam.visible = true; dat(ten, 1, 0);
-      bo.filter(t => !to[t]).reduce((p, t) => p.then(() => napTo(t)).catch(() => {}), Promise.resolve()); })
+      if (napHet) bo.filter(t => !to[t]).reduce((p, t) => p.then(() => napTo(t)).catch(() => {}), Promise.resolve()); })
     .catch(() => { hong = true; });
   const coSan = t => to[t] ? t : (napTo(t).catch(() => {}), t.startsWith('di-') && to['di-sau'] ? 'di-sau' : to.dung ? 'dung' : ten);
   /* số khung thứ k của một tờ: tờ «qua lại» đi 0…K−1 rồi K−2…1 */

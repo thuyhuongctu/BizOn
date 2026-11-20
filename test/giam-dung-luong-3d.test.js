@@ -28,12 +28,14 @@ check(+(/CACHE = 'bizon-v(\d+)'/.exec(read('sw.js')) || [])[1] >= 893, 'sw.js �
 (async () => {
   const b = await chromium.launch();
   try {
-    for (const [u, can] of [['BizOn%20Game%203D.html?diorama=1', 20], ['ben-phu-sa-3d.html', 2]]) {
+    // Bật Nghiệp: từ 20/11/2026 chỉ tải khi đã vào game, mỗi vai tải trước tờ đứng + một tờ đi (10 tờ), tờ đi khác tải khi cần
+    for (const [u, can] of [['BizOn%20Game%203D.html?diorama=1', 10], ['ben-phu-sa-3d.html', 2]]) {
       const ctx = await b.newContext({ viewport: { width: 1280, height: 800 } });
       await ctx.addInitScript(() => { try { localStorage.setItem('bizon-lang', 'vi'); localStorage.setItem('bizon-bps-tour-seen', '1'); } catch (e) {} });
       const pg = await ctx.newPage(), tai = [];
       pg.on('request', r => { const m = /tranh-dong\/([\w-]+)\.webp/.exec(r.url()); if (m) tai.push(m[1]); });
       await pg.goto(BASE + '/' + u, { waitUntil: 'load' });
+      if (u.startsWith('BizOn')) { await pg.waitForTimeout(3000); if (await pg.evaluate(() => document.body.classList.contains('login3d'))) check(tai.length === 0, u + ': màn đăng nhập chưa tải tờ nào (' + tai.length + ')'); /* từ 20/11/2026 tranh nhân vật chỉ tải khi đã vào game (test/bat-nghiep-sprite-khi-can.test.js) */ await pg.waitForFunction(() => { const f = document.getElementById('gf'); return !document.getElementById('boot') && f && f.contentWindow && typeof f.contentWindow.doLoginDemo === 'function'; }, null, { timeout: 60000 }); for (let k = 0; k < 3 && await pg.evaluate(() => document.body.classList.contains('login3d')); k++) { await pg.locator('#l3Demo').click({ force: true }); await pg.waitForTimeout(3000); } }
       await pg.waitForTimeout(u.startsWith('BizOn') ? 9000 : 5000);
       const vai = tai.filter(n => TO.some(t => n === t || n === t + '-v2'));
       check(vai.length > 0 && vai.every(n => n.endsWith('-v2')), u + ': chỉ tải tờ -v2 (' + vai.length + ' tờ, không tải tờ gốc)');
