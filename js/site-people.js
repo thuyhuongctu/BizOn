@@ -26,7 +26,7 @@
       },
       orcid: '0000-0002-7711-2487',
       osf: 'https://osf.io/m25qs/',
-      zenodo: '10.5281/zenodo.21282517',
+      zenodo: '10.5281/zenodo.23325489',   // DOI bản v1.3 của BizOn (CITATION.cff, chị chọn 20/11/2026); 21282517 là của M-AIDA, không dùng ở đây
       github: 'thuyhuongctu',
     },
     tu: {
@@ -39,7 +39,7 @@
       },
       orcid: '0000-0003-0667-3137',
       osf: 'https://osf.io/vqtkd/',
-      zenodo: '10.5281/zenodo.21592241',
+      zenodo: '10.5281/zenodo.23325489',
       website: 'https://patueconomics.com/',
       // không có GitHub cá nhân
     },
