@@ -5,6 +5,8 @@
      data-en-html     → đổi innerHTML (dùng cho đoạn có <b>/<a>…)
      data-en-ph       → đổi placeholder
      data-en-aria     → đổi aria-label
+     data-en-alt      → đổi alt của ảnh (21/11/2026)
+     data-en-title    → đổi title (gợi ý khi rê chuột) (21/11/2026)
      data-en-content  → đổi content của <meta> (vd meta description)
      <title data-en>  → đổi tiêu đề tab (title không có thẻ con nên dùng data-en như chữ thường)
    Ngôn ngữ lưu ở localStorage['bizon-lang'] (dùng chung toàn site), CHỈ khi
@@ -49,6 +51,8 @@
     document.querySelectorAll('[data-en-html]').forEach(function(el){ swapHtml(el, lang); });
     document.querySelectorAll('[data-en-ph]').forEach(function(el){ swapAttr(el, 'placeholder', 'viPh', el.dataset.enPh, lang); });
     document.querySelectorAll('[data-en-aria]').forEach(function(el){ swapAttr(el, 'aria-label', 'viAria', el.dataset.enAria, lang); });
+    document.querySelectorAll('[data-en-alt]').forEach(function(el){ swapAttr(el, 'alt', 'viAlt', el.dataset.enAlt, lang); });
+    document.querySelectorAll('[data-en-title]').forEach(function(el){ swapAttr(el, 'title', 'viTitle', el.dataset.enTitle, lang); });
     document.querySelectorAll('meta[data-en-content]').forEach(function(el){ swapAttr(el, 'content', 'viContent', el.dataset.enContent, lang); });
     document.querySelectorAll('img[data-en-src]').forEach(function(el){ swapAttr(el, 'src', 'viSrc', el.dataset.enSrc, lang); });
     document.documentElement.lang = lang;

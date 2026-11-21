@@ -28,7 +28,7 @@ assert.ok(+(fs.readFileSync(path.join(ROOT, 'sw.js'), 'utf8').match(/bizon-v(\d+
         const box = document.getElementById('cang-cai-mep-moi'), a = box.querySelector('a'), rb = box.getBoundingClientRect(), ra = a.getBoundingClientRect();
         return { inVideo: !!box.closest('#video-3d'), afterVideo: !!box.previousElementSibling && box.previousElementSibling.tagName === 'VIDEO',
           head: box.querySelector('strong').textContent, text: box.textContent, href: a.getAttribute('href'), aH: ra.height,
-          tips: document.querySelector('#meo').textContent, toc: document.querySelectorAll('nav[aria-label="Mục lục"] a').length,
+          tips: document.querySelector('#meo').textContent, toc: document.querySelectorAll('nav[aria-label="Mục lục"] a, nav[aria-label="Contents"] a').length,
           over: document.documentElement.scrollWidth - innerWidth, boxIn: rb.right <= innerWidth + 1 };
       });
       assert.ok(r.inVideo && r.afterVideo, lang + ': ô cảng nằm ngay dưới video, trong mục video');

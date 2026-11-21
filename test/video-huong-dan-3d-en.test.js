@@ -33,8 +33,8 @@ assert.ok(+(fs.readFileSync(path.join(ROOT, 'sw.js'), 'utf8').match(/bizon-v(\d+
         title: sec.querySelector('h2').textContent, src: v.querySelector('source').getAttribute('src'), poster: v.getAttribute('poster'),
         preload: v.getAttribute('preload'), controls: v.hasAttribute('controls'), playsinline: v.hasAttribute('playsinline'),
         beforeStart: sec.nextElementSibling && sec.nextElementSibling.id === 'bat-dau',
-        toc0: (document.querySelector('nav[aria-label="Mục lục"] a') || {}).getAttribute && document.querySelector('nav[aria-label="Mục lục"] a').getAttribute('href'),
-        tocN: document.querySelectorAll('nav[aria-label="Mục lục"] a').length,
+        toc0: (document.querySelector('nav[aria-label="Mục lục"] a, nav[aria-label="Contents"] a') || {}).getAttribute && document.querySelector('nav[aria-label="Mục lục"] a, nav[aria-label="Contents"] a').getAttribute('href'),
+        tocN: document.querySelectorAll('nav[aria-label="Mục lục"] a, nav[aria-label="Contents"] a').length,
         overflow: document.documentElement.scrollWidth - window.innerWidth,
         vw: v.getBoundingClientRect().width, sw: sec.getBoundingClientRect().width,
       };

@@ -100,10 +100,24 @@
   btn.id = 'bz-dock-btn';
   btn.textContent = '⋯';
   /* Nhãn nút ⋯ theo ngôn ngữ đang chọn, đổi theo khi người dùng bấm VI/EN */
+  function isEn() {
+    if (window.clayCurrentLang) return window.clayCurrentLang() === 'en';
+    try { return localStorage.getItem('bizon-lang') === 'en'; } catch (e) { return false; }
+  }
+  function L(vi, en) { return isEn() ? en : vi; }
+  /* Gợi ý (title) của nút nhạc tuỳ trạng thái đang phát hay dừng */
+  function musicTitle(on) { return on ? L('Tắt nhạc', 'Stop music') : L('Phát/dừng playlist nhạc gốc BizOn (tự lặp lại)', 'Play/pause the BizOn original playlist (loops)'); }
   function btnLabel() {
-    var en = false; try { en = localStorage.getItem('bizon-lang') === 'en'; } catch (e) {}
-    btn.title = en ? 'Quick controls: music · light/dark · VI/EN · clocks · share' : 'Tiện ích: nhạc · sáng/tối · VI/EN · đồng hồ · chia sẻ';
-    btn.setAttribute('aria-label', en ? 'Open BizOn quick controls' : 'Mở bảng tiện ích BizOn');
+    btn.title = L('Tiện ích: nhạc · sáng/tối · VI/EN · đồng hồ · chia sẻ', 'Quick controls: music · light/dark · VI/EN · clocks · share');
+    btn.setAttribute('aria-label', L('Mở bảng tiện ích BizOn', 'Open BizOn quick controls'));
+    /* Các nút trong bảng (21/11/2026: trước đây chỉ có tiếng Việt) */
+    var set = function (id, t) { var e = document.getElementById(id); if (e) { e.title = t; e.setAttribute('aria-label', t); } };
+    var m = document.getElementById('bz-music'); if (m) set('bz-music', musicTitle(m.classList.contains('on')));
+    set('bz-next', L('Bài kế tiếp', 'Next track'));
+    set('bz-theme', L('Sáng / Tối', 'Light / Dark'));
+    set('bz-lang', L('Đổi sang tiếng Anh', 'Switch to Vietnamese'));
+    set('bz-tour', L('Hương AI dẫn tham quan trang này', 'Take a guided tour of this page with Hương AI'));
+    set('bz-copy', L('Sao chép liên kết trang này', 'Copy this page’s link'));
   }
   btnLabel();
   window.addEventListener('bizon:langchange', btnLabel);
@@ -212,7 +226,7 @@
       audio.src = 'assets/audio/' + PLAYLIST[trackIdx][1];
       audio.play().catch(function () {});
       musicBtn.classList.add('on');
-      musicBtn.title = 'Tắt nhạc';
+      musicBtn.title = musicTitle(true);
       showTrack();
     }
     // i = vị trí trong danh sách con hiện hành (list()), có vòng lại đầu/cuối –
@@ -231,7 +245,7 @@
         } else {
           audio.pause();
           musicBtn.classList.remove('on');
-          musicBtn.title = 'Phát playlist nhạc gốc BizOn (tự lặp lại)';
+          musicBtn.title = musicTitle(false);
         }
       });
       nextBtn.addEventListener('click', next);
@@ -290,9 +304,10 @@
         try { en = localStorage.getItem('bizon-lang') || 'vi'; } catch (e) {}
         langBtn.textContent = en === 'en' ? 'VI' : 'EN';
       }
-      langBtn.addEventListener('click', function () { window.toggleLang(); setTimeout(syncLang, 60); });
+      langBtn.addEventListener('click', function () { window.toggleLang(); setTimeout(function () { syncLang(); btnLabel(); }, 60); });
       syncLang();
     }
+    btnLabel();   // nút trong bảng đã gắn vào trang: đặt gợi ý theo ngôn ngữ
 
     /* Sao chép liên kết trang hiện tại */
     var copyBtn = document.getElementById('bz-copy');
