@@ -66,9 +66,15 @@
   .le-nhac .ghi{font-size:14px}
   @media (max-width:820px){ .le-nhac{grid-template-columns:minmax(0,1fr)} }
   /* Bài hát tri ân «The Northern Shield» (20/11/2026): ảnh Lumina nghe nhạc + trình phát âm thanh của trình duyệt, lời bài hát gập lại */
-  .le-bai{margin:0;display:grid;justify-items:center;gap:14px;padding:18px 16px 16px;border-radius:22px;background:linear-gradient(160deg,#F7E9D0,#EBD6B5)}
-  .le-bai img{display:block;width:auto;height:clamp(200px,34vw,300px);max-width:100%}
-  .le-bai audio{width:100%;max-width:420px}
+  .le-bai{margin:0;display:grid;gap:12px}
+  .le-bai audio{width:100%}
+  /* MV YouTube: chỉ ảnh bìa + nút ▶, trình phát youtube-nocookie tải khi bấm (js/am-mv.js) */
+  .le-mv{position:relative;aspect-ratio:16/9;border-radius:22px;overflow:hidden;background:#0b1a2a}
+  .le-mv button{position:absolute;inset:0;width:100%;height:100%;padding:0;border:0;cursor:pointer;background:#0b1a2a center/cover no-repeat}
+  .le-mv .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:72px;height:72px;border-radius:50%;background:var(--clay-gold,#FFC64D);color:var(--clay-ink);font-size:28px;line-height:72px;box-shadow:inset 0 -6px 0 rgba(0,0,0,.18),0 10px 24px rgba(0,0,0,.35);transition:transform .15s}
+  .le-mv button:hover .play,.le-mv button:focus-visible .play{transform:translate(-50%,-50%) scale(1.08)}
+  .le-mv .note{position:absolute;left:0;right:0;bottom:0;padding:28px 16px 10px;background:linear-gradient(transparent,rgba(3,51,55,.85));color:#D6EEF2;font-size:12px;font-weight:700;text-align:left}
+  @media (prefers-reduced-motion:reduce){ .le-mv .play{transition:none} }
   .le-loi-bai{margin-top:14px;border-radius:18px;background:var(--clay-tray)}
   .le-loi-bai summary{cursor:pointer;min-height:44px;display:flex;align-items:center;padding:0 16px;font-weight:800;color:var(--clay-ink)}
   .le-loi-bai .loi{max-height:420px;overflow:auto;padding:0 16px 14px;font-size:15px;line-height:1.6;color:var(--clay-ink)}
@@ -86,7 +92,7 @@
     <p class="le-so" aria-hidden="true">20<i>.</i>11</p>
     <h1 id="le-h1" data-en="Thank you, teachers">Tri ân thầy cô</h1>
     <p class="le-loi" data-en="On Vietnamese Teachers' Day, BizOn wishes every teacher good health, happiness and the lasting joy of the classroom. Thank you for turning each lesson into a journey of discovery with your students.">Nhân Ngày Nhà giáo Việt Nam 20/11, BizOn kính chúc quý thầy cô luôn mạnh khỏe, hạnh phúc và giữ mãi niềm vui đứng lớp. Cảm ơn thầy cô đã cùng sinh viên biến mỗi buổi học thành một hành trình khám phá.</p>
-    <p class="clay-link-row le-nghe"><a class="clay-link" href="#bai-tri-an"><span class="clay-link-i play" aria-hidden="true">▶</span><span data-en="Listen: «The Northern Shield»">Nghe bài hát tri ân «The Northern Shield»</span></a></p>
+    <p class="clay-link-row le-nghe"><a class="clay-link" href="#bai-tri-an"><span class="clay-link-i play" aria-hidden="true">▶</span><span data-en="Listen: «The Guiding Light»">Nghe bài hát tri ân «Ngọn hải đăng soi đường»</span></a></p>
     <div class="le-canh" aria-hidden="true">
       <span class="le-bong" style="width:90px;height:90px;left:6%;top:10%;background:#F2A7B8"></span>
       <span class="le-bong" style="width:54px;height:54px;left:22%;top:52%;background:#F6C75A;animation-delay:-2s"></span>
@@ -145,12 +151,18 @@
 
   <section class="le-nhac" id="bai-tri-an" aria-labelledby="tri-an-h2">
     <figure class="le-bai">
-      <img src="assets/character/advisors/lumina-nghe-nhac-ngoi-cut.webp" alt="" width="722" height="900" loading="lazy">
+      <div class="le-mv">
+        <button type="button" data-yt="8yottDb7Bg0" aria-label="Phát MV Ngọn hải đăng soi đường (The Northern Shield) trên YouTube" style="background-image:url('assets/video/mv-ngon-hai-dang-soi-duong-v2-poster.webp')">
+          <span class="play" aria-hidden="true">▶</span>
+          <span class="note" data-en="Tap to play · the video loads from YouTube">Bấm để phát · video tải từ YouTube</span>
+        </button>
+      </div>
       <audio controls preload="none" src="assets/audio/bizonland-the-northern-shield-v2.mp3" aria-label="Nghe bài hát BizOnland · The Northern Shield" data-en-aria="Listen to BizOnland · The Northern Shield"></audio>
     </figure>
     <div>
-      <span class="clay-eyebrow" data-en="New song · 20 November">Bài hát mới · 20/11</span>
-      <h2 id="tri-an-h2" style="margin-top:12px">BizOnland · The Northern Shield</h2>
+      <span class="clay-eyebrow" data-en="New music video · 20 November">MV mới · 20/11</span>
+      <h2 id="tri-an-h2" style="margin-top:12px" data-en="The Guiding Light">Ngọn hải đăng soi đường</h2>
+      <p class="ghi" style="margin-top:4px">BizOnland · The Northern Shield</p>
       <p data-en="BizOnland's thank-you song for teachers: two companions side by side through the storm, from Bến Phù Sa out to the open sea, ending with «To you… the lighthouse that lights our way».">Bài hát BizOnland tri ân Người Thầy: hai người kề vai vượt bão, từ Bến Phù Sa ra biển lớn, khép lại bằng lời «Kính dâng Người... ngọn hải đăng soi đường».</p>
       <details class="le-loi-bai">
         <summary data-en="Lyrics (Vietnamese)">Lời bài hát</summary>
@@ -166,8 +178,8 @@
           <h3>Kết</h3><p>(Nam) Hướng về những sảnh đường vàng son...<br>(Nữ) Sát cánh bên nhau cho đến ngày khải hoàn...<br>(Cả hai) Về miền Valhalla...<br>Kính dâng Người... ngọn hải đăng soi đường.</p>
         </div>
       </details>
-      <p class="clay-link-row"><a class="clay-link" href="am-nhac.html"><span class="clay-link-i" aria-hidden="true">♪</span><span data-en="BizOn music library">Kho âm nhạc BizOn</span></a></p>
-      <p class="ghi" data-en="4:23 · © 2026 BizOnland.">4:23 · © 2026 BizOnland.</p>
+      <p class="clay-link-row"><a class="clay-link" href="https://youtu.be/8yottDb7Bg0" target="_blank" rel="noopener"><span class="clay-link-i play" aria-hidden="true">▶</span><span data-en="Watch on YouTube">Xem trên YouTube</span></a><a class="clay-link" href="am-nhac.html#ngon-hai-dang"><span class="clay-link-i" aria-hidden="true">♪</span><span data-en="BizOn music library">Kho âm nhạc BizOn</span></a></p>
+      <p class="ghi" data-en="4:23 · © 2026 BizOnland. The YouTube player loads only when you tap.">4:23 · © 2026 BizOnland. Trình phát YouTube chỉ tải khi bấm.</p>
     </div>
   </section>
 
@@ -284,5 +296,6 @@
 <script src="js/bizon-clay-i18n.js" defer></script>
 <script src="js/bizon-clay-nav.js" defer></script>
 <script src="js/bizon-clay-footer.js" defer></script>
+<script src="js/am-mv.js" defer></script>
 </body>
 </html>
