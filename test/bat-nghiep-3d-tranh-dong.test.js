@@ -44,7 +44,9 @@ const nv = pg => pg.evaluate(() => window.__bn3dNhanVat());
     check(await until(pg, () => window.__bn3dNhanVat && window.__bn3dNhanVat().length === 7) && (await nv(pg)).every(a => a.tranh === null), '?nv=3d: cả 7 nhân vật dùng mô hình 3D cũ');
     await pg.close();
     // 3. tờ sprite tải hỏng
-    const ctx = await b.newContext({ viewport: { width: 900, height: 600 } }); pg = await ctx.newPage(); const loi3 = []; pg.on('pageerror', e => loi3.push(e.message));
+    // Chặn service worker (sw.js): từ 20/11/2026 tranh chỉ tải sau khi vào game, lúc đó sw.js đã điều khiển trang và tự tải tệp,
+    // nên page.route không chặn được yêu cầu – test lúc đạt lúc hỏng. Bước này chỉ cần giả lập tờ sprite tải hỏng.
+    const ctx = await b.newContext({ viewport: { width: 900, height: 600 }, serviceWorkers: 'block' }); pg = await ctx.newPage(); const loi3 = []; pg.on('pageerror', e => loi3.push(e.message));
     await pg.route('**/assets/character/tranh-dong/**', r => r.abort());
     await pg.route(/supabase\.co/, r => r.fulfill({ status: 200, contentType: 'application/json', body: '[]' })); 
     await pg.goto(URL, { waitUntil: 'load' });
