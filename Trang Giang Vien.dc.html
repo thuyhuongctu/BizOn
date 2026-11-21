@@ -28,6 +28,7 @@
 <script src="js/core/zip-store.js"></script>
 <script src="js/core/roster-file.js"></script>
 <script src="js/bizon-grading.js"></script>
+<script src="js/ly-do-quyet-dinh.js"></script>
 <script src="js/official-cert.js"></script>
 <style>
 body{margin:0;background:#efe4d2;color:#1f3f4a;font-family:'Be Vietnam Pro',sans-serif}
@@ -539,6 +540,19 @@ input,select,textarea,button{font-family:inherit}
                     <div style="font-size:11px;color:#5a6b74;margin-top:2px">{{ m.line }}</div>
                   </div>
                 </sc-for>
+                <sc-if value="{{ at.hasRounds }}" hint-placeholder-val="{{ false }}">
+                  <details class="gv-tl" style="border-top:1px dashed #e6d6bf;padding-top:4px">
+                    <summary style="cursor:pointer;min-height:44px;display:flex;align-items:center;font:800 14px 'Baloo 2',sans-serif;color:#1f4a55">{{ at.tlTitle }}</summary>
+                    <sc-for list="{{ at.rounds }}" as="r" hint-placeholder-count="3">
+                      <div style="border-top:1px dotted #eadcc6;padding:6px 0">
+                        <div style="font-weight:800;font-size:12px;color:#e8843a">{{ r.label }}</div>
+                        <div style="font-size:12px;color:#33505a;line-height:1.5">{{ r.line }}</div>
+                        <sc-if value="{{ r.hasWhy }}" hint-placeholder-val="{{ false }}"><div style="font-size:12px;color:#1f6f8a;font-weight:700;line-height:1.5">{{ r.why }}</div></sc-if>
+                        <sc-if value="{{ r.hasDec }}" hint-placeholder-val="{{ false }}"><div style="font-size:12px;color:#33505a;line-height:1.5">{{ r.dec }}</div></sc-if>
+                      </div>
+                    </sc-for>
+                  </details>
+                </sc-if>
               </div>
             </sc-for>
           </div>
@@ -900,6 +914,22 @@ class Component extends DCLogic {
     const T = ok ? P.teams(s.subs) : [], G = ok ? P.grades(T, (s.st && s.st.scores) || [], s.edits, s.memberLog) : [], money = ok ? P.money : (x => x);
     const MB = ok ? P.members(T, s.memberLog) : [], BP = s.bpResults || [];
     const AC = ok ? P.memberActivity(s.memberLog) : [];
+    // Dòng thời gian ra quyết định theo đội (đặc tả 007, câu chuyện 3): chỉ chủ lớp xem (nhật ký đọc bằng bizon_member_log)
+    const TL = ok && P.timeline ? P.timeline(s.memberLog, T) : [], tk = n => String(n || '').trim().replace(/\s+/g, ' ').toLowerCase();
+    const en = s.lang === 'en', LD = window.BizonLyDo, nf = v => Number(v).toLocaleString(en ? 'en-US' : 'vi-VN', { maximumFractionDigits: 1 });
+    const tlRows = team => { const t = TL.find(x => tk(x.team) === tk(team)); return !t ? [] : t.rounds.map(r => {
+      const d = r.decision || {}, parts = [];
+      if (r.proposals.length) parts.push(this.tr('Đề xuất: ', 'Proposals: ') + r.proposals.join(', '));
+      if (r.whatif) parts.push(r.whatif + this.tr(' lượt Nếu–Thì', ' What-If runs'));
+      if (r.lumina) parts.push(r.lumina + this.tr(' lần hỏi Lumina', ' Lumina questions'));
+      if (r.minutes) parts.push(r.minutes + this.tr(' biên bản', ' minutes'));
+      const dec = [d.price != null ? this.tr('giá ', 'price ') + nf(d.price) + 'k' : '', d.marketing != null ? 'MKT ' + nf(d.marketing) + this.tr('tr', 'm') : '', d.production != null ? this.tr('SX ', 'output ') + nf(d.production) : ''].filter(Boolean).join(' · ');
+      const res = r.profit != null ? this.tr('Lợi nhuận ', 'Profit ') + nf(r.profit) + this.tr(' tr', ' m') + (r.share != null ? this.tr(' · thị phần ', ' · share ') + nf(r.share) + '%' : '') : '';
+      const why = r.reasons.length ? this.tr('Lý do: ', 'Reasons: ') + r.reasons.map(id => LD ? LD.label(id, en) : id).join(', ') + (r.note ? ' – «' + r.note + '»' : '') : '';
+      return { label: this.tr('Vòng ', 'Round ') + r.round + (r.committed ? '' : this.tr(' · chưa chốt', ' · not submitted')),
+        line: parts.join(' · ') || this.tr('Chưa có ghi nhận trước khi chốt', 'Nothing logged before submitting'),
+        hasWhy: !!why, why, hasDec: !!(dec || res), dec: [dec ? this.tr('Chốt: ', 'Decision: ') + dec : '', res].filter(Boolean).join(' → ') };
+    }); };
     const MINI = BP.filter(r => /^HC Mini/.test(r.company || ''));
     const roster = ok ? P.parseRoster(s.rosterText) : {};
     const rosterGroups = Object.keys(roster).length;
@@ -1002,7 +1032,8 @@ class Component extends DCLogic {
       certStudents: certStudentList(s.rosterText).map(st => ({ name: st.name, mssv: st.mssv || '—', dl: () => this.issueOne(st) })),
       certCount: certStudentList(s.rosterText).length,
       activityTeams: AC.map(t => { const lv = ok ? P.rubricLevel(t.balance, s.rubric) : { label: '' };
-        return { name: t.team, balance: t.balance, levelLabel: lv.label,
+        const rounds = tlRows(t.team);
+        return { name: t.team, balance: t.balance, levelLabel: lv.label, rounds, hasRounds: rounds.length > 0, tlTitle: this.tr('🧭 Dòng thời gian ra quyết định', '🧭 Decision timeline'),
           members: t.members.slice().sort((a, b) => b.score - a.score).map(m => ({ name: m.name, role: m.role, score: m.score,
             line: `${m.proposals}${this.tr(' đề xuất · ', ' proposals · ')}${m.minutes}${this.tr(' biên bản · ', ' minutes · ')}${m.whatif}${this.tr(' Nếu–Thì · ', ' What-If · ')}${m.lumina}${this.tr(' hỏi Lumina · ', ' Lumina questions · ')}${m.commits}${this.tr(' chốt vòng', ' round submits')}` + (m.overdraftRounds ? ` · ⚠️ ${m.overdraftRounds}${this.tr(' vòng thấu chi', ' overdraft rounds')}` : '') })) }; }),
       board: inClass && s.board,

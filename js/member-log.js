@@ -53,9 +53,10 @@
     })().finally(() => { flushing = null; });
     return flushing;
   }
-  function record(kind, payload) {
+  // roundOverride: js/ly-do-quyet-dinh.js gửi lý do sau khi chốt, dùng đúng số vòng lúc chốt (21/11/2026)
+  function record(kind, payload, roundOverride) {
     const w = who(); if (!w || !w.live || !w.team) return false;
-    const round = Math.min(6, Math.max(1, w.S.round || 1));
+    const round = Math.min(6, Math.max(1, roundOverride || w.S.round || 1));
     const q = readQ(); q.push({ p_class_code: w.classCode, p_round: round, p_kind: kind, p_payload: payload || {}, p_member_name: w.name, p_client_ts: new Date().toISOString() });
     writeQ(q); flush(); return true;
   }
@@ -69,7 +70,10 @@
   }
   // Gộp nhật ký đội thành thống kê theo thành viên (vai + tên) cho tab "Hiệu suất thành viên".
   // Đếm số hành động ghi nhận được – KHÔNG phải điểm chấm, chỉ đo mức độ tham gia tương đối.
+  // Dòng lý do ra quyết định (js/ly-do-quyet-dinh.js) mang kind 'commit' + payload.reasonsOnly: không tính là một lần chốt.
+  const isReasonRow = r => r && r.kind === 'commit' && r.payload && r.payload.reasonsOnly;
   function teamStats(rows) {
+    rows = (rows || []).filter(r => !isReasonRow(r));
     const byMember = {}; // key: role+'|'+name
     const keyOf = r => r.role + '|' + (r.member_name || r.role);
     rows.forEach(r => {
@@ -213,5 +217,5 @@
       </div>`;
     const pdfBtn = $('mp-pdf'); if (pdfBtn) pdfBtn.onclick = () => exportPdf(members, balance, { team: w.team, classCode: w.classCode });
   }
-  window.BizonMemberLog = { record, flush, render, renderReport, teamStats, exportPdf };
+  window.BizonMemberLog = { record, flush, render, renderReport, teamStats, exportPdf, live: () => { const w = who(); return !!(w && w.live && w.team); } };
 })();
