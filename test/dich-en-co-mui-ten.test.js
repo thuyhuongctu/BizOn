@@ -44,7 +44,7 @@ const wrong = (p, lang) => p.evaluate(lang => {
         const umk = 'a.hp-news[href="bang-chung.html#lop-quoc-te-umk"] span';
         assert.match(norm(await p.$eval(umk, e => e.textContent)), /^17–19 Nov 2026 · 160 students from UM Kendari/, tag + ': tin UM Kendari bằng tiếng Anh');
         assert.ok(await p.$eval(umk, e => !!e.querySelector('.clay-go')), tag + ': vẫn có viên mũi tên');
-        assert.equal(norm(await p.$eval('#hp-le-20-11 span', e => e.textContent)), 'Thank you, teachers · write a card for your teacher with the BizOn green dragon', tag + ': dòng 20/11 bằng tiếng Anh');
+        assert.equal(norm(await p.$eval('#hp-le-20-11 span', e => e.textContent)), 'Thank you, teachers · write a card for your teacher with Tèo Soi', tag + ': dòng 20/11 bằng tiếng Anh');
         await p.evaluate(() => window.clayApplyLang('vi')); await p.waitForTimeout(400);
         assert.match(norm(await p.$eval(umk, e => e.textContent)), /^17–19\/11\/2026 · 160 sinh viên/, tag + ': đổi về VI ra chữ gốc');
         assert.ok(await p.$eval(umk, e => !!e.querySelector('.clay-go')), tag + ': VI vẫn có viên mũi tên');
