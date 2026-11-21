@@ -6,10 +6,12 @@ const path = require('node:path');
 const assert = require('node:assert/strict');
 const R = f => path.join(__dirname, '..', f);
 const s = fs.readFileSync(R('am-nhac.html'), 'utf8');
-const nut = [...s.matchAll(/<button type="button" data-yt="([^"]+)" aria-label="([^"]+)" style="background-image:url\('([^']+)'\)">/g)];
+const nut = [...s.matchAll(/<button type="button" data-yt="([^"]+)" aria-label="([^"]+)"(?: data-en-aria="([^"]+)")? style="background-image:url\('([^']+)'\)">/g)];
 assert.ok(nut.length >= 8, 'phải có ít nhất 8 nút phát MV, thấy ' + nut.length);
 const ma = new Set();
-for (const [, id, nhan, poster] of nut) {
+// 21/11/2026: mỗi nút có nhãn tiếng Anh cho trình đọc màn hình
+assert.ok(nut.every(m => m[3]), 'nút MV nào cũng có data-en-aria');
+for (const [, id, nhan, , poster] of nut) {
   assert.match(id, /^[A-Za-z0-9_-]{11}$/, 'mã YouTube sai: ' + id);
   assert.ok(!ma.has(id), 'mã YouTube trùng: ' + id); ma.add(id);
   assert.ok(nhan.length > 10, 'aria-label quá ngắn: ' + id);
