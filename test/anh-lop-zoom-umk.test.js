@@ -30,8 +30,8 @@ assert.ok(+(read('sw.js').match(/bizon-v(\d+)/) || [])[1] >= 948, 'sw.js ≥ v94
       p.on('pageerror', e => errs.push(e.message));
       await p.addInitScript(l => localStorage.setItem('bizon-lang', l), lang);
       await p.goto(BASE + '/bang-chung.html#lop-zoom-umk', { waitUntil: 'load', timeout: 60000 });
-      await p.locator('#lop-zoom-umk + .bc-photos').scrollIntoViewIfNeeded(); await p.waitForTimeout(800);
-      const r = await p.evaluate(() => { const imgs = [...document.querySelectorAll('#lop-zoom-umk + .bc-photos img')];
+      await p.locator('#lop-zoom-umk + .bc-photos.bc-zoom').scrollIntoViewIfNeeded(); await p.waitForTimeout(800);
+      const r = await p.evaluate(() => { const imgs = [...document.querySelectorAll('#lop-zoom-umk + .bc-photos.bc-zoom img')];
         return { n: imgs.length, ok: imgs.every(i => i.complete && i.naturalWidth > 0), alts: imgs.map(i => i.alt), h: document.getElementById('lop-zoom-umk').textContent.trim(), sw: document.documentElement.scrollWidth }; });
       const tag = w + ' ' + lang;
       assert.equal(r.n, 2, tag + ': ảnh lớp và màn Quiz');
