@@ -4,32 +4,32 @@
 
 Ký hiệu: `[P]` làm song song được (khác tệp). `[US1]`…`[US3]` là câu chuyện 1–3. Test viết trước và phải thấy hỏng.
 
-## Giai đoạn 1 – Câu chuyện 1: Tab Bật Nghiệp trên Màn hình lớp học (P1) · PR 1
+## Giai đoạn 1 – Câu chuyện 1: Tab Bật Nghiệp trên Màn hình lớp học (P1) · PR 1 · đã gộp #1146
 
-- [ ] T001 [US1] Viết `test/man-hinh-lop-hoc-bat-nghiep.test.js`, chạy và thấy hỏng. Test kiểm:
+- [x] T001 [US1] Viết `test/man-hinh-lop-hoc-bat-nghiep.test.js`, chạy và thấy hỏng. Test kiểm:
   - có tab thứ tư «Bật Nghiệp / Bat Nghiep»;
   - `?game=bn&demo=1` vẽ sa bàn có 6 thành phố, xe của mỗi đội đứng ở chặng bằng vòng đã nộp;
   - bảng 10 đội đầu xếp theo lợi nhuận lũy kế, trùng thứ tự với `BizOnInstructorPage.teams()`;
   - chưa đăng nhập thì hiện màn đăng nhập;
   - EN không còn chữ Việt ngoài tên riêng; 390 và 1280 px không tràn; không lỗi JS.
-- [ ] T002 [US1] `js/man-hinh-lop-hoc-data.js`: `GAMES.bn`, `fromBn(subs)`, `demo('bn')`.
-- [ ] T003 [US1] `js/man-hinh-lop-hoc.js`: cảnh `bn` (tuyến 6 thành phố, xe tải đất sét, nhãn VI/EN, chế độ ngày/đêm).
-- [ ] T004 [US1] `man-hinh-lop-hoc.html`: nút tab, `NOTES.bn`, `GAME_URL.bn`, nạp `js/bizon-grading.js`, nhánh `fetchData`.
-- [ ] T005 [US1] Sửa `man-hinh-lop-hoc.test.js` và `man-hinh-lop-hoc-en.test.js` cho đủ 4 tab. `sw.js` nâng `CACHE`. Chạy các test `man-hinh-*`, `bizon-grading`, `instructor-*`; html-validate `man-hinh-lop-hoc.html`.
-- [ ] T006 [US1] Chụp tab Bật Nghiệp ở 1280 px gửi chị. Mở PR nháp; gộp khi chị nói «Gộp».
+- [x] T002 [US1] `js/man-hinh-lop-hoc-data.js`: `GAMES.bn`, `fromBn(subs)`, `demo('bn')`.
+- [x] T003 [US1] `js/man-hinh-lop-hoc.js`: cảnh `bn` (tuyến 6 thành phố, xe tải đất sét, nhãn VI/EN, chế độ ngày/đêm).
+- [x] T004 [US1] `man-hinh-lop-hoc.html`: nút tab, `NOTES.bn`, `GAME_URL.bn`, nạp `js/bizon-grading.js`, nhánh `fetchData`.
+- [x] T005 [US1] Sửa `man-hinh-lop-hoc.test.js` và `man-hinh-lop-hoc-en.test.js` cho đủ 4 tab. `sw.js` nâng `CACHE`. Chạy các test `man-hinh-*`, `bizon-grading`, `instructor-*`; html-validate `man-hinh-lop-hoc.html`.
+- [x] T006 [US1] Chụp tab Bật Nghiệp ở 1280 px gửi chị. Mở PR nháp; gộp khi chị nói «Gộp».
 
-## Giai đoạn 2 – Câu chuyện 2: Tập huấn giảng viên 6 bước (P2) · PR 2
+## Giai đoạn 2 – Câu chuyện 2: Tập huấn giảng viên 6 bước (P2) · PR 2 · đã gộp #1151
 
-- [ ] T007 [US2] Viết `test/tap-huan-giang-vien.test.js`, chạy và thấy hỏng. Test kiểm:
+- [x] T007 [US2] Viết `test/tap-huan-giang-vien.test.js`, chạy và thấy hỏng. Test kiểm:
   - `truong-giang-vien.html` có đúng 6 bước theo thứ tự tạo lớp → gửi mã/link → chiếu Màn hình lớp học → theo dõi → chốt và chấm → xuất kết quả;
   - mỗi bước có ảnh (tệp tồn tại, có `alt`), một việc cần làm, một lỗi hay gặp;
   - bản in (`emulateMedia print`) không có menu, mỗi bước không bị cắt;
   - EN đủ; 360 px không tràn.
-- [ ] T008 [P] [US2] `scripts/chup-tap-huan.mjs`: chụp 6 bước trên lớp demo, VI và EN, xuất WebP vào `assets/tap-huan/`.
-- [ ] T009 [US2] Viết lại `truong-giang-vien.html` theo 6 bước, giữ địa chỉ và các mục yêu cầu kỹ thuật và câu hỏi thường gặp ở cuối.
-- [ ] T010 [P] [US2] Đổi chữ liên kết «Lần đầu? Hướng dẫn 5 bước» trên `giang-vien.html` và các trang khác thành «Tập huấn 6 bước».
-- [ ] T011 [US2] `sw.js` nâng `CACHE`. Chạy `tap-huan-giang-vien`, `giang-vien-*`, `hanh-van-de-hieu`. html-validate trên các trang đã đổi.
-- [ ] T012 [US2] Gửi chị bản PDF in thử. Mở PR nháp; gộp khi chị nói «Gộp».
+- [x] T008 [P] [US2] `scripts/chup-tap-huan.mjs`: chụp 6 bước trên lớp demo, VI và EN, xuất WebP vào `assets/tap-huan/`.
+- [x] T009 [US2] Viết lại `truong-giang-vien.html` theo 6 bước, giữ địa chỉ và các mục yêu cầu kỹ thuật và câu hỏi thường gặp ở cuối.
+- [x] T010 [P] [US2] Đổi chữ liên kết «Lần đầu? Hướng dẫn 5 bước» trên `giang-vien.html` và các trang khác thành «Tập huấn 6 bước».
+- [x] T011 [US2] `sw.js` nâng `CACHE`. Chạy `tap-huan-giang-vien`, `giang-vien-*`, `hanh-van-de-hieu`. html-validate trên các trang đã đổi.
+- [x] T012 [US2] Gửi chị bản PDF in thử. Mở PR nháp; gộp khi chị nói «Gộp».
 
 ## Giai đoạn 3 – Câu chuyện 3: Lý do ra quyết định (P3) · PR 3 · sau PR 1 và 2
 

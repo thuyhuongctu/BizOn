@@ -4,7 +4,7 @@
 
 **Ngày tạo**: 2026-11-19
 
-**Trạng thái**: Đã làm rõ ngày 19/11/2026, chờ chị duyệt kế hoạch
+**Trạng thái**: Đã làm xong câu chuyện 1 (#1146) và câu chuyện 2 (#1151). Câu chuyện 3 (lý do ra quyết định) đang làm, PR riêng. Cập nhật 21/11/2026.
 
 **Đầu vào**:
 - Kiểm tra trước buổi UMK (19/11/2026): Màn hình lớp học chưa có tab Bật Nghiệp, nên kế hoạch dạy phải dùng Trang Giảng viên → «Tiến độ 6 vòng».
