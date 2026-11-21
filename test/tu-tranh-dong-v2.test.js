@@ -22,7 +22,9 @@ check(+(/CACHE = 'bizon-v(\d+)'/.exec(read('sw.js')) || [])[1] >= 842, 'sw.js �
   try {
     const pg = await b.newPage({ viewport: { width: 900, height: 600 } }), tai = [], loi = [];
     pg.on('request', r => { const m = /tranh-dong\/(tu-[a-z0-9-]+)\.webp/.exec(r.url()); if (m) tai.push(m[1]); }); pg.on('pageerror', e => loi.push(e.message));
+    await pg.route(/supabase\.co/, r => r.fulfill({ status: 200, contentType: 'application/json', body: '[]' })); 
     await pg.goto(BASE + '/BizOn%20Game%203D.html?diorama=1', { waitUntil: 'load' });
+    /* từ 20/11/2026 tranh nhân vật chỉ tải khi đã vào game (test/bat-nghiep-sprite-khi-can.test.js) */ await pg.waitForFunction(() => { const f = document.getElementById('gf'); return !document.getElementById('boot') && f && f.contentWindow && typeof f.contentWindow.doLoginDemo === 'function'; }, null, { timeout: 60000 }); for (let k = 0; k < 3 && await pg.evaluate(() => document.body.classList.contains('login3d')); k++) { await pg.locator('#l3Demo').click({ force: true }); await pg.waitForTimeout(3000); }
     const ok = await pg.waitForFunction(() => window.__bn3dNhanVat && (window.__bn3dNhanVat().find(a => a.id === 'tu') || {}).tranh && window.__bn3dNhanVat().find(a => a.id === 'tu').tranh.sanSang, null, { timeout: 60000 }).then(() => true, () => false);
     check(ok, 'Bật Nghiệp 3D: thầy Tú là tranh động, đã tải');
     check(tai.some(t => /^tu-dung-v\d+$/.test(t)) && tai.includes('tu-noi-v2') && !tai.includes('tu-dung') && !tai.includes('tu-noi'), 'Bật Nghiệp 3D tải tờ v2, không tải tờ cũ (' + tai.join(', ') + ')');

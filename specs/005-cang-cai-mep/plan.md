@@ -60,6 +60,13 @@ Bản 2D (`game.html`), bản gọn (`bat-nghiep-v2.html`) và bản 3D (qua ifr
   - với `'c'`: đặt `s.brand = max(0,5, s.brand − U)` và ghi dòng «Lùi ngày giao – uy tín giảm».
 - Đối thủ ảo dùng `ev` chung nhưng không có `portChoice`; engine không áp `fulfillMul` cho đối thủ (engine.js 757), nên đối thủ không bị ảnh hưởng.
 - Số nháp: **Ca = 1,40**, **U = 0,06**, `fulfillMul(c)` = **0,95**. Số chốt sau `/balance-check` với ba kiểu đội (SC-003), rồi chị và thầy Tú duyệt bảng số trong PR 2.
+- **Sau `/balance-check` (19/11/2026, PR 2):** đề xuất **Ca = 1,30**, giữ **U = 0,06** và `fulfillMul(c)` = **0,95**; chờ chị và thầy Tú duyệt.
+  - Với Ca = 1,40, (a) không thắng ở kiểu đội nào khi bật thị trường động; với Ca = 1,30, mỗi lựa chọn thắng ít nhất một kiểu đội.
+  - Bảng số đầy đủ nằm trong mô tả PR 2.
+- Hàng không giao được ở (b) và (c) nằm lại kho và bán được ở vụ 6, nên (b) chủ yếu là «giao trễ», không mất hẳn đơn.
+- Vì vậy kiểm thêm kiểu đội thứ tư «giá thấp, biên mỏng, không dựa vào thương hiệu». Đây đúng là trường hợp đặc tả nói (c) có lợi.
+- (a) không đổi chi phí của đối thủ ảo: mô-đun chạy song song một bản sao theo (b) để lấy lợi nhuận đối thủ.
+- Bản 2D có một chỗ chưa khớp: ô «Kênh phân phối» của Business Model Canvas (`js/app.js:3073`) vẫn ghi «85%» khi đội chọn (c), vì tệp này đóng băng.
 
 ## Nguồn số liệu (câu 4A, tra ngày 16/11/2026)
 

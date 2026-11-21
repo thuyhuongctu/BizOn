@@ -24,7 +24,7 @@ const src = read('assets/models/SOURCES.md');
 check(IDS.every(id => src.includes(id + '.glb')), 'SOURCES.md ghi nguồn sáu tệp');
 check(+(/CACHE = 'bizon-v(\d+)'/.exec(read('sw.js')) || [])[1] >= 793, 'sw.js ≥ bizon-v793');
 
-const PAGE = `<!DOCTYPE html><html><head><meta charset="utf-8"><script type="importmap">{"imports":{"three":"./js/vendor/three.module.js"}}</script></head>
+const PAGE = `<!DOCTYPE html><html><head><meta charset="utf-8"><script type="importmap">{"imports":{"three":"./js/vendor/three.module.min.js"}}</script></head>
 <body><script>window.BIZON_CHAR_GLB = true;</script><script type="module">
 import * as THREE from 'three'; import { makeCharacters } from './bizon-characters.js';
 const r = new THREE.WebGLRenderer(); r.setSize(300, 300); document.body.append(r.domElement);

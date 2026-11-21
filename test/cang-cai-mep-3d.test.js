@@ -1,7 +1,8 @@
 /* Bật Nghiệp 3D: khu Cảng Cái Mép – Thị Vải (specs/005-cang-cai-mep, câu chuyện 1).
  * Kiểm tra: mô-đun riêng js/cang-cai-mep-3d.js không chạm luật chơi; trang 3D chỉ thêm import, lời gọi và một nút ZONES;
  * nút «🚢 Cảng Cái Mép» bay máy quay tới cảng; 5 điểm chạm mở đúng 5 thẻ kiến thức VI/EN, đổi ngôn ngữ thì thẻ vẽ lại;
- * nút đóng ≥ 44 px; không tràn ngang ở 390 px; không lỗi JS. Cần máy chủ tĩnh BIZON_URL. */
+ * nút đóng ≥ 44 px; không tràn ngang ở 390 px; không lỗi JS. Câu chuyện 2: vụ 5 thẻ hải quan có nút «Ra quyết định»
+ * mở ô lựa chọn ở cảng (js/cang-cai-mep.js). Cần máy chủ tĩnh BIZON_URL. */
 'use strict';
 const path = require('path');
 const fs = require('fs');
@@ -26,7 +27,8 @@ const page = read('BizOn Game 3D.html');
 check(/import \{ buildPort \} from '\.\/js\/cang-cai-mep-3d\.js';/.test(page), 'trang 3D nhập buildPort');
 check((page.match(/buildPort\(/g) || []).length === 1, 'trang 3D gọi buildPort đúng một lần');
 check(/\[\['🚢 Cảng Cái Mép', '🚢 Cái Mép Port'\]/.test(page), 'ZONES có nút «🚢 Cảng Cái Mép»');
-check(!/cang-cai-mep/.test(read('game.html')) && !/cang-cai-mep/.test(read('js/engine.js')), 'game.html và engine.js không đổi');
+// Câu chuyện 2 (PR luật cảng): game.html chỉ nạp mô-đun luật js/cang-cai-mep.js, không nạp khu cảng 3D; engine.js không đổi.
+check(!/cang-cai-mep-3d/.test(read('game.html')) && !/cang-cai-mep/.test(read('js/engine.js')), 'game.html không nạp khu cảng 3D, engine.js không đổi');
 check(/'\.\/js\/cang-cai-mep-3d\.js'/.test(read('sw.js')), 'sw.js lưu sẵn js/cang-cai-mep-3d.js');
 
 (async () => {
@@ -76,6 +78,17 @@ check(/'\.\/js\/cang-cai-mep-3d\.js'/.test(read('sw.js')), 'sw.js lưu sẵn js/
         try { localStorage.setItem('bizon-lang', localStorage.getItem('bizon-lang') === 'en' ? 'vi' : 'en'); } catch (e) {} K.relang();
         const c = document.getElementById('cmCard'); return { before, after: c.querySelector('h4').textContent, open: !c.hidden }; });
       check(relang.open && relang.before !== relang.after, lang + ': đổi ngôn ngữ thì thẻ vẽ lại (' + relang.before + ' → ' + relang.after + ')');
+      // Câu chuyện 2: thẻ hải quan chỉ có nút «Ra quyết định» ở vụ 5; bấm thì mở bảng Quyết định tới ô lựa chọn ở cảng.
+      const go1 = await page.evaluate(() => { window.__caiMep.open('customs'); return !!document.querySelector('#cmCard .cm-go'); });
+      check(!go1, lang + ': vụ 1 thẻ hải quan không có nút «Ra quyết định»');
+      const go5 = await page.evaluate(() => { const w = document.getElementById('gf').contentWindow; w.eval('S.round = 5; S.caseId = "A"; S.committed = false; S.finished = false');
+        window.__caiMep.open('customs'); const b = document.querySelector('#cmCard .cm-go'); if (!b) return { has: false };
+        const r = b.getBoundingClientRect(); b.click(); return { has: true, h: r.height, text: b.textContent }; });
+      check(go5.has && go5.h >= 44, lang + ': vụ 5 thẻ hải quan có nút «Ra quyết định» ≥ 44 px (' + (go5.text || '') + ')');
+      await page.waitForTimeout(900);
+      const dec = await page.evaluate(() => { const d = document.getElementById('gf').contentWindow.document, tab = d.getElementById('tab-decisions'), box = d.getElementById('bz-port');
+        return { tab: !!tab && tab.classList.contains('active'), box: !!box && !box.hidden, card: !document.getElementById('cmCard').hidden }; });
+      check(dec.tab && dec.box && !dec.card, lang + ': bấm nút thì đóng thẻ, mở tab Quyết định có ô «Xử lý hàng kẹt ở Cái Mép» (' + JSON.stringify(dec) + ')');
       check(errors.length === 0, lang + ': không lỗi JS (' + errors.slice(0, 2).join(' | ') + ')');
       await ctx.close();
     }

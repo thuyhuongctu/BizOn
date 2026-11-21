@@ -94,6 +94,7 @@ window.BZ_LIB_EN={
 'team-victory-celebration-v2.webp':['Champions’ night','The whole team lifts the BizOn Bật Nghiệp trophy amid confetti & stage lights'],
 /* music (khoá = audioId) */
 'bizon-lesprit-du-mekong':['BizOn – L’Esprit du Mékong ⭐','BizOn’s main song · by Đỗ Thùy Hương & Phan Anh Tú'],
+'bizonland-the-northern-shield':['«The Guiding Light» · The Northern Shield','BizOnland’s thank-you song for teachers · 20 November · 4:23'],
 'huong-on-return':['Hương on Return','BizOn’s first main song · vocal recording'],
 'vua-du-de-bay-cao':['Vừa Đủ Để Bay Cao','Vietnamese song · vocal recording'],
 'bizon-theme':['BizOn Theme','Game background music · instrumental'],

@@ -45,7 +45,7 @@ for (const f of ['./hanh-trinh.html', './js/hanh-trinh.js', './js/core/journey.j
   await page.waitForFunction(() => window.ftTest.phase() === 'end', null, { timeout: 10000 });
   const end = await page.evaluate(() => {
     const p = JSON.parse(localStorage.getItem('bizon-journey')), blk = document.getElementById('ft-journey-next'), a = document.querySelector('#ft-end a.jl-next'), old = document.querySelector('#ft-end a[href="hanh-trinh.html"].clay-btn');
-    return { st: window.ftTest.state(), t1: p.tiers.t1, carry: p.carry.t2, blk: blk && blk.textContent, lines: blk ? blk.querySelectorAll('.jc-line').length : -1, next: a && a.getAttribute('href') + '|' + a.target + '|' + a.textContent, old: old && old.textContent, ctx: window.__ftJourney.reason };
+    return { st: window.ftTest.state(), t1: p.tiers.t1, carry: p.carry.t2, blk: blk && blk.textContent, lines: blk ? blk.querySelectorAll('.jc-line').length : -1, next: a && a.getAttribute('href') + '|' + a.target + '|' + a.textContent.trim() + (a.querySelector('.clay-go') ? ' [→]' : ''), old: old && old.textContent, ctx: window.__ftJourney.reason };
   });
   assert.equal(end.t1.status, 'done'); assert.equal(end.t1.appVersion, 'bizon-bps-v1');
   assert.equal(end.t1.eff, end.st.result.eff); assert.equal(end.t1.rank, end.st.result.rank);
@@ -53,7 +53,7 @@ for (const f of ['./hanh-trinh.html', './js/hanh-trinh.js', './js/core/journey.j
   assert.ok(end.t1.knownPairs.includes('0-2'), 'cặp đã bán được ghi: ' + end.t1.knownPairs);
   assert.equal(end.carry.balance, 500 + end.carry.balanceBonus, 'hành trang T1→T2 đã tính sẵn');
   assert.match(end.blk, /Bậc 1 đã ghi vào hộ chiếu của Đội Thử/); assert.equal(end.lines, 3, 'xem trước 3 khoản hành trang');
-  assert.equal(end.next, 'hanh-trinh.html|_top|🧭 Sang Bậc 2 · Bật Nghiệp →');
+  assert.equal(end.next, 'hanh-trinh.html|_top|🧭 Sang Bậc 2 · Bật Nghiệp [→]'); // «→» thành viên mũi tên đất sét (19/11/2026)
   assert.match(end.old, /Tiếp tục hành trình/, 'nút «Lên Bậc 2» cũ trỏ về trang Hành trình');
   assert.equal(end.ctx, 'done');
 

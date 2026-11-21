@@ -11,7 +11,10 @@ const labels = document.getElementById('bps3d-labels');
 const W0 = () => host.clientWidth, H0 = () => host.clientHeight;
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
-renderer.setPixelRatio(Math.min(2, devicePixelRatio));
+// Điện thoại (cạnh ngắn < 600 px): vẽ ở DPR 1,25 và bóng 1024 (trước: DPR 2 + bóng 2048, chậm nhất trong 4 game 3D).
+// Vòng vẽ bên dưới còn tự hạ thêm khi tụt khung hình và vẽ thưa khi khung 3D bị bảng che.
+const nho = Math.min(innerWidth, innerHeight) < 600;
+renderer.setPixelRatio(Math.min(nho ? 1.25 : 2, devicePixelRatio));
 renderer.setSize(W0(), H0());
 renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -27,7 +30,7 @@ controls.target.set(0, 0, -3); controls.enableDamping = true; controls.maxPolarA
 
 const hemi = new THREE.HemisphereLight(0xfff1dc, 0x9bbf9a, 0.95); scene.add(hemi);
 const sun = new THREE.DirectionalLight(0xfff0d8, 2.2); sun.position.set(-26, 44, 22); sun.castShadow = true;
-sun.shadow.mapSize.set(2048, 2048); sun.shadow.bias = -0.0004; sun.shadow.normalBias = 0.06;
+sun.shadow.mapSize.set(nho ? 1024 : 2048, nho ? 1024 : 2048); sun.shadow.bias = -0.0004; sun.shadow.normalBias = 0.06;
 Object.assign(sun.shadow.camera, { left: -52, right: 52, top: 52, bottom: -52, far: 140 }); scene.add(sun);
 const fill = new THREE.DirectionalLight(0xbcd8ff, 0.45); fill.position.set(30, 18, -30); scene.add(fill);
 if (window.BizOnClayLight) BizOnClayLight.rig(THREE, scene, { distance: 40 });   // đèn bù xanh ngọc + đèn viền kem (js/clay-light.js)
@@ -370,6 +373,13 @@ new ResizeObserver(() => { renderer.setSize(W0(), H0()); camera.aspect = W0() / 
 
 // ---- vòng vẽ ----
 const v3 = new THREE.Vector3(); const clock = new THREE.Clock();
+// Vật thể có hoạt cảnh (thuyền nhấp nhô, đèn lồng, khói, người nhún): duyệt cảnh mỗi giây một lần thay vì mỗi khung
+let dong = [], dongT = -9;
+// Tự hạ chất lượng (như Hộ Chiếu Thương Hiệu 3D): dưới 38 khung/giây thì giảm DPR 0,25 mỗi lần, tới 1 thì tắt bóng
+const perf = { n: 0, s: 0, last: 0 };
+// Khung 3D ẩn (chưa vào ván): không vẽ. Bị che kín (5 điểm dọc giữa khung đều nằm dưới bảng chơi, ảnh sa bàn, thẻ đăng nhập…):
+// vẽ thưa ~10 khung/giây. Chỉ cần lộ ra một phần cảnh 3D là vẽ đủ.
+let biChe = false, cheT = -9, dem = 0;
 // Né nhãn chồng lên nhau: nhãn gần camera giữ vị trí, nhãn xa hơn bị đẩy xuống
 // nếu lấn vào vùng ngang của một nhãn đã đặt trước đó.
 function declutter(list) {
@@ -384,9 +394,20 @@ function frame() {
   // khỏi tranh CPU/GPU với animation loop của hub – xem js/clay-hub.js.
   if (document.hidden || window.__clayHubOpen) { requestAnimationFrame(frame); return; }
   const t = clock.getElapsedTime(), now = performance.now();
+  if (t - cheT > 0.5) { cheT = t; const r = host.getBoundingClientRect();
+    if (!r.width || !r.height) biChe = 'an';
+    else biChe = ![0.15, 0.3, 0.5, 0.7, 0.85].some(y => { const e = document.elementFromPoint(r.left + r.width / 2, Math.min(innerHeight - 1, r.top + r.height * y)); return e && host.contains(e); }); }
+  if (biChe === 'an' || (biChe && ++dem % 6)) { requestAnimationFrame(frame); return; }
+  { const dt = (now - (perf.last || now)) / 1000; perf.last = now;
+    if (!biChe && dt < 0.5) { perf.n++; perf.s += dt; }
+    if (perf.s > (nho ? 1.2 : 2.5)) { const fps = perf.n / perf.s; perf.n = perf.s = 0;
+      if (fps < 38 && t > (nho ? 1.5 : 4)) { const pr = renderer.getPixelRatio();
+        if (pr > 1.01) renderer.setPixelRatio(Math.max(1, pr - 0.25));
+        else if (renderer.shadowMap.enabled) { renderer.shadowMap.enabled = false; scene.traverse(o => o.material && (o.material.needsUpdate = true)); } } } }
   for (const tr of TRANH) if (tr.j) datKhung(tr, Math.floor(t * tr.j.fps));
   night += (nightT - night) * 0.05;
-  scene.traverse(o => {
+  if (t - dongT > 1) { dongT = t; dong = []; scene.traverse(o => { const u = o.userData; if (u.bob !== undefined || u.lantern || u.smoke !== undefined || u.jig !== undefined) dong.push(o); }); }
+  dong.forEach(o => {
     if (o.userData.bob !== undefined) { o.position.y = 0.1 + Math.sin(t * 1.6 + o.userData.bob) * 0.12; o.rotation.z = Math.sin(t + o.userData.bob) * 0.04; }
     if (o.userData.lantern) o.material.emissiveIntensity = night * 1.6 + 0.05;
     if (o.userData.smoke !== undefined) { const k = (t * 0.5 + o.userData.smoke / 3) % 1; o.position.y = 6 + k * 3.4; o.scale.setScalar(0.6 + k * 0.9); }
@@ -413,6 +434,9 @@ function frame() {
     declutter(explorePins.filter(p => p.lab.style.display !== 'none')); }
   requestAnimationFrame(frame);
 }
-window.__bps3d = { get me() { return me; }, rivals, get moving() { return anim.length; }, wakes };   // cho test: đọc tư thế ghe/người
+window.__bps3d = { get me() { return me; }, rivals, get moving() { return anim.length; }, wakes,
+  get chatLuong() { return { pr: renderer.getPixelRatio(), bong: renderer.shadowMap.enabled, bongCo: sun.shadow.mapSize.x, biChe, dong: dong.length }; } };
+// Bảng tinh chỉnh cho người làm game (?tinh-chinh=1); người chơi không thấy, không tải thêm gì
+if (/[?&]tinh-chinh=1(&|$)/.test(location.search)) import('./tinh-chinh-3d.js').then(m => m.gan({ ten: 'Bến Phù Sa 3D', renderer, scene, camera, controls }));   // cho test: đọc tư thế ghe/người
 const wait = () => { if (G()) { setWeek(G().S.week || 0); frame(); } else setTimeout(wait, 60); };
 wait();

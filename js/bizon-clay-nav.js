@@ -12,6 +12,8 @@
   window.BIZON_NO_NAV = true; /* chặn site-nav.js cũ nếu vô tình được nạp */
 
   var LINKS = [
+    /* Mục chữ «Trang chủ» (20/11/2026): logo BizOn vẫn về trang chủ, nhưng nhiều người không biết bấm logo */
+    { href:'index.html',            vi:'Trang chủ', en:'Home' },
     { href:'universe.html',         vi:'Vũ trụ',    en:'Universe' },
     { href:'games.html',            vi:'Trò chơi',  en:'Games' },
     { href:'hanh-trinh.html',       vi:'Hành trình',en:'Journey' },
@@ -153,4 +155,41 @@
   var cur = window.clayCurrentLang ? window.clayCurrentLang() : 'vi';
   if(window.clayRefreshLang) window.clayRefreshLang(); else syncLang(cur);
   syncLang(cur);
+})();
+
+/* Mũi tên đất sét (19/11/2026, chị góp ý dấu «→» trông xấu): trên các trang clay, dấu «→» ở đầu hay cuối chữ
+ * của liên kết và nút được thay bằng một viên đất sét nhỏ có mũi tên (css/bizon-clay.css · .clay-go).
+ * Chữ gốc vẫn giữ trong data-vi/data-en, nên đổi VI/EN rồi đổi lại vẫn ra đúng; người dùng trình đọc màn hình
+ * không nghe thấy viên đất sét (aria-hidden). Muốn giữ dấu «→» ở một chỗ nào thì thêm data-giu-mui-ten. */
+(function(){
+  if(!document.body || !document.body.classList.contains('clay')) return;
+  var SEL = 'a, button, .hp-door-go';
+  var RE_END = /\s*→\s*$/, RE_START = /^\s*→\s*/;
+  function ball(){ var s = document.createElement('span'); s.className = 'clay-go'; s.setAttribute('aria-hidden', 'true'); return s; }
+  function deco(el){
+    if(el.closest('[data-giu-mui-ten], pre, code, svg')) return;
+    if(el.dataset && el.dataset.en != null && el.dataset.vi == null) el.dataset.vi = el.textContent;   // giữ chữ gốc cho bizon-clay-i18n.js
+    var w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null), n, list = [];
+    while((n = w.nextNode())) if(n.nodeValue.indexOf('→') >= 0) list.push(n);
+    list.forEach(function(t){
+      if(t.parentNode.closest('.clay-go')) return;
+      var p = t.parentNode;   // dòng chữ có data-en nằm trong liên kết: giữ chữ gốc (còn «→») trước khi bỏ dấu
+      if(p.dataset && p.dataset.en != null && p.dataset.vi == null) p.dataset.vi = p.textContent;
+      var v = t.nodeValue;
+      if(RE_END.test(v)){ t.nodeValue = v.replace(RE_END, ' '); if(!/\S/.test(t.nodeValue)) t.nodeValue = ''; t.parentNode.insertBefore(ball(), t.nextSibling); }
+      else if(RE_START.test(v)){ t.nodeValue = v.replace(RE_START, ' '); t.parentNode.insertBefore(ball(), t); }
+    });
+  }
+  function run(root){ (root && root.querySelectorAll ? [root].concat([].slice.call(root.querySelectorAll(SEL))) : [].slice.call(document.querySelectorAll(SEL))).forEach(function(el){ if(el.matches && el.matches(SEL)) deco(el); }); }
+  run();
+  // Chỉ xét lại phần vừa đổi (đổi ngôn ngữ, nội dung bơm bằng JS), gom theo khung hình cho nhẹ
+  var pend = [], queued = false;
+  new MutationObserver(function(recs){
+    recs.forEach(function(r){ var t = r.target.nodeType === 1 ? r.target : r.target.parentElement; if(t) pend.push(t); });
+    if(queued) return; queued = true;
+    (window.requestAnimationFrame || setTimeout)(function(){
+      queued = false; var todo = pend; pend = [];
+      todo.forEach(function(t){ if(!t.isConnected) return; var c = t.closest(SEL); run(c || t); });
+    });
+  }).observe(document.body, { childList: true, subtree: true, characterData: true });
 })();

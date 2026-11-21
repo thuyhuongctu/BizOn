@@ -70,6 +70,7 @@ Lưu kịch bản ở `docs/video/kich-ban-[chu-de].md` (hỏi chị trước kh
   khoảng 10 dB.
 - Thành phẩm: **−14 đến −16 LUFS**, đỉnh thật **≤ −1 dBTP**, tiếng và hình dài bằng nhau.
   Mẫu: `ffmpeg -i in.mp4 -af loudnorm=I=-15:TP=-1.5:LRA=7 -c:v copy out.mp4`.
+  Hoặc dùng lệnh `ffmpeg-skill` (đo hai lượt, báo số đo thật): `python3 .claude/skills/ffmpeg-skill/scripts/loudness.py in.mp4 -I -15 --tp -1.5 -o in-v2.mp4`.
 
 ## 6. Kiểm thành phẩm (bắt buộc trước khi đưa lên trang)
 

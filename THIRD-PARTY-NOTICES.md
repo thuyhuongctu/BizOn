@@ -15,9 +15,10 @@ Cách duy trì: **mỗi khi thêm, nâng cấp hoặc gỡ một thư viện, ph
 
 | Thành phần | Phiên bản | Giấy phép | Tệp trong kho | Dùng ở đâu |
 |---|---|---|---|---|
-| **three.js** (lõi + bản mô-đun) · Three.js Authors | r184 | MIT | `js/vendor/three.module.js`, `js/vendor/three.core.js`, `vendor/three/three.module.js`, `vendor/three/three.core.js` | Mọi cảnh 3D: Bật Nghiệp 3D, Bến Phù Sa 3D, Hộ Chiếu Thương Hiệu 3D, Hộ Chiếu Sầu Riêng 3D, Vũ trụ, trung tâm 3D |
+| **three.js** (lõi + bản mô-đun) · Three.js Authors | r184 | MIT | `js/vendor/three.module.min.js`, `js/vendor/three.core.min.js` (bản rút gọn chính thức, mọi trang dùng chung một đường dẫn); `js/vendor/three.module.js`, `js/vendor/three.core.js` (bản đầy đủ, chỉ còn làm dự phòng và để đối chiếu) | Mọi cảnh 3D: Bật Nghiệp 3D, Bến Phù Sa 3D, Hộ Chiếu Thương Hiệu 3D, Hộ Chiếu Sầu Riêng 3D, Vũ trụ, trung tâm 3D |
 | **three.js** (bản UMD cũ, không còn được dự án three.js duy trì) | r15x | MIT | `js/vendor/three.min.js` | Một số trang 3D cũ còn nạp kiểu `<script>` |
-| **three.js add-ons** · OrbitControls, GLTFLoader, SkeletonUtils, BufferGeometryUtils | r184 | MIT | `js/vendor/OrbitControls.js`, `vendor/three/OrbitControls.js`, `js/vendor/GLTFLoader.js`, `js/vendor/SkeletonUtils.js`, `js/vendor/BufferGeometryUtils.js` | Điều khiển camera, nạp mô hình `.glb` |
+| **three.js** (bản UMD nhúng sẵn trong gói trang) | 0.160.0 | MIT | nằm trong `lab/ho-chieu-sau-rieng-3d.html` | Hộ Chiếu Sầu Riêng 3D; nếu bản nhúng hỏng thì trang nạp `js/vendor/three.module.min.js` (r184) trong kho, không gọi CDN |
+| **three.js add-ons** · OrbitControls, GLTFLoader, SkeletonUtils, BufferGeometryUtils | r184 | MIT | `js/vendor/OrbitControls.js`, `js/vendor/GLTFLoader.js`, `js/vendor/SkeletonUtils.js`, `js/vendor/BufferGeometryUtils.js` | Điều khiển camera, nạp mô hình `.glb` |
 | **GSAP** · GreenSock / Webflow | 3.15.0 | GSAP Standard «No Charge» License (miễn phí kể cả thương mại; không được dùng để dựng công cụ tạo hoạt ảnh không mã cạnh tranh với Webflow; không phải mã nguồn mở) — https://gsap.com/community/standard-license/ | `js/vendor/gsap.min.js` | Hoạt ảnh giao diện ở 3 trang |
 | **@formkit/auto-animate** · FormKit Inc. | 0.10.0 | MIT (bản sao giấy phép: `vendor/auto-animate/LICENSE`) | `js/vendor/auto-animate.min.js` (gói lại thành biến toàn cục `window.autoAnimate`, có ghi chú trong tệp), `vendor/auto-animate/index.mjs` | Chuyển động danh sách ở Hộ Chiếu Thương Hiệu (thẻ + 3D) |
 | **D3** · Mike Bostock | 7.9.0 | ISC | `js/vendor/d3.min.js` | Bản đồ thế giới trong Hộ Chiếu Thương Hiệu (`js/bp-worldmap.js`) |
@@ -25,6 +26,7 @@ Cách duy trì: **mỗi khi thêm, nâng cấp hoặc gỡ một thư viện, ph
 | **QR Code Generator for JavaScript** · Kazuhiko Arase | bản 2009 (tệp gốc của tác giả) | MIT (ghi chú giấy phép ở đầu tệp). «QR Code» là nhãn hiệu của DENSO WAVE | `js/vendor/qrcode.js` | Mã QR mở từng sản phẩm trên trang tổng hợp CHAM (`cham/index.html`) |
 | **React** và **ReactDOM** · Meta Platforms | 18.3.1 | MIT | `vendor/react/react.production.min.js`, `vendor/react/react-dom.production.min.js` | Các trang tài liệu `*.dc.html`, Trang Giảng viên, trang thiết kế trong `design/`; các trang này ánh xạ URL unpkg sang bản cục bộ qua `window.__resources` nên **không gọi ra unpkg** |
 | **PeerJS** | 1.5.4 | MIT | `vendor/peerjs/peerjs.min.js` | Chơi theo nhóm ngang hàng trong «Ben Phu Sa Game v4 Nhom.dc.html» (kèm máy chủ tín hiệu công cộng của PeerJS, xem Mục 5) |
+| **Tweakpane** · cocopon | 4.0.5 | MIT (bản sao giấy phép: `vendor/tweakpane/LICENSE.txt`) | `vendor/tweakpane/tweakpane.min.js` | Bảng tinh chỉnh cảnh 3D cho người làm game (`js/tinh-chinh-3d.js`), chỉ nạp khi địa chỉ có `?tinh-chinh=1`; người chơi không tải tệp này |
 | **Tailwind CSS** · Tailwind Labs | bản dựng rút gọn | MIT | `css/tw.css` (44 KB, chỉ chứa lớp tiện ích được dùng) | 10 trang |
 | **Bản dựng Vite của trang lớp học KT330H** | — | React (MIT), biểu tượng **lucide-react** (ISC) và các gói phụ thuộc của chúng, đóng gói trong một tệp | `kt330h/assets/index-*.js` | `kt330h/index.html` |
 
@@ -62,7 +64,6 @@ Các trang chính của bizonland.com (trang chủ, bốn trò chơi, hành trì
 | **Google Fonts** (`fonts.googleapis.com`, `fonts.gstatic.com`) — phông OFL, phát qua máy chủ Google | `kt330h/index.html`, `BizOn Game 3D.html`, `Characters 3D.html`, `HQ Asset Gallery.html`, `Trang Giang Vien.dc.html`, 4 trang thang điểm `*.dc.html` | Điều khoản dịch vụ Google Fonts; trình duyệt gửi địa chỉ IP tới Google khi mở các trang này |
 | **unpkg.com** — three.js 0.184.0 (MIT) qua import map | 3 trang xưởng ghe `bp3d-boat/` | Công cụ nội bộ dựng mô hình ghe, không nằm trong luồng chơi |
 | **unpkg.com** — `@babel/standalone` 7.29.0 (MIT) | `bp3d-explainer.html` | Trang giải thích kỹ thuật |
-| **esm.sh** — three.js 0.160.0 (MIT) | Hộ Chiếu Sầu Riêng 3D | Chỉ là **dự phòng** khi `window.THREE` chưa nạp được từ bản cục bộ |
 | **YouTube** (`youtube-nocookie.com`) | Kho Âm nhạc | Chỉ tải sau khi người xem bấm phát |
 
 ## 5 · Dịch vụ bên thứ ba (không phải mã trong kho)
@@ -85,6 +86,10 @@ Lệnh `video-ngan` (`.claude/skills/video-ngan/`) và công cụ kiểm video `
 
 
 Lệnh `ffmpeg-skill` (`.claude/skills/ffmpeg-skill/`, thêm 19/11/2026) chép nguyên phần skill (`SKILL.md`, `scripts/`, `references/`, `templates/`) của **kajisho5/ffmpeg-skill** (© 2026 kajisho5, giấy phép **MIT**, toàn văn trong `LICENSE` cùng thư mục; nguồn và commit ghi ở `NGUON.md`): bộ script Python gọi ffmpeg trên máy để cắt, ghép, đổi khổ, gắn phụ đề, chuẩn độ to và kiểm video trước khi đăng. Đây là công cụ phát triển, không chạy trên trang web.
+
+Lệnh `diagram-design` (`.claude/skills/diagram-design/`, thêm 19/11/2026) chép phần skill (`SKILL.md`, `references/`, `scripts/`, 7 tệp khuôn trong `assets/`) của **cathrynlavery/diagram-design** (© 2025 Cathryn Lavery, giấy phép **MIT**, toàn văn trong `LICENSE` cùng thư mục; nguồn, commit và quy tắc BizOn ghi ở `NGUON.md`): hướng dẫn và script để vẽ sơ đồ (lưu đồ, dòng thời gian, hành trình người dùng, sơ đồ dữ liệu…) thành tệp HTML/SVG tự chứa. Biểu tượng đi kèm thuộc Tabler Icons (MIT), Simple Icons (CC0), log-z/logos (MIT) và Devicon (MIT), kê ở `THIRD_PARTY_LICENSES.md`. Đây là công cụ phát triển, không chạy trên trang web; sơ đồ nó tạo ra là tác phẩm của nhóm tác giả.
+
+Lệnh `motion-design` (`.claude/skills/motion-design/`, thêm 19/11/2026) chép nguyên thư mục skill của **LottieFiles/motion-design-skill** (© 2025 LottieFiles, giấy phép **MIT**, toàn văn trong `LICENSE` cùng thư mục; nguồn, commit và quy tắc BizOn ghi ở `NGUON.md`): hướng dẫn căn thời gian, easing, dàn dựng và 12 nguyên tắc hoạt hình áp vào giao diện. Chỉ gồm tệp Markdown, không có script. Đây là công cụ phát triển, không chạy trên trang web.
 
 **Spec Kit** (`.specify/`, các lệnh `speckit-*` trong `.claude/skills/`) lấy nguyên từ **github/spec-kit** bản 0.9.5.dev0 (© GitHub, Inc., giấy phép **MIT**), cài qua bản sao `thuyhuongctu/spec-kit`; chỉ phần hiến chương `.specify/memory/constitution.md` là viết riêng cho BizOn. Lệnh `dac-ta` (`.claude/skills/dac-ta/`) là lối vào tiếng Việt viết riêng cho BizOn, phỏng theo quy trình của Spec Kit, gọi lại các lệnh `speckit-*` chứ không chép mẫu. Đây là công cụ phát triển, không chạy trên trang web.
 
