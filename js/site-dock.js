@@ -12,6 +12,7 @@
    * Tên bài theo đúng Kho Âm nhạc (am-nhac.html) – nguồn chuẩn của hệ sinh thái. */
   var PLAYLIST = [
     ['BizOn – L’Esprit du Mékong ⭐ (bài hát chính)', 'bizon-lesprit-du-mekong-v2.mp3'],
+    ['Ngọn hải đăng soi đường · The Northern Shield 🕯️ (tri ân Người Thầy 20/11 · 4:23)', 'bizonland-the-northern-shield-v2.mp3'],
     ['Hương on Return (bài hát chính đầu tiên)', 'huong-on-return.mp3'],
     ['Hương on Return – remix (remastered)', 'huong-on-return-remix.mp3'],
     ['Bật Nghiệp ⭐ (ca khúc chủ đề game · bản thu có lời)', 'bat-nghiep-co-loi.mp3'],
