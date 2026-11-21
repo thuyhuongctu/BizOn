@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Cảnh video «Đường ngắn nhất đi qua Singapore»</title>
+<!-- Trang dựng hình cho scripts/video/dung-cang-cai-mep.mjs: 13 cảnh khổ 1920×1080, vẽ theo thời gian t (giây) do script
+     truyền vào qua window.veKhung(t). Không dùng animation CSS để mỗi khung hình là tất định.
+     Ảnh chụp màn hình thật của Bật Nghiệp 3D nằm ở assets/video/src/cang-cai-mep/. Bản đồ chỉ có chấm cảng và đường biển,
+     không vẽ đất liền hay đường biên. -->
+<link rel="stylesheet" href="../../../css/bizon-clay-fonts.css">
+<style>
+  html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: #033337; }
+  body { font-family: 'Be Vietnam Pro', system-ui, sans-serif; color: #033337; }
+  .canh { position: absolute; inset: 0; opacity: 0; overflow: hidden; }
+  .nen { position: absolute; inset: 0; background-size: cover; background-position: center; will-change: transform; }
+  .kem { background: #FFFAF0; }
+  .bien { background: radial-gradient(ellipse at 60% 40%, #d7eef0 0%, #b9dfe3 60%, #a3d2d8 100%); }
+  .the { position: absolute; background: rgba(255, 250, 240, .97); border-radius: 36px; padding: 30px 46px; box-shadow: inset 0 -6px 0 rgba(110,70,30,.10), 0 18px 50px rgba(0,0,0,.25); }
+  .toi { background: #033337; color: #fff; }
+  .lon { font-weight: 800; font-size: 112px; line-height: 1; letter-spacing: -2px; }
+  .vua { font-weight: 800; font-size: 60px; line-height: 1.12; }
+  .nho { font-weight: 600; font-size: 34px; line-height: 1.3; opacity: .82; }
+  .cam { color: #E07B00; } .do { color: #C62828; } .xanh { color: #006687; } .vang { color: #FDA127; }
+  .chip { display: inline-block; background: #033337; color: #fff; font-weight: 800; font-size: 54px; padding: 18px 36px; border-radius: 999px; }
+  .chip.cam { background: #FDA127; color: #033337; } .chip.do { background: #C62828; }
+  .ghichu { position: absolute; right: 30px; bottom: 22px; font-size: 24px; font-weight: 600; color: #033337; background: rgba(255,250,240,.88); padding: 6px 16px; border-radius: 999px; }
+  .cham { position: absolute; width: 34px; height: 34px; margin: -17px 0 0 -17px; border-radius: 50%; background: #033337; box-shadow: 0 0 0 10px rgba(3,51,55,.15); }
+  .cham.cam { background: #E07B00; box-shadow: 0 0 0 12px rgba(224,123,0,.22); }
+  .nhan { position: absolute; font-weight: 800; font-size: 40px; white-space: nowrap; color: #033337; background: rgba(255,250,240,.88); padding: 2px 16px; border-radius: 999px; }
+  .thung { position: absolute; width: 64px; height: 44px; margin: -22px 0 0 -32px; border-radius: 10px; background: #FDA127; box-shadow: inset 0 -8px 0 rgba(0,0,0,.15), 0 6px 14px rgba(0,0,0,.2); }
+  .tau { position: absolute; border-radius: 0 0 40px 40px; background: #1f2d3a; box-shadow: inset 0 -18px 0 #b33a2a; }
+  .khoi { position: absolute; border-radius: 10px; box-shadow: inset 0 -8px 0 rgba(0,0,0,.15); }
+  svg { position: absolute; inset: 0; }
+  #den { position: absolute; inset: 0; background: #000; opacity: 0; }
+</style>
+</head>
+<body>
+<div id="san"></div>
+<div id="den"></div>
+<script>
+'use strict';
+const Q = new URLSearchParams(location.search);
+const EN = Q.get('lang') === 'en';
+const L = (vi, en) => (EN ? en : vi);
+const A = p => '../../../assets/video/src/cang-cai-mep/' + p;
+const ez = x => x <= 0 ? 0 : x >= 1 ? 1 : x * x * (3 - 2 * x);
+const vao = (s, a, dur = 0.45) => ez((s - a) / dur);
+const lerp = (a, b, t) => a + (b - a) * t;
+
+// Bản đồ giản lược (không có đất liền): chỉ chấm cảng. Toạ độ khung 1920×1080.
+const P = { vn: [1180, 360], sg: [1060, 700], eu: [230, 250], usw: [1760, 250], use: [1760, 640] };
+const banDo = (id, them = '') => `<div class="nen bien"></div><svg viewBox="0 0 1920 1080" id="${id}"></svg>
+  <div class="cham cam" style="left:${P.vn[0]}px;top:${P.vn[1]}px"></div><div class="nhan" style="left:${P.vn[0] - 360}px;top:${P.vn[1] + 26}px">Cái Mép · ${L('Việt Nam', 'Viet Nam')}</div>
+  <div class="cham" style="left:${P.sg[0]}px;top:${P.sg[1]}px"></div><div class="nhan" style="left:${P.sg[0] + 36}px;top:${P.sg[1] + 4}px">Singapore</div>
+  <div class="cham" style="left:${P.eu[0]}px;top:${P.eu[1]}px"></div><div class="nhan" style="left:${P.eu[0] - 40}px;top:${P.eu[1] - 80}px">${L('Châu Âu', 'Europe')}</div>${them}`;
+// Đường cong bậc hai từ a tới b, cong lên theo k
+const cong = (a, b, k) => { const mx = (a[0] + b[0]) / 2, my = (a[1] + b[1]) / 2 - k; return { d: `M${a[0]},${a[1]} Q${mx},${my} ${b[0]},${b[1]}`, at: t => [lerp(lerp(a[0], mx, t), lerp(mx, b[0], t), t), lerp(lerp(a[1], my, t), lerp(my, b[1], t), t)] }; };
+const VONG1 = cong(P.vn, P.sg, -60), VONG2 = cong(P.sg, P.eu, 160);
+
+const CANH = [
+  { // 01 Móc câu: đường vòng qua Singapore
+    html: banDo('c1s') + `<div class="thung" id="c1t"></div>
+      <div class="the" id="c1c" style="left:90px;bottom:90px;max-width:1000px"><div class="vua">${L('Đường ngắn nhất sang châu Âu…', 'The shortest way to Europe…')}</div><div class="vua cam">${L('lại đi qua Singapore?', '…goes through Singapore?')}</div></div>`,
+    ve(s, p, d, el) {
+      const a = vao(s, 0.1, d * 0.35), b = vao(s, d * 0.4, d * 0.45);
+      el.q('#c1s').innerHTML = `<path d="${VONG1.d}" fill="none" stroke="#033337" stroke-width="8" stroke-dasharray="18 14" opacity="${0.25 + 0.75 * a}"/>
+        <path d="${VONG2.d}" fill="none" stroke="#033337" stroke-width="8" stroke-dasharray="18 14" opacity="${0.25 + 0.75 * b}"/>`;
+      const pt = b > 0 ? VONG2.at(b) : VONG1.at(a); const t = el.q('#c1t'); t.style.left = pt[0] + 'px'; t.style.top = pt[1] + 'px';
+      op(el, '#c1c', vao(s, d * 0.3)); } },
+  { // 02 Tàu mẹ cần nước sâu
+    html: `<div class="nen" style="background-image:url(${A('man-cang-3d.webp')});transform-origin:62% 70%"></div>
+      <div class="the" id="c2" style="left:90px;top:90px;max-width:900px"><div class="vua">🚢 ${L('Tàu mẹ', 'Mother ship')}</div><div class="nho">${L('chở cả chục nghìn thùng hàng', 'carries tens of thousands of boxes')}</div>
+        <div class="vua xanh" id="c2b" style="margin-top:14px">${L('→ cần nước thật sâu', '→ needs very deep water')}</div></div>`,
+    ve(s, p, d, el) { el.nen.style.transform = `scale(${1.05 + 0.12 * ez(p)})`; op(el, '#c2', vao(s, 0.15)); op(el, '#c2b', vao(s, d * 0.55)); } },
+  { // 03 Chuyển tải: tàu nhỏ → tàu mẹ
+    html: `<div class="nen kem"></div>
+      <div style="position:absolute;left:0;right:0;top:720px;bottom:0;background:#b9dfe3"></div>
+      <div class="tau" style="left:160px;top:620px;width:420px;height:110px"></div>
+      <div class="khoi" style="left:200px;top:570px;width:90px;height:56px;background:#2a9d8f"></div><div class="khoi" style="left:300px;top:570px;width:90px;height:56px;background:#4a7fb5"></div>
+      <div class="tau" style="left:900px;top:560px;width:880px;height:170px"></div>
+      ${[0, 1, 2, 3, 4, 5, 6].map(i => `<div class="khoi" style="left:${960 + i * 104}px;top:500px;width:92px;height:62px;background:${['#2a9d8f', '#e9c46a', '#4a7fb5', '#9b5de5', '#e76f51', '#6a994e', '#2a9d8f'][i]}"></div>`).join('')}
+      <div class="nhan" style="left:200px;top:760px">${L('Tàu nhỏ', 'Feeder ship')}</div><div class="nhan" style="left:1180px;top:760px">${L('Tàu mẹ · cảng trung chuyển', 'Mother ship · transshipment hub')}</div>
+      <div class="thung" id="c3t"></div>
+      <div class="the" id="c3c" style="left:50%;top:70px;transform:translateX(-50%);text-align:center"><div class="vua">${L('Bốc dỡ', 'Handled')} <span class="cam" id="c3n">1</span> ${L('lần', 'time')}</div></div>`,
+    ve(s, p, d, el) {
+      const a = vao(s, d * 0.15, d * 0.3), b = vao(s, d * 0.55, d * 0.3);
+      const x = lerp(470, 1500, a), y = 545 - Math.sin(Math.PI * a) * 260 - b * 0; const y2 = b > 0 ? lerp(545, 470, b) : y;
+      const t = el.q('#c3t'); t.style.left = (b > 0 ? 1500 : x) + 'px'; t.style.top = y2 + 'px';
+      op(el, '#c3c', vao(s, 0.1)); el.q('#c3n').textContent = b > 0.5 ? '2' : '1'; } },
+  { // 04 Thêm phí, thêm ngày, thêm rủi ro
+    html: `<div class="nen kem"></div><div class="thung" style="left:960px;top:330px;width:260px;height:180px;margin:-90px 0 0 -130px;border-radius:24px"></div>
+      <div style="position:absolute;left:0;right:0;top:560px;text-align:center">
+        <span class="chip" id="c4a">+ ${L('phí', 'fees')}</span>&nbsp;&nbsp;<span class="chip cam" id="c4b">+ ${L('ngày', 'days')}</span>&nbsp;&nbsp;<span class="chip do" id="c4c">+ ${L('chỗ có thể trễ', 'a place to fall behind')}</span></div>`,
+    ve(s, p, d, el) { ['#c4a', '#c4b', '#c4c'].forEach((k, i) => { const v = vao(s, 0.2 + i * d * 0.25, 0.3); const n = el.q(k); n.style.opacity = v; n.style.display = 'inline-block'; n.style.transform = `translateY(${(1 - v) * 40}px) scale(${0.9 + 0.1 * v})`; }); } },
+  { // 05 Trụ sở → bay tới Cảng Cái Mép (ảnh chụp màn hình thật)
+    html: `<div class="nen" style="background-image:url(${A('man-tru-so.webp')})"></div>
+      <div class="nen" id="c5b" style="background-image:url(${A('man-cang-3d.webp')})"></div>
+      <div class="the" id="c5c" style="left:90px;bottom:150px"><div class="nho">${L('Cụm cảng nước sâu', 'Deep-water port cluster')}</div><div class="vua">Cái Mép – Thị Vải</div></div>`,
+    ve(s, p, d, el) { const sw = vao(s, d * 0.3, 0.6); el.qa('.nen')[0].style.transform = `scale(${1.02 + 0.2 * ez(Math.min(1, p * 2))})`;
+      el.q('#c5b').style.opacity = sw; el.q('#c5b').style.transform = `scale(${1.12 - 0.06 * ez(p)})`; op(el, '#c5c', vao(s, d * 0.5)); } },
+  { // 06 Tàu ~400 m, 24.188 TEU, 3/2023
+    html: `<div class="nen" style="background-image:url(${A('man-cang-3d.webp')});transform-origin:58% 72%"></div>
+      <div class="the" id="c6" style="right:80px;top:90px;text-align:right"><div class="nho">${L('Tháng 3/2023', 'March 2023')}</div><div class="lon">≈ 400 m</div><div class="vua cam">24.188 TEU</div></div>
+      <div class="ghichu">${L('Nguồn: SGGP, 30/3/2023', 'Source: SGGP, 30 Mar 2023')}</div>`,
+    ve(s, p, d, el) { el.nen.style.transform = `scale(${1.25 + 0.1 * ez(p)})`; op(el, '#c6', vao(s, d * 0.2)); } },
+  { // 07 22 tuyến tàu mẹ đi thẳng
+    html: banDo('c7s', `<div class="cham" style="left:${P.usw[0]}px;top:${P.usw[1]}px"></div><div class="nhan" style="left:${P.usw[0] - 250}px;top:${P.usw[1] - 80}px">${L('Bờ Tây Hoa Kỳ', 'US West Coast')}</div>
+      <div class="cham" style="left:${P.use[0]}px;top:${P.use[1]}px"></div><div class="nhan" style="left:${P.use[0] - 250}px;top:${P.use[1] + 30}px">${L('Bờ Đông Hoa Kỳ', 'US East Coast')}</div>`) +
+      `<div class="the" id="c7c" style="left:90px;bottom:80px"><div class="lon cam">22</div><div class="vua">${L('tuyến tàu mẹ đi thẳng', 'direct mother-ship services')}</div><div class="nho">${L('nhiều nhất Đông Nam Á, sau Singapore', 'most in Southeast Asia after Singapore')}</div></div>
+      <div class="ghichu">${L('Cảng vụ Hàng hải Vũng Tàu, 10/2024', 'Vũng Tàu Maritime Administration, Oct 2024')}</div>`,
+    ve(s, p, d, el) {
+      const fade = 1 - vao(s, 0.1, 0.6);
+      // 22 tuyến: 5 sang châu Âu, 8 bờ Tây, 8 bờ Đông, 1 Mỹ – Canada (gộp vào bờ Tây)
+      const dich = [...Array(5).fill('eu'), ...Array(9).fill('usw'), ...Array(8).fill('use')];
+      let h = `<path d="${VONG1.d}" fill="none" stroke="#033337" stroke-width="8" stroke-dasharray="18 14" opacity="${0.6 * fade}"/><path d="${VONG2.d}" fill="none" stroke="#033337" stroke-width="8" stroke-dasharray="18 14" opacity="${0.6 * fade}"/>`;
+      dich.forEach((k, i) => { const v = vao(s, 0.4 + i * (d * 0.45 / 22), 0.4); const j = (i % 9) - 4;
+        const c = cong(P.vn, P[k], (k === 'eu' ? 120 : 60) + j * 18); h += `<path d="${c.d}" fill="none" stroke="#E07B00" stroke-width="5" stroke-linecap="round" pathLength="1" stroke-dasharray="1 1" stroke-dashoffset="${1 - v}" opacity=".85"/>`; });
+      el.q('#c7s').innerHTML = h; op(el, '#c7c', vao(s, d * 0.35)); } },
+  { // 08 Cảng tắc: phí lưu mỗi thùng mỗi ngày (thẻ «Khi cảng tắc» thật trong game)
+    html: `<div class="nen" style="background-image:url(${A('man-the-cang-tac.webp')});transform-origin:8% 82%"></div>
+      <div class="the" id="c8" style="right:80px;top:120px;width:760px"><div class="vua do">⏳ ${L('Cảng tắc', 'Port jam')}</div>
+        <div class="nho" style="margin:10px 0">${L('Quá hạn miễn phí: mỗi thùng, mỗi ngày', 'After free time: every box, every day')}</div>
+        <div class="vua">${L('Ngày', 'Day')} <span class="cam" id="c8n">1</span></div><div class="lon cam" id="c8p" style="margin-top:8px">75–300 USD</div></div>
+      <div class="ghichu">${L('Biểu phí lưu container của hãng tàu, 2025', 'Carrier demurrage & detention tariff, 2025')}</div>`,
+    ve(s, p, d, el) { el.nen.style.transform = `scale(${1 + 0.18 * ez(p)})`; op(el, '#c8', vao(s, d * 0.3)); el.q('#c8n').textContent = String(1 + Math.floor(Math.max(0, s - d * 0.3) * 1.6)); op(el, '#c8p', vao(s, d * 0.7)); } },
+  { // 09 May mà / không may
+    html: `<div class="nen kem"></div>
+      <div class="the" id="c9a" style="left:80px;top:90px;width:780px"><div class="nho">${L('May mà…', 'Luckily…')}</div><div class="vua">${L('tàu càng to, cước mỗi thùng càng nhẹ', 'bigger ship, cheaper freight per box')}</div></div>
+      <div class="the toi" id="c9b" style="right:80px;top:90px;width:780px"><div class="nho vang" style="opacity:1">${L('Không may là…', 'Unluckily…')}</div><div class="vua">${L('cả núi hàng cùng chờ một nhịp chậm', 'a mountain of cargo waits on one slow beat')}</div></div>
+      <div id="c9x"></div><div id="c9y"></div>
+      <div class="ghichu">ITF/OECD, «The Impact of Mega-Ships», 2015</div>`,
+    init(el) { let h = ''; for (let i = 0; i < 5; i++) h += `<div class="thung" style="left:${200 + i * 130}px;top:720px;width:100px;height:70px;margin:0"><div class="c9c" style="position:absolute;left:50%;top:-58px;width:52px;height:52px;margin-left:-26px;border-radius:50%;background:#e9c46a;box-shadow:inset 0 -6px 0 #c9a227"></div></div>`; el.q('#c9x').innerHTML = h;
+      h = ''; for (let i = 0; i < 24; i++) h += `<div class="khoi c9k" style="left:${1080 + (i % 6) * 112}px;top:${930 - Math.floor(i / 6) * 74}px;width:100px;height:64px;background:${['#2a9d8f', '#e9c46a', '#4a7fb5', '#9b5de5', '#e76f51', '#6a994e'][i % 6]}"></div>`; el.q('#c9y').innerHTML = h; },
+    ve(s, p, d, el) { const a = vao(s, 0.2), b = vao(s, d * 0.48); op(el, '#c9a', a); op(el, '#c9b', b);
+      const k = 1 - 0.6 * vao(s, 0.5, d * 0.35); el.qa('.c9c').forEach(c => { c.style.transform = `scale(${k})`; c.style.opacity = a; });
+      el.qa('.c9k').forEach((c, i) => { c.style.opacity = vao(s, d * 0.5 + i * (d * 0.35 / 24), 0.2); }); } },
+  { // 10 Cổng trường giờ tan học
+    html: `<div class="nen kem"></div><div style="position:absolute;left:0;right:0;top:760px;bottom:0;background:#d9cbb2"></div>
+      <div class="khoi" style="left:820px;top:380px;width:60px;height:390px;background:#c0392b"></div><div class="khoi" style="left:1300px;top:380px;width:60px;height:390px;background:#c0392b"></div>
+      <div class="khoi" style="left:800px;top:340px;width:580px;height:70px;background:#033337;color:#fff;font-weight:800;font-size:38px;display:flex;align-items:center;justify-content:center">${L('TRƯỜNG HỌC', 'SCHOOL')}</div>
+      <div class="khoi" id="c10bus" style="top:560px;width:520px;height:200px;background:#FDA127;border-radius:30px"><div style="position:absolute;left:30px;right:30px;top:30px;height:70px;background:#d7eef0;border-radius:14px"></div></div>
+      <div id="c10xe"></div>
+      <div class="the" id="c10c" style="left:50%;top:70px;transform:translateX(-50%);text-align:center;white-space:nowrap"><div class="vua" id="c10t"></div></div>`,
+    init(el) { let h = ''; for (let i = 0; i < 14; i++) h += `<div class="khoi c10m" style="left:${880 + (i % 7) * 60}px;top:${640 + Math.floor(i / 7) * 64}px;width:48px;height:48px;border-radius:50%;background:${['#4a7fb5', '#6a994e', '#9b5de5', '#e76f51'][i % 4]}"></div>`; el.q('#c10xe').innerHTML = h; },
+    ve(s, p, d, el) { op(el, '#c10c', vao(s, 0.1)); const ket = vao(s, d * 0.5, 0.5);
+      const x = s < d * 0.5 ? lerp(-560, 1600, ez(s / (d * 0.48))) : lerp(-560, 300, ez((s - d * 0.5) / (d * 0.25)));
+      el.q('#c10bus').style.left = x + 'px';
+      el.qa('.c10m').forEach((m, i) => { m.style.opacity = vao(s, d * 0.5 + i * 0.05, 0.2); });
+      el.q('#c10t').innerHTML = s < d * 0.5 ? L('Cổng rộng: <span class="cam">một chuyến</span> đón cả lớp', 'Wide gate: <span class="cam">one trip</span> for the whole class') : L('Kẹt cổng 10 phút: <span class="do">cả xe cùng trễ</span>', 'Gate jammed 10 minutes: <span class="do">the whole bus is late</span>'); } },
+  { // 11 Vụ 5 trong Bật Nghiệp 3D: ba lựa chọn (ảnh chụp màn hình thật)
+    html: `<div id="c11w" style="position:absolute;inset:0;transform-origin:97% 46%"><div class="nen" style="background-image:url(${A('man-o-quyet-dinh-vu5.webp')})"></div>
+        <div class="vong" style="position:absolute;left:1476px;top:369px;width:384px;height:104px"></div>
+        <div class="vong" style="position:absolute;left:1476px;top:474px;width:384px;height:104px"></div>
+        <div class="vong" style="position:absolute;left:1476px;top:579px;width:384px;height:104px"></div></div>
+      <div class="the" id="c11c" style="left:80px;top:250px;max-width:760px"><div class="nho">Bật Nghiệp 3D · ${L('vụ 5', 'round 5')}</div><div class="vua">${L('Hàng kẹt ở Cái Mép', 'Cargo stuck at Cái Mép')}</div>
+        <div class="nho" style="margin-top:12px" id="c11o"></div></div>`,
+    ve(s, p, d, el) { el.q('#c11w').style.transform = `scale(${1 + 0.45 * ez(Math.min(1, p * 1.6))})`; op(el, '#c11c', vao(s, 0.15));
+      const opt = [L('(a) Trả phí ưu tiên', '(a) Pay a priority fee'), L('(b) Chờ cho đỡ tốn', '(b) Wait to save money'), L('(c) Xin lùi ngày giao', '(c) Ask for a later date')];
+      const k = Math.min(2, Math.floor(Math.max(0, s - d * 0.35) / (d * 0.18)));
+      el.qa('.vong').forEach((v, i) => { const on = s > d * 0.35 && i === k; v.style.boxShadow = on ? '0 0 0 8px #E07B00' : 'none'; v.style.borderRadius = '16px'; });
+      el.q('#c11o').innerHTML = s > d * 0.35 ? opt.map((o, i) => `<div style="font-weight:800;opacity:${i <= k ? 1 : 0.25}">${o}</div>`).join('') : ''; } },
+  { // 12 Khảo sát: gần 1/3 người mua giảm lòng tin
+    html: `<div class="nen kem"></div><div id="c12p"></div>
+      <div class="the" id="c12c" style="left:50%;top:70px;transform:translateX(-50%);text-align:center;white-space:nowrap"><div class="lon cam">≈ 1/3</div><div class="vua">${L('người mua giảm lòng tin', 'shoppers trust the seller less')}</div><div class="nho">${L('sau một lần giao trễ', 'after one late delivery')}</div></div>
+      <div class="ghichu">${L('Khảo sát của Sendcloud, 2025 · 8.000 người mua, 8 nước châu Âu', 'Sendcloud survey, 2025 · 8,000 shoppers, 8 European countries')}</div>`,
+    init(el) { let h = ''; for (let i = 0; i < 3; i++) h += `<div class="c12n" style="position:absolute;left:${560 + i * 300}px;top:560px;width:200px;height:380px"><div style="position:absolute;left:50px;top:0;width:100px;height:100px;border-radius:50%;background:#e0b48a"></div><div class="ao" style="position:absolute;left:10px;top:120px;width:180px;height:240px;border-radius:90px 90px 24px 24px;background:#006687"></div></div>`; el.q('#c12p').innerHTML = h; },
+    ve(s, p, d, el) { op(el, '#c12c', vao(s, 0.2)); const n = el.qa('.c12n')[2]; const v = vao(s, d * 0.45, 0.5);
+      n.style.opacity = 1 - 0.55 * v; n.style.transform = `translateX(${60 * v}px)`; n.querySelector('.ao').style.background = v > 0.5 ? '#8a9a9c' : '#006687'; } },
+  { // 13 Cú lật: đường nào ngắn nhất, đội bạn chọn — cắt đen ở chữ cuối
+    html: banDo('c13s') + `<div id="c13a"></div>
+      <div class="the" id="c13c" style="left:90px;bottom:90px;max-width:1100px"><div class="vua">${L('Khi cảng tắc, đường nào ngắn nhất…', 'When the port jams, the shortest way…')}</div><div class="vua cam">${L('là đội bạn chọn.', 'is your team\'s call.')}</div></div>`,
+    init(el) { el.q('#c13a').innerHTML = ['a', 'b', 'c'].map((k, i) => `<div class="chip ${i === 1 ? 'cam' : ''} c13k" style="position:absolute;left:${P.vn[0] + 70}px;top:${P.vn[1] - 150 + i * 110}px;font-size:44px;padding:10px 26px">(${k})</div>`).join(''); },
+    ve(s, p, d, el) { el.root.querySelector('.nen').style.transform = `scale(${1 + 0.06 * ez(p)})`;
+      el.qa('.c13k').forEach((c, i) => { const v = vao(s, 0.4 + i * 0.35, 0.3); c.style.opacity = v; c.style.transform = `translateX(${(1 - v) * -60}px)`; });
+      op(el, '#c13c', vao(s, d * 0.35)); } },
+];
+
+function op(el, sel, v) { const n = el.q(sel); if (n) n.style.opacity = v; }
+
+const san = document.getElementById('san');
+const ELS = CANH.map(c => { const d = document.createElement('div'); d.className = 'canh'; d.innerHTML = c.html; san.appendChild(d);
+  const el = { root: d, nen: d.querySelector('.nen'), q: s => d.querySelector(s), qa: s => [...d.querySelectorAll(s)] }; if (c.init) c.init(el); return el; });
+
+// MOC: [{a, b}] theo giọng đọc; script đặt bằng window.datMoc(). Chuyển cảnh mờ 0,25 s.
+let MOC = CANH.map((_, i) => ({ a: i * 5, b: i * 5 + 5 })), TONG = CANH.length * 5;
+window.SO_CANH = CANH.length;
+window.datMoc = (m, tong) => { MOC = m; TONG = tong; };
+window.veKhung = t => {
+  const X = 0.25;
+  ELS.forEach((el, i) => {
+    const a = i === 0 ? 0 : MOC[i].a, b = i === CANH.length - 1 ? TONG : MOC[i + 1].a;
+    const v = t < a - X || t > b + X ? 0 : i === 0 ? (t <= b ? 1 : 1 - (t - b) / X) : t < a ? (t - (a - X)) / X : t <= b ? 1 : i === CANH.length - 1 ? 1 : 1 - (t - b) / X;
+    el.root.style.opacity = Math.max(0, Math.min(1, v));
+    if (v > 0) { const d = b - a, s = t - a, p = Math.max(0, Math.min(1, s / d));
+      el.root.style.transform = `scale(${(1 + 0.03 * p).toFixed(5)})`;   // mọi cảnh đẩy vào chậm
+      CANH[i].ve(Math.max(0, s), p, d, el); }
+  });
+  document.getElementById('den').style.opacity = t > TONG - 0.35 ? 1 : 0;   // cắt đen đúng chữ cuối («chọn»)
+};
+window.veKhung(0);
+</script>
+</body>
+</html>
