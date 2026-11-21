@@ -1,6 +1,6 @@
 // 21/11/2026: trang Bằng chứng, mục lớp quốc tế UM Kendari có thêm «Lớp học qua Zoom · 17–19/11/2026» với 2 ảnh chụp màn hình
 // chị gửi: lớp trao đổi qua Zoom. Đã cắt khung chat, làm mờ họ tên sinh viên và giảng viên UMK (chị chọn «che tên, giữ mặt»).
-// Thêm ảnh màn Quiz giữa kỳ (chị chọn; bảng điểm có họ tên, MSSV nên không đăng). Ảnh thầy Tú cúi nhìn xuống chị chọn bỏ, không ghép ảnh khác vào (trang Bằng chứng chỉ dùng ảnh thật). Tệp mới, không ghi đè ảnh cũ.
+// Thêm ảnh màn EnQuiz: sinh viên thi 2 quiz giữa kỳ trên EnQuiz (chị chọn; bảng điểm có họ tên, MSSV nên không đăng). Ảnh thầy Tú cúi nhìn xuống chị chọn bỏ, không ghép ảnh khác vào (trang Bằng chứng chỉ dùng ảnh thật). Tệp mới, không ghi đè ảnh cũ.
 'use strict';
 const fs = require('fs'), path = require('path'), assert = require('assert');
 const BASE = process.env.BIZON_URL || 'http://127.0.0.1:8899';
@@ -17,6 +17,7 @@ const s = read('bang-chung.html');
 assert.ok(s.indexOf('id="lop-quoc-te-umk"') < s.indexOf('id="lop-zoom-umk"'), 'nhóm ảnh Zoom nằm trong mục lớp UMK');
 for (const f of IMGS) assert.ok(new RegExp('<img src="' + f.replace(/[.]/g, '\\.') + '" width="\\d+" height="\\d+" loading="lazy" alt="[^"]+" data-en-alt="[^"]+">').test(s), f + ': có kích thước, alt VI/EN');
 assert.ok(/làm mờ họ tên/.test(s) && /names blurred/.test(s), 'chú thích nói rõ đã làm mờ họ tên');
+assert.ok(s.includes('Sinh viên thi hai bài Quiz giữa kỳ (chương 1–3, 4–7) trên EnQuiz') && s.includes('Students sat both midterm quizzes (chapters 1–3 and 4–7) on EnQuiz'), 'chú thích: sinh viên thi 2 quiz trên EnQuiz (VI/EN)');
 assert.ok(!s.includes('umk-zoom-2026-11-18-thay-tu') && !fs.existsSync(R('assets/photos/umk-zoom-2026-11-18-thay-tu.webp')), 'không dùng ảnh thầy Tú cúi đầu (chị chọn bỏ)');
 assert.ok(+(read('sw.js').match(/bizon-v(\d+)/) || [])[1] >= 948, 'sw.js ≥ v948');
 
