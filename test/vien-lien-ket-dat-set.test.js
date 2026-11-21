@@ -14,7 +14,7 @@ const css = read('css/bizon-clay.css');
 assert.match(css, /\.clay-link,body\.clay a\.clay-link\{/, 'css có .clay-link');
 assert.match(css, /\.clay-chip\{display:inline-flex;padding:3px 10px/, 'nhãn nhỏ .clay-chip giữ nguyên');
 assert.match(read('giang-vien.html'), /<span class="clay-chip"[^>]*>Ứng dụng chính/, 'nhãn «Ứng dụng chính» vẫn là .clay-chip');
-const PAGES = { 'am-nhac.html': 4, 'doi-ngu.html': 1, 'ho-chieu-sau-rieng.html': 2, 'giang-vien.html': 1 };
+const PAGES = { 'am-nhac.html': 5, 'doi-ngu.html': 1, 'ho-chieu-sau-rieng.html': 2, 'giang-vien.html': 1 };
 for (const f of Object.keys(PAGES)) assert.ok(!/>▶ (Nghe|Chơi)|Giảng viên đăng nhập →<|kịch bản lớp học →<|chỉ báo 2030 →</.test(read(f)), f + ': không còn dòng liên kết trơn cũ');
 
 (async () => {
