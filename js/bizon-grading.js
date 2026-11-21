@@ -44,7 +44,12 @@
    * Được áp dụng: đề xuất lệch ≤ 10% so với quyết định đã chốt; biên bản ≥ 30 ký tự; CEO: chốt vòng có dùng ít nhất 1 đề xuất → tối đa 0,75. */
   const ROLE_KEYS = { CFO: ['rd', 'paymentTerm'], CMO: ['price', 'marketing'], COO: ['production', 'workers', 'training'] };
   const near = (a, b) => b != null && Math.abs(+a - +b) <= Math.max(1, Math.abs(+b) * .1);
+  /* Dòng lý do ra quyết định (js/ly-do-quyet-dinh.js, 21/11/2026) đi kèm nhật ký với kind 'commit' + payload.reasonsOnly
+   * (không cần migration). Không phải một lần chốt: mọi hàm chấm đều bỏ qua, chỉ timeline() đọc. */
+  const isReason = l => !!(l && l.kind === 'commit' && l.payload && l.payload.reasonsOnly);
+  const realLog = log => (log || []).filter(l => !isReason(l));
   function members(T, log) {
+    log = realLog(log);
     const out = [], byTeam = {};
     (log || []).forEach(l => { const k = tkey(l.team_name); (byTeam[k] = byTeam[k] || []).push(l); });
     Object.keys(byTeam).forEach(k => {
@@ -131,6 +136,7 @@
    * Dùng CHÍNH nhật ký thành viên (member_log, mọi kind kể cả lumina) để cho giảng viên
    * xem "bằng chứng số" mức tham gia từng người theo đội — KHÔNG phải điểm chấm (khác B5 ở trên). */
   function memberActivity(log) {
+    log = realLog(log);
     const byTeam = {}, label = {};
     (log || []).forEach(l => { const k = tkey(l.team_name); if (!(k in label)) label[k] = String(l.team_name || '').trim(); (byTeam[k] = byTeam[k] || []).push(l); });
     const RO = { CEO: 0, CFO: 1, CMO: 2, COO: 3, SEC: 4 };
@@ -293,5 +299,37 @@
     const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([xml], { type: 'application/vnd.ms-excel' })); a.download = `BizOn-${code}-so-diem.xls`; document.body.appendChild(a); a.click(); a.remove();
   }
   const EVENTS = [['', 'Theo kịch bản (không can thiệp)'], ['EV_STABLE', '🌤️ Thị trường ổn định'], ['EV_GOLDEN', '🌟 Cơ hội vàng – tổng cầu tăng'], ['EV_PRICEWAR', '⚔️ Cạnh tranh về giá – nhạy giá'], ['EV_RECESSION', '⚡ Khủng hoảng năng lượng'], ['EV_SUPPLY', '🚢 Khủng hoảng chuỗi cung ứng'], ['EV_MILESTONE', '🐉 Việt Nam hóa Rồng']];
-  window.BizOnInstructorPage = { money, f1, letter, members, autoNote, teams, grades, bpGrade, miniGrade, parseRoster, rosterGroup, miniExport, decRows, xls, caseTaskCsv, EVENTS, memberActivity, rubricLevel };
+  /* Dòng thời gian theo đội × vòng (đặc tả 007, câu chuyện 3): đề xuất theo vai → Nếu–Thì → Lumina → lý do → quyết định → kết quả.
+   * Chỉ đọc nhật ký đội (bizon_member_log, chủ lớp xem) và lượt nộp; không chấm điểm. */
+  function timeline(log, T) {
+    const byTeam = {}, label = {};
+    (log || []).forEach(l => { const k = tkey(l.team_name); if (!(k in label)) label[k] = String(l.team_name || '').trim(); (byTeam[k] = byTeam[k] || []).push(l); });
+    (T || []).forEach(t => { const k = tkey(t.name); if (!(k in label)) label[k] = t.name; byTeam[k] = byTeam[k] || []; });
+    return Object.keys(byTeam).sort().map(k => {
+      const L = byTeam[k].slice().sort((a, b) => String(a.created_at || '').localeCompare(String(b.created_at || '')));
+      const t = (T || []).find(x => tkey(x.name) === k), rounds = [];
+      for (let r = 1; r <= 6; r++) {
+        const Lr = L.filter(l => +l.round_number === r), sub = t && (t.rs || []).find(s => +s.round_number === r);
+        if (!Lr.length && !sub) continue;
+        const n = kind => Lr.filter(l => l.kind === kind).length;
+        const commits = Lr.filter(l => l.kind === 'commit' && !isReason(l)), why = Lr.filter(isReason);
+        const lastC = commits[commits.length - 1], lastW = why[why.length - 1], res = sub ? r0(sub) : null;
+        const num = v => (v == null || v === '' || isNaN(+v)) ? null : +v;
+        rounds.push({
+          round: r,
+          proposals: Lr.filter(l => l.kind === 'proposal').map(l => l.role),
+          whatif: n('whatif'), lumina: n('lumina'), minutes: n('minutes'),
+          reasons: lastW ? ((lastW.payload || {}).reasons || []).slice(0, 2).map(String) : [],
+          note: lastW ? String((lastW.payload || {}).note || '').slice(0, 120) : '',
+          committed: !!(lastC || sub),
+          decision: lastC ? lastC.payload : (res && (res.decisions || res.decision)) || null,
+          profit: res ? num(res.netProfit) : (lastC ? num((lastC.payload || {}).netProfit) : null),
+          share: res ? num(res.share) : null,
+        });
+      }
+      return { team: label[k], rounds };
+    });
+  }
+
+  window.BizOnInstructorPage = { timeline, money, f1, letter, members, autoNote, teams, grades, bpGrade, miniGrade, parseRoster, rosterGroup, miniExport, decRows, xls, caseTaskCsv, EVENTS, memberActivity, rubricLevel };
 })();
