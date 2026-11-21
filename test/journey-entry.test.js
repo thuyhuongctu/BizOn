@@ -62,7 +62,8 @@ assert.match(read('sw.js'), /const CACHE = 'bizon-v\d+';/);
   assert.equal(await page.$eval('#ar-journey h3', e => e.textContent.trim()), 'Link the three levels into one journey: From the River Silt to the World');
   // trang Vũ trụ: thẻ Hộ chiếu dẫn tới hành trình
   await page.goto(`${BASE}/universe.html`, { waitUntil: 'load', timeout: 60000 }); await page.waitForTimeout(300);
-  assert.equal(await page.$eval('a.go[href="hanh-trinh.html"]', e => e.textContent.trim()), 'Bắt đầu hành trình 3 bậc →');
+  // 19/11/2026: dấu «→» cuối liên kết được js/bizon-clay-nav.js thay bằng viên mũi tên đất sét .clay-go
+  assert.equal(await page.$eval('a.go[href="hanh-trinh.html"]', e => e.textContent.trim() + (e.querySelector('.clay-go') ? ' [→]' : '')), 'Bắt đầu hành trình 3 bậc [→]');
   // điện thoại: dải không tràn ngang
   const phone = await browser.newPage({ viewport: { width: 390, height: 800 } }); phone.on('pageerror', e => errors.push('phone: ' + e.message));
   await phone.route(/\.(mp3|m4a|mp4|webm)(\?|$)/, r => r.abort());

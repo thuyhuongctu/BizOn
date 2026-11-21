@@ -5,6 +5,8 @@
      data-en-html     → đổi innerHTML (dùng cho đoạn có <b>/<a>…)
      data-en-ph       → đổi placeholder
      data-en-aria     → đổi aria-label
+     data-en-alt      → đổi alt của ảnh (21/11/2026)
+     data-en-title    → đổi title (gợi ý khi rê chuột) (21/11/2026)
      data-en-content  → đổi content của <meta> (vd meta description)
      <title data-en>  → đổi tiêu đề tab (title không có thẻ con nên dùng data-en như chữ thường)
    Ngôn ngữ lưu ở localStorage['bizon-lang'] (dùng chung toàn site), CHỈ khi
@@ -27,7 +29,9 @@
   function swapText(el, lang){
     /* An toàn: bỏ qua phần tử có con là thẻ (đặt data-en nhầm trên vùng chứa
        sẽ xoá mất các con như <input>). Dùng data-en-html cho vùng có thẻ con. */
-    if(el.children.length) return;
+    /* Ngoại lệ: viên mũi tên đất sét (.clay-go, js/bizon-clay-nav.js) chỉ là trang trí thay dấu «→»; đổi chữ
+       xoá nó đi rồi bizon-clay-nav.js tự gắn lại. Trước 21/11/2026 các dòng có «→» không đổi được sang EN. */
+    for(var i = 0; i < el.children.length; i++) if(!el.children[i].classList.contains('clay-go')) return;
     if(el.dataset.vi == null) el.dataset.vi = el.textContent;
     el.textContent = lang === 'en' ? el.dataset.en : el.dataset.vi;
   }
@@ -47,6 +51,8 @@
     document.querySelectorAll('[data-en-html]').forEach(function(el){ swapHtml(el, lang); });
     document.querySelectorAll('[data-en-ph]').forEach(function(el){ swapAttr(el, 'placeholder', 'viPh', el.dataset.enPh, lang); });
     document.querySelectorAll('[data-en-aria]').forEach(function(el){ swapAttr(el, 'aria-label', 'viAria', el.dataset.enAria, lang); });
+    document.querySelectorAll('[data-en-alt]').forEach(function(el){ swapAttr(el, 'alt', 'viAlt', el.dataset.enAlt, lang); });
+    document.querySelectorAll('[data-en-title]').forEach(function(el){ swapAttr(el, 'title', 'viTitle', el.dataset.enTitle, lang); });
     document.querySelectorAll('meta[data-en-content]').forEach(function(el){ swapAttr(el, 'content', 'viContent', el.dataset.enContent, lang); });
     document.querySelectorAll('img[data-en-src]').forEach(function(el){ swapAttr(el, 'src', 'viSrc', el.dataset.enSrc, lang); });
     document.documentElement.lang = lang;

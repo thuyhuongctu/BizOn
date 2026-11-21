@@ -11,6 +11,12 @@ window.BZ_MUSIC = {
     ['«BizOn – L’Esprit du Mékong»', 'illustrations/globe-trade.webp', 'Bài hát chính của BizOn · Pháp–Anh–Việt · 5:13', [
       ['Bản gốc ⭐', 'Đỗ Thùy Hương & Phan Anh Tú · lời Pháp–Anh–Việt · 5:13', 'bizon-lesprit-du-mekong', 'Original ⭐', 'Đỗ Thùy Hương & Phan Anh Tú · French–English–Vietnamese lyrics · 5:13']
     ], "BizOn's main song · French–English–Vietnamese · 5:13"],
+    ['«Ngọn hải đăng soi đường» · The Northern Shield', 'character/advisors/lumina-nghe-nhac-dung-cut.webp', 'Bài hát tri ân Người Thầy 20/11 · 4:23', [
+      ['Bản gốc ⭐', 'Tri ân Người Thầy 20/11 · 4:23', 'bizonland-the-northern-shield', 'Original ⭐', 'Thank you, teachers · 20 November · 4:23']
+    ], 'A thank-you song for teachers · 20 November · 4:23', '«The Guiding Light» · The Northern Shield'],
+    ['«BizOnland · Fjord Moonlight»', 'character/advisors/lumina-nghe-nhac-dung-cut.webp', 'Ca khúc mới của Je m’appelle Hương · 4:45', [
+      ['Bản gốc ⭐', 'Je m’appelle Hương · 4:45', 'bizonland-fjord-moonlight', 'Original ⭐', 'Je m’appelle Hương · 4:45']
+    ], 'A new song by Je m’appelle Hương · 4:45'],
     ['«Hương on Return»', 'character/lumina-ao-dai-wave-cut.webp', 'Bài hát chính đầu tiên của BizOn', [
       ['Bản gốc ⭐', 'Bản thu có lời', 'huong-on-return', 'Original ⭐', 'Vocal recording'],
       ['Bản remix (remastered)', 'Bản phối lại mới · hành trình Go Global gói trong một bài hát', 'huong-on-return-remix', 'Remix (remastered)', 'A fresh remix · the Go Global journey in one song']

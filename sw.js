@@ -1,7 +1,7 @@
 /* BizOn Bật Nghiệp 2026 – Service Worker (offline app shell)
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. */
 
-const CACHE = 'bizon-v899';
+const CACHE = 'bizon-v944';
 const SHELL = [
   './',
   './index.html',
@@ -42,6 +42,7 @@ const SHELL = [
   './man-hinh-lop-hoc.html',
   './js/man-hinh-lop-hoc.js',
   './js/man-hinh-lop-hoc-data.js',
+  './js/bizon-grading.js',
   './js/live-progress.js',
   './nhac-ben-phu-sa.html',
   './lab/cmr-lab.html',
@@ -74,8 +75,8 @@ const SHELL = [
   './lab/hanh-trinh-sau-rieng-data.js',
   './lab/hanh-trinh-sau-rieng-ui.js',
   './lab/hanh-trinh-sau-rieng-3d.js',
-  './js/vendor/three.module.js',
-  './js/vendor/three.core.js',
+  './js/vendor/three.module.min.js',
+  './js/vendor/three.core.min.js',
   './js/poly3d-kit.js',
   './thu-vien.html',
   './am-nhac.html',
@@ -120,6 +121,7 @@ const SHELL = [
   './js/ben-bizon-dang-di.js',
   './js/ben-bizon-tranh-dong.js',
   './js/cang-cai-mep-3d.js',
+  './js/cang-cai-mep.js',
   './js/ben-bizon-nhiem-vu.js',
   './js/ben-bizon-cau-hoi.js',
   './js/tranh-dong-2d.js',
@@ -133,6 +135,7 @@ const SHELL = [
   './tuyen-dung.html',
   './lien-he.html',
   './giang-vien.html',
+  './vao-lop.html',
   './bao-chi.html',
   './chinh-sach.html',
   './css/tw.css',
@@ -224,6 +227,7 @@ const SHELL = [
   './js/quiz-bank.js',
   './js/quiz-bank-en.js',
   './js/games-clay.js',
+  './js/bao-loi-3d.js',
   './js/bps3d.js',
   './js/bps3d-v3.js',
   './js/bps3d-npc.js',
@@ -242,9 +246,7 @@ const SHELL = [
   './js/bps3d-bridge.js',
   './support.js',
   './vendor/peerjs/peerjs.min.js',
-  './vendor/three/three.module.js',
-  './vendor/three/three.core.js',
-  './vendor/three/OrbitControls.js',
+  './js/vendor/OrbitControls.js',
   './vendor/react/react.production.min.js',
   './vendor/react/react-dom.production.min.js',
   './css/bizon-fonts-v8.css',

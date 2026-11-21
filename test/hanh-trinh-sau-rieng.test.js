@@ -29,7 +29,7 @@ check(H.CHANG.filter(c => c.lienKet).every(c => fs.existsSync(path.join(root, 'l
 // ---- Kiểm tĩnh ----
 const page = read('lab/hanh-trinh-sau-rieng.html'), sw = read('sw.js'), g3 = read('lab/hanh-trinh-sau-rieng-3d.js');
 check(page.includes('<link rel="canonical" href="https://bizonland.com/lab/hanh-trinh-sau-rieng.html">') && read('sitemap.xml').includes('https://bizonland.com/lab/hanh-trinh-sau-rieng.html'), 'canonical + sitemap');
-check(/"three": "\.\.\/js\/vendor\/three\.module\.js"/.test(page) && page.includes('type="module" src="hanh-trinh-sau-rieng-3d.js"'), 'importmap three và cảnh 3D nạp dạng module');
+check(/"three": "\.\.\/js\/vendor\/three\.module\.min\.js"/.test(page) && page.includes('type="module" src="hanh-trinh-sau-rieng-3d.js"'), 'importmap three và cảnh 3D nạp dạng module');
 check(!/ho-chieu-sau-rieng-(engine|core)\.js/.test(page) && page.indexOf('src="ho-chieu-sau-rieng-data.js"') > 0 && page.indexOf('src="ho-chieu-sau-rieng-data.js"') < page.indexOf('src="hanh-trinh-sau-rieng-ui.js"'), 'chỉ đọc dữ liệu Hộ Chiếu, không nạp engine/core');
 check(['tan-cang-warehouse.glb', 'crate.glb', 'kenney-cay/'].every(f => g3.includes(f)) && /Kenney/.test(read('assets/models/SOURCES.md')), 'mô hình 3D chỉ dùng bộ Kenney (CC0) đã ghi nguồn');
 check(read('ho-chieu-sau-rieng.html').includes('href="lab/hanh-trinh-sau-rieng.html"'), 'trang Hộ Chiếu Sầu Riêng dẫn tới hành trình');

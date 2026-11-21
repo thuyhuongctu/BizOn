@@ -12,7 +12,10 @@
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú. */
 (function () {
   'use strict';
-  var isEN = function () { try { return (localStorage.getItem('bizon-lang') || 'vi') === 'en'; } catch (e) { return false; } };
+  var isEN = function () {
+    if (window.clayCurrentLang) return window.clayCurrentLang() === 'en';
+    try { return (localStorage.getItem('bizon-lang') || 'vi') === 'en'; } catch (e) { return false; }
+  };
   function T(vi, en) { return isEN() ? en : vi; }
   var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
 
@@ -22,8 +25,8 @@
     if (!ns) { console.warn('Game3DGate.mount: thiếu ns'); return; }
     var introId = opts.introId;
     // titleEn/subtitleEn (tuỳ chọn): bản tiếng Anh của title/subtitle – thiếu thì dùng lại bản gốc.
-    var title = opts.title ? T(opts.title, opts.titleEn || opts.title) : T('Chào mừng!', 'Welcome!');
-    var subtitle = opts.subtitle ? T(opts.subtitle, opts.subtitleEn || opts.subtitle) : '';
+    function title() { return opts.title ? T(opts.title, opts.titleEn || opts.title) : T('Chào mừng!', 'Welcome!'); }
+    function subtitle() { return opts.subtitle ? T(opts.subtitle, opts.subtitleEn || opts.subtitle) : ''; }
     // backdrop: đặt quả địa cầu làm nền phía sau thẻ (cần Game3DGlobe đã nạp; thiếu thì bỏ qua)
     var wantGlobe = !!opts.backdrop;
 
@@ -43,12 +46,17 @@
         st.textContent = '#g3d-gate .clay-card{background:#FFFAF0!important;color:#033337}#g3d-gate .clay-card input{background:#fff!important;color:#033337!important}#g3d-gate .clay-card input::placeholder{color:rgba(3,51,55,.45)}';
         document.head.appendChild(st); }
       box.style.cssText = 'position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px;background:linear-gradient(160deg,#02191c 0%,#033337 60%,#02444d 100%);overflow-y:auto';
-      box.innerHTML =
-        (wantGlobe && window.Game3DGlobe ? '<div id="g3d-globe" aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;opacity:.5"></div>' : '') +
-        '<div class="clay-card p-0" style="max-width:420px;width:100%;overflow:hidden;position:relative;z-index:1">' +
+      box.innerHTML = wantGlobe && window.Game3DGlobe ? '<div id="g3d-globe" aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;opacity:.5"></div>' : '';
+      var card = document.createElement('div');
+      card.className = 'clay-card p-0';
+      card.style.cssText = 'max-width:420px;width:100%;overflow:hidden;position:relative;z-index:1';
+      box.appendChild(card);
+      /* Vẽ chữ theo ngôn ngữ hiện tại; đổi VI/EN khi cổng đang mở thì vẽ lại, giữ chữ người chơi đã gõ (21/11/2026). */
+      function paint() {
+      card.innerHTML =
           '<div style="padding:28px 24px 24px">' +
-            '<h2 class="font-display font-extrabold" style="font-size:22px;margin:0 0 4px;color:#033337">' + esc(title) + '</h2>' +
-            (subtitle ? '<p style="font-size:13px;color:rgba(3,51,55,.6);margin:0 0 18px;line-height:1.4">' + esc(subtitle) + '</p>' : '<div style="margin-bottom:10px"></div>') +
+            '<h2 class="font-display font-extrabold" style="font-size:22px;margin:0 0 4px;color:#033337">' + esc(title()) + '</h2>' +
+            (subtitle() ? '<p style="font-size:13px;color:rgba(3,51,55,.6);margin:0 0 18px;line-height:1.4">' + esc(subtitle()) + '</p>' : '<div style="margin-bottom:10px"></div>') +
             '<label style="display:block;font-size:13px;font-weight:700;color:#033337;margin:0 0 4px">' + T('Tên đội – cũng là tên doanh nghiệp của bạn', 'Team name – also your firm name') + '</label>' +
             '<input id="g3d-team" type="text" placeholder="' + T('VD: Rồng Xanh Corp', 'e.g. Blue Dragon Corp') + '" style="width:100%;border:2px solid rgba(0,102,135,.18);border-radius:14px;padding:11px 14px;margin:0 0 14px;font:inherit;box-sizing:border-box">' +
             '<label style="display:block;font-size:13px;font-weight:700;color:#033337;margin:0 0 4px">Email</label>' +
@@ -58,8 +66,9 @@
             '<input id="g3d-class" type="text" placeholder="' + T('VD: QTKD-2026-A', 'e.g. QTKD-2026-A') + '" style="width:100%;border:2px solid rgba(0,102,135,.18);border-radius:14px;padding:11px 14px;margin:0 0 18px;font:inherit;box-sizing:border-box">' +
             '<button id="g3d-go" type="button" class="clay-btn w-full bg-clay-gold text-deep-teal font-display font-extrabold py-4">' + T('Bắt đầu 🚀', 'Start 🚀') + '</button>' +
             '<button id="g3d-demo" type="button" style="display:block;width:100%;background:none;border:0;padding:12px 0 0;font:700 13px inherit;color:rgba(3,51,55,.65);cursor:pointer">' + T('👥 Chơi thử nhanh, không cần điền', '👥 Quick play, skip the form') + '</button>' +
-          '</div>' +
-        '</div>';
+          '</div>';
+      }
+      paint();
       document.body.appendChild(box);
       if (wantGlobe && window.Game3DGlobe) window.Game3DGlobe.mount(document.getElementById('g3d-globe'));
 
@@ -77,6 +86,7 @@
         if (typeof opts.onEnter === 'function') opts.onEnter({ team: team, email: email, classId: classId });
       }
 
+      function bind() {
       document.getElementById('g3d-go').onclick = function () {
         var team = document.getElementById('g3d-team').value.trim() || T('Đội của bạn', 'Your team');
         var email = document.getElementById('g3d-email').value.trim();
@@ -86,6 +96,15 @@
       document.getElementById('g3d-demo').onclick = function () {
         enter(T('Đội Demo', 'Demo Team'), '', '');
       };
+      }
+      bind();
+      window.addEventListener('bizon:langchange', function () {
+        if (!box.isConnected) return;
+        var keep = {};
+        ['g3d-team', 'g3d-email', 'g3d-class'].forEach(function (id) { var el = document.getElementById(id); if (el) keep[id] = el.value; });
+        paint(); bind();
+        Object.keys(keep).forEach(function (id) { document.getElementById(id).value = keep[id]; });
+      });
     }
 
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', go); else go();

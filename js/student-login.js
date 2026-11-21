@@ -213,6 +213,13 @@
       }
     }
     render();
+    /* Đổi VI/EN trên trang (bizon-clay-i18n.js) thì vẽ lại khung đăng nhập, giữ email và mật khẩu đã gõ (21/11/2026). */
+    window.addEventListener('bizon:langchange', () => {
+      if (!wrap.isConnected) return;
+      const keep = [...wrap.querySelectorAll('input')].map(i => i.value);
+      render();
+      wrap.querySelectorAll('input').forEach((i, k) => { if (keep[k] != null) i.value = keep[k]; });
+    });
     if (signedIn()) onChange(session);
     return { render };
   }

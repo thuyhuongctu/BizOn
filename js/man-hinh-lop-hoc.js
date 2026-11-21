@@ -1,10 +1,11 @@
-/* BizOn – Màn hình lớp học: ba cảnh 3D (Three.js) cho máy chiếu.
+/* BizOn – Màn hình lớp học: bốn cảnh 3D (Three.js) cho máy chiếu.
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền.
  *   bps  Sa bàn đất sét đồng bằng: ghe mỗi nhóm trên tuyến Cần Thơ → Cái Mép, đi xa hơn khi doanh thu cao hơn.
  *   hcth Quần đảo 7 thị trường quanh đảo nhà Mekong: tuyến dày hơn khi nhiều doanh nghiệp vào thị trường đó.
  *   hcsr Dòng phù sa 8 chặng (ảnh chặng thật của game): hạt đất sét mỗi nhóm đứng ở chặng ứng với điểm tổng.
+ *   bn   Tuyến Bật Nghiệp 6 tỉnh/thành trên bản đồ Việt Nam đất sét: xe tải mỗi đội đứng ở thành phố của vòng đã nộp.
  * Chế độ đêm: nền tối, đèn ấm, đom đóm. Tự viết, chỉ dùng three.js (MIT) trong vendor/three. */
-import * as THREE from '../vendor/three/three.module.js';
+import * as THREE from './vendor/three.module.min.js';
 // 06/11/2026: nhãn song ngữ, theo lựa chọn ngôn ngữ của site (bizon-lang / bizon-clay-i18n)
 const EN = (() => { try { const q = new URLSearchParams(location.search).get('lang'); if (q === 'en') return true; if (q === 'vi') return false; return localStorage.getItem('bizon-lang') === 'en' && localStorage.getItem('bizon-lang-auto') !== '1'; } catch (e) { return false; } })();
 
@@ -52,7 +53,7 @@ const RIVERS = [
   [[105.24, 10.80], [105.45, 10.62], [105.63, 10.46], [105.95, 10.34], [106.18, 10.33], [106.36, 10.36], [106.6, 10.27], [106.8, 10.2]],
 ];
 const ROUTE = [[105.78, 10.03], [105.97, 10.25], [106.36, 10.36], [106.70, 10.78], [107.03, 10.53]];
-const PLACES = [['Cần Thơ', 105.78, 10.03, 'home'], ['Vĩnh Long', 105.97, 10.25], ['Mỹ Tho', 106.36, 10.36], ['TP. Hồ Chí Minh', 106.70, 10.78], ['Cảng Cái Mép', 107.03, 10.53]];
+const PLACES = [['Cần Thơ', 105.78, 10.03, 'home'], ['Vĩnh Long', 105.97, 10.25], ['Mỹ Tho', 106.36, 10.36], ['TP. Hồ Chí Minh', 106.70, 10.78, '', 'Ho Chi Minh City'], ['Cảng Cái Mép', 107.03, 10.53, '', 'Cái Mép Port']];
 
 async function buildBps(ctx, data, night) {
   const { scene, camera } = ctx;
@@ -78,7 +79,7 @@ async function buildBps(ctx, data, night) {
     b.scale.setScalar(1.4); scene.add(b); return b;
   });
   if (teams.length) { const L = lotus(1.5); const p = route.getPointAt(Math.min(0.995, teams[0].progress)); L.position.set(p.x + 0.5, 0.66, p.z - 0.6); scene.add(L); ctx.spin.push(L); }
-  ctx.labels(PLACES.map(([vi, lon, lat, k]) => { const v = P(lon, lat); return { text: vi, cls: k || '', at: new THREE.Vector3(v.x, 0.9, v.y) }; }));
+  ctx.labels(PLACES.map(([vi, lon, lat, k, en]) => { const v = P(lon, lat); return { text: EN && en ? en : vi, cls: k || '', at: new THREE.Vector3(v.x, 0.9, v.y) }; }));
   const ff = night ? fireflies(scene, () => { const v = P(105.0 + Math.random() * 2.2, 9.6 + Math.random() * 1.3); return new THREE.Vector3(v.x, 0.9 + Math.random() * 0.9, v.y); }, 260) : null;
   ctx.tick = t => {
     boats.forEach((b, i) => { const u = Math.min(teams[i].progress * 0.97 + Math.sin(t * 0.6 + i) * 0.003, 0.995); const p = route.getPointAt(u), q = route.getTangentAt(u);
@@ -180,6 +181,78 @@ function buildHcsr(ctx, data, night) {
   ctx.tick = t => { water.uniforms.t.value = t; if (ff) ff(t); };
 }
 
+// ---------- bn: tuyến Bật Nghiệp 6 tỉnh/thành ----------
+// Cùng cách chiếu kinh độ/vĩ độ như PLACES của Bến Phù Sa, thu nhỏ để thấy cả nước. Tọa độ và tên lấy từ BN_CITIES (man-hinh-lop-hoc-data.js).
+const BN_C = { lon: 107.0, lat: 15.6 }, BN_K = 1.7;
+const PB = (lon, lat) => new THREE.Vector2((lon - BN_C.lon) * BN_K * Math.cos(BN_C.lat * Math.PI / 180), -(lat - BN_C.lat) * BN_K);
+// Xe tải đất sét nhỏ (vài khối hộp, mũi xe theo +Z): ca-bin màu của đội, thùng hàng kem có sọc cùng màu
+function truck(color, night) {
+  const g = new THREE.Group(), add = (geo, m, x, y, z) => { const o = new THREE.Mesh(geo, m); o.position.set(x, y, z); o.castShadow = true; g.add(o); return o; };
+  const team = mat(color, { roughness: 0.7 });
+  add(new THREE.BoxGeometry(0.3, 0.05, 0.62), mat('#4A4038'), 0, 0.09, 0);
+  add(new THREE.BoxGeometry(0.32, 0.3, 0.4), mat('#F6E7CB'), 0, 0.27, -0.09);
+  add(new THREE.BoxGeometry(0.33, 0.06, 0.41), team, 0, 0.3, -0.09);
+  add(new THREE.BoxGeometry(0.3, 0.24, 0.18), team, 0, 0.23, 0.21);
+  add(new THREE.BoxGeometry(0.26, 0.1, 0.02), mat('#BFE3EE', night ? { emissive: '#FFD27A', emissiveIntensity: 0.5 } : {}), 0, 0.28, 0.305);
+  [[-0.16, 0.18], [0.16, 0.18], [-0.16, -0.17], [0.16, -0.17]].forEach(([x, z]) => {
+    const w = add(new THREE.CylinderGeometry(0.075, 0.075, 0.06, 12), mat('#2A2420'), x, 0.075, z); w.rotation.z = Math.PI / 2; });
+  if (night) { const l = new THREE.PointLight('#FFC870', 0.7, 1.8); l.position.set(0, 0.35, 0.5); g.add(l); }
+  return g;
+}
+function flag(color) {
+  const g = new THREE.Group();
+  const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.025, 0.025, 0.9, 8), mat('#6B4A33')); pole.position.y = 0.45; g.add(pole);
+  const cloth = new THREE.Mesh(new THREE.BoxGeometry(0.42, 0.26, 0.03), mat(color)); cloth.position.set(0.22, 0.75, 0); cloth.castShadow = true; g.add(cloth);
+  return g;
+}
+// Nhãn Hà Nội, Thanh Hóa dời sang đông (vịnh Bắc Bộ) cho khỏi đè số đếm góc trên trái; nhãn Cần Thơ dời xuống đông nam, tách khỏi TP. Hồ Chí Minh
+const LAB_DX = [2.1, 0.6, 0, 0, 2.7, 5.4], LAB_DZ = [1.0, 0, 0, 0, 1.4, 0.4];
+async function buildBn(ctx, data, night) {
+  const { scene, camera } = ctx;
+  scene.background = new THREE.Color(night ? '#14231F' : '#EAF4F1'); scene.fog = new THREE.Fog(night ? '#14231F' : '#EAF4F1', 40, 90);
+  lights(scene, night);
+  // Nước dài theo chiều Bắc–Nam: lùi máy quay theo bề ngang còn trống (trừ bảng bên phải) để thấy đủ sáu thành phố.
+  // Máy chiếu: bản đồ lệch phải cho khỏi số đếm góc trái; điện thoại (màn dọc): lùi xa hơn, đẩy bản đồ xuống dưới phần chữ
+  const aim = new THREE.Vector3(-2.3, 0, -3.3), aimTall = new THREE.Vector3(0.4, 0, -7.5), dir = new THREE.Vector3(0, 38, 25).normalize(), tan = Math.tan(15 * Math.PI / 180);
+  ctx.fit = a => { const c = a < 0.75 ? aimTall : aim, d = Math.max(55, 9.4 / (tan * a)); camera.position.copy(c).addScaledVector(dir, d); camera.lookAt(c); scene.fog.near = d - 12; scene.fog.far = d + 45; };
+  ctx.fit(1.2);
+  const sea = new THREE.Mesh(new THREE.CylinderGeometry(44, 44, 0.6, 96), mat(night ? '#1F4A45' : '#9FD3D6'));
+  sea.position.y = -0.5; sea.receiveShadow = true; scene.add(sea);
+  const geo = await (await fetch(ROOT + 'assets/geo/vnm.json')).json();
+  const shapes = geo.coordinates.map(poly => { const s = new THREE.Shape(poly[0].map(([x, y]) => PB(x, y))); poly.slice(1).forEach(h => s.holes.push(new THREE.Path(h.map(([x, y]) => PB(x, y))))); return s; });
+  const land = new THREE.Mesh(new THREE.ExtrudeGeometry(shapes, { depth: 0.5, bevelEnabled: true, bevelThickness: 0.12, bevelSize: 0.08, bevelSegments: 3, curveSegments: 4 }), mat(night ? '#4F5E3A' : '#CFE3A4', { roughness: 0.95 }));
+  land.rotation.x = Math.PI / 2; land.position.y = 0.3; land.castShadow = land.receiveShadow = true; scene.add(land);
+  const C = (window.BizOnClassScreen && window.BizOnClassScreen.BN_CITIES) || [];
+  const at = C.map(c => { const v = PB(c.lon, c.lat); return new THREE.Vector3(v.x, 0.45, v.y); });
+  // Đường đi: chuỗi hạt đất sét nối sáu thành phố, như tuyến ghe của Bến Phù Sa
+  if (at.length > 1) {
+    const road = new THREE.CatmullRomCurve3(at.map(p => new THREE.Vector3(p.x, 0.62, p.z)), false, 'centripetal');
+    const n = 160, dots = new THREE.InstancedMesh(new THREE.SphereGeometry(0.07, 8, 8), mat(night ? '#E8B860' : '#8a5a2b'), n);
+    for (let i = 0; i < n; i++) { const p = road.getPointAt(i / (n - 1)); dots.setMatrixAt(i, new THREE.Matrix4().makeTranslation(p.x, p.y, p.z)); } scene.add(dots);
+  }
+  const all = data.teams || [], teams = all.slice(0, 10), counts = data.stages || null;
+  const lead = teams.length ? teams[0].stage : -1;
+  at.forEach((p, i) => {
+    const ped = new THREE.Mesh(new THREE.CylinderGeometry(0.42, 0.5, 0.24, 28), mat(i === lead ? '#FDA127' : '#D9A86C', { roughness: 0.9 }));
+    ped.position.set(p.x, 0.52, p.z); ped.castShadow = ped.receiveShadow = true; scene.add(ped);
+    const f = flag(counts && counts[i] ? '#E8762D' : '#C9BFA8'); f.position.set(p.x + 0.12, 0.62, p.z); scene.add(f);
+  });
+  // Xe của 10 đội đầu: xếp hàng 4 xe phía tây thành phố, mũi xe hướng bắc (về Hà Nội)
+  const park = C.map(() => 0), trucks = [];
+  teams.forEach((t, i) => {
+    const s = Math.max(0, Math.min(at.length - 1, t.stage || 0)), k = park[s]++, p = at[s];
+    const tr = truck(TEAM_COLORS[i], night); tr.scale.setScalar(1.5); tr.rotation.y = Math.PI;
+    tr.position.set(p.x - 0.8 - (k % 4) * 0.6, 0.45, p.z + 0.15 + Math.floor(k / 4) * 1.05); scene.add(tr);
+    if (i === 0) { const f = flag('#D7263D'); f.scale.setScalar(0.7); f.position.set(0, 0.36, 0); tr.add(f); }
+    trucks.push({ name: t.name, stage: s });
+  });
+  ctx.labels(C.map((c, i) => ({ text: (i + 1) + '. ' + (EN ? c.en : c.vi) + (counts ? ' · ' + counts[i] + (EN ? ' teams' : ' đội') : ''),
+    cls: i === lead ? 'home' : counts && !counts[i] ? 'dim' : '', at: new THREE.Vector3(at[i].x + (LAB_DX[i] || 0), 1.5, at[i].z + (LAB_DZ[i] || 0)) })));
+  ctx.info = { cities: C.map(c => (EN ? c.en : c.vi)), trucks, night: !!night };
+  const ff = night ? fireflies(scene, () => { const p = at[Math.floor(Math.random() * at.length)] || new THREE.Vector3(); return new THREE.Vector3(p.x + (Math.random() - 0.5) * 4, 0.8 + Math.random(), p.z + (Math.random() - 0.5) * 4); }, 220) : null;
+  ctx.tick = t => { if (ff) ff(t); };
+}
+
 // ---------- khung dựng ----------
 export function createStage(canvas, overlay) {
   const R = new THREE.WebGLRenderer({ canvas, antialias: true });
@@ -187,7 +260,8 @@ export function createStage(canvas, overlay) {
   let ctx = null, offset = 0, gen = 0; const clock = new THREE.Clock();
   function size() {
     const w = innerWidth, h = innerHeight; R.setSize(w, h);
-    if (ctx) { ctx.camera.aspect = w / h; offset ? ctx.camera.setViewOffset(w + offset, h, offset, 0, w, h) : ctx.camera.clearViewOffset(); ctx.camera.updateProjectionMatrix(); }
+    if (ctx) { if (ctx.fit) ctx.fit(Math.max(0.3, (w - offset) / h));
+      ctx.camera.aspect = w / h; offset ? ctx.camera.setViewOffset(w + offset, h, offset, 0, w, h) : ctx.camera.clearViewOffset(); ctx.camera.updateProjectionMatrix(); }
   }
   addEventListener('resize', size);
   function dispose(scene) { scene.traverse(o => { if (o.geometry) o.geometry.dispose(); if (o.material) [].concat(o.material).forEach(m => { if (m.map) m.map.dispose(); m.dispose(); }); }); }
@@ -198,7 +272,7 @@ export function createStage(canvas, overlay) {
     next.cards = list => { next.tags.push(...list.map(o => { const e = document.createElement('div'); e.className = 'st' + (o.lead ? ' lead' : '') + (o.below ? ' below' : '');
       const img = document.createElement('img'); img.src = o.img; img.alt = ''; const b = document.createElement('b'); b.textContent = o.text; const s = document.createElement('span'); s.textContent = o.badge;
       e.append(img, b, s); return { e, at: o.at }; })); };
-    if (game === 'bps') await buildBps(next, data, night); else if (game === 'hcth') buildHcth(next, data, night); else buildHcsr(next, data, night);
+    if (game === 'bps') await buildBps(next, data, night); else if (game === 'hcth') buildHcth(next, data, night); else if (game === 'bn') await buildBn(next, data, night); else buildHcsr(next, data, night);
     if (my !== gen) { dispose(next.scene); return; }
     if (ctx) dispose(ctx.scene);
     overlay.replaceChildren(...next.tags.map(t => t.e));
@@ -211,5 +285,6 @@ export function createStage(canvas, overlay) {
     R.render(ctx.scene, ctx.camera);
     for (const g of ctx.tags) { const s = g.at.clone().project(ctx.camera); g.e.style.left = ((s.x + 1) / 2 * innerWidth).toFixed(1) + 'px'; g.e.style.top = ((1 - s.y) / 2 * innerHeight).toFixed(1) + 'px'; }
   })();
-  return { show };
+  // info: vị trí xe, thành phố… của cảnh đang chiếu (chỉ cảnh bn ghi), để test và giảng viên kiểm tra
+  return { show, get info() { return ctx && ctx.info ? ctx.info : null; } };
 }

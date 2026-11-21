@@ -14,7 +14,8 @@ assert.ok(fs.statSync(R('assets/covers/ho-chieu-thuong-hieu-3d-v2.webp')).size <
 // 16/11/2026: trailer v6 = hình v5 + giọng v4 + nhạc «Mekong Compass» liền mạch, tự hạ khi có lời (v5 lúc có tiếng lúc không).
 // 16/11/2026 (chiều): chị đổi lại – ô «Bật Nghiệp» ở «Xem trước khi bắt đầu» phát trailer v6 (có nhạc); video hướng dẫn 3D
 // chuyển xuống nút trên thẻ game Bật Nghiệp («Hướng dẫn chơi»).
-assert.ok((home.match(/data-trailer="assets\/video\/bizon-trailer-v6-720p\.mp4"/g) || []).length === 1 && !/bizon-trailer-v[45]-720p/.test(home), 'trang chủ dùng trailer v6 đúng một chỗ');
+// 19/11/2026 (đặc tả 006): cửa «Tôi muốn xem thử» cũng mở trailer v6, nên trang chủ có thể dùng v6 ở nhiều chỗ; vẫn cấm v4, v5.
+assert.ok((home.match(/data-trailer="assets\/video\/bizon-trailer-v6-720p\.mp4"/g) || []).length >= 1 && !/bizon-trailer-v[45]-720p/.test(home), 'trang chủ dùng trailer v6, không còn v4, v5');
 const xemTruoc = home.slice(home.indexOf('Xem trước khi bắt đầu.'));
 assert.ok(/data-trailer="assets\/video\/bizon-trailer-v6-720p\.mp4" data-poster="assets\/video\/bizon-trailer-poster\.webp"/.test(xemTruoc) && xemTruoc.includes('Đấu trường 6 vòng thị trường · thuyết minh tiếng Anh · có nhạc · 1:30') && !xemTruoc.includes('bat-nghiep-3d-huong-dan-en-v2.mp4'), 'ô Bật Nghiệp ở «Xem trước» phát trailer v6');
 const theBN = (home.match(/<li class="hp-game lv2">[\s\S]*?<\/li>/) || [''])[0];
