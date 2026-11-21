@@ -21,5 +21,5 @@ for (const f of ['tu-v3-10cm.stl', 'ceo-v3-10cm.stl']) {
 }
 assert.match(read('scripts/3d/glb-thanh-stl.py'), /REMESH/);
 assert.match(read('assets/in-3d/README.md'), /support/);
-assert.ok(+(read('sw.js').match(/bizon-v(\d+)/) || [])[1] >= 938);
+assert.ok(+(read('sw.js').match(/bizon-v(\d+)/) || [])[1] >= 942);
 console.log('in-3d-nhan-vat: ok');
