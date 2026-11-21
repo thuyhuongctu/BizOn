@@ -173,6 +173,8 @@
     while((n = w.nextNode())) if(n.nodeValue.indexOf('→') >= 0) list.push(n);
     list.forEach(function(t){
       if(t.parentNode.closest('.clay-go')) return;
+      var p = t.parentNode;   // dòng chữ có data-en nằm trong liên kết: giữ chữ gốc (còn «→») trước khi bỏ dấu
+      if(p.dataset && p.dataset.en != null && p.dataset.vi == null) p.dataset.vi = p.textContent;
       var v = t.nodeValue;
       if(RE_END.test(v)){ t.nodeValue = v.replace(RE_END, ' '); if(!/\S/.test(t.nodeValue)) t.nodeValue = ''; t.parentNode.insertBefore(ball(), t.nextSibling); }
       else if(RE_START.test(v)){ t.nodeValue = v.replace(RE_START, ' '); t.parentNode.insertBefore(ball(), t); }

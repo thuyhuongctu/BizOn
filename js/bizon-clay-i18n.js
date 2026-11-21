@@ -27,7 +27,9 @@
   function swapText(el, lang){
     /* An toàn: bỏ qua phần tử có con là thẻ (đặt data-en nhầm trên vùng chứa
        sẽ xoá mất các con như <input>). Dùng data-en-html cho vùng có thẻ con. */
-    if(el.children.length) return;
+    /* Ngoại lệ: viên mũi tên đất sét (.clay-go, js/bizon-clay-nav.js) chỉ là trang trí thay dấu «→»; đổi chữ
+       xoá nó đi rồi bizon-clay-nav.js tự gắn lại. Trước 21/11/2026 các dòng có «→» không đổi được sang EN. */
+    for(var i = 0; i < el.children.length; i++) if(!el.children[i].classList.contains('clay-go')) return;
     if(el.dataset.vi == null) el.dataset.vi = el.textContent;
     el.textContent = lang === 'en' ? el.dataset.en : el.dataset.vi;
   }
