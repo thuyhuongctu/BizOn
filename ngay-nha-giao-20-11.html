@@ -7,7 +7,7 @@
 <script src="js/bizon-lang.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title data-en="Thank you, teachers · 20 November · BizOn">Tri ân thầy cô · 20/11 · BizOn</title>
-<meta name="description" data-en-content="BizOn celebrates Vietnamese Teachers' Day (20 November): a thank-you to every teacher, and a card maker so students can send their own message with the BizOn green dragon." content="BizOn mừng Ngày Nhà giáo Việt Nam 20/11: lời tri ân gửi thầy cô và công cụ viết thiệp để sinh viên gửi lời cảm ơn cùng rồng xanh BizOn.">
+<meta name="description" data-en-content="BizOn celebrates Vietnamese Teachers' Day (20 November): a thank-you to every teacher, and a card maker so students can send their own message with Tèo Soi, the BizOn dragon." content="BizOn mừng Ngày Nhà giáo Việt Nam 20/11: lời tri ân gửi thầy cô và công cụ viết thiệp để sinh viên gửi lời cảm ơn cùng rồng Tèo Soi.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://bizonland.com/ngay-nha-giao-20-11.html">
 <meta property="og:title" content="Tri ân thầy cô · 20/11 · BizOn">
@@ -268,7 +268,7 @@
     ctx.font = '500 32px ' + BODY; ctx.fillStyle = '#2B4A55';
     dong.forEach(function(d, k){ ctx.fillText(d, 140, 630 + k * 50); });
     if(ky.value.trim()){ ctx.textAlign = 'right'; ctx.font = '800 34px ' + HEAD; ctx.fillStyle = '#1F4A55'; ctx.fillText(ky.value.trim().slice(0, 60), W - 140, 500 + cao - 36); }
-    /* Bệ và rồng xanh */
+    /* Bệ và rồng Tèo Soi */
     ctx.fillStyle = '#E9C79C'; ctx.beginPath(); ctx.ellipse(W / 2, H - 70, 420, 50, 0, 0, Math.PI * 2); ctx.fill();
     var anh = await Promise.all([taiAnh('assets/illustrations/hoa-hong-vang-dat-set.webp'), taiAnh('assets/dragon/wave-v2.webp')]);
     var rh = Math.max(220, Math.min(380, H - (500 + cao + 40) - 40));
