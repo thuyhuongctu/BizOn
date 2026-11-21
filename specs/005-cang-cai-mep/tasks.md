@@ -4,7 +4,7 @@
 
 Ký hiệu: `[P]` làm song song được (khác tệp). `[US1]`, `[US2]` là câu chuyện 1, 2. Test viết trước và phải thấy hỏng.
 
-## Giai đoạn 1 – Câu chuyện 1: Khu Cảng Cái Mép (P1) · PR 1 · gộp trước 19/11/2026
+## Giai đoạn 1 – Câu chuyện 1: Khu Cảng Cái Mép (P1) · PR 1 · gộp trước 19/11/2026 · đã gộp #1127
 
 - [X] T001 [US1] Viết `test/cang-cai-mep-3d.test.js`, chạy và thấy hỏng. Test kiểm:
   - có nút «🚢 Cảng Cái Mép» trong `#zones`;
@@ -29,7 +29,7 @@ Ký hiệu: `[P]` làm song song được (khác tệp). `[US1]`, `[US2]` là c�
 
 **Điểm dừng**: khu cảng dùng được, luật chơi không đổi. Đã gộp ở PR #1127 ngày 16/11/2026; lớp UMK chơi ngày 19/11 với bản này.
 
-## Giai đoạn 2 – Câu chuyện 2: Quyết định ở cảng vụ 5 (P2) · PR 2 · gộp sau 19/11/2026
+## Giai đoạn 2 – Câu chuyện 2: Quyết định ở cảng vụ 5 (P2) · PR 2 · gộp sau 19/11/2026 · đã gộp #1142
 
 - [X] T009 [US2] Viết `test/cang-cai-mep-luat.test.js` (Node `vm`, nạp `engine.js` + `market-dynamic.js` + `cang-cai-mep.js`), chạy và thấy hỏng. Test kiểm, cho mỗi trường hợp A, B, C:
   - «không chọn» và (b) trùng từng con số với luật cũ;

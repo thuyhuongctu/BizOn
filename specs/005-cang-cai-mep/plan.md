@@ -71,8 +71,9 @@ Bản 2D (`game.html`), bản gọn (`bat-nghiep-v2.html`) và bản 3D (qua ifr
 ## Nguồn số liệu (câu 4A, tra ngày 16/11/2026)
 
 **Thẻ kiến thức (PR 1):**
-- Cảng Gemalink (cụm Cái Mép – Thị Vải) đón tàu OOCL Spain **24.188 TEU** tháng 3/2023, tàu container lớn nhất từng cập cảng Việt Nam. Tàu chạy tuyến Á – Âu, ghé Singapore, Piraeus, Hamburg, Rotterdam. Nguồn: [VOV](https://vov.vn/en/economy/cai-mep-thi-vai-port-receives-giant-container-vessel-845409.vov), [SGGP](https://en.sggp.org.vn/cai-mep-thi-vai-receives-one-of-worlds-largest-container-ships-post101204.html).
+- Cụm cảng Cái Mép – Thị Vải đón tàu OOCL Spain **24.188 TEU** (dài gần 400 m, rộng 61,3 m) sáng 30/3/2023, «tàu container nước ngoài lớn nhất từng cập cảng Việt Nam». Tàu chạy tuyến Á – Âu LL3, ghé Singapore, Piraeus, Hamburg, Rotterdam. Nguồn: [SGGP, 30/3/2023](https://en.sggp.org.vn/cai-mep-thi-vai-receives-one-of-worlds-largest-container-ships-post101204.html). *(Rà lại 21/11/2026: liên kết VOV ghi trước đây là một bài khác, năm 2021, về tàu MSC Auriga 15.000 TEU, nên đã bỏ; bài SGGP không nêu tên bến nên cũng bỏ tên bến.)*
 - Cụm cảng có **hơn 20 tuyến tàu mẹ đi thẳng** sang châu Âu, bờ Đông và bờ Tây Hoa Kỳ. Nguồn: [Vietnamnet](https://vietnamnet.vn/en/seaport-growth-accelerates-on-stronger-infrastructure-connectivity-2495395.html), [VTV](https://english.vtv.vn/news/ssit-welcomes-lng-powered-mega-container-ship-on-new-trans-pacific-route-2026053001151104.htm) (SSIT, tuyến bờ Đông Hoa Kỳ, 2026).
+  - Số cụ thể: đầu tháng 10/2024, trong 50 tuyến container hằng tuần ghé Cái Mép – Thị Vải có **22 tuyến tàu mẹ** đi Hoa Kỳ và châu Âu, nhiều nhất Đông Nam Á sau Singapore (theo Cảng vụ Hàng hải Vũng Tàu). Nguồn: [Sở Công Thương Đồng Nai, 17/10/2024](https://sct.dongnai.gov.vn/vi/news/Quan-ly-thuong-mai/cang-bien-viet-nam-co-22-tuyen-dich-vu-tau-me-di-thang-hoa-ky-chau-au-y-10605.html).
 - Thẻ ghi «hơn 20 tuyến đi thẳng» và «tàu trên 24.000 TEU» kèm năm. Không ghi tên doanh nghiệp bến cảng ngoài tên địa danh. Trước khi gộp PR 1 em kiểm lại hai con số này.
 
 **Tham số luật (PR 2), dùng để định mức, không đưa nguyên số vào game:**

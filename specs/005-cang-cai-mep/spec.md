@@ -4,7 +4,7 @@
 
 **Ngày tạo**: 2026-11-16
 
-**Trạng thái**: Đã làm rõ ngày 16/11/2026, chờ chị duyệt kế hoạch
+**Trạng thái**: Đã làm xong. Câu chuyện 1 (khu Cảng Cái Mép – Thị Vải trong Bật Nghiệp 3D) gộp #1127; câu chuyện 2 (quyết định ở cảng vụ 5) gộp #1142; phần giới thiệu trên trang hướng dẫn gộp #1128. Còn chờ: video giới thiệu cảng (đang làm). Cập nhật 21/11/2026.
 
 **Đầu vào**: Ngày 16/11/2026 chị nhắn «Hộ chiếu thương hiệu và thử đề xuất làm cảng cái Mép trong game bật nghiệp».
 Em đề xuất hai bước. Chị trả lời cùng ngày: «Cảng cái mép là cả 2 bước».
