@@ -18,7 +18,8 @@ assert.ok(le.includes('<audio controls preload="none" src="' + NHE + '"'), 'tran
 assert.ok(le.includes('<a class="clay-link" href="#bai-tri-an">') && le.includes('id="bai-tri-an"'), 'nút đầu trang dẫn tới bài hát');
 assert.ok(le.includes('Kính dâng Người... ngọn hải đăng soi đường.') && le.includes('BIZON VƯƠN XA'), 'có lời bài hát');
 assert.ok(!/\[(Intro|Verse|Chorus|Bridge|Outro)/.test(le), 'lời không lẫn chỉ dẫn phối khí');
-assert.ok(!/sDI4m87s8Ss|hGpwZgAsx2I|am-mv\.js|hai-dang/.test(le), 'đã bỏ MV Ngọn hải đăng soi đường');
+assert.ok(!/sDI4m87s8Ss|hGpwZgAsx2I|id="hai-dang"|href="#hai-dang"/.test(le), 'không còn hai bản MV cũ đã gỡ');
+assert.ok(le.includes('data-yt="8yottDb7Bg0"') && le.includes('<script src="js/am-mv.js" defer></script>') && le.includes('href="https://youtu.be/8yottDb7Bg0"'), 'có MV YouTube 8yottDb7Bg0 (21/11/2026), chỉ tải khi bấm');
 assert.ok(+(/CACHE = 'bizon-v(\d+)'/.exec(read('sw.js')) || [])[1] >= 936, 'sw.js ≥ v936');
 
 (async () => {
@@ -31,9 +32,9 @@ assert.ok(+(/CACHE = 'bizon-v(\d+)'/.exec(read('sw.js')) || [])[1] >= 936, 'sw.j
       await p.goto(BASE + '/ngay-nha-giao-20-11.html?lang=' + lang, { waitUntil: 'load', timeout: 60000 }); await p.waitForTimeout(500);
       const tag = w + ' ' + lang;
       const st = await p.evaluate(() => { const s = document.getElementById('bai-tri-an'), a = s.querySelector('audio'), d = s.querySelector('details');
-        return { h: a.getBoundingClientRect().height, img: s.querySelector('img').complete, open: d.open, sum: d.querySelector('summary').textContent.trim(), sw: document.documentElement.scrollWidth }; });
+        return { h: a.getBoundingClientRect().height, img: !!s.querySelector('.le-mv button[data-yt]'), open: d.open, sum: d.querySelector('summary').textContent.trim(), sw: document.documentElement.scrollWidth }; });
       assert.ok(st.h > 20, tag + ': trình phát hiện ra');
-      assert.ok(st.img, tag + ': ảnh Lumina tải được');
+      assert.ok(st.img, tag + ': có nút phát MV');
       assert.equal(st.open, false, tag + ': lời bài hát gập sẵn');
       assert.equal(st.sum, lang === 'en' ? 'Lyrics (Vietnamese)' : 'Lời bài hát', tag + ': nhãn lời bài hát');
       assert.ok(st.sw <= w, tag + ': không tràn ngang');
