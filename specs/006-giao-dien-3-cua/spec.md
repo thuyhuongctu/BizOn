@@ -4,7 +4,7 @@
 
 **Ngày tạo**: 2026-11-19
 
-**Trạng thái**: Đã làm rõ ngày 19/11/2026, chờ chị duyệt kế hoạch
+**Trạng thái**: Đã làm xong câu chuyện 1 (#1144) và câu chuyện 2 (#1150). Câu chuyện 3 bỏ khỏi phạm vi (3C). Câu chuyện 4, buổi thử 5 phút, hoãn đến khi chị có thời gian; phiếu thử ở `docs/thu-nghiem/thu-5-phut.md`. Cập nhật 21/11/2026.
 
 **Đầu vào**: góp ý của thầy Tú qua Zalo sau buổi chạy thử với lớp UM Kendari (19/11/2026):
 - «Thầy nghĩ giao diện cần có tính thân thiện và đơn giản để tiện người dùng, vì quá nhiều thông tin nên không biết vào đâu.»
