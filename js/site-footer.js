@@ -144,7 +144,8 @@
           '</div>' +
           '<div class="bzf-meta">' +
             '📦 DOI <a href="https://doi.org/10.5281/zenodo.21592241" target="_blank" rel="noopener">10.5281/zenodo.21592241</a><br>' +
-            '⭐ <a href="https://github.com/thuyhuongctu/BizOn" target="_blank" rel="noopener">github.com/thuyhuongctu/BizOn</a>' +
+            '⭐ <a href="https://github.com/thuyhuongctu/BizOn" target="_blank" rel="noopener">github.com/thuyhuongctu/BizOn</a><br>' +
+            '▶ <a href="https://www.youtube.com/@jemappellehuong" target="_blank" rel="noopener" data-en="BizOnland on YouTube">Kênh YouTube BizOnland</a>' +
           '</div>' +
         '</div>' +
         '<div class="bzf-grid">' + cols + '</div>' +

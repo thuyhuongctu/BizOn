@@ -20,6 +20,7 @@
   }
 
   var GP = 'https://play.google.com/store/apps/details?id=io.github.thuyhuongctu.bizon';
+  var YT = 'https://www.youtube.com/@jemappellehuong';
   var cols =
     /* Cột «Trò chơi» chỉ trỏ tới bản 3D mới nhất, theo Hành trình 3 bậc (chị duyệt 12/11/2026). Bản 2D cũ vẫn vào được
        bằng đường dẫn cũ và từ trang giới thiệu từng game. Tên tệp có dấu cách thì mã hoá %20. */
@@ -63,6 +64,8 @@
           + '<a class="cf-logo" href="'+u('index.html')+'" aria-label="BizOn">Biz<span class="cf-o" aria-hidden="true"></span>n</a>'
           + '<p data-en="Decision simulations for business education – from the Mekong Delta.">Mô phỏng ra quyết định cho giáo dục kinh doanh – từ Đồng bằng sông Cửu Long.</p>'
           + '<a class="cf-gp" href="'+GP+'" target="_blank" rel="noopener" data-en="▶ Get it on Google Play">▶ Tải trên Google Play</a>'
+          /* Kênh YouTube của BizOnland (chị gửi 22/11/2026): MV, video bài học, video hướng dẫn. Bỏ tham số theo dõi ?si= */
+          + '<a class="cf-gp cf-yt" href="'+YT+'" target="_blank" rel="noopener" data-en="▶ BizOnland on YouTube">▶ Kênh YouTube BizOnland</a>'
         + '</div>'
         + '<nav class="cf-cols" aria-label="Liên kết chân trang" data-en-aria="Footer links">' + cols + '</nav>'
       + '</div>'
