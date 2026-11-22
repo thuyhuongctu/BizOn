@@ -2,8 +2,9 @@
 // Dựng bằng khối đất sét của bizon-hq-kit.js, đặt ngoài nền trụ sở (x > 8). Chạm từng chỗ mở thẻ kiến thức VI/EN.
 // Mô-đun này KHÔNG chạm luật chơi: không ghi ván, không gọi engine. Câu chuyện 2 chỉ đọc qua window.BizonPort (js/cang-cai-mep.js).
 // Nguồn số liệu (tra 16/11/2026, xem specs/005-cang-cai-mep/plan.md):
-//  - Tàu 24.188 TEU cập cụm cảng Cái Mép – Thị Vải tháng 3/2023, lớn nhất từng cập cảng Việt Nam (VOV, SGGP).
-//  - Hơn 20 tuyến tàu mẹ đi thẳng sang châu Âu, bờ Đông và bờ Tây Hoa Kỳ (Vietnamnet).
+//  - Tàu 24.188 TEU cập cụm cảng Cái Mép – Thị Vải ngày 30/3/2023, «tàu container nước ngoài lớn nhất từng cập cảng Việt Nam» tính tới lúc đó (SGGP).
+//    Rà lại 21/11/2026: liên kết VOV ghi trước đây là bài khác (2021, tàu 15.000 TEU) nên đã bỏ khỏi dòng nguồn.
+//  - Hơn 20 tuyến tàu mẹ đi thẳng sang châu Âu, bờ Đông và bờ Tây Hoa Kỳ: 22 tuyến đầu tháng 10/2024 (Cảng vụ Hàng hải Vũng Tàu, Vietnamnet).
 //  - Phí lưu container/lưu bãi khoảng 75–300 USD/container/ngày sau thời gian miễn phí (biểu phí hãng tàu 2025, nhà giao nhận).
 //  - Incoterms 2020: FOB và CIF đều chuyển rủi ro khi hàng đã xếp lên tàu ở cảng đi.
 
@@ -13,8 +14,8 @@ const CARDS = [
         'Cái Mép – Thị Vải is a deep-water port cluster at the mouth of the Thị Vải river, south-east of Ho Chi Minh City. Large mother vessels call directly, and the cluster runs more than 20 direct services to Europe and both US coasts. Cargo skips a transhipment hub, so there is one leg less: fewer days, lower fees and less risk of damage.'],
     q: ['Câu hỏi cho COO: nếu bán hàng sang châu Âu, đi thẳng từ Cái Mép hay chuyển tải sẽ hợp với đơn hàng của đội hơn?', 'Question for the COO: for an order to Europe, would a direct call from Cái Mép or a transhipment route suit our team better?'] },
   { key: 'ship', icon: '🚢', t: ['Tàu container và TEU', 'Container ships and TEU'],
-    b: ['Tháng 3/2023, cụm cảng Cái Mép đón một tàu 24.188 TEU – tàu container lớn nhất từng cập cảng Việt Nam. 1 TEU là một container 20 feet; container 40 feet (FEU) bằng 2 TEU. Tàu càng lớn thì chi phí chở mỗi container càng thấp (lợi thế quy mô), nhưng chỉ cảng nước sâu mới đón được.',
-        'In March 2023 the Cái Mép cluster received a 24,188 TEU ship – the largest container ship ever to call at a Vietnamese port. One TEU is one 20-foot container; a 40-foot container (FEU) counts as 2 TEU. The bigger the ship, the lower the cost per container (economies of scale), but only deep-water ports can take them.'],
+    b: ['Tháng 3/2023, cụm cảng Cái Mép đón một tàu 24.188 TEU – tàu container nước ngoài lớn nhất từng cập cảng Việt Nam tính tới lúc đó. 1 TEU là một container 20 feet; container 40 feet (FEU) bằng 2 TEU. Tàu càng lớn thì chi phí chở mỗi container càng thấp (lợi thế quy mô), nhưng chỉ cảng nước sâu mới đón được.',
+        'In March 2023 the Cái Mép cluster received a 24,188 TEU ship – the largest foreign container ship to call at a Vietnamese port up to then. One TEU is one 20-foot container; a 40-foot container (FEU) counts as 2 TEU. The bigger the ship, the lower the cost per container (economies of scale), but only deep-water ports can take them.'],
     q: ['Câu hỏi cho CFO: chi phí vận chuyển mỗi sản phẩm của ta thay đổi thế nào nếu đi chung container với hàng của doanh nghiệp khác (LCL)?', 'Question for the CFO: how would our shipping cost per unit change if we shared a container with other firms (LCL)?'] },
   { key: 'yard', icon: '📦', t: ['Bãi container và Incoterms', 'Container yard and Incoterms'],
     b: ['Hợp đồng ghi điều kiện giao hàng (Incoterms) để biết ai trả gì và rủi ro chuyển lúc nào. FOB – giao lên tàu: người bán lo hàng tới khi xếp lên tàu ở cảng đi; cước biển và bảo hiểm do người mua trả. CIF: người bán trả thêm cước biển và bảo hiểm tới cảng đến, nhưng rủi ro vẫn chuyển sang người mua ngay khi hàng đã lên tàu.',
@@ -25,11 +26,11 @@ const CARDS = [
         'An export file usually includes: the contract and commercial invoice, packing list, bill of lading, the correct HS code, a certificate of origin (C/O) to claim FTA preferential tariffs, and phytosanitary certificates for farm or wood products. A wrong HS code or a missing C/O can hold the shipment for inspection and miss the vessel.'],
     q: ['Câu hỏi cho Thư ký: đội đã ghi đủ hồ sơ nào trong nhật ký trước khi chốt đơn xuất khẩu?', 'Question for the Secretary: which documents has the team logged before confirming an export order?'] },
   { key: 'jam', icon: '⏳', t: ['Khi cảng tắc', 'When the port is congested'],
-    b: ['Tàu phải chờ cầu; container nằm bãi quá thời gian miễn phí thì bị tính phí lưu container và lưu bãi, theo biểu phí các hãng tàu thường khoảng 75–300 USD mỗi container mỗi ngày. Hàng giao trễ, khách mất lòng tin. Trong Bật Nghiệp, biến cố hậu cần ở vụ 5 làm giá thành tăng 25% và chỉ giao được 85% đơn.',
-        'Ships wait for a berth; containers left in the yard beyond the free time incur demurrage and detention, which carrier tariffs typically set at about USD 75–300 per container per day. Deliveries run late and customers lose trust. In Bật Nghiệp, the round-5 logistics event raises unit cost by 25% and cuts order fulfilment to 85%.'],
-    q: ['Câu hỏi cho CEO: nếu vụ 5 cảng tắc, đội chấp nhận tốn thêm chi phí hay chấp nhận giao thiếu hàng?', 'Question for the CEO: if the port jams in round 5, would the team rather pay more or deliver less?'] },
+    b: ['Tàu phải chờ cầu; container nằm bãi quá thời gian miễn phí thì bị tính phí lưu container và lưu bãi, theo biểu phí các hãng tàu thường khoảng 75–300 USD mỗi container mỗi ngày. Hàng giao trễ, khách mất lòng tin. Trong Bật Nghiệp, ở vụ 5 hàng của đội kẹt ở cảng và đội chọn một trong ba cách: trả phí ưu tiên để giao đủ, chờ hoặc đổi cảng (giá thành tăng 25%, giao 85% đơn), hay xin khách lùi ngày giao.',
+        'Ships wait for a berth; containers left in the yard beyond the free time incur demurrage and detention, which carrier tariffs typically set at about USD 75–300 per container per day. Deliveries run late and customers lose trust. In Bật Nghiệp, your cargo gets stuck at the port in round 5 and the team picks one of three ways out: pay a priority fee to deliver in full, wait or switch ports (unit cost +25%, 85% of orders delivered), or ask the customer for a later delivery date.'],
+    q: ['Câu hỏi cho CEO: nếu vụ 5 cảng tắc, đội chấp nhận tốn thêm chi phí, giao thiếu hàng hay mất một chút uy tín?', 'Question for the CEO: if the port jams in round 5, would the team rather pay more, deliver less or lose a little trust?'] },
 ];
-const SRC = ['Nguồn: VOV, SGGP (2023), Vietnamnet; biểu phí lưu container của hãng tàu (2025); Incoterms 2020.', 'Sources: VOV, SGGP (2023), Vietnamnet; carrier demurrage & detention tariffs (2025); Incoterms 2020.'];
+const SRC = ['Nguồn: SGGP (2023), Cảng vụ Hàng hải Vũng Tàu (2024), Vietnamnet; biểu phí lưu container của hãng tàu (2025); Incoterms 2020.', 'Sources: SGGP (2023), Vũng Tàu Maritime Administration (2024), Vietnamnet; carrier demurrage & detention tariffs (2025); Incoterms 2020.'];
 
 export function buildPort(ctx) {
   const { THREE, scene, hq, camera, canvas, T } = ctx;
