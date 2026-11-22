@@ -503,6 +503,7 @@
         { img: 'hc/chain2/11-kiem-dich-noi-dia.webp', vi: 'Kiểm dịch thực vật tại trạm kiểm soát nội địa trước khi ra cửa khẩu.', en: 'Phytosanitary inspection at a domestic checkpoint before reaching the border.' }
       ] },
       { id: 'cold-pack', vi: 'Đóng hàng lạnh & vận chuyển nội địa', en: 'Cold packing & domestic transport', items: [
+        { img: 'hc/sa-ban/kho-lanh-nong-san.webp', vi: 'Sa bàn kho lạnh nông sản: trái cây được phân loại, đóng thùng rồi chờ trong kho lạnh trước khi lên xe và container lạnh.', en: 'Cold-store diorama: fruit is graded, packed and held in cold storage before loading onto reefer trucks and containers.' },
         { img: 'hc/durian/chang-6-xe-lanh-cao-toc.webp', vi: 'Chặng 6 · Xe lạnh chạy cao tốc ra cảng: −18 °C, độ ẩm 85 %, GPS theo dõi chuỗi lạnh.', en: 'Stage 6 · Reefer truck on the expressway to the port: −18 °C, 85 % humidity, GPS cold-chain tracking.' },
         { img: 'hc/durian/cabin-xe-lanh.webp', vi: 'Trong cabin xe lạnh: tài xế và đội đối chiếu lộ trình ra cảng trước khi lăn bánh.', en: 'Inside the reefer cab: the driver and the team check the route to the port before setting off.' },
         { img: 'hc/durian/cao-toc-ra-cang.webp', vi: 'Đoàn xe lạnh chạy cao tốc ra cảng quốc tế, còn 15 km tới bến xuất khẩu.', en: 'Reefer trucks on the expressway to the international seaport, 15 km from the export terminal.' },
@@ -515,6 +516,7 @@
         { img: 'hc/chain2/16-kiem-tra-nhiet-do-cont.webp', vi: 'Kiểm tra nhiệt độ thực tế trong container trước khi niêm phong.', en: "Checking the container's actual temperature before sealing." }
       ] },
       { id: 'border', vi: 'Qua cửa khẩu biên giới', en: 'Crossing the land border', items: [
+        { img: 'hc/sa-ban/cua-khau-quoc-te.webp', vi: 'Sa bàn cửa khẩu quốc tế: xe container xếp hàng qua trạm kiểm soát, kiểm dịch rồi mới sang bên kia biên giới.', en: 'International border-gate diorama: container trucks queue through control and inspection before crossing the border.' },
         { img: 'scenes/border-v2.webp', vi: 'Cửa khẩu biên giới: xe lạnh xếp hàng qua luồng xanh, cơ quan kiểm dịch thực vật kiểm tra trước khi thông quan.', en: 'Border gate: reefer trucks queue in the green lane; plant-quarantine officers inspect before clearance.' },
         { img: 'hc/chain2/17-tram-can-etc-wim.webp', vi: 'Qua trạm cân tải trọng tự động (WIM) và thu phí không dừng (ETC).', en: 'Passing automatic weigh-in-motion (WIM) and non-stop toll (ETC) stations.' },
         { img: 'hc/chain2/18-bien-bao-cua-khau.webp', vi: 'Biển chỉ dẫn hướng cửa khẩu quốc tế Hữu Nghị – Tân Thanh.', en: 'Road sign pointing to the Hữu Nghị–Tân Thanh international border gate.' },
@@ -524,6 +526,7 @@
         { img: 'hc/chain2/22-hai-quan-trung-quoc-tiep-nhan.webp', vi: 'Hải quan Trung Quốc tiếp nhận và quét mã lô hàng.', en: 'Chinese customs receives and scans the shipment.' }
       ] },
       { id: 'rail-sea', vi: 'Đường sắt & đường biển liên vận', en: 'Rail & sea freight', items: [
+        { img: 'hc/sa-ban/cang-cai-mep-thi-vai.webp', vi: 'Sa bàn cảng nước sâu Cái Mép – Thị Vải: tàu mẹ cập thẳng cầu cảng, container lạnh đi thẳng sang châu Âu và Mỹ, không phải chuyển tải.', en: 'Cái Mép – Thị Vải deep-water port diorama: mother ships berth directly, so reefer containers go straight to Europe and the US without transhipment.' },
         { img: 'hc/durian/chang-7-cang-hai-quan.webp', vi: 'Chặng 7 · Cảng quốc tế, bến 04: cẩu container Durian Passport lên tàu, hải quan niêm phong.', en: 'Stage 7 · International seaport, berth 04: the Durian Passport container is craned aboard and customs seals it.' },
         { img: 'hc/durian/cang-boc-xep-container.webp', vi: 'Chặng 3 · Cảng biển quốc tế: bốc container lạnh lên tàu Durian Express, hải quan đã thông quan.', en: 'Stage 3 · International seaport: reefer containers are loaded onto the Durian Express after customs clearance.' },
         { img: 'hc/durian/tau-keo-roi-cang.webp', vi: 'Hai tàu kéo đưa tàu Durian Express rời bến, bắt đầu hành trình xuất khẩu.', en: 'Two tugboats ease the Durian Express away from the quay to start the export voyage.' },
