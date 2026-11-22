@@ -15,7 +15,6 @@ window.BZ_LIB_EN={
 "mv3d/southern-horizons/can-nhom-vn.webp":["The whole team at the rail", "All eight members along the rail at sunset · MV «Southern Horizons»"],
 "mv3d/southern-horizons/can-4nu.webp":["Four executive members", "The CFO, CMO, COO and company secretary · MV «Southern Horizons»"],
 "mv3d/southern-horizons/thuyen-hoa-dang.webp":["Through the waves with a lotus lantern", "Closing scene and background of the YouTube cover · MV «Southern Horizons»"],
-"mv3d/southern-horizons/can-tho.webp":["The team on the Can Tho map", "Closing frame · Can Tho bridge, floating market, «Heart of BizOnland» · MV «Southern Horizons»"],
 /* world – trang phục bốn nước (MV Ngọn hải đăng soi đường) */
 "character/the-gioi/lumina-no.webp":["Lumina – Norway", "Bunad: embroidered red wool vest, white linen blouse, navy wool skirt with a floral hem · MV «Southern Horizons»"],
 "character/the-gioi/tu-no.webp":["Tu Phan – Norway", "Men's bunad: green wool waistcoat with silver buttons, embroidered white shirt, black breeches, white wool socks · MV «Southern Horizons»"],

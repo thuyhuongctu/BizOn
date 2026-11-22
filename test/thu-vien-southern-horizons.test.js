@@ -1,4 +1,4 @@
-// Thư viện Sáng tạo, mục MV 3D: 13 ảnh của MV «Southern Horizons» (thuyền rồng qua bốn nước và về Việt Nam).
+// Thư viện Sáng tạo, mục MV 3D: 12 ảnh của MV «Southern Horizons» (thuyền rồng qua bốn nước và về Việt Nam).
 // Mỗi ảnh phải tồn tại, có tên/chú thích và bản tiếng Anh.
 'use strict';
 const fs = require('node:fs'), path = require('node:path'), vm = require('node:vm'), assert = require('node:assert/strict');
@@ -7,7 +7,7 @@ const ctx = { window: {} }; vm.createContext(ctx);
 vm.runInContext(read('js/thu-vien-data.js'), ctx); vm.runInContext(read('js/thu-vien-data-en.js'), ctx);
 const D = ctx.window.BZ_LIB, E = ctx.window.BZ_LIB_EN;
 const sh = D.mv.filter(a => a[0].startsWith('mv3d/southern-horizons/'));
-assert.equal(sh.length, 13, 'phải đủ 13 ảnh Southern Horizons');
+assert.equal(sh.length, 12, 'phải đủ 12 ảnh Southern Horizons');
 for (const [f, ten, ghi] of sh) {
   assert.ok(fs.existsSync(path.join(ROOT, 'assets', f)), 'thiếu tệp assets/' + f);
   assert.ok(ten && ghi, 'thiếu tên/chú thích: ' + f);
