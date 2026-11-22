@@ -28,9 +28,11 @@ assert.ok(read('assets/video/subs/cang-cai-mep-en.en.vtt').includes('which way i
 assert.ok(read('THIRD-PARTY-NOTICES.md').includes('`assets/video/cang-cai-mep-*`') && /HeyGen Voice 1 Turbo/.test(read('THIRD-PARTY-NOTICES.md')), 'ghi nguồn gốc ở mục 7');
 assert.ok(fs.existsSync(R('scripts/video/cat-giong-theo-cau.py')), 'có script cắt giọng theo câu');
 const hd = read('huong-dan.html');
-for (const l of ['vi', 'en']) for (const f of [`assets/video/cang-cai-mep-${l}-720p.mp4`, `assets/video/cang-cai-mep-${l}-poster.webp`, `assets/video/subs/cang-cai-mep-${l}.${l}.vtt`])
+// 22/11/2026: ảnh bìa đổi sang sa bàn cảng (cang-cai-mep-poster-v2), dùng chung cho hai bản
+for (const l of ['vi', 'en']) for (const f of [`assets/video/cang-cai-mep-${l}-720p.mp4`, 'assets/video/cang-cai-mep-poster-v2.webp', `assets/video/subs/cang-cai-mep-${l}.${l}.vtt`])
   assert.ok(hd.includes(`'${f}'`) && fs.existsSync(R(f)), 'trang Hướng dẫn trỏ tới tệp có thật: ' + f);
 assert.ok(+(read('sw.js').match(/bizon-v(\d+)/) || [])[1] >= 951, 'sw.js ≥ v951');
+assert.ok(size('assets/video/cang-cai-mep-poster-v2.webp') < size('assets/video/cang-cai-mep-poster-v2.jpg'), 'poster v2: WebP nhỏ hơn JPG');
 
 (async () => {
   const b = await chromium.launch();
@@ -47,7 +49,7 @@ assert.ok(+(read('sw.js').match(/bizon-v(\d+)/) || [])[1] >= 951, 'sw.js ≥ v95
           fits: rv.right <= innerWidth + 1 && rv.width > 200, over: document.documentElement.scrollWidth - innerWidth }; });
       const tag = lang + ' ' + w;
       assert.equal(r.src, `assets/video/cang-cai-mep-${lang}-720p.mp4`, tag + ': phát đúng bản theo ngôn ngữ');
-      assert.equal(r.poster, `assets/video/cang-cai-mep-${lang}-poster.webp`, tag + ': ảnh bìa đúng bản');
+      assert.equal(r.poster, 'assets/video/cang-cai-mep-poster-v2.webp', tag + ': ảnh bìa là sa bàn cảng');
       assert.equal(r.track, `assets/video/subs/cang-cai-mep-${lang}.${lang}.vtt`, tag + ': phụ đề đúng bản');
       assert.equal(r.srclang, lang, tag + ': srclang');
       assert.ok(r.inBox && r.fits && r.over <= 0, tag + ': video nằm trong ô cảng, vừa khung, không tràn ngang');
