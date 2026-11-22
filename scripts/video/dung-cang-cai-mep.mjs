@@ -107,7 +107,7 @@ ff('-i', mixed, '-af', `loudnorm=I=-15:TP=-2.5:LRA=7:measured_I=${m.input_i}:mea
 
 // ---------- ghép ----------
 const final = join(OUT, NAME + '.mp4');
-ff('-framerate', String(FPS), '-i', join(tmp, 'k%05d.jpg'), '-i', audio, '-c:v', 'libx264', '-preset', 'slow', '-crf', '20', '-profile:v', 'high', '-level', '4.1', '-pix_fmt', 'yuv420p',
+ff('-framerate', String(FPS), '-i', join(tmp, 'k%05d.jpg'), '-i', audio, '-c:v', 'libx264', '-preset', 'slow', '-crf', '23', '-profile:v', 'high', '-level', '4.1', '-pix_fmt', 'yuv420p',
   '-c:a', 'copy', '-shortest', '-movflags', '+faststart', final);
 ff('-i', final, '-vf', 'scale=1280:720:flags=lanczos', '-c:v', 'libx264', '-preset', 'slow', '-crf', '24', '-profile:v', 'high', '-level', '4.0', '-pix_fmt', 'yuv420p',
   '-c:a', 'aac', '-b:a', '112k', '-movflags', '+faststart', join(OUT, NAME + '-720p.mp4'));

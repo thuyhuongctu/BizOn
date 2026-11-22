@@ -2,7 +2,7 @@
 
 **Khổ:** ngang 1920×1080, 30 khung/giây, cho trang `huong-dan.html` (thay thẻ «Mới sau video: 🚢 Cảng Cái Mép»). Cắt bản dọc 9:16 sau nếu chị muốn.
 **Độ dài:** 60–70 giây, lời tiếng Việt, phụ đề `.vtt` VI/EN.
-**Trạng thái:** **kịch bản đã duyệt** (21/11/2026, chị nhắn «Duyệt»). Bước tiếp theo: lời đọc → hình → âm thanh → kiểm bằng `scripts/kiem-video.mjs`.
+**Trạng thái:** **kịch bản đã duyệt** (21/11/2026, chị nhắn «Duyệt»). Đã dựng hai bản VI (73 giây) và EN (86 giây), kiểm bằng `scripts/kiem-video.mjs` đạt; gắn ở trang Hướng dẫn, ô «🚢 Cảng Cái Mép».
 **Ngày tra nguồn:** 21/11/2026.
 
 ---
@@ -88,3 +88,20 @@ Số viết bằng chữ để đếm âm tiết. Tổng khoảng **320 âm ti�
 | 5 | Âm thanh | Nhạc nền không lời của BizOn (ví dụ «Mekong Compass»), hạ khoảng −3 dB khi có lời. Thành phẩm −15 LUFS, đỉnh ≤ −1,5 dBTP. |
 | 6 | Kiểm | `node scripts/kiem-video.mjs` không có lỗi. Gửi chị 2–3 tấm ghép. |
 | 7 | Đưa lên trang | Tệp mới `assets/video/cang-cai-mep-*.mp4` cùng bản `-720p`, poster `.webp` + `.jpg`, phụ đề VI/EN. Thẻ trên `huong-dan.html` đổi thành nút xem video. Ghi `THIRD-PARTY-NOTICES.md` mục 7, nâng `sw.js`, viết test, mở PR nháp. |
+
+---
+
+## 5. Giọng đọc (21/11/2026)
+
+Chị yêu cầu làm giọng đọc tiếng Việt và tiếng Anh, thêm bản video tiếng Anh.
+
+- Dịch vụ đọc của Edge (edge-tts) không chạy được trên máy đám mây vì proxy chặn kết nối WebSocket.
+- Dùng **HeyGen Voice 1 Turbo**, giọng công khai «Deirdre», gọi qua Agensi. Mỗi thứ tiếng đọc liền một lần, có mốc từng ký tự;
+  `scripts/video/cat-giong-theo-cau.py` cắt thành 13 câu, tăng tốc ×1,2 (VI) và ×1,3 (EN), giữ cao độ.
+- Chữ gửi đi đọc khác phụ đề ở vài chỗ để máy đọc đúng: VI «Xin-ga-po», «công-te-nơ», «tê-ê-u», «ba-đê»; EN «Cai Mep, Thi Vai»,
+  «Bat Nghiep» (tên riêng đọc kiểu Anh). Phụ đề vẫn ghi đủ dấu.
+- Nghe kiểm bằng Whisper (small): bản EN khớp lời; bản VI khớp lời nhưng lệch dấu vài chữ (ví dụ «càng» thay cho «cảng»).
+- Đã thử nhân bản giọng chị bằng Fish Audio (mẫu 24 giây từ bản thu video sầu riêng) theo lựa chọn của chị: sai dấu nhiều hơn
+  hẳn («Thần Bá năm 2023», «tháng 15») nên không dùng.
+- Muốn bản VI chuẩn dấu hơn: chị thu 13 câu, đặt vào `assets/video/src/cang-cai-mep/vi/01…13.mp3` rồi chạy lại
+  `node scripts/video/dung-cang-cai-mep.mjs --lang vi`.
