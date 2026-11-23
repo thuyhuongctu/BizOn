@@ -75,6 +75,7 @@ Các trang chính của bizonland.com (trang chủ, bốn trò chơi, hành trì
 | **Google Play** · Trusted Web Activity | Ứng dụng Android `io.github.thuyhuongctu.bizon` bọc trang web; mã bọc sinh bởi Bubblewrap, dùng thư viện **android-browser-helper 2.2.0** (Apache License 2.0) | Google Play Developer Distribution Agreement |
 | **PeerJS Cloud** (máy chủ tín hiệu công cộng) | Kết nối ngang hàng cho chế độ chơi nhóm | Điều khoản của PeerJS |
 | **Zenodo** (CERN) | DOI 10.5281/zenodo.21592241 cho bản phát hành | Điều khoản Zenodo |
+| **GoatCounter** (mã nguồn mở, EUPL 1.2) | Đếm lượt xem trang ẩn danh từ 23/11/2026: không cookie, không lưu IP, không nạp mã của bên thứ ba (trang tự gửi yêu cầu `/count` từ `js/thong-ke.js`); chi tiết ở `chinh-sach.html#thong-ke` | Điều khoản và chính sách riêng tư của GoatCounter |
 
 ## 6 · Công cụ phát triển (không được phân phối cùng sản phẩm)
 
