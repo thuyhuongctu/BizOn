@@ -10,6 +10,7 @@ Kịch bản: `docs/phim/tap-01-kich-ban.md`. Bản nháp 23/11/2026.
 1. Với mỗi cảnh NV, đưa ảnh tham chiếu vào công cụ video làm khung đầu hoặc ảnh nhân vật, rồi dán mô tả tiếng Anh.
 2. Mỗi cảnh dựng 4–8 giây, khung 16:9, xuất mp4. Đặt tên theo mã cảnh (`C01.mp4`…), gửi qua Drive.
 3. Dựng dư 1–2 lần cho cảnh quan trọng (C01, C14, C17) để em chọn bản đẹp nhất.
+4. Cảnh nào có khung hình Stitch (bảng cuối trang), chị xem khung ấy để giữ bố cục và bối cảnh, nhưng vẫn đưa ảnh tham chiếu nhân vật vào công cụ, không dùng thẳng khung Stitch (còn chữ «DURIAN EXPRESS»).
 
 **Đuôi chung của mọi mô tả NV** (đã gắn sẵn trong từng dòng):
 `claymation stop-motion style, handmade clay figures, warm cinematic light, 16:9, no text, no signs, no logos, no subtitles`
@@ -43,6 +44,20 @@ Kịch bản: `docs/phim/tap-01-kich-ban.md`. Bản nháp 23/11/2026.
 - phần còn lại là các cảnh dùng lại và khoảng thở có nhạc.
 
 Thời lượng khớp lại theo giọng thật của chị khi ghép.
+
+## Khung hình Stitch cho tập 1
+
+Lưu ở Drive `Mua-1/00-chung/khung-hinh-stitch/`. Danh sách đủ 21 khung và việc cần sửa: `docs/phim/khung-loat-phim.md`, mục 11. Thương hiệu của hợp tác xã trong phim là «Sầu Riêng Phù Sa», em chèn ở hậu kỳ.
+
+| Cảnh | Khung Stitch | Lấy gì từ khung |
+|---|---|---|
+| Ảnh bìa | `tap01-bia-va-C17-ben-song-tau-va-xe.png` | Sà lan và xe lạnh đứng cạnh nhau: đúng câu hỏi «sông hay đường?» |
+| C02 | `tap01-mo-dau-vuon-bac-ba.png` | Nền thẻ tựa: vườn Bác Ba bên sông |
+| C04 | `tap01-C04-tau-tren-song.png` | Góc máy trên sông, hai bờ dừa nước |
+| C10 | `tap01-C10-cabin-xe-lanh.png` | Nửa sau của cảnh: xe container lạnh |
+| C11 | `tap01-C11-xe-lanh-tren-cau-ra-cang.png` | Xe lạnh trên đường ra cảng |
+| C17 | `tap01-bia-va-C17-ben-song-tau-va-xe.png` | Bối cảnh bến sông có cả sà lan và xe |
+| C19, hậu đoạn | `tap01-xe-lanh-toi-cong-cang-cai-mep.png`, `tap01-ket-cang-cai-mep-xep-hang.png` | Đích đến Cái Mép, nền chữ chạy |
 
 ## Nếu cảnh NV khó dựng
 
