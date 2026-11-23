@@ -36,6 +36,11 @@ assert.equal(C.modelCard(D, en).title, 'How does the model work?');
 const href = C.modelCard(D, vi).href, anchor = href.split('#')[1];
 assert.ok(R(href.split('#')[0]).includes('id="' + anchor + '"'), 'liên kết tới neo có thật: ' + href);
 assert.equal(C.howToPlay(D, vi).length, 7, 'howToPlay vẫn đúng 7 mục');
+// Tài liệu hướng dẫn khớp dữ liệu: vụ 6 dựa trên nghị định thư đông lạnh đã ký 19/8/2024 (FROZENPROTO), không phải kịch bản giả định
+const hd6 = R('docs/huong-dan-ho-chieu-sau-rieng.md');
+assert.ok(D.seasons[5].frozenProtocol && /19\/8\/2024/.test(D.seasons[5].textVi), 'dữ liệu vụ 6: nghị định thư ký 19/8/2024');
+assert.doesNotMatch(hd6, /Vụ 6[^\n]*là \*\*kịch bản giả định\*\*|đông lạnh \(giả định\)/, 'tài liệu không còn gọi vụ 6 là giả định');
+assert.ok(hd6.includes('19/8/2024') && hd6.includes('FROZENPROTO'), 'tài liệu nêu mốc và nguồn của vụ 6');
 assert.ok(/Không dùng Math\.random/.test(R('lab/ho-chieu-sau-rieng-engine.js')), 'engine vẫn tất định như thẻ nói');
 
 // --- Hộp đen ---
