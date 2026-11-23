@@ -103,6 +103,10 @@ for (const lang of ['vi', 'en']) {
       assert.ok(lang === 'en' ? c1[1].includes('Will we make it?') : c1[1].includes('Kịp không đây?'), lang + ': bong bóng thoại đúng ngôn ngữ');
       const het = await p.evaluate(() => { window.veKhung(window.thongTin.tong - 0.01); return getComputedStyle(document.getElementById('den')).opacity; });
       assert.ok(+het > 0.9, lang + ': cuối phim tối dần');
+      const bq = await p.evaluate(() => { window.veKhung(window.thongTin.tong / 2); const e = document.querySelector('.bq'); const d = window.thongTin.doan.find(x => x.canh === 'C19'); window.veKhung(d.b - 0.5);
+        return { dau: e && getComputedStyle(e).visibility !== 'hidden' ? e.textContent : '', cuoi: (document.querySelector('.bq-cuoi') || {}).textContent || '' }; });
+      assert.equal(bq.dau, '© 2026 Bizonland', lang + ': dấu bản quyền trên hình');
+      assert.ok(bq.cuoi.includes('Đỗ Thùy Hương & Phan Anh Tú') && bq.cuoi.includes(lang === 'en' ? 'All rights reserved' : 'Bảo lưu mọi quyền'), lang + ': dòng bản quyền cuối chữ chạy');
       assert.deepEqual(errs, [], lang + ': bản dựng không lỗi JS');
       assert.deepEqual(loi404.filter(u => !/favicon/.test(u)), [], lang + ': không thiếu tệp');
       await p.close();

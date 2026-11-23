@@ -70,6 +70,8 @@
   .cho .nv { position: absolute; right: 60px; bottom: 0; height: 760px; display: flex; align-items: flex-end; gap: 10px; }
   .cho .nv img { max-height: 700px; max-width: 360px; }
   #den { position: absolute; inset: 0; z-index: 5; background: #000; visibility: hidden; }
+  .bq { position: absolute; right: 26px; top: 14px; z-index: 4; font-weight: 700; font-size: 22px; color: rgba(255,255,255,.78);
+        text-shadow: 0 1px 4px rgba(0,0,0,.6); letter-spacing: .3px; }
   .pd { position: absolute; left: 160px; right: 160px; bottom: 34px; text-align: center; visibility: hidden; z-index: 4; }
   .pd span { display: inline; font-weight: 700; font-size: 40px; line-height: 1.45; color: #fff; background: rgba(0,0,0,.72); padding: 4px 18px;
              -webkit-box-decoration-break: clone; box-decoration-break: clone; border-radius: 10px; }
@@ -93,6 +95,9 @@
   const L = (vi, en) => (EN ? en : vi);
   const GOC = '../../../';
   const san = document.getElementById('san');
+  // Bản quyền: dấu nhỏ góc trên bên phải suốt phim, dòng đầy đủ cuối chữ chạy (cùng câu chữ với chân trang bizonland.com)
+  const BAN_QUYEN = L('© 2026 Bizonland · Đỗ Thùy Hương & Phan Anh Tú · Bảo lưu mọi quyền', '© 2026 Bizonland · Đỗ Thùy Hương & Phan Anh Tú · All rights reserved');
+  { const bq = document.createElement('div'); bq.className = 'bq'; bq.textContent = '© 2026 Bizonland'; document.getElementById('root').appendChild(bq); }
   const tl = gsap.timeline({ paused: true });
 
   const tao = (html, cls) => { const d = document.createElement('div'); d.className = cls; d.innerHTML = html; san.appendChild(d); return d; };
@@ -244,7 +249,7 @@
         <p>${L('Tuổi Trẻ, 27/11/2019 (N6) và 21/05/2008 (N7)', 'Tuổi Trẻ, 27 Nov 2019 (N6) and 21 May 2008 (N7)')}</p>
         <p>${L('Phép tính chênh lệch × 20: BizOnland (N8)', 'Difference × 20: BizOnland calculation (N8)')}</p>
         <h3>&nbsp;</h3><p>${L('Nhân vật, hợp tác xã, Kim Long Exports và hạn chót trong phim là hư cấu.', 'Characters, the co-op, Kim Long Exports and the deadline are fictional.')}</p>
-        <h2 style="margin-top:70px">bizonland.com</h2></div>`, 'doan sl');
+        <h2 style="margin-top:70px">bizonland.com</h2><p class="bq-cuoi">${BAN_QUYEN}</p></div>`, 'doan sl');
       const chay = q(el, '.chay');
       tl.fromTo(chay, { y: 0 }, { y: () => -(1080 + chay.offsetHeight) + 140, duration: d.b - d.a, ease: 'none' }, d.a);
       return el;
