@@ -126,13 +126,13 @@ if (CHI_HTML) process.exit(0);
 
 // ---------- kết xuất hình bằng HyperFrames ----------
 const env = { ...process.env, HYPERFRAMES_NO_TELEMETRY: '1', DO_NOT_TRACK: '1', HYPERFRAMES_SKIP_SKILLS: '1' };
-// Ưu tiên chrome-headless-shell (chụp khung bằng BeginFrame, nhanh); Chrome đầy đủ phải chụp màn hình từng khung, chậm và có lúc treo.
-if (!env.PUPPETEER_EXECUTABLE_PATH) {
-  const shell = '/opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell';
-  if (existsSync(shell)) env.PUPPETEER_EXECUTABLE_PATH = shell; else if (existsSync('/opt/pw-browsers/chromium')) env.PUPPETEER_EXECUTABLE_PATH = '/opt/pw-browsers/chromium';
-}
+// Ưu tiên chrome-headless-shell (chụp khung bằng BeginFrame, nhanh) kể cả khi máy đã đặt PUPPETEER_EXECUTABLE_PATH
+// tới Chrome đầy đủ: Chrome đầy đủ phải chụp màn hình từng khung, chậm và có lúc treo. Muốn dùng trình duyệt khác: --chrome <đường dẫn>.
+const SHELL = '/opt/pw-browsers/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell';
+if (arg('--chrome')) env.PUPPETEER_EXECUTABLE_PATH = arg('--chrome');
+else if (existsSync(SHELL)) env.PUPPETEER_EXECUTABLE_PATH = SHELL;
 const hinh = join(tmp, 'hinh.mp4');
-const r = spawnSync('npx', ['--yes', HF, 'render', BUILD, '-o', hinh, '--fps', String(FPS), '--quality', NHAP ? 'draft' : 'delivery', '--workers', arg('--workers') || '2', '--no-wait', '--quiet'], { stdio: 'inherit', env });
+const r = spawnSync('npx', ['--yes', HF, 'render', BUILD, '-o', hinh, '--fps', String(FPS), '--quality', NHAP ? 'draft' : 'delivery', '--workers', arg('--workers') || '1', '--no-wait', '--quiet'], { stdio: 'inherit', env });
 if (r.status !== 0 || !existsSync(hinh)) throw new Error('HyperFrames kết xuất lỗi');
 
 // ---------- tiếng: giọng theo mốc + nhạc nền tự hạ khi có lời, chuẩn độ to ----------
