@@ -16,6 +16,9 @@ assert.ok(tc.includes('WCAG 2.2') && tc.includes('axe-core 4.10.2'), 'nêu chu�
 for (const id of ['pham-vi', 'phuong-phap', 'ket-qua', 'han-che', 'ho-tro', 'phan-hoi']) assert.ok(tc.includes('id="' + id + '"'), 'mục #' + id);
 assert.ok(/Chưa kiểm thủ công/.test(tc) && /Manual testing with screen readers/.test(tc), 'nói rõ chưa kiểm thủ công (VI/EN)');
 assert.ok(tc.includes('mailto:bricoleur@bizonland.com'), 'địa chỉ báo rào cản');
+// Mô tả lớp chữ mờ khớp js/capture-guard.js (độ mờ trong WM.alpha)
+const wmAlpha = Math.round(+(read('js/capture-guard.js').match(/alpha: ([\d.]+)/) || [])[1] * 100);
+assert.ok(wmAlpha > 0 && tc.includes('độ mờ ' + wmAlpha + ' %') && tc.includes(wmAlpha + '% opacity'), 'trang tuyên bố ghi đúng độ mờ lớp chữ mờ (' + wmAlpha + ' %)');
 assert.ok(tc.includes('js/thong-ke.js') && tc.includes('js/bizon-clay-footer.js'), 'chân trang và thống kê như các trang khác');
 assert.ok(read('sitemap.xml').includes('<loc>https://bizonland.com/tiep-can.html</loc>'), 'có trong sitemap');
 assert.ok(read('js/bizon-clay-footer.js').includes("href:'tiep-can.html'"), 'có liên kết ở chân trang');
