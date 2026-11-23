@@ -37,6 +37,20 @@ Chỉ dùng nhân vật có sẵn trong ảnh game (hiến chương). Ảnh tham
 | **Bạn nón lá** | Cậu bé, cô bé đi cùng Tèo; đại diện người xem trẻ | Tò mò, ít lời | `assets/hc/cast/ban-non-la-dung.webp`, `assets/hc/cast/ban-gai-non-la-di-cung-teo.webp` |
 | **Victor Lâm** | Cố vấn quốc tế hóa; xuất hiện từ tập 3 (cước biển, người mua nước ngoài) | Điềm đạm, nhìn xa | `assets/character/advisors/victor-lam-cut.webp` |
 
+**Mô tả tiếng Anh theo ảnh tham chiếu.** Lời mô tả cảnh cho công cụ video phải tả nhân vật đúng như ảnh đưa vào; tả lệch thì công cụ sẽ «sửa» nhân vật theo chữ. Mỗi cảnh NV có ảnh nào thì mô tả phải chứa cụm tương ứng (test kiểm). Bản 23/11/2026 sửa lỗi bản đầu: Minh Khang không phải thanh niên mặc vest, Lina Park không để tóc ngắn, An Nhiên không mặc áo san hô.
+
+| Ảnh tham chiếu | Cụm mô tả bắt buộc (EN) |
+|---|---|
+| `assets/hc/cast/bac-ba-v4-cut.webp` | `elderly Vietnamese clay farmer in a conical straw hat and a checkered scarf` |
+| `assets/hc/cast/ba-sau-lanh-v4-cut.webp` | `elderly Vietnamese clay woman with grey hair in a bun and a checkered scarf` |
+| `assets/character/advisors/minh-khang-cut.webp` | `older clay man with short grey hair and round glasses in a blue-grey polo shirt` |
+| `assets/hc/cast/lina-park-cut-v3.webp` | `young clay woman with dark hair in a bun and a teal utility vest` |
+| `assets/hc/cast/an-nhien-cut-v3.webp` | `young clay woman with a dark ponytail in an orange blazer and jeans` |
+| `assets/hc/cast/an-nhien-qa-dong-lanh-cut.webp` | `young clay quality inspector in a white and mint lab coat with a hair cap` |
+| `assets/hc/cast/kim-long-ceo.png` | `confident clay businessman with black hair in a red suit` |
+| `assets/dragon/teo-soi/countdown.webp` | `small mint-green clay baby dragon` |
+| `assets/dragon/teo-soi/inspect.webp` | `small mint-green clay baby dragon` |
+
 **Nhân vật phụ không lời** (người lái sà lan, tài xế, công nhân bến, khách nước ngoài): chỉ xuất hiện dáng xa, không rõ mặt, không thành nhân vật mới. Đứa trẻ đi cùng Tèo Soi luôn là Bạn nón lá.
 
 ## 5. Giọng và lời thoại
@@ -125,3 +139,37 @@ Khi dựng lại một khung, chị thêm vào cuối lời nhắc: `claymation 
 | `poster-mua1-doc.png` | Áp phích dọc cả nhóm | Ảnh bìa mùa (sau khi sửa) | Xóa chữ, logo Dolby, chữ chạy giả; Kim Long ra rìa hoặc bỏ; tên phim em chèn |
 | `poster-mua1-ngang.png` | Áp phích ngang cả nhóm, quả địa cầu | Ảnh bìa kênh (sau khi sửa) | Như áp phích dọc |
 | `ve-moi-vip.png` | Vé mời vàng trong hộp nhung, Tèo Soi | Thẻ mời buổi công chiếu tập 1 | Xóa chữ, mã QR giả; chữ em chèn |
+
+## 12. Khung hình Stitch đợt 2 (23/11/2026, chiều)
+
+Lưu ở Drive `00-chung/khung-hinh-stitch/dot-2-23-11/`. Đợt này sạch chữ hơn hẳn và nhân vật bám ảnh gốc; ưu tiên dùng đợt 2, đợt 1 để dự phòng. Tệp tên bắt đầu `khong-dung-` thì bỏ, `sua-` thì phải dựng lại trước khi dùng.
+
+Ghi chú Stitch tự viết kèm bộ ảnh (tệp `.md` trong zip) **không theo kịch bản đã duyệt** – để Kim Long ký hợp đồng, kết tập 1 bằng đáp án «kết hợp sông và đường», có số không nguồn – nên chỉ lấy hình, không lấy ghi chú.
+
+| Tệp | Nội dung | Dùng cho | Sửa trước khi dùng |
+|---|---|---|---|
+| `tap01-bia-ben-song-sa-lan-xe-lanh-v2.png` | Bến sông: sà lan và xe lạnh cạnh nhau, Bác Ba và An Nhiên | Tập 1: ảnh bìa, bối cảnh C17 | – |
+| `tap01-C03-bac-ba-vuon.png` | Bác Ba ôm trái sầu riêng ở chòi vườn | Tập 1: C03 (dáng, nét mặt) | Cảnh phim là bến đêm |
+| `tap01-C05-minh-khang-sa-ban.png` | Minh Khang bên sa bàn, cảng phía sau | Tập 1: C05, C13 (dáng nhân vật) | Cảnh phim là bến đêm |
+| `tap01-C07-lina-park-ben-cang.png` | Lina Park cầm máy tính bảng ở bãi container | Tập 1: C07 | – |
+| `tap01-C10-kim-long-van-phong.png` | Kim Long khoanh tay trong văn phòng nhìn ra cảng | Tập 1: C10 (nửa đầu) | – |
+| `tap01-C12-lumina-sa-ban.png` | Lumina áo dài bên sa bàn đồng bằng | Tập 1: C12, C18 (nền ảnh Lumina) | – |
+| `tap01-C20-teo-soi-kinh-lup.png` | Tèo Soi cầm kính lúp bên trái sầu riêng | Tập 1: C20 | – |
+| `tap01-xe-lanh-toi-cong-cang-v2.png` | Xe lạnh qua cổng cảng, Tèo Soi, Lina Park | Tập 1: C19, hậu đoạn | – |
+| `poster-mua1-doc-v3.png` | Minh Khang, Lina Park, Bác Ba, Tèo Soi trước sông và cảng | Áp phích chính của mùa | Tên phim em chèn |
+| `banner-mua1-ngang-v2.png` | Vườn → xe lạnh → sà lan → tàu mẹ, cả nhóm | Ảnh bìa kênh, banner | Tên phim em chèn |
+| `nv-ba-sau-lanh-vuon.png` | Bà Sáu Lành ôm trái ở chòi vườn | Tham chiếu dáng Bà Sáu Lành | – |
+| `nv-teo-soi-sa-ban.png` | Tèo Soi soi sa bàn | Tham chiếu Tèo Soi; tập 2–5 | – |
+| `nv-kim-long-sa-ban.png` | Kim Long bên sa bàn | Tham chiếu Kim Long; cảnh đối thủ | – |
+| `nv-lina-park-sa-ban.png` | Lina Park bên sa bàn | Tham chiếu Lina Park | – |
+| `nv-lumina-phong-trung-bay.png` | Lumina trong phòng trưng bày nông sản | Tập 4–6 | – |
+| `nv-minh-khang-teo-soi-ban-dieu-hanh.png` | Minh Khang và Tèo Soi ở bàn điều hành | Tập 3 (cước biển) | – |
+| `tap02-an-nhien-kiem-trai-dong-lanh.png` | An Nhiên kiểm múi sầu riêng đông lạnh | Tập 2 | Che chữ «−18 °C», «QC» trên màn hình |
+| `tap06-le-ra-mat-lumina-minh-khang.png` | Lumina và Minh Khang trên sân khấu ra mắt | Tập 6 | – |
+| `tap06-ky-hop-dong-minh-khang.png` | Minh Khang, Lumina bắt tay đối tác nước ngoài | Tập 6 | – |
+| `tap06-mui-tau-ra-bien-teo-lina.png` | Tèo Soi và Lina Park ở mũi tàu ra biển | Tập 6; hậu đoạn tập 5 | – |
+| `sua-sa-ban-lumina-kim-long-doi-tac.png` | Lumina, Kim Long và đối tác bên sa bàn | Tập 6 | Kim Long → Minh Khang |
+| `sua-sa-ban-ca-nhom-co-kim-long.png` | Tèo Soi, Minh Khang, Lina Park và Kim Long bên sa bàn | Tập 3 | Kim Long → bỏ hoặc thay bằng An Nhiên |
+| `khong-dung-kim-long-ky-voi-teo-soi.png` | Kim Long ký hợp đồng với Tèo Soi | Không dùng | Trái vai: Kim Long là đối thủ |
+| `khong-dung-poster-doc-v2.png` | Áp phích dọc có viền trắng | Không dùng | Viền trắng, Tèo Soi và Minh Khang lệch dáng, chữ méo |
+| `khong-dung-banner-ngang-v3.png` | Banner ngang có viền mờ | Không dùng | Viền mờ, Tèo Soi lệch dáng, chữ «Vietnam Fresh» |
