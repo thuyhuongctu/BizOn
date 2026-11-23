@@ -11,7 +11,7 @@ const sql = read('supabase/migrations/20261123000000_quy_mo_su_dung.sql');
 check(/security definer/.test(sql) && /grant execute on function public\.bizon_quy_mo_su_dung\(\) to anon, authenticated/.test(sql) && /\^\(DEMO\|TEST\)/.test(sql), 'migration: hàm security definer, khách gọi được, bỏ lớp DEMO/TEST');
 check(!/\b(insert\s+into|update\s+[\w.]+\s+set|delete\s+from|truncate)\b/i.test(sql.replace(/--.*$/gm, '')), 'migration chỉ đọc');
 check(/quy_mo_su_dung_smoke\.sql/.test(read('.github/workflows/supabase-student-login.yml')), 'workflow Supabase chạy kiểm SQL');
-check(+(/CACHE = 'bizon-v(\d+)'/.exec(read('sw.js')) || [])[1] >= 958, 'sw.js ≥ bizon-v958');
+check(+(/CACHE = 'bizon-v(\d+)'/.exec(read('sw.js')) || [])[1] >= 959, 'sw.js ≥ bizon-v959');
 const MAU = { lop: 12, doi_bat_nghiep: 1234, van_bat_nghiep_xong: 87, luot_ben_phu_sa: 456, luot_ho_chieu: 78, tu_ngay: '2026-08-04' };
 (async () => {
   const b = await chromium.launch();
