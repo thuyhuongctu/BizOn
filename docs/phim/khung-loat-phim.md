@@ -12,6 +12,7 @@ Hợp tác xã nhỏ của Bác Ba ở miền Tây đưa lô sầu riêng đầu
 - Một miền Tây thu nhỏ bằng đất nặn: sông rộng, ghe xuồng, vườn sầu riêng, bến bãi, cao tốc, và xa xa là cảng nước sâu Cái Mép với những cần cẩu cao.
 - Cảnh trong phim là thật về địa lý, nhưng nhân vật và doanh nghiệp là hư cấu. Không có hãng tàu, công ty vận tải hay bến cảng nào được gọi tên hay hiện logo.
 - Bizonland là vùng đất «khởi nghiệp – bật nghiệp»: ai cũng có thể bắt đầu nhỏ, nhưng muốn đi xa thì phải hiểu đường đi của hàng hóa.
+- **Thương hiệu sầu riêng của hợp tác xã Bác Ba: «Sầu Riêng Phù Sa»** (EN: *Phu Sa Durian*). Chốt ngày 23/11/2026, thay cho tên «Durian Express» trong bộ khung hình Stitch: «Durian Express» trùng tên một dịch vụ giao sầu riêng có thật của DHL Express Malaysia. «Phù Sa» gắn với đất bồi miền Tây và với «Bến Phù Sa» của BizOnland. Tên thương hiệu chỉ do em chèn ở hậu kỳ; cảnh do công cụ dựng không in tên lên thùng, xe hay tàu.
 
 ## 3. Mục tiêu mùa, đối thủ và đồng hồ
 
@@ -28,15 +29,15 @@ Chỉ dùng nhân vật có sẵn trong ảnh game (hiến chương). Ảnh tham
 | **Lumina** | Người kể chuyện, cố vấn của nhóm. Bày số liệu, đặt câu hỏi, **không chọn giúp**. Giọng chị Hương | Ấm, rõ, hơi tinh nghịch. «Mình không chọn giúp ai cả. Mình chỉ đặt số liệu lên bàn.» | `assets/character/advisors/lumina-vest-cut.webp`, `assets/character/advisors/lumina-y-tuong-cut.webp` |
 | **Bác Ba** | Chủ nhiệm hợp tác xã vườn sầu riêng, chủ lô hàng | Chân chất, ít lời, thương vườn. «Trái này tui chăm cả năm đó nghen.» | `assets/hc/cast/bac-ba-v4-cut.webp` |
 | **Bà Sáu Lành** | Người giữ hồn nghề, hiểu sông nước; thường là người nhìn ra điều cả nhóm bỏ sót | Điềm tĩnh, hỏi một câu là trúng. «Con nước đêm nay ra sao?» | `assets/hc/cast/ba-sau-lanh-v4-cut.webp`, `assets/character/advisors/ba-sau-lanh-cut.webp` |
-| **Minh Khang** | Giám đốc tài chính, giữ túi tiền; thường nghiêng về phương án rẻ | Nhanh nhảu, mê con số. «Đi sông cho rẻ!» | `assets/character/advisors/minh-khang-cut.webp` |
+| **Minh Khang** | Giám đốc tài chính, giữ túi tiền; thường nghiêng về phương án rẻ. Đứng ra đại diện hợp tác xã ở lễ ra mắt và lễ ký hợp đồng (tập 6) | Nhanh nhảu, mê con số. «Đi sông cho rẻ!» | `assets/character/advisors/minh-khang-cut.webp` |
 | **Lina Park** | Người vẽ tuyến phân phối; nghĩ về thời gian và rủi ro | Thực tế, nói thẳng. «Kịp, nếu không có gì trục trặc.» | `assets/hc/cast/lina-park-cut-v3.webp`, `assets/character/advisors/lina-park-cut.webp` |
 | **An Nhiên** | Lo chất lượng trái (độ ngọt, độ tươi, đi lạnh) | Cẩn thận, thương trái như thương người. «Trái tươi không chờ được.» | `assets/hc/cast/an-nhien-cut-v3.webp`, `assets/hc/cast/an-nhien-qa-dong-lanh-cut.webp` |
-| **Kim Long** | CEO Kim Long Exports, đối thủ | Tự tin, lịch sự, luôn đi trước. «Chỗ cuối là của tôi.» | `assets/hc/cast/kim-long-ceo.png` |
+| **Kim Long** | CEO Kim Long Exports, đối thủ. Không bao giờ đứng ở vị trí của hợp tác xã (lễ ra mắt, ký hợp đồng) | Tự tin, lịch sự, luôn đi trước. «Chỗ cuối là của tôi.» | `assets/hc/cast/kim-long-ceo.png` |
 | **Tèo Soi** | Rồng con đi theo container, phần vui của phim; hay hỏi câu «ngây thơ» mà trúng | Lém lỉnh, mê sầu riêng. «Kịp không đây?» | `assets/dragon/teo-soi/countdown.webp`, `assets/dragon/teo-soi/inspect.webp`, `assets/hc/duo/om-teo.webp` |
 | **Bạn nón lá** | Cậu bé, cô bé đi cùng Tèo; đại diện người xem trẻ | Tò mò, ít lời | `assets/hc/cast/ban-non-la-dung.webp`, `assets/hc/cast/ban-gai-non-la-di-cung-teo.webp` |
 | **Victor Lâm** | Cố vấn quốc tế hóa; xuất hiện từ tập 3 (cước biển, người mua nước ngoài) | Điềm đạm, nhìn xa | `assets/character/advisors/victor-lam-cut.webp` |
 
-**Nhân vật phụ không lời** (người lái sà lan, tài xế, công nhân bến): chỉ xuất hiện dáng xa, không rõ mặt, không thành nhân vật mới.
+**Nhân vật phụ không lời** (người lái sà lan, tài xế, công nhân bến, khách nước ngoài): chỉ xuất hiện dáng xa, không rõ mặt, không thành nhân vật mới. Đứa trẻ đi cùng Tèo Soi luôn là Bạn nón lá.
 
 ## 5. Giọng và lời thoại
 
@@ -89,3 +90,38 @@ Lumina bày ba cột (chi phí, thời gian, rủi ro), hỏi «còn đội bạ
 - tên công cụ và gói đang dùng;
 - gói ấy có cho phép dùng thương mại không (cần biết trước khi nhận tài trợ);
 - có yêu cầu ghi nguồn không.
+
+## 11. Khung hình tham chiếu (Stitch)
+
+Ngày 23/11/2026 chị dựng 21 khung hình bằng Google Stitch. Em tách và đặt tên theo cảnh sẽ dùng, lưu ở Drive `13. BizOnland Phim/Mua-1/00-chung/khung-hinh-stitch/`. Khung hình dùng để **tham chiếu bố cục, bối cảnh và ánh sáng**, chưa dùng thẳng làm khung đầu cho công cụ video được, vì:
+- khung nào cũng in chữ «DURIAN EXPRESS» (trên tàu, xe, thùng, biển hiệu) và chữ tiếng Anh, tiếng Việt bị méo;
+- hai áp phích có logo «Dolby Cinema» và dòng chữ chạy giả;
+- Kim Long (áo đỏ) đứng ở vị trí của hợp tác xã trong lễ ra mắt, ký hợp đồng và nếm thử;
+- có nhân vật mới rõ mặt (trẻ em, tài xế, khách nước ngoài);
+- phong cách là 3D bóng, chưa phải đất nặn.
+
+Khi dựng lại một khung, chị thêm vào cuối lời nhắc: `claymation stop-motion style, no text, no letters, no logos, no signage, no brand names, no flags, no maps`.
+
+| Tệp | Nội dung | Dùng cho | Sửa trước khi dùng |
+|---|---|---|---|
+| `tap01-mo-dau-vuon-bac-ba.png` | Bác Ba hái sầu riêng, Bà Sáu Lành ngồi bên giỏ, Tèo Soi cầm kính lúp, ghe trên sông | Tập 1: nền thẻ tựa C02, hậu đoạn | Xóa chữ trên thùng gỗ |
+| `tap01-C04-tau-tren-song.png` | Tàu chở container lạnh trên sông, hai bờ dừa nước, Tèo Soi trên boong | Tập 1: C04 | Xóa chữ trên mạn tàu, thùng |
+| `tap01-C10-cabin-xe-lanh.png` | Trong cabin xe lạnh, đồng hồ −18 °C, cầu dây văng phía trước, Tèo Soi và Bạn nón lá | Tập 1: C10 (nửa sau, xe lạnh), C11 | Xóa chữ trên màn hình; tài xế chỉ hiện dáng |
+| `tap01-C11-xe-lanh-tren-cau-ra-cang.png` | Xe container lạnh chạy trên cầu dây văng lúc hoàng hôn | Tập 1: C11, C08 (ảnh minh họa đường bộ) | Xóa biển chỉ đường, chữ trên xe |
+| `tap01-bia-va-C17-ben-song-tau-va-xe.png` | Bến sông: sà lan và xe lạnh đứng cạnh nhau, cần cẩu xếp container | Tập 1: ảnh bìa (sông hay đường?), bối cảnh C17 | Xóa biển «River Port Loading», chữ trên tàu, xe |
+| `tap01-xe-lanh-toi-cong-cang-cai-mep.png` | Xe lạnh qua cổng cảng Cái Mép, nhân viên cảng vẫy tay | Tập 1: hậu đoạn; tập 2: mở đầu nếu khán giả chọn «đường» | Xóa chữ trên cổng, xe |
+| `tap01-ket-cang-cai-mep-xep-hang.png` | Cần cẩu cảng xếp container lên tàu mẹ | Tập 1: hậu đoạn; tập 2–3 | Xóa chữ trên tàu, thùng |
+| `tap02-nha-may-cap-dong.png` | Nhà máy cấp đông: băng chuyền, đường hầm −18 °C, An Nhiên kiểm trái | Tập 2 «Tươi hay cấp đông?» | Xóa chữ trên máy, biển |
+| `tap06-tau-me-roi-cang-cai-mep.png` | Tàu mẹ rời cảng, tàu lai dắt, công nhân vẫy tay | Tập 6 | Xóa chữ trên tàu, biển cảng |
+| `tap06-tau-ra-bien-binh-minh.png` | Mũi tàu ra biển lúc bình minh, Tèo Soi và An Nhiên | Tập 6; hậu đoạn tập 5 | Xóa chữ trên container |
+| `tap06-cap-cang-nuoc-ngoai.png` | Tàu cập cảng nước ngoài, nhóm đón hàng | Tập 6 | Xóa băng rôn; Kim Long → Minh Khang; người lạ → dáng xa |
+| `tap06-cang-va-quay-hang-nuoc-ngoai.png` | Cảng và quầy hàng đông lạnh ở siêu thị nước ngoài | Tập 6 | Xóa biển hiệu, chữ trên thùng |
+| `tap06-quan-ca-phe-nuoc-ngoai.png` | Quán cà phê nước ngoài, khách ăn món sầu riêng, Tèo Soi | Tập 6 | Xóa biển «Durian Express Cafe»; khách → dáng xa |
+| `tap06-gia-dinh-nuoc-ngoai-mo-hop.png` | Một gia đình nước ngoài mở hộp sầu riêng trong bếp | Tập 6: kết mùa | Xóa chữ trên hộp |
+| `tap06-tu-vuon-toi-ban-an.png` | Tranh ghép «từ vườn tới bàn ăn»: vườn, nhà máy, tàu, bàn ăn | Tập 6: tổng kết mùa | Xóa toàn bộ chữ, cờ; Kim Long → Minh Khang |
+| `tap06-le-ra-mat.png` | Lễ ra mắt: bục phát biểu, máy quay, Lina Park | Tập 6 | Xóa chữ, logo; Kim Long → Minh Khang |
+| `tap06-ky-hop-dong.png` | Lễ ký hợp đồng xuất khẩu, bắt tay người mua | Tập 6 | Xóa chữ, cờ, logo; Kim Long → Minh Khang |
+| `tap06-nem-thu-vip.png` | Tiệc nếm thử sầu riêng đông lạnh | Tập 6 | Xóa chữ; Kim Long → Minh Khang |
+| `poster-mua1-doc.png` | Áp phích dọc cả nhóm | Ảnh bìa mùa (sau khi sửa) | Xóa chữ, logo Dolby, chữ chạy giả; Kim Long ra rìa hoặc bỏ; tên phim em chèn |
+| `poster-mua1-ngang.png` | Áp phích ngang cả nhóm, quả địa cầu | Ảnh bìa kênh (sau khi sửa) | Như áp phích dọc |
+| `ve-moi-vip.png` | Vé mời vàng trong hộp nhung, Tèo Soi | Thẻ mời buổi công chiếu tập 1 | Xóa chữ, mã QR giả; chữ em chèn |

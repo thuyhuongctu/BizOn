@@ -81,6 +81,25 @@ assert.ok(/02-giong\/vi/.test(kh) && /03-canh-nv/.test(kh) && /05-ban-cuoi/.test
 assert.ok(/Hoàng Sa và Trường Sa/.test(kh) && /không dành cho trẻ em/.test(kh) && /làm trước Tết/.test(kh), 'danh sách kiểm và lịch Tết');
 assert.ok(plan.includes('docs/phim/ke-hoach-san-xuat.md'), 'plan.md trỏ tới kế hoạch sản xuất');
 
-// 6. sw.js
-assert.ok(+(/CACHE = 'bizon-v(\d+)'/.exec(read('sw.js')) || [])[1] >= 958, 'sw.js ≥ v958');
+// 6. Khung hình Stitch (23/11/2026): thương hiệu «Sầu Riêng Phù Sa» thay «Durian Express» (trùng dịch vụ của DHL Express Malaysia),
+// Minh Khang đại diện hợp tác xã ở lễ ra mắt và ký hợp đồng, Kim Long chỉ là đối thủ; mọi khung dùng trong phân cảnh có trong danh sách.
+const thuongHieu = khung.split('## 3.')[0];
+assert.match(thuongHieu, /«Sầu Riêng Phù Sa»/, 'khung ghi thương hiệu «Sầu Riêng Phù Sa» của hợp tác xã');
+assert.match(khung, /thay cho tên «Durian Express»[^\n]*DHL Express Malaysia/, 'ghi lý do bỏ tên «Durian Express»');
+for (const dong of khung.split('\n').filter(l => /durian express/i.test(l))) assert.ok(/thay cho tên|xóa|in chữ/i.test(dong), '«Durian Express» chỉ được nhắc để bỏ hoặc xóa: ' + dong.slice(0, 50));
+assert.ok(/\*\*Minh Khang\*\*[^\n]*lễ ra mắt và lễ ký hợp đồng/.test(nhanVat) && /\*\*Kim Long\*\*[^\n]*đối thủ\. Không bao giờ đứng ở vị trí của hợp tác xã/.test(nhanVat), 'Minh Khang dẫn lễ ra mắt, Kim Long là đối thủ');
+const stitch = khung.split('## 11. Khung hình tham chiếu (Stitch)')[1] || '';
+const khungStitch = [...stitch.matchAll(/^\| `([A-Za-z0-9-]+\.png)` \|/gm)].map(m => m[1]);
+assert.equal(khungStitch.length, 21, 'khung kê đủ 21 khung hình Stitch');
+assert.equal(new Set(khungStitch).size, 21, 'tên khung không trùng');
+assert.match(stitch, /no text, no letters, no logos, no signage, no brand names, no flags, no maps/, 'có đuôi lời nhắc cấm chữ khi dựng lại');
+for (const dong of stitch.split('\n').filter(l => l.startsWith('| `') && /Kim Long/.test(l))) assert.match(dong, /Kim Long (→ Minh Khang|ra rìa)/, 'khung có Kim Long phải ghi việc thay: ' + dong.slice(0, 40));
+const pcStitch = pc.split('## Khung hình Stitch cho tập 1')[1].split('\n## ')[0];
+const dungTap1 = [...pcStitch.matchAll(/`([A-Za-z0-9-]+\.png)`/g)].map(m => m[1]);
+assert.ok(dungTap1.length >= 7, 'phân cảnh tập 1 chỉ rõ khung Stitch cho các cảnh');
+for (const f of dungTap1) assert.ok(khungStitch.includes(f) && f.startsWith('tap01-'), 'khung ' + f + ' có trong danh sách và thuộc tập 1');
+assert.ok(/\bC04\b/.test(pcStitch) && /\bC11\b/.test(pcStitch) && /\bC17\b/.test(pcStitch), 'khung Stitch gắn với C04, C11, C17');
+
+// 7. sw.js
+assert.ok(+(/CACHE = 'bizon-v(\d+)'/.exec(read('sw.js')) || [])[1] >= 975, 'sw.js ≥ v975');
 console.log('phim-dua-trai-ra-bien-kich-ban: đạt (' + K.length + ' câu, ' + C.size + ' cảnh, ' + N.size + ' nguồn)');
