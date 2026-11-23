@@ -101,5 +101,5 @@ for (const f of dungTap1) assert.ok(khungStitch.includes(f) && f.startsWith('tap
 assert.ok(/\bC04\b/.test(pcStitch) && /\bC11\b/.test(pcStitch) && /\bC17\b/.test(pcStitch), 'khung Stitch gắn với C04, C11, C17');
 
 // 7. sw.js
-assert.ok(+(/CACHE = 'bizon-v(\d+)'/.exec(read('sw.js')) || [])[1] >= 975, 'sw.js ≥ v975');
+assert.ok(+(/CACHE = 'bizon-v(\d+)'/.exec(read('sw.js')) || [])[1] >= 978, 'sw.js ≥ v978');
 console.log('phim-dua-trai-ra-bien-kich-ban: đạt (' + K.length + ' câu, ' + C.size + ' cảnh, ' + N.size + ' nguồn)');
