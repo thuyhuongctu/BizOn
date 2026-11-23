@@ -30,6 +30,13 @@ const CARDS = [
         'Ships wait for a berth; containers left in the yard beyond the free time incur demurrage and detention, which carrier tariffs typically set at about USD 75–300 per container per day. Deliveries run late and customers lose trust. In Bật Nghiệp, your cargo gets stuck at the port in round 5 and the team picks one of three ways out: pay a priority fee to deliver in full, wait or switch ports (unit cost +25%, 85% of orders delivered), or ask the customer for a later delivery date.'],
     q: ['Câu hỏi cho CEO: nếu vụ 5 cảng tắc, đội chấp nhận tốn thêm chi phí, giao thiếu hàng hay mất một chút uy tín?', 'Question for the CEO: if the port jams in round 5, would the team rather pay more, deliver less or lose a little trust?'] },
 ];
+// 23/11/2026 (chị chọn A): ảnh sa bàn «Cảng Cái Mép – Thị Vải» chị tạo (dùng chung với Hộ Chiếu Sầu Riêng) đặt thành
+// tấm sa bàn lớn trong khu cảng và làm ảnh đầu mọi thẻ kiến thức. Khối đất sét giữ nguyên để chạm từng phần.
+const SA_BAN = 'assets/hc/sa-ban/cang-cai-mep-thi-vai.webp';
+const SA_BAN_CARD = { icon: '🗺️', t: ['Sa bàn Cảng Cái Mép – Thị Vải', 'Cái Mép – Thị Vải port diorama'],
+  b: ['Sa bàn thu nhỏ một cụm cảng nước sâu: tàu mẹ cập cầu cảng, cần cẩu giàn bốc container từ tàu lên bờ, bãi container xếp tầng, xe đầu kéo chở hàng ra vào qua cổng hải quan. Hàng xuất khẩu đi theo đúng thứ tự ấy, chỉ ngược chiều: từ cổng vào bãi, lên tàu, rồi ra biển.',
+      'A miniature deep-water port: a mother vessel at the berth, gantry cranes lifting containers between ship and quay, stacked container yards, and trucks moving cargo in and out through the customs gate. Export cargo follows the same steps in reverse: through the gate, into the yard, onto the ship and out to sea.'],
+  q: ['Chạm từng phần của khu cảng đất sét (cần cẩu, tàu, bãi, hải quan, biển «Cảng tắc?») để đọc thẻ kiến thức.', 'Tap each part of the clay port (crane, ship, yard, customs, the «Port jam?» sign) to read its knowledge card.'] };
 const SRC = ['Nguồn: SGGP (2023), Cảng vụ Hàng hải Vũng Tàu (2024), Vietnamnet; biểu phí lưu container của hãng tàu (2025); Incoterms 2020.', 'Sources: SGGP (2023), Vũng Tàu Maritime Administration (2024), Vietnamnet; carrier demurrage & detention tariffs (2025); Incoterms 2020.'];
 
 export function buildPort(ctx) {
@@ -81,7 +88,19 @@ export function buildPort(ctx) {
   const jam = G('cm_jam', port, -0.3, 0, -5.3, 0.3);
   Cy(jam, 'cm_jam_post', 0.04, 0.04, 1.1, mat(0x6e4428, 0.9), 0, 0, 0, 6);
   panel(jam, 'cm_jam_face', 1.1, 0.55, TX.sign('⏳ CẢNG TẮC?', '#e2b04a', '#2c3552', 'PORT JAM?'), 0, 1.2, 0.05);
-  port.traverse(o => { if (o.isMesh) { o.castShadow = true; o.receiveShadow = true; } });
+  // Bàn sa bàn: khung gỗ đất sét, mặt là ảnh sa bàn, nghiêng như bàn sa bàn thật, đặt giữa bến (giữa cần cẩu và bãi
+  // container) để màn hình hẹp của điện thoại cũng thấy khi bấm nút «🚢 Cảng Cái Mép»; quay về phía máy quay của nút ấy
+  const saban = G('cm_saban', port, 0.1, 0, -0.1, Math.atan2(0.5, 0.8)); saban.scale.setScalar(1.1);
+  const wood = mat(0x8a5a36, 0.9);
+  for (const x of [-1.1, 1.1]) for (const z of [-0.35, 0.25]) Cy(saban, 'cm_saban_leg', 0.05, 0.06, z < 0 ? 1.05 : 0.6, wood, x, 0, z, 6);
+  const board = G('cm_saban_board', saban, 0, 0.82, -0.05); board.rotation.x = -0.72;
+  B(board, 'cm_saban_frame', 2.62, 1.52, 0.08, wood, 0, -0.76, -0.05, 0.03);
+  const tex = new THREE.TextureLoader().load(SA_BAN, t => { t.needsUpdate = true; });
+  if ('colorSpace' in tex && THREE.SRGBColorSpace) tex.colorSpace = THREE.SRGBColorSpace;
+  const face = new THREE.Mesh(new THREE.PlaneGeometry(2.46, 1.37), new THREE.MeshBasicMaterial({ map: tex, toneMapped: false }));
+  face.name = 'cm_saban_face'; face.position.set(0, 0, 0.001); board.add(face);
+  saban.userData.cmKey = 'saban';
+  port.traverse(o => { if (o.isMesh && o !== face) { o.castShadow = true; o.receiveShadow = true; } });
 
   // Vùng chạm vô hình (đủ lớn trên điện thoại), mỗi vùng gắn một thẻ
   const hitMat = new THREE.MeshBasicMaterial({ visible: false });
@@ -97,6 +116,7 @@ export function buildPort(ctx) {
     st.textContent = '#cmCard{box-sizing:border-box;position:fixed;z-index:7;left:12px;bottom:64px;width:min(360px,calc(100vw - 24px));max-height:min(62vh,520px);overflow:auto;background:#fbf6ee;color:#2c3552;border:3px solid #e6d6bf;border-radius:18px;padding:12px 14px 12px;box-shadow:0 5px 0 #d9c5a8;font:14px/1.5 system-ui,sans-serif}'
       + '#cmCard[hidden]{display:none}#cmCard h4{margin:0 48px 6px 0;font-size:16px;color:#1f6f8a}#cmCard p{margin:0 0 8px}#cmCard .cm-q{background:#eef6f6;border-radius:12px;padding:6px 9px}#cmCard small{display:block;color:#6b5b47;font-size:12px}'
       + '#cmCard .cm-go{display:block;width:100%;min-height:44px;margin:4px 0 8px;border:0;border-radius:14px;background:#1f6f8a;color:#fff;font:inherit;font-weight:800;cursor:pointer}'
+      + '#cmCard .cm-img{display:block;width:calc(100% + 28px);margin:-12px -14px 10px;height:118px;object-fit:cover;border-radius:15px 15px 0 0;background:#e6d6bf}'
       + '#cmCard .cm-x{position:absolute;top:6px;right:6px;width:44px;height:44px;border:0;border-radius:50%;background:#efe3cf;color:#2c3552;font-size:18px;cursor:pointer}'
       + 'body.room #cmCard,body.arena #cmCard,body.login3d #cmCard,body.evt #cmCard{display:none!important}';
     document.head.appendChild(st);
@@ -110,10 +130,10 @@ export function buildPort(ctx) {
   const portApi = () => { try { const f = document.getElementById('gf'), w = f && f.contentWindow; return (w && w.BizonPort) || null; } catch (e) { return null; } };
   const portOpen = () => { const P = portApi(); try { return !!(P && P.now && P.now()); } catch (e) { return false; } };
   function open(key) {
-    const c = CARDS.find(x => x.key === key); if (!c) return false;
+    const c = key === 'saban' ? SA_BAN_CARD : CARDS.find(x => x.key === key); if (!c) return false;
     card.dataset.k = key;
     const go = key === 'customs' && portOpen();
-    card.innerHTML = `<button type="button" class="cm-x" aria-label="${esc(T('Đóng', 'Close'))}">✕</button><h4>${c.icon} ${esc(L(c.t))}</h4><p>${esc(L(c.b))}</p>`
+    card.innerHTML = `<img class="cm-img" src="${SA_BAN}" alt="${esc(L(SA_BAN_CARD.t))}" width="1376" height="768"><button type="button" class="cm-x" aria-label="${esc(T('Đóng', 'Close'))}">✕</button><h4>${c.icon} ${esc(L(c.t))}</h4><p>${esc(L(c.b))}</p>`
       + (go ? `<button type="button" class="cm-go">${esc(T('🚢 Ra quyết định: xử lý hàng kẹt ở Cái Mép', '🚢 Make the decision: cargo stuck at Cái Mép'))}</button>` : '')
       + `<p class="cm-q">${esc(L(c.q))}</p><small>${esc(L(SRC))}</small>`;
     card.querySelector('.cm-x').onclick = close;
@@ -138,7 +158,7 @@ export function buildPort(ctx) {
   const lb = document.getElementById('langBtn'); if (lb) lb.addEventListener('click', () => setTimeout(relang, 0));
   addEventListener('bizon:langchange', () => setTimeout(relang, 0));
 
-  const api = { port, hits, camera, keys: CARDS.map(c => c.key), open, close, relang };
+  const api = { port, hits, camera, keys: CARDS.map(c => c.key), open, close, relang, saban, sabanFace: face };
   window.__caiMep = api; // hỗ trợ kiểm thử, không ảnh hưởng game
   return { port, decor, api };
 }
