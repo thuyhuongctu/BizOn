@@ -125,6 +125,19 @@
     </ul>
   </section>
 
+  <section class="bc-sec" id="quy-mo" hidden>
+    <h2 class="bc-h2"><span class="num" style="background:var(--clay-c3)">2c</span><span data-en="Scale of use (live totals)">Quy mô sử dụng (số tổng cập nhật trực tiếp)</span></h2>
+    <p style="margin:10px 0 0;font-size:15px;color:var(--clay-sub)" data-en="Totals read directly from the classroom database each time this page opens. Only counts are returned: no class codes, team names or emails. Sample and test classes are excluded.">Số tổng đọc thẳng từ cơ sở dữ liệu lớp học mỗi lần mở trang. Chỉ trả về số đếm: không có mã lớp, tên đội hay email. Đã bỏ các lớp mẫu và lớp thử.</p>
+    <div class="bc-stats">
+      <div class="bc-stat" style="background:var(--clay-c1)"><div style="font-family:var(--clay-head);font-size:46px;font-weight:800;line-height:1.14;color:var(--clay-ink)" data-qm="lop">–</div><div style="margin-top:8px;font-size:13px;font-weight:700;line-height:1.45;color:var(--clay-ink-2)" data-en="classes">lớp đã dùng</div></div>
+      <div class="bc-stat" style="background:var(--clay-c2)"><div style="font-family:var(--clay-head);font-size:46px;font-weight:800;line-height:1.14;color:var(--clay-ink)" data-qm="doi_bat_nghiep">–</div><div style="margin-top:8px;font-size:13px;font-weight:700;line-height:1.45;color:var(--clay-ink-2)" data-en="Bật Nghiệp teams">đội chơi Bật Nghiệp</div></div>
+      <div class="bc-stat" style="background:var(--clay-c4)"><div style="font-family:var(--clay-head);font-size:46px;font-weight:800;line-height:1.14;color:var(--clay-ink)" data-qm="van_bat_nghiep_xong">–</div><div style="margin-top:8px;font-size:13px;font-weight:700;line-height:1.45;color:var(--clay-ink-2)" data-en="teams that finished all 6 rounds">đội chơi đủ 6 vòng</div></div>
+      <div class="bc-stat" style="background:var(--clay-c3)"><div style="font-family:var(--clay-head);font-size:46px;font-weight:800;line-height:1.14;color:var(--clay-ink)" data-qm="luot_ben_phu_sa">–</div><div style="margin-top:8px;font-size:13px;font-weight:700;line-height:1.45;color:var(--clay-ink-2)" data-en="Bến Phù Sa games submitted">ván Bến Phù Sa đã nộp</div></div>
+      <div class="bc-stat" style="background:var(--clay-c1)"><div style="font-family:var(--clay-head);font-size:46px;font-weight:800;line-height:1.14;color:var(--clay-ink)" data-qm="luot_ho_chieu">–</div><div style="margin-top:8px;font-size:13px;font-weight:700;line-height:1.45;color:var(--clay-ink-2)" data-en="Brand Passport games submitted">ván Hộ Chiếu Thương Hiệu đã nộp</div></div>
+    </div>
+    <p style="margin:18px 0 0;font-size:13px;line-height:1.6;color:var(--clay-sub)"><span data-en="Counting from">Tính từ ngày</span> <span data-qm="tu_ngay">–</span>. <span data-en="These are usage counts, not learning outcomes; outcomes are reported in sections 2 and 2b.">Đây là số liệu sử dụng, không phải kết quả học tập; kết quả học tập ở mục 2 và 2b.</span></p>
+  </section>
+
   <section class="bc-sec">
     <h2 class="bc-h2"><span class="num" style="background:var(--clay-c3)">3</span><span data-en="Limitations of the current evidence">Giới hạn của bằng chứng hiện có</span></h2>
     <div style="display:flex;flex-direction:column;gap:12px">
@@ -212,9 +225,12 @@
   </section>
 </main>
 
+<script src="js/backend-config.js" defer></script>
+<script src="js/quy-mo-su-dung.js" defer></script>
 <script src="js/site-vnmap.js" defer></script>
 <script src="js/bizon-clay-i18n.js" defer></script>
 <script src="js/bizon-clay-nav.js" defer></script>
 <script src="js/bizon-clay-footer.js" defer></script>
+<script src="js/thong-ke.js" defer></script>
 </body>
 </html>

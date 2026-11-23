@@ -27,7 +27,7 @@
   - mục «Điều khoản công cụ video» để chị ghi kết quả kiểm.
 - [X] T003 [US1] Tra nguồn số liệu tuyến Cần Thơ → Cái Mép theo danh sách «Cần tra» trong `plan.md`. Ghi trang cho các số của Báo cáo Logistics Việt Nam 2024 (tệp Drive chị chia sẻ). Viết `docs/phim/nguon-so-lieu.md`. Chọn yếu tố «cú lật» có nguồn chính thống.
 - [X] T004 [US1] `docs/phim/tap-01-kich-ban.md`: kịch bản VI/EN theo nhịp mẫu trong `plan.md` (khoảng 4:45). Bảng gồm: số câu, mốc thời gian, người nói, lời VI, lời EN, cảnh, chữ chèn trên hình.
-- [ ] T005 [US1] Gửi chị bản kịch bản. **(chị) Duyệt kịch bản** (dự kiến 26/11).
+- [X] T005 [US1] Gửi chị bản kịch bản. **(chị) Duyệt kịch bản** (dự kiến 26/11). Chị đã duyệt ngày 23/11/2026.
 - [X] T006 [US1] `docs/phim/tap-01-phan-canh.md`: 14–18 cảnh. Mỗi cảnh có: loại (nhân vật / số liệu), thời lượng, khung hình, chuyển động máy quay, nhân vật, ảnh tham chiếu, mô tả cảnh tiếng Anh cho công cụ video. Mô tả luôn có «claymation, 16:9, no text, no signs, no logos».
 - [X] T007 [P] [US1] `docs/phim/tap-01-loi-thu-giong.md`: lời Lumina từng câu VI và EN, đánh dấu ngắt nhịp (`/`) và nhấn, chú cách đọc tên riêng trong bản EN. Kèm hướng dẫn thu: phòng yên, cách mic 15–20 cm, WAV 48 kHz, mỗi câu một tệp `01.wav`… và thu thêm một lượt dự phòng.
 - [ ] T008 [US1] `sw.js`: nâng `CACHE`. Chạy test mới và `dac-ta`. Mở PR nháp; gộp khi chị nói «Gộp».
@@ -80,7 +80,7 @@
 
 - [ ] T023 [US3] Viết `test/chon-tuyen.test.js`, chạy và thấy hỏng. Test kiểm:
   - **mô hình tính (Node `vm`):** hai tuyến × ba tình huống × ba mục tiêu cho kết quả xác định; mỗi tuyến tốt nhất ở ít nhất một tổ hợp (SC-004); mỗi tham số có nguồn;
-  - **giao diện (Playwright, 360/390/1280, VI/EN):** chọn, xem kết quả, đổi mục tiêu thì lời nhận xét đổi; vùng chạm ≥ 44 px; không gửi mạng; chạy ngoại tuyến.
+  - **giao diện (Playwright, 360/390/1280, VI/EN):** chọn, xem kết quả, đổi mục tiêu thì lời nhận xét đổi; vùng chạm ≥ 44 px; không gửi lựa chọn của người chơi lên mạng (chỉ có lượt đếm GoatCounter chung của trang); chạy ngoại tuyến.
 - [ ] T024 [US3] `js/chon-tuyen.js`:
   - tham số ở đầu tệp (chi phí, thời gian, hao hụt, khả năng kịp tàu theo tình huống), lấy từ `docs/phim/nguon-so-lieu.md`;
   - giao diện chọn tuyến, tình huống, mục tiêu;

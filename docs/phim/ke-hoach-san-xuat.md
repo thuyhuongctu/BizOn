@@ -75,7 +75,7 @@ Tập 1 làm theo lịch rút gọn vì bắt đầu ngày 23/11/2026. Từ tậ
 | Ngày | Việc | Ai |
 |---|---|---|
 | 23/11 | Khung loạt phim, nguồn số liệu, kịch bản, phân cảnh, lời thu giọng (PR #1193) | Em – **xong** |
-| trước 26/11 | **Cổng 1: duyệt kịch bản** | Chị |
+| 23/11 | **Cổng 1: duyệt kịch bản** | Chị – **xong** |
 | 27–28/11 | Chỉnh theo góp ý; gộp PR 1 khi chị nói «Gộp» | Em |
 | 29/11–02/12 | Thu giọng VI + EN; dựng 13 cảnh nhân vật | Chị |
 | 29/11–03/12 | Trang cảnh số liệu, script dựng (PR 2); trang loạt phim (PR 3) | Em |
@@ -212,7 +212,7 @@ Em đánh dấu sau mỗi bước; chị xem nhanh ở đây.
 
 | Tập | Kịch bản | Cổng 1 | Giọng | Cảnh NV | Bản nháp | Cổng 2 | Bản cuối | Cổng 3 | Teaser | Phát hành | Bình chọn |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| 1 | ✅ 23/11 | ⏳ | – | – | – | – | – | – | – | 13/12 | – |
+| 1 | ✅ 23/11 | ✅ 23/11 | – | – | – | – | – | – | – | 13/12 | – |
 | 2 | – | – | – | – | – | – | – | – | – | 27/12 | – |
 | 3 | – | – | – | – | – | – | – | – | – | 10/01 | – |
 | 4 | – | – | – | – | – | – | – | – | – | 24/01 | – |

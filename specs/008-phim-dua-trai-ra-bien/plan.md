@@ -36,7 +36,10 @@ Phần mã trong kho chia thành 6 PR sau PR đặc tả này. Không có migrat
   - faster-whisper (đã cài) nghe soát dấu tên riêng;
   - Playwright cho trang loạt phim và màn chơi;
   - Node `vm` cho mô hình tính của màn chơi.
-- **Đo lường:** bizonland.com không có công cụ đo người xem (cam kết không cookie bên thứ ba). Số người xem lấy ở YouTube Studio và Meta, gồm tỷ lệ giữ chân, lượt bấm thẻ và màn hình kết thúc, phiếu bình chọn. Lượt chơi trên web không đếm.
+- **Đo lường:**
+  - Số người xem phim lấy ở YouTube Studio và Meta: tỷ lệ giữ chân, lượt bấm thẻ và màn hình kết thúc, phiếu bình chọn.
+  - bizonland.com đếm lượt xem trang ẩn danh bằng GoatCounter (#1194: không cookie, không lưu IP). Nhờ đó đếm được lượt xem trang loạt phim và trang dẫn tới (YouTube, Facebook), dùng cho SC-003.
+  - Màn chơi không gửi lựa chọn của người chơi đi đâu.
 
 ## Kiểm theo hiến chương
 
