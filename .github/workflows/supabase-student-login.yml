@@ -17,6 +17,7 @@ on:
       - 'test/sql/chu_ky_luu_kin_smoke.sql'
       - 'test/sql/gioi_han_lop_dong_smoke.sql'
       - 'test/sql/khach_dang_ky_email_smoke.sql'
+      - 'test/sql/ben_phu_sa_nop_khong_dang_nhap_smoke.sql'
       - 'test/sql/quy_mo_su_dung_smoke.sql'
       - '.github/workflows/supabase-student-login.yml'
   pull_request:
@@ -34,6 +35,7 @@ on:
       - 'test/sql/chu_ky_luu_kin_smoke.sql'
       - 'test/sql/gioi_han_lop_dong_smoke.sql'
       - 'test/sql/khach_dang_ky_email_smoke.sql'
+      - 'test/sql/ben_phu_sa_nop_khong_dang_nhap_smoke.sql'
       - 'test/sql/quy_mo_su_dung_smoke.sql'
       - '.github/workflows/supabase-student-login.yml'
 
@@ -87,6 +89,8 @@ jobs:
         run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -q -f test/sql/gioi_han_lop_dong_smoke.sql
       - name: Kiểm email khách (chỉ ghi qua hàm, phải đồng ý, không đọc thẳng được bảng)
         run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -q -f test/sql/khach_dang_ky_email_smoke.sql
+      - name: Kiểm Bến Phù Sa nộp không đăng nhập (không lưu email, không lên bảng xếp hạng công khai, giới hạn lượt)
+        run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -q -f test/sql/ben_phu_sa_nop_khong_dang_nhap_smoke.sql
       - name: Kiểm quy mô sử dụng (chỉ trả số tổng, bỏ lớp DEMO/TEST, khách gọi được nhưng không đọc thẳng bảng)
         run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -q -f test/sql/quy_mo_su_dung_smoke.sql
       # Chạy lại migration hành trình định nghĩa lại bizon_class_feed (mất explain_hidden, mất feedback) và bizon_purge_expired
