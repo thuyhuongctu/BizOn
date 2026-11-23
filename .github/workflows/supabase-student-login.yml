@@ -17,6 +17,7 @@ on:
       - 'test/sql/chu_ky_luu_kin_smoke.sql'
       - 'test/sql/gioi_han_lop_dong_smoke.sql'
       - 'test/sql/khach_dang_ky_email_smoke.sql'
+      - 'test/sql/quy_mo_su_dung_smoke.sql'
       - '.github/workflows/supabase-student-login.yml'
   pull_request:
     paths:
@@ -33,6 +34,7 @@ on:
       - 'test/sql/chu_ky_luu_kin_smoke.sql'
       - 'test/sql/gioi_han_lop_dong_smoke.sql'
       - 'test/sql/khach_dang_ky_email_smoke.sql'
+      - 'test/sql/quy_mo_su_dung_smoke.sql'
       - '.github/workflows/supabase-student-login.yml'
 
 # Chỉ cần đọc mã nguồn; không ghi gì lên kho (rà soát 03/11/2026)
@@ -85,6 +87,8 @@ jobs:
         run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -q -f test/sql/gioi_han_lop_dong_smoke.sql
       - name: Kiểm email khách (chỉ ghi qua hàm, phải đồng ý, không đọc thẳng được bảng)
         run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -q -f test/sql/khach_dang_ky_email_smoke.sql
+      - name: Kiểm quy mô sử dụng (chỉ trả số tổng, bỏ lớp DEMO/TEST, khách gọi được nhưng không đọc thẳng bảng)
+        run: psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -q -f test/sql/quy_mo_su_dung_smoke.sql
       # Chạy lại migration hành trình định nghĩa lại bizon_class_feed (mất explain_hidden, mất feedback) và bizon_purge_expired
       # (mất case_tasks), nên phải chạy lại các migration sau nó theo thứ tự thời gian rồi kiểm lại tất cả.
       - name: Áp lại ba migration theo thứ tự (phải an toàn khi chạy lại) rồi kiểm lại
