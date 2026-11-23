@@ -131,7 +131,7 @@ main[tabindex="-1"]:focus{outline:none}
 #clay-footer .cf-gp:hover{color:var(--clay-foot-link)}
 #clay-footer .cf-bottom{margin-top:28px;padding-top:18px;border-top:1px solid rgba(207,231,231,.16);display:flex;flex-direction:column;gap:8px}
 #clay-footer .cf-legal{display:flex;flex-wrap:wrap;gap:0 18px;font-size:12.5px}
-#clay-footer .cf-legal a{display:inline-flex;align-items:center;min-height:44px;color:var(--clay-foot-link)}
+#clay-footer .cf-legal a{display:inline-flex;align-items:center;min-height:44px;color:var(--clay-foot-link);text-decoration:underline;text-underline-offset:3px}
 #clay-footer .cf-dis{font-size:12px;color:#7FA9AA}
 @media (max-width:820px){
   #clay-footer .cf-top{grid-template-columns:1fr;gap:24px}
@@ -147,5 +147,3 @@ main[tabindex="-1"]:focus{outline:none}
 @media (max-width:360px){#clay-nav .cn-dl::after,#clay-nav .cn-theme::after{inset:-4px}}
 #clay-footer .cf-logo,#clay-footer .cf-gp{min-height:44px;box-sizing:border-box}
 #clay-footer .cf-gp{display:inline-flex;align-items:center}
-/* 23/11/2026 (WCAG 1.4.1): liên kết thư điện tử ở chân trang có gạch chân, không chỉ khác màu */
-#clay-footer .cf-legal a{text-decoration:underline;text-underline-offset:3px}
