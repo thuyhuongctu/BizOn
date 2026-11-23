@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<!-- BizOn Bật Nghiệp 2026 – © Đỗ Thùy Hương & PGS.TS. Phan Anh Tú -->
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<!-- SEO/PWA: canonical, Open Graph, cài thành ứng dụng -->
+<link rel="canonical" href="https://bizonland.com/tiep-can.html">
+<link rel="alternate" hreflang="vi" href="https://bizonland.com/tiep-can.html?lang=vi">
+<link rel="alternate" hreflang="en" href="https://bizonland.com/tiep-can.html?lang=en">
+<link rel="alternate" hreflang="x-default" href="https://bizonland.com/tiep-can.html">
+<meta property="og:url" content="https://bizonland.com/tiep-can.html">
+<meta property="og:image" content="https://bizonland.com/assets/og/og-cover.jpg">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:locale" content="vi_VN"><meta property="og:locale:alternate" content="en_US">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#006687">
+<link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+<script src="js/bizon-lang.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title data-en="Accessibility statement · BizOn">Tuyên bố tiếp cận · BizOn</title>
+<meta name="description" data-en-content="BizOn accessibility statement: target WCAG 2.2 AA, how the public pages were tested (axe-core, two screen widths), results, known limitations and how to report a barrier." content="Tuyên bố tiếp cận của BizOn: mục tiêu WCAG 2.2 AA, cách kiểm các trang công khai (axe-core, hai khổ màn hình), kết quả, hạn chế còn lại và cách báo khi gặp rào cản.">
+<meta name="copyright" content="© 2026 Đỗ Thùy Hương & PGS.TS. Phan Anh Tú">
+<link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<script src="js/bizon-boot.js"></script>
+<link rel="stylesheet" href="css/bizon-clay-fonts.css">
+<link rel="stylesheet" href="css/bizon-clay.css">
+<style>
+  .tc-sec{padding:18px 0;border-top:2px dashed #F0E2C8;scroll-margin-top:96px}
+  .tc-sec h2{margin:0 0 10px;font-size:clamp(20px,2.6vw,26px)}
+  .tc-sec ul{margin:8px 0 0;padding-left:20px;line-height:1.65}
+  .tc-sec li{margin:6px 0}
+  .tc-wrap{overflow-x:auto;border-radius:18px;background:var(--clay-card);margin:12px 0}
+  .tc-wrap:focus-visible{outline:3px solid var(--clay-teal);outline-offset:2px}
+  .tc-sec table{width:100%;min-width:520px;border-collapse:collapse;font-size:14px}
+  .tc-sec th,.tc-sec td{padding:10px 12px;text-align:left;border-bottom:1px solid #F0E2C8}
+  .tc-sec thead th{background:var(--clay-tray)}
+</style>
+<meta property="og:title" content="Tuyên bố tiếp cận · BizOn">
+<meta property="og:description" content="Mục tiêu WCAG 2.2 AA, phương pháp kiểm, kết quả và hạn chế còn lại.">
+<meta name="twitter:card" content="summary_large_image">
+<script src="js/capture-guard.js"></script>
+</head>
+<body class="clay">
+
+<main class="clay-main">
+  <section class="clay-hero">
+    <div class="sun" aria-hidden="true"></div>
+    <div class="grid">
+      <div class="htext">
+        <span class="clay-eyebrow" data-en="Updated 23 November 2026">Cập nhật 23/11/2026</span>
+        <h1 data-en="Accessibility statement">Tuyên bố tiếp cận</h1>
+        <p class="lead" data-en="BizOn aims for the public pages to meet WCAG 2.2 level AA so that learners with low vision, colour-vision differences, keyboard-only use or motion sensitivity can study with the platform. This page states what has been tested, the results, and what is not yet met.">BizOn đặt mục tiêu các trang công khai đạt WCAG 2.2 mức AA, để người học nhìn kém, khó phân biệt màu, chỉ dùng bàn phím hay nhạy cảm với chuyển động vẫn học được. Trang này nói rõ đã kiểm những gì, kết quả ra sao và còn chỗ nào chưa đạt.</p>
+      </div>
+      <div class="art tall"><img src="assets/character/lumina-ao-dai-thumbsup.webp" alt="" loading="lazy" style="object-position:50% 100%"></div>
+    </div>
+    <div class="wave" aria-hidden="true"></div>
+  </section>
+
+  <section class="tc-sec" id="pham-vi">
+    <h2 data-en="1. Standard and scope">1. Chuẩn và phạm vi</h2>
+    <p data-en="Standard: Web Content Accessibility Guidelines (WCAG) 2.2, level AA. Scope: the public pages and the game screens that run in a normal web page. The 3D game scenes draw on a canvas and are covered only in part (see section 4).">Chuẩn: Hướng dẫn tiếp cận nội dung web (WCAG) 2.2, mức AA. Phạm vi: các trang công khai và màn hình trò chơi chạy trong trang web thường. Cảnh 3D của trò chơi vẽ trên khung canvas nên chỉ được bao phủ một phần (xem mục 4).</p>
+  </section>
+
+  <section class="tc-sec" id="phuong-phap">
+    <h2 data-en="2. How it was tested">2. Cách kiểm</h2>
+    <ul>
+      <li data-en="Automated check with axe-core 4.10.2 using the WCAG 2.0/2.1/2.2 A and AA rule sets, on 12 main pages, at two screen widths (1280 px computer and 390 px phone), Vietnamese interface, light mode.">Kiểm tự động bằng axe-core 4.10.2 với bộ quy tắc WCAG 2.0/2.1/2.2 mức A và AA, trên 12 trang chính, ở hai khổ màn hình (máy tính 1280 px và điện thoại 390 px), giao diện tiếng Việt, chế độ sáng.</li>
+      <li data-en="HTML validity: html-validate 8.24.1 reports 0 errors on the pages in the sitemap.">Mã HTML hợp lệ: html-validate 8.24.1 báo 0 lỗi trên các trang trong sơ đồ trang.</li>
+      <li data-en="Limitation of the method: automated tools find only part of all accessibility problems. A manual review with a screen reader and keyboard-only use has not yet been done; it is the next step.">Giới hạn của cách kiểm: công cụ tự động chỉ phát hiện được một phần các lỗi tiếp cận. Chưa kiểm thủ công bằng trình đọc màn hình và chỉ dùng bàn phím; đó là bước tiếp theo.</li>
+    </ul>
+  </section>
+
+  <section class="tc-sec" id="ket-qua">
+    <h2 data-en="3. Results (number of failing elements, 1280 px)">3. Kết quả (số phần tử không đạt, khổ 1280 px)</h2>
+    <section class="tc-wrap" tabindex="0" aria-label="Bảng kết quả kiểm tiếp cận" data-en-aria="Accessibility test results table">
+    <table>
+      <thead><tr><th scope="col" data-en="Page">Trang</th><th scope="col" data-en="Before">Trước</th><th scope="col" data-en="After">Sau</th><th scope="col" data-en="Note">Ghi chú</th></tr></thead>
+      <tbody>
+        <tr><th scope="row" data-en="Home">Trang chủ</th><td>10</td><td>0</td><td><span data-en="Fixed">Đã sửa</span></td></tr>
+        <tr><th scope="row" data-en="Games">Trò chơi</th><td>15</td><td>0</td><td><span data-en="Fixed">Đã sửa</span></td></tr>
+        <tr><th scope="row" data-en="Join a class">Vào lớp</th><td>2</td><td>0</td><td><span data-en="Fixed">Đã sửa</span></td></tr>
+        <tr><th scope="row" data-en="Lecturers">Giảng viên</th><td>2</td><td>0</td><td><span data-en="Fixed">Đã sửa</span></td></tr>
+        <tr><th scope="row" data-en="Evidence">Bằng chứng</th><td>11</td><td>0</td><td><span data-en="Fixed">Đã sửa</span></td></tr>
+        <tr><th scope="row" data-en="Policy">Chính sách</th><td>7</td><td>0</td><td><span data-en="Fixed">Đã sửa</span></td></tr>
+        <tr><th scope="row" data-en="Journey">Hành trình</th><td>2</td><td>0</td><td><span data-en="Fixed">Đã sửa</span></td></tr>
+        <tr><th scope="row" data-en="Classroom">Lớp học</th><td>8</td><td>0</td><td><span data-en="Fixed">Đã sửa</span></td></tr>
+        <tr><th scope="row" data-en="Bật Nghiệp 3D">Bật Nghiệp 3D</th><td>1</td><td>0</td><td><span data-en="Fixed">Đã sửa</span></td></tr>
+        <tr><th scope="row" data-en="Academic foundation">Trường học thuật</th><td>16</td><td>0</td><td><span data-en="Fixed">Đã sửa</span></td></tr>
+        <tr><th scope="row" data-en="Brand Passport">Hộ Chiếu Thương Hiệu</th><td>10</td><td>8</td><td><span data-en="Light orange text in the game interface">Chữ cam nhạt trong giao diện game</span></td></tr>
+        <tr><th scope="row" data-en="Bến Phù Sa 3D">Bến Phù Sa 3D</th><td>15</td><td>15</td><td><span data-en="Small, light text in the game interface">Chữ nhỏ, nhạt trong giao diện game</span></td></tr>
+      </tbody>
+    </table>
+    </section>
+    <p data-en="Before the fixes, all 12 pages had failures (99 elements at 1280 px, 107 at 390 px). After the fixes, 10 of 12 pages have none; 23 elements remain on 2 game pages, at both widths. This statement page itself passes the same check.">Trước khi sửa, cả 12 trang đều có lỗi (99 phần tử ở khổ 1280 px, 107 ở khổ 390 px). Sau khi sửa, 10/12 trang không còn lỗi; còn 23 phần tử ở 2 trang game, ở cả hai khổ. Chính trang tuyên bố này cũng đạt cùng phép kiểm.</p>
+    <h3 data-en="What was fixed">Những gì đã sửa</h3>
+    <ul>
+      <li data-en="Text contrast (1.4.3): the accent orange was darkened (#C2581B → #B04F17); badges and buttons with white text on light orange now use dark text or a darker background; light grey text was darkened.">Tương phản chữ (1.4.3): màu cam nhấn sẫm hơn (#C2581B → #B04F17); nhãn và nút chữ trắng trên cam nhạt chuyển sang chữ sẫm hoặc nền sẫm hơn; chữ xám nhạt sẫm hơn.</li>
+      <li data-en="Links inside text (1.4.1): links in paragraphs and in the footer are underlined, not told apart by colour alone.">Liên kết trong đoạn văn (1.4.1): liên kết trong đoạn và ở chân trang có gạch chân, không chỉ khác màu.</li>
+      <li data-en="Keyboard (2.1.1): tables that scroll sideways can be reached and scrolled with the keyboard.">Bàn phím (2.1.1): bảng cuộn ngang chọn được và cuộn được bằng bàn phím.</li>
+      <li data-en="High contrast mode: cards and buttons get a system border, because browsers remove shadows in this mode.">Chế độ tương phản cao: thẻ và nút có viền theo màu hệ thống, vì trình duyệt bỏ bóng đổ ở chế độ này.</li>
+      <li data-en="Reduced motion (2.3.3): with “reduce motion” on, animations stop and buttons no longer move when pressed.">Giảm chuyển động (2.3.3): khi bật «giảm chuyển động», hoạt ảnh dừng và nút không còn lún khi bấm.</li>
+    </ul>
+  </section>
+
+  <section class="tc-sec" id="han-che">
+    <h2 data-en="4. Known limitations">4. Hạn chế còn lại</h2>
+    <ul>
+      <li data-en="The interfaces of Bến Phù Sa 3D and Brand Passport still contain small, light-coloured text (23 elements). They will be fixed in a separate pass.">Giao diện Bến Phù Sa 3D và Hộ Chiếu Thương Hiệu còn chữ nhỏ, màu nhạt (23 phần tử). Sẽ sửa ở một đợt riêng.</li>
+      <li data-en="3D scenes are drawn on a canvas: screen readers cannot read the scene itself. Decisions, results and instructions are given as ordinary text beside the scene.">Cảnh 3D vẽ trên canvas nên trình đọc màn hình không đọc được bản thân cảnh. Các quyết định, kết quả và hướng dẫn được trình bày bằng chữ thường bên cạnh cảnh.</li>
+      <li data-en="A faint repeated watermark covers the pages to protect the authors’ images. It is set to 7% opacity and ignores pointer and screen-reader input.">Một lớp chữ mờ lặp lại phủ lên trang để bảo vệ hình ảnh của tác giả. Lớp này đặt ở độ mờ 7 %, không nhận thao tác chuột và trình đọc màn hình bỏ qua.</li>
+      <li data-en="Manual testing with screen readers (NVDA, TalkBack, VoiceOver) has not yet been done.">Chưa kiểm thủ công với trình đọc màn hình (NVDA, TalkBack, VoiceOver).</li>
+    </ul>
+  </section>
+
+  <section class="tc-sec" id="ho-tro">
+    <h2 data-en="5. Settings that help">5. Tùy chọn hỗ trợ</h2>
+    <ul>
+      <li data-en="Vietnamese and English throughout; dark mode; the site follows the device’s “reduce motion” and high-contrast settings.">Tiếng Việt và tiếng Anh trên toàn trang; chế độ tối; trang theo cài đặt «giảm chuyển động» và tương phản cao của thiết bị.</li>
+      <li data-en="Visible focus ring when moving with the Tab key; touch targets at least 44 px.">Viền nét hiện rõ khi di chuyển bằng phím Tab; vùng chạm tối thiểu 44 px.</li>
+    </ul>
+  </section>
+
+  <section class="tc-sec" id="phan-hoi">
+    <h2 data-en="6. Report a barrier">6. Báo khi gặp rào cản</h2>
+    <p data-en-html="If any part of BizOn is hard to use for you, please write to &lt;a href=&quot;mailto:bricoleur@bizonland.com?subject=Ti%E1%BA%BFp%20c%E1%BA%ADn%20BizOn&quot;&gt;bricoleur@bizonland.com&lt;/a&gt; with the page and what happened. We aim to reply within 5 working days.">Nếu phần nào của BizOn khó dùng với bạn, vui lòng viết về <a href="mailto:bricoleur@bizonland.com?subject=Ti%E1%BA%BFp%20c%E1%BA%ADn%20BizOn">bricoleur@bizonland.com</a>, ghi rõ trang và điều đã xảy ra. Chúng tôi cố gắng trả lời trong 5 ngày làm việc.</p>
+  </section>
+</main>
+
+<script src="js/site-vnmap.js" defer></script>
+<script src="js/bizon-clay-i18n.js" defer></script>
+<script src="js/bizon-clay-nav.js" defer></script>
+<script src="js/bizon-clay-footer.js" defer></script>
+<script src="js/thong-ke.js" defer></script>
+</body>
+</html>

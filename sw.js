@@ -1,7 +1,7 @@
 /* BizOn Bật Nghiệp 2026 – Service Worker (offline app shell)
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. */
 
-const CACHE = 'bizon-v964';
+const CACHE = 'bizon-v965';
 const SHELL = [
   './',
   './index.html',
@@ -139,6 +139,7 @@ const SHELL = [
   './vao-lop.html',
   './bao-chi.html',
   './chinh-sach.html',
+  './tiep-can.html',
   './css/tw.css',
   // Phông tự host. Nạp sẵn cả bảng khai báo lẫn hai tập ký tự mà trang tiếng Việt
   // thật sự dùng, để lần mở offline vẫn đúng kiểu chữ chứ không rơi về phông hệ thống.

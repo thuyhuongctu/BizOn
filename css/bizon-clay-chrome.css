@@ -15,7 +15,7 @@
   --clay-teal-2:#1E7E8C;
   --clay-orange:#E8762D;
   --clay-gold:#FDA127;
-  --clay-accent:#C2581B;
+  --clay-accent:#B04F17;   /* 23/11/2026: #C2581B → #B04F17 để chữ cam đạt 4,5:1 trên nền kem (WCAG 1.4.3) */
   /* Bộ màu đất sét phụ */
   --clay-c1:#7FD3DC; --clay-c2:#FFD58A; --clay-c3:#F4B6C2; --clay-c4:#A9DCC4; --clay-c5:#D9F0F2;
   /* Sắc nhạt hay dùng (nền thẻ phụ, ô đáp án) */
@@ -147,3 +147,5 @@ main[tabindex="-1"]:focus{outline:none}
 @media (max-width:360px){#clay-nav .cn-dl::after,#clay-nav .cn-theme::after{inset:-4px}}
 #clay-footer .cf-logo,#clay-footer .cf-gp{min-height:44px;box-sizing:border-box}
 #clay-footer .cf-gp{display:inline-flex;align-items:center}
+/* 23/11/2026 (WCAG 1.4.1): liên kết thư điện tử ở chân trang có gạch chân, không chỉ khác màu */
+#clay-footer .cf-legal a{text-decoration:underline;text-underline-offset:3px}

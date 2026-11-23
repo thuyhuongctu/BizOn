@@ -19,7 +19,7 @@
   --clay-teal-2:#1E7E8C;
   --clay-orange:#E8762D;
   --clay-gold:#FDA127;
-  --clay-accent:#C2581B;
+  --clay-accent:#B04F17;   /* 23/11/2026: #C2581B → #B04F17 để chữ cam đạt 4,5:1 trên nền kem (WCAG 1.4.3) */
   /* Bộ màu đất sét phụ */
   --clay-c1:#7FD3DC; --clay-c2:#FFD58A; --clay-c3:#F4B6C2; --clay-c4:#A9DCC4; --clay-c5:#D9F0F2;
   /* Sắc nhạt hay dùng (nền thẻ phụ, ô đáp án) */
@@ -349,3 +349,17 @@ a:hover .clay-go,button:hover .clay-go{transform:translateX(2px)}
 .clay-link-i.emoji{background:var(--clay-c2);font-size:18px}
 .clay-link-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
 @media (prefers-reduced-motion:reduce){.clay-link{transition:none}.clay-link:hover{transform:none}}
+
+/* ===== Tiếp cận (23/11/2026, rà bằng axe-core 4.10, WCAG 2.2 AA; xem tiep-can.html) =====
+   1.4.1: liên kết nằm giữa đoạn văn phải phân biệt được không chỉ bằng màu → gạch chân.
+   1.4.3: chữ xám nhạt viết thẳng trong style (#6B7F80) chỉ đạt 3,9–4,1:1 trên nền kem → sẫm hơn một bậc.
+   1.4.11 và chế độ tương phản cao: bóng đổ bị trình duyệt bỏ → thẻ và nút có viền hệ thống.
+   2.3.3: «giảm chuyển động» thì nút không lún khi bấm. */
+:where(main, .clay) :is(p, li, td, dd) > a:not([class]),#clay-footer .cf-legal a{text-decoration:underline;text-underline-offset:2px}
+:root:not([data-theme="dark"]) [style*="color:#6B7F80" i]{color:#5E7172!important}
+.clay-card,.clay-card-sm{outline:1px solid rgba(110,70,30,.10);outline-offset:-1px}
+@media (forced-colors:active){
+  .clay-card,.clay-card-sm,.clay-btn,.clay-eyebrow,.bc-stat,#clay-nav .cn-bar{border:2px solid CanvasText;forced-color-adjust:auto}
+  .clay-btn:focus-visible,.clay :focus-visible{outline:3px solid Highlight}
+}
+@media (prefers-reduced-motion:reduce){.clay-btn,.clay-btn:active{transition:none;transform:none}}
