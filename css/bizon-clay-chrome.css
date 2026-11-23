@@ -15,7 +15,7 @@
   --clay-teal-2:#1E7E8C;
   --clay-orange:#E8762D;
   --clay-gold:#FDA127;
-  --clay-accent:#C2581B;
+  --clay-accent:#B04F17;   /* 23/11/2026: #C2581B → #B04F17 để chữ cam đạt 4,5:1 trên nền kem (WCAG 1.4.3) */
   /* Bộ màu đất sét phụ */
   --clay-c1:#7FD3DC; --clay-c2:#FFD58A; --clay-c3:#F4B6C2; --clay-c4:#A9DCC4; --clay-c5:#D9F0F2;
   /* Sắc nhạt hay dùng (nền thẻ phụ, ô đáp án) */
@@ -131,7 +131,7 @@ main[tabindex="-1"]:focus{outline:none}
 #clay-footer .cf-gp:hover{color:var(--clay-foot-link)}
 #clay-footer .cf-bottom{margin-top:28px;padding-top:18px;border-top:1px solid rgba(207,231,231,.16);display:flex;flex-direction:column;gap:8px}
 #clay-footer .cf-legal{display:flex;flex-wrap:wrap;gap:0 18px;font-size:12.5px}
-#clay-footer .cf-legal a{display:inline-flex;align-items:center;min-height:44px;color:var(--clay-foot-link)}
+#clay-footer .cf-legal a{display:inline-flex;align-items:center;min-height:44px;color:var(--clay-foot-link);text-decoration:underline;text-underline-offset:3px}
 #clay-footer .cf-dis{font-size:12px;color:#7FA9AA}
 @media (max-width:820px){
   #clay-footer .cf-top{grid-template-columns:1fr;gap:24px}
