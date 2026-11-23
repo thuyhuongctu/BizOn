@@ -10,7 +10,7 @@
 
 ## Giai đoạn 1 – Tiền kỳ tập 1 (US1, P1) · PR 1 · hạn 28/11/2026
 
-- [ ] T001 [US1] Viết `test/phim-dua-trai-ra-bien-kich-ban.test.js`, chạy và thấy hỏng. Test kiểm:
+- [X] T001 [US1] Viết `test/phim-dua-trai-ra-bien-kich-ban.test.js`, chạy và thấy hỏng. Test kiểm:
   - kịch bản có đủ 7 nhịp (móc câu, tựa đề, hai phe, leo thang, cú lật, kết treo, hậu đoạn), móc câu kết thúc ≤ 0:10;
   - số câu VI bằng số câu EN, cùng người nói, cùng mốc thời gian;
   - câu kết có câu hỏi «sông hay đường» và không có câu khẳng định lựa chọn nào đúng;
@@ -19,17 +19,17 @@
   - nhân vật nào cũng có trong danh sách nhân vật có sẵn và có ảnh tham chiếu tồn tại;
   - mô tả cảnh nào cũng có «no text» và «no logos»;
   - không gọi Lumina là «AI».
-- [ ] T002 [P] [US1] `docs/phim/khung-loat-phim.md`:
+- [X] T002 [P] [US1] `docs/phim/khung-loat-phim.md`:
   - thế giới Bizonland; mục tiêu mùa 1 (lô sầu riêng đầu tiên của Bác Ba ra thế giới); đối thủ Kim Long Exports;
   - vai, tính cách, câu cửa miệng và ảnh tham chiếu của từng nhân vật;
   - 6 tập và quyết định của từng tập;
   - quy tắc hình ảnh và giọng;
   - mục «Điều khoản công cụ video» để chị ghi kết quả kiểm.
-- [ ] T003 [US1] Tra nguồn số liệu tuyến Cần Thơ → Cái Mép theo danh sách «Cần tra» trong `plan.md`. Ghi trang cho các số của Báo cáo Logistics Việt Nam 2024 (tệp Drive chị chia sẻ). Viết `docs/phim/nguon-so-lieu.md`. Chọn yếu tố «cú lật» có nguồn chính thống.
-- [ ] T004 [US1] `docs/phim/tap-01-kich-ban.md`: kịch bản VI/EN theo nhịp mẫu trong `plan.md` (khoảng 4:45). Bảng gồm: số câu, mốc thời gian, người nói, lời VI, lời EN, cảnh, chữ chèn trên hình.
-- [ ] T005 [US1] Gửi chị bản kịch bản. **(chị) Duyệt kịch bản** (dự kiến 26/11).
-- [ ] T006 [US1] `docs/phim/tap-01-phan-canh.md`: 14–18 cảnh. Mỗi cảnh có: loại (nhân vật / số liệu), thời lượng, khung hình, chuyển động máy quay, nhân vật, ảnh tham chiếu, mô tả cảnh tiếng Anh cho công cụ video. Mô tả luôn có «claymation, 16:9, no text, no signs, no logos».
-- [ ] T007 [P] [US1] `docs/phim/tap-01-loi-thu-giong.md`: lời Lumina từng câu VI và EN, đánh dấu ngắt nhịp (`/`) và nhấn, chú cách đọc tên riêng trong bản EN. Kèm hướng dẫn thu: phòng yên, cách mic 15–20 cm, WAV 48 kHz, mỗi câu một tệp `01.wav`… và thu thêm một lượt dự phòng.
+- [X] T003 [US1] Tra nguồn số liệu tuyến Cần Thơ → Cái Mép theo danh sách «Cần tra» trong `plan.md`. Ghi trang cho các số của Báo cáo Logistics Việt Nam 2024 (tệp Drive chị chia sẻ). Viết `docs/phim/nguon-so-lieu.md`. Chọn yếu tố «cú lật» có nguồn chính thống.
+- [X] T004 [US1] `docs/phim/tap-01-kich-ban.md`: kịch bản VI/EN theo nhịp mẫu trong `plan.md` (khoảng 4:45). Bảng gồm: số câu, mốc thời gian, người nói, lời VI, lời EN, cảnh, chữ chèn trên hình.
+- [X] T005 [US1] Gửi chị bản kịch bản. **(chị) Duyệt kịch bản** (dự kiến 26/11). Chị đã duyệt ngày 23/11/2026.
+- [X] T006 [US1] `docs/phim/tap-01-phan-canh.md`: 14–18 cảnh. Mỗi cảnh có: loại (nhân vật / số liệu), thời lượng, khung hình, chuyển động máy quay, nhân vật, ảnh tham chiếu, mô tả cảnh tiếng Anh cho công cụ video. Mô tả luôn có «claymation, 16:9, no text, no signs, no logos».
+- [X] T007 [P] [US1] `docs/phim/tap-01-loi-thu-giong.md`: lời Lumina từng câu VI và EN, đánh dấu ngắt nhịp (`/`) và nhấn, chú cách đọc tên riêng trong bản EN. Kèm hướng dẫn thu: phòng yên, cách mic 15–20 cm, WAV 48 kHz, mỗi câu một tệp `01.wav`… và thu thêm một lượt dự phòng.
 - [ ] T008 [US1] `sw.js`: nâng `CACHE`. Chạy test mới và `dac-ta`. Mở PR nháp; gộp khi chị nói «Gộp».
 
 **Điểm dừng**: chị có kịch bản đã duyệt, bảng phân cảnh để dựng cảnh nhân vật, lời để thu giọng.

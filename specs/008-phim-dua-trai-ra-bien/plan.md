@@ -13,6 +13,8 @@ Mỗi tập làm theo một dây chuyền cố định gồm năm bước:
 4. **Chị:** duyệt bản cuối và đăng.
 5. **Em:** cắt teaser và đoạn dọc, cập nhật trang loạt phim.
 
+Bảng điều hành sản xuất (phân vai, lịch từng tập, lưu trữ tệp, cổng duyệt, danh sách kiểm, dự phòng, bảng theo dõi tiến độ) nằm ở `docs/phim/ke-hoach-san-xuat.md`.
+
 Phần mã trong kho chia thành 6 PR sau PR đặc tả này. Không có migration Supabase. Bản phim cuối nằm trên YouTube và Drive, **không đưa vào kho**, vì một tập dài 4–6 phút có cả bản VI và EN sẽ quá nặng cho GitHub Pages.
 
 ## Bối cảnh kỹ thuật
