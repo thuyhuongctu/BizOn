@@ -14,7 +14,7 @@
 | Bật Nghiệp (`game.html`) | Lời Lumina trong thẻ biến cố (`.bz-explain`), dòng gợi ý Lumina trên bảng điều khiển `#dash-lumina`, khung hỏi Cố vấn `#advisor-chat` + lịch sử, hộp mô phỏng «Nếu – Thì» (`.bz-explain`) | Tên, mô tả và tác động định lượng của biến cố; báo cáo kết quả; luật chơi; bản tin thị trường từ hành trang |
 | Bật Nghiệp bản gọn (`bat-nghiep-v2.html`) | Lời Lumina trong thẻ biến cố `.bn2-say`, dự báo dòng tiền `.bn2-fc`, khung lời khuyên Lumina và Nếu – Thì (`.bz-explain`) | Như trên |
 | Hộ Chiếu Thương Hiệu (đầy đủ, bản gọn, 3D) | Lời bình cơ chế của cố vấn `.bp-adv` (Lumina, Victor Lâm, dự báo sự kiện), dấu chân hệ quả `#bp-footprint`, bài học cốt lõi `#bp-lesson` | Tín hiệu thị trường đã mua `#bp-signals`, hồ sơ thị trường, câu hỏi tổng kết, lời thoại không khí của nhân vật 3D |
-| Hộ Chiếu Sầu Riêng (bản gọn, 3D) | Khối «Dự báo của engine trước khi chốt» và nút Nếu – Thì (`.bz-explain`), phần giải thích dự báo trong Cách chơi | Biến cố và lựa chọn, tin thị trường đã mua, nguồn dữ kiện (fact), phiếu quyết định và nhật ký phản tư |
+| Hộ Chiếu Sầu Riêng (bản gọn, 3D) | Khối «Dự báo của engine trước khi chốt» và nút Nếu – Thì (`.bz-explain`), phần giải thích dự báo trong Cách chơi, thẻ «Mô hình hoạt động thế nào?» (từ 23/11/2026: nút 🔍 và hộp thoại ở bản gọn, mục cuối trong Cách chơi ở bản 3D; `.bz-explain`) | Biến cố và lựa chọn, tin thị trường đã mua, nguồn dữ kiện (fact), phiếu quyết định và nhật ký phản tư |
 | Bến Phù Sa (2D, 3D) | Câu «Bài học cốt lõi» cuối ván (`.bz-explain`) | Gợi ý thao tác `#ft-hint`, luật chơi, câu hỏi tổng kết |
 | Hành trang hành trình (mọi game) | Dòng giải thích từng khoản (`.jc-lines`); thay bằng một câu «Hành trang đã áp, chi tiết ẩn trong lớp này» | Giá trị áp (vốn, uy tín…), nút Nhận / Chơi độc lập |
 
@@ -29,3 +29,4 @@ Nguyên tắc chọn: ẩn thứ nói **vì sao / sẽ ra sao** (cơ chế, dự
 - Lời thoại không khí của nhân vật 3D (bp3d.js) không chứa cơ chế nên không ẩn; nếu pilot cho thấy sinh viên coi đó là gợi ý, thêm vào bảng trên.
 - Cờ đọc theo mã lớp, không theo cá nhân: cùng lớp cùng điều kiện (phân nhánh theo lớp, đúng thiết kế hai nhánh).
 - Đổi danh sách bề mặt sau khi đã thu dữ liệu = đổi biến độc lập; ghi phiên bản `css/explain-mode.css` vào báo cáo.
+- 23/11/2026: thêm thẻ «Mô hình hoạt động thế nào?» của Hộ Chiếu Sầu Riêng vào danh sách ẩn (nội dung ở `DurianCore.modelCard`). Lớp hộp đen thu dữ liệu trước ngày này chưa từng thấy thẻ, nên điều kiện của họ không đổi; lớp có giải thích thu từ ngày này có thêm một bề mặt so với trước, cần ghi khi so sánh hai đợt. Bản lớp học 2D (`lab/ho-chieu-sau-rieng.html`) không nạp `js/explain-mode.js`, nên không thuộc nhánh nghiên cứu.

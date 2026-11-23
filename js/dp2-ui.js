@@ -36,7 +36,7 @@ const DP2 = (() => {
     fake_origin: T('Dính giả xuất xứ', 'Fake origin involved'), exhausted_trees: T('Vườn kiệt sức', 'Exhausted orchard') });
 
   let APP = null, RIVALS = null;
-  const ui = { view: 'decide', adv: false, help: false, err: '', setup: { cls: '', team: '', roleId: 'exporter' } };
+  const ui = { view: 'decide', adv: false, help: false, model: false, err: '', setup: { cls: '', team: '', roleId: 'exporter' } };
 
   /* ---------- ván: cùng khoá và cùng cấu trúc với bản lớp học ---------- */
   function load() {
@@ -147,6 +147,7 @@ const DP2 = (() => {
       <div class="bn2-cash" title="${T('Tiền mặt', 'Cash')}">💰 ${money(g().cash)}</div>
       <button class="bn2-iconbtn" data-act="lang">${T('EN', 'VI')}</button>
       <button class="bn2-iconbtn" data-act="help" aria-label="${T('Cách chơi', 'How to play')}">❓</button>
+      <button type="button" class="bn2-iconbtn bz-explain" data-act="model" aria-haspopup="dialog" aria-label="${T('Mô hình hoạt động thế nào?', 'How does the model work?')}" title="${T('Mô hình hoạt động thế nào?', 'How does the model work?')}">🔍</button>
     </div></header>`;
   }
   function standings(upto) {
@@ -280,6 +281,15 @@ const DP2 = (() => {
       <p class="bn2-small bn2-muted" style="margin-top:8px">${T('Ván này đã lưu trên máy; bản lớp học mở đúng ván này (dấu vết quyết định, câu hỏi thảo luận, CSV/JSON, hai chứng nhận cho ván có Mã lớp).', 'This game is saved on the device; the classroom edition opens the same game (decision trail, discussion questions, CSV/JSON, two certificates for games with a Class ID).')}</p>
     </section>${window.BizOnJourneyLink && ui.journey ? BizOnJourneyLink.endHtml(ui.journey) : ''}`;
   }
+  // Thẻ «Mô hình hoạt động thế nào?»: nội dung chung ở DurianCore.modelCard; cả nút lẫn hộp thoại mang .bz-explain (ẩn ở lớp hộp đen).
+  function viewModel() {
+    const c = C.modelCard(D, T);
+    return `<div class="bn2-modal bz-explain" role="dialog" aria-modal="true" aria-labelledby="dp2-model-h"><div class="bn2-card bp2-help">
+      <h2 id="dp2-model-h" style="font-size:22px">🔍 ${esc(c.title)}</h2>
+      <ul class="dp2-mc">${c.lines.map(([k, v]) => `<li><b>${esc(k)}</b> – ${esc(v)}</li>`).join('')}</ul>
+      <p style="margin:10px 0 0;font-weight:700"><a href="../${c.href}" style="color:inherit;text-decoration:underline;text-underline-offset:2px">${esc(c.more)} →</a></p>
+      <button type="button" class="bn2-btn pri block" style="margin-top:14px" data-act="closemodel">${T('Đóng', 'Close')}</button></div></div>`;
+  }
   function viewHelp() {
     const rvs = RIVALS ? RIVALS.map(r => C.rivalCard(D, D.rivals.find(x => x.id === r.id), T)) : [];
     return `<div class="bn2-modal" role="dialog" aria-modal="true" aria-labelledby="dp2-help-h"><div class="bn2-card bp2-help">
@@ -302,7 +312,7 @@ const DP2 = (() => {
     if (ph === 'start') { el.innerHTML = viewStart(); return; }
     if (ph === 'end' && window.BizOnJourneyLink && ui.journey && ui.journey.active) BizOnJourneyLink.finish(ui.journey, durianResult(), { variant: 'durian', roleId: APP.roleId, appVersion: 'bizon-srp-v2' });   // hành trình 3 bậc: ghi Bậc 3 một lần
     const main = ph === 'end' ? viewEnd() : ph === 'result' ? viewResult() : viewDecide();
-    el.innerHTML = viewTop() + `<main id="dp2-main" class="bn2-wrap"><div class="bn2-grid main"><div class="bn2-grid">${main}</div><div class="bn2-grid">${viewSide()}</div></div></main>` + (ui.help ? viewHelp() : '');
+    el.innerHTML = viewTop() + `<main id="dp2-main" class="bn2-wrap"><div class="bn2-grid main"><div class="bn2-grid">${main}</div><div class="bn2-grid">${viewSide()}</div></div></main>` + (ui.help ? viewHelp() : '') + (ui.model ? viewModel() : '');
   }
 
   /* ---------- sự kiện ---------- */
@@ -312,6 +322,8 @@ const DP2 = (() => {
     if (act === 'lang') { const n = lang() === 'en' ? 'vi' : 'en'; store.set('bizon-lang', n); render(); return; }
     if (act === 'help') { ui.help = true; render(); return; }
     if (act === 'closehelp') { ui.help = false; render(); return; }
+    if (act === 'model') { ui.model = true; render(); const f = app().querySelector('[data-act="closemodel"]'); if (f) f.focus(); return; }
+    if (act === 'closemodel') { ui.model = false; render(); const f = app().querySelector('[data-act="model"]'); if (f) f.focus(); return; }
     if (act === 'role') { ui.setup.roleId = v; document.querySelectorAll('[data-act=role]').forEach(x => { const on = x.dataset.v === v; x.classList.toggle('on', on); x.setAttribute('aria-pressed', on); }); return; }
     if (act === 'resume') { const s = load(); if (s) { boot(s); logEv('RESUME', '', 'R' + s.game.n); save(); ui.view = 'decide'; render(); window.scrollTo(0, 0); } return; }
     if (act === 'discard') { if (confirm(T('Xoá hẳn ván đang lưu trên máy này?', 'Permanently delete the saved game on this device?'))) { store.del(SAVE_KEY); render(); } return; }
@@ -377,6 +389,8 @@ const DP2 = (() => {
     // Hành trình 3 bậc (?journey=): biến thể Sầu Riêng; vai đã chọn trên trang Hành trình được chọn sẵn.
     ui.journey = window.BizOnJourneyLink ? BizOnJourneyLink.attach('t3', undefined, { variant: 'durian' }) : null;
     if (ui.journey && ui.journey.active && ui.journey.passport.tiers.t3.roleId && D.roles[ui.journey.passport.tiers.t3.roleId]) ui.setup.roleId = ui.journey.passport.tiers.t3.roleId;
+    // Esc đóng hộp thoại Cách chơi / Mô hình (bàn phím, WCAG 2.1.2)
+    document.addEventListener('keydown', e => { if (e.key !== 'Escape' || !(ui.help || ui.model)) return; const wasModel = ui.model; ui.help = false; ui.model = false; render(); if (wasModel) { const f = app() && app().querySelector('[data-act="model"]'); if (f) f.focus(); } });
     document.addEventListener('click', onClick); document.addEventListener('input', onInput); document.addEventListener('change', onChange); document.addEventListener('submit', onSubmit);
     window.addEventListener('bizon:langchange', render);
     render();
