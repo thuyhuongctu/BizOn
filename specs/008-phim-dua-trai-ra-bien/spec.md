@@ -4,7 +4,7 @@
 
 **Ngày tạo**: 2026-11-23
 
-**Trạng thái**: Bản nháp, chờ chị trả lời phần «Làm rõ».
+**Trạng thái**: Đã làm rõ (23/11/2026), có kế hoạch và danh sách việc; chờ chị duyệt trước khi làm PR 1.
 
 **Đầu vào**: chị nhắn qua nhiều tin, ngày 22–23/11/2026.
 
@@ -52,7 +52,18 @@
 
 ## Làm rõ
 
-*(Chờ chị trả lời. Năm câu hỏi ở cuối tệp, mục «Câu hỏi gửi chị».)*
+Chị trả lời ngày 23/11/2026: «1 a, 2a, 3 a, 4a, 5 a».
+
+1. **Dựng hình (1A)**: kết hợp hai cách.
+   - Chị dựng các cảnh nhân vật diễn bằng công cụ video chị dùng cho MV 3D, từ ảnh đất nặn có sẵn.
+   - Em viết mô tả từng cảnh (prompt), dựng các cảnh số liệu, bản đồ, bảng so sánh bằng trang cảnh HTML, rồi ghép tiếng, nhạc, phụ đề.
+   - **Mọi chữ trên hình do em chèn ở hậu kỳ.** Cảnh của công cụ video không chứa chữ, để tránh chữ tiếng Việt sai dấu.
+2. **Kênh (2A)**: dùng tiếp kênh @jemappellehuong, tạo playlist «Đưa trái ra biển / Fruit to the Sea».
+3. **Nhịp (3A)**: mùa 1 có 6 tập, 2 tuần một tập. Giữa hai tập có teaser và 3 đoạn dọc. Lịch cụ thể ở `plan.md`, nghỉ quanh Tết Đinh Mùi (6/2/2027).
+4. **Bình chọn (4A)**: dùng thăm dò có sẵn của YouTube (thẻ Cộng đồng, thăm dò trong Shorts) và Facebook. Không thêm bảng hay RPC Supabase. bizonland.com chỉ hiện kết quả do em nhập tay sau khi bình chọn đóng.
+5. **Tài trợ (5A)**: tập 1 và tập 2 chưa nhận tài trợ, dùng làm hồ sơ chào.
+   - Trước tập 3, chị thống nhất với thầy Tú, và với trường nếu cần, về pháp nhân nhận tiền và cách chia doanh thu.
+   - Em soạn bảng giá nháp. Bảng giá **không đăng lên web** cho tới khi chị duyệt và trang Chính sách được cập nhật cho khớp.
 
 ## Kịch bản người dùng và kiểm thử *(bắt buộc)*
 
@@ -146,7 +157,7 @@ Một bộ hồ sơ VI/EN, gồm:
 
 1. **Cho** bộ hồ sơ, **khi** đọc, **thì** mọi số người xem là số thật từ YouTube Studio hoặc Meta, có ngày lấy số.
 2. **Cho** gói tài trợ, **khi** đọc, **thì** có điều khoản độc lập nội dung và cách ghi nhận nhà tài trợ trong phim.
-3. **Cho** các mức giá, **khi** công bố, **thì** đúng như chị duyệt (câu hỏi 5) và khớp trang Chính sách (hiến chương II).
+3. **Cho** các mức giá, **khi** công bố, **thì** đúng như chị duyệt (5A) và khớp trang Chính sách (hiến chương II).
 
 ---
 
@@ -174,14 +185,14 @@ Một bộ hồ sơ VI/EN, gồm:
 - **FR-005**: Chỉ dùng nhân vật có trong ảnh game. Không logo hay tên thương mại thật. Bản đồ Việt Nam có Hoàng Sa và Trường Sa.
 - **FR-006**: Giọng Lumina bản phát hành do chị thu, cả VI và EN. PHẢI có kịch bản thu theo từng câu, đánh dấu ngắt nhịp và từ khó đọc.
 - **FR-007**: Mỗi tập phát hành có: bản VI, bản EN, phụ đề `.vtt` hai thứ tiếng, ảnh bìa, 3 đoạn dọc, teaser 15 giây, và mô tả video có nguồn số liệu cùng đường dẫn bizonland.com.
-- **FR-008**: Có cơ chế bình chọn sau mỗi tập. Lựa chọn số đông được kể thành hậu quả ở tập sau, kèm tỷ lệ phiếu thật. Dùng cách bình chọn nào thì theo câu hỏi 4.
+- **FR-008**: Có cơ chế bình chọn sau mỗi tập. Lựa chọn số đông được kể thành hậu quả ở tập sau, kèm tỷ lệ phiếu thật. Bình chọn bằng thăm dò của YouTube và Facebook (4A); kết quả nhập tay vào dữ liệu trang loạt phim.
 - **FR-009**: bizonland.com có trang loạt phim gồm:
   - tập phim, nhúng theo cách chỉ tải khi bấm;
   - lịch phát hành;
   - màn chơi chọn tuyến (câu chuyện 3).
   Trang ở trong `sitemap.xml`, có `canonical`, VI/EN bằng `data-en`, chạy ngoại tuyến (trừ video).
-- **FR-010**: Màn chơi chọn tuyến không có lựa chọn luôn thắng; tham số đặt ở đầu tệp, có nguồn. Màn chơi không gửi dữ liệu người học lên máy chủ, trừ khi chị chọn bình chọn trên web ở câu hỏi 4.
-- **FR-011**: Có bộ hồ sơ tài trợ và giấy phép VI/EN, với điều khoản độc lập nội dung. Giá và pháp nhân nhận tiền theo câu hỏi 5.
+- **FR-010**: Màn chơi chọn tuyến không có lựa chọn luôn thắng; tham số đặt ở đầu tệp, có nguồn. Màn chơi không gửi dữ liệu người học lên máy chủ, kể cả số lần chơi (4A).
+- **FR-011**: Có bộ hồ sơ tài trợ và giấy phép VI/EN, với điều khoản độc lập nội dung. Theo 5A: chưa nhận tài trợ ở tập 1–2; giá và pháp nhân chốt trước tập 3.
 - **FR-012**: Có quy trình đăng tải ghi thành tài liệu, gồm:
   - chọn «không dành cho trẻ em»;
   - giờ đăng, thẻ, chương trong mô tả;
@@ -240,32 +251,4 @@ Một bộ hồ sơ VI/EN, gồm:
 
 ## Câu hỏi gửi chị
 
-Mỗi câu có phương án em đề xuất đứng đầu. Chị trả lời gọn, ví dụ «1A, 2A, 3B, 4A, 5C».
-
-**Câu 1. Dựng hình nhân vật bằng cách nào?**
-- **A (đề xuất).** Kết hợp hai cách:
-  - chị dựng các cảnh nhân vật diễn bằng công cụ video chị đang dùng cho MV 3D, từ ảnh đất nặn có sẵn; em viết sẵn mô tả cho từng cảnh (prompt);
-  - em dựng các cảnh số liệu, bản đồ, bảng so sánh bằng trang cảnh HTML như video Cảng Cái Mép, rồi ghép tiếng, nhạc, phụ đề.
-
-  Lý do: nhân vật diễn tự nhiên như MV, còn số liệu thì chính xác và sửa được.
-- **B.** Em dựng toàn bộ bằng nhân vật 3D thủ tục trong kho (`bizon-characters.js`). Đồng bộ và tự động, nhưng chuyển động cứng hơn MV.
-- **C.** Thuê studio hoạt hình bên ngoài.
-
-**Câu 2. Kênh chính?**
-- **A (đề xuất).** Dùng tiếp kênh @jemappellehuong, tạo playlist «Đưa trái ra biển». Lý do: lượt đăng ký đã tích lũy giúp đạt điều kiện kiếm tiền nhanh hơn.
-- **B.** Mở kênh riêng «BizOnland». Thương hiệu rõ hơn, nhưng bắt đầu từ 0.
-
-**Câu 3. Nhịp phát hành mùa 1?**
-- **A (đề xuất).** 6 tập, 2 tuần một tập. Giữa hai tập có 3 đoạn dọc và teaser. Lý do: đủ thời gian cho bình chọn 7 ngày và dựng cảnh hậu quả.
-- **B.** Mỗi tuần một tập ngắn 2–3 phút. Nhịp dày, áp lực sản xuất cao.
-- **C.** Mỗi tháng một tập 8–10 phút.
-
-**Câu 4. Bình chọn đặt ở đâu?**
-- **A (đề xuất).** Dùng thăm dò có sẵn của YouTube (thẻ Cộng đồng, thăm dò trong Shorts) và Facebook. Lý do: không thêm bảng Supabase, không đụng dữ liệu người học.
-- **B.** Làm bình chọn trên bizonland.com. Cần bảng và RPC Supabase mới; chị áp migration lên production.
-- **C.** Cả hai: nền tảng là chính, phiếu từ màn chơi trên web làm số tham khảo.
-
-**Câu 5. Tài trợ và giấy phép ở mùa 1?**
-- **A (đề xuất).** Tập 1 và tập 2 chưa nhận tài trợ, dùng làm hồ sơ chào. Chị thống nhất với thầy Tú, và với trường nếu cần, về pháp nhân nhận tiền và chia doanh thu trước tập 3. Bảng giá em soạn nháp để chị duyệt. Lý do: có số người xem thật thì chào giá dễ hơn, và tránh vướng quy định khi chưa rõ ai ký hợp đồng.
-- **B.** Nhận tài trợ ngay từ tập 1, đứng tên cá nhân chị.
-- **C.** Nhận qua Trường Đại học Cần Thơ.
+Đã trả lời ngày 23/11/2026, xem mục «Làm rõ».

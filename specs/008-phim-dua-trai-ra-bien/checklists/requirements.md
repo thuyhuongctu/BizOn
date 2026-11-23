@@ -13,7 +13,7 @@
 
 ## Độ đầy đủ của yêu cầu
 
-- [ ] Không còn chỗ cần làm rõ: còn 5 câu hỏi gửi chị (dựng hình, kênh, nhịp, bình chọn, tài trợ)
+- [x] Không còn chỗ cần làm rõ (chị trả lời 5 câu ngày 23/11/2026)
 - [x] Yêu cầu kiểm được và không mơ hồ
 - [x] Tiêu chí thành công đo được
 - [x] Tiêu chí thành công không phụ thuộc công nghệ
@@ -31,4 +31,4 @@
 
 ## Ghi chú
 
-- Lập kế hoạch (`plan.md`) và chia việc (`tasks.md`) sau khi chị trả lời 5 câu hỏi.
+- Đã có `plan.md` và `tasks.md` (23/11/2026).
