@@ -70,6 +70,10 @@
   .cho .nv { position: absolute; right: 60px; bottom: 0; height: 760px; display: flex; align-items: flex-end; gap: 10px; }
   .cho .nv img { max-height: 700px; max-width: 360px; }
   #den { position: absolute; inset: 0; z-index: 5; background: #000; visibility: hidden; }
+  .pd { position: absolute; left: 160px; right: 160px; bottom: 34px; text-align: center; visibility: hidden; z-index: 4; }
+  .pd span { display: inline; font-weight: 700; font-size: 40px; line-height: 1.45; color: #fff; background: rgba(0,0,0,.72); padding: 4px 18px;
+             -webkit-box-decoration-break: clone; box-decoration-break: clone; border-radius: 10px; }
+  .co-pd .bong { bottom: 200px; }
 </style>
 </head>
 <body>
@@ -290,6 +294,11 @@
   }
   doan.forEach((d, i) => { const el = (d.loai === 'SL' && SL[d.canh]) ? SL[d.canh](d) : NV(d); el.id = 'd' + i; el.dataset.canh = d.canh; hien(el, d.a, d.b); });
   cau.forEach(chu);
+  // Phụ đề in trên hình (chỉ khi dựng bản duyệt với --phu-de): bong bóng thoại đẩy lên để không đè chữ
+  if (G && G.phu_de && G.phu_de.length) {
+    document.getElementById('root').classList.add('co-pd');
+    G.phu_de.forEach(x => { const el = document.createElement('div'); el.className = 'pd'; el.innerHTML = '<span></span>'; el.firstChild.textContent = x.t; document.getElementById('root').appendChild(el); hien(el, x.a, x.b); });
+  }
   const den = document.getElementById('den');
   gsap.set(den, { autoAlpha: 0 }); tl.to(den, { autoAlpha: 1, duration: 0.4, ease: 'none' }, TONG - 0.4);
   tl.set({}, {}, TONG);

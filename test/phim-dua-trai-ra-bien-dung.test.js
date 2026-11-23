@@ -55,6 +55,10 @@ for (const lang of ['vi', 'en']) {
   for (const m of html.matchAll(/goc\/[\w\-/]+\.(?:webp|png|jpg|css)/g)) assert.ok(fs.existsSync(path.join(OUT, `dua-trai-ra-bien-01-${lang}-nhap`, m[0])), lang + ': tệp đã chép ' + m[0]);
 }
 
+// Bản duyệt có phụ đề tiếng Anh in trên hình (--phu-de en)
+{ const r = spawnSync(process.execPath, [R('scripts/video/dung-phim.mjs'), '--tap', '01', '--lang', 'en', '--nhap', '--chi-html', '--phu-de', 'en', '--out', OUT, '--canh', path.join(OUT, 'khong-co')], { encoding: 'utf8' });
+  assert.equal(r.status, 0, 'dung-phim --phu-de en: ' + r.stderr); }
+
 (async () => {
   const b = await chromium.launch();
   try {
@@ -101,6 +105,18 @@ for (const lang of ['vi', 'en']) {
       assert.ok(+het > 0.9, lang + ': cuối phim tối dần');
       assert.deepEqual(errs, [], lang + ': bản dựng không lỗi JS');
       assert.deepEqual(loi404.filter(u => !/favicon/.test(u)), [], lang + ': không thiếu tệp');
+      await p.close();
+    }
+    { // 3c. Phụ đề tiếng Anh in trên hình: đúng câu, không đè bong bóng thoại
+      const p = await (await b.newContext({ viewport: { width: 1920, height: 1080 } })).newPage();
+      const errs = []; p.on('pageerror', e => errs.push(e.message));
+      await p.goto(`${BASE}/artifacts/phim-test/dua-trai-ra-bien-01-en-nhap-phu-de-en/index.html`, { waitUntil: 'load', timeout: 60000 });
+      const kq = await p.evaluate(() => { window.veKhung(3.2); const v = [...document.querySelectorAll('.pd')].filter(e => getComputedStyle(e).visibility === 'visible');
+        const bo = document.querySelector('.bong').getBoundingClientRect(), pd = v[0] && v[0].getBoundingClientRect(); return { n: v.length, t: v[0] && v[0].textContent, chong: pd ? bo.bottom > pd.top : true }; });
+      assert.equal(kq.n, 1, 'phụ đề: mỗi lúc một câu');
+      assert.ok(kq.t && kq.t.startsWith('In 44 hours, the mother ship leaves'), 'phụ đề tiếng Anh đúng câu 1');
+      assert.ok(!kq.chong, 'phụ đề không đè bong bóng thoại');
+      assert.deepEqual(errs, [], 'bản phụ đề không lỗi JS');
       await p.close();
     }
     console.log('phim-dua-trai-ra-bien-dung: đạt');

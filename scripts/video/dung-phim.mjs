@@ -15,6 +15,7 @@
  * Dùng:  NODE_PATH=… node scripts/video/dung-phim.mjs --tap 01 --lang vi|en [--out thư-mục] [--canh thư-mục-cảnh-NV] [--nhap] [--chi-html]
  *   --nhap      chưa đủ giọng hay cảnh NV: căn giờ theo mốc kịch bản, cảnh NV thiếu thay bằng thẻ chờ (tên tệp thêm «-nhap»)
  *   --chi-html  chỉ ghi thư mục dựng (index.html cho HyperFrames), không kết xuất – dùng cho test và xem trước
+ *   --phu-de vi|en  in lời Lumina thành phụ đề trên hình (bản duyệt nhịp, chiếu lớp); bản phát hành dùng .vtt
  * Kết quả: dua-trai-ra-bien-NN-<lang>.mp4, -720p.mp4, -poster.jpg/.webp, phụ đề .vi.vtt và .en.vtt (cùng mốc câu).
  */
 import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync, rmSync, copyFileSync } from 'node:fs';
@@ -27,9 +28,10 @@ const HF = 'hyperframes@0.9.86';
 const arg = k => { const i = process.argv.indexOf(k); return i > 0 ? process.argv[i + 1] : undefined; };
 const TAP = (arg('--tap') || '01').padStart(2, '0'), LANG = arg('--lang') === 'en' ? 'en' : 'vi';
 const NHAP = process.argv.includes('--nhap'), CHI_HTML = process.argv.includes('--chi-html');
+const PHU_DE = ['vi', 'en'].includes(arg('--phu-de')) ? arg('--phu-de') : null; // in lời Lumina lên hình (chỉ để duyệt; bản phát hành dùng .vtt)
 const OUT = resolve(arg('--out') || join(ROOT, 'artifacts', 'phim'));
 const CANH_DIR = resolve(arg('--canh') || join(ROOT, 'assets/video/src/dua-trai-ra-bien', 'tap-' + TAP, 'canh'));
-const NAME = `dua-trai-ra-bien-${TAP}-${LANG}` + (NHAP ? '-nhap' : '');
+const NAME = `dua-trai-ra-bien-${TAP}-${LANG}` + (NHAP ? '-nhap' : '') + (PHU_DE ? '-phu-de-' + PHU_DE : '');
 const LEAD = 0.3, GAP = 0.35, TAIL = 0.6, FPS = 30;
 const R = p => join(ROOT, p), read = p => readFileSync(R(p), 'utf8');
 const ff = (...a) => { const r = spawnSync('ffmpeg', ['-v', 'error', '-y', ...a], { stdio: 'inherit' }); if (r.status !== 0) throw new Error('ffmpeg lỗi: ' + a.join(' ').slice(0, 200)); };
@@ -113,6 +115,7 @@ const GHEP = {
   lang: LANG, tong: +TONG.toFixed(3),
   doan: DOAN.map(d => ({ canh: d.canh, loai: d.loai, a: d.a, b: d.b, video: !!d.video, tinh: d.tinh || null, mo_ta: d.mo_ta, anh: d.anh, cau: d.cau.map(c => ({ so: c.so, a: c.a, b: c.b })) })),
   cau: CAU.map(c => ({ so: c.so, a: c.a, b: c.b, chu: CFG.chu[c.so] || [] })),
+  phu_de: PHU_DE ? CAU.map((c, i) => ({ a: c.a + 0.1, b: c.loiHet ? Math.min(c.b, c.loiHet + GAP * 0.9) : c.b, t: KB[i][PHU_DE] })).filter(x => x.t && x.t !== '—') : [],
 };
 const MAU = read('scripts/video/dua-trai-ra-bien/canh.html');
 const tepAnh = new Set([...MAU.matchAll(/assets\/[\w\-/]+\.(?:webp|png|jpg)/g)].map(x => x[0]));
