@@ -88,18 +88,44 @@ assert.match(thuongHieu, /«Sầu Riêng Phù Sa»/, 'khung ghi thương hiệu 
 assert.match(khung, /thay cho tên «Durian Express»[^\n]*DHL Express Malaysia/, 'ghi lý do bỏ tên «Durian Express»');
 for (const dong of khung.split('\n').filter(l => /durian express/i.test(l))) assert.ok(/thay cho tên|xóa|in chữ/i.test(dong), '«Durian Express» chỉ được nhắc để bỏ hoặc xóa: ' + dong.slice(0, 50));
 assert.ok(/\*\*Minh Khang\*\*[^\n]*lễ ra mắt và lễ ký hợp đồng/.test(nhanVat) && /\*\*Kim Long\*\*[^\n]*đối thủ\. Không bao giờ đứng ở vị trí của hợp tác xã/.test(nhanVat), 'Minh Khang dẫn lễ ra mắt, Kim Long là đối thủ');
-const stitch = khung.split('## 11. Khung hình tham chiếu (Stitch)')[1] || '';
+const stitch = (khung.split('## 11. Khung hình tham chiếu (Stitch)')[1] || '').split('\n## 12.')[0];
 const khungStitch = [...stitch.matchAll(/^\| `([A-Za-z0-9-]+\.png)` \|/gm)].map(m => m[1]);
 assert.equal(khungStitch.length, 21, 'khung kê đủ 21 khung hình Stitch');
 assert.equal(new Set(khungStitch).size, 21, 'tên khung không trùng');
 assert.match(stitch, /no text, no letters, no logos, no signage, no brand names, no flags, no maps/, 'có đuôi lời nhắc cấm chữ khi dựng lại');
 for (const dong of stitch.split('\n').filter(l => l.startsWith('| `') && /Kim Long/.test(l))) assert.match(dong, /Kim Long (→ Minh Khang|ra rìa)/, 'khung có Kim Long phải ghi việc thay: ' + dong.slice(0, 40));
+// Đợt 2: 25 khung; khung có Kim Long chỉ là cảnh đối thủ, hoặc phải sửa (Kim Long → …), hoặc bị loại
+const dot2 = khung.split('## 12. Khung hình Stitch đợt 2')[1] || '';
+const khungDot2 = [...dot2.matchAll(/^\| `([A-Za-z0-9-]+\.png)` \|/gm)].map(m => m[1]);
+assert.equal(khungDot2.length, 25, 'đợt 2 kê đủ 25 khung');
+assert.equal(new Set([...khungStitch, ...khungDot2]).size, 46, 'tên khung hai đợt không trùng nhau');
+assert.match(dot2, /không theo kịch bản đã duyệt/, 'ghi rõ không theo ghi chú Stitch tự viết');
+for (const dong of dot2.split('\n').filter(l => l.startsWith('| `') && /Kim Long/.test(l))) {
+  const f = dong.match(/`([^`]+)`/)[1];
+  assert.ok(/^(nv-kim-long|tap01-C10-kim-long|khong-dung-)/.test(f) || (/^sua-/.test(f) && /Kim Long →/.test(dong)), 'đợt 2: khung có Kim Long phải là cảnh đối thủ, sửa hoặc loại: ' + f);
+}
+for (const dong of dot2.split('\n').filter(l => /^\| `(khong-dung|sua)-/.test(l))) assert.ok(!/\| Tập 1: /.test(dong), 'khung loại hoặc chưa sửa không gắn vào tập 1');
 const pcStitch = pc.split('## Khung hình Stitch cho tập 1')[1].split('\n## ')[0];
 const dungTap1 = [...pcStitch.matchAll(/`([A-Za-z0-9-]+\.png)`/g)].map(m => m[1]);
 assert.ok(dungTap1.length >= 7, 'phân cảnh tập 1 chỉ rõ khung Stitch cho các cảnh');
-for (const f of dungTap1) assert.ok(khungStitch.includes(f) && f.startsWith('tap01-'), 'khung ' + f + ' có trong danh sách và thuộc tập 1');
+for (const f of dungTap1) assert.ok((khungStitch.includes(f) || khungDot2.includes(f)) && f.startsWith('tap01-'), 'khung ' + f + ' có trong danh sách và thuộc tập 1');
 assert.ok(/\bC04\b/.test(pcStitch) && /\bC11\b/.test(pcStitch) && /\bC17\b/.test(pcStitch), 'khung Stitch gắn với C04, C11, C17');
 
-// 7. sw.js
-assert.ok(+(/CACHE = 'bizon-v(\d+)'/.exec(read('sw.js')) || [])[1] >= 978, 'sw.js ≥ v978');
+// 7. Mô tả cảnh NV phải tả nhân vật đúng ảnh tham chiếu (23/11/2026: bản đầu tả Minh Khang là thanh niên mặc vest,
+// Lina Park tóc ngắn, An Nhiên áo san hô – khác hẳn ảnh gốc, công cụ video sẽ dựng sai nhân vật).
+const moTa = new Map([...nhanVat.matchAll(/^\| `(assets\/[^`]+)` \| `([^`]+)` \|$/gm)].map(m => [m[1], m[2]]));
+assert.ok(moTa.size >= 9, 'khung có bảng cụm mô tả theo ảnh tham chiếu');
+for (const [f] of moTa) assert.ok(fs.existsSync(R(f)), 'cụm mô tả gắn với ảnh có thật ' + f);
+for (const [ma, c] of C) {
+  if (c.loai !== 'NV') continue;
+  for (const f of c.anh.match(/assets\/[^`\s,]+/g) || []) {
+    if (/\/hc\/durian\//.test(f)) continue; // ảnh bối cảnh, không phải nhân vật
+    assert.ok(moTa.has(f), ma + ': ảnh nhân vật ' + f + ' có cụm mô tả trong khung');
+    assert.ok(c.mota.includes(moTa.get(f)), ma + ': mô tả cảnh tả đúng nhân vật theo ' + f + ' («' + moTa.get(f) + '»)');
+  }
+  assert.ok(!/navy suit|red tie|black bob|coral blouse/.test(c.mota), ma + ': không còn mô tả nhân vật sai của bản đầu');
+}
+
+// 8. sw.js
+assert.ok(+(/CACHE = 'bizon-v(\d+)'/.exec(read('sw.js')) || [])[1] >= 979, 'sw.js ≥ v979');
 console.log('phim-dua-trai-ra-bien-kich-ban: đạt (' + K.length + ' câu, ' + C.size + ' cảnh, ' + N.size + ' nguồn)');
