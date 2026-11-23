@@ -117,11 +117,22 @@
   .hp-journey-kicker{font-size:11.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--clay-teal)}
   .hp-journey h3{margin:4px 0 6px;font-family:var(--clay-head);font-size:clamp(22px,2.6vw,30px);font-weight:800;line-height:1.15;color:var(--clay-ink)}
   .hp-journey p{margin:0;max-width:44em;font-size:15px;line-height:1.6;color:var(--clay-sub);text-wrap:pretty}
-  .hp-journey-steps{display:flex;flex-wrap:wrap;gap:6px 10px;margin:10px 0 0;padding:0;list-style:none;font-size:13px;font-weight:800;color:var(--clay-ink)}
-  .hp-journey-steps li{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;background:var(--clay-cream-deep)}
-  .hp-journey-steps li[aria-hidden]{padding:4px 2px;background:none;color:var(--clay-teal)}
+  /* Bản đồ hành trình (23/11/2026): ba trạm, giữa hai trạm ghi rõ hành trang mang sang (số lấy từ js/core/journey.js PARAMS) */
+  .hp-journey-body{flex-basis:560px}
+  .hp-journey-steps{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.9fr) minmax(0,1fr) minmax(0,.9fr) minmax(0,1.1fr);align-items:stretch;gap:0;margin:14px 0 0;padding:0;list-style:none;font-size:14px;font-weight:800;color:var(--clay-ink)}
+  .hp-journey-steps li{display:flex;flex-direction:column;align-items:flex-start;gap:4px;padding:12px 14px;border-radius:20px;background:var(--clay-cream-deep)}
+  .hp-journey-steps li small{font-size:12.5px;font-weight:600;line-height:1.4;color:var(--clay-ink-2)}
+  .hp-journey-steps li.hp-jcarry{position:relative;justify-content:center;padding:26px 10px 8px;background:none;font-size:12px;font-weight:700;line-height:1.35;color:var(--clay-teal)}
+  .hp-journey-steps li.hp-jcarry::before{content:"";position:absolute;left:6px;right:14px;top:14px;border-top:3px dashed var(--clay-teal)}
+  .hp-journey-steps li.hp-jcarry::after{content:"";position:absolute;right:4px;top:8px;border:7px solid transparent;border-left:10px solid var(--clay-teal);border-right:0}
+  @media (max-width:760px){
+    .hp-journey-steps{grid-template-columns:1fr}
+    .hp-journey-steps li.hp-jcarry{padding:6px 10px 6px 34px}
+    .hp-journey-steps li.hp-jcarry::before{left:18px;right:auto;top:4px;bottom:12px;border-top:0;border-left:3px dashed var(--clay-teal)}
+    .hp-journey-steps li.hp-jcarry::after{left:13px;right:auto;top:auto;bottom:2px;border:7px solid transparent;border-top:10px solid var(--clay-teal);border-bottom:0}
+  }
   .hp-games-lead a{color:var(--clay-teal);font-weight:800;text-decoration:underline;text-underline-offset:3px}
-  .hp-journey-steps li b{display:grid;place-items:center;width:20px;height:20px;border-radius:50%;background:var(--clay-teal);color:#fff;font-size:11px}
+  .hp-journey-steps li b{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:var(--clay-teal);color:#fff;font-size:11px}
   .hp-journey-cta{display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 24px;border-radius:18px;background:var(--clay-teal);color:var(--clay-on-teal);font:800 17px var(--clay-head);box-shadow:inset 0 -4px 0 rgba(0,0,0,.18);white-space:nowrap}
   .hp-games{list-style:none;margin:36px 0 0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:26px}
   .hp-game{--lv:#2E7139;display:flex;flex-direction:column;border-radius:34px;background:var(--clay-card);padding:12px;box-shadow:var(--clay-night-shadow,inset 0 -9px 0 rgba(110,70,30,.08),inset 0 5px 0 rgba(255,255,255,.95),0 30px 44px -26px rgba(110,70,30,.6));transition:transform .25s ease}
@@ -343,7 +354,7 @@
         <div class="hp-journey-kicker" data-en="PLAY ALL THREE LEVELS AS ONE STORY · ONE TEAM, ONE PASSPORT">CHƠI LIỀN MẠCH CẢ BA BẬC · MỘT ĐỘI, MỘT HỘ CHIẾU</div>
         <h3 data-en="Link the three levels into one journey: From the River Silt to the World">Nối ba bậc thành một hành trình: Từ Phù Sa ra Thế giới</h3>
         <p data-en="For a class that walks the whole path: the same team plays Level 1, then Level 2, then a Passport. Each finished level leaves a capped, explained carry-over for the next, and the rules of every level stay unchanged.">Dành cho lớp đi hết lộ trình: cùng một đội chơi Bậc 1, rồi Bậc 2, rồi một Hộ chiếu. Mỗi bậc hoàn thành để lại hành trang có giới hạn, có giải thích cho bậc sau; luật của từng bậc giữ nguyên.</p>
-        <ul class="hp-journey-steps"><li><b>1</b><span data-en="Bến Phù Sa">Bến Phù Sa</span></li><li aria-hidden="true">→</li><li><b>2</b><span data-en="Bật Nghiệp">Bật Nghiệp</span></li><li aria-hidden="true">→</li><li><b>3</b><span data-en="Brand or Durian Passport">Hộ Chiếu Thương Hiệu hoặc Sầu Riêng</span></li></ul>
+        <ul class="hp-journey-steps"><li><b>1</b><span data-en="Bến Phù Sa">Bến Phù Sa</span><small data-en="5 weeks · start up: test cheap, then scale">5 tuần · khởi sự: thử rẻ rồi mới mở rộng</small></li><li class="hp-jcarry"><span data-en="Carried to Level 2: up to +50m capital; brand ×1.05 if ranked 1–2">Mang sang Bậc 2: vốn tối đa +50 triệu; thương hiệu ×1,05 nếu hạng 1–2</span></li><li><b>2</b><span data-en="Bật Nghiệp">Bật Nghiệp</span><small data-en="6 rounds · operate: price, output, marketing, cash flow">6 vòng · vận hành: giá, sản lượng, marketing, dòng tiền</small></li><li class="hp-jcarry"><span data-en="Carried to Level 3: starting cash shifts at most ±15%; reputation up to +5">Mang sang Bậc 3: vốn khởi điểm lệch tối đa ±15 %; uy tín tối đa +5</span></li><li><b>3</b><span data-en="Brand or Durian Passport">Hộ Chiếu Thương Hiệu hoặc Sầu Riêng</span><small data-en="6 quarters or 6 seasons · go international">6 quý hoặc 6 vụ · quốc tế hóa</small></li></ul>
       </div>
       <span class="hp-journey-cta"><span data-en="Start the journey">Bắt đầu hành trình</span><span aria-hidden="true">→</span></span>
     </a>
