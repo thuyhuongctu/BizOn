@@ -69,6 +69,18 @@ for (const [ten2, phan] of [['VI', phanVi], ['EN', phanEn]]) {
 }
 assert.match(ltg, /48 kHz/, 'có hướng dẫn thu');
 
-// 5. sw.js
+// 5. Kế hoạch sản xuất: lịch phát hành khớp plan.md của đặc tả, có lưu trữ, cổng duyệt, danh sách kiểm, dự phòng
+const kh = read('docs/phim/ke-hoach-san-xuat.md'), plan = read('specs/008-phim-dua-trai-ra-bien/plan.md');
+const ngayPhat = t => [...t.matchAll(/CN (\d\d\/\d\d\/20\d\d)/g)].map(m => m[1]);
+const phatPlan = [...new Set(ngayPhat(plan.split('## Mùa 1')[1].split('**Hai nhánh')[0]))];
+assert.equal(phatPlan.length, 6, 'plan.md có 6 ngày phát hành');
+for (const d of phatPlan) assert.ok(kh.includes(d), 'kế hoạch sản xuất có ngày phát hành ' + d);
+for (const muc of ['## 3. Dây chuyền một tập', '## 5. Lưu trữ tệp', '## 6. Cổng duyệt', '## 7. Danh sách kiểm chất lượng', '## 10. Dự phòng', '## 11. Bảng theo dõi tiến độ'])
+  assert.ok(kh.includes(muc), 'kế hoạch có mục ' + muc);
+assert.ok(/02-giong\/vi/.test(kh) && /03-canh-nv/.test(kh) && /05-ban-cuoi/.test(kh), 'có cấu trúc thư mục Drive');
+assert.ok(/Hoàng Sa và Trường Sa/.test(kh) && /không dành cho trẻ em/.test(kh) && /làm trước Tết/.test(kh), 'danh sách kiểm và lịch Tết');
+assert.ok(plan.includes('docs/phim/ke-hoach-san-xuat.md'), 'plan.md trỏ tới kế hoạch sản xuất');
+
+// 6. sw.js
 assert.ok(+(/CACHE = 'bizon-v(\d+)'/.exec(read('sw.js')) || [])[1] >= 958, 'sw.js ≥ v958');
 console.log('phim-dua-trai-ra-bien-kich-ban: đạt (' + K.length + ' câu, ' + C.size + ' cảnh, ' + N.size + ' nguồn)');
