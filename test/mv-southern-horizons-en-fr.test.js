@@ -1,5 +1,5 @@
-// 22/11/2026: MV «Ngọn hải đăng soi đường» bản tiếng Anh – Pháp (Southern Horizons, YouTube m0iGo4Oaa6U – bản dựng lại
-// đúng tệp nhạc, thay link 3Z934Ae8Zmo chị gửi trước)
+// 22/11/2026: MV «Ngọn hải đăng soi đường» bản tiếng Anh – Pháp (Southern Horizons). 23/11/2026: YouTube 7terx4NQUU4 –
+// bản 4:19 dựng lại với ảnh trang phục tách nền lại, thay m0iGo4Oaa6U và 3Z934Ae8Zmo trước đó)
 // có trên trang tri ân 20/11 (nút phát, chỉ tải trình phát YouTube khi bấm) và trong Thư viện Sáng tạo, mục MV 3D
 // (thẻ mở YouTube ở tab mới), cạnh bản tiếng Việt 8yottDb7Bg0.
 'use strict';
@@ -7,7 +7,7 @@ const fs = require('node:fs'), path = require('node:path'), assert = require('no
 const BASE = process.env.BIZON_URL || 'http://127.0.0.1:8899';
 let chromium; try { chromium = require('playwright').chromium; } catch (e) { chromium = require('playwright-core').chromium; }
 const R = f => path.join(__dirname, '..', f), read = f => fs.readFileSync(R(f), 'utf8');
-const EN = 'm0iGo4Oaa6U', VI = '8yottDb7Bg0', POSTER = 'assets/video/mv-southern-horizons-en-fr-poster.webp';
+const EN = '7terx4NQUU4', VI = '8yottDb7Bg0', POSTER = 'assets/video/mv-southern-horizons-en-fr-poster.webp';
 
 const b = fs.readFileSync(R(POSTER));
 assert.ok(b.subarray(0, 4).toString() === 'RIFF' && b.subarray(8, 12).toString() === 'WEBP', 'ảnh bìa bản EN/FR là WebP');
@@ -15,10 +15,10 @@ const le = read('ngay-nha-giao-20-11.html');
 assert.ok(le.includes('data-yt="' + EN + '"') && le.includes('href="https://youtu.be/' + EN + '"'), 'trang tri ân có MV bản tiếng Anh – Pháp');
 assert.ok(le.includes('data-yt="' + VI + '"'), 'trang tri ân vẫn giữ bản tiếng Việt');
 assert.ok(le.includes("url('" + POSTER + "')"), 'nút phát dùng ảnh bìa lưu trên trang');
-for (const f of ['ngay-nha-giao-20-11.html', 'js/thu-vien-clay.js']) assert.ok(!read(f).includes('3Z934Ae8Zmo'), f + ': không còn link MV cũ sai tệp nhạc');
+for (const f of ['ngay-nha-giao-20-11.html', 'js/thu-vien-clay.js']) for (const cu of ['3Z934Ae8Zmo', 'm0iGo4Oaa6U']) assert.ok(!read(f).includes(cu), f + ': không còn link MV cũ ' + cu);
 const tv = read('js/thu-vien-clay.js');
 assert.ok(tv.includes("'" + EN + "'") && tv.includes("'" + VI + "'"), 'Thư viện có cả hai bản MV');
-assert.ok(+(/CACHE = 'bizon-v(\d+)'/.exec(read('sw.js')) || [])[1] >= 956, 'sw.js ≥ v956');
+assert.ok(+(/CACHE = 'bizon-v(\d+)'/.exec(read('sw.js')) || [])[1] >= 981, 'sw.js ≥ v981');
 
 (async () => {
   const br = await chromium.launch();
