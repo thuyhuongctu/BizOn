@@ -1148,18 +1148,27 @@
     } catch (e) {}
   }
 
+  // Nộp không đăng nhập: gọi hàm công khai bằng khóa anon (khóa công khai theo thiết kế của Supabase).
+  async function rpcKhach(ten, thamSo) {
+    var c = bcfg(), r = await fetch(c.url.replace(/\/$/, '') + '/rest/v1/rpc/' + ten, { method: 'POST',
+      headers: { 'Content-Type': 'application/json', apikey: c.anonKey, Authorization: 'Bearer ' + c.anonKey }, body: JSON.stringify(thamSo) });
+    if (!r.ok) { var j = null; try { j = await r.json(); } catch (e) {} throw new Error((j && j.message) || ('HTTP ' + r.status)); }
+  }
+
   window.ftSubmit = async function () {
     var klass = $('ft-class').value.trim(), name = $('ft-name').value.trim();
     var msg = $('ft-send-msg'), btn = $('ft-send');
     if (!klass) { msg.textContent = T('Nhập Mã lớp trước đã nhé.', 'Enter a class code first.'); return; }
-    if (!window.StudentLogin || !StudentLogin.signedIn()) { msg.textContent = T('Đăng nhập email trường ở khung phía trên trước đã nhé.', 'Sign in with your school email in the box above first.'); return; }
+    // Từ 23/11/2026 không bắt buộc đăng nhập: chưa đăng nhập thì nộp ẩn danh qua bizon_submit_ft_result_khach (không lưu email,
+    // hiện trên bảng giảng viên, không lên bảng xếp hạng chung); đã đăng nhập email trường thì nộp như cũ.
+    var daDangNhap = !!(window.StudentLogin && StudentLogin.signedIn());
     if (!S.result) return;
     try { localStorage.setItem('bps-class', klass); localStorage.setItem('bps-name', name); } catch (e) {}
     if (window.BizOnExplain) BizOnExplain.init({ classCode: klass });   // nhánh hộp đen (R1)
     btn.disabled = true; btn.style.opacity = 0.5;
     msg.textContent = T('Đang gửi…', 'Sending…');
     try {
-      await StudentLogin.rpc('bizon_submit_ft_result', {
+      await (daDangNhap ? StudentLogin.rpc.bind(StudentLogin) : rpcKhach)(daDangNhap ? 'bizon_submit_ft_result' : 'bizon_submit_ft_result_khach', {
         p_class_code: klass,
         p_player_name: name || null,
         p_team_name: myTeam() + ' – ' + TEAM()[S.cap].name,
@@ -1170,7 +1179,8 @@
         // Phiên bản riêng từng bản để bảng giáo viên tách xếp hạng (bản cũ ghi 'bizon-v302')
         p_app_version: 'bizon-bps2d-v2',
       });
-      msg.textContent = T('✅ Đã nộp! Kết quả đã hiện trên bảng của giảng viên.', "✅ Submitted! Your result now shows on the instructor's dashboard.");
+      msg.textContent = daDangNhap ? T('✅ Đã nộp! Kết quả đã hiện trên bảng của giảng viên.', "✅ Submitted! Your result now shows on the instructor's dashboard.")
+        : T('✅ Đã nộp (chưa đăng nhập)! Giảng viên thấy kết quả trên bảng lớp. Muốn có tên trên bảng xếp hạng chung thì đăng nhập email trường rồi nộp lại.', "✅ Submitted (not signed in)! Your instructor sees it on the class board. To appear on the public leaderboard, sign in with your school email and submit again.");
     } catch (e) {
       btn.disabled = false; btn.style.opacity = 1;
       // Lỗi từ máy chủ (chưa đăng nhập, mã lớp sai…) nói rõ lý do; còn lại là lỗi mạng.
