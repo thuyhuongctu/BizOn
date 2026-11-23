@@ -15,6 +15,7 @@
  * Dùng:  NODE_PATH=… node scripts/video/dung-phim.mjs --tap 01 --lang vi|en [--out thư-mục] [--canh thư-mục-cảnh-NV] [--nhap] [--chi-html]
  *   --nhap      chưa đủ giọng hay cảnh NV: căn giờ theo mốc kịch bản, cảnh NV thiếu thay bằng thẻ chờ (tên tệp thêm «-nhap»)
  *   --chi-html  chỉ ghi thư mục dựng (index.html cho HyperFrames), không kết xuất – dùng cho test và xem trước
+ *   --tho 0..1  giữ bao nhiêu phần khoảng dư giữa giọng thật và mốc kịch bản (mặc định 0,5)
  *   --phu-de vi|en  in lời Lumina thành phụ đề trên hình (bản duyệt nhịp, chiếu lớp); bản phát hành dùng .vtt
  * Kết quả: dua-trai-ra-bien-NN-<lang>.mp4, -720p.mp4, -poster.jpg/.webp, phụ đề .vi.vtt và .en.vtt (cùng mốc câu).
  */
@@ -33,6 +34,7 @@ const OUT = resolve(arg('--out') || join(ROOT, 'artifacts', 'phim'));
 const CANH_DIR = resolve(arg('--canh') || join(ROOT, 'assets/video/src/dua-trai-ra-bien', 'tap-' + TAP, 'canh'));
 const NAME = `dua-trai-ra-bien-${TAP}-${LANG}` + (NHAP ? '-nhap' : '') + (PHU_DE ? '-phu-de-' + PHU_DE : '');
 const LEAD = 0.3, GAP = 0.35, TAIL = 0.6, FPS = 30;
+const THO = arg('--tho') != null ? Math.min(1, Math.max(0, +arg('--tho'))) : 0.5;
 const R = p => join(ROOT, p), read = p => readFileSync(R(p), 'utf8');
 const ff = (...a) => { const r = spawnSync('ffmpeg', ['-v', 'error', '-y', ...a], { stdio: 'inherit' }); if (r.status !== 0) throw new Error('ffmpeg lỗi: ' + a.join(' ').slice(0, 200)); };
 const dur = f => parseFloat(spawnSync('ffprobe', ['-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', f], { encoding: 'utf8' }).stdout);
@@ -65,7 +67,10 @@ if (NHAP) { // theo mốc kịch bản; câu cuối dài cau_cuoi_giay
       const w = join(tmp, `g${k.so}.wav`);
       ff('-i', giongCua(k), '-af', 'silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0.05,areverse,silenceremove=start_periods=1:start_threshold=-45dB:start_silence=0.08,areverse,aresample=48000', '-ac', '1', w);
       d = dur(w); CAU.push({ so: k.so, a: t, loiHet: t + d, w, canh: k.canh });
-      t += d + GAP;
+      // Khoảng thở: giọng thật thường nhanh hơn mốc kịch bản; giữ lại một phần (--tho, mặc định 0,5) phần dư
+      // để cảnh số liệu kịp hiện và người xem kịp đọc bong bóng thoại.
+      const ke = (i + 1 < KB.length ? KB[i + 1].moc : k.moc + CFG.cau_cuoi_giay) - k.moc;
+      t += d + GAP + THO * Math.max(0, ke - d - GAP);
     } else { // câu không lời (chữ chạy): giữ thời lượng dự kiến trong kịch bản
       d = (i + 1 < KB.length ? KB[i + 1].moc : k.moc + CFG.cau_cuoi_giay) - k.moc;
       CAU.push({ so: k.so, a: t, canh: k.canh }); t += d;

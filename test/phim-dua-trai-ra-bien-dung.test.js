@@ -26,6 +26,13 @@ for (const k of KB) {
   assert.deepEqual(co.map(x => [x.ai, x.vi, x.en]), bong.map(x => [x.ai, x.vi, x.en]), 'câu ' + k.so + ': bong bóng thoại khớp kịch bản');
   if (/▭ \d\d:\d\d:\d\d/.test(k.chu)) assert.ok((G.chu[k.so] || []).some(x => x.loai === 'dem' && k.chu.includes(x.tu)), 'câu ' + k.so + ': có đồng hồ đếm ngược');
 }
+// Giọng Lumina theo câu: thư mục ngôn ngữ nào đã có thì phải đủ mọi câu có lời, đúng số câu, không thừa
+for (const l of ['vi', 'en']) {
+  const dir = R(path.dirname(G.giong.replace('{lang}', l)));
+  if (!fs.existsSync(dir)) continue;
+  const can = KB.filter(k => k[l] && k[l] !== '—').map(k => String(k.so).padStart(2, '0') + '.mp3');
+  assert.deepEqual(fs.readdirSync(dir).filter(f => f.endsWith('.mp3')).sort(), can.sort(), l + ': giọng đủ ' + can.length + ' câu, đặt tên theo số câu');
+}
 for (const so of Object.keys(G.chu)) assert.ok(KB.some(k => k.so === +so), 'tệp ghép: câu ' + so + ' có trong kịch bản');
 
 // 2. Trang cảnh và script dựng
