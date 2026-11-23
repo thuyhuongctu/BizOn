@@ -80,7 +80,7 @@
 
     /* mains */
     var img = ['assets/covers/ben-phu-sa-3d.webp','assets/covers/bat-nghiep-3d-v4.webp','assets/covers/ho-chieu-thuong-hieu-3d-v2.webp','assets/covers/ho-chieu-sau-rieng-cho-noi.webp'];
-    var tagBg = ['#0F5C4E','var(--clay-orange)','#B3541A','#B3541A'];
+    var tagBg = ['#0F5C4E','#B3541A','#B3541A','#B3541A'];   // 23/11/2026: chữ trắng trên cam #E8762D chỉ 2,97:1 → #B3541A (WCAG 1.4.3)
     var play = [B+'ben-phu-sa.html', B+'game.html', B+'brand-passport.html', B+'lab/ho-chieu-sau-rieng.html'];
     var d3 = [B+'ben-phu-sa-3d.html', B+'BizOn Game 3D.html', B+'Ho Chieu Thuong Hieu 3D.html', B+'lab/ho-chieu-sau-rieng-3d.html'];
     var journey = '<a id="ar-journey" href="'+B+'hanh-trinh.html" style="display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px 22px;padding:20px 24px;border-radius:30px;background:var(--clay-card);border:3px solid var(--clay-teal);color:var(--clay-ink);box-shadow:var(--clay-night-shadow,inset 0 -8px 0 rgba(110,70,30,.08),inset 0 5px 0 #fff,0 22px 30px -22px rgba(110,70,30,.5))">'

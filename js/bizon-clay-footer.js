@@ -47,7 +47,8 @@
     + col('Liên hệ','Contact',[
       { href:'lien-he.html', vi:'Liên hệ & Hợp tác', en:'Contact & partnerships' },
       { href:'tuyen-dung.html', vi:'Tuyển dụng', en:'Jobs' },
-      { href:'chinh-sach.html', vi:'Chính sách dữ liệu & quyền riêng tư', en:'Data & privacy policy' }
+      { href:'chinh-sach.html', vi:'Chính sách dữ liệu & quyền riêng tư', en:'Data & privacy policy' },
+      { href:'tiep-can.html', vi:'Tuyên bố tiếp cận', en:'Accessibility statement' }
     ]);
 
   var disVi = 'Trang web chỉ phục vụ mục đích giáo dục và nghiên cứu, không đại diện cho bất kỳ tổ chức chính trị nào. Hình ảnh quốc kỳ, bản đồ chỉ mang ý nghĩa minh họa văn hóa – giáo dục; quần đảo Hoàng Sa và Trường Sa thuộc chủ quyền Việt Nam. Bản đồ dữ liệu dùng ranh giới Natural Earth (dữ liệu công cộng), tham chiếu Bản đồ nền – Hệ thống VNSDI, Bộ Nông nghiệp và Môi trường.';

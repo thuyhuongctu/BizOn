@@ -16,7 +16,7 @@
     var n = tb.head.length, cols = COLS[n] || COLS[3], minW = n===3 ? '620px' : '420px';
     var h = '<div style="margin-top:16px">';
     if(tb.cap) h += '<div style="margin-bottom:8px;font-size:14px;font-weight:800">'+esc(tb.cap)+'</div>';
-    h += '<div style="overflow-x:auto;border-radius:18px;background:var(--clay-tray);box-shadow:inset 0 3px 6px rgba(110,70,30,.12)"><div style="min-width:'+minW+';padding:6px">';
+    h += '<div tabindex="0" role="region" aria-label="'+((document.documentElement.lang||'').slice(0,2)==='en'?'Table, scrolls sideways':'Bảng cuộn ngang')+'" style="overflow-x:auto;border-radius:18px;background:var(--clay-tray);box-shadow:inset 0 3px 6px rgba(110,70,30,.12)"><div style="min-width:'+minW+';padding:6px">';
     h += '<div style="display:grid;grid-template-columns:'+cols+';gap:12px;padding:10px 12px;font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#7A4A0E">'
       + tb.head.map(function(hd){ return '<div>'+esc(hd)+'</div>'; }).join('') + '</div>';
     h += tb.rows.map(function(row){
