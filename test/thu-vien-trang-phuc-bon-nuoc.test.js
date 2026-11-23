@@ -15,7 +15,7 @@ const D = ctx.window.BZ_LIB, E = ctx.window.BZ_LIB_EN;
 assert.ok(Array.isArray(D.world), 'thiếu mục world trong BZ_LIB');
 assert.equal(D.world.length, 28, 'phải đủ 28 ảnh (7 nhân vật × 4 nước)');
 for (const ai of ['lumina', 'tu', 'ceo', 'cfo', 'cmo', 'coo', 'sec']) for (const nuoc of ['no', 'fr', 'kr', 'sg']) {
-  const f = 'character/the-gioi/' + ai + '-' + nuoc + '.webp';
+  const f = 'character/the-gioi/' + ai + '-' + nuoc + '-v2.webp';
   const muc = D.world.find(a => a[0] === f);
   assert.ok(muc, 'thiếu mục ' + f);
   assert.ok(muc[1] && muc[2], 'thiếu tên/chú thích: ' + f);
