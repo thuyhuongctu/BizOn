@@ -18,7 +18,7 @@ Sau buổi chơi, người học có thể:
 ## 2 · Cấu trúc ván chơi
 
 - **4 vai:** HTX nhà vườn Cai Lậy · Cơ sở đóng gói Đắk Lắk · Công ty xuất khẩu TP.HCM · Doanh nghiệp cấp đông Tiền Giang.
-- **6 vụ**, chính vụ và nghịch vụ xen kẽ, theo mốc thật: mở cửa chính ngạch (27/7/2022) → lô đầu tiên qua Hà Khẩu → trùng vụ Thái Lan → **Nhiệm vụ vụ 4:** kiểm tra của Hải quan Trung Quốc và cảnh báo cadimi → Việt Nam vượt Thái Lan, chuẩn độ khô 35% → nghị định thư đông lạnh (giả định).
+- **6 vụ**, chính vụ và nghịch vụ xen kẽ, theo mốc thật: mở cửa chính ngạch (27/7/2022) → lô đầu tiên qua Hà Khẩu → trùng vụ Thái Lan → **Nhiệm vụ vụ 4:** kiểm tra của Hải quan Trung Quốc và cảnh báo cadimi → Việt Nam vượt Thái Lan, chuẩn độ khô 35% → nghị định thư đông lạnh (ký 19/8/2024).
 - **Mỗi vụ:** (1) mua tối đa 2 nguồn tin, có nguồn thiên lệch; (2) chọn 1 ưu tiên đầu tư, nguồn hàng (thương lái hay vùng liên kết có mã), xử lý nghịch vụ (HTX); (3) chia sản lượng cho 6 kênh; (4) chọn phản ứng với một biến cố.
 - **Điểm tổng 0–100**, công khai từ đầu: 30% lợi nhuận + 20% uy tín + 20% năng lực + 15% thích ứng + 15% bền vững.
 
@@ -39,13 +39,14 @@ Quy định, mốc thời gian và biến cố đều có trích nguồn hiển 
 - Nghị định thư kiểm dịch thực vật MARD–GACC (2022).
 - Báo cáo thị trường rau quả của Bộ Công Thương (12/2023, 01/2024, 02/2024).
 - Kết quả tra cứu «Xuất khẩu trái sầu riêng» của CESTI (04/2024).
+- Tin VTV/VGP về nghị định thư sầu riêng đông lạnh ký ngày 19/8/2024 (khóa FROZENPROTO).
 - Các nghiên cứu chuỗi cung ứng: Cai Lậy (2014), Phong Điền (2017), Tiền Giang (2009); Thái Lan (IDE-JETRO 2018; GMSARN 2023); Malaysia (2019; MARDI 2023); Đài Loan (2020); CGIAR (2022).
 
 **Giới hạn cần nói với người học:**
 - Khối lượng, hệ số giá và xác suất là **minh họa**. Chúng được neo vào tỷ lệ trong tài liệu (giá nghịch vụ gấp 2–3 lần; hao hụt 15–40%; doanh nghiệp xuất khẩu bán giá khoảng 1,8 lần giá mua năm 2014), nhưng không phải số thống kê.
 - Số liệu chi phí và biên lợi nhuận trong tài liệu là của 2009–2017, trước khi có chính ngạch.
 - Tài liệu không đề cập Vàng O; không có quy định riêng cho Mỹ, EU, Hàn Quốc, Trung Đông. Trò chơi chỉ dùng những gì tài liệu có.
-- Vụ 6 (nghị định thư đông lạnh) là **kịch bản giả định**: tài liệu 04/2024 chỉ cho biết Việt Nam đang thúc đẩy ký kết.
+- Vụ 6 (nghị định thư đông lạnh) dựa trên sự kiện thật: Bộ NN&PTNT và GACC ký nghị định thư ngày 19/8/2024 (nguồn FROZENPROTO, VTV/VGP). Bộ tài liệu 04/2024 ra đời trước mốc này nên chỉ ghi Việt Nam đang thúc đẩy ký kết; giá và nhu cầu kênh đông lạnh trong vụ 6 vẫn là tham số minh họa. (Sửa 23/11/2026: bản trước gọi vụ 6 là kịch bản giả định, không khớp dữ liệu game.)
 
 ## 4 · Gợi ý tổ chức buổi học (90 phút)
 
