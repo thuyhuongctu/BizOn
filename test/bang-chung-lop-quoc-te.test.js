@@ -29,7 +29,7 @@ check(+(/CACHE = 'bizon-v(\d+)'/.exec(R('sw.js')) || [])[1] >= 843, 'sw.js ≥ b
     for (const w of [360, 412]) {
       const ctx = await b.newContext({ viewport: { width: w, height: 860 }, locale: 'vi-VN' }); const p = await ctx.newPage(); const loi = []; p.on('pageerror', e => loi.push(e.message));
       await p.goto(BASE + '/bang-chung.html', { timeout: 60000 }); await p.waitForTimeout(1500);
-      const r = await p.evaluate(() => [...document.querySelectorAll('.bc-h2')].map(h => {
+      const r = await p.evaluate(() => [...document.querySelectorAll('.bc-h2')].filter(h => h.getClientRects().length).map(h => {   // bỏ mục đang ẩn (2c Quy mô sử dụng khi chưa có số)
         const rng = document.createRange(); rng.selectNodeContents(h.querySelector('span:last-child')); const chu = rng.getBoundingClientRect();
         const ke = h.nextElementSibling.getBoundingClientRect(), so = h.querySelector('.num').getBoundingClientRect();
         return { cach: Math.round(ke.top - chu.bottom), so: Math.round(so.width), mb: getComputedStyle(h).marginBottom };
