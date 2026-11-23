@@ -166,6 +166,7 @@
         gsap.set(q(el, '#c8s'), { strokeDashoffset: 0 }); gsap.set(q(el, '#c8sl2'), { background: 'var(--xanh)' });
         ['#c8xt', '#c8xtn', '#c8xtl'].forEach(s => gsap.set(q(el, s), { autoAlpha: 0.25 }));
         q(el, '#c8sln').textContent = L('40 giờ', '40 h');
+        if (so === 22) { q(el, '#c8sln').textContent = L('40 + 5 giờ', '40 + 5 h'); q(el, '#c8sln').style.left = (X(45) + 20) + 'px'; }
         mo(han, c.a + 0.4, 0.4); vao(q(el, '#c8hann'), c.a + 0.5);
         if (so === 11) { hide('#c8cho'); q(kq, '.lon').textContent = L('40 / 44 · vừa khít', '40 / 44 · cutting it close'); vao(kq, c.a + 1.6); }
         else {
