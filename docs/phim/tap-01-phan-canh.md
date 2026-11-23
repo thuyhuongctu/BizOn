@@ -60,8 +60,8 @@ Lưu ở Drive `Mua-1/00-chung/khung-hinh-stitch/` (đợt 1), `dot-2-23-11/` (�
 | C05 | `tap01-C05-minh-khang-chi-ra-song.png` | 3 | Minh Khang chỉ ra sông, cầm túi tiền |
 | C07 | `tap01-C07-lina-park-ben-cang.png` | 2 | Dáng Lina Park |
 | C09 | `tap01-C09-an-nhien-thung-lanh.png` | 3 | An Nhiên kiểm trái trong thùng lạnh |
-| C10 | `tap01-C10-kim-long-van-phong.png`, `tap01-C10b-bai-xe-lanh-day.png` | 2, 3 | Nửa đầu: Kim Long trong văn phòng; nửa sau: bãi xe lạnh đầy xe |
-| C11 | `tap01-C11-xe-lanh-tren-cau-ra-cang.png` | 1 | Tạm thời; còn thiếu khung bãi xe gần như trống |
+| C10 | `tap01-C10-kim-long-van-phong.png`, `tap01-C10b-bai-xe-lanh-day-v2-nho.png` | 2, 3 | Nửa đầu: Kim Long trong văn phòng; nửa sau: bãi xe lạnh đầy xe (cùng bãi với C11) |
+| C11 | `tap01-C11-bai-xe-lanh-gan-trong-nho.png` | 3 | Cùng bãi xe, chỉ còn ba xe lạnh |
 | C12 | `tap01-C12-lumina-sa-ban.png` | 2 | Nền ảnh Lumina cạnh bảng ba cột (em dựng) |
 | C13 | `tap01-C13-minh-khang-lina-teo.png` | 3 | Minh Khang, Lina Park, Tèo Soi quanh bàn |
 | C14 | `tap01-C14-ba-sau-lanh.png` | 3 | Bà Sáu Lành bên mép bến |

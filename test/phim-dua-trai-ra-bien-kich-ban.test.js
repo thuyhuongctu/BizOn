@@ -98,11 +98,11 @@ for (const dong of stitch.split('\n').filter(l => l.startsWith('| `') && /Kim Lo
 const dot2 = (khung.split('## 12. Khung hình Stitch đợt 2')[1] || '').split('\n## 13.')[0];
 const dot3 = khung.split('## 13. Khung hình Stitch đợt 3')[1] || '';
 const khungDot3 = [...dot3.matchAll(/^\| `([A-Za-z0-9-]+\.png)` \|/gm)].map(m => m[1]);
-assert.equal(khungDot3.length, 19, 'đợt 3 kê đủ 19 khung');
+assert.equal(khungDot3.length, 23, 'đợt 3 kê đủ 23 khung (19 + 4 chị gửi qua trò chuyện)');
 for (const dong of dot3.split('\n').filter(l => /^\| `/.test(l) && /Kim Long/.test(l))) assert.fail('đợt 3 không có Kim Long ở phía hợp tác xã: ' + dong.slice(0, 50));
 const khungDot2 = [...dot2.matchAll(/^\| `([A-Za-z0-9-]+\.png)` \|/gm)].map(m => m[1]);
 assert.equal(khungDot2.length, 25, 'đợt 2 kê đủ 25 khung');
-assert.equal(new Set([...khungStitch, ...khungDot2, ...khungDot3]).size, 65, 'tên khung ba đợt không trùng nhau');
+assert.equal(new Set([...khungStitch, ...khungDot2, ...khungDot3]).size, 69, 'tên khung ba đợt không trùng nhau');
 assert.match(dot2, /không theo kịch bản đã duyệt/, 'ghi rõ không theo ghi chú Stitch tự viết');
 for (const dong of dot2.split('\n').filter(l => l.startsWith('| `') && /Kim Long/.test(l))) {
   const f = dong.match(/`([^`]+)`/)[1];

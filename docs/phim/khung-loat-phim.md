@@ -199,5 +199,9 @@ Lưu ở Drive `00-chung/khung-hinh-stitch/dot-3-23-11/`. Chị tạo theo «T�
 | `tap06-ca-nhom-o-cang.png` | Cả nhóm vui mừng ở cảng, cần cẩu nhấc container | Tập 6: kết mùa | – |
 | `tap06-tau-me-roi-cang.png` | Tàu mẹ rời cảng, tàu lai dắt phun nước | Tập 6 | – |
 | `sua-buong-lai-tau-co-thuyen-truong.png` | Tèo Soi, Lina Park trong buồng lái cùng thuyền trưởng | Tập 6 | Thuyền trưởng là nhân vật mới rõ mặt → chỉ hiện dáng xa hoặc bỏ |
+| `tap01-C10b-bai-xe-lanh-day-v2-nho.png` | Bãi xe lạnh đầy xe (cùng bãi với C11) | Tập 1: C10 (nửa sau), thay bản đầu để nối liền với C11 | Bản 688×384: cần bản đủ độ phân giải |
+| `tap01-C11-bai-xe-lanh-gan-trong-nho.png` | Cùng bãi, chỉ còn ba xe lạnh | Tập 1: C11 | Bản 688×384: cần bản đủ độ phân giải |
+| `tap01-khung0-ben-dem-v2-nho.png` | Bến đêm dây đèn lồng, ấm trà trên bàn, đồng hồ trên cột | Tập 1: bối cảnh chung, phương án 2 | Bản 688×384 |
+| `tap06-mui-tau-teo-lina-v2-nho.png` | Tèo Soi đội mũ thuyền trưởng và Lina Park ở mũi tàu ra biển | Tập 6 (thay khung buồng lái có thuyền trưởng) | Bản 688×384 |
 
-Còn thiếu cho tập 1: **C11** (bãi xe gần như trống, cùng bãi với `tap01-C10b-bai-xe-lanh-day.png`) và, nếu muốn, **C20** (Tèo Soi ôm trái phủ sương giá; tạm dùng `tap01-C20-teo-soi-kinh-lup.png` của đợt 2).
+Bốn khung cuối chị gửi qua trò chuyện tối 23/11 nên chỉ có bản nhỏ 688×384 (tên có đuôi `-nho`); khi dựng video cảnh cần bản gốc đủ độ phân giải. Còn thiếu, nếu muốn: **C20** (Tèo Soi ôm trái phủ sương giá; tạm dùng `tap01-C20-teo-soi-kinh-lup.png` của đợt 2).
