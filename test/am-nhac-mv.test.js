@@ -32,4 +32,8 @@ assert.ok(ma.has('Vy3dhR4ichs'), 'vẫn giữ bản lyric video Durian Passport'
 // 21/11/2026: chị gửi MV của bài mới, tên trên YouTube «Ngọn hải đăng soi đường» (The Northern Shield) – 8yottDb7Bg0
 assert.ok(ma.has('8yottDb7Bg0') && s.includes('id="ngon-hai-dang"') && s.includes('assets/video/mv-ngon-hai-dang-soi-duong-v2-poster.webp'), 'có MV The Northern Shield trong Kho âm nhạc');
 assert.ok(!ma.has('hGpwZgAsx2I') && !ma.has('sDI4m87s8Ss'), 'không còn hai bản MV cũ đã gỡ');
+// 22/11/2026: chị gỡ MV Bến Phù Sa bản tranh sáp màu (ynmGb3GqUdU) khỏi album BizOn trên YouTube – Kho âm nhạc bỏ nút này, giữ bản 3D
+assert.ok(!ma.has('ynmGb3GqUdU') && ma.has('LoIQxNs9ROo'), 'đã gỡ MV Bến Phù Sa tranh vẽ, còn bản 3D');
+assert.ok(!s.includes('kể bằng hai MV') && !s.includes('in two music videos'), 'câu giới thiệu MV Bến Phù Sa không còn nói «hai MV»');
+assert.ok(+(fs.readFileSync(R('sw.js'), 'utf8').match(/bizon-v(\d+)/) || [])[1] >= 955, 'sw.js ≥ v955');
 console.log('am-nhac-mv: ' + nut.length + ' nút MV, poster và mã YouTube đều hợp lệ');
