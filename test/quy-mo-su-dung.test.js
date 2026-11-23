@@ -22,7 +22,7 @@ const MAU = { lop: 12, doi_bat_nghiep: 1234, van_bat_nghiep_xong: 87, luot_ben_p
     await ctx.route(/rest\/v1\/rpc\/bizon_quy_mo_su_dung/, r => traVe ? r.fulfill(traVe) : r.abort());
     const pg = await ctx.newPage(), loi = []; pg.on('pageerror', e => loi.push(e.message));
     await pg.goto(BASE + '/bang-chung.html', { waitUntil: 'load' }); await pg.waitForTimeout(1500);
-    const st = await pg.evaluate(() => { const s = document.getElementById('quy-mo'); return { an: s.hidden, so: [...s.querySelectorAll('[data-qm]')].map(e => e.textContent), tran: document.documentElement.scrollWidth > innerWidth }; });
+    const st = await pg.evaluate(() => { const s = document.getElementById('quy-mo'); return { an: s.hidden, so: [...s.querySelectorAll('[data-qm]')].map(e => e.textContent), an0: [...s.querySelectorAll('.bc-stat')].filter(e => e.hidden).map(e => e.querySelector('[data-qm]').getAttribute('data-qm')), tran: document.documentElement.scrollWidth > innerWidth }; });
     await ctx.close(); return { st, loi };
   };
   try {
@@ -33,6 +33,8 @@ const MAU = { lop: 12, doi_bat_nghiep: 1234, van_bat_nghiep_xong: 87, luot_ben_p
     check(!st.an && st.so.join('|') === '12|1,234|87|456|78|08/04/2026', 'en: số và ngày định dạng Anh (' + st.so.join(', ') + ')');
     ({ st, loi } = await mo('vi', { status: 404, contentType: 'application/json', body: '{}' }));
     check(st.an && !loi.length, 'chưa có hàm (404): khối ẩn, không lỗi');
+    ({ st } = await mo('vi', { status: 200, contentType: 'application/json', body: JSON.stringify({ ...MAU, luot_ben_phu_sa: 0 }) }));
+    check(!st.an && st.an0.join() === 'luot_ben_phu_sa', 'ô bằng 0 (chưa có ván Bến Phù Sa nào nộp) thì ẩn, các ô khác vẫn hiện');
     ({ st } = await mo('vi', null));
     check(st.an, 'mất mạng: khối ẩn');
     ({ st } = await mo('vi', { status: 200, contentType: 'application/json', body: JSON.stringify({ ...MAU, lop: 0 }) }));

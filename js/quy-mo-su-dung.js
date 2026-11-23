@@ -12,7 +12,7 @@
     sec.querySelectorAll('[data-qm]').forEach(function (el) {
       var k = el.getAttribute('data-qm'), v = so[k];
       if (k === 'tu_ngay') { var p = String(v || '').split('-'); el.textContent = p.length === 3 ? (en() ? p[1] + '/' + p[2] + '/' + p[0] : p[2] + '/' + p[1] + '/' + p[0]) : '–'; }
-      else el.textContent = typeof v === 'number' ? f.format(v) : '–';
+      else { el.textContent = typeof v === 'number' ? f.format(v) : '–'; var o = el.closest('.bc-stat'); if (o) o.hidden = !(v > 0); }   // ô bằng 0 thì ẩn (chưa có lớp nào nộp)
     });
   }
   var c = window.BIZON_BACKEND;
