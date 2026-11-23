@@ -80,7 +80,7 @@
 
 - [ ] T023 [US3] Viết `test/chon-tuyen.test.js`, chạy và thấy hỏng. Test kiểm:
   - **mô hình tính (Node `vm`):** hai tuyến × ba tình huống × ba mục tiêu cho kết quả xác định; mỗi tuyến tốt nhất ở ít nhất một tổ hợp (SC-004); mỗi tham số có nguồn;
-  - **giao diện (Playwright, 360/390/1280, VI/EN):** chọn, xem kết quả, đổi mục tiêu thì lời nhận xét đổi; vùng chạm ≥ 44 px; không gửi mạng; chạy ngoại tuyến.
+  - **giao diện (Playwright, 360/390/1280, VI/EN):** chọn, xem kết quả, đổi mục tiêu thì lời nhận xét đổi; vùng chạm ≥ 44 px; không gửi lựa chọn của người chơi lên mạng (chỉ có lượt đếm GoatCounter chung của trang); chạy ngoại tuyến.
 - [ ] T024 [US3] `js/chon-tuyen.js`:
   - tham số ở đầu tệp (chi phí, thời gian, hao hụt, khả năng kịp tàu theo tình huống), lấy từ `docs/phim/nguon-so-lieu.md`;
   - giao diện chọn tuyến, tình huống, mục tiêu;
