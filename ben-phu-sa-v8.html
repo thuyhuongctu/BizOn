@@ -1296,7 +1296,9 @@ body.bps-net-on .vutru-goc{display:none}
     // Chỉ điền sẵn khi ô còn trống – initSubmit() chạy lại mỗi lần đổi ngôn ngữ
     // ở màn kết thúc, không được ghi đè chữ người chơi vừa gõ.
     try {
-      if (!$('ft-class').value) $('ft-class').value = localStorage.getItem('bps-class') || '';
+      // Mã lớp lấy theo thứ tự: ?lop= trên đường dẫn giảng viên phát (trang «Vào lớp» ghép sẵn) → hộ chiếu Hành trình → mã đã nộp
+      // lần trước. Trước 23/11/2026 chỉ lấy mã đã nộp, nên sinh viên vào từ đường dẫn lớp gặp ô trống ở màn nộp bài.
+      if (!$('ft-class').value) $('ft-class').value = (window.BizOnLive && BizOnLive.classFor('bps')) || (function () { try { var q = (new URLSearchParams(location.search).get('lop') || '').trim().toUpperCase(); return /^[A-Z0-9_-]{3,40}$/.test(q) ? q : ''; } catch (e) { return ''; } })() || localStorage.getItem('bps-class') || '';
       if (!$('ft-name').value) $('ft-name').value = localStorage.getItem('bps-name') || '';
     } catch (e) {}
   }

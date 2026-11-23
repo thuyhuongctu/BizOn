@@ -21,7 +21,7 @@ for (const t of the) {
   assert.equal(nhan.length, 2, ten + ': hai nhãn');
   assert.ok(nhan.every(x => x.length <= 22), ten + ': nhãn ngắn (' + nhan.join(' · ') + ')');
 }
-assert.ok(+(/CACHE = 'bizon-v(\d+)'/.exec(read('sw.js')) || [])[1] >= 962, 'sw.js ≥ v962');
+assert.ok(+(/CACHE = 'bizon-v(\d+)'/.exec(read('sw.js')) || [])[1] >= 964, 'sw.js ≥ v964');
 
 (async () => {
   const b = await chromium.launch();
