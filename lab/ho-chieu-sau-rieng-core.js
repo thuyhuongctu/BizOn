@@ -207,6 +207,25 @@
       style: L(rv.styleVi, rv.styleEn), plan, planText: plan.map((x, i) => (i + 1) + '. ' + x).join(' · '), alloc,
       linked: L('Vùng liên kết ', 'Linked areas ') + Math.round((rv.linked || 0) * 100) + '%' + (rv.induce ? L(' · có xử lý nghịch vụ', ' · induces off-season') : L(' · không ép nghịch vụ', ' · no off-season forcing')) };
   }
+  // Thẻ «Mô hình hoạt động thế nào?» (23/11/2026): năm dòng ngắn, cùng một nguồn cho bản 2D, v2 và 3D.
+  // Là bề mặt giải thích cơ chế: mỗi bản đặt trong khối .bz-explain để lớp «hộp đen» không thấy (docs/architecture/NHANH-HOP-DEN.md).
+  // Không phải một mục của howToPlay (test giữ đúng 7 mục). Trọng số điểm đọc từ dữ liệu nên đổi tham số thì thẻ đổi theo.
+  function modelCard(D, L) {
+    const W = D.scoreWeights;
+    return {
+      title: L('Mô hình hoạt động thế nào?', 'How does the model work?'),
+      lines: [
+        [L('Bạn quyết định', 'You decide'), L('mỗi vụ trong 6 vụ chính – nghịch (2022–2025): một ưu tiên đầu tư, tỷ lệ mua từ vùng trồng có mã số, cách chia hàng cho các kênh, tối đa 2 nguồn tin và cách ứng phó biến cố của vụ.', 'each of the 6 main and off seasons (2022–2025): one investment priority, the share bought from coded growing areas, how to split goods across channels, up to 2 information sources and how to respond to the season’s event.')],
+        [L('Giá, kênh, rủi ro', 'Price, channels, risk'), L('giá bán = giá vựa của vụ × hệ số của kênh. Kênh giá cao mở dần theo đầu tư: chính ngạch Trung Quốc cần mã vùng trồng và mã đóng gói, đông lạnh cần kho cấp đông, Nhật Bản cần kiểm nghiệm. Lô chính ngạch có thể bị chặn và phải bán nội địa giá thấp: mua nhiều qua thương lái thì rủi ro tăng, kiểm nghiệm thì rủi ro giảm.', 'selling price = the season’s depot price × the channel’s multiplier. High-price channels open with investment: official export to China needs area and packing codes, frozen needs a freezer, Japan needs testing. An official lot can be blocked and sold domestically at a low price: buying more through traders raises the risk, testing lowers it.')],
+        [L('Tất định', 'Deterministic'), L('cùng mã lớp, cùng vai, cùng quyết định thì luôn ra cùng kết quả. Biến cố và các lần kiểm tra lô rút theo hạt giống của lớp. Ba đối thủ AI theo kịch bản cố định: là mốc so sánh, không phản ứng với đội, không giành thị phần.', 'the same class code, role and decisions always give the same result. Events and lot checks are drawn from the class seed. The three AI rivals follow fixed scripts: a benchmark that does not react to you or take market share.')],
+        [L('Điểm', 'Score'), L('lợi nhuận ' + W.profit + ' · uy tín ' + W.reputation + ' · năng lực ' + W.capability + ' · ứng phó biến cố ' + W.adaptation + ' · bền vững ' + W.sustainability + ' (thang 100).', 'profit ' + W.profit + ' · reputation ' + W.reputation + ' · capability ' + W.capability + ' · shock response ' + W.adaptation + ' · sustainability ' + W.sustainability + ' (out of 100).')],
+        [L('Không làm được', 'Does not do'), L('sản lượng, hệ số giá và xác suất là minh hoạ, neo vào tỷ lệ trong tài liệu chứ không phải số thống kê. Không có quy định riêng của Mỹ, EU. Kết quả để học cách ra quyết định, không phải dự báo thị trường.', 'volumes, price multipliers and probabilities are illustrative, anchored to ratios in the documents, not statistics. No US or EU rules. Results are for learning to decide, not market forecasts.')]
+      ],
+      more: L('Bảng tham số và nguồn', 'Parameters and sources'),
+      href: 'truong-hoc-thuat.html#tham-so-sau-rieng'
+    };
+  }
+
   // Câu nói rõ vai trò của đối thủ, dùng ở mọi chỗ giới thiệu đối thủ.
   function rivalNote(L) {
     return L('Ba đối thủ chơi cùng doanh nghiệp, cùng 6 vụ, cùng engine với đội, theo kịch bản cố định ghi ở trên. Họ không phản ứng với quyết định của đội và không giành thị phần: đây là mốc để so sánh. Đội cắm cờ ở vụ nào lợi nhuận vụ đó bằng hoặc hơn đối thủ cao nhất.',
@@ -240,6 +259,7 @@
     goals: goals,
     causes: causes,
     howToPlay: howToPlay,
+    modelCard: modelCard,
     rivalCard: rivalCard,
     rivalNote: rivalNote,
     cumFlag: cumFlag,

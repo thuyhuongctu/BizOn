@@ -203,6 +203,7 @@ details.gv{margin-top:10px} details.gv summary{cursor:pointer;font-weight:700;fo
 .rules-box{background:var(--panel);border-radius:var(--radius);box-shadow:var(--shadow);max-width:760px;width:100%;max-height:100%;display:flex;flex-direction:column;overflow:hidden}
 .rules-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line);font-size:16px}
 .rules-body{overflow:auto;padding:12px 16px}.rules-body h3{margin:14px 0 6px;font-size:14px}.rules-body h3:first-child{margin-top:0}
+.rules-body .mc-more{margin:12px 0 0;font-size:13px;font-weight:700}.rules-body .mc-more a{color:inherit;text-decoration:underline;text-underline-offset:2px}
 .rules-body dl{margin:0;display:grid;grid-template-columns:minmax(130px,1fr) 2.2fr;gap:4px 12px;font-size:13px;line-height:1.5}.rules-body dt{font-weight:700}.rules-body dd{margin:0;color:var(--ink-2,#3d484f)}
 @media(max-width:600px){.rules-body dl{grid-template-columns:1fr}.rules-body dd{margin:0 0 6px}}
 .music{min-width:38px}
@@ -258,6 +259,7 @@ footer{color:var(--faint)}
   <button class="tbtn music" id="musicBtn" type="button" aria-pressed="false">♪</button>
   <button class="tbtn" id="trackBtn" type="button">…</button>
   <button class="tbtn" id="rulesBtn" type="button">…</button>
+  <button class="tbtn bz-explain" id="modelBtn" type="button" aria-haspopup="dialog">…</button>
   <button class="tbtn" id="exitBtn" type="button" hidden></button>
   <a class="tbtn" href="ho-chieu-sau-rieng-3d.html" id="map3dLink">🗺️</a>
   <a class="tbtn" href="../lop-hoc.html" id="backLink">…</a>
@@ -351,6 +353,8 @@ footer{color:var(--faint)}
     $('homeLink').textContent = L('← Trang chủ', '← Home');
     $('map3dLink').textContent = L('🗺️ Bản 3D', '🗺️ 3D version');
     $('rulesBtn').textContent = L('📘 Cách chơi', '📘 How to play');
+    $('modelBtn').textContent = L('🔍 Mô hình', '🔍 Model');
+    $('modelBtn').title = L('Mô hình hoạt động thế nào? Năm dòng tóm tắt và giới hạn', 'How does the model work? Five lines and its limits');
     $('rulesBtn').title = L('Luật chơi 6 vụ: vòng chơi, 5 quyết định, đầu tư mở kênh, cờ, cách tính điểm', 'How the 6 seasons work: the round, 5 decisions, what unlocks what, flags, scoring');
     $('exitBtn').hidden = !APP;
     $('exitBtn').textContent = L('⏏ Thoát ván', '⏏ Quit game');
@@ -403,6 +407,9 @@ footer{color:var(--faint)}
   // «Cách chơi 6 vụ»: luật rút từ dữ liệu và tham số qua DurianCore.howToPlay (dùng chung với bản 3D)
   const rulesHTML = () => DurianCore.howToPlay(D, L).map(sec => `<h3>${esc(sec.title)}</h3><dl>${sec.lines.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('')}</dl>`).join('');
   const openRules = () => { $('rulesTitle').textContent = L('📘 Cách chơi 6 vụ', '📘 How to play the 6 seasons'); $('rulesBody').innerHTML = rulesHTML(); $('rulesModal').hidden = false; $('rulesClose').focus(); };
+  // Thẻ mô hình: nội dung chung ở DurianCore.modelCard; khối .bz-explain để lớp hộp đen không thấy.
+  const modelHTML = () => { const c = DurianCore.modelCard(D, L); return `<div class="bz-explain"><dl>${c.lines.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join('')}</dl><p class="mc-more"><a href="../${c.href}">${esc(c.more)} →</a></p></div>`; };
+  const openModel = () => { $('rulesTitle').textContent = '🔍 ' + DurianCore.modelCard(D, L).title; $('rulesBody').innerHTML = modelHTML(); $('rulesModal').hidden = false; $('rulesClose').focus(); };
   const flowHTML = () => `<ol class="flow">${D.flow.map((f, i) => `<li><b>${i + 1}</b>${nm(f)} · ${f.min}′</li>`).join('')}</ol>`;
   const teamMember = id => D.team.find(m => m.id === id);
   const rivalInfo = id => D.rivals.find(r => r.id === id);
@@ -1187,6 +1194,7 @@ footer{color:var(--faint)}
 
   // Thoát ván đang chơi về màn mở đầu. Ván vẫn lưu trên máy: ở màn mở đầu có «Chơi tiếp», «Xóa ván» và «Bắt đầu ván mới».
   $('rulesBtn').onclick = openRules;
+  $('modelBtn').onclick = openModel;
   $('rulesClose').onclick = () => { $('rulesModal').hidden = true; };
   $('rulesModal').onclick = e => { if (e.target === $('rulesModal')) $('rulesModal').hidden = true; };
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('rulesModal').hidden) $('rulesModal').hidden = true; });
