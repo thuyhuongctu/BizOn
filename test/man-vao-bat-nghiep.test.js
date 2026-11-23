@@ -7,7 +7,8 @@
  * - ?lop=: mã lớp đã điền (chữ hoa, bỏ khoảng trắng), đường «Tôi có mã lớp» mở sẵn;
  * - ?giao-dien=goc: ba phần tử mới ẩn; vị trí mọi phần tử trong thẻ trùng với khi tháo khối bọc (bố cục y như bản hồ sơ);
  * - Đội Demo và đường mã lớp (không mã) đều vào được game như trước; không lỗi JS.
- * Đổi CSS hay chữ của màn vào cũ thì test này hỏng: đó là bản trong hồ sơ, phải hỏi chị trước. */
+ * Đổi CSS hay chữ của màn vào cũ thì test này hỏng: đó là bản trong hồ sơ, phải hỏi chị trước.
+ * Thay đổi đã duyệt: 23/11/2026 chữ nút .go trắng → #033337 (tương phản). */
 'use strict';
 const fs = require('node:fs'), path = require('node:path'), crypto = require('node:crypto');
 const BASE = process.env.BIZON_URL || 'http://127.0.0.1:8899';
@@ -27,8 +28,12 @@ for (const id of ['l3PathClass', 'l3Back', 'l3Form', 'l3GocLink', 'l3Email', 'l3
     .replace(/ *<button type="button" class="l3-back" id="l3Back"[^\n]*\n/, '').replace(/ *<div id="l3Form">\n/, '')
     .replace(/(id="l3Go"[^\n]*\n) *<\/div>\n/, '$1').replace(/<a href="\?giao-dien=goc" id="l3GocLink"[^>]*>[^<]*<\/a>/, '');
   check(sha(goc) === 'dec180a96b677de250e25bd34d66f2d51965f929e37b9f8a10b1e864ea3b14f5', 'bỏ phần mới thì khối #login3d trùng bản hồ sơ (chữ, thứ tự ô, nút)');
-  const css = html.split('\n').filter(l => l.includes('#login3d') && !/goc|l3-back|focus-visible/.test(l)).join('\n');
-  check(sha(css) === 'f67d50e60e9ab61e01b0f0f3fa3411226e1d69aa2ce4ea150d7c8ccab7095faa', 'các dòng CSS #login3d của bản hồ sơ còn nguyên');
+  // 23/11/2026 chị duyệt một thay đổi khác bản hồ sơ: chữ nút «Bắt đầu» (.go) từ trắng sang #033337 để đạt tương phản 4,5:1
+  // (WCAG 1.4.3; trắng trên cam #e8762d chỉ ≈ 3:1). Đổi ngược đúng chỗ đó trước khi băm: mọi dòng CSS khác vẫn phải trùng bản hồ sơ.
+  const DUYET = ['background:#e8762d;color:#033337;', 'background:#e8762d;color:#fff;'];
+  check(html.includes('#login3d .go{margin-top:6px;border:0;' + DUYET[0]), 'nút «Bắt đầu» chữ sẫm #033337 (thay đổi đã duyệt)');
+  const css = html.split('\n').filter(l => l.includes('#login3d') && !/goc|l3-back|focus-visible/.test(l)).join('\n').replace(DUYET[0], DUYET[1]);
+  check(sha(css) === 'f67d50e60e9ab61e01b0f0f3fa3411226e1d69aa2ce4ea150d7c8ccab7095faa', 'các dòng CSS #login3d của bản hồ sơ còn nguyên (trừ thay đổi đã duyệt)');
 }
 check(/document\.getElementById\('l3Go'\)\.onclick = \(\) => l3Enter\(false\);/.test(html) && /document\.getElementById\('l3Demo'\)\.onclick = \(\) => l3Enter\(true\);/.test(html), 'trình xử lý #l3Go, #l3Demo giữ nguyên');
 check(/qs\.get\('giao-dien'\) === 'goc'/.test(html) && /classList\.add\('goc'\)/.test(html), 'đọc ?giao-dien=goc');

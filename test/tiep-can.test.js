@@ -53,6 +53,7 @@ const CASES = [
   ['truong-hoc-thuat.html', '.af-node[data-node="n3"] .eb', 'tiêu đề nút sơ đồ chưa chọn'],
   ['truong-hoc-thuat.html', '.af-nodepanel .next span', 'dòng «tiếp theo» trong khung sơ đồ'],
   ['bang-chung.html', '.bc-more', 'nút xem thêm trang Bằng chứng'],
+  ['BizOn%20Game%203D.html', '#login3d .go', 'nút «Bắt đầu» màn vào Bật Nghiệp 3D'],
   ['tiep-can.html', '.tc-sec h2', 'tiêu đề mục trang tiếp cận'],
 ];
 (async () => {
