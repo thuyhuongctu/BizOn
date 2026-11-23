@@ -250,6 +250,11 @@
   // ---------- Cảnh nhân vật (NV): có video thì để trong suốt (video nằm dưới), chưa có thì hiện thẻ chờ ----------
   function NV(d) {
     if (d.video) return tao('', 'doan nv-co');
+    if (d.tinh && d.tinh.length) { // khung hình tĩnh của cảnh, máy quay đẩy chậm (lần lượt vào giữa, sang trái, sang phải)
+      const el = tao(d.tinh.map((x, i) => `<div class="nen tinh" style="background-image:url(${x.src});transform-origin:${['50% 50%', '30% 50%', '70% 50%'][i % 3]}"></div>`).join(''), 'doan nv tinh-co');
+      el.querySelectorAll('.tinh').forEach((n, i) => { const x = d.tinh[i]; hien(n, x.a, x.b); tl.fromTo(n, { scale: 1 }, { scale: 1.08, duration: x.b - x.a, ease: 'none' }, x.a); });
+      return el;
+    }
     return tao(`<div class="ma">${d.canh}</div><div class="ghi">${d.mo_ta || ''}</div>
       <div class="tag">${L('Cảnh nhân vật · chờ chị dựng', 'Character scene · placeholder')}</div>
       <div class="nv">${(d.anh || []).map(a => `<img src="${GOC}${a}" alt="">`).join('')}</div>`, 'doan nv cho');
@@ -291,7 +296,7 @@
   window.__timelines = window.__timelines || {};
   window.__timelines.main = tl;
   window.veKhung = t => { tl.seek(t, false); };
-  window.thongTin = { tong: TONG, lang: EN ? 'en' : 'vi', doan: doan.map(d => ({ canh: d.canh, loai: d.loai, a: d.a, b: d.b, video: !!d.video })), canhSL: Object.keys(SL) };
+  window.thongTin = { tong: TONG, lang: EN ? 'en' : 'vi', doan: doan.map(d => ({ canh: d.canh, loai: d.loai, a: d.a, b: d.b, video: !!d.video, tinh: (d.tinh || []).length })), canhSL: Object.keys(SL) };
   tl.seek(0);
 })();
 </script>

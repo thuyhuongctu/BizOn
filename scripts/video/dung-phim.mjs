@@ -91,8 +91,16 @@ const chep = (p, dich = p) => { const d = join(GOC, dich); mkdirSync(dirname(d),
 let video = '', thieuNV = [];
 DOAN.forEach(d => {
   if (d.loai !== 'NV') return;
-  const tep = existsSync(CANH_DIR) ? readdirSync(CANH_DIR).filter(f => new RegExp(`^${d.canh}(-\\d+)?\\.mp4$`).test(f)).sort((x, y) => x.localeCompare(y, 'en', { numeric: true })) : [];
-  if (!tep.length) { thieuNV.push(d.canh); return; }
+  const co = re => (existsSync(CANH_DIR) ? readdirSync(CANH_DIR).filter(f => re.test(f)).sort((x, y) => x.localeCompare(y, 'en', { numeric: true })) : []);
+  const tep = co(new RegExp(`^${d.canh}(-\\d+)?\\.mp4$`));
+  if (!tep.length) {
+    // Chưa có video: dùng khung hình tĩnh (C05.png, C10-1.png, C10-2.png…) chia đều thời lượng, máy quay đẩy nhẹ
+    const anh = co(new RegExp(`^${d.canh}(-\\d+)?\\.(png|jpe?g|webp)$`, 'i'));
+    if (!anh.length) { thieuNV.push(d.canh); return; }
+    const k = (d.b - d.a) / anh.length;
+    d.tinh = anh.map((f, i) => ({ src: chep(join(CANH_DIR, f), 'canh/' + f), a: d.a + i * k, b: d.a + (i + 1) * k }));
+    return;
+  }
   d.video = true; let t = d.a;
   tep.forEach((f, i) => {
     const p = join(CANH_DIR, f), het = i === tep.length - 1 ? d.b : Math.min(d.b, t + dur(p));
@@ -103,7 +111,7 @@ DOAN.forEach(d => {
 if (thieuNV.length && !NHAP) throw new Error(`Thiếu cảnh nhân vật ${thieuNV.join(', ')} trong ${CANH_DIR} (chạy với --nhap để thay bằng thẻ chờ)`);
 const GHEP = {
   lang: LANG, tong: +TONG.toFixed(3),
-  doan: DOAN.map(d => ({ canh: d.canh, loai: d.loai, a: d.a, b: d.b, video: !!d.video, mo_ta: d.mo_ta, anh: d.anh, cau: d.cau.map(c => ({ so: c.so, a: c.a, b: c.b })) })),
+  doan: DOAN.map(d => ({ canh: d.canh, loai: d.loai, a: d.a, b: d.b, video: !!d.video, tinh: d.tinh || null, mo_ta: d.mo_ta, anh: d.anh, cau: d.cau.map(c => ({ so: c.so, a: c.a, b: c.b })) })),
   cau: CAU.map(c => ({ so: c.so, a: c.a, b: c.b, chu: CFG.chu[c.so] || [] })),
 };
 const MAU = read('scripts/video/dua-trai-ra-bien/canh.html');

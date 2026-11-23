@@ -43,9 +43,12 @@ assert.ok(!/cloud|share|publish|auth/.test(dung.split('\n').filter(l => /spawnSy
 assert.ok(+(/CACHE = 'bizon-v(\d+)'/.exec(read('sw.js')) || [])[1] >= 980, 'sw.js ≥ v980');
 
 // 3. Bản dựng nháp VI và EN (chỉ HTML)
-const OUT = R('artifacts/phim-test');
+// Bản VI: chưa có cảnh NV nào (thẻ chờ). Bản EN: có khung hình tĩnh cho C05 (một ảnh) và C10 (hai ảnh nối nhau).
+const OUT = R('artifacts/phim-test'), TINH = path.join(OUT, 'canh-tinh');
+fs.rmSync(OUT, { recursive: true, force: true }); fs.mkdirSync(TINH, { recursive: true });
+for (const f of ['C05.webp', 'C10-1.webp', 'C10-2.webp']) fs.copyFileSync(R('assets/hc/durian/tau-dem-cuc-quang.webp'), path.join(TINH, f));
 for (const lang of ['vi', 'en']) {
-  const r = spawnSync(process.execPath, [R('scripts/video/dung-phim.mjs'), '--tap', '01', '--lang', lang, '--nhap', '--chi-html', '--out', OUT, '--canh', R('artifacts/phim-test/khong-co')], { encoding: 'utf8' });
+  const r = spawnSync(process.execPath, [R('scripts/video/dung-phim.mjs'), '--tap', '01', '--lang', lang, '--nhap', '--chi-html', '--out', OUT, '--canh', lang === 'en' ? TINH : path.join(OUT, 'khong-co')], { encoding: 'utf8' });
   assert.equal(r.status, 0, 'dung-phim --chi-html ' + lang + ': ' + r.stderr);
   const html = fs.readFileSync(path.join(OUT, `dua-trai-ra-bien-01-${lang}-nhap`, 'index.html'), 'utf8');
   assert.ok(!html.includes('../../../') && !/<script src=/.test(html), lang + ': bản dựng không trỏ ra ngoài thư mục, GSAP chép vào trang');
@@ -83,8 +86,14 @@ for (const lang of ['vi', 'en']) {
       vis.forEach((v, i) => assert.deepEqual(v, [tt.doan[i].canh], lang + ': giữa đoạn ' + (i + 1) + ' chỉ cảnh ' + tt.doan[i].canh + ' hiện'));
       const dau = await p.evaluate(() => { window.veKhung(0); return [...document.querySelectorAll('.doan')].filter(e => getComputedStyle(e).visibility === 'visible').length; });
       assert.equal(dau, 1, lang + ': khung đầu tiên (giây 0) đã có hình');
-      const cho = await p.evaluate(() => window.thongTin.doan.filter(d => d.loai === 'NV').map(d => { window.veKhung((d.a + d.b) / 2); const e = [...document.querySelectorAll('.doan.cho')].find(x => getComputedStyle(x).visibility === 'visible'); return e ? e.querySelector('.ma').textContent : ''; }));
-      assert.deepEqual(cho, tt.doan.filter(d => d.loai === 'NV').map(d => d.canh), lang + ': cảnh NV chưa có video hiện thẻ chờ đúng mã');
+      const nv = tt.doan.filter(d => d.loai === 'NV');
+      const cho = await p.evaluate(() => window.thongTin.doan.filter(d => d.loai === 'NV' && !d.tinh).map(d => { window.veKhung((d.a + d.b) / 2); const e = [...document.querySelectorAll('.doan.cho')].find(x => getComputedStyle(x).visibility === 'visible'); return e ? e.querySelector('.ma').textContent : ''; }));
+      assert.deepEqual(cho, nv.filter(d => !d.tinh).map(d => d.canh), lang + ': cảnh NV chưa có video hay ảnh hiện thẻ chờ đúng mã');
+      assert.deepEqual(nv.filter(d => d.tinh).map(d => [d.canh, d.tinh]), lang === 'en' ? [['C05', 1], ['C10', 2]] : [], lang + ': cảnh có khung hình tĩnh');
+      if (lang === 'en') {
+        const t10 = await p.evaluate(() => { const d = window.thongTin.doan.find(x => x.canh === 'C10'); return [0.25, 0.75].map(f => { window.veKhung(d.a + (d.b - d.a) * f); return [...document.querySelectorAll('.tinh')].map(e => getComputedStyle(e).visibility === 'visible'); }); });
+        assert.ok(t10[0].filter(Boolean).length === 1 && t10[1].filter(Boolean).length === 1 && t10[0].indexOf(true) !== t10[1].indexOf(true), 'en: C10 hai khung tĩnh nối nhau, mỗi lúc một khung');
+      }
       const c1 = await p.evaluate(() => { window.veKhung(3.2); return [document.querySelector('.dem') && document.querySelector('.dem').textContent, document.body.innerText]; });
       assert.equal(c1[0], '43:59:57', lang + ': đồng hồ đếm ngược chạy theo giây phim');
       assert.ok(lang === 'en' ? c1[1].includes('Will we make it?') : c1[1].includes('Kịp không đây?'), lang + ': bong bóng thoại đúng ngôn ngữ');

@@ -173,3 +173,31 @@ Ghi chú Stitch tự viết kèm bộ ảnh (tệp `.md` trong zip) **không the
 | `khong-dung-kim-long-ky-voi-teo-soi.png` | Kim Long ký hợp đồng với Tèo Soi | Không dùng | Trái vai: Kim Long là đối thủ |
 | `khong-dung-poster-doc-v2.png` | Áp phích dọc có viền trắng | Không dùng | Viền trắng, Tèo Soi và Minh Khang lệch dáng, chữ méo |
 | `khong-dung-banner-ngang-v3.png` | Banner ngang có viền mờ | Không dùng | Viền mờ, Tèo Soi lệch dáng, chữ «Vietnam Fresh» |
+
+## 13. Khung hình Stitch đợt 3 (23/11/2026, tối)
+
+Lưu ở Drive `00-chung/khung-hinh-stitch/dot-3-23-11/`. Chị tạo theo «Tập 1 – Ảnh khung còn thiếu»: cùng một bến đêm (khung 0), không chữ, nhân vật đúng ảnh tham chiếu. Đây là khung chính của tập 1; bản nháp dùng chúng làm ảnh tĩnh (máy quay đẩy nhẹ) cho tới khi có video cảnh.
+
+| Tệp | Nội dung | Dùng cho | Sửa trước khi dùng |
+|---|---|---|---|
+| `tap01-khung0-ben-dem.png` | Bến sông đêm, bàn gỗ, đèn lồng, đồng hồ trên cột, không người | Tập 1: bối cảnh chung | – |
+| `tap01-C01-teo-soi-tren-container.png` | Tèo Soi trên chồng container, Bác Ba đứng dưới | Tập 1: C01 | – |
+| `tap01-C03-bac-ba-ben-dem.png` | Bác Ba nâng trái sầu riêng ở bến đêm | Tập 1: C03 | – |
+| `tap01-C04-doan-sa-lan.png` | Đoàn sà lan trên sông lúc chạng vạng, nhìn từ trên cao | Tập 1: C04 | – |
+| `tap01-C05-minh-khang-chi-ra-song.png` | Minh Khang chỉ ra sông, tay cầm túi tiền | Tập 1: C05 | – |
+| `tap01-C09-an-nhien-thung-lanh.png` | An Nhiên kiểm trái trong thùng lạnh | Tập 1: C09 | – |
+| `tap01-C10b-bai-xe-lanh-day.png` | Bãi xe container lạnh đầy xe, ban đêm | Tập 1: C10 (nửa sau) | – |
+| `tap01-C13-minh-khang-lina-teo.png` | Minh Khang, Lina Park, Tèo Soi quanh bàn | Tập 1: C13 | – |
+| `tap01-C14-ba-sau-lanh.png` | Bà Sáu Lành bên mép bến | Tập 1: C14 | – |
+| `tap01-C16-sa-lan-nuoc-rong.png` | Sà lan neo giữa kênh hẹp lúc nước ròng | Tập 1: C16 | – |
+| `tap01-C17-ca-nhom-quanh-ban.png` | Sáu nhân vật quanh bàn, đồng hồ phía sau, chưa ai chốt | Tập 1: C17 | – |
+| `khac-ca-nhom-bat-tay-1.png` | Cả nhóm quanh bàn, Minh Khang bắt tay Lina Park | Dự phòng (cảnh đã chốt, hợp tập 2 hơn tập 1) | – |
+| `khac-ca-nhom-bat-tay-2.png` | Như trên, góc khác | Dự phòng | – |
+| `khac-teo-soi-tren-sa-lan.png` | Tèo Soi đứng mũi sà lan trên sông ban ngày | Tập 2 (nếu khán giả chọn «sông») | – |
+| `khac-sa-lan-qua-cong-kenh.png` | Sà lan đi giữa hai bờ kè, ban ngày | Tập 2 (nếu khán giả chọn «sông») | – |
+| `tap02-sa-lan-cap-cang-cai-mep.png` | Sà lan cập cảng cạnh tàu mẹ | Tập 2 | – |
+| `tap06-ca-nhom-o-cang.png` | Cả nhóm vui mừng ở cảng, cần cẩu nhấc container | Tập 6: kết mùa | – |
+| `tap06-tau-me-roi-cang.png` | Tàu mẹ rời cảng, tàu lai dắt phun nước | Tập 6 | – |
+| `sua-buong-lai-tau-co-thuyen-truong.png` | Tèo Soi, Lina Park trong buồng lái cùng thuyền trưởng | Tập 6 | Thuyền trưởng là nhân vật mới rõ mặt → chỉ hiện dáng xa hoặc bỏ |
+
+Còn thiếu cho tập 1: **C11** (bãi xe gần như trống, cùng bãi với `tap01-C10b-bai-xe-lanh-day.png`) và, nếu muốn, **C20** (Tèo Soi ôm trái phủ sương giá; tạm dùng `tap01-C20-teo-soi-kinh-lup.png` của đợt 2).
