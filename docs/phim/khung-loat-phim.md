@@ -190,7 +190,7 @@ Lưu ở Drive `00-chung/khung-hinh-stitch/dot-3-23-11/`. Chị tạo theo «T�
 | `tap01-C13-minh-khang-lina-teo.png` | Minh Khang, Lina Park, Tèo Soi quanh bàn | Tập 1: C13 | – |
 | `tap01-C14-ba-sau-lanh.png` | Bà Sáu Lành bên mép bến | Tập 1: C14 | – |
 | `tap01-C16-sa-lan-nuoc-rong.png` | Sà lan neo giữa kênh hẹp lúc nước ròng | Tập 1: C16 | – |
-| `tap01-C17-ca-nhom-quanh-ban.png` | Sáu nhân vật quanh bàn, đồng hồ phía sau, chưa ai chốt | Tập 1: C17 | Bác Ba đứng ngoài mép bến, chân trên mặt nước (chị phát hiện 24/11) → tạo lại; bản nháp tạm cắt khung che chân |
+| `tap01-C17-ca-nhom-quanh-ban.png` | Sáu nhân vật quanh bàn, đồng hồ phía sau, chưa ai chốt | Tập 1: C17 | Bác Ba đứng ngoài mép bến, chân trên mặt nước (chị phát hiện 24/11). Chị chốt 24/11: giữ bản cắt khung (cắt 80 % khung, bỏ phần đáy che chân: `crop=iw*0.8:ih*0.8:iw*0.08:0`), không tạo lại |
 | `khac-ca-nhom-bat-tay-1.png` | Cả nhóm quanh bàn, Minh Khang bắt tay Lina Park | Dự phòng (cảnh đã chốt, hợp tập 2 hơn tập 1) | – |
 | `khac-ca-nhom-bat-tay-2.png` | Như trên, góc khác | Dự phòng | – |
 | `khac-teo-soi-tren-sa-lan.png` | Tèo Soi đứng mũi sà lan trên sông ban ngày | Tập 2 (nếu khán giả chọn «sông») | – |
