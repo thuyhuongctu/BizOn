@@ -21,7 +21,7 @@ YouTube Studio của kênh; em không có số liệu đó nên không đoán.
 - **Tệp:** `assets/video/bizon-intro-vi-v4.mp4` (1920×1080). Phụ đề: `subs/bizon-intro-vi-v4.vi.vtt`, `.en.vtt`.
 - **Tiêu đề (54 ký tự):** BizOn: học kinh doanh quốc tế qua game, làm ở miền Tây
 - **Tiêu đề tiếng Anh:** BizOn: learn international business through games, made in the Mekong Delta
-- **Chữ trên ảnh bìa (3 chữ, không lặp tiêu đề):** TỪ CHỢ NỔI → THẾ GIỚI. Ảnh: khung cuối video (logo BizOn, hai nhân vật đất sét).
+- **Chữ trên ảnh bìa (không lặp tiêu đề):** TỪ CHỢ NỔI / RA THẾ GIỚI. Ảnh: hai nhân vật đất sét ở khung đầu video.
 - **Mô tả:**
 
 > Ba trò chơi mô phỏng, đi từ gánh hàng rong trên chợ nổi đến đưa thương hiệu Việt ra nước ngoài. Miễn phí cho người học.
@@ -152,7 +152,9 @@ YouTube Studio của kênh; em không có số liệu đó nên không đoán.
 ## Ảnh bìa và ghi chú
 
 - **Ảnh bìa video ngang** (1280×720, chữ trên ảnh không lặp tiêu đề, dựng từ khung hình của chính video, phông Be Vietnam Pro):
-  `docs/youtube/anh-bia/anh-bia-01-gioi-thieu.jpg`, `anh-bia-03-ben-phu-sa.jpg`, `anh-bia-05-cang-cai-mep.jpg`, `anh-bia-07-bat-nghiep.jpg`.
+  `docs/youtube/anh-bia/anh-bia-01-gioi-thieu-v2.jpg`, `anh-bia-03-ben-phu-sa-v2.jpg`, `anh-bia-05-cang-cai-mep-v2.jpg`, `anh-bia-07-bat-nghiep-v2.jpg`.
+  Bản `-v2` (24/11/2026): giãn khoảng cách dòng để dấu tiếng Việt (THẾ, CHỢ, THỬ, CẢNG) không chạm dòng trên; ảnh Bật Nghiệp
+  đưa chữ về một dòng để không che mặt nhân vật. Bản đầu (không có `-v2`) giữ lại, không dùng.
   Shorts (2, 4, 6, 8): chọn khung hình ngay trong ứng dụng YouTube khi đăng.
 - Hai trailer (3, 7) đăng bản hiện có, chữ trên hình tiếng Anh; trailer 3 có phụ đề tiếng Việt.
 - Mục 2 và 6 nêu số liệu thật: nguồn nằm trong `docs/video/kich-ban-*.md`.

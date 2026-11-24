@@ -59,7 +59,8 @@ for (const [, u] of kit.matchAll(/https:\/\/bizonland\.com\/([^\s)]*)/g)) {
   assert.ok(fs.existsSync(path.join(ROOT, f)), 'đường dẫn trỏ tới trang có thật: ' + f);
 }
 const jpgSize = b => { for (let i = 2; i < b.length;) { const m = b[i + 1], len = b.readUInt16BE(i + 2); if (m >= 0xC0 && m <= 0xC3) return [b.readUInt16BE(i + 7), b.readUInt16BE(i + 5)]; i += 2 + len; } };
-const bia = [...kit.matchAll(/anh-bia-\d\d-[a-z-]+\.jpg/g)].map(m => m[0]);
+const bia = [...kit.matchAll(/anh-bia-\d\d-[a-z0-9-]+\.jpg/g)].map(m => m[0]);
+assert.ok(bia.every(f => f.endsWith('-v2.jpg')), 'hồ sơ dùng ảnh bìa bản -v2 (giãn dòng, dấu tiếng Việt không chạm nhau)');
 assert.equal(new Set(bia).size, 4, '4 ảnh bìa cho 4 video ngang');
 for (const f of new Set(bia)) assert.deepEqual(jpgSize(fs.readFileSync(path.join(ROOT, 'docs/youtube/anh-bia', f))), [1280, 720], f + ' 1280×720');
 
