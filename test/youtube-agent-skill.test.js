@@ -45,6 +45,24 @@ if (hasPy) {
   assert.equal(h.status, 0, 'hookscore.py chạy được: ' + h.stderr);
 } else console.log('  (bỏ qua chạy thử Python: máy không có python3)');
 
+// Bộ hồ sơ đăng 8 video (chị duyệt 24/11/2026): mọi tệp, phụ đề, ảnh bìa, đường dẫn có thật; tiêu đề ≤ 60 ký tự đúng số ghi
+const kit = R('docs/youtube/ho-so-dang-8-video.md');
+assert.equal((kit.match(/^## \d\. /gm) || []).length, 8, 'đủ 8 video');
+for (const [, f] of kit.matchAll(/\*\*Tệp:\*\* `(assets\/video\/[^`]+)`/g)) assert.ok(fs.existsSync(path.join(ROOT, f)), 'tệp video có thật: ' + f);
+for (const [, f] of kit.matchAll(/`subs\/([^`]+\.vtt)`/g)) assert.ok(fs.existsSync(path.join(ROOT, 'assets/video/subs', f)), 'phụ đề có thật: ' + f);
+for (const [, n, t] of kit.matchAll(/\*\*Tiêu đề \((\d+) ký tự\):\*\* (.+)/g)) {
+  const len = [...t.trim()].length;
+  assert.equal(len, +n, 'số ký tự ghi đúng: ' + t); assert.ok(len <= 60, 'tiêu đề ≤ 60 ký tự: ' + t);
+}
+for (const [, u] of kit.matchAll(/https:\/\/bizonland\.com\/([^\s)]*)/g)) {
+  const f = decodeURIComponent(u.replace(/[.,]$/, '')) || 'index.html';
+  assert.ok(fs.existsSync(path.join(ROOT, f)), 'đường dẫn trỏ tới trang có thật: ' + f);
+}
+const jpgSize = b => { for (let i = 2; i < b.length;) { const m = b[i + 1], len = b.readUInt16BE(i + 2); if (m >= 0xC0 && m <= 0xC3) return [b.readUInt16BE(i + 7), b.readUInt16BE(i + 5)]; i += 2 + len; } };
+const bia = [...kit.matchAll(/anh-bia-\d\d-[a-z-]+\.jpg/g)].map(m => m[0]);
+assert.equal(new Set(bia).size, 4, '4 ảnh bìa cho 4 video ngang');
+for (const f of new Set(bia)) assert.deepEqual(jpgSize(fs.readFileSync(path.join(ROOT, 'docs/youtube/anh-bia', f))), [1280, 720], f + ' 1280×720');
+
 const tpn = R('THIRD-PARTY-NOTICES.md');
 assert.ok(tpn.includes('**Jakeschincariol/youtube-agent-skill**') && tpn.includes('.claude/skills/yt-script/LICENSE'), 'THIRD-PARTY-NOTICES ghi nguồn và giấy phép');
 assert.ok(+(R('sw.js').match(/bizon-v(\d+)/) || [])[1] >= 975, 'sw.js tăng phiên bản');
