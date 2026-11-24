@@ -1,0 +1,35 @@
+{
+  "tap": 1,
+  "ten": { "vi": "Sà lan hay xe tải?", "en": "Barge or Truck?" },
+  "kich_ban": "docs/phim/tap-01-kich-ban.md",
+  "phan_canh": "docs/phim/tap-01-phan-canh.md",
+  "giong": "assets/video/src/dua-trai-ra-bien/tap-01/{lang}/{so}.mp3",
+  "canh_nv": "{canh}.mp4",
+  "nhac": "assets/audio/mekong-compass.mp3",
+  "cau_cuoi_giay": 10,
+  "chu": {
+    "1": [
+      { "loai": "dem", "tu": "44:00:00" },
+      { "loai": "bong", "ai": "Tèo Soi", "vi": "Kịp không đây?", "en": "Will we make it?" }
+    ],
+    "3": [{ "loai": "bong", "ai": "Bác Ba", "vi": "Trái này tui chăm cả năm đó nghen.", "en": "I tended this fruit all year, you know." }],
+    "4": [{ "loai": "chu", "vi": "~80% hàng hóa đi đường thủy", "en": "~80% of freight goes by water", "nguon": "Bộ Công Thương, Báo cáo Logistics Việt Nam 2024 (N1)", "nguon_en": "Ministry of Industry and Trade, Viet Nam Logistics Report 2024 (N1)" }],
+    "5": [{ "loai": "bong", "ai": "Minh Khang", "vi": "Đi sông cho rẻ!", "en": "River is cheaper!" }],
+    "8": [{ "loai": "bong", "ai": "Lina Park", "vi": "Sông chậm lắm!", "en": "The river is slow!" }],
+    "10": [{ "loai": "bong", "ai": "An Nhiên", "vi": "Trái tươi không chờ được.", "en": "Fresh fruit can't wait." }],
+    "12": [{ "loai": "bong", "ai": "Kim Long", "vi": "Chỗ cuối là của tôi.", "en": "The last slot is mine." }],
+    "14": [{ "loai": "chu", "vi": "Xe lạnh còn trống: ít", "en": "Reefer trucks left: few" }],
+    "17": [
+      { "loai": "bong", "ai": "Minh Khang", "vi": "Sông vẫn kịp!", "en": "The river will make it!" },
+      { "loai": "bong", "ai": "Lina Park", "vi": "Kịp, nếu không có gì trục trặc.", "en": "If nothing goes wrong.", "phai": true, "sau": 0.5 }
+    ],
+    "18": [{ "loai": "bong", "ai": "Bà Sáu Lành", "vi": "Đêm nay con nước ở Chợ Gạo ra sao?", "en": "How's the tide at Chợ Gạo tonight?", "sau": 0.45 }],
+    "21": [{ "loai": "chu", "vi": "~5 giờ chờ nước", "en": "~5 h waiting for the tide", "nguon": "Tuổi Trẻ, 27/11/2019 (N6)", "nguon_en": "Tuổi Trẻ, 27 Nov 2019 (N6)" }],
+    "24": [{ "loai": "dem", "tu": "43:00:00" }],
+    "25": [{ "loai": "chu", "vi": "SÔNG hay ĐƯỜNG?", "en": "RIVER or ROAD?" }],
+    "29": [
+      { "loai": "chu", "vi": "Tập sau: Tươi hay cấp đông?", "en": "Next time: Fresh or Frozen?" },
+      { "loai": "bong", "ai": "Tèo Soi", "vi": "Ủa... nếu trái không đi tươi mà đi đông thì sao?", "en": "Wait... what if the fruit goes frozen, not fresh?", "sau": 0.3 }
+    ]
+  }
+}

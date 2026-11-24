@@ -95,10 +95,14 @@ assert.equal(new Set(khungStitch).size, 21, 'tên khung không trùng');
 assert.match(stitch, /no text, no letters, no logos, no signage, no brand names, no flags, no maps/, 'có đuôi lời nhắc cấm chữ khi dựng lại');
 for (const dong of stitch.split('\n').filter(l => l.startsWith('| `') && /Kim Long/.test(l))) assert.match(dong, /Kim Long (→ Minh Khang|ra rìa)/, 'khung có Kim Long phải ghi việc thay: ' + dong.slice(0, 40));
 // Đợt 2: 25 khung; khung có Kim Long chỉ là cảnh đối thủ, hoặc phải sửa (Kim Long → …), hoặc bị loại
-const dot2 = khung.split('## 12. Khung hình Stitch đợt 2')[1] || '';
+const dot2 = (khung.split('## 12. Khung hình Stitch đợt 2')[1] || '').split('\n## 13.')[0];
+const dot3 = khung.split('## 13. Khung hình Stitch đợt 3')[1] || '';
+const khungDot3 = [...dot3.matchAll(/^\| `([A-Za-z0-9-]+\.png)` \|/gm)].map(m => m[1]);
+assert.equal(khungDot3.length, 23, 'đợt 3 kê đủ 23 khung (19 + 4 chị gửi qua trò chuyện)');
+for (const dong of dot3.split('\n').filter(l => /^\| `/.test(l) && /Kim Long/.test(l))) assert.fail('đợt 3 không có Kim Long ở phía hợp tác xã: ' + dong.slice(0, 50));
 const khungDot2 = [...dot2.matchAll(/^\| `([A-Za-z0-9-]+\.png)` \|/gm)].map(m => m[1]);
 assert.equal(khungDot2.length, 25, 'đợt 2 kê đủ 25 khung');
-assert.equal(new Set([...khungStitch, ...khungDot2]).size, 46, 'tên khung hai đợt không trùng nhau');
+assert.equal(new Set([...khungStitch, ...khungDot2, ...khungDot3]).size, 69, 'tên khung ba đợt không trùng nhau');
 assert.match(dot2, /không theo kịch bản đã duyệt/, 'ghi rõ không theo ghi chú Stitch tự viết');
 for (const dong of dot2.split('\n').filter(l => l.startsWith('| `') && /Kim Long/.test(l))) {
   const f = dong.match(/`([^`]+)`/)[1];
@@ -108,7 +112,7 @@ for (const dong of dot2.split('\n').filter(l => /^\| `(khong-dung|sua)-/.test(l)
 const pcStitch = pc.split('## Khung hình Stitch cho tập 1')[1].split('\n## ')[0];
 const dungTap1 = [...pcStitch.matchAll(/`([A-Za-z0-9-]+\.png)`/g)].map(m => m[1]);
 assert.ok(dungTap1.length >= 7, 'phân cảnh tập 1 chỉ rõ khung Stitch cho các cảnh');
-for (const f of dungTap1) assert.ok((khungStitch.includes(f) || khungDot2.includes(f)) && f.startsWith('tap01-'), 'khung ' + f + ' có trong danh sách và thuộc tập 1');
+for (const f of dungTap1) assert.ok((khungStitch.includes(f) || khungDot2.includes(f) || khungDot3.includes(f)) && f.startsWith('tap01-'), 'khung ' + f + ' có trong danh sách và thuộc tập 1');
 assert.ok(/\bC04\b/.test(pcStitch) && /\bC11\b/.test(pcStitch) && /\bC17\b/.test(pcStitch), 'khung Stitch gắn với C04, C11, C17');
 
 // 7. Mô tả cảnh NV phải tả nhân vật đúng ảnh tham chiếu (23/11/2026: bản đầu tả Minh Khang là thanh niên mặc vest,

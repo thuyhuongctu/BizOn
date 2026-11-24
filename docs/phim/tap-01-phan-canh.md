@@ -47,20 +47,26 @@ Thời lượng khớp lại theo giọng thật của chị khi ghép.
 
 ## Khung hình Stitch cho tập 1
 
-Lưu ở Drive `Mua-1/00-chung/khung-hinh-stitch/` (đợt 1) và `khung-hinh-stitch/dot-2-23-11/` (đợt 2). Danh sách đủ và việc cần sửa: `docs/phim/khung-loat-phim.md`, mục 11 và 12. Thương hiệu của hợp tác xã trong phim là «Sầu Riêng Phù Sa», em chèn ở hậu kỳ. Ưu tiên khung đợt 2 (sạch chữ, đúng dáng nhân vật).
+Lưu ở Drive `Mua-1/00-chung/khung-hinh-stitch/` (đợt 1), `dot-2-23-11/` (đợt 2) và `dot-3-23-11/` (đợt 3). Danh sách đủ và việc cần sửa: `docs/phim/khung-loat-phim.md`, mục 11–13. Thương hiệu của hợp tác xã trong phim là «Sầu Riêng Phù Sa», em chèn ở hậu kỳ. Khung đợt 3 dùng chung một bến đêm và đúng dáng nhân vật nên được ưu tiên. Chị dùng khung này làm khung đầu khi dựng video cảnh; trước khi có video, bản nháp dùng chính các khung này làm ảnh tĩnh (đặt tên theo mã cảnh, ví dụ «C05.png», «C10-1.png», «C10-2.png»).
 
 | Cảnh | Khung Stitch | Đợt | Lấy gì từ khung |
 |---|---|---|---|
 | Ảnh bìa | `tap01-bia-ben-song-sa-lan-xe-lanh-v2.png` | 2 | Sà lan và xe lạnh đứng cạnh nhau: đúng câu hỏi «sông hay đường?» |
+| Bối cảnh | `tap01-khung0-ben-dem.png` | 3 | Bến đêm chung cho C01, C03, C05, C13, C14, C17 |
+| C01 | `tap01-C01-teo-soi-tren-container.png` | 3 | Tèo Soi trên chồng container, Bác Ba dưới bến |
 | C02 | `tap01-mo-dau-vuon-bac-ba.png` | 1 | Nền thẻ tựa: vườn Bác Ba bên sông |
-| C03 | `tap01-C03-bac-ba-vuon.png` | 2 | Dáng và nét mặt Bác Ba ôm trái (cảnh phim vẫn là bến đêm) |
-| C04 | `tap01-C04-tau-tren-song.png` | 1 | Góc máy trên sông, hai bờ dừa nước |
-| C05 | `tap01-C05-minh-khang-sa-ban.png` | 2 | Dáng Minh Khang (cảnh phim vẫn là bến đêm) |
+| C03 | `tap01-C03-bac-ba-ben-dem.png` | 3 | Bác Ba nâng trái ở bến đêm |
+| C04 | `tap01-C04-doan-sa-lan.png` | 3 | Đoàn sà lan lúc chạng vạng |
+| C05 | `tap01-C05-minh-khang-chi-ra-song.png` | 3 | Minh Khang chỉ ra sông, cầm túi tiền |
 | C07 | `tap01-C07-lina-park-ben-cang.png` | 2 | Dáng Lina Park |
-| C10 | `tap01-C10-kim-long-van-phong.png`, `tap01-C10-cabin-xe-lanh.png` | 2, 1 | Nửa đầu: Kim Long trong văn phòng; nửa sau: xe container lạnh |
-| C11 | `tap01-C11-xe-lanh-tren-cau-ra-cang.png` | 1 | Xe lạnh trên đường ra cảng |
+| C09 | `tap01-C09-an-nhien-thung-lanh.png` | 3 | An Nhiên kiểm trái trong thùng lạnh |
+| C10 | `tap01-C10-kim-long-van-phong.png`, `tap01-C10b-bai-xe-lanh-day-v2-nho.png` | 2, 3 | Nửa đầu: Kim Long trong văn phòng; nửa sau: bãi xe lạnh đầy xe (cùng bãi với C11) |
+| C11 | `tap01-C11-bai-xe-lanh-gan-trong-nho.png` | 3 | Cùng bãi xe, chỉ còn ba xe lạnh |
 | C12 | `tap01-C12-lumina-sa-ban.png` | 2 | Nền ảnh Lumina cạnh bảng ba cột (em dựng) |
-| C17 | `tap01-bia-ben-song-sa-lan-xe-lanh-v2.png` | 2 | Bối cảnh bến sông có cả sà lan và xe |
+| C13 | `tap01-C13-minh-khang-lina-teo.png` | 3 | Minh Khang, Lina Park, Tèo Soi quanh bàn |
+| C14 | `tap01-C14-ba-sau-lanh.png` | 3 | Bà Sáu Lành bên mép bến |
+| C16 | `tap01-C16-sa-lan-nuoc-rong.png` | 3 | Sà lan neo lúc nước ròng |
+| C17 | `tap01-C17-ca-nhom-quanh-ban.png` | 3 | Sáu nhân vật quanh bàn, chưa ai chốt |
 | C19, hậu đoạn | `tap01-xe-lanh-toi-cong-cang-v2.png`, `tap01-ket-cang-cai-mep-xep-hang.png` | 2, 1 | Đích đến Cái Mép, nền chữ chạy |
 | C20 | `tap01-C20-teo-soi-kinh-lup.png` | 2 | Dáng Tèo Soi |
 

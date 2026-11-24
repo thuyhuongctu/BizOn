@@ -38,14 +38,14 @@
 
 - [ ] T009 (chị) Thu giọng Lumina VI và EN theo `tap-01-loi-thu-giong.md`. Gửi tệp qua Drive (29/11–02/12).
 - [ ] T010 (chị) Dựng 10–14 cảnh nhân vật theo `tap-01-phan-canh.md`, mỗi cảnh 4–8 giây, không chữ. Gửi mp4 qua Drive (29/11–02/12).
-- [ ] T011 [US1] Viết `test/phim-dua-trai-ra-bien-dung.test.js`, chạy và thấy hỏng. Test kiểm:
+- [X] T011 [US1] Viết `test/phim-dua-trai-ra-bien-dung.test.js`, chạy và thấy hỏng. Test kiểm:
   - `canh.html` chạy được, mỗi cảnh số liệu hiện đúng lượt, không lỗi JS, chữ đúng ngôn ngữ;
   - bản đồ có nhãn Hoàng Sa và Trường Sa nếu vẽ toàn quốc;
   - mọi cảnh trong `tap-01.ghep.json` trỏ tới tệp có thật hoặc cảnh HTML có thật;
   - tổng thời lượng 4–6 phút;
   - `dung-phim.mjs` có `--nhap`, `loudnorm`, xuất phụ đề `.vtt`.
-- [ ] T012 [US1] `scripts/video/dua-trai-ra-bien/canh.html`: đồng hồ đếm ngược, bản đồ tuyến (sông và bộ), bảng ba cột của Lumina, thẻ tựa đề, chữ chạy kèm nguồn, khung hé tập 2. Vẽ tất định theo `window.veKhung(t)` như `scripts/video/cang-cai-mep/canh.html`.
-- [ ] T013 [US1] `scripts/video/dung-phim.mjs` và `tap-01.ghep.json`:
+- [X] T012 [US1] `scripts/video/dua-trai-ra-bien/canh.html`: đồng hồ đếm ngược, bản đồ tuyến (sông và bộ), bảng ba cột của Lumina, thẻ tựa đề, chữ chạy kèm nguồn, khung hé tập 2. Vẽ tất định trên một dòng thời gian GSAP dừng sẵn; kết xuất bằng HyperFrames (chị duyệt 23/11/2026, Apache-2.0, ghim 0.9.86, chạy trên máy, tắt telemetry). `window.veKhung(t)` vẫn có để test.
+- [X] T013 [US1] `scripts/video/dung-phim.mjs` và `tap-01.ghep.json` (thêm `--chi-html` để test và xem trước):
   - ghép cảnh nhân vật (mp4) với cảnh HTML;
   - chèn chữ VI/EN lên hình;
   - giọng theo câu, nhạc nền gốc BizOn, `loudnorm`;

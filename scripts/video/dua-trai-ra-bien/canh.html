@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1920, height=1080">
+<title>Cảnh phim «Đưa trái ra biển»</title>
+<!-- Khuôn dựng phim «Đưa trái ra biển» (đặc tả 008), khổ 1920×1080, kết xuất bằng HyperFrames (HTML → MP4).
+     - Mở thẳng tệp này: xem trước các cảnh số liệu (SL) nối nhau, mỗi câu 5 giây (dùng cho test và để chỉnh hình).
+     - scripts/video/dung-phim.mjs chép tệp này vào thư mục dựng, chèn window.GHEP (mốc từng câu, cảnh, chữ trên hình)
+       và các <video class="clip"> của cảnh nhân vật (NV) do chị dựng; HyperFrames tua dòng thời gian GSAP từng khung.
+     Mọi chuyển động nằm trên một dòng thời gian GSAP dừng sẵn (window.__timelines.main), không dùng animation CSS,
+     không Date.now(), không Math.random(): cùng đầu vào thì cùng khung hình.
+     Bản đồ: chỉ sơ đồ tuyến Cần Thơ → Cái Mép (hai chấm, một đường sông, một đường bộ), không vẽ đất liền hay bản đồ
+     toàn quốc; nếu sau này vẽ bản đồ Việt Nam toàn quốc thì phải có Hoàng Sa và Trường Sa (khung loạt phim, mục 8). -->
+<link rel="stylesheet" href="../../../css/bizon-clay-fonts.css">
+<style>
+  :root { --dem: #0d2b2f; --kem: #FFF7E8; --muc: #033337; --cam: #F2A541; --xanh: #6FC2B0; --do: #E0574F; --dat: #9c7a52; }
+  html, body { margin: 0; width: 1920px; height: 1080px; overflow: hidden; background: var(--dem); }
+  body { font-family: 'Be Vietnam Pro', system-ui, sans-serif; color: var(--kem); }
+  #root { position: relative; width: 1920px; height: 1080px; overflow: hidden; }
+  video.clip { position: absolute; inset: 0; width: 1920px; height: 1080px; object-fit: cover; z-index: 0; }
+  #san { position: absolute; inset: 0; z-index: 1; }
+  .doan, .lop { position: absolute; inset: 0; visibility: hidden; }
+  .doan.sl { background: var(--dem); overflow: hidden; }
+  .nen { position: absolute; inset: 0; background-size: cover; background-position: center; }
+  .mo { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(13,43,47,.15) 0%, rgba(13,43,47,.75) 100%); }
+  .the { position: absolute; background: rgba(255,247,232,.97); color: var(--muc); border-radius: 36px; padding: 28px 44px;
+         box-shadow: inset 0 -6px 0 rgba(110,70,30,.10), 0 18px 50px rgba(0,0,0,.35); }
+  .lon { font-weight: 800; font-size: 104px; line-height: 1; letter-spacing: -2px; }
+  .vua { font-weight: 800; font-size: 58px; line-height: 1.12; }
+  .nho { font-weight: 600; font-size: 32px; line-height: 1.3; opacity: .85; }
+  .cam { color: #c46d00; } .do { color: #b8322a; } .xanh { color: #006f63; }
+  .nguon { position: absolute; right: 30px; bottom: 22px; max-width: 1400px; font-size: 24px; font-weight: 600; color: var(--muc);
+           background: rgba(255,247,232,.9); padding: 6px 18px; border-radius: 999px; }
+  .tua { position: absolute; left: 0; right: 0; top: 330px; text-align: center; }
+  .tua .loat { font-weight: 900; font-size: 136px; letter-spacing: 4px; color: var(--kem); text-shadow: 0 8px 30px rgba(0,0,0,.5); }
+  .tua .tap { display: inline-block; margin-top: 26px; font-weight: 800; font-size: 60px; color: var(--muc); background: var(--cam);
+              padding: 14px 46px; border-radius: 999px; }
+  .cot { position: absolute; bottom: 250px; width: 300px; border-radius: 28px 28px 0 0; transform-origin: 50% 100%; }
+  .cot .nhat { position: absolute; left: 0; right: 0; top: 0; border-radius: 28px 28px 0 0; background: rgba(255,255,255,.35); }
+  .nhan { position: absolute; font-weight: 800; font-size: 46px; text-align: center; color: var(--kem); }
+  .truc { position: absolute; height: 4px; background: rgba(255,247,232,.5); }
+  .thanh { position: absolute; height: 84px; border-radius: 18px; transform-origin: 0 50%; }
+  .vach { position: absolute; width: 8px; border-radius: 4px; background: var(--kem); }
+  .bang { position: absolute; display: grid; grid-template-columns: 250px repeat(3, 330px); gap: 14px; }
+  .bang div { background: rgba(255,247,232,.97); color: var(--muc); border-radius: 22px; padding: 22px 20px; font-weight: 800; font-size: 40px; text-align: center; }
+  .bang .dau { background: var(--cam); }
+  .bang .hang { background: var(--xanh); }
+  .lumina { position: absolute; bottom: 0; height: 960px; }
+  .nut { display: inline-block; font-weight: 900; font-size: 84px; padding: 22px 70px; border-radius: 999px; margin: 0 24px; color: var(--muc); }
+  .chay { position: absolute; left: 0; right: 0; top: 1080px; text-align: center; }
+  .chay h2 { font-size: 64px; margin: 0 0 18px; color: var(--cam); }
+  .chay h3 { font-size: 40px; margin: 56px 0 14px; color: var(--xanh); }
+  .chay p { font-size: 34px; margin: 6px 0; font-weight: 600; }
+  .bong { position: absolute; left: 90px; bottom: 90px; max-width: 1240px; background: #fff; color: var(--muc); border-radius: 44px;
+          padding: 26px 46px 30px; box-shadow: 0 16px 44px rgba(0,0,0,.35); }
+  .bong.phai { left: auto; right: 90px; }
+  .bong::after { content: ''; position: absolute; left: 70px; bottom: -26px; border: 18px solid transparent; border-top: 26px solid #fff; border-bottom: 0; }
+  .bong .ai { display: inline-block; font-weight: 800; font-size: 30px; background: var(--cam); color: var(--muc); padding: 4px 18px; border-radius: 999px; margin-bottom: 10px; }
+  .bong .loi { font-weight: 800; font-size: 54px; line-height: 1.15; }
+  .chu { position: absolute; left: 90px; top: 80px; max-width: 1300px; background: rgba(255,247,232,.97); color: var(--muc);
+         border-radius: 30px; padding: 22px 40px; box-shadow: 0 14px 40px rgba(0,0,0,.3); }
+  .chu .vua { font-size: 52px; } .chu .nho { font-size: 26px; margin-top: 6px; }
+  .dem { position: absolute; right: 70px; top: 60px; font-family: 'Be Vietnam Pro', monospace; font-variant-numeric: tabular-nums;
+         font-weight: 900; font-size: 76px; color: #fff; background: rgba(13,43,47,.85); border: 4px solid var(--do); padding: 8px 34px; border-radius: 26px; }
+  .cho { background: #13363a; }
+  .cho .ma { position: absolute; left: 90px; top: 80px; font-weight: 900; font-size: 140px; color: var(--cam); }
+  .cho .ghi { position: absolute; left: 90px; top: 260px; width: 1000px; font-weight: 700; font-size: 44px; line-height: 1.3; }
+  .cho .tag { position: absolute; left: 90px; top: 520px; font-weight: 800; font-size: 32px; color: var(--muc); background: var(--xanh); padding: 8px 24px; border-radius: 999px; }
+  .cho .nv { position: absolute; right: 60px; bottom: 0; height: 760px; display: flex; align-items: flex-end; gap: 10px; }
+  .cho .nv img { max-height: 700px; max-width: 360px; }
+  #den { position: absolute; inset: 0; z-index: 5; background: #000; visibility: hidden; }
+  .bq { position: absolute; right: 26px; top: 14px; z-index: 4; font-weight: 700; font-size: 22px; color: rgba(255,255,255,.78);
+        text-shadow: 0 1px 4px rgba(0,0,0,.6); letter-spacing: .3px; }
+  .pd { position: absolute; left: 160px; right: 160px; bottom: 34px; text-align: center; visibility: hidden; z-index: 4; }
+  .pd span { display: inline; font-weight: 700; font-size: 40px; line-height: 1.45; color: #fff; background: rgba(0,0,0,.72); padding: 4px 18px;
+             -webkit-box-decoration-break: clone; box-decoration-break: clone; border-radius: 10px; }
+  .co-pd .bong { bottom: 200px; }
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="60" data-width="1920" data-height="1080">
+<!--VIDEO-->
+<div id="san"></div>
+<div id="den"></div>
+</div>
+<script src="../../../js/vendor/gsap.min.js"></script>
+<!--GHEP-->
+<script>
+'use strict';
+(function () {
+  const G = window.GHEP || null;
+  const Q = new URLSearchParams(location.search);
+  const EN = (G ? G.lang : Q.get('lang')) === 'en';
+  const L = (vi, en) => (EN ? en : vi);
+  const GOC = '../../../';
+  const san = document.getElementById('san');
+  // Bản quyền: dấu nhỏ góc trên bên phải suốt phim, dòng đầy đủ cuối chữ chạy (cùng câu chữ với chân trang bizonland.com)
+  const BAN_QUYEN = L('© 2026 Bizonland · Đỗ Thùy Hương & Phan Anh Tú · Bảo lưu mọi quyền', '© 2026 Bizonland · Đỗ Thùy Hương & Phan Anh Tú · All rights reserved');
+  { const bq = document.createElement('div'); bq.className = 'bq'; bq.textContent = '© 2026 Bizonland'; document.getElementById('root').appendChild(bq); }
+  const tl = gsap.timeline({ paused: true });
+
+  const tao = (html, cls) => { const d = document.createElement('div'); d.className = cls; d.innerHTML = html; san.appendChild(d); return d; };
+  const q = (el, s) => el.querySelector(s);
+  // Một phần tử chỉ hiện trong [a, b): ẩn từ đầu, bật ở a, tắt ở b. Tua lùi thì GSAP trả lại trạng thái cũ.
+  // Phần tử bắt đầu ở giây 0 thì hiện sẵn (lệnh set ở đúng vị trí 0 không chạy khi đầu đọc đứng yên ở 0).
+  const hien = (el, a, b) => {
+    if (a <= 0.001) gsap.set(el, { autoAlpha: 1 }); else { gsap.set(el, { autoAlpha: 0 }); tl.set(el, { autoAlpha: 1 }, a); }
+    tl.set(el, { autoAlpha: 0 }, b);
+  };
+  const vao = (el, at, y = 30) => tl.fromTo(el, { autoAlpha: 0, y }, { autoAlpha: 1, y: 0, duration: 0.5, ease: 'back.out(1.6)' }, at);
+  const mo = (el, at, d = 0.6) => tl.fromTo(el, { autoAlpha: 0 }, { autoAlpha: 1, duration: d, ease: 'power2.out' }, at);
+  const caus = (d, so) => d.cau.find(c => c.so === so) || d.cau[0];
+
+  // ---------- Cảnh số liệu (SL): mỗi hàm nhận đoạn { canh, a, b, cau: [{ so, a, b }] } và trả về phần tử ----------
+  const SL = {
+    C02(d) { // Thẻ tựa đề
+      const el = tao(`<div class="nen" style="background-image:url(${GOC}assets/hc/durian/tau-dem-cuc-quang.webp)"></div><div class="mo"></div>
+        <div class="tua"><div class="loat">${L('ĐƯA TRÁI RA BIỂN', 'FRUIT TO THE SEA')}</div><div class="tap">${L('Tập 1 · Sà lan hay xe tải?', 'Ep. 1 · Barge or Truck?')}</div></div>`, 'doan sl');
+      tl.fromTo(q(el, '.nen'), { scale: 1.1 }, { scale: 1, duration: d.b - d.a, ease: 'none' }, d.a);
+      vao(q(el, '.loat'), d.a + 0.3, 50); vao(q(el, '.tap'), d.a + 1.1);
+      return el;
+    },
+    C06(d) { // Cước một container: sà lan và xe tải, rồi nhân 20
+      const k = 62; // px cho mỗi triệu đồng
+      const el = tao(`<div class="nhan" style="left:0;right:0;top:70px;font-size:56px">${L('Cước một container, Cần Thơ → Cái Mép', 'Freight per container, Cần Thơ → Cái Mép')}</div>
+        <div class="cot" id="c6s" style="left:480px;height:${5.5 * k}px;background:var(--xanh)"><div class="nhat" style="height:${1.5 * k}px"></div></div>
+        <div class="cot" id="c6d" style="left:1140px;height:${9 * k}px;background:var(--cam)"><div class="nhat" style="height:${0.5 * k}px"></div></div>
+        <div class="nhan" id="c6sn" style="left:430px;width:400px;bottom:${270 + 5.5 * k}px">${L('4–5,5 tr', '4–5.5M')}</div>
+        <div class="nhan" id="c6dn" style="left:1090px;width:400px;bottom:${270 + 9 * k}px">${L('8,5–9 tr', '8.5–9M')}</div>
+        <div class="nhan" style="left:430px;width:400px;bottom:170px">${L('Sà lan', 'Barge')}</div>
+        <div class="nhan" style="left:1090px;width:400px;bottom:170px">${L('Xe tải', 'Truck')}</div>
+        <div class="the" id="c6x" style="left:50%;top:330px;transform:translateX(-50%);text-align:center;white-space:nowrap">
+          <div class="nho">${L('× 20 container', '× 20 containers')}</div><div class="lon cam">${L('60–100 triệu đồng', '60–100 million VND')}</div><div class="nho">${L('chênh lệch mỗi chuyến', 'difference per trip')}</div></div>
+        <div class="nguon">${L('Nguồn: Báo cáo Kinh tế thường niên ĐBSCL, qua vietnamtradeportal.gov.vn (N4) · nhân 20: tự tính (N8)', 'Source: Mekong Delta Annual Economic Report, via vietnamtradeportal.gov.vn (N4) · ×20: own calculation (N8)')}</div>`, 'doan sl');
+      const c6 = caus(d, 6), c7 = caus(d, 7);
+      tl.fromTo(q(el, '#c6s'), { scaleY: 0 }, { scaleY: 1, duration: 1, ease: 'back.out(1.3)' }, c6.a + 0.4);
+      tl.fromTo(q(el, '#c6d'), { scaleY: 0 }, { scaleY: 1, duration: 1, ease: 'back.out(1.3)' }, c6.a + 1.2);
+      vao(q(el, '#c6sn'), c6.a + 1.2); vao(q(el, '#c6dn'), c6.a + 2.0);
+      if (d.cau.some(c => c.so === 7)) vao(q(el, '#c6x'), c7.a + 0.3); else gsap.set(q(el, '#c6x'), { autoAlpha: 0 });
+      return el;
+    },
+    C08(d) { // Sơ đồ tuyến và trục giờ: câu 9 (36–40 giờ và ~8 giờ), câu 11 (40 / 44), câu 22 (40 + 5 = 45 > 44)
+      const so = d.cau[0].so, x0 = 300, w = 1320, h = w / 48, X = g => x0 + g * h;
+      const el = tao(`<svg viewBox="0 0 1920 1080" width="1920" height="1080" style="position:absolute;inset:0">
+          <path id="c8s" d="M300,250 C520,160 640,360 860,250 S1220,150 1400,260 S1560,300 1620,250" fill="none" stroke="#6FC2B0" stroke-width="14" stroke-linecap="round" pathLength="1" stroke-dasharray="1 1"/>
+          <path id="c8b" d="M300,250 L1620,250" fill="none" stroke="#F2A541" stroke-width="10" stroke-dasharray="26 18"/>
+          <circle cx="300" cy="250" r="26" fill="#FFF7E8"/><circle cx="1620" cy="250" r="26" fill="#FFF7E8"/></svg>
+        <div class="nhan" style="left:150px;width:300px;top:300px">Cần Thơ</div><div class="nhan" style="left:1470px;width:300px;top:300px">Cái Mép</div>
+        <div class="truc" style="left:${x0}px;width:${w}px;top:900px"></div>
+        ${[0, 8, 16, 24, 32, 40, 48].map(g => `<div class="nho" style="position:absolute;left:${X(g) - 60}px;width:120px;text-align:center;top:920px;color:var(--kem)">${g}${L(' giờ', ' h')}</div>`).join('')}
+        <div class="nhan" style="left:40px;width:240px;top:560px;text-align:right">${L('Sà lan', 'Barge')}</div>
+        <div class="thanh" id="c8sl" style="left:${x0}px;top:545px;width:${36 * h}px;background:var(--xanh)"></div>
+        <div class="thanh" id="c8sl2" style="left:${X(36)}px;top:545px;width:${4 * h}px;background:rgba(111,194,176,.55)"></div>
+        <div class="thanh" id="c8cho" style="left:${X(40)}px;top:545px;width:${5 * h}px;background:var(--do)"></div>
+        <div class="nhan" id="c8sln" style="left:${X(40) + 20}px;top:556px;text-align:left">${L('36–40 giờ', '36–40 h')}</div>
+        <div class="nhan" style="left:40px;width:240px;top:720px;text-align:right" id="c8xtl">${L('Xe tải', 'Truck')}</div>
+        <div class="thanh" id="c8xt" style="left:${x0}px;top:705px;width:${8 * h}px;background:var(--cam)"></div>
+        <div class="nhan" id="c8xtn" style="left:${X(8) + 20}px;top:716px;text-align:left">${L('~8 giờ', '~8 h')}</div>
+        <div class="vach" id="c8han" style="left:${X(44) - 4}px;top:480px;height:440px"></div>
+        <div class="nhan" id="c8hann" style="left:${X(44) - 200}px;width:400px;top:410px">${L('Hạn: 44 giờ', 'Deadline: 44 h')}</div>
+        <div class="the" id="c8kq" style="left:50%;top:640px;transform:translateX(-50%);white-space:nowrap"><div class="lon"></div></div>
+        <div class="nguon">${so === 22 ? L('Nguồn: N3 (thời gian chạy), Tuổi Trẻ 2019 (N6: ~5 giờ chờ nước)', 'Sources: N3 (travel time), Tuổi Trẻ 2019 (N6: ~5 h waiting)') : L('Nguồn: Báo cáo Kinh tế thường niên ĐBSCL, qua vietnamtradeportal.gov.vn (N3)', 'Source: Mekong Delta Annual Economic Report, via vietnamtradeportal.gov.vn (N3)')}</div>`, 'doan sl');
+      const c = d.cau[0], han = q(el, '#c8han'), kq = q(el, '#c8kq'), hide = s => gsap.set(q(el, s), { autoAlpha: 0 });
+      if (so === 9) {
+        tl.fromTo(q(el, '#c8s'), { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 1.4, ease: 'power1.inOut' }, c.a + 0.2);
+        tl.fromTo(q(el, '#c8b'), { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.8 }, c.a + 0.6);
+        tl.fromTo(q(el, '#c8sl'), { scaleX: 0 }, { scaleX: 1, duration: 1.6, ease: 'power2.out' }, c.a + 1.2);
+        tl.fromTo(q(el, '#c8sl2'), { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.4 }, c.a + 2.8);
+        vao(q(el, '#c8sln'), c.a + 3.0);
+        tl.fromTo(q(el, '#c8xt'), { scaleX: 0 }, { scaleX: 1, duration: 0.8, ease: 'power2.out' }, c.a + 3.6);
+        vao(q(el, '#c8xtn'), c.a + 4.2);
+        ['#c8cho', '#c8han', '#c8hann', '#c8kq'].forEach(hide);
+      } else {
+        gsap.set(q(el, '#c8s'), { strokeDashoffset: 0 }); gsap.set(q(el, '#c8sl2'), { background: 'var(--xanh)' });
+        ['#c8xt', '#c8xtn', '#c8xtl'].forEach(s => gsap.set(q(el, s), { autoAlpha: 0.25 }));
+        q(el, '#c8sln').textContent = L('40 giờ', '40 h');
+        if (so === 22) { q(el, '#c8sln').textContent = L('40 + 5 giờ', '40 + 5 h'); q(el, '#c8sln').style.left = (X(45) + 20) + 'px'; }
+        mo(han, c.a + 0.4, 0.4); vao(q(el, '#c8hann'), c.a + 0.5);
+        if (so === 11) { hide('#c8cho'); q(kq, '.lon').textContent = L('40 / 44 · vừa khít', '40 / 44 · cutting it close'); vao(kq, c.a + 1.6); }
+        else {
+          tl.fromTo(q(el, '#c8cho'), { scaleX: 0 }, { scaleX: 1, duration: 1.2, ease: 'power2.out' }, c.a + 1.2);
+          tl.to(han, { background: '#E0574F', duration: 0.3 }, c.a + 2.4);
+          q(kq, '.lon').innerHTML = `40 + 5 = <span class="do">45 &gt; 44</span>`; vao(kq, c.a + 2.6);
+        }
+      }
+      return el;
+    },
+    C12(d) { // Lumina bày bảng ba cột; câu 16 điền hai hàng
+      const o = [L('Chi phí', 'Cost'), L('Thời gian', 'Time'), L('Rủi ro', 'Risk')];
+      const s = [L('Sà lan', 'Barge'), L('4–5,5 tr', '4–5.5M VND'), L('36–40 giờ', '36–40 h'), L('sát hạn', 'tight deadline')];
+      const x = [L('Xe tải', 'Truck'), L('8,5–9 tr', '8.5–9M VND'), L('~8 giờ', '~8 h'), L('thiếu xe', 'short of trucks')];
+      const el = tao(`<img class="lumina" src="${GOC}assets/character/advisors/lumina-y-tuong-cut.webp" alt="" style="left:30px">
+        <div class="bang" style="left:560px;top:250px">
+          <div style="background:transparent"></div>${o.map(t => `<div class="dau">${t}</div>`).join('')}
+          ${s.map((t, i) => `<div class="${i ? 'o1' : 'hang o1'}">${t}</div>`).join('')}
+          ${x.map((t, i) => `<div class="${i ? 'o2' : 'hang o2'}">${t}</div>`).join('')}</div>
+        <div class="nguon">${L('Nguồn: N3, N4 · thiếu xe: tình tiết hư cấu', 'Sources: N3, N4 · truck shortage: fictional')}</div>`, 'doan sl');
+      const c15 = caus(d, 15), c16 = caus(d, 16);
+      tl.fromTo(q(el, '.lumina'), { autoAlpha: 0, x: -60 }, { autoAlpha: 1, x: 0, duration: 0.7, ease: 'power2.out' }, d.a + 0.1);
+      el.querySelectorAll('.dau').forEach((n, i) => vao(n, c15.a + 0.8 + i * 0.5));
+      const co16 = d.cau.some(c => c.so === 16);
+      el.querySelectorAll('.o1').forEach((n, i) => co16 ? vao(n, c16.a + 0.3 + i * 0.35) : gsap.set(n, { autoAlpha: 0 }));
+      el.querySelectorAll('.o2').forEach((n, i) => co16 ? vao(n, c16.a + 2.4 + i * 0.35) : gsap.set(n, { autoAlpha: 0 }));
+      return el;
+    },
+    C15(d) { // Kênh Chợ Gạo: câu 19 dài 28,5 km, 1877; câu 20 triều xuống, sà lan dừng
+      const el = tao(`<div style="position:absolute;left:0;right:0;top:400px;height:420px;background:var(--dat)"></div>
+        <div id="c15n" style="position:absolute;left:0;right:0;top:400px;height:420px;background:#3f8fa8;transform-origin:50% 50%"></div>
+        <div style="position:absolute;left:0;right:0;top:300px;height:100px;background:#3d6b3a"></div><div style="position:absolute;left:0;right:0;top:820px;height:120px;background:#3d6b3a"></div>
+        <div id="c15t" style="position:absolute;left:-460px;top:560px;width:420px;height:110px;border-radius:0 0 40px 40px;background:#1f2d3a;box-shadow:inset 0 -16px 0 #b33a2a">
+          ${[0, 1, 2].map(i => `<div style="position:absolute;left:${30 + i * 128}px;top:-62px;width:112px;height:62px;border-radius:10px;background:var(--xanh)"></div>`).join('')}</div>
+        <div class="the" id="c15a" style="left:90px;top:60px"><div class="vua">${L('Kênh Chợ Gạo', 'Chợ Gạo canal')}</div><div class="nho">${L('28,5 km · đào từ năm 1877', '28.5 km · dug in 1877')}</div></div>
+        <div class="the" id="c15b" style="right:90px;top:60px"><div class="vua do">${L('Triều thấp', 'Low tide')}</div><div class="nho">${L('sà lan lớn dễ mắc cạn', 'big barges can run aground')}</div></div>
+        <div class="nguon" id="c15g"></div>`, 'doan sl');
+      const c19 = caus(d, 19), c20 = caus(d, 20), g = q(el, '#c15g');
+      vao(q(el, '#c15a'), c19.a + 0.3);
+      tl.fromTo(q(el, '#c15t'), { x: 0 }, { x: 1180, duration: Math.max(2, c19.b - c19.a), ease: 'power1.out' }, c19.a);
+      tl.set(g, { textContent: L('Nguồn: Tuổi Trẻ, 21/05/2008 (N7)', 'Source: Tuổi Trẻ, 21 May 2008 (N7)') }, d.a);
+      if (d.cau.some(c => c.so === 20)) {
+        tl.to(q(el, '#c15n'), { scaleY: 0.4, duration: 2, ease: 'power2.inOut' }, c20.a + 0.2);
+        vao(q(el, '#c15b'), c20.a + 1.4);
+        tl.set(g, { textContent: L('Nguồn: Tuổi Trẻ 2008 (N7) · VOV Giao thông, 24/09/2026 (N5)', 'Sources: Tuổi Trẻ 2008 (N7) · VOV Traffic, 24 Sep 2026 (N5)') }, c20.a);
+      } else gsap.set(q(el, '#c15b'), { autoAlpha: 0 });
+      return el;
+    },
+    C18(d) { // Lumina mời bình chọn; câu 27 địa chỉ bizonland.com
+      const el = tao(`<img class="lumina" src="${GOC}assets/character/advisors/lumina-vest-cut.webp" alt="" style="right:60px">
+        <div style="position:absolute;left:90px;top:170px;width:1200px;text-align:center">
+          <div class="vua" id="c18a">${L('Còn đội bạn?', 'And your team?')}</div>
+          <div style="margin-top:40px" id="c18b"><span class="nut" style="background:var(--xanh)">${L('SÔNG', 'RIVER')}</span><span class="vua">${L('hay', 'or')}</span><span class="nut" style="background:var(--cam)">${L('ĐƯỜNG', 'ROAD')}</span></div>
+          <div class="vua" id="c18c" style="margin-top:50px">${L('Bình chọn ngay dưới video ↓', 'Vote right below the video ↓')}</div></div>
+        <div class="the" id="c18d" style="left:250px;top:760px;text-align:center"><div class="lon cam">bizonland.com</div><div class="nho">${L('mục Đưa trái ra biển', 'Fruit to the Sea')}</div></div>`, 'doan sl');
+      const c26 = caus(d, 26), c27 = caus(d, 27);
+      tl.fromTo(q(el, '.lumina'), { autoAlpha: 0, x: 60 }, { autoAlpha: 1, x: 0, duration: 0.7, ease: 'power2.out' }, d.a + 0.1);
+      vao(q(el, '#c18a'), c26.a + 0.3); vao(q(el, '#c18b'), c26.a + 1.0); vao(q(el, '#c18c'), c26.a + 3.0);
+      if (d.cau.some(c => c.so === 27)) vao(q(el, '#c18d'), c27.a + 0.4); else gsap.set(q(el, '#c18d'), { autoAlpha: 0 });
+      return el;
+    },
+    C19(d) { // Chữ chạy: nhân vật, giọng, nhạc, nguồn số liệu
+      const el = tao(`<div class="chay"><h2>${L('Đưa trái ra biển · Tập 1', 'Fruit to the Sea · Episode 1')}</h2>
+        <h3>${L('Nhân vật', 'Characters')}</h3><p>Lumina · Bác Ba · Bà Sáu Lành · Minh Khang · Lina Park · An Nhiên · Kim Long · Tèo Soi</p>
+        <h3>${L('Giọng Lumina', 'Voice of Lumina')}</h3><p>Đỗ Thùy Hương</p>
+        <h3>${L('Nhạc', 'Music')}</h3><p>${L('Nhạc gốc BizOnland', 'BizOnland original music')}</p>
+        <h3>${L('Nguồn số liệu', 'Data sources')}</h3>
+        <p>${L('Bộ Công Thương, Báo cáo Logistics Việt Nam 2024 (N1, N2)', 'Ministry of Industry and Trade, Viet Nam Logistics Report 2024 (N1, N2)')}</p>
+        <p>${L('Báo cáo Kinh tế thường niên ĐBSCL, qua vietnamtradeportal.gov.vn (N3, N4)', 'Mekong Delta Annual Economic Report, via vietnamtradeportal.gov.vn (N3, N4)')}</p>
+        <p>${L('VOV Giao thông, 24/09/2026 (N5)', 'VOV Traffic, 24 Sep 2026 (N5)')}</p>
+        <p>${L('Tuổi Trẻ, 27/11/2019 (N6) và 21/05/2008 (N7)', 'Tuổi Trẻ, 27 Nov 2019 (N6) and 21 May 2008 (N7)')}</p>
+        <p>${L('Phép tính chênh lệch × 20: BizOnland (N8)', 'Difference × 20: BizOnland calculation (N8)')}</p>
+        <h3>&nbsp;</h3><p>${L('Nhân vật, hợp tác xã, Kim Long Exports và hạn chót trong phim là hư cấu.', 'Characters, the co-op, Kim Long Exports and the deadline are fictional.')}</p>
+        <h2 style="margin-top:70px">bizonland.com</h2><p class="bq-cuoi">${BAN_QUYEN}</p></div>`, 'doan sl');
+      const chay = q(el, '.chay');
+      tl.fromTo(chay, { y: 0 }, { y: () => -(1080 + chay.offsetHeight) + 140, duration: d.b - d.a, ease: 'none' }, d.a);
+      return el;
+    },
+  };
+
+  // ---------- Cảnh nhân vật (NV): có video thì để trong suốt (video nằm dưới), chưa có thì hiện thẻ chờ ----------
+  function NV(d) {
+    if (d.video) return tao('', 'doan nv-co');
+    if (d.tinh && d.tinh.length) { // khung hình tĩnh của cảnh, máy quay đẩy chậm (lần lượt vào giữa, sang trái, sang phải)
+      const el = tao(d.tinh.map((x, i) => `<div class="nen tinh" style="background-image:url(${x.src});transform-origin:${['50% 50%', '30% 50%', '70% 50%'][i % 3]}"></div>`).join(''), 'doan nv tinh-co');
+      el.querySelectorAll('.tinh').forEach((n, i) => { const x = d.tinh[i]; hien(n, x.a, x.b); tl.fromTo(n, { scale: 1 }, { scale: 1.08, duration: x.b - x.a, ease: 'none' }, x.a); });
+      return el;
+    }
+    return tao(`<div class="ma">${d.canh}</div><div class="ghi">${d.mo_ta || ''}</div>
+      <div class="tag">${L('Cảnh nhân vật · chờ chị dựng', 'Character scene · placeholder')}</div>
+      <div class="nv">${(d.anh || []).map(a => `<img src="${GOC}${a}" alt="">`).join('')}</div>`, 'doan nv cho');
+  }
+
+  // ---------- Chữ trên hình của từng câu (bong bóng thoại, chữ, đồng hồ đếm ngược) ----------
+  const giay = s => s.split(':').reduce((t, x) => t * 60 + +x, 0);
+  const hms = s => [Math.floor(s / 3600), Math.floor(s / 60) % 60, s % 60].map(x => String(x).padStart(2, '0')).join(':');
+  function chu(c) {
+    (c.chu || []).forEach((x, i) => {
+      const a = c.a + 0.2 + (x.sau != null ? x.sau * (c.b - c.a) : i * 0.5), b = c.b;
+      if (x.loai === 'bong') {
+        const el = tao(`<div class="bong${x.phai ? ' phai' : ''}"><div class="ai">${x.ai}</div><div class="loi">«${L(x.vi, x.en)}»</div></div>`, 'lop');
+        hien(el, a, b); vao(q(el, '.bong'), a, 24);
+      } else if (x.loai === 'chu') {
+        const el = tao(`<div class="chu"><div class="vua">${L(x.vi, x.en)}</div>${x.nguon ? `<div class="nho">${L(x.nguon, x.nguon_en || x.nguon)}</div>` : ''}</div>`, 'lop');
+        hien(el, a, b); vao(q(el, '.chu'), a);
+      } else if (x.loai === 'dem') {
+        const el = tao(`<div class="dem">${x.tu}</div>`, 'lop'), s0 = giay(x.tu), o = q(el, '.dem');
+        hien(el, c.a, b);
+        for (let k = 1; k <= Math.floor(b - c.a); k++) tl.set(o, { textContent: hms(s0 - k) }, c.a + k);
+      }
+    });
+  }
+
+  // ---------- Lập dòng thời gian ----------
+  let doan, cau, TONG;
+  if (G) { doan = G.doan; cau = G.cau; TONG = G.tong; }
+  else { // xem trước: các cảnh số liệu nối nhau, mỗi câu 5 giây
+    const mau = [['C02', [2]], ['C06', [6, 7]], ['C08', [9]], ['C08', [11]], ['C12', [15, 16]], ['C15', [19, 20]], ['C08', [22]], ['C18', [26, 27]], ['C19', [28]]];
+    let t = 0; doan = mau.map(([canh, ds]) => { const a = t; const cs = ds.map(so => { const c = { so, a: t, b: t + 5 }; t += 5; return c; }); return { canh, loai: 'SL', a, b: t, cau: cs }; });
+    cau = []; TONG = t;
+  }
+  doan.forEach((d, i) => { const el = (d.loai === 'SL' && SL[d.canh]) ? SL[d.canh](d) : NV(d); el.id = 'd' + i; el.dataset.canh = d.canh; hien(el, d.a, d.b); });
+  cau.forEach(chu);
+  // Phụ đề in trên hình (chỉ khi dựng bản duyệt với --phu-de): bong bóng thoại đẩy lên để không đè chữ
+  if (G && G.phu_de && G.phu_de.length) {
+    document.getElementById('root').classList.add('co-pd');
+    G.phu_de.forEach(x => { const el = document.createElement('div'); el.className = 'pd'; el.innerHTML = '<span></span>'; el.firstChild.textContent = x.t; document.getElementById('root').appendChild(el); hien(el, x.a, x.b); });
+  }
+  const den = document.getElementById('den');
+  gsap.set(den, { autoAlpha: 0 }); tl.to(den, { autoAlpha: 1, duration: 0.4, ease: 'none' }, TONG - 0.4);
+  tl.set({}, {}, TONG);
+  window.__timelines = window.__timelines || {};
+  window.__timelines.main = tl;
+  window.veKhung = t => { tl.seek(t, false); };
+  window.thongTin = { tong: TONG, lang: EN ? 'en' : 'vi', doan: doan.map(d => ({ canh: d.canh, loai: d.loai, a: d.a, b: d.b, video: !!d.video, tinh: (d.tinh || []).length })), canhSL: Object.keys(SL) };
+  tl.seek(0);
+})();
+</script>
+</body>
+</html>
