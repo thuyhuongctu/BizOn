@@ -49,6 +49,37 @@ assert.ok(dung.includes("'hyperframes@0.9.86'") && dung.includes("HYPERFRAMES_NO
 assert.ok(!/cloud|share|publish|auth/.test(dung.split('\n').filter(l => /spawnSync\('npx'/.test(l)).join('')), 'không dùng đám mây hay chia sẻ của HeyGen');
 assert.ok(+(/CACHE = 'bizon-v(\d+)'/.exec(read('sw.js')) || [])[1] >= 980, 'sw.js ≥ v980');
 
+// 2b. Xếp giọng: tệp ghi âm đánh số 1–28 vào đúng chỗ câu (tệp 28 → câu 29, câu 28 là chữ chạy không lời)
+{
+  const os = require('node:os');
+  const XG = R('scripts/video/xep-giong.mjs');
+  const can = KB.filter(k => k.vi && k.vi !== '—').map(k => k.so);
+  const tam = fs.mkdtempSync(path.join(os.tmpdir(), 'xg-test-'));
+  const lam = (ten, ...them) => {
+    const vao = path.join(tam, ten, 'vao'), ra = path.join(tam, ten, 'ra');
+    fs.mkdirSync(vao, { recursive: true });
+    return { vao, ra, chay: tenTep => { tenTep.forEach(f => fs.writeFileSync(path.join(vao, f), f)); return spawnSync(process.execPath, [XG, '--tap', '01', '--lang', 'vi', vao, '--dich', ra, ...them], { encoding: 'utf8' }); } };
+  };
+  // Đánh số theo thứ tự đọc 1..28
+  let t = lam('thu-tu'); let r = t.chay(can.map((_, i) => (i + 1) + '.mp3'));
+  assert.equal(r.status, 0, 'xep-giong: nhận tệp 1–' + can.length + '\n' + r.stderr);
+  assert.deepEqual(fs.readdirSync(t.ra).sort(), can.map(s => String(s).padStart(2, '0') + '.mp3').sort(), 'xep-giong: đủ câu, đặt tên theo số câu');
+  assert.equal(fs.readFileSync(path.join(t.ra, '29.mp3'), 'utf8'), can.length + '.mp3', 'xep-giong: tệp cuối vào câu 29, không vào câu 28');
+  assert.equal(fs.readFileSync(path.join(t.ra, '27.mp3'), 'utf8'), '27.mp3', 'xep-giong: tệp 27 vào câu 27');
+  // Chạy lại không ghi đè khi chưa cho phép
+  r = spawnSync(process.execPath, [XG, '--tap', '01', '--lang', 'vi', t.vao, '--dich', t.ra], { encoding: 'utf8' });
+  assert.notEqual(r.status, 0, 'xep-giong: không ghi đè giọng đã có nếu thiếu --ghi-de');
+  // Đánh số theo số câu (01–27, 29) giữ nguyên
+  t = lam('theo-cau'); r = t.chay(can.map(s => String(s).padStart(2, '0') + ' Lumina.mp3'));
+  assert.equal(r.status, 0, 'xep-giong: nhận tệp theo số câu\n' + r.stderr);
+  assert.equal(fs.readFileSync(path.join(t.ra, '29.mp3'), 'utf8'), '29 Lumina.mp3', 'xep-giong: tệp 29 giữ câu 29');
+  // Thiếu tệp thì báo lỗi, không chép gì
+  t = lam('thieu'); r = t.chay(can.slice(1).map((_, i) => (i + 1) + '.mp3'));
+  assert.notEqual(r.status, 0, 'xep-giong: thiếu tệp phải báo lỗi');
+  assert.ok(!fs.existsSync(t.ra), 'xep-giong: lỗi thì không chép tệp nào');
+  fs.rmSync(tam, { recursive: true, force: true });
+}
+
 // 3. Bản dựng nháp VI và EN (chỉ HTML)
 // Bản VI: chưa có cảnh NV nào (thẻ chờ). Bản EN: có khung hình tĩnh cho C05 (một ảnh) và C10 (hai ảnh nối nhau).
 const OUT = R('artifacts/phim-test'), TINH = path.join(OUT, 'canh-tinh');
