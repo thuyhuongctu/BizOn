@@ -73,6 +73,9 @@ header.top .sub{font-size:13px;color:var(--muted);font-weight:700;margin:2px 0 0
 .the.canh{box-shadow:0 0 0 3px var(--gold),var(--clay)}
 .the.qua{box-shadow:0 0 0 3px var(--burg),var(--clay)}
 .hang-nut{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:10px}
+#phong-3d{display:block;width:100%;height:280px;border-radius:16px;margin-bottom:12px;background:#EFE6D6}
+.chon-3d{display:flex;align-items:center;gap:10px;min-height:44px;font-weight:700;font-size:14px}
+.chon-3d input{width:24px;height:24px}
 .hoi-dong{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
 .tv{background:var(--track);border-radius:16px;padding:8px;text-align:center;opacity:.6}
 .tv.hoi{opacity:1;background:#fff;box-shadow:0 0 0 3px var(--gold)}
@@ -84,7 +87,7 @@ header.top .sub{font-size:13px;color:var(--muted);font-weight:700;margin:2px 0 0
 table{width:100%;border-collapse:collapse;font-size:14px}
 th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--field);vertical-align:top}
 .chan{font-size:12px;color:var(--muted);line-height:1.5;margin-top:18px}
-@media (max-width:520px){.so-lon{font-size:52px}.vai-ten{font-size:24px}.cau{font-size:18px}.dai .o{font-size:10px}.dai .o.hep i{display:inline}.dai .o.hep em{display:none}.lumina{grid-template-columns:52px 1fr}.lumina img{width:52px;height:52px}}
+@media (max-width:520px){#phong-3d{height:220px}.so-lon{font-size:52px}.vai-ten{font-size:24px}.cau{font-size:18px}.dai .o{font-size:10px}.dai .o.hep i{display:inline}.dai .o.hep em{display:none}.lumina{grid-template-columns:52px 1fr}.lumina img{width:52px;height:52px}}
 .lua-chon{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:10px 0}
 .lua-chon label{display:block;font-weight:800;font-size:14px;margin-bottom:4px}
 .lua-chon select,.lua-chon input{width:100%;min-height:44px;border:0;border-radius:12px;background:var(--field);padding:8px 12px}
@@ -127,6 +130,7 @@ legend{font-weight:800;font-size:16px;padding:0;margin-bottom:4px}
         <div><label for="ma-luot" data-k="maLuot">Mã lượt</label><input type="text" id="ma-luot" maxlength="12" autocomplete="off" spellcheck="false"><div class="goi-y" data-k="maGoiY">Cùng mã thì cùng bộ câu hỏi. Giảng viên đặt chung một mã để các đội gặp câu hỏi công bằng.</div></div>
         <div><label for="so-cau" data-k="soCau">Số câu Hội đồng hỏi</label><select id="so-cau"><option>3</option><option>4</option><option>5</option></select></div>
       </div>
+      <label class="chon-3d"><input type="checkbox" id="chk-3d"> <span data-k="chon3d">Phòng Hội đồng 3D (máy yếu nên tắt)</span></label>
       <div class="hang-nut"><button type="button" class="btn chinh" id="nut-bat-dau" data-k="batDau">Bắt đầu pitch 7 phút</button></div>
     </div>
   </section>
@@ -153,6 +157,8 @@ legend{font-weight:800;font-size:16px;padding:0;margin-bottom:4px}
   <section id="man-hoi-dap" hidden aria-labelledby="h-hoi-dap">
     <div class="the">
       <h2 id="h-hoi-dap" style="margin:0 0 10px;font-size:18px"><span data-k="hoiDapTieuDe">Hội đồng đặt câu hỏi</span> <span class="num" id="thu-tu-cau"></span></h2>
+      <canvas id="phong-3d" hidden role="img" aria-label=""></canvas>
+      <p class="goi-y" id="note-3d" role="status" aria-live="polite"></p>
       <div class="hoi-dong" id="hoi-dong"></div>
       <div id="the-cau">
         <div id="chip-cau"></div>
@@ -223,6 +229,7 @@ legend{font-weight:800;font-size:16px;padding:0;margin-bottom:4px}
 
 <script src="pitch-goi-von-data.js"></script>
 <script src="pitch-goi-von-core.js"></script>
+<script src="pitch-goi-von-3d.js"></script>
 <script>
 (function () {
   'use strict';
@@ -233,6 +240,7 @@ legend{font-weight:800;font-size:16px;padding:0;margin-bottom:4px}
       tieuDe: 'Phòng luyện pitch gọi vốn', phuDe: 'Hội đồng đầu tư · theo kịch bản «Đại hội Cổ đông & Pitch xin vốn»', amBat: '🔔 Âm thanh', amTat: '🔕 Tắt tiếng',
       luatTieuDe: 'Luật của phòng pitch', luminaNhan: 'Lumina dẫn chương trình và giữ giờ · cố vấn chạy theo luật',
       luat: ['Pitch 7 phút, chia cho 5 vai theo thứ tự: CEO 30 giây, CMO 90, CFO 90, COO 60, Thư ký 60, CEO chốt 90.', 'Nội dung theo khung PASTOR: Problem, Answer, Story, Traction, Offer, Response.', 'Mỗi đoạn tự chuyển khi hết giờ. Vai nói xong sớm thì bấm «Xong, chuyển vai»; phần dư dồn cho lời chốt của CEO.', 'Còn 10 giây có tiếng báo. Quá 7 phút là quá giờ. Quá 30 giây so với 7 phút: trừ 5 điểm, chuông reo và phần trình bày dừng.', 'Sau pitch, Hội đồng hỏi 3–5 câu. Mỗi câu có 1 phút để trả lời.'],
+      chon3d: 'Phòng Hội đồng 3D (máy yếu nên tắt)', dangNap3d: 'Đang dựng phòng Hội đồng 3D…', phang3d: 'Máy này chưa hiển thị được 3D, trang dùng bản phẳng.', aria3d: ten => 'Phòng Hội đồng 3D: ' + ten + ' đang hỏi.',
       tenDoi: 'Tên đội', nganh: 'Ngành hàng', maLuot: 'Mã lượt', maGoiY: 'Cùng mã thì cùng bộ câu hỏi. Giảng viên đặt chung một mã để các đội gặp câu hỏi công bằng.', soCau: 'Số câu Hội đồng hỏi', batDau: 'Bắt đầu pitch 7 phút',
       dangNoi: 'Đang trình bày', conLaiTong: 'Còn lại của 7 phút:', chuyenVai: 'Xong, chuyển vai', tamDung: 'Tạm dừng (tập)', tiepTuc: 'Tiếp tục', ketThucPitch: 'Kết thúc pitch',
       denLuot: v => 'Đến lượt ' + v + '.', con10: 'Còn 10 giây.', quaGio: 'Quá 7 phút: đang quá giờ.', phat: 'Quá 30 giây: trừ 5 điểm. Phần trình bày dừng.', daTamDung: 'Đang tạm dừng.',
@@ -259,6 +267,7 @@ legend{font-weight:800;font-size:16px;padding:0;margin-bottom:4px}
       tieuDe: 'Funding pitch practice room', phuDe: 'Investment board · based on the «Shareholders\' Congress & Funding Pitch» playbook', amBat: '🔔 Sound on', amTat: '🔕 Muted',
       luatTieuDe: 'Rules of the pitch room', luminaNhan: 'Lumina hosts and keeps time · a rule-based advisor',
       luat: ['A 7-minute pitch shared by 5 roles in this order: CEO 30 s, CMO 90, CFO 90, COO 60, Secretary 60, CEO close 90.', 'Content follows PASTOR: Problem, Answer, Story, Traction, Offer, Response.', 'Each segment moves on when its time runs out. If a role finishes early, press «Done, next role»; the time left goes to the CEO\'s close.', 'A sound plays at 10 seconds left. Past 7 minutes you are over time. 30 seconds over 7 minutes: minus 5 points, the bell rings and the pitch stops.', 'After the pitch, the board asks 3–5 questions. Each answer gets 1 minute.'],
+      chon3d: '3D board room (turn off on slow devices)', dangNap3d: 'Building the 3D board room…', phang3d: 'This device cannot show 3D, so the page uses the flat view.', aria3d: ten => '3D board room: ' + ten + ' is asking.',
       tenDoi: 'Team name', nganh: 'Product sector', maLuot: 'Round code', maGoiY: 'Same code, same questions. The instructor sets one code so every team gets a fair set.', soCau: 'Questions from the board', batDau: 'Start the 7-minute pitch',
       dangNoi: 'Now presenting', conLaiTong: 'Left of the 7 minutes:', chuyenVai: 'Done, next role', tamDung: 'Pause (practice)', tiepTuc: 'Resume', ketThucPitch: 'End pitch',
       denLuot: v => v + ', your turn.', con10: '10 seconds left.', quaGio: 'Past 7 minutes: over time.', phat: '30 seconds over: minus 5 points. The pitch stops.', daTamDung: 'Paused.',
@@ -372,7 +381,24 @@ legend{font-weight:800;font-size:16px;padding:0;margin-bottom:4px}
     S.ket = { giay: g, phat: g >= L.hanPhatGiay, tungDoan: C.thoiGianTungDoan(g, S.som, D.DOAN, L) };
     if (S.ket.phat) { baoBang(t('phat'), 'do'); bip(330, 0.9, 3); }
     S.phase = 'hoi-dap'; S.iCau = 0;
-    setTimeout(() => { hien('man-hoi-dap'); batDauCau(); }, S.ket.phat ? 1800 : 0);
+    setTimeout(() => { hien('man-hoi-dap'); moPhong3d(); batDauCau(); }, S.ket.phat ? 1800 : 0);
+  }
+
+  // Phòng Hội đồng 3D (PR 3): chỉ nạp three.js khi vào phần hỏi đáp; hỏng hay không có WebGL thì dùng bản phẳng.
+  const P3 = window.PitchPhong3D;
+  let p3 = null, p3Hong = false;
+  function phang(ghiChu) { $('phong-3d').hidden = true; $('hoi-dong').hidden = false; $('note-3d').textContent = ghiChu ? t('phang3d') : ''; }
+  function moPhong3d() {
+    if (!$('chk-3d').checked || p3Hong) { phang(p3Hong); return; }
+    if (p3) { $('phong-3d').hidden = false; $('hoi-dong').hidden = true; return; }
+    if (!P3 || !P3.hoTro()) { p3Hong = true; phang(true); return; }
+    $('note-3d').textContent = t('dangNap3d');
+    P3.napThree('../js/vendor/three.min.js').then(() => {
+      if (S.phase !== 'hoi-dap' || p3) return;
+      $('phong-3d').hidden = false; $('hoi-dong').hidden = true;
+      p3 = P3.mount($('phong-3d'), { hoiDong: D.HOI_DONG, lumina: '../assets/character/advisors/lumina-vest-cut.webp', lang });
+      $('note-3d').textContent = ''; veCau();
+    }).catch(() => { p3Hong = true; p3 = null; phang(true); });
   }
 
   function batDauCau() { S.dhCau = C.taoDongHo(() => performance.now() + tua); S.dhCau.batDau(); S.daBaoCau = false; veCau(); $('nut-cau-tiep').focus(); }
@@ -386,6 +412,7 @@ legend{font-weight:800;font-size:16px;padding:0;margin-bottom:4px}
       d.querySelector('img').src = h.anh; d.querySelector('b').textContent = ten(h); d.querySelector('small').textContent = ten(h.vaiTro); hd.appendChild(d);
     });
     const ng = D.HOI_DONG.find(h => h.id === c.hoi);
+    if (p3) { try { p3.hoi(c.hoi); p3.ngonNgu(lang); $('phong-3d').setAttribute('aria-label', t('aria3d')(ten(ng))); } catch (e) { p3Hong = true; p3 = null; phang(true); } }
     $('chip-cau').innerHTML = '';
     [ten(ng) + ' ' + t('hoi'), c.p + ' · ' + ten(D.PASTOR[c.p]), tenVai(c.vai)].forEach(s => { const sp = document.createElement('span'); sp.className = 'chip'; sp.textContent = s; $('chip-cau').appendChild(sp); });
     $('cau').textContent = ten(c);
@@ -486,6 +513,11 @@ legend{font-weight:800;font-size:16px;padding:0;margin-bottom:4px}
   $('nut-lang').addEventListener('click', () => { lang = lang === 'vi' ? 'en' : 'vi'; try { localStorage.setItem('bizon-lang', lang); } catch (e) {} apNgonNgu(); });
   $('nut-am').addEventListener('click', () => { amBat = !amBat; $('nut-am').setAttribute('aria-pressed', String(amBat)); $('nut-am').textContent = amBat ? t('amBat') : t('amTat'); });
 
+  // Mặc định: bật 3D nếu máy có WebGL và không phải máy yếu; người dùng đổi thì nhớ lựa chọn; ?3d=0 hay ?3d=1 ghi đè.
+  let chon3d = null; try { chon3d = localStorage.getItem('bizon-pitch-3d'); } catch (e) {}
+  const q3d = (location.search.match(/[?&]3d=([01])/) || [])[1];
+  $('chk-3d').checked = q3d ? q3d === '1' : chon3d ? chon3d === '1' : !!(P3 && P3.hoTro() && !P3.mayYeu());
+  $('chk-3d').addEventListener('change', () => { try { localStorage.setItem('bizon-pitch-3d', $('chk-3d').checked ? '1' : '0'); } catch (e) {} });
   const maUrl = (location.search.match(/[?&]ma=([A-Za-z0-9-]{1,12})/) || [])[1];
   if (maUrl) $('ma-luot').value = maUrl.toUpperCase();
   apNgonNgu();
@@ -493,7 +525,7 @@ legend{font-weight:800;font-size:16px;padding:0;margin-bottom:4px}
   document.addEventListener('visibilitychange', () => { veDongHo(); veGioCau(); });
 
   // Móc cho test: tua đồng hồ (giây) và đọc trạng thái. Không ảnh hưởng người dùng.
-  window.__pitchTest = { tua(g) { tua += g * 1000; veDongHo(); veGioCau(); }, trangThai: () => ({ phase: S.phase, giay: dh.giay(), som: S.som.slice(), ket: S.ket, cau: S.cau.map(c => c.id), iCau: S.iCau, ma: S.ma }) };
+  window.__pitchTest = { tua(g) { tua += g * 1000; veDongHo(); veGioCau(); }, p3: () => (p3 ? p3.trangThai() : { tat: true, hong: p3Hong }), trangThai: () => ({ phase: S.phase, giay: dh.giay(), som: S.som.slice(), ket: S.ket, cau: S.cau.map(c => c.id), iCau: S.iCau, ma: S.ma }) };
 })();
 </script>
 <script src="../js/thong-ke.js" defer></script>
