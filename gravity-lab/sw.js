@@ -1,4 +1,4 @@
-/* Gravity Lab đã chuyển về kho riêng (https://thuyhuongctu.github.io/Gravity-Lab/).
+/* Gravity Lab đã chuyển về kho riêng (https://gravity.bizonland.com/).
  * Service worker này thay bản cũ để dọn bộ nhớ đệm "gl-*" của nó trên bizonland.com
  * rồi tự gỡ, để /gravity-lab/ không còn phục vụ bản sao cũ. */
 self.addEventListener('install', function () { self.skipWaiting(); });
