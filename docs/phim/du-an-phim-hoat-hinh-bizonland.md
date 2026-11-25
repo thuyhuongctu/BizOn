@@ -17,7 +17,7 @@
 | Ngôn ngữ | Bản tiếng Việt và bản tiếng Anh, phụ đề hai thứ tiếng |
 | Người xem | Sinh viên kinh tế, kinh doanh quốc tế; giảng viên; người làm nông sản và logistics Đồng bằng sông Cửu Long |
 | Kênh phát | YouTube @jemappellehuong (playlist «Đưa trái ra biển»), Facebook, TikTok; trang loạt phim trên bizonland.com |
-| Người kể chuyện | Lumina, cố vấn của nhóm trong game BizOnland, do chị Hương lồng tiếng |
+| Người kể chuyện | Lumina, cố vấn của nhóm trong game BizOnland, do Hương lồng tiếng |
 | Tình trạng (24/11/2026) | Tập 1 đã có kịch bản, bảng phân cảnh, 69 khung hình, giọng Lumina tiếng Anh và bản dựng tiếng Anh 3:59 có giọng và phụ đề |
 
 ## 2. Vì sao làm phim
@@ -88,7 +88,7 @@
 
 **Phân vai:**
 
-| Việc | Chị Hương | Thầy Tú | Trợ lý AI (Claude Code) |
+| Việc | Hương | Thầy Tú | Trợ lý AI (Claude Code) |
 |---|---|---|---|
 | Ý tưởng mùa, chọn quyết định từng tập | Quyết | Góp ý | Đề xuất |
 | Số liệu, nguồn | Duyệt | Góp ý học thuật | Tra và ghi nguồn |
@@ -96,9 +96,9 @@
 | Khung hình nhân vật (Google Stitch) và cảnh nhân vật (công cụ video) | Làm | – | Viết lời nhắc, soát lỗi từng khung |
 | Giọng Lumina | Thu | – | Cắt câu, soát bằng Whisper |
 | Cảnh số liệu, chữ, bong bóng, phụ đề, nhạc, ghép | Duyệt | – | Làm |
-| Chiếu thử cho sinh viên | Lớp của chị | Lớp của thầy | Tổng hợp phiếu |
+| Chiếu thử cho sinh viên | Lớp của Hương | Lớp của thầy | Tổng hợp phiếu |
 | Đăng tải, bình chọn, bình luận | Làm | – | Soạn sẵn |
-| Tài trợ, pháp nhân, bảng giá | Quyết | Quyết cùng chị | Soạn nháp |
+| Tài trợ, pháp nhân, bảng giá | Quyết | Quyết cùng Hương | Soạn nháp |
 
 **Dây chuyền một tập (khoảng 3 tuần):**
 1. Kịch bản theo câu, có mốc giờ, nguồn và cảnh → **cổng duyệt 1** (kịch bản).
@@ -114,7 +114,7 @@
 | Việc | Công cụ | Giấy phép, ghi chú |
 |---|---|---|
 | Khung hình nhân vật | Google Stitch | Kiểm điều khoản dùng thương mại trước khi nhận tài trợ |
-| Video cảnh nhân vật | Công cụ video chị đang dùng cho MV 3D | Như trên |
+| Video cảnh nhân vật | Công cụ video Hương đang dùng cho MV 3D | Như trên |
 | Cảnh số liệu, ghép hình | HyperFrames 0.9.86 (HeyGen) | Apache-2.0; chạy trên máy, tắt gửi dữ liệu sử dụng |
 | Chuyển động | GSAP | Miễn phí, kể cả dùng thương mại |
 | Ghép tiếng, phụ đề, độ to | ffmpeg | Mã nguồn mở |
@@ -150,7 +150,7 @@
 ## 9. Kinh phí và nguồn thu
 
 **Chi phí mỗi tập:**
-- Công của chị Hương khoảng 6–8 giờ; công của thầy Tú khoảng 1 giờ.
+- Công của Hương khoảng 6–8 giờ; công của thầy Tú khoảng 1 giờ.
 - Phí gói công cụ video, nếu có.
 - Nhạc, giọng và các công cụ dựng phim: 0 đồng (nhạc gốc, giọng tự thu, công cụ mã nguồn mở).
 - Không chạy quảng cáo trả tiền ở tập 1–2.
