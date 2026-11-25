@@ -16,7 +16,7 @@ const w2 = {}; vm.runInNewContext(R('js/khao-sat-bo2.js'), { window: w2 }); cons
 check(E && E.qa.length === 15 && E.qaIb.length === 15, 'khao-sat-en.js: 15 câu cho mỗi bộ');
 check([...E.qa, ...E.qaIb, ...Object.values(E.thay)].every(it => it.q.length > 15 && it.o.length === 4 && it.o.every(o => o.length > 2)), 'mỗi câu có đề và đúng 4 lựa chọn');
 check(Object.keys(E.thay).sort().join(',') === Object.keys(B2.thay).sort().join(','), 'bộ 2 tiếng Anh thay đúng các câu của js/khao-sat-bo2.js');
-check(E.likertB.length === 8 && E.likertBIb.length === 8 && E.likertC.length === 5, 'thang B 8 câu mỗi bộ, thang C 5 câu');
+check(E.likertB.length === 8 && E.likertBIb.length === 8 && E.likertC.length === 7, 'thang B 8 câu mỗi bộ, thang C 7 câu');
 const moiChu = [...E.qa, ...E.qaIb, ...Object.values(E.thay)].flatMap(it => [it.q, ...it.o]).concat(E.likertB, E.likertBIb, E.likertC);
 check(!moiChu.some(s => VI.test(s) || /[₫«»]/.test(s)), 'bản tiếng Anh không còn chữ có dấu tiếng Việt, ký hiệu ₫ hay ngoặc «»');
 check(E.ghep2().length === 15 && E.ghep2()[1] === E.thay[2] && E.ghep2()[0] === E.qa[0], 'ghep2() ghép 10 câu neo với 5 câu vận dụng');
@@ -52,7 +52,7 @@ check(+(/CACHE = 'bizon-v(\d+)'/.exec(R('sw.js')) || [])[1] >= 842, 'sw.js ≥ b
       await p.goto(BASE + '/khao-sat-online.html?phieu=sau&lop=KT330H-UMK&lang=en&bo=' + bo, { timeout: 60000 }); await p.waitForTimeout(1500);
       const con = await conViet(p);
       check(con.length === 0, 'lang=en, bộ ' + bo + ': phiếu SAU không còn chữ Việt' + (con.length ? ' → ' + con.join(' | ') : ''));
-      check((await p.evaluate(() => document.querySelectorAll('#ks-a input[type=radio]').length)) === 60 && (await p.evaluate(() => document.querySelectorAll('#ks-b .likert-row, #ks-c .likert-row').length)) === 13, 'lang=en, bộ ' + bo + ': 15 câu × 4 lựa chọn, 8 + 5 dòng thang đo');
+      check((await p.evaluate(() => document.querySelectorAll('#ks-a input[type=radio]').length)) === 60 && (await p.evaluate(() => document.querySelectorAll('#ks-b .likert-row, #ks-c .likert-row').length)) === 15, 'lang=en, bộ ' + bo + ': 15 câu × 4 lựa chọn, 8 + 7 dòng thang đo');
       check(await p.evaluate(() => document.documentElement.scrollWidth <= 390), 'lang=en, bộ ' + bo + ': không tràn ngang ở 390 px');
     }
     await p.goto(BASE + '/khao-sat-online.html?phieu=sau&lop=KT330H-UMK&lang=en', { timeout: 60000 }); await p.waitForTimeout(1500);
@@ -70,7 +70,7 @@ check(+(/CACHE = 'bizon-v(\d+)'/.exec(R('sw.js')) || [])[1] >= 842, 'sw.js ≥ b
       document.getElementById('ks-consent-chk').checked = true; document.getElementById('ks-code').value = 'um26';
       KEY.forEach((k, i) => { document.querySelector(`input[name="a${i + 1}"][value="${k}"]`).checked = true; });
       for (let i = 1; i <= 8; i++) document.querySelector(`input[name="b${i}"][value="4"]`).checked = true;
-      for (let i = 1; i <= 5; i++) document.querySelector(`input[name="c${i}"][value="5"]`).checked = true;
+      for (let i = 1; i <= 7; i++) document.querySelector(`input[name="c${i}"][value="5"]`).checked = true;
       const r = document.getElementById('ks-role'); r.selectedIndex = 5; document.getElementById('ks-rounds').value = '6';
     });
     const vaiTro = await p.evaluate(() => { const r = document.getElementById('ks-role'); return [r.options[r.selectedIndex].textContent, r.value, r.options[0].textContent]; });
@@ -79,7 +79,7 @@ check(+(/CACHE = 'bizon-v(\d+)'/.exec(R('sw.js')) || [])[1] >= 842, 'sw.js ≥ b
     const xong = await p.evaluate(() => document.getElementById('ks-done').innerText);
     check(xong.includes('Your response has been recorded!') && xong.includes('Thank you! Your POST survey – code UM26, class KT330H-UMK') && xong.includes('Back to the BizOn home page') && !VI.test(xong), 'lang=en: màn hình nộp xong bằng tiếng Anh');
     const row = gui[0] || {};
-    check(gui.length === 1 && row.instrument === 'batnghiep' && row.phase === 'post' && row.class_code === 'KT330H-UMK' && row.student_code === 'UM26' && row.score_a === 15 && row.role === 'Thư ký' && row.rounds_played === 6 && row.likert_b.length === 8 && row.likert_c.length === 5 && Object.values(row.score_by_outcome).every(v => v === 3), 'lang=en: dòng nộp về máy chủ giống bản tiếng Việt (15/15, 5 cụm × 3, vai trò «Thư ký»)');
+    check(gui.length === 1 && row.instrument === 'batnghiep' && row.phase === 'post' && row.class_code === 'KT330H-UMK' && row.student_code === 'UM26' && row.score_a === 15 && row.role === 'Thư ký' && row.rounds_played === 6 && row.likert_b.length === 8 && row.likert_c.length === 7 && Object.values(row.score_by_outcome).every(v => v === 3), 'lang=en: dòng nộp về máy chủ giống bản tiếng Việt (15/15, 5 cụm × 3, vai trò «Thư ký»)');
     check(Object.keys(row).sort().join(',') === 'answers_a,class_code,client_ts,instrument,likert_b,likert_c,nps,open_improve,open_like,phase,role,rounds_played,score_a,score_by_outcome,student_code', 'lang=en: không thêm cột mới vào dòng nộp');
     check(!loi.length, 'lang=en: không lỗi JS: ' + loi.join(' | '));
     await ctx.close();

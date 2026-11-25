@@ -25,9 +25,9 @@ assert.match(studioJs, /searchParams\.set\('lop', state\.classCode\)/);
 assert.match(studioJs, /state\.mode !== 'auth'/);
 assert.match(studioJs, /navigator\.clipboard\.writeText\(link\)/);
 
-// CSV khảo sát có đủ thang Likert B (8 câu), C (5 câu) và điểm A theo chuẩn đầu ra.
+// CSV khảo sát có đủ thang Likert B (8 câu), C (7 câu từ 11/2026) và điểm A theo chuẩn đầu ra.
 assert.match(studioJs, /diem_A_theo_chuan/);
 assert.match(studioJs, /likert\(row\.likert_b, 8\)/);
-assert.match(studioJs, /likert\(row\.likert_c, 5\)/);
+assert.match(studioJs, /likert\(row\.likert_c, 7\)/);
 
 console.log('survey-class-link: ok');
