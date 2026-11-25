@@ -7,7 +7,7 @@ Tra ngày 22–23/11/2026. Trước khi phát hành mỗi tập, em kiểm lại
 
 | Mã | Số liệu | Tài liệu gốc | Trang / vị trí | Ngày tra | Dùng ở |
 |---|---|---|---|---|---|
-| N1 | Ở Đồng bằng sông Cửu Long, đường thủy nội địa chiếm 79,7% thị phần luân chuyển hàng hóa. Lời đọc dùng «gần 80%», vì đoạn sau của sách ghi «gần 79,8%» | Bộ Công Thương, *Báo cáo Logistics Việt Nam 2024* (tệp chị chia sẻ trên Drive) | Mục 2.1.3, tr. ~50–51 | 22/11/2026 | Tập 1, câu 4 |
+| N1 | Ở Đồng bằng sông Cửu Long, đường thủy nội địa chiếm 79,7% thị phần luân chuyển hàng hóa. Lời đọc dùng «gần 80%», vì đoạn sau của sách ghi «gần 79,8%» | Bộ Công Thương, *Báo cáo Logistics Việt Nam 2024* (tệp Hương chia sẻ trên Drive) | Mục 2.1.3, tr. ~50–51 | 22/11/2026 | Tập 1, câu 4 |
 | N2 | Chở một container bằng đường thủy ở phía Nam chỉ tốn khoảng 30% so với đường bộ | Bộ Công Thương, *Báo cáo Logistics Việt Nam 2024* | tr. ~51 | 22/11/2026 | Mô tả video tập 1 |
 | N3 | Từ Cần Thơ tới cảng Cái Mép: sà lan mất 36–40 giờ, đường bộ 8–8,5 giờ | *Báo cáo Kinh tế thường niên ĐBSCL*, dẫn theo Cổng Thông tin Thương mại Việt Nam: https://vietnamtradeportal.gov.vn/index.php?id=3240&page=61&r=site%2Fdisplay | Đoạn «sà lan đi từ Cần Thơ…» | 23/11/2026 | Tập 1, câu 9, 11, 22 |
 | N4 | Cước một container thường từ Cần Thơ tới Cái Mép: đường bộ 8,5–9 triệu đồng, sà lan khoảng 4–5,5 triệu đồng | Như N3: https://vietnamtradeportal.gov.vn/index.php?id=3240&page=61&r=site%2Fdisplay | Cùng đoạn | 23/11/2026 | Tập 1, câu 6 |
@@ -32,7 +32,7 @@ Tra ngày 22–23/11/2026. Trước khi phát hành mỗi tập, em kiểm lại
 - **Không dùng** các số trong bản tóm tắt Google Docs do AI viết (16,8–21% GDP; cảng Trần Đề giảm 10–40% chi phí), vì chưa truy được nguồn gốc.
 - **Số dành cho tập sau (chưa dùng ở tập 1):**
   - cước biển từ 1.661 lên 3.964 USD/FEU trong một tháng, từ 12/2023 sang 1/2024 (*Báo cáo Logistics Việt Nam 2024*, tr. 70), dùng cho tập 3;
-  - sầu riêng đông lạnh Malaysia: cấp đông −80 đến −110 °C, khoảng 26 ngày từ vườn tới người mua (bài báo 2021 chị chia sẻ), dùng cho tập 2;
+  - sầu riêng đông lạnh Malaysia: cấp đông −80 đến −110 °C, khoảng 26 ngày từ vườn tới người mua (bài báo 2021 Hương chia sẻ), dùng cho tập 2;
   - nhiệt độ chở sầu riêng tươi: các trang dịch vụ logistics ghi 13–15 °C, nhưng nguồn chưa đủ chính thống, cần tìm tài liệu kiểm dịch hoặc nghiên cứu trước tập 2.
 
 ## Hư cấu (mã H)

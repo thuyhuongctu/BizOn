@@ -3,7 +3,7 @@
 Loạt phim «Đưa trái ra biển» / «Fruit to the Sea», mùa 1. Dài khoảng 4:45. Khung loạt phim: `docs/phim/khung-loat-phim.md`.
 Nguồn số liệu: `docs/phim/nguon-so-lieu.md`. Bảng phân cảnh: `docs/phim/tap-01-phan-canh.md`.
 
-**Trạng thái**: bản nháp 23/11/2026, chờ chị duyệt.
+**Trạng thái**: bản nháp 23/11/2026, chờ Hương duyệt.
 
 ## 1. Tóm tắt
 
@@ -18,7 +18,7 @@ Phim dừng đúng lúc cả đội phải chốt. Lumina hỏi người xem: s�
 
 ## 2. Kịch bản theo câu
 
-- **Lời Lumina** do chị đọc.
+- **Lời Lumina** do Hương đọc.
 - **Bong bóng / chữ** do em chèn ở hậu kỳ. Ký hiệu: «💬 Tên:» là bong bóng thoại; «▭» là chữ hoặc bảng trên hình.
 - **Nguồn:** mã trong `nguon-so-lieu.md`. **H** là tình tiết hư cấu.
 

@@ -72,9 +72,10 @@
       textVi: 'Hoa Kỳ áp thuế 20% lên hàng Việt Nam; hàng bị nghi trung chuyển (hàm lượng nội địa dưới 30%) chịu 40%.',
       textEn: 'The US imposes 20% on Vietnamese goods; suspected transshipment (local content under 30%) faces 40%.',
       tariff: { US: 0.20 }, transship: { market: 'US', threshold: 0.30, rate: 0.40 } },
-    { q: 8, vi: 'Bình thường mới', en: 'New normal',
-      textVi: 'Thuế của Hoa Kỳ giữ nguyên. Quý cuối để chứng minh mô hình kinh doanh của bạn bền vững.',
-      textEn: 'US tariffs stay in place. A final quarter to prove your model is sustainable.',
+    // Quý 8 giữ nguyên tác động (để không đổi cân bằng), thêm bối cảnh có thật: WTO (2026), báo cáo G20 lần thứ 33, số đến 30/6/2026.
+    { q: 8, vi: 'Bình thường mới', en: 'New normal', inspired: 'G20, 2026',
+      textVi: 'Thuế của Hoa Kỳ giữ nguyên. Theo WTO, đến 30/6/2026 các biện pháp hạn chế nhập khẩu còn hiệu lực của nhóm G20 đã phủ 29,6% kim ngạch nhập khẩu của nhóm, mức cao nhất từ năm 2009: rào cản là bối cảnh thường trực, không còn là cú sốc nhất thời. Quý cuối để chứng minh mô hình kinh doanh của bạn bền vững.',
+      textEn: 'US tariffs stay in place. According to the WTO, by 30 June 2026 the import-restricting measures in force in G20 economies covered 29.6% of G20 imports, the highest level since 2009: barriers are now a permanent backdrop, not a one-off shock. A final quarter to prove your model is sustainable.',
       tariff: { US: 0.20 }, transship: { market: 'US', threshold: 0.30, rate: 0.40 } }
   ];
 
@@ -90,7 +91,14 @@
       noteEn: 'Textile and garment exports against imports of fabric, cotton, yarn and textile/leather/footwear materials.' }
   };
 
-  const api = { industries, markets, events, benchmarks, salvage };
+  // Bối cảnh 2026 (số thật, chỉ dùng trong lời biến cố quý 8 và câu hỏi thảo luận; không đưa vào tính toán)
+  const context2026 = {
+    wto: 'World Trade Organization (2026, 23/11). Trade-facilitating measures help offset rise in new G20 trade restrictions. https://www.wto.org/english/news_e/news26_e/tmg20_23nov26_559_e.htm',
+    oecdUnctad: 'OECD & UNCTAD (2026). 33rd OECD/UNCTAD report on G20 investment measures. https://www.wto.org/english/news_e/news_docs/33_OECD_UNCTAD_report_on_G20_investment_measures.pdf',
+    g20ImportStockpileShare: 0.296   // biện pháp hạn chế nhập khẩu còn hiệu lực (từ 2009), tính đến 30/6/2026
+  };
+
+  const api = { industries, markets, events, benchmarks, salvage, context2026 };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.FactoryData = api;
 })(typeof window !== 'undefined' ? window : globalThis);

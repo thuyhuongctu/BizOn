@@ -153,7 +153,19 @@
     <p class="text-sm text-deep-teal/60 mb-4" data-en="Starting from Vietnam – tap a destination on the world map.">Xuất phát từ Việt Nam – chạm vào một điểm đến trên bản đồ thế giới.</p>
     <div class="clay-card p-3 sm:p-5 overflow-hidden">
       <div id="world-map"></div>
+      <p id="kh-bat" class="clay-sunken rounded-2xl p-3 mt-4 text-xs font-bold text-deep-teal" hidden data-en="🌡️ Climate scenario is on (teacher link): each quarter carries a climate risk cost that grows with the hub country's vulnerability and the capital committed on site, and shrinks with ESG. Magnitudes are illustrative.">🌡️ Kịch bản khí hậu đang bật (link của giảng viên): mỗi quý có chi phí rủi ro khí hậu, tăng theo mức dễ tổn thương của nước trung tâm và số vốn đặt tại chỗ, giảm theo điểm ESG. Độ lớn là minh họa.</p>
       <div id="market-cards" class="grid sm:grid-cols-5 gap-2.5 mt-4"></div>
+      <!-- Đặc tả 009 (Câu chuyện 1): hồ sơ khí hậu ND-GAIN của nước trung tâm; chỉ để tham khảo, không đổi điểm -->
+      <details id="kh-giai-thich" class="clay-sunken rounded-2xl p-3 mt-4 text-xs text-deep-teal/70 leading-relaxed" hidden>
+        <summary class="font-bold text-deep-teal" data-en="🌡️ Climate risk of each market – what is the ND-GAIN index?">🌡️ Rủi ro khí hậu của thị trường – chỉ số ND-GAIN là gì?</summary>
+        <div class="space-y-2 mt-2">
+          <p data-en="ND-GAIN (University of Notre Dame) measures two sides of each country: vulnerability to climate change (0–1, higher means more vulnerable) and readiness to adapt in economic, governance and social terms (0–1, higher is better). The ND-GAIN score combines both on a 0–100 scale: the higher the score, the more resilient the country.">ND-GAIN (Đại học Notre Dame) đo hai mặt của mỗi quốc gia: mức dễ tổn thương trước biến đổi khí hậu (0–1, càng cao càng dễ tổn thương) và mức sẵn sàng thích ứng về kinh tế, quản trị, xã hội (0–1, càng cao càng tốt). Điểm ND-GAIN gộp hai mặt này trên thang 0–100: điểm càng cao, quốc gia càng chống chịu tốt.</p>
+          <p data-en="Each card uses the figures of the market's hub country: Singapore for Southeast Asia, Japan for East Asia, Germany for Europe, the United States for North America, the United Arab Emirates for the Middle East, South Korea, and Kenya for Africa. One country does not represent a whole region: resilience can differ widely between countries in the same region.">Mỗi thẻ dùng số của nước trung tâm của thị trường: Singapore cho Đông Nam Á, Nhật Bản cho Đông Á, Đức cho châu Âu, Hoa Kỳ cho Bắc Mỹ, Các Tiểu vương quốc Ả Rập Thống nhất cho Trung Đông, Hàn Quốc, và Kenya cho châu Phi. Một nước không đại diện cho cả vùng: mức chống chịu của các nước trong cùng một vùng có thể chênh nhau nhiều.</p>
+          <p data-en="Why investors care: a study of 400 Fortune Global 500 firms over 2003–2017 found that multinationals set up more wholly owned subsidiaries in countries that are more resilient to climate change, and that this pattern is stronger for firms with high ESG capability (Oh, Rivera &amp; Oetzel, 2026). The study is about very large multinationals; applying it to the small firm in this game is an extension for discussion, not a conclusion.">Vì sao nhà đầu tư quan tâm: nghiên cứu trên 400 doanh nghiệp Fortune Global 500 giai đoạn 2003–2017 cho thấy các tập đoàn lập nhiều công ty con 100% vốn hơn ở những nước chống chịu khí hậu tốt, và xu hướng này mạnh hơn ở doanh nghiệp có năng lực ESG cao (Oh, Rivera &amp; Oetzel, 2026). Nghiên cứu nói về tập đoàn rất lớn; áp vào doanh nghiệp nhỏ trong game là suy rộng để thảo luận, không phải kết luận.</p>
+          <p data-en="In normal play the index is for reference only and does not change any score.">Ở chế độ chơi thường, chỉ số chỉ để tham khảo, không làm thay đổi điểm số nào.</p>
+          <p id="kh-nguon" class="text-[10px] text-deep-teal/60"></p>
+        </div>
+      </details>
       <button type="button" onclick="gAnnual()" class="clay-btn w-full bg-surface-bright text-deep-teal/75 font-bold py-3 text-sm mt-4" data-en="🗓️ Year-end report – every campaign the team has run">🗓️ Báo cáo Tổng kết Năm – thành tích mọi chiến dịch của đội</button>
     </div>
   </section>
@@ -198,6 +210,7 @@
           <div class="clay-sunken rounded-2xl p-3"><p id="g-risk" class="font-display font-extrabold text-orange-600 text-lg">–</p><p class="text-[9px] font-extrabold text-deep-teal/50 uppercase" data-en="⚠️ Risk">⚠️ Rủi ro</p></div>
           <div class="clay-sunken rounded-2xl p-3"><p id="g-doi" class="font-display font-extrabold text-primary text-lg">–</p><p class="text-[9px] font-extrabold text-deep-teal/50 uppercase" data-en="🌐 DOI">🌐 Quốc tế hóa</p></div>
         </div>
+        <p id="g-khihau" class="clay-sunken rounded-2xl p-3 text-[11px] text-deep-teal/70 mb-4" hidden></p>
         <div class="grid grid-cols-2 gap-2.5 text-center mb-4">
           <div class="clay-sunken rounded-2xl p-3"><p id="g-rep" class="font-display font-extrabold text-clay-orange text-lg">–</p><p class="text-[9px] font-extrabold text-deep-teal/50 uppercase" data-en="🏅 Reputation">🏅 Danh tiếng</p></div>
           <div class="clay-sunken rounded-2xl p-3"><p id="g-learn" class="font-display font-extrabold text-primary text-lg">–</p><p class="text-[9px] font-extrabold text-deep-teal/50 uppercase" data-en="🎓 International learning">🎓 Học hỏi quốc tế</p></div>
@@ -262,6 +275,7 @@
 
 <script src="js/site-ui.js" defer></script>
 <script src="js/site-vnmap.js" defer></script>
+<script src="js/go-global-khi-hau.js"></script>
 <script>
 /* ================= WORLD MARKET LIVE ================= */
 const WM_SAMPLE = [
@@ -399,7 +413,7 @@ const Q_EVENTS = [
   { icon: '🌱', name: 'Quy định ESG mới', nameEn: 'New ESG regulation',       desc: 'Thị trường siết tiêu chuẩn bền vững – đội đầu tư bản địa hóa/tuân thủ cao được khách tin tưởng hơn.', esg: true, demand: 0.98, descEn: 'The market tightens sustainability standards – teams that invest heavily in localisation/compliance earn more customer trust.' },
   { icon: '⚖️', name: 'AI Act có hiệu lực', nameEn: 'AI Act takes effect',     desc: 'Luật quản lý AI mới làm quảng cáo số phải kiểm duyệt chặt – hiệu quả marketing số giảm tạm thời.', digBoost: 0.85, demand: 1.0, descEn: 'A new AI law requires strict review of digital ads – digital marketing effectiveness drops temporarily.' },
   { icon: '🚢', name: 'Khủng hoảng logistics', nameEn: 'Logistics crisis',  desc: 'Cước vận tải biển tăng vọt – chi phí mỗi sản phẩm đội thêm 1.5 USD trong quý.', cogsAdd: 1.5, demand: 0.97, descEn: 'Ocean freight rates soar – each unit costs an extra 1.5 USD this quarter.' },
-  { icon: '🌪️', name: 'Thiên tai gián đoạn chuỗi cung', nameEn: 'Natural disaster disrupts the supply chain', desc: 'Bão lớn làm cảng trung chuyển đóng cửa – chi phí đội thêm 1.2 USD/sản phẩm, tổng cầu giảm nhẹ.', cogsAdd: 1.2, demand: 0.92, descEn: 'A major storm shuts the transhipment port – costs rise by 1.2 USD/unit and total demand dips slightly.' },
+  { icon: '🌪️', climate: true, name: 'Thiên tai gián đoạn chuỗi cung', nameEn: 'Natural disaster disrupts the supply chain', desc: 'Bão lớn làm cảng trung chuyển đóng cửa – chi phí đội thêm 1.2 USD/sản phẩm, tổng cầu giảm nhẹ.', cogsAdd: 1.2, demand: 0.92, descEn: 'A major storm shuts the transhipment port – costs rise by 1.2 USD/unit and total demand dips slightly.' },
   { icon: '💱', name: 'Biến động tỷ giá', nameEn: 'Exchange-rate swings',       desc: 'Đồng USD biến động mạnh – doanh thu quy đổi giảm 7% quý này. Ai lỡ vay ngoại tệ càng thấm đòn.', fx: 0.93, demand: 1.0, descEn: 'The US dollar swings sharply – converted revenue falls 7% this quarter. Anyone who borrowed in foreign currency is hit harder.' },
 ];
 const G = { market: null, mode: null, q: 0, profit: 0, shareHist: [], done: false, qlog: [] };
@@ -533,8 +547,59 @@ function renderWorldMap() {
     <button type="button" onclick="pickMarket('${m.id}')" class="clay-sunken rounded-2xl p-3 text-left transition-all ${sel && sel.id === m.id ? 'ring-2 ring-clay-orange' : ''}">
       <p class="text-lg">${m.flag} ${gFlags.includes(m.id) ? '🚩' : ''}</p>
       <p class="font-display font-extrabold text-deep-teal text-xs mt-0.5">${mName(m)}</p>
-      <p class="text-[9px] text-deep-teal/50">${L('Quy mô', 'Size')} ${(m.size / 1000).toFixed(0)}k ${L('sp', 'units')} · ${L('Thuế', 'Tariff')} ${(m.tariff * 100).toFixed(0)}% · ${L('Số hóa', 'Digital readiness')} ${(m.digital * 100).toFixed(0)}%</p>
+      <p class="text-[9px] text-deep-teal/50">${L('Quy mô', 'Size')} ${(m.size / 1000).toFixed(0)}k ${L('sp', 'units')} · ${L('Thuế', 'Tariff')} ${(m.tariff * 100).toFixed(0)}% · ${L('Số hóa', 'Digital readiness')} ${(m.digital * 100).toFixed(0)}%</p>${khDongThe(m)}
     </button>`).join('');
+  khNguon();
+}
+
+/* Đặc tả 009 · Câu chuyện 1: hồ sơ khí hậu ND-GAIN (js/go-global-khi-hau.js). Chỉ hiển thị, không vào gCalc.
+   Câu chuyện 2: kịch bản khí hậu chỉ bật khi link có ?khihau=1 và có đủ số liệu (KH_BAT). */
+const KH = window.GoGlobalKhiHau || null;
+const KH_BAT = !!(KH && KH.coSoLieu() && /[?&]khihau=1(?:&|$)/.test(location.search));
+const KH_MUC = { thap: ['thấp', 'low'], vua: ['vừa', 'medium'], cao: ['cao', 'high'] };
+/* Câu chuyện 3: câu hỏi thảo luận về rủi ro khí hậu ở màn kết quả. Chỉ hỏi, không gợi ý đáp án. */
+function khCauHoi() {
+  if (!KH || !KH.coSoLieu() || !G.market) return '';
+  const h = KH.hoSo(G.market.id);
+  const qs = [
+    L(`Thị trường đội vừa chọn dùng số của ${h.vi}: ND-GAIN ${khSo(h.gain, 1)}, hạng ${h.hang}/${KH.TONG_SO_NUOC}. Nếu phải đặt nhà máy (FDI) ở đây, đội cần biết thêm điều gì về rủi ro khí hậu trước khi cam kết vốn?`,
+      `The market your team chose uses the figures of ${h.en}: ND-GAIN ${khSo(h.gain, 1)}, rank ${h.hang}/${KH.TONG_SO_NUOC}. If you had to build a plant (FDI) here, what more would your team need to know about climate risk before committing capital?`),
+    L(`Với số vốn đặt tại chỗ và điểm ESG của đội, phương thức «${G.mode.name}» chịu rủi ro khí hậu nhiều hơn hay ít hơn xuất khẩu và cấp phép? Đội có đổi phương thức không, và vì sao?`,
+      `Given the capital committed on site and your team's ESG score, does «${G.mode.nameEn}» carry more or less climate risk than exporting or licensing? Would your team change its entry mode, and why?`),
+  ];
+  return `<div id="kh-cau-hoi" class="clay-sunken rounded-2xl p-4 mt-3 text-left">
+      <p class="font-display font-extrabold text-deep-teal text-xs mb-1.5">🌡️ ${L('Câu hỏi thảo luận: rủi ro khí hậu', 'Discussion questions: climate risk')}${KH_BAT ? '' : ' ' + L('(chỉ số chỉ để tham khảo trong ván này)', '(the index was for reference only in this game)')}</p>
+      ${qs.map((q, i) => `<p class="text-[11px] text-deep-teal/75 leading-relaxed${i ? ' mt-1.5' : ''}">${i + 1}. ${q}</p>`).join('')}
+    </div>`;
+}
+function khDongPhanUng(r) {
+  const el = document.getElementById('g-khihau');
+  if (!el) return;
+  el.hidden = !r.khiHau;
+  if (!r.khiHau) return;
+  const k = r.khiHau, h = KH.hoSo(G.market.id);
+  const tt = k.thienTai ? L(` Thiên tai quý này: +${khSo(k.thienTai.cogsAdd, 2)} USD/sản phẩm, cầu × ${khSo(k.thienTai.demand, 2)}.`, ` Disaster this quarter: +${khSo(k.thienTai.cogsAdd, 2)} USD per unit, demand × ${khSo(k.thienTai.demand, 2)}.`) : '';
+  el.textContent = L(`🌡️ Chi phí rủi ro khí hậu quý này: ${khSo(k.chiPhi, 1)}k$ (${h.vi}, mức rủi ro ${KH_MUC[KH.mucRuiRo(G.market.id)][0]}; vốn đặt tại chỗ ${Math.round(KH.a(G.mode) * 100)}% so với FDI; ESG ${r.esg} giảm ${Math.round((1 - KH.m(r.esg)) * 100)}%).`,
+    `🌡️ Climate risk cost this quarter: ${khSo(k.chiPhi, 1)}k$ (${h.en}, ${KH_MUC[KH.mucRuiRo(G.market.id)][1]} risk; capital on site ${Math.round(KH.a(G.mode) * 100)}% of FDI; ESG ${r.esg} cuts it by ${Math.round((1 - KH.m(r.esg)) * 100)}%).`) + tt;
+}
+const khSo = (x, d) => GEN ? x.toFixed(d) : x.toFixed(d).replace('.', ',');
+function khDongThe(m) {
+  const h = KH && KH.coSoLieu() ? KH.hoSo(m.id) : null;
+  if (!h) return '';
+  const muc = KH_BAT ? ` · ${L('rủi ro khí hậu', 'climate risk')} ${L(...KH_MUC[KH.mucRuiRo(m.id)])}` : '';
+  return `<p class="text-[9px] text-deep-teal/60 mt-1">🌡️ ND-GAIN ${khSo(h.gain, 1)} · ${L('hạng', 'rank')} ${h.hang}/${KH.TONG_SO_NUOC} · ${L(h.vi, h.en)} (${h.nam})${muc}</p>`;
+}
+function khNguon() {
+  const box = document.getElementById('kh-giai-thich'), src = document.getElementById('kh-nguon');
+  if (!box || !src) return;
+  const co = !!(KH && KH.coSoLieu());
+  box.hidden = !co;
+  const bat = document.getElementById('kh-bat');
+  if (bat) bat.hidden = !KH_BAT;
+  if (!co) return;
+  src.innerHTML = L(`Nguồn: ND-GAIN Country Index, bản 2026, số liệu năm ${KH.NAM}; xếp hạng trên ${KH.TONG_SO_NUOC} quốc gia có điểm năm đó.`,
+    `Source: ND-GAIN Country Index, 2026 edition, ${KH.NAM} data; ranks among the ${KH.TONG_SO_NUOC} countries scored that year.`)
+    + `<br>${KH.TRICH.ndgain}<br>${KH.TRICH.oh}`;
 }
 
 function pickMarket(id) {
@@ -645,7 +710,14 @@ function qEvent() {
 function paintQuarter() {
   document.getElementById('q-num').textContent = G.q;
   const ev = qEvent();
-  document.getElementById('q-event').innerHTML = `<p class="font-display font-extrabold text-deep-teal text-sm">${ev.icon} ${L('Quý', 'Quarter')} ${G.q}: ${evName(ev)}</p><p class="text-xs text-deep-teal/60 mt-1">${evDesc(ev)}</p>`;
+  document.getElementById('q-event').innerHTML = `<p class="font-display font-extrabold text-deep-teal text-sm">${ev.icon} ${L('Quý', 'Quarter')} ${G.q}: ${evName(ev)}</p><p class="text-xs text-deep-teal/60 mt-1">${evDesc(ev)}</p>${khBienCo(ev)}`;
+}
+/* Kịch bản khí hậu: biến cố thiên tai mạnh hay yếu theo mức dễ tổn thương của nước trung tâm (số ND-GAIN thật) */
+function khBienCo(ev) {
+  if (!KH_BAT || !ev.climate || !G.market) return '';
+  const h = KH.hoSo(G.market.id);
+  return `<p class="text-xs text-deep-teal/70 mt-1">🌡️ ${L(`Kịch bản khí hậu: ${h.vi} có mức dễ tổn thương ${khSo(h.vul, 2)} (ND-GAIN ${KH.NAM}), nên trong kịch bản này, mức +1,2 USD/sản phẩm và cầu × 0,92 nói ở trên được thay bằng mức tính theo nơi đặt hàng, số vốn đặt tại chỗ và điểm ESG của đội (xem dòng 🌡️ ở «Thị trường phản ứng»). Lumina hỏi: nếu quý nào cũng có rủi ro này, phương thức của đội còn đáng không?`,
+    `Climate scenario: ${h.en} has a vulnerability score of ${khSo(h.vul, 2)} (ND-GAIN ${KH.NAM}), so in this scenario the +1.2 USD per unit and demand × 0.92 above are replaced by amounts based on the location, the capital committed on site and the team's ESG score (see the 🌡️ line under «Market response»). Lumina asks: if every quarter carried this risk, would your entry mode still be worth it?`)}</p>`;
 }
 
 function gCalc(p, mkt, loc) {
@@ -659,19 +731,24 @@ function gCalc(p, mkt, loc) {
   if (ev.esg) attr *= 0.85 + 0.3 * Math.min(1, loc / 60);   // quý ESG: bản địa hóa/tuân thủ được thưởng
   const aiAttr = 2.3 + 0.1 * G.q;
   const share = attr / (attr + aiAttr);
-  const units = m.size * (ev.demand || 1) * share / 1000;   // nghìn sản phẩm
-  const cogs = 5.5 + (ev.cogsAdd || 0);
+  // ESG tính trước để kịch bản khí hậu dùng (công thức như cũ, nên kết quả khi tắt kịch bản không đổi)
+  const esg = Math.min(100, Math.round(35 + loc * 0.7 + (md.id === 'jv' ? 10 : 0) + (ev.esg ? 5 : 0)));
+  // Đặc tả 009 · Câu chuyện 2: kịch bản khí hậu, chỉ chạy khi link có ?khihau=1 (KH_BAT). Độ lớn minh họa.
+  const kh = KH_BAT ? { chiPhi: KH.chiPhiQuy(m.id, md, esg), thienTai: ev.climate ? KH.thienTai(m.id, md, esg) : null } : null;
+  const units = m.size * (kh && kh.thienTai ? kh.thienTai.demand : (ev.demand || 1)) * share / 1000;   // nghìn sản phẩm
+  const cogs = 5.5 + (kh && kh.thienTai ? kh.thienTai.cogsAdd : (ev.cogsAdd || 0));
   const revenue = units * p * (ev.fx || 1);                  // nghìn USD (đã quy đổi tỷ giá)
   const gross = units * (p * (ev.fx || 1) * (1 - tariff) - cogs);
-  const profit = (gross - md.fixedQ - mkt - loc) * md.share * (G.negoAdj || 1);
-  // Bộ chỉ số AIBIS: ESG · Rủi ro · DOI (mức độ quốc tế hóa)
-  const esg = Math.min(100, Math.round(35 + loc * 0.7 + (md.id === 'jv' ? 10 : 0) + (ev.esg ? 5 : 0)));
+  const profit = (gross - md.fixedQ - mkt - loc - (kh ? kh.chiPhi : 0)) * md.share * (G.negoAdj || 1);
+  // Bộ chỉ số AIBIS: ESG (đã tính ở trên) · Rủi ro · DOI (mức độ quốc tế hóa)
   const risk = Math.max(5, Math.min(100, Math.round(md.cost0 / 3 + m.cult * 30 + tariff * 55 - loc * 0.25)));
   const doi = Math.min(100, Math.round(gFlags.length / MARKETS.length * 55 + md.control * 35 + share * 12));
   // Chỉ số AIBIS mở rộng: Danh tiếng (uy tín thương hiệu quốc tế) & Học hỏi quốc tế (năng lực hấp thụ tri thức)
   const rep = Math.min(100, Math.round(28 + share * 100 * 0.45 + esg * 0.25 + md.control * 12));
   const learn = Math.min(100, Math.round(18 + G.q * 9 + ((md.id === 'jv' || md.id === 'ally') ? 16 : 0) + m.cult * 22 + (PROFILE.exp === 'exp' ? 8 : 0)));
-  return { share: share * 100, revenue, profit, esg, risk, doi, rep, learn };
+  const out = { share: share * 100, revenue, profit, esg, risk, doi, rep, learn };
+  if (kh) out.khiHau = kh;   // chỉ có khi bật kịch bản, để kết quả khi tắt giữ đúng các trường cũ
+  return out;
 }
 
 function gUpdate() {
@@ -689,6 +766,7 @@ function gUpdate() {
   document.getElementById('g-doi').textContent = r.doi;
   document.getElementById('g-rep').textContent = r.rep;
   document.getElementById('g-learn').textContent = r.learn;
+  khDongPhanUng(r);
   G.hintClip = r.share < 35 ? 'glob-01' : r.profit < 0 ? 'glob-02' : 'glob-03';
   paintHint();
 }
@@ -730,7 +808,9 @@ function gCommit() {
     tech: PROFILE.tech, exp: PROFILE.exp, quarter: G.q, event: qEvent().name,
     price: p, marketing: mkt, localization: loc,
     share: +r.share.toFixed(1), profit: +r.profit.toFixed(1), revenue: +r.revenue.toFixed(1),
-    esg: r.esg, risk: r.risk, doi: r.doi, rep: r.rep, learn: r.learn });
+    esg: r.esg, risk: r.risk, doi: r.doi, rep: r.rep, learn: r.learn,
+    // Đặc tả 009 · Câu chuyện 3: điểm ND-GAIN của nước trung tâm và trạng thái kịch bản khí hậu, để tách dữ liệu khi phân tích
+    ndgain: KH && KH.coSoLieu() ? KH.hoSo(G.market.id).gain : '', climate_mode: KH_BAT ? 'on' : 'off' });
   const row = { q: G.q, icon: qEvent().icon, share: r.share, profit: r.profit };
   gLogRows.push(row);
   document.getElementById('g-log').insertAdjacentHTML('afterbegin', gLogRow(row));
@@ -780,7 +860,8 @@ function gExportCSV() {
   let rows = [];
   try { rows = JSON.parse(localStorage.getItem('bizon-global-log') || '[]'); } catch (e) {}
   if (!rows.length) return;
-  const cols = ['time', 'market', 'mode', 'nego', 'tech', 'exp', 'quarter', 'event', 'price', 'marketing', 'localization', 'share', 'profit', 'esg', 'risk', 'doi', 'rep', 'learn', 'result', 'avgShare', 'totalProfit'];
+  // 21 cột cũ giữ nguyên tên và thứ tự; ndgain, climate_mode thêm ở cuối (đặc tả 009). Dòng ghi trước đó để trống hai cột này.
+  const cols = ['time', 'market', 'mode', 'nego', 'tech', 'exp', 'quarter', 'event', 'price', 'marketing', 'localization', 'share', 'profit', 'esg', 'risk', 'doi', 'rep', 'learn', 'result', 'avgShare', 'totalProfit', 'ndgain', 'climate_mode'];
   const csv = [cols.join(','), ...rows.map(r => cols.map(c => `"${String(r[c] ?? '').replace(/"/g, '""')}"`).join(','))].join('\n');
   const a = document.createElement('a');
   a.href = URL.createObjectURL(new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8' }));
@@ -888,6 +969,7 @@ function gRenderResult() {
       <p class="font-display font-extrabold text-deep-teal text-xs mb-1.5">🎓 Lumina Mentor – ${L('góc lý thuyết', 'theory corner')}</p>
       <p class="text-[11px] text-deep-teal/75 leading-relaxed">${gMentor(avgShare, win)}</p>
     </div>
+    ${khCauHoi()}
     <button type="button" onclick="gAnnual()" class="clay-btn w-full bg-surface-bright text-deep-teal/70 font-bold py-3 text-sm mt-3">🗓️ ${L('Báo cáo Tổng kết Năm – thành tích mọi chiến dịch', 'Year-end report – every campaign')}</button>
     <button type="button" onclick="gExportCSV()" class="clay-btn w-full bg-surface-bright text-deep-teal/70 font-bold py-3 text-sm mt-2">📥 ${L('Xuất nhật ký quyết định (CSV) – dữ liệu nghiên cứu / chấm điểm', 'Export the decision log (CSV) – research / grading data')}</button>
     <div class="flex gap-2 mt-4">

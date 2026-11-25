@@ -68,7 +68,7 @@ Ký hiệu: **CLO-A** đến **CLO-E**
 | CLO-A | Hệ số co giãn thực hiện; tỷ lệ doanh thu trên chi phí marketing (ROI) | Báo cáo phân tích thị trường sau vòng chơi |
 | CLO-B | Số dư dòng tiền; tỷ lệ nợ trên vốn chủ; giá trị tồn kho | Đánh giá báo cáo tài chính và lưu chuyển tiền tệ |
 | CLO-C | Sản lượng trên công suất; chi phí khấu hao và năng lượng; chỉ số OEE | Chỉ số hiệu quả vận hành trong báo cáo cuối ván |
-| CLO-D | Điểm rủi ro quốc gia; tỷ suất lợi nhuận biên xuất khẩu | Bản thu hoạch chiến lược quốc tế hóa (reflection memo) |
+| CLO-D | Điểm rủi ro quốc gia; tỷ suất lợi nhuận biên xuất khẩu; khi giảng viên bật kịch bản khí hậu (`global.html?khihau=1`, đặc tả 009): chi phí rủi ro khí hậu theo ND-GAIN của nước trung tâm và mức vốn đặt tại chỗ | Bản thu hoạch chiến lược quốc tế hóa (reflection memo); câu hỏi thảo luận «rủi ro khí hậu» ở màn kết quả Go Global |
 | CLO-E | Tần suất chỉnh sửa quyết định; nội dung Nhật ký đội do vai Thư ký ghi | Đánh giá đồng đẳng trong đội (peer-assessment) |
 
 **Điểm mạnh của bộ chỉ số này:** cả năm chỉ số đều **lấy tự động từ dữ liệu ván chơi**, không phụ thuộc vào cảm nhận chủ quan của giảng viên. Bảng điều khiển giảng viên xuất được dữ liệu này ra tệp CSV để chấm.
