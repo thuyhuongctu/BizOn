@@ -21,7 +21,7 @@ const dong = fs.readFileSync(CSV, 'utf8').split('\n').filter(l => l && !l.starts
 assert.equal(dong[0], 'thi_truong,iso3,nuoc,nam,nd_gain,vulnerability,readiness,hang,tong_so_nuoc');
 const bang = dong.slice(1).map(l => l.split(','));
 assert.equal(bang.length, 7, 'đủ 7 nước trung tâm');
-assert.match(fs.readFileSync(CSV, 'utf8').split('\n')[0], /^# Nguồn: ndgain_countryindex_2026\.zip .+ tải ngày \d{4}-\d{2}-\d{2}/, 'CSV ghi tệp nguồn chính thức và ngày tải');
+assert.match(fs.readFileSync(CSV, 'utf8').split('\n')[0], /^# Nguồn: nd_?gain_country_?index_2026[\w.-]*\.zip .+ tải ngày \d{4}-\d{2}-\d{2}; tệp gain\/gain\.csv, vulnerability\/vulnerability\.csv, readiness\/readiness\.csv/, 'CSV ghi tệp nguồn chính thức và ngày tải');
 assert.ok(KH.coSoLieu(), 'js/go-global-khi-hau.js có đủ số liệu 7 thị trường');
 for (const [tt, iso, , nam, gain, vul, ready, hang, tong] of bang) {
   assert.equal(KH.THI_TRUONG[tt], iso, `${tt} → ${iso}`);

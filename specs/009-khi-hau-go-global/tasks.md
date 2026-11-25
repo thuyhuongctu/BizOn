@@ -9,9 +9,9 @@
 
 ## Giai đoạn 1: Chuẩn bị
 
-- [ ] T001 Chị tải `ndgain_countryindex_2026.zip` từ trang ND-GAIN (Download Data) và gửi em. Trang chặn tải tự động.
+- [X] T001 (25/11/2026: tệp nhận được là `nd_gain_country_index_2026_release_data_v2.zip`, bản 2026, số liệu đến 2024) Chị tải `ndgain_countryindex_2026.zip` từ trang ND-GAIN (Download Data) và gửi em. Trang chặn tải tự động.
 - [X] T002 Đọc điều khoản dùng dữ liệu trên trang ND-GAIN; ghi cách trích dẫn vào `plan.md` và `THIRD-PARTY-NOTICES.md`.
-- [ ] T003 Trích 7 nước (SGP, JPN, DEU, USA, ARE, KOR, KEN) từ tệp gốc: năm mới nhất có số, ND-GAIN, vulnerability, readiness, thứ hạng. Ghi vào `docs/research/du-lieu/nd-gain-2026-nuoc-trung-tam.csv`, kèm tên tệp gốc và ngày tải.
+- [X] T003 Trích 7 nước (SGP, JPN, DEU, USA, ARE, KOR, KEN) từ tệp gốc: năm mới nhất có số, ND-GAIN, vulnerability, readiness, thứ hạng. Ghi vào `docs/research/du-lieu/nd-gain-2026-nuoc-trung-tam.csv`, kèm tên tệp gốc và ngày tải.
 
 ## Giai đoạn 2: Nền dùng chung (chặn mọi câu chuyện)
 

@@ -10,8 +10,16 @@
   'use strict';
 
   /* nd-gain:bat-dau – sinh bởi scripts/research/trich-nd-gain.mjs, không sửa tay */
-  const NAM = 0, TONG_SO_NUOC = 0, NGAY_TAI = '';
-  const NUOC = {};
+  const NAM = 2024, TONG_SO_NUOC = 190, NGAY_TAI = '2026-11-25';
+  const NUOC = {
+    SGP: { vi: "Singapore", en: "Singapore", nam: 2024, gain: 68.5, vul: 0.379, ready: 0.749, hang: 6 },
+    JPN: { vi: "Nhật Bản", en: "Japan", nam: 2024, gain: 65.7, vul: 0.353, ready: 0.667, hang: 18 },
+    DEU: { vi: "Đức", en: "Germany", nam: 2024, gain: 69.2, vul: 0.296, ready: 0.68, hang: 3 },
+    USA: { vi: "Hoa Kỳ", en: "United States", nam: 2024, gain: 65.7, vul: 0.317, ready: 0.632, hang: 17 },
+    ARE: { vi: "Các Tiểu vương quốc Ả Rập Thống nhất", en: "United Arab Emirates", nam: 2024, gain: 53.7, vul: 0.416, ready: 0.49, hang: 56 },
+    KOR: { vi: "Hàn Quốc", en: "South Korea", nam: 2024, gain: 68.3, vul: 0.356, ready: 0.722, hang: 7 },
+    KEN: { vi: "Kenya", en: "Kenya", nam: 2024, gain: 39.3, vul: 0.482, ready: 0.268, hang: 147 },
+  };
   /* nd-gain:ket-thuc */
 
   // Thị trường game → nước trung tâm (mã ISO3)

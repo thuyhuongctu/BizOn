@@ -35,13 +35,22 @@ export const NUOC = [
 const tam = mkdtempSync(join(tmpdir(), 'nd-gain-'));
 const r = spawnSync('unzip', ['-q', '-o', resolve(zip), '-d', tam], { stdio: 'inherit' });
 if (r.status !== 0) loi('giải nén lỗi');
-const tim = (dir, ten) => {
+// Tệp 2026 có tệp cùng tên ở hai nơi: gain/gain.csv (điểm từng nước theo năm) và trends/gain.csv (xu hướng gộp).
+// Chỉ nhận tệp nằm trong thư mục cùng tên (gain/gain.csv, vulnerability/vulnerability.csv, readiness/readiness.csv),
+// bỏ thư mục __MACOSX; thấy không đúng một tệp như vậy thì dừng.
+const timTatCa = (dir, ten, out = []) => {
   for (const f of readdirSync(dir)) {
+    if (f === '__MACOSX') continue;
     const p = join(dir, f);
-    if (statSync(p).isDirectory()) { const k = tim(p, ten); if (k) return k; }
-    else if (f.toLowerCase() === ten) return p;
+    if (statSync(p).isDirectory()) timTatCa(p, ten, out);
+    else if (f.toLowerCase() === ten) out.push(p);
   }
-  return null;
+  return out;
+};
+const tim = (dir, ten) => {
+  const dung = timTatCa(dir, ten).filter(p => basename(dirname(p)).toLowerCase() === ten.replace(/\.csv$/, ''));
+  if (dung.length > 1) loi(`có ${dung.length} tệp ${ten} trong thư mục cùng tên`);
+  return dung[0] || null;
 };
 
 // CSV đơn giản có ngoặc kép: tách theo dấu phẩy ngoài ngoặc
@@ -57,7 +66,7 @@ const docBang = ten => {
     const m = new Map(); for (const [i, y] of nam) { const v = parseFloat(d[i]); if (Number.isFinite(v)) m.set(y, v); }
     bang.set(d[iIso], m);
   }
-  return { bang, tep: basename(p), namMax: Math.max(...nam.map(x => x[1])) };
+  return { bang, tep: basename(dirname(p)) + '/' + basename(p), namMax: Math.max(...nam.map(x => x[1])) };
 };
 const gain = docBang('gain.csv'), vul = docBang('vulnerability.csv'), rdy = docBang('readiness.csv');
 
