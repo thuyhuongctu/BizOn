@@ -63,14 +63,14 @@
 
 ## Giai đoạn 5: Câu chuyện 3 – Câu hỏi thảo luận và CSV (P3)
 
-- [ ] T015 [US3] Thêm vào test: màn kết quả có câu hỏi khí hậu VI/EN, không chứa đáp án (không có từ «nên chọn»); CSV thêm `ndgain`, `climate_mode` ở cuối, 21 cột cũ giữ nguyên. Chạy thấy hỏng.
-- [ ] T016 [US3] `global.html`: thêm 1–2 câu hỏi vào `gRenderResult`; thêm hai trường vào bản ghi `gCommit` và hai cột vào `gExportCSV`.
-- [ ] T017 [US3] Cập nhật `docs/chuan-dau-ra-va-rubric.md` mục CLO-D (một dòng: rủi ro khí hậu là một trục so sánh khi bật kịch bản) và hướng dẫn giảng viên (cách gửi link `?khihau=1`).
+- [X] T015 [US3] Thêm vào test: màn kết quả có câu hỏi khí hậu VI/EN, không chứa đáp án (không có từ «nên chọn»); CSV thêm `ndgain`, `climate_mode` ở cuối, 21 cột cũ giữ nguyên. Chạy thấy hỏng.
+- [X] T016 [US3] `global.html`: thêm 1–2 câu hỏi vào `gRenderResult`; thêm hai trường vào bản ghi `gCommit` và hai cột vào `gExportCSV`.
+- [X] T017 [US3] Cập nhật `docs/chuan-dau-ra-va-rubric.md` mục CLO-D (một dòng: rủi ro khí hậu là một trục so sánh khi bật kịch bản) và hướng dẫn giảng viên (cách gửi link `?khihau=1`).
 
 ## Giai đoạn 6: Hoàn thiện
 
-- [ ] T018 Chạy toàn bộ `npm test`; `html-validate` các tệp đã đổi; kiểm 360/390/1366 px.
-- [ ] T019 Ghi vào mô tả PR: bản nháp hồ sơ Go Global sẽ có thêm ngày thay đổi của `global.html`.
+- [X] T018 Chạy toàn bộ `npm test`; `html-validate` các tệp đã đổi; kiểm 360/390/1366 px.
+- [X] T019 Ghi vào mô tả PR: bản nháp hồ sơ Go Global sẽ có thêm ngày thay đổi của `global.html`.
 
 ## Phụ thuộc
 

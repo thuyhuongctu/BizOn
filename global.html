@@ -557,6 +557,21 @@ function renderWorldMap() {
 const KH = window.GoGlobalKhiHau || null;
 const KH_BAT = !!(KH && KH.coSoLieu() && /[?&]khihau=1(?:&|$)/.test(location.search));
 const KH_MUC = { thap: ['thấp', 'low'], vua: ['vừa', 'medium'], cao: ['cao', 'high'] };
+/* Câu chuyện 3: câu hỏi thảo luận về rủi ro khí hậu ở màn kết quả. Chỉ hỏi, không gợi ý đáp án. */
+function khCauHoi() {
+  if (!KH || !KH.coSoLieu() || !G.market) return '';
+  const h = KH.hoSo(G.market.id);
+  const qs = [
+    L(`Thị trường đội vừa chọn dùng số của ${h.vi}: ND-GAIN ${khSo(h.gain, 1)}, hạng ${h.hang}/${KH.TONG_SO_NUOC}. Nếu phải đặt nhà máy (FDI) ở đây, đội cần biết thêm điều gì về rủi ro khí hậu trước khi cam kết vốn?`,
+      `The market your team chose uses the figures of ${h.en}: ND-GAIN ${khSo(h.gain, 1)}, rank ${h.hang}/${KH.TONG_SO_NUOC}. If you had to build a plant (FDI) here, what more would your team need to know about climate risk before committing capital?`),
+    L(`Với số vốn đặt tại chỗ và điểm ESG của đội, phương thức «${G.mode.name}» chịu rủi ro khí hậu nhiều hơn hay ít hơn xuất khẩu và cấp phép? Đội có đổi phương thức không, và vì sao?`,
+      `Given the capital committed on site and your team's ESG score, does «${G.mode.nameEn}» carry more or less climate risk than exporting or licensing? Would your team change its entry mode, and why?`),
+  ];
+  return `<div id="kh-cau-hoi" class="clay-sunken rounded-2xl p-4 mt-3 text-left">
+      <p class="font-display font-extrabold text-deep-teal text-xs mb-1.5">🌡️ ${L('Câu hỏi thảo luận: rủi ro khí hậu', 'Discussion questions: climate risk')}${KH_BAT ? '' : ' ' + L('(chỉ số chỉ để tham khảo trong ván này)', '(the index was for reference only in this game)')}</p>
+      ${qs.map((q, i) => `<p class="text-[11px] text-deep-teal/75 leading-relaxed${i ? ' mt-1.5' : ''}">${i + 1}. ${q}</p>`).join('')}
+    </div>`;
+}
 function khDongPhanUng(r) {
   const el = document.getElementById('g-khihau');
   if (!el) return;
@@ -793,7 +808,9 @@ function gCommit() {
     tech: PROFILE.tech, exp: PROFILE.exp, quarter: G.q, event: qEvent().name,
     price: p, marketing: mkt, localization: loc,
     share: +r.share.toFixed(1), profit: +r.profit.toFixed(1), revenue: +r.revenue.toFixed(1),
-    esg: r.esg, risk: r.risk, doi: r.doi, rep: r.rep, learn: r.learn });
+    esg: r.esg, risk: r.risk, doi: r.doi, rep: r.rep, learn: r.learn,
+    // Đặc tả 009 · Câu chuyện 3: điểm ND-GAIN của nước trung tâm và trạng thái kịch bản khí hậu, để tách dữ liệu khi phân tích
+    ndgain: KH && KH.coSoLieu() ? KH.hoSo(G.market.id).gain : '', climate_mode: KH_BAT ? 'on' : 'off' });
   const row = { q: G.q, icon: qEvent().icon, share: r.share, profit: r.profit };
   gLogRows.push(row);
   document.getElementById('g-log').insertAdjacentHTML('afterbegin', gLogRow(row));
@@ -843,7 +860,8 @@ function gExportCSV() {
   let rows = [];
   try { rows = JSON.parse(localStorage.getItem('bizon-global-log') || '[]'); } catch (e) {}
   if (!rows.length) return;
-  const cols = ['time', 'market', 'mode', 'nego', 'tech', 'exp', 'quarter', 'event', 'price', 'marketing', 'localization', 'share', 'profit', 'esg', 'risk', 'doi', 'rep', 'learn', 'result', 'avgShare', 'totalProfit'];
+  // 21 cột cũ giữ nguyên tên và thứ tự; ndgain, climate_mode thêm ở cuối (đặc tả 009). Dòng ghi trước đó để trống hai cột này.
+  const cols = ['time', 'market', 'mode', 'nego', 'tech', 'exp', 'quarter', 'event', 'price', 'marketing', 'localization', 'share', 'profit', 'esg', 'risk', 'doi', 'rep', 'learn', 'result', 'avgShare', 'totalProfit', 'ndgain', 'climate_mode'];
   const csv = [cols.join(','), ...rows.map(r => cols.map(c => `"${String(r[c] ?? '').replace(/"/g, '""')}"`).join(','))].join('\n');
   const a = document.createElement('a');
   a.href = URL.createObjectURL(new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8' }));
@@ -951,6 +969,7 @@ function gRenderResult() {
       <p class="font-display font-extrabold text-deep-teal text-xs mb-1.5">🎓 Lumina Mentor – ${L('góc lý thuyết', 'theory corner')}</p>
       <p class="text-[11px] text-deep-teal/75 leading-relaxed">${gMentor(avgShare, win)}</p>
     </div>
+    ${khCauHoi()}
     <button type="button" onclick="gAnnual()" class="clay-btn w-full bg-surface-bright text-deep-teal/70 font-bold py-3 text-sm mt-3">🗓️ ${L('Báo cáo Tổng kết Năm – thành tích mọi chiến dịch', 'Year-end report – every campaign')}</button>
     <button type="button" onclick="gExportCSV()" class="clay-btn w-full bg-surface-bright text-deep-teal/70 font-bold py-3 text-sm mt-2">📥 ${L('Xuất nhật ký quyết định (CSV) – dữ liệu nghiên cứu / chấm điểm', 'Export the decision log (CSV) – research / grading data')}</button>
     <div class="flex gap-2 mt-4">
