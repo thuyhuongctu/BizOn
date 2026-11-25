@@ -518,7 +518,7 @@
       setStatus('Chưa có dữ liệu khảo sát trong phiên. Bấm “Tải khảo sát” trước.', 'error');
       return;
     }
-    const likertHeader = [1, 2, 3, 4, 5, 6, 7, 8].map(i => `b${i}`).concat([1, 2, 3, 4, 5].map(i => `c${i}`)).join(',');
+    const likertHeader = [1, 2, 3, 4, 5, 6, 7, 8].map(i => `b${i}`).concat([1, 2, 3, 4, 5, 6, 7].map(i => `c${i}`)).join(',');
     const header = `bo_cau_hoi,phieu,ma_sv,vai_tro,so_vong,diem_A,diem_gioi_thieu,thich_nhat,can_cai_thien,nop_luc,diem_A_theo_chuan,${likertHeader}\n`;
     const likert = (values, count) => Array.from({ length: count }, (_, i) => (Array.isArray(values) ? values[i] ?? '' : ''));
     const rows = state.surveys.map(row => [
@@ -534,7 +534,7 @@
       csvCell(row.created_at),
       csvCell(row.score_by_outcome ? JSON.stringify(row.score_by_outcome) : ''),
       ...likert(row.likert_b, 8),
-      ...likert(row.likert_c, 5)
+      ...likert(row.likert_c, 7) // phiếu trước 11/2026 chỉ có c1–c5, c6–c7 để trống
     ].join(',')).join('\n');
     download(`bizon-survey-${state.classCode || 'class'}.csv`, `﻿${header}${rows}`, 'text/csv;charset=utf-8');
   }
