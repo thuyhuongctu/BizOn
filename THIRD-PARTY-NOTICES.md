@@ -76,6 +76,7 @@ Các trang chính của bizonland.com (trang chủ, bốn trò chơi, hành trì
 | **PeerJS Cloud** (máy chủ tín hiệu công cộng) | Kết nối ngang hàng cho chế độ chơi nhóm | Điều khoản của PeerJS |
 | **Zenodo** (CERN) | DOI 10.5281/zenodo.21592241 cho bản phát hành | Điều khoản Zenodo |
 | **GoatCounter** (mã nguồn mở, EUPL 1.2) | Đếm lượt xem trang ẩn danh từ 23/11/2026: không cookie, không lưu IP, không nạp mã của bên thứ ba (trang tự gửi yêu cầu `/count` từ `js/thong-ke.js`); chi tiết ở `chinh-sach.html#thong-ke` | Điều khoản và chính sách riêng tư của GoatCounter |
+| **ND-GAIN Country Index** (University of Notre Dame), bản 2026 | Dữ liệu, không phải mã: điểm ND-GAIN, dễ tổn thương, sẵn sàng của 7 nước trung tâm trong Go Global (đặc tả 009). Chép 7 dòng vào `docs/research/du-lieu/nd-gain-2026-nuoc-trung-tam.csv` và `js/go-global-khi-hau.js` bằng `scripts/research/trich-nd-gain.mjs`; trang ghi nguồn và năm số liệu | ND-GAIN là công cụ mở, miễn phí; trích dẫn theo cách ND-GAIN đề xuất: «Notre Dame Global Adaptation Initiative Country Index (ND-GAIN). (2026). University of Notre Dame.» |
 
 ## 6 · Công cụ phát triển (không được phân phối cùng sản phẩm)
 
