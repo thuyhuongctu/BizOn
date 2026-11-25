@@ -83,6 +83,8 @@
       'The team meeting and the AI advisor\'s suggestions help me know what to do.',
       'The "Why?" explanation after each round helps me draw lessons.',
       'I want to keep using BizOn in future class sessions.',
+      'While playing, I had to think hard and weigh options before each decision.',
+      'My teammates and I discussed and debated with each other before finalizing decisions.',
     ],
     // Ghép bộ 2 tiếng Anh: 10 câu neo của bộ 1 + 5 câu vận dụng
     ghep2() { return this.qa.map((it, i) => this.thay[i + 1] || it); },
