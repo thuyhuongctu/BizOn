@@ -262,6 +262,9 @@
     'Cuộc họp đội và gợi ý của cố vấn AI giúp tôi biết cần làm gì.',
     'Phần giải thích «Vì sao?» sau mỗi vòng giúp tôi rút ra bài học.',
     'Tôi muốn tiếp tục dùng BizOn trong các buổi học sau.',
+    // c_6, c_7 thêm 11/2026 (docs/research/THIET-KE-DOT-KHAO-SAT-SAU.md); c_1–c_5 giữ nguyên để so với đợt 10/2026
+    'Khi chơi, tôi phải suy nghĩ, cân nhắc nhiều trước mỗi quyết định.',
+    'Các bạn trong đội trao đổi, tranh luận với nhau trước khi chốt quyết định.',
   ];
 
   const $ = id => document.getElementById(id);
@@ -382,7 +385,7 @@
     let likC = null, nps = null;
     if (phase === 'post') {
       likC = [];
-      for (let i = 1; i <= 5; i++) { const v = val('c' + i); if (!v) missing.push($('c-' + i)); else likC.push(Number(v)); }
+      for (let i = 1; i <= LIKERT_C.length; i++) { const v = val('c' + i); if (!v) missing.push($('c-' + i)); else likC.push(Number(v)); }
       nps = Number($('ks-nps').value);
     }
     if (missing.length) {
