@@ -27,6 +27,16 @@ const sec6 = notes.slice(notes.indexOf('## 6 ·'), notes.indexOf('## 7 ·'));
 assert.ok(sec6.includes('Claude Code Game Studios') && sec6.includes('Donchitos') && sec6.includes('MIT'), 'mục 6 thiếu ghi công');
 for (const name of SKILLS) assert.ok(sec6.includes('`' + name + '`'), 'mục 6 thiếu ' + name);
 
+// 25/11/2026: security-audit có phần phỏng theo Claude-BugHunter (nội dung CC BY 4.0) – phải ghi công ở tệp và ở mục 6.
+{
+  const sa = read('.claude/skills/security-audit/SKILL.md');
+  for (const t of ['Claude-BugHunter', 'Sachin Sharma', 'CC BY 4.0', 'creativecommons.org/licenses/by/4.0', 'Đã thay đổi'])
+    assert.ok(sa.includes(t), 'security-audit thiếu ghi công Claude-BugHunter: ' + t);
+  for (const t of ['Claude-BugHunter', 'Sachin Sharma', 'CC BY 4.0']) assert.ok(sec6.includes(t), 'mục 6 thiếu ghi công Claude-BugHunter: ' + t);
+  assert.match(sa, /Cổng xác minh 7 câu/);
+  assert.match(sa, /nguồn → đích/);
+}
+
 // Lệnh trỏ nhau phải trỏ tới lệnh có thật trong .claude/skills/
 for (const name of SKILLS) for (const m of read(`.claude/skills/${name}/SKILL.md`).matchAll(/`\/([a-z-]+)/g)) {
   assert.ok(fs.existsSync(path.join(ROOT, '.claude/skills', m[1], 'SKILL.md')), `${name} trỏ tới lệnh không có: /${m[1]}`);

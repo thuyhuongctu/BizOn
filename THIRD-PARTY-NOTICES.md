@@ -84,6 +84,8 @@ Chỉ chạy trên máy phát triển hoặc trong CI; không có mã của chú
 
 Mười một lệnh cho Claude Code trong `.claude/skills/` (`balance-check`, `playtest-report`, `design-review`, `ux-review`; từ 16/11/2026 thêm `security-audit`, `localize`, `asset-audit`, `perf-profile`, `smoke-check`, `patch-notes`, `prototype` theo bản 1.3.0) phỏng theo các skill cùng tên của **Claude Code Game Studios** (© 2026 Donchitos, giấy phép **MIT**), đã Việt hóa và viết lại cho BizOn. Đây là hướng dẫn làm việc cho công cụ phát triển, không chạy trên trang web; mỗi tệp giữ dòng ghi nguồn. Toàn văn giấy phép MIT: <https://opensource.org/license/mit>.
 
+Từ 25/11/2026, lệnh `security-audit` có thêm phần lần theo «nguồn → đích» trong DOM, «Cổng xác minh 7 câu» và bảng «Một mình chưa thành lỗi», phỏng theo các skill `hunt-dom`, `hunt-xss`, `hunt-open-redirect`, `triage-validation` của **Claude-BugHunter** (© 2026 Sachin Sharma, <https://github.com/elementalsouls/Claude-BugHunter>; mã theo MIT, nội dung skill theo giấy phép **CC BY 4.0** – <https://creativecommons.org/licenses/by/4.0/>). Đã thay đổi: rút gọn, Việt hóa, bỏ toàn bộ kỹ thuật tấn công, công cụ quét và mã của kho đó, chỉ giữ bảng kiểm phòng thủ cho trang tĩnh BizOn + Supabase. Không cài bộ công cụ Claude-BugHunter vào kho.
+
 Lệnh `video-ngan` (`.claude/skills/video-ngan/`) và công cụ kiểm video `scripts/kiem-video.mjs` phỏng theo công thức kịch bản và `scripts/short_qa.py` của **Claude Animated Shorts** (© 2026 Mr omi, giấy phép **MIT**), viết lại bằng tiếng Việt và Node cho BizOn; không dùng ảnh tham khảo hay mã dựng hình của kho đó.
 
 
