@@ -97,6 +97,14 @@
     q('R-sec-1', 'R', 'sec', 'Nếu sau 6 tháng cam kết SMART không đạt, đội đề nghị Hội đồng xử lý thế nào?', 'If the SMART commitment is missed after 6 months, what do you propose the board should do?'),
   ];
 
+  // Tự chấm sau pitch: 4 tiêu chí × 2,5 điểm, theo kịch bản «Đại hội Cổ đông».
+  const TIEU_CHI = [
+    { id: 'kha-thi', toiDa: 2.5, vi: 'Khả thi tài chính', en: 'Financial feasibility' },
+    { id: 'doc-dao', toiDa: 2.5, vi: 'Độc đáo', en: 'Originality' },
+    { id: 'doi-ngu', toiDa: 2.5, vi: 'Đội ngũ', en: 'Team' },
+    { id: 'trinh-bay', toiDa: 2.5, vi: 'Trình bày', en: 'Delivery' },
+  ];
+
   const NGANH = [
     { id: 'nong-san', vi: 'Nông sản tươi', en: 'Fresh produce' },
     { id: 'che-bien', vi: 'Thực phẩm chế biến', en: 'Processed food' },
@@ -106,7 +114,7 @@
     { id: 'khac', vi: 'Ngành khác', en: 'Other' },
   ];
 
-  const DATA = { PHIEN_BAN, DOAN, LUAT, VAI, PASTOR, HOI_DONG, CAU_HOI, NGANH };
+  const DATA = { PHIEN_BAN, DOAN, LUAT, VAI, PASTOR, HOI_DONG, CAU_HOI, TIEU_CHI, NGANH };
   if (typeof module === 'object' && module.exports) module.exports = DATA;
   else root.PitchData = DATA;
 })(typeof self !== 'undefined' ? self : this);
