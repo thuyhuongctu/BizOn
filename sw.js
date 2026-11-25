@@ -278,7 +278,7 @@ const IMG_MAX = 600;
 // tải hết như trước. Tải 6 tệp một lúc để không giành hết băng thông của trang đang mở.
 const MANIFEST = './sw-manifest.json';
 async function oldCaches() {
-  const keys = (await caches.keys()).filter(k => /^bizon-v\d+$/.test(k) && k !== CACHE).sort((x, y) => y.slice(7) - x.slice(7));
+  const keys = (await caches.keys()).filter(k => /^bizon-v993\d+$/.test(k) && k !== CACHE).sort((x, y) => y.slice(7) - x.slice(7));
   return Promise.all(keys.map(k => caches.open(k)));
 }
 async function readFiles(res) { try { return (await res.json()).files || {}; } catch (e) { return {}; } }
@@ -303,7 +303,7 @@ self.addEventListener('activate', e => {
     caches.keys()
       // Dọn bản cũ của chính sw.js và cache của sw-bizon.js/sw-hochieu.js đã ngừng ('bizon-3d*',
       // 'bizon-hochieu*'); IMG_CACHE và cache của app/sw.js (phạm vi /app/) để nguyên.
-      .then(keys => Promise.all(keys.filter(k => (/^bizon-v\d+$/.test(k) && k !== CACHE) || /^bizon-(3d|hochieu)-v\d+$/.test(k)).map(k => caches.delete(k))))
+      .then(keys => Promise.all(keys.filter(k => (/^bizon-v993\d+$/.test(k) && k !== CACHE) || /^bizon-(3d|hochieu)-v\d+$/.test(k)).map(k => caches.delete(k))))
       .then(() => self.clients.claim())
   );
 });
