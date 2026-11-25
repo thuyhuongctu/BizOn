@@ -85,6 +85,15 @@ table{width:100%;border-collapse:collapse;font-size:14px}
 th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--field);vertical-align:top}
 .chan{font-size:12px;color:var(--muted);line-height:1.5;margin-top:18px}
 @media (max-width:520px){.so-lon{font-size:52px}.vai-ten{font-size:24px}.cau{font-size:18px}.dai .o{font-size:10px}.dai .o.hep i{display:inline}.dai .o.hep em{display:none}.lumina{grid-template-columns:52px 1fr}.lumina img{width:52px;height:52px}}
+.lua-chon{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:10px 0}
+.lua-chon label{display:block;font-weight:800;font-size:14px;margin-bottom:4px}
+.lua-chon select,.lua-chon input{width:100%;min-height:44px;border:0;border-radius:12px;background:var(--field);padding:8px 12px}
+fieldset{border:0;padding:0;margin:14px 0 0}
+legend{font-weight:800;font-size:16px;padding:0;margin-bottom:4px}
+.kq-kiem p{margin:6px 0;line-height:1.5}
+.kq-kiem .lech{color:var(--warn)}
+.diem-lon{font-size:28px;font-weight:800;margin:6px 0}
+@media print{header.top .tools,.hang-nut,.chan,#man-chuan-bi,#man-pitch,#man-hoi-dap,#man-tu-cham{display:none!important}body{background:#fff}.the{box-shadow:none;border:1px solid #ccc}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -155,15 +164,56 @@ th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--field);verti
     </div>
   </section>
 
-  <!-- Màn 4: kết thúc lượt -->
+  <!-- Màn 4: tự chấm và kiểm ba con số -->
+  <section id="man-tu-cham" hidden aria-labelledby="h-tu-cham">
+    <div class="the">
+      <h2 id="h-tu-cham" style="margin:0 0 4px;font-size:18px" data-k="tuChamTieuDe">Đội tự chấm</h2>
+      <p class="goi-y" data-k="tuChamGoiY">Chấm nóng khi cảm xúc còn tươi: 4 tiêu chí, mỗi tiêu chí tối đa 2,5 điểm. Điểm phạt quá giờ trừ tự động.</p>
+      <div class="lua-chon" id="o-diem"></div>
+      <fieldset>
+        <legend data-k="baConTieuDe">Ba con số mỗi thành viên phải thuộc</legend>
+        <div class="lua-chon">
+          <div><label for="so-vonXin" data-k="soVonXin">Vốn xin (triệu đồng)</label><input type="number" id="so-vonXin" inputmode="decimal" min="0" step="any"></div>
+          <div><label for="so-bep" data-k="soBep">Điểm hòa vốn (sản phẩm/tháng)</label><input type="number" id="so-bep" inputmode="decimal" min="0" step="any"></div>
+          <div><label for="so-lnMucTieu" data-k="soLn">Lợi nhuận mục tiêu (triệu đồng/tháng)</label><input type="number" id="so-lnMucTieu" inputmode="decimal" min="0" step="any"></div>
+        </div>
+      </fieldset>
+      <fieldset>
+        <legend data-k="soPhuTieuDe">Số liệu để kiểm (lấy từ file Excel hòa vốn của CFO)</legend>
+        <div class="lua-chon">
+          <div><label for="so-gia" data-k="soGia">Giá bán (nghìn đồng/sản phẩm)</label><input type="number" id="so-gia" inputmode="decimal" min="0" step="any"></div>
+          <div><label for="so-bienPhi" data-k="soBienPhi">Biến phí (nghìn đồng/sản phẩm)</label><input type="number" id="so-bienPhi" inputmode="decimal" min="0" step="any"></div>
+          <div><label for="so-dinhPhi" data-k="soDinhPhi">Định phí (triệu đồng/tháng)</label><input type="number" id="so-dinhPhi" inputmode="decimal" min="0" step="any"></div>
+          <div><label for="so-sanLuong" data-k="soSanLuong">Sản lượng dự kiến (sản phẩm/tháng)</label><input type="number" id="so-sanLuong" inputmode="decimal" min="0" step="any"></div>
+          <div><label for="so-dauTu" data-k="soDauTu">Đầu tư ban đầu (triệu đồng)</label><input type="number" id="so-dauTu" inputmode="decimal" min="0" step="any"></div>
+          <div><label for="so-thangHoaVon" data-k="soThang">Số tháng đến khi hòa vốn</label><input type="number" id="so-thangHoaVon" inputmode="decimal" min="0" step="any"></div>
+        </div>
+      </fieldset>
+      <div class="hang-nut"><button type="button" class="btn phu" id="nut-kiem" data-k="kiemBaCon">Kiểm ba con số</button></div>
+      <div class="kq-kiem" id="ket-qua-kiem" role="status" aria-live="polite"></div>
+      <div class="hang-nut"><button type="button" class="btn chinh" id="nut-tong-ket" data-k="xemTongKet">Xem bảng tổng kết</button></div>
+    </div>
+  </section>
+
+  <!-- Màn 5: kết thúc lượt -->
   <section id="man-ket-thuc" hidden aria-labelledby="h-ket-thuc">
     <div class="the">
       <h2 id="h-ket-thuc" style="margin:0 0 8px;font-size:18px" data-k="ketThucTieuDe">Kết thúc lượt</h2>
       <p id="tom-tat"></p>
+      <div class="diem-lon num" id="diem-tong"></div>
+      <table id="bang-diem"><caption class="goi-y" style="text-align:left" data-k="bangDiemCap">Điểm tự chấm</caption><thead><tr><th scope="col" data-k="cotTieuChi">Tiêu chí</th><th scope="col" data-k="cotDiem">Điểm</th></tr></thead><tbody></tbody></table>
+      <p id="so-sanh" class="goi-y"></p>
+      <div class="kq-kiem" id="tk-kiem"></div>
       <table id="bang-thoi-gian"><caption class="goi-y" style="text-align:left" data-k="bangVaiCap">Thời gian từng đoạn</caption><thead><tr><th scope="col" data-k="cotVai">Vai</th><th scope="col" data-k="cotDinhMuc">Định mức</th><th scope="col" data-k="cotThucTe">Thực tế</th></tr></thead><tbody></tbody></table>
       <h3 style="font-size:15px;margin:16px 0 6px" data-k="cauDaGap">Câu hỏi đội đã gặp</h3>
       <ol id="ds-cau"></ol>
-      <div class="hang-nut"><button type="button" class="btn chinh" id="nut-lai" data-k="tapLai">Tập lại</button></div>
+      <div class="hang-nut">
+        <button type="button" class="btn chinh" id="nut-lai" data-k="tapLai">Tập lại</button>
+        <button type="button" class="btn phu" id="nut-in" data-k="inBang">In bảng</button>
+        <button type="button" class="btn" id="nut-csv" data-k="xuatCsv">Xuất CSV</button>
+        <button type="button" class="btn" id="nut-xoa-luu" data-k="xoaLuu">Xóa kết quả đã lưu</button>
+      </div>
+      <p class="goi-y" data-k="luuGoiY">Kết quả chỉ lưu trong trình duyệt của máy này. Muốn nộp cho giảng viên thì in bảng hoặc xuất CSV.</p>
     </div>
   </section>
 
@@ -187,6 +237,20 @@ th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--field);verti
       dangNoi: 'Đang trình bày', conLaiTong: 'Còn lại của 7 phút:', chuyenVai: 'Xong, chuyển vai', tamDung: 'Tạm dừng (tập)', tiepTuc: 'Tiếp tục', ketThucPitch: 'Kết thúc pitch',
       denLuot: v => 'Đến lượt ' + v + '.', con10: 'Còn 10 giây.', quaGio: 'Quá 7 phút: đang quá giờ.', phat: 'Quá 30 giây: trừ 5 điểm. Phần trình bày dừng.', daTamDung: 'Đang tạm dừng.',
       hoiDapTieuDe: 'Hội đồng đặt câu hỏi', gioTraLoi: 'Giờ trả lời:', cauTiep: 'Câu tiếp theo', cauCuoi: 'Xong phần hỏi đáp', hetGioCau: 'Hết 1 phút cho câu này.', cauSo: (i, n) => '(câu ' + i + '/' + n + ')', hoi: 'hỏi',
+      tuChamTieuDe: 'Đội tự chấm', tuChamGoiY: 'Chấm nóng khi cảm xúc còn tươi: 4 tiêu chí, mỗi tiêu chí tối đa 2,5 điểm. Điểm phạt quá giờ trừ tự động.',
+      baConTieuDe: 'Ba con số mỗi thành viên phải thuộc', soVonXin: 'Vốn xin (triệu đồng)', soBep: 'Điểm hòa vốn (sản phẩm/tháng)', soLn: 'Lợi nhuận mục tiêu (triệu đồng/tháng)',
+      soPhuTieuDe: 'Số liệu để kiểm (lấy từ file Excel hòa vốn của CFO)', soGia: 'Giá bán (nghìn đồng/sản phẩm)', soBienPhi: 'Biến phí (nghìn đồng/sản phẩm)', soDinhPhi: 'Định phí (triệu đồng/tháng)',
+      soSanLuong: 'Sản lượng dự kiến (sản phẩm/tháng)', soDauTu: 'Đầu tư ban đầu (triệu đồng)', soThang: 'Số tháng đến khi hòa vốn', kiemBaCon: 'Kiểm ba con số', xemTongKet: 'Xem bảng tổng kết',
+      kqThieu: 'Chưa đủ số để kiểm. Nhập thêm giá bán, biến phí, định phí, sản lượng, đầu tư ban đầu và số tháng đến khi hòa vốn.',
+      kqBep: (x, s) => 'Điểm hòa vốn: định phí × 1000 ÷ (giá − biến phí) = ' + s.dinhPhi + ' × 1000 ÷ (' + s.gia + ' − ' + s.bienPhi + ') = ' + x.tinh + ' sản phẩm/tháng; đội khai ' + x.khai + (x.ok ? '.' : ', lệch ' + String(Math.round(x.lech * 100)).replace('-', '−') + ' %.'),
+      kqBepAm: (x, s) => 'Điểm hòa vốn: giá bán (' + s.gia + ') không lớn hơn biến phí (' + s.bienPhi + '), nên mỗi sản phẩm bán ra không bù được định phí.',
+      kqLn: (x, s) => 'Lợi nhuận ở sản lượng dự kiến: (sản lượng − điểm hòa vốn) × (giá − biến phí) ÷ 1000 = (' + s.sanLuong + ' − ' + bepCua(s) + ') × ' + (s.gia - s.bienPhi) + ' ÷ 1000 = ' + x.tinh + ' triệu đồng/tháng; mục tiêu đội khai ' + x.khai + (x.ok ? '.' : ': mục tiêu lớn hơn mức sản lượng dự kiến cho phép.'),
+      kqVon: (x, s) => 'Vốn cần đến khi hòa vốn: đầu tư ban đầu + số tháng × định phí ÷ 2 = ' + s.dauTu + ' + ' + s.thangHoaVon + ' × ' + s.dinhPhi + ' ÷ 2 = ' + x.tinh + ' triệu đồng (giả định doanh số tăng đều đến điểm hòa vốn); đội xin ' + x.khai + (x.ok ? '.' : ': vốn xin chưa đủ trang trải đến điểm hòa vốn.'),
+      kqGhiChu: 'Trang chỉ báo chỗ chưa khớp và cách tính, không sửa số giúp đội.',
+      bangDiemCap: 'Điểm tự chấm', cotTieuChi: 'Tiêu chí', cotDiem: 'Điểm', diemTong: (d) => 'Tổng: ' + d.tong100 + '/100 = ' + String(d.tong10).replace('.', ',') + '/10' + (d.phat100 ? ' (đã trừ ' + d.phat100 + ' điểm quá giờ)' : ''),
+      soSanh: (a, b) => 'So với lượt trước của đội (' + a.thoiDiem.slice(0, 16).replace('T', ' ') + '): điểm ' + a.tong100 + ' → ' + b.tong100 + '/100; thời gian pitch ' + a.mm + ' → ' + b.mm + '; chỗ chưa khớp ' + a.soLech + ' → ' + b.soLech + '.',
+      chuaCoLuotTruoc: 'Đây là lượt đầu tiên của đội trên máy này.', inBang: 'In bảng', xuatCsv: 'Xuất CSV', xoaLuu: 'Xóa kết quả đã lưu', xacNhanXoa: 'Xóa mọi kết quả pitch đã lưu trên máy này?',
+      luuGoiY: 'Kết quả chỉ lưu trong trình duyệt của máy này. Muốn nộp cho giảng viên thì in bảng hoặc xuất CSV.',
       ketThucTieuDe: 'Kết thúc lượt', bangVaiCap: 'Thời gian từng đoạn', cotVai: 'Vai', cotDinhMuc: 'Định mức', cotThucTe: 'Thực tế', cauDaGap: 'Câu hỏi đội đã gặp', tapLai: 'Tập lại',
       tomTat: (doi, tong, phat, ma) => doi + ': pitch ' + tong + (phat ? ', quá 30 giây nên bị trừ 5 điểm' : ', không bị trừ điểm') + '. Mã lượt ' + ma + '.', doiMacDinh: 'Đội chưa đặt tên', giay: 'giây',
       chan: 'Câu hỏi của Hội đồng soạn sẵn theo khung PASTOR, rút theo mã lượt. Trang không dùng AI, không ghi âm, không ghi hình và không gửi dữ liệu đi đâu. Lumina và Hội đồng là cố vấn chạy theo luật: chỉ giữ giờ và đặt câu hỏi, không chấm nội dung câu trả lời.', veLopHoc: '← Về trang Lớp học',
@@ -199,11 +263,27 @@ th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--field);verti
       dangNoi: 'Now presenting', conLaiTong: 'Left of the 7 minutes:', chuyenVai: 'Done, next role', tamDung: 'Pause (practice)', tiepTuc: 'Resume', ketThucPitch: 'End pitch',
       denLuot: v => v + ', your turn.', con10: '10 seconds left.', quaGio: 'Past 7 minutes: over time.', phat: '30 seconds over: minus 5 points. The pitch stops.', daTamDung: 'Paused.',
       hoiDapTieuDe: 'The board asks', gioTraLoi: 'Answer time:', cauTiep: 'Next question', cauCuoi: 'Finish Q&A', hetGioCau: 'One minute is up for this question.', cauSo: (i, n) => '(question ' + i + '/' + n + ')', hoi: 'asks',
+      tuChamTieuDe: 'Team self-assessment', tuChamGoiY: 'Score it hot, while it is fresh: 4 criteria, up to 2.5 points each. The overtime penalty is deducted automatically.',
+      baConTieuDe: 'The three numbers every member must know', soVonXin: 'Funding ask (million VND)', soBep: 'Break-even (units/month)', soLn: 'Target profit (million VND/month)',
+      soPhuTieuDe: 'Figures for the check (from the CFO\'s break-even spreadsheet)', soGia: 'Price (thousand VND/unit)', soBienPhi: 'Variable cost (thousand VND/unit)', soDinhPhi: 'Fixed cost (million VND/month)',
+      soSanLuong: 'Expected volume (units/month)', soDauTu: 'Initial investment (million VND)', soThang: 'Months to break-even', kiemBaCon: 'Check the three numbers', xemTongKet: 'See the summary',
+      kqThieu: 'Not enough figures to check. Add price, variable cost, fixed cost, volume, initial investment and months to break-even.',
+      kqBep: (x, s) => 'Break-even: fixed cost × 1000 ÷ (price − variable cost) = ' + s.dinhPhi + ' × 1000 ÷ (' + s.gia + ' − ' + s.bienPhi + ') = ' + x.tinh + ' units/month; the team stated ' + x.khai + (x.ok ? '.' : ', a gap of ' + String(Math.round(x.lech * 100)).replace('-', '−') + ' %.'),
+      kqBepAm: (x, s) => 'Break-even: the price (' + s.gia + ') is not above the variable cost (' + s.bienPhi + '), so no unit sold covers any fixed cost.',
+      kqLn: (x, s) => 'Profit at expected volume: (volume − break-even) × (price − variable cost) ÷ 1000 = (' + s.sanLuong + ' − ' + bepCua(s) + ') × ' + (s.gia - s.bienPhi) + ' ÷ 1000 = ' + x.tinh + ' million VND/month; the stated target is ' + x.khai + (x.ok ? '.' : ': the target is higher than the expected volume allows.'),
+      kqVon: (x, s) => 'Funding needed until break-even: initial investment + months × fixed cost ÷ 2 = ' + s.dauTu + ' + ' + s.thangHoaVon + ' × ' + s.dinhPhi + ' ÷ 2 = ' + x.tinh + ' million VND (assuming sales grow evenly up to break-even); the ask is ' + x.khai + (x.ok ? '.' : ': the ask does not cover the months until break-even.'),
+      kqGhiChu: 'The page only shows what does not match and how it was calculated; it does not fix the numbers for the team.',
+      bangDiemCap: 'Self-assessment', cotTieuChi: 'Criterion', cotDiem: 'Points', diemTong: (d) => 'Total: ' + d.tong100 + '/100 = ' + d.tong10 + '/10' + (d.phat100 ? ' (' + d.phat100 + ' points deducted for overtime)' : ''),
+      soSanh: (a, b) => 'Compared with the team\'s previous round (' + a.thoiDiem.slice(0, 16).replace('T', ' ') + '): score ' + a.tong100 + ' → ' + b.tong100 + '/100; pitch time ' + a.mm + ' → ' + b.mm + '; mismatches ' + a.soLech + ' → ' + b.soLech + '.',
+      chuaCoLuotTruoc: 'This is the team\'s first round on this device.', inBang: 'Print', xuatCsv: 'Export CSV', xoaLuu: 'Delete saved results', xacNhanXoa: 'Delete all pitch results saved on this device?',
+      luuGoiY: 'Results are stored only in this browser. To hand them in, print the summary or export a CSV.',
       ketThucTieuDe: 'Round finished', bangVaiCap: 'Time per segment', cotVai: 'Role', cotDinhMuc: 'Allowed', cotThucTe: 'Used', cauDaGap: 'Questions the team faced', tapLai: 'Practise again',
       tomTat: (doi, tong, phat, ma) => doi + ': pitch took ' + tong + (phat ? ', more than 30 seconds over, so minus 5 points' : ', no penalty') + '. Round code ' + ma + '.', doiMacDinh: 'Unnamed team', giay: 's',
       chan: 'Board questions are pre-written on the PASTOR frame and drawn by round code. This page uses no AI, records no audio or video, and sends no data anywhere. Lumina and the board are rule-based advisors: they keep time and ask questions; they do not grade the answers.', veLopHoc: '← Back to Classroom',
     },
   };
+  // Điểm hòa vốn tính theo công thức (cùng cách với PitchCore.kiemBaCon), dùng để ghi số cụ thể trong lời báo lợi nhuận.
+  const bepCua = s => Math.round(s.dinhPhi * 1000 / (s.gia - s.bienPhi));
   let lang = 'vi';
   try { lang = localStorage.getItem('bizon-lang') === 'en' ? 'en' : 'vi'; } catch (e) {}
   const t = k => T[lang][k];
@@ -229,7 +309,7 @@ th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--field);verti
   const dh = C.taoDongHo(() => performance.now() + tua);
   const S = { phase: 'chuan-bi', som: [], doanTruoc: -1, daBao10: {}, daBaoQua: false, ket: null, cau: [], iCau: 0, dhCau: null, daBaoCau: false, ma: '', doi: '' };
 
-  function hien(id) { ['man-chuan-bi', 'man-pitch', 'man-hoi-dap', 'man-ket-thuc'].forEach(m => { $(m).hidden = m !== id; }); }
+  function hien(id) { ['man-chuan-bi', 'man-pitch', 'man-hoi-dap', 'man-tu-cham', 'man-ket-thuc'].forEach(m => { $(m).hidden = m !== id; }); }
   function tenVai(v) { const x = D.VAI[v]; return x.icon + ' ' + x[lang]; }
 
   function apNgonNgu() {
@@ -241,7 +321,7 @@ th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--field);verti
     const chon = $('nganh').value; $('nganh').innerHTML = '';
     D.NGANH.forEach(n => { const o = document.createElement('option'); o.value = n.id; o.textContent = ten(n); $('nganh').appendChild(o); });
     if (chon) $('nganh').value = chon;
-    veDai(); if (S.phase === 'pitch') veDongHo(); if (S.phase === 'hoi-dap') veCau(); if (S.phase === 'ket-thuc') veKetThuc();
+    veDai(); if (S.phase === 'pitch') veDongHo(); if (S.phase === 'hoi-dap') veCau(); if (S.phase === 'tu-cham') { veODiem(); if (S.daKiem) veKiem($('ket-qua-kiem')); } if (S.phase === 'ket-thuc') veKetThuc();
     $('nut-dung').textContent = dh.dangChay() || S.phase !== 'pitch' ? t('tamDung') : t('tiepTuc');
   }
 
@@ -322,7 +402,39 @@ th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--field);verti
     if (con > 0) $('bao-cau').textContent = '';
   }
 
-  function cauTiep() { S.iCau++; if (S.iCau >= S.cau.length) { S.phase = 'ket-thuc'; hien('man-ket-thuc'); veKetThuc(); $('nut-lai').focus(); } else batDauCau(); }
+  function cauTiep() { S.iCau++; if (S.iCau >= S.cau.length) { S.phase = 'tu-cham'; S.daKiem = false; $('ket-qua-kiem').innerHTML = ''; veODiem(); hien('man-tu-cham'); $('diem-0').focus(); } else batDauCau(); }
+
+  // Tự chấm và kiểm ba con số
+  const KHOA = 'bizon-pitch-v1', SO = ['vonXin', 'bep', 'lnMucTieu', 'gia', 'bienPhi', 'dinhPhi', 'sanLuong', 'dauTu', 'thangHoaVon'];
+  function veODiem() {
+    const o = $('o-diem'), cu = [0, 1, 2, 3].map(i => $('diem-' + i) ? $('diem-' + i).value : '2');
+    o.innerHTML = '';
+    D.TIEU_CHI.forEach((tc, i) => {
+      const d = document.createElement('div'), lb = document.createElement('label'), se = document.createElement('select');
+      lb.htmlFor = se.id = 'diem-' + i; lb.textContent = ten(tc) + ' (0–2,5)'.replace(',', lang === 'en' ? '.' : ',');
+      for (let v = 0; v <= 2.5; v += 0.5) { const op = document.createElement('option'); op.value = String(v); op.textContent = lang === 'vi' ? String(v).replace('.', ',') : String(v); se.appendChild(op); }
+      se.value = cu[i]; d.appendChild(lb); d.appendChild(se); o.appendChild(d);
+    });
+  }
+  function docSo() { const s = {}; SO.forEach(k => { const v = $('so-' + k).value.trim(); s[k] = v === '' ? null : Number(v); }); return s; }
+  function veKiem(dich) {
+    const s = docSo(), kq = C.kiemBaCon(s); dich.innerHTML = '';
+    const them = (chu, lech) => { const p = document.createElement('p'); p.textContent = (lech ? '⚠ ' : '✓ ') + chu; if (lech) p.className = 'lech'; dich.appendChild(p); };
+    if (!kq.length) { const p = document.createElement('p'); p.textContent = t('kqThieu'); dich.appendChild(p); return kq; }
+    kq.forEach(x => { if (x.ma === 'bep') them(x.tinh === null ? t('kqBepAm')(x, s) : t('kqBep')(x, s), !x.ok); if (x.ma === 'ln') them(t('kqLn')(x, s), !x.ok); if (x.ma === 'von') them(t('kqVon')(x, s), !x.ok); });
+    const g = document.createElement('p'); g.className = 'goi-y'; g.textContent = t('kqGhiChu'); dich.appendChild(g);
+    return kq;
+  }
+  function docLuu() { try { const a = JSON.parse(localStorage.getItem(KHOA) || '[]'); return Array.isArray(a) ? a : []; } catch (e) { return []; } }
+  function ghiLuu(a) { try { localStorage.setItem(KHOA, JSON.stringify(a.slice(-50))); } catch (e) {} }
+  function tongKet() {
+    const diem = C.tinhDiem([0, 1, 2, 3].map(i => $('diem-' + i).value), S.ket.phat, L), so = docSo(), kq = C.kiemBaCon(so);
+    S.luot = { thoiDiem: new Date().toISOString(), doi: S.doi || t('doiMacDinh'), nganh: $('nganh').value, ma: S.ma, giay: S.ket.giay, phat: S.ket.phat, tungDoan: S.ket.tungDoan,
+      cau: S.cau.map(c => c.id), diem: diem.diem, tong100: diem.tong100, tong10: diem.tong10, phat100: diem.phat100, so, soLech: kq.filter(x => !x.ok).length, phienBan: D.PHIEN_BAN };
+    const a = docLuu(); S.luotTruoc = a.filter(l => (l.doi || '').toLowerCase() === S.luot.doi.toLowerCase()).pop() || null;
+    a.push(S.luot); ghiLuu(a);
+    S.phase = 'ket-thuc'; hien('man-ket-thuc'); veKetThuc(); $('nut-lai').focus();
+  }
 
   function veKetThuc() {
     if (!S.ket) return;
@@ -333,10 +445,34 @@ th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--field);verti
       [tenVai(d.vai), d.giay + ' ' + t('giay'), Math.round(dung) + ' ' + t('giay')].forEach(v => { const td = document.createElement('td'); td.textContent = v; tr.appendChild(td); });
       tb.appendChild(tr);
     });
+    if (S.luot) {
+      $('diem-tong').textContent = t('diemTong')(S.luot);
+      const bd = $('bang-diem').querySelector('tbody'); bd.innerHTML = '';
+      D.TIEU_CHI.forEach((tc, i) => { const tr = document.createElement('tr'); [ten(tc), (lang === 'vi' ? String(S.luot.diem[i]).replace('.', ',') : String(S.luot.diem[i])) + ' / 2,5'.replace(',', lang === 'vi' ? ',' : '.')].forEach(v => { const td = document.createElement('td'); td.textContent = v; tr.appendChild(td); }); bd.appendChild(tr); });
+      const a = S.luotTruoc;
+      $('so-sanh').textContent = a ? t('soSanh')({ ...a, mm: C.mmss(a.giay) }, { ...S.luot, mm: C.mmss(S.luot.giay) }) : t('chuaCoLuotTruoc');
+      veKiemTomTat();
+    }
     const ol = $('ds-cau'); ol.innerHTML = '';
     S.cau.forEach(c => { const li = document.createElement('li'); li.textContent = '[' + c.p + ' · ' + D.VAI[c.vai][lang] + '] ' + ten(c); ol.appendChild(li); });
   }
 
+  function veKiemTomTat() {
+    const tk = $('tk-kiem'); tk.innerHTML = '';
+    const goc = document.createElement('div'); const kq = veKiem(goc);
+    if (kq.length) [...goc.querySelectorAll('p:not(.goi-y)')].forEach(p => tk.appendChild(p));
+  }
+  function xuatCsv() {
+    const doi = (S.luot && S.luot.doi || '').toLowerCase(), ds = docLuu().filter(l => (l.doi || '').toLowerCase() === doi);
+    const blob = new Blob([C.taoCsv(ds.length ? ds : [S.luot])], { type: 'text/csv;charset=utf-8' }), a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = 'pitch-' + (doi.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'doi') + '-' + new Date().toISOString().slice(0, 10) + '.csv';
+    document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+  }
+  $('nut-kiem').addEventListener('click', () => { S.daKiem = true; veKiem($('ket-qua-kiem')); });
+  $('nut-tong-ket').addEventListener('click', tongKet);
+  $('nut-in').addEventListener('click', () => window.print());
+  $('nut-csv').addEventListener('click', xuatCsv);
+  $('nut-xoa-luu').addEventListener('click', () => { if (confirm(t('xacNhanXoa'))) { try { localStorage.removeItem(KHOA); } catch (e) {} S.luotTruoc = null; if (S.luot) $('so-sanh').textContent = t('chuaCoLuotTruoc'); } });
   $('nut-bat-dau').addEventListener('click', batDau);
   $('nut-chuyen').addEventListener('click', chuyenVai);
   $('nut-ket-thuc').addEventListener('click', () => ketThucPitch(false));

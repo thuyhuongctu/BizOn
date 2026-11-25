@@ -112,7 +112,59 @@
     return (am ? '+' : '') + Math.floor(g / 60) + ':' + String(g % 60).padStart(2, '0');
   }
 
-  const CORE = { trangThai, thoiGianTungDoan, taoDongHo, bam, mulberry32, rutCauHoi, maNgauNhien, mmss };
+  /** Tự chấm 4 tiêu chí (mỗi tiêu chí 0–2,5, bước 0,5). Phạt 5 điểm thang 100 (0,5 thang 10), không âm. */
+  function tinhDiem(diem, biPhat, luat) {
+    const d = [0, 1, 2, 3].map(i => { const x = Number((diem || [])[i]); return Number.isFinite(x) ? Math.min(2.5, Math.max(0, Math.round(x * 2) / 2)) : 0; });
+    const tuCham = d.reduce((a, b) => a + b, 0);
+    const tong100 = Math.max(0, Math.round(tuCham * 10 - (biPhat ? luat.diemPhat : 0)));
+    return { diem: d, tuCham, phat100: biPhat ? luat.diemPhat : 0, tong100, tong10: tong100 / 10 };
+  }
+
+  /** Kiểm ba con số (vốn xin, BEP/tháng, lợi nhuận mục tiêu/tháng) bằng số phụ đội nhập. Chỉ trả số tính theo công thức
+   *  và số đội khai; KHÔNG đề xuất số thay. Thiếu số phụ thì bỏ qua phép kiểm đó.
+   *  Đơn vị: tiền tổng (vonXin, lnMucTieu, dinhPhi, dauTu) = triệu đồng; giá, biến phí = nghìn đồng/sản phẩm;
+   *  bep, sanLuong = sản phẩm/tháng; thangHoaVon = tháng.
+   *  - bep: F × 1000 ÷ (giá − biến phí); lệch quá 10 % so với số khai thì báo.
+   *  - ln: (sản lượng − BEP tính) × (giá − biến phí) ÷ 1000; mục tiêu lớn hơn thì báo.
+   *  - von: đầu tư ban đầu + M × F ÷ 2 (giả định doanh số tăng đều từ 0 lên điểm hòa vốn trong M tháng); vốn xin nhỏ hơn thì báo. */
+  function kiemBaCon(so) {
+    const n = k => { const x = Number(so && so[k]); return Number.isFinite(x) && so[k] !== '' && so[k] !== null ? x : null; };
+    const ra = [];
+    const gia = n('gia'), bp = n('bienPhi'), F = n('dinhPhi');
+    const bdg = gia !== null && bp !== null ? gia - bp : null;
+    const bepTinh = bdg !== null && bdg > 0 && F !== null ? F * 1000 / bdg : null;
+    if (n('bep') !== null && bdg !== null && F !== null) {
+      if (bepTinh === null) ra.push({ ma: 'bep', ok: false, tinh: null, khai: n('bep'), lech: null });
+      else { const lech = (n('bep') - bepTinh) / bepTinh; ra.push({ ma: 'bep', ok: Math.abs(lech) <= 0.10 + 1e-9, tinh: Math.round(bepTinh), khai: n('bep'), lech }); }
+    }
+    if (n('lnMucTieu') !== null && n('sanLuong') !== null && bepTinh !== null) {
+      const toiDa = Math.round((n('sanLuong') - bepTinh) * bdg / 1000 * 10) / 10;
+      ra.push({ ma: 'ln', ok: n('lnMucTieu') <= toiDa + 1e-9, tinh: toiDa, khai: n('lnMucTieu'), lech: null });
+    }
+    if (n('vonXin') !== null && n('dauTu') !== null && F !== null && n('thangHoaVon') !== null) {
+      const can = Math.round((n('dauTu') + n('thangHoaVon') * F / 2) * 10) / 10;
+      ra.push({ ma: 'von', ok: n('vonXin') >= can - 1e-9, tinh: can, khai: n('vonXin'), lech: null });
+    }
+    return ra;
+  }
+
+  const COT_CSV = ['thoi_diem', 'doi', 'nganh', 'ma_luot', 'tong_giay', 'bi_phat', 'giay_ceo_mo', 'giay_cmo', 'giay_cfo', 'giay_coo', 'giay_sec', 'giay_ceo_chot',
+    'cau_hoi', 'diem_kha_thi', 'diem_doc_dao', 'diem_doi_ngu', 'diem_trinh_bay', 'diem_100', 'diem_10',
+    'von_xin', 'bep_thang', 'ln_muc_tieu', 'gia', 'bien_phi', 'dinh_phi', 'san_luong', 'dau_tu', 'thang_hoa_von', 'so_canh_bao', 'phien_ban_cau_hoi'];
+
+  /** CSV một dòng mỗi lượt; có BOM để Excel đọc đúng tiếng Việt; dòng kết thúc CRLF. */
+  function taoCsv(luot) {
+    const o = v => { const s = v === null || v === undefined ? '' : String(v); return /[",\r\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
+    const dong = luot.map(l => {
+      const s = l.so || {}, td = l.tungDoan || [];
+      return [l.thoiDiem, l.doi, l.nganh, l.ma, Math.round(l.giay), l.phat ? 1 : 0, ...[0, 1, 2, 3, 4, 5].map(i => Math.round(td[i] || 0)),
+        (l.cau || []).join(';'), ...(l.diem || []), l.tong100, l.tong10,
+        s.vonXin, s.bep, s.lnMucTieu, s.gia, s.bienPhi, s.dinhPhi, s.sanLuong, s.dauTu, s.thangHoaVon, l.soLech, l.phienBan].map(o).join(',');
+    });
+    return '\uFEFF' + [COT_CSV.join(',')].concat(dong).join('\r\n') + '\r\n';
+  }
+
+  const CORE = { trangThai, thoiGianTungDoan, taoDongHo, bam, mulberry32, rutCauHoi, maNgauNhien, mmss, tinhDiem, kiemBaCon, COT_CSV, taoCsv };
   if (typeof module === 'object' && module.exports) module.exports = CORE;
   else root.PitchCore = CORE;
 })(typeof self !== 'undefined' ? self : this);

@@ -8,8 +8,8 @@
 - [X] T005 Liên kết từ kịch bản «Đại hội Cổ đông» trong `js/lop-hoc-data.js` và `-en.js`; precache `sw.js`; sitemap và canonical.
 
 ## Câu chuyện 2 (P2, PR 2)
-- [ ] T006 Test: tự chấm 4 × 2,5, trừ phạt; kiểm ba con số báo lệch có công thức; so sánh lượt 1 và lượt 2; xuất CSV.
-- [ ] T007 Màn tự chấm, kiểm ba con số, bảng tổng kết (in được), lưu `localStorage`, xuất CSV.
+- [X] T006 Test: tự chấm 4 × 2,5, trừ phạt; kiểm ba con số báo lệch có công thức; so sánh lượt 1 và lượt 2; xuất CSV.
+- [X] T007 Màn tự chấm, kiểm ba con số, bảng tổng kết (in được), lưu `localStorage`, xuất CSV.
 
 ## Câu chuyện 3 (P3, PR 3)
 - [ ] T008 Test: có WebGL thì có canvas 3D, người hỏi nổi bật; không có WebGL thì về bản phẳng, không lỗi.

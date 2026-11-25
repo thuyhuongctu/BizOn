@@ -131,6 +131,7 @@ assert.ok(v >= 998, 'sw.js phải ≥ bizon-v998, đang ' + v);
     await p.evaluate(() => __pitchTest.tua(61));
     check((await p.textContent('#bao-cau')).length > 0, lang + ': hết 1 phút có báo');
     for (let i = 0; i < 4; i++) await p.click('#nut-cau-tiep');
+    await p.click('#nut-tong-ket'); // PR 2: sau hỏi đáp là màn tự chấm
     check(!(await p.isHidden('#man-ket-thuc')), lang + ': sang màn kết thúc');
     const tom = await p.textContent('#tom-tat');
     check(/Đội Sen/.test(tom) && /LOP7/.test(tom) && /(trừ 5 điểm|minus 5 points)/.test(tom), lang + ': tóm tắt có tên đội, mã, điểm phạt');
