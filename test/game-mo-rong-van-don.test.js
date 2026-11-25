@@ -8,7 +8,7 @@ const BASE = process.env.BIZON_URL || 'http://127.0.0.1:8899';
 let chromium; try { chromium = require('playwright').chromium; } catch (e) { console.error('Cần cài playwright.'); process.exit(2); }
 const ROOT = path.join(__dirname, '..');
 // 13/11/2026: kho game đổi tên từ ThuyHuong_Digital-2026-Games thành Vietnamese-History-Games; địa chỉ GitHub Pages cũ trả 404.
-const URL_VD = 'https://thuyhuongctu.github.io/Vietnamese-History-Games/van-don/';
+const URL_VD = 'https://games.jemappellehuong.com/van-don/';
 assert.ok(+(fs.readFileSync(path.join(ROOT, 'sw.js'), 'utf8').match(/bizon-v(\d+)/) || [])[1] >= 847);
 for (const f of ['js/games-clay.js', 'games.html', 'index.html', 'universe.html']) assert.doesNotMatch(fs.readFileSync(path.join(ROOT, f), 'utf8'), /ThuyHuong_Digital-2026-Games/, f + ' còn địa chỉ cũ của kho game sử Việt');
 
@@ -48,7 +48,7 @@ for (const f of ['js/games-clay.js', 'games.html', 'index.html', 'universe.html'
     // nên không nói ngoại thương «bắt đầu» ở Vân Đồn, và «đầu tiên» phải kèm «thường được coi là».
     assert.doesNotMatch(r.title, /bắt đầu/);
     assert.match(r.text, /thường được coi là thương cảng quốc tế đầu tiên/);
-    assert.match(r.text, /16 tuổi/, 'game không dành cho trẻ em');
+    assert.match(r.text, /18 tuổi/, 'game không dành cho trẻ em: từ 18 tuổi, khớp khai báo trên Google Play (25/11/2026)');
     assert.ok(r.afterMini, 'mục mở rộng nằm sau mục trò chơi nhỏ');
     await pg.close();
     pg = await open('en', 360);
@@ -56,7 +56,9 @@ for (const f of ['js/games-clay.js', 'games.html', 'index.html', 'universe.html'
     assert.equal(r.href, URL_VD);
     assert.match(r.tag, /More to play/);
     assert.match(r.text, /not part of BizOn/);
-    assert.match(r.text, /in Vietnamese/, 'bản EN phải báo game chỉ có tiếng Việt');
+    // Từ 25/11/2026 game có giao diện tiếng Anh và mở bằng tiếng Anh, nên không còn ghi «the game is in Vietnamese».
+    assert.match(r.text, /in English and Vietnamese/, 'bản EN phải báo game có cả tiếng Anh lẫn tiếng Việt');
+    assert.match(r.text, /aged 18/);
     assert.ok(r.h >= 44, 'vùng chạm đủ lớn');
     assert.ok(r.overflow <= 0, 'tràn ngang ' + r.overflow + ' px');
     await pg.close();
