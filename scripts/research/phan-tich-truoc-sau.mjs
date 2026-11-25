@@ -8,7 +8,7 @@
  * Việc làm: với mỗi (lớp, student_code) lấy phiếu pre và post mới nhất (created_at) → ghép cặp; tính cho score_a (0–15),
  * từng b_1…b_8 (tự tin 1–5) và tổng B: n cặp, trung bình trước/sau, chênh lệch, d Cohen theo cặp (d_z = mean(diff)/sd(diff)) và
  * d theo độ lệch chuẩn gộp, t theo cặp với p hai phía (xấp xỉ), Wilcoxon dấu-hạng (xấp xỉ chuẩn, hiệu chỉnh đồng hạng, bỏ chênh 0).
- * Thêm: phiếu sau có nps và c_1…c_5 (trải nghiệm). Không ghép được thì báo số phiếu lẻ. Không suy diễn nhân quả: đây là
+ * Thêm: phiếu sau có nps và c_1…c_7 (trải nghiệm; c_6, c_7 có từ 11/2026). Không ghép được thì báo số phiếu lẻ. Không suy diễn nhân quả: đây là
  * thiết kế một nhóm trước–sau, chỉ nói «đo được», không nói «do BizOn gây ra» (thiet-ke-nghien-cuu.html). */
 import fs from 'node:fs';
 import path from 'node:path';
