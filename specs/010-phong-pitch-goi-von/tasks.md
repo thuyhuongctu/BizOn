@@ -12,8 +12,8 @@
 - [X] T007 Màn tự chấm, kiểm ba con số, bảng tổng kết (in được), lưu `localStorage`, xuất CSV.
 
 ## Câu chuyện 3 (P3, PR 3)
-- [ ] T008 Test: có WebGL thì có canvas 3D, người hỏi nổi bật; không có WebGL thì về bản phẳng, không lỗi.
-- [ ] T009 Phòng Hội đồng 3D, dùng lại sa bàn văn phòng; tải three.js chỉ khi mở chế độ 3D.
+- [X] T008 Test: có WebGL thì có canvas 3D, người hỏi nổi bật; không có WebGL thì về bản phẳng, không lỗi.
+- [X] T009 Phòng Hội đồng 3D, dùng lại sa bàn văn phòng; tải three.js chỉ khi mở chế độ 3D.
 
 ## Kế hoạch PR
 
