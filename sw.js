@@ -57,6 +57,7 @@ const SHELL = [
   './lab/pitch-goi-von.html',
   './lab/pitch-goi-von-data.js',
   './lab/pitch-goi-von-core.js',
+  './lab/pitch-goi-von-3d.js',
   './lab/ie-lab.html',
   './lab/ie-lab.js',
   './assets/fonts/Baloo2-var-vietnamese.woff2',
