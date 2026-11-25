@@ -39,7 +39,7 @@
   - số là của nước trung tâm, Singapore không đại diện cả Đông Nam Á;
   - Oh et al. (2026) và giới hạn suy rộng sang doanh nghiệp nhỏ;
   - trích dẫn APA của ND-GAIN và Oh et al.
-- [ ] T010 [US1] Chạy `html-validate`, `global-tieng-anh`, `ie-lab` (lõi không đổi); kiểm 360 px.
+- [X] T010 [US1] Chạy `html-validate`, `global-tieng-anh`, `ie-lab` (lõi không đổi); kiểm 360 px.
 
 **Điểm dừng:** P1 dùng được độc lập, có thể gộp riêng.
 
@@ -48,16 +48,16 @@
 **Mục tiêu:** rủi ro khí hậu có hậu quả, tăng theo mức dễ tổn thương, theo mức cam kết tài sản; ESG giảm thiệt hại.
 **Cách thử độc lập:** cùng quyết định, bật và tắt.
 
-- [ ] T011 [US2] Thêm vào test:
+- [X] T011 [US2] Thêm vào test:
   - tắt thì trùng khít mốc T007;
   - bật thì thứ tự chi phí khí hậu giữa 7 thị trường trùng thứ tự dễ tổn thương (Spearman = 1);
   - cùng thị trường: FDI > xuất khẩu, ESG thấp > ESG cao;
   - biến cố thiên tai mạnh hơn ở thị trường dễ tổn thương hơn;
   - cân bằng: không phương thức nào thắng ở cả 7 thị trường.
   Chạy thấy hỏng.
-- [ ] T012 [US2] `global.html`: đọc `khihau=1`; trong `gCalc`, khi bật, trừ `chiPhiQuy` vào lợi nhuận và thay tác động biến cố thiên tai bằng `thienTai`. Biến cố nhận ra bằng thuộc tính mới `climate: true` trên đúng biến cố «Thiên tai…»; thêm thuộc tính không đổi kết quả khi tắt.
-- [ ] T013 [US2] `global.html`: khi bật, lời biến cố thiên tai và một dòng dưới «Thị trường phản ứng» nói rõ chi phí khí hậu quý này và vì sao (số ND-GAIN, mức cam kết, ESG), VI/EN. Lumina đặt câu hỏi, không khuyên chọn.
-- [ ] T014 [US2] Dòng nhỏ trên trang khi bật: «Kịch bản khí hậu đang bật · độ lớn là minh họa».
+- [X] T012 [US2] `global.html`: đọc `khihau=1`; trong `gCalc`, khi bật, trừ `chiPhiQuy` vào lợi nhuận và thay tác động biến cố thiên tai bằng `thienTai`. Biến cố nhận ra bằng thuộc tính mới `climate: true` trên đúng biến cố «Thiên tai…»; thêm thuộc tính không đổi kết quả khi tắt.
+- [X] T013 [US2] `global.html`: khi bật, lời biến cố thiên tai và một dòng dưới «Thị trường phản ứng» nói rõ chi phí khí hậu quý này và vì sao (số ND-GAIN, mức cam kết, ESG), VI/EN. Lumina đặt câu hỏi, không khuyên chọn.
+- [X] T014 [US2] Dòng nhỏ trên trang khi bật: «Kịch bản khí hậu đang bật · độ lớn là minh họa».
 
 **Điểm dừng:** P1 + P2 chạy, tắt mặc định.
 

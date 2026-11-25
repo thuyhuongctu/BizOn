@@ -48,7 +48,19 @@
   // Hệ số giảm nhờ ESG: ESG 35 → 1; ESG 100 → 0,6 (trần giảm 40 %).
   const m = esg => 1 - HE_SO.esgTran * Math.min(1, Math.max(0, ((Number(esg) || 0) - HE_SO.esgMin) / HE_SO.esgKhoang));
 
-  const api = { NAM, TONG_SO_NUOC, NGAY_TAI, NUOC, THI_TRUONG, HE_SO, TRICH, hoSo, coSoLieu, s, a, m };
+  // Kịch bản khí hậu (?khihau=1, PR 2). Mọi độ lớn là minh họa; chỉ hướng tác động theo Oh, Rivera & Oetzel (2026).
+  // Chi phí rủi ro khí hậu mỗi quý (nghìn USD): tăng theo mức dễ tổn thương và mức cam kết tài sản, giảm theo ESG.
+  const chiPhiQuy = (id, mode, esg) => HE_SO.chiPhiQuy * s(id) * a(mode) * m(esg);
+  // Biến cố thiên tai khi bật kịch bản: chi phí thêm mỗi sản phẩm (USD) và hệ số cầu.
+  // Không bật thì game giữ nguyên +1,2 USD/sp và cầu × 0,92 như cũ.
+  const thienTai = (id, mode, esg) => ({
+    cogsAdd: HE_SO.thienTaiCogs * (0.5 + s(id)) * (0.5 + 0.5 * a(mode)) * m(esg),
+    demand: 1 - HE_SO.thienTaiCau * (0.5 + s(id)),
+  });
+  // Mức rủi ro khí hậu tương đối (chỉ để hiện chữ): chia ba khoảng đều của s.
+  const mucRuiRo = id => { const v = s(id); return v < 1 / 3 ? 'thap' : v < 2 / 3 ? 'vua' : 'cao'; };
+
+  const api = { NAM, TONG_SO_NUOC, NGAY_TAI, NUOC, THI_TRUONG, HE_SO, TRICH, hoSo, coSoLieu, s, a, m, chiPhiQuy, thienTai, mucRuiRo };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.GoGlobalKhiHau = api;
 })(typeof window !== 'undefined' ? window : globalThis);
