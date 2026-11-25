@@ -3,14 +3,14 @@
 Kịch bản: `docs/phim/tap-01-kich-ban.md`. Bản nháp 23/11/2026.
 
 **Loại cảnh:**
-- **NV** = cảnh nhân vật, chị dựng bằng công cụ video từ ảnh tham chiếu.
+- **NV** = cảnh nhân vật, Hương dựng bằng công cụ video từ ảnh tham chiếu.
 - **SL** = cảnh số liệu, em dựng bằng trang cảnh HTML.
 
-**Cách chị dùng bảng này:**
+**Cách Hương dùng bảng này:**
 1. Với mỗi cảnh NV, đưa ảnh tham chiếu vào công cụ video làm khung đầu hoặc ảnh nhân vật, rồi dán mô tả tiếng Anh.
 2. Mỗi cảnh dựng 4–8 giây, khung 16:9, xuất mp4. Đặt tên theo mã cảnh (`C01.mp4`…), gửi qua Drive.
 3. Dựng dư 1–2 lần cho cảnh quan trọng (C01, C14, C17) để em chọn bản đẹp nhất.
-4. Cảnh nào có khung hình Stitch (bảng cuối trang), chị xem khung ấy để giữ bố cục và bối cảnh, nhưng vẫn đưa ảnh tham chiếu nhân vật vào công cụ, không dùng thẳng khung Stitch (còn chữ «DURIAN EXPRESS»).
+4. Cảnh nào có khung hình Stitch (bảng cuối trang), Hương xem khung ấy để giữ bố cục và bối cảnh, nhưng vẫn đưa ảnh tham chiếu nhân vật vào công cụ, không dùng thẳng khung Stitch (còn chữ «DURIAN EXPRESS»).
 
 **Đuôi chung của mọi mô tả NV** (đã gắn sẵn trong từng dòng):
 `claymation stop-motion style, handmade clay figures, warm cinematic light, 16:9, no text, no signs, no logos, no subtitles`
@@ -39,15 +39,15 @@ Kịch bản: `docs/phim/tap-01-kich-ban.md`. Bản nháp 23/11/2026.
 | C20 | NV | 6 giây | 29 | Tèo Soi ôm một trái sầu riêng phủ sương giá, nghiêng đầu thắc mắc | Tèo Soi | `assets/dragon/teo-soi/inspect.webp` | A small mint-green clay baby dragon hugs a durian covered in white frost, tilts its head curiously, cold mist around, close-up, playful, claymation stop-motion style, handmade clay figures, warm cinematic light, 16:9, no text, no signs, no logos, no subtitles |
 
 **Tổng:**
-- 13 cảnh NV, khoảng 114 giây (chị dựng);
+- 13 cảnh NV, khoảng 114 giây (Hương dựng);
 - 7 cảnh SL, khoảng 115 giây (em dựng);
 - phần còn lại là các cảnh dùng lại và khoảng thở có nhạc.
 
-Thời lượng khớp lại theo giọng thật của chị khi ghép.
+Thời lượng khớp lại theo giọng thật của Hương khi ghép.
 
 ## Khung hình Stitch cho tập 1
 
-Lưu ở Drive `Mua-1/00-chung/khung-hinh-stitch/` (đợt 1), `dot-2-23-11/` (đợt 2) và `dot-3-23-11/` (đợt 3). Danh sách đủ và việc cần sửa: `docs/phim/khung-loat-phim.md`, mục 11–13. Thương hiệu của hợp tác xã trong phim là «Sầu Riêng Phù Sa», em chèn ở hậu kỳ. Khung đợt 3 dùng chung một bến đêm và đúng dáng nhân vật nên được ưu tiên. Chị dùng khung này làm khung đầu khi dựng video cảnh; trước khi có video, bản nháp dùng chính các khung này làm ảnh tĩnh (đặt tên theo mã cảnh, ví dụ «C05.png», «C10-1.png», «C10-2.png»).
+Lưu ở Drive `Mua-1/00-chung/khung-hinh-stitch/` (đợt 1), `dot-2-23-11/` (đợt 2) và `dot-3-23-11/` (đợt 3). Danh sách đủ và việc cần sửa: `docs/phim/khung-loat-phim.md`, mục 11–13. Thương hiệu của hợp tác xã trong phim là «Sầu Riêng Phù Sa», em chèn ở hậu kỳ. Khung đợt 3 dùng chung một bến đêm và đúng dáng nhân vật nên được ưu tiên. Hương dùng khung này làm khung đầu khi dựng video cảnh; trước khi có video, bản nháp dùng chính các khung này làm ảnh tĩnh (đặt tên theo mã cảnh, ví dụ «C05.png», «C10-1.png», «C10-2.png»).
 
 | Cảnh | Khung Stitch | Đợt | Lấy gì từ khung |
 |---|---|---|---|

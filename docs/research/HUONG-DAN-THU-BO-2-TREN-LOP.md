@@ -35,7 +35,7 @@ Tối thiểu 4 vòng, tốt nhất đủ 6 vòng, có phần «Vì sao?» sau m
 ## 5. Buổi cuối: phiếu SAU (12 phút, sau tổng kết)
 
 1. Chỉ gửi link phiếu SAU **sau khi tổng kết xong** và **cách phiếu trước ít nhất 60 phút** (phiếu nộp sớm hơn sẽ bị loại khi phân tích).
-2. Sinh viên gõ đúng mã tự đặt đã dùng, chọn vai trong đội và số vòng đã chơi, rồi làm 15 câu kiến thức, 8 câu tự tin, 5 câu trải nghiệm, điểm giới thiệu và hai câu mở.
+2. Sinh viên gõ đúng mã tự đặt đã dùng, chọn vai trong đội và số vòng đã chơi, rồi làm 15 câu kiến thức, 8 câu tự tin, 7 câu trải nghiệm, điểm giới thiệu và hai câu mở.
 3. Kiểm tra: Tải khảo sát → số «cặp ghép» (có cả phiếu trước và sau cùng mã) nên ≥ 80 % sĩ số. Nếu thấp, hỏi lớp ngay trong buổi xem ai quên mã; sinh viên nộp lại với đúng mã, phân tích sẽ lấy phiếu mới nhất.
 
 ## 6. Xuất dữ liệu và gửi (3 phút)
