@@ -13,7 +13,7 @@
 
 ## Đủ yêu cầu
 
-- [ ] Không còn chỗ cần làm rõ: còn 3 câu hỏi gửi chị (nơi đặt, quy đổi vùng – nước, cách bật)
+- [x] Không còn chỗ cần làm rõ: chị đã trả lời 3 câu ngày 25/11/2026
 - [x] Yêu cầu kiểm được, không mơ hồ
 - [x] Tiêu chí thành công đo được
 - [x] Tiêu chí thành công không phụ thuộc công nghệ
@@ -30,4 +30,4 @@
 
 ## Ghi chú
 
-- Lập kế hoạch (`/speckit-plan`) sau khi chị trả lời 3 câu hỏi.
+- Đã làm rõ; kế hoạch ở `plan.md`.
