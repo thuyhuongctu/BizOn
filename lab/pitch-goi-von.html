@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<link rel="canonical" href="https://bizonland.com/lab/pitch-goi-von.html">
+<link rel="alternate" hreflang="vi" href="https://bizonland.com/lab/pitch-goi-von.html?lang=vi">
+<link rel="alternate" hreflang="en" href="https://bizonland.com/lab/pitch-goi-von.html?lang=en">
+<link rel="alternate" hreflang="x-default" href="https://bizonland.com/lab/pitch-goi-von.html">
+<meta property="og:url" content="https://bizonland.com/lab/pitch-goi-von.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Phòng luyện pitch gọi vốn · BizOn">
+<meta property="og:image" content="https://bizonland.com/assets/og/og-cover.jpg">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:locale" content="vi_VN"><meta property="og:locale:alternate" content="en_US">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#006687">
+<link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+<script src="../js/bizon-lang.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phòng luyện pitch gọi vốn · BizOn</title>
+<link rel="icon" href="../assets/brand/bizon-favicon.svg" type="image/svg+xml">
+<meta name="description" content="Phòng luyện pitch gọi vốn «Hội đồng đầu tư» của BizOn: đồng hồ 7 phút chia theo 5 vai, Hội đồng đặt câu hỏi soạn sẵn theo khung PASTOR. Theo kịch bản «Đại hội Cổ đông & Pitch xin vốn». Không dùng AI, không ghi âm, chạy ngoại tuyến.">
+<!-- Đặc tả: specs/010-phong-pitch-goi-von (PR 1: đồng hồ theo vai và Hội đồng hỏi).
+     Luật và bộ câu hỏi: pitch-goi-von-data.js; tính giờ, rút câu hỏi: pitch-goi-von-core.js (hàm thuần, có test). -->
+<style>
+@font-face{font-family:'Plus Jakarta Sans';font-weight:400 800;font-display:swap;src:url(../assets/fonts/PlusJakartaSans-var-vietnamese.woff2) format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+1EA0-1EF9,U+20AB}
+@font-face{font-family:'Plus Jakarta Sans';font-weight:400 800;font-display:swap;src:url(../assets/fonts/PlusJakartaSans-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+2000-206F,U+20AC,U+2122,U+2212}
+:root{--ink:#1F2A44;--page:#F4F1EA;--card:#FBF9F4;--field:#ECE7DC;--track:#E9E4D8;--muted:#4F5768;--burg:#8C2F39;--gold:#C9A24A;--blue:#3E5C8A;--green:#3F6E52;--warn:#9A5B12;--clay:0 22px 34px -20px rgba(31,42,68,.4),inset 0 -6px 12px rgba(0,0,0,.05),inset 0 6px 12px rgba(255,255,255,.9)}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--page);color:var(--ink);font-family:'Plus Jakarta Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+a{color:var(--burg);font-weight:700}
+[hidden]{display:none!important}
+.num{font-variant-numeric:tabular-nums}
+.wrap{max-width:980px;margin:0 auto;padding:18px 16px 40px}
+header.top{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+header.top h1{font-size:22px;margin:0;line-height:1.2}
+header.top .sub{font-size:13px;color:var(--muted);font-weight:700;margin:2px 0 0}
+.tools{display:flex;gap:8px;align-items:center}
+.btn{min-height:44px;min-width:44px;border:0;border-radius:14px;padding:10px 16px;font-weight:800;background:var(--track);box-shadow:0 6px 12px -8px rgba(31,42,68,.5)}
+.btn.chinh{background:var(--burg);color:#fff}
+.btn.phu{background:var(--blue);color:#fff}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.the{background:var(--card);border-radius:22px;padding:18px;box-shadow:var(--clay);margin-bottom:16px}
+.lumina{display:grid;grid-template-columns:72px 1fr;gap:14px;align-items:start}
+.lumina img{width:72px;height:72px;object-fit:contain}
+.lumina h2{margin:0 0 4px;font-size:17px}
+.lumina .nhan{font-size:12px;color:var(--muted);font-weight:700}
+.lumina ul{margin:8px 0 0;padding-left:20px;line-height:1.55}
+.form{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin:14px 0}
+.form label{display:block;font-weight:800;font-size:14px;margin-bottom:4px}
+.form input,.form select{width:100%;min-height:44px;border:0;border-radius:12px;background:var(--field);padding:8px 12px}
+.goi-y{font-size:12px;color:var(--muted);margin-top:4px}
+.dong-ho{text-align:center}
+.vai-hien{font-size:15px;font-weight:800;color:var(--muted);margin:0}
+.vai-ten{font-size:30px;font-weight:800;margin:4px 0}
+.doan-mo-ta{font-size:15px;margin:0 0 6px}
+.so-lon{font-size:64px;font-weight:800;line-height:1;margin:6px 0}
+.tong{font-size:16px;font-weight:700;color:var(--muted)}
+.dai{display:flex;gap:4px;margin:14px 0 6px}
+.dai .o{flex:var(--g) 1 0;min-width:0;background:var(--track);border-radius:8px;padding:6px 4px;font-size:12px;font-weight:800;text-align:center;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;position:relative}
+.dai .o .day{position:absolute;inset:0 auto 0 0;background:rgba(62,92,138,.25);width:0}
+.dai .o span{position:relative}
+.dai .o i,.dai .o em{font-style:normal}
+.dai .o i{display:none}
+.dai .o.xong{background:#DDE5D8}
+.dai .o.dang{outline:2px solid var(--blue)}
+.bao{min-height:28px;font-weight:800;margin:6px 0}
+.bao.canh{color:var(--warn)}
+.bao.do{color:var(--burg)}
+.the.canh{box-shadow:0 0 0 3px var(--gold),var(--clay)}
+.the.qua{box-shadow:0 0 0 3px var(--burg),var(--clay)}
+.hang-nut{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:10px}
+.hoi-dong{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
+.tv{background:var(--track);border-radius:16px;padding:8px;text-align:center;opacity:.6}
+.tv.hoi{opacity:1;background:#fff;box-shadow:0 0 0 3px var(--gold)}
+.tv img{width:100%;max-width:96px;aspect-ratio:1;object-fit:contain;display:block;margin:0 auto}
+.tv b{display:block;font-size:13px}
+.tv small{display:block;font-size:11px;color:var(--muted)}
+.cau{font-size:20px;line-height:1.45;font-weight:700;margin:8px 0}
+.chip{display:inline-block;background:var(--field);border-radius:999px;padding:3px 10px;font-size:12px;font-weight:800;margin:0 6px 4px 0}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--field);vertical-align:top}
+.chan{font-size:12px;color:var(--muted);line-height:1.5;margin-top:18px}
+@media (max-width:520px){.so-lon{font-size:52px}.vai-ten{font-size:24px}.cau{font-size:18px}.dai .o{font-size:10px}.dai .o.hep i{display:inline}.dai .o.hep em{display:none}.lumina{grid-template-columns:52px 1fr}.lumina img{width:52px;height:52px}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header class="top">
+    <div>
+      <h1 data-k="tieuDe">Phòng luyện pitch gọi vốn</h1>
+      <p class="sub" data-k="phuDe">Hội đồng đầu tư · theo kịch bản «Đại hội Cổ đông & Pitch xin vốn»</p>
+    </div>
+    <div class="tools">
+      <button type="button" class="btn" id="nut-am" aria-pressed="true" data-k="amBat">🔔 Âm thanh</button>
+      <button type="button" class="btn" id="nut-lang" aria-label="Đổi ngôn ngữ / Switch language">EN</button>
+    </div>
+  </header>
+
+  <!-- Màn 1: chuẩn bị -->
+  <section id="man-chuan-bi" aria-labelledby="h-chuan-bi">
+    <div class="the lumina">
+      <img src="../assets/character/advisors/lumina-vest-cut.webp" alt="" width="72" height="72">
+      <div>
+        <h2 id="h-chuan-bi" data-k="luatTieuDe">Luật của phòng pitch</h2>
+        <div class="nhan" data-k="luminaNhan">Lumina dẫn chương trình và giữ giờ · cố vấn chạy theo luật</div>
+        <ul id="luat"></ul>
+      </div>
+    </div>
+    <div class="the">
+      <div class="form">
+        <div><label for="ten-doi" data-k="tenDoi">Tên đội</label><input type="text" id="ten-doi" maxlength="40" autocomplete="off"></div>
+        <div><label for="nganh" data-k="nganh">Ngành hàng</label><select id="nganh"></select></div>
+        <div><label for="ma-luot" data-k="maLuot">Mã lượt</label><input type="text" id="ma-luot" maxlength="12" autocomplete="off" spellcheck="false"><div class="goi-y" data-k="maGoiY">Cùng mã thì cùng bộ câu hỏi. Giảng viên đặt chung một mã để các đội gặp câu hỏi công bằng.</div></div>
+        <div><label for="so-cau" data-k="soCau">Số câu Hội đồng hỏi</label><select id="so-cau"><option>3</option><option>4</option><option>5</option></select></div>
+      </div>
+      <div class="hang-nut"><button type="button" class="btn chinh" id="nut-bat-dau" data-k="batDau">Bắt đầu pitch 7 phút</button></div>
+    </div>
+  </section>
+
+  <!-- Màn 2: pitch -->
+  <section id="man-pitch" hidden aria-labelledby="vai-ten">
+    <div class="the dong-ho" id="the-dong-ho">
+      <p class="vai-hien" data-k="dangNoi">Đang trình bày</p>
+      <p class="vai-ten" id="vai-ten">CEO</p>
+      <p class="doan-mo-ta" id="doan-mo-ta"></p>
+      <div class="so-lon num" id="so-doan" aria-hidden="true">0:30</div>
+      <div class="tong"><span data-k="conLaiTong">Còn lại của 7 phút:</span> <span class="num" id="so-tong">7:00</span></div>
+      <div class="dai" id="dai"></div>
+      <div class="bao" id="bao" role="status" aria-live="assertive"></div>
+      <div class="hang-nut">
+        <button type="button" class="btn phu" id="nut-chuyen" data-k="chuyenVai">Xong, chuyển vai</button>
+        <button type="button" class="btn" id="nut-dung" data-k="tamDung">Tạm dừng (tập)</button>
+        <button type="button" class="btn chinh" id="nut-ket-thuc" data-k="ketThucPitch">Kết thúc pitch</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Màn 3: Hội đồng hỏi -->
+  <section id="man-hoi-dap" hidden aria-labelledby="h-hoi-dap">
+    <div class="the">
+      <h2 id="h-hoi-dap" style="margin:0 0 10px;font-size:18px"><span data-k="hoiDapTieuDe">Hội đồng đặt câu hỏi</span> <span class="num" id="thu-tu-cau"></span></h2>
+      <div class="hoi-dong" id="hoi-dong"></div>
+      <div id="the-cau">
+        <div id="chip-cau"></div>
+        <p class="cau" id="cau" aria-live="polite"></p>
+        <div class="tong"><span data-k="gioTraLoi">Giờ trả lời:</span> <span class="num" id="so-cau-gio">1:00</span></div>
+        <div class="bao" id="bao-cau" role="status" aria-live="polite"></div>
+      </div>
+      <div class="hang-nut"><button type="button" class="btn phu" id="nut-cau-tiep" data-k="cauTiep">Câu tiếp theo</button></div>
+    </div>
+  </section>
+
+  <!-- Màn 4: kết thúc lượt -->
+  <section id="man-ket-thuc" hidden aria-labelledby="h-ket-thuc">
+    <div class="the">
+      <h2 id="h-ket-thuc" style="margin:0 0 8px;font-size:18px" data-k="ketThucTieuDe">Kết thúc lượt</h2>
+      <p id="tom-tat"></p>
+      <table id="bang-thoi-gian"><caption class="goi-y" style="text-align:left" data-k="bangVaiCap">Thời gian từng đoạn</caption><thead><tr><th scope="col" data-k="cotVai">Vai</th><th scope="col" data-k="cotDinhMuc">Định mức</th><th scope="col" data-k="cotThucTe">Thực tế</th></tr></thead><tbody></tbody></table>
+      <h3 style="font-size:15px;margin:16px 0 6px" data-k="cauDaGap">Câu hỏi đội đã gặp</h3>
+      <ol id="ds-cau"></ol>
+      <div class="hang-nut"><button type="button" class="btn chinh" id="nut-lai" data-k="tapLai">Tập lại</button></div>
+    </div>
+  </section>
+
+  <p class="chan" data-k="chan">Câu hỏi của Hội đồng soạn sẵn theo khung PASTOR, rút theo mã lượt. Trang không dùng AI, không ghi âm, không ghi hình và không gửi dữ liệu đi đâu. Lumina và Hội đồng là cố vấn chạy theo luật: chỉ giữ giờ và đặt câu hỏi, không chấm nội dung câu trả lời.</p>
+  <p class="chan"><a href="../lop-hoc.html" data-k="veLopHoc">← Về trang Lớp học</a></p>
+</main>
+
+<script src="pitch-goi-von-data.js"></script>
+<script src="pitch-goi-von-core.js"></script>
+<script>
+(function () {
+  'use strict';
+  const D = window.PitchData, C = window.PitchCore, L = D.LUAT;
+  const $ = id => document.getElementById(id);
+  const T = {
+    vi: {
+      tieuDe: 'Phòng luyện pitch gọi vốn', phuDe: 'Hội đồng đầu tư · theo kịch bản «Đại hội Cổ đông & Pitch xin vốn»', amBat: '🔔 Âm thanh', amTat: '🔕 Tắt tiếng',
+      luatTieuDe: 'Luật của phòng pitch', luminaNhan: 'Lumina dẫn chương trình và giữ giờ · cố vấn chạy theo luật',
+      luat: ['Pitch 7 phút, chia cho 5 vai theo thứ tự: CEO 30 giây, CMO 90, CFO 90, COO 60, Thư ký 60, CEO chốt 90.', 'Nội dung theo khung PASTOR: Problem, Answer, Story, Traction, Offer, Response.', 'Mỗi đoạn tự chuyển khi hết giờ. Vai nói xong sớm thì bấm «Xong, chuyển vai»; phần dư dồn cho lời chốt của CEO.', 'Còn 10 giây có tiếng báo. Quá 7 phút là quá giờ. Quá 30 giây so với 7 phút: trừ 5 điểm, chuông reo và phần trình bày dừng.', 'Sau pitch, Hội đồng hỏi 3–5 câu. Mỗi câu có 1 phút để trả lời.'],
+      tenDoi: 'Tên đội', nganh: 'Ngành hàng', maLuot: 'Mã lượt', maGoiY: 'Cùng mã thì cùng bộ câu hỏi. Giảng viên đặt chung một mã để các đội gặp câu hỏi công bằng.', soCau: 'Số câu Hội đồng hỏi', batDau: 'Bắt đầu pitch 7 phút',
+      dangNoi: 'Đang trình bày', conLaiTong: 'Còn lại của 7 phút:', chuyenVai: 'Xong, chuyển vai', tamDung: 'Tạm dừng (tập)', tiepTuc: 'Tiếp tục', ketThucPitch: 'Kết thúc pitch',
+      denLuot: v => 'Đến lượt ' + v + '.', con10: 'Còn 10 giây.', quaGio: 'Quá 7 phút: đang quá giờ.', phat: 'Quá 30 giây: trừ 5 điểm. Phần trình bày dừng.', daTamDung: 'Đang tạm dừng.',
+      hoiDapTieuDe: 'Hội đồng đặt câu hỏi', gioTraLoi: 'Giờ trả lời:', cauTiep: 'Câu tiếp theo', cauCuoi: 'Xong phần hỏi đáp', hetGioCau: 'Hết 1 phút cho câu này.', cauSo: (i, n) => '(câu ' + i + '/' + n + ')', hoi: 'hỏi',
+      ketThucTieuDe: 'Kết thúc lượt', bangVaiCap: 'Thời gian từng đoạn', cotVai: 'Vai', cotDinhMuc: 'Định mức', cotThucTe: 'Thực tế', cauDaGap: 'Câu hỏi đội đã gặp', tapLai: 'Tập lại',
+      tomTat: (doi, tong, phat, ma) => doi + ': pitch ' + tong + (phat ? ', quá 30 giây nên bị trừ 5 điểm' : ', không bị trừ điểm') + '. Mã lượt ' + ma + '.', doiMacDinh: 'Đội chưa đặt tên', giay: 'giây',
+      chan: 'Câu hỏi của Hội đồng soạn sẵn theo khung PASTOR, rút theo mã lượt. Trang không dùng AI, không ghi âm, không ghi hình và không gửi dữ liệu đi đâu. Lumina và Hội đồng là cố vấn chạy theo luật: chỉ giữ giờ và đặt câu hỏi, không chấm nội dung câu trả lời.', veLopHoc: '← Về trang Lớp học',
+    },
+    en: {
+      tieuDe: 'Funding pitch practice room', phuDe: 'Investment board · based on the «Shareholders\' Congress & Funding Pitch» playbook', amBat: '🔔 Sound on', amTat: '🔕 Muted',
+      luatTieuDe: 'Rules of the pitch room', luminaNhan: 'Lumina hosts and keeps time · a rule-based advisor',
+      luat: ['A 7-minute pitch shared by 5 roles in this order: CEO 30 s, CMO 90, CFO 90, COO 60, Secretary 60, CEO close 90.', 'Content follows PASTOR: Problem, Answer, Story, Traction, Offer, Response.', 'Each segment moves on when its time runs out. If a role finishes early, press «Done, next role»; the time left goes to the CEO\'s close.', 'A sound plays at 10 seconds left. Past 7 minutes you are over time. 30 seconds over 7 minutes: minus 5 points, the bell rings and the pitch stops.', 'After the pitch, the board asks 3–5 questions. Each answer gets 1 minute.'],
+      tenDoi: 'Team name', nganh: 'Product sector', maLuot: 'Round code', maGoiY: 'Same code, same questions. The instructor sets one code so every team gets a fair set.', soCau: 'Questions from the board', batDau: 'Start the 7-minute pitch',
+      dangNoi: 'Now presenting', conLaiTong: 'Left of the 7 minutes:', chuyenVai: 'Done, next role', tamDung: 'Pause (practice)', tiepTuc: 'Resume', ketThucPitch: 'End pitch',
+      denLuot: v => v + ', your turn.', con10: '10 seconds left.', quaGio: 'Past 7 minutes: over time.', phat: '30 seconds over: minus 5 points. The pitch stops.', daTamDung: 'Paused.',
+      hoiDapTieuDe: 'The board asks', gioTraLoi: 'Answer time:', cauTiep: 'Next question', cauCuoi: 'Finish Q&A', hetGioCau: 'One minute is up for this question.', cauSo: (i, n) => '(question ' + i + '/' + n + ')', hoi: 'asks',
+      ketThucTieuDe: 'Round finished', bangVaiCap: 'Time per segment', cotVai: 'Role', cotDinhMuc: 'Allowed', cotThucTe: 'Used', cauDaGap: 'Questions the team faced', tapLai: 'Practise again',
+      tomTat: (doi, tong, phat, ma) => doi + ': pitch took ' + tong + (phat ? ', more than 30 seconds over, so minus 5 points' : ', no penalty') + '. Round code ' + ma + '.', doiMacDinh: 'Unnamed team', giay: 's',
+      chan: 'Board questions are pre-written on the PASTOR frame and drawn by round code. This page uses no AI, records no audio or video, and sends no data anywhere. Lumina and the board are rule-based advisors: they keep time and ask questions; they do not grade the answers.', veLopHoc: '← Back to Classroom',
+    },
+  };
+  let lang = 'vi';
+  try { lang = localStorage.getItem('bizon-lang') === 'en' ? 'en' : 'vi'; } catch (e) {}
+  const t = k => T[lang][k];
+  const ten = o => o[lang];
+
+  // Âm báo bằng WebAudio, không cần tệp âm thanh.
+  let amBat = true, ac = null;
+  function bip(tanSo, dai, lan) {
+    if (!amBat) return;
+    try {
+      ac = ac || new (window.AudioContext || window.webkitAudioContext)();
+      for (let i = 0; i < (lan || 1); i++) {
+        const o = ac.createOscillator(), g = ac.createGain(), bd = ac.currentTime + i * (dai + 0.12);
+        o.frequency.value = tanSo; o.connect(g); g.connect(ac.destination);
+        g.gain.setValueAtTime(0.0001, bd); g.gain.exponentialRampToValueAtTime(0.25, bd + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, bd + dai);
+        o.start(bd); o.stop(bd + dai + 0.02);
+      }
+    } catch (e) {}
+  }
+
+  // Đồng hồ: giờ thật + phần tua (chỉ test dùng __pitchTest.tua).
+  let tua = 0;
+  const dh = C.taoDongHo(() => performance.now() + tua);
+  const S = { phase: 'chuan-bi', som: [], doanTruoc: -1, daBao10: {}, daBaoQua: false, ket: null, cau: [], iCau: 0, dhCau: null, daBaoCau: false, ma: '', doi: '' };
+
+  function hien(id) { ['man-chuan-bi', 'man-pitch', 'man-hoi-dap', 'man-ket-thuc'].forEach(m => { $(m).hidden = m !== id; }); }
+  function tenVai(v) { const x = D.VAI[v]; return x.icon + ' ' + x[lang]; }
+
+  function apNgonNgu() {
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-k]').forEach(el => { const v = T[lang][el.dataset.k]; if (typeof v === 'string') el.textContent = v; });
+    $('nut-lang').textContent = lang === 'vi' ? 'EN' : 'VI';
+    $('nut-am').textContent = amBat ? t('amBat') : t('amTat');
+    $('luat').innerHTML = ''; t('luat').forEach(s => { const li = document.createElement('li'); li.textContent = s; $('luat').appendChild(li); });
+    const chon = $('nganh').value; $('nganh').innerHTML = '';
+    D.NGANH.forEach(n => { const o = document.createElement('option'); o.value = n.id; o.textContent = ten(n); $('nganh').appendChild(o); });
+    if (chon) $('nganh').value = chon;
+    veDai(); if (S.phase === 'pitch') veDongHo(); if (S.phase === 'hoi-dap') veCau(); if (S.phase === 'ket-thuc') veKetThuc();
+    $('nut-dung').textContent = dh.dangChay() || S.phase !== 'pitch' ? t('tamDung') : t('tiepTuc');
+  }
+
+  function veDai() {
+    const dai = $('dai'); dai.innerHTML = '';
+    D.DOAN.forEach((d, i) => {
+      const o = document.createElement('div'); o.className = 'o' + (d.giay <= 30 ? ' hep' : ''); o.style.setProperty('--g', d.giay); o.id = 'o-' + i;
+      o.innerHTML = '<div class="day"></div><span><i></i><em></em></span>'; o.querySelector('i').textContent = D.VAI[d.vai].icon + ' '; o.querySelector('em').textContent = D.VAI[d.vai][lang].replace(/ \(SEC\)$/, '');
+      o.title = D.VAI[d.vai][lang] + ' · ' + d.giay + ' ' + t('giay'); dai.appendChild(o);
+    });
+  }
+
+  function batDau() {
+    S.doi = $('ten-doi').value.trim(); S.ma = ($('ma-luot').value.trim() || C.maNgauNhien()).toUpperCase(); $('ma-luot').value = S.ma;
+    S.cau = C.rutCauHoi(D.CAU_HOI, D.HOI_DONG, S.ma, $('so-cau').value, L);
+    S.som = []; S.doanTruoc = -1; S.daBao10 = {}; S.daBaoQua = false; S.ket = null; S.phase = 'pitch';
+    dh.datLai(); dh.batDau(); hien('man-pitch'); bip(660, 0.15); veDongHo(); $('nut-chuyen').focus();
+  }
+
+  function veDongHo() {
+    if (S.phase !== 'pitch') return;
+    const g = dh.giay(), s = C.trangThai(g, S.som, D.DOAN, L), d = D.DOAN[s.doan];
+    $('vai-ten').textContent = tenVai(s.vai); $('doan-mo-ta').textContent = ten(d);
+    $('so-doan').textContent = C.mmss(s.conLaiDoan); $('so-tong').textContent = C.mmss(s.conLaiTong);
+    D.DOAN.forEach((x, i) => {
+      const o = $('o-' + i); if (!o) return;
+      o.classList.toggle('xong', i < s.doan); o.classList.toggle('dang', i === s.doan);
+      o.querySelector('.day').style.width = i < s.doan ? '100%' : i === s.doan ? Math.min(100, 100 * s.trongDoan / Math.max(1, s.trongDoan + Math.max(0, s.conLaiDoan))) + '%' : '0';
+    });
+    const the = $('the-dong-ho'); the.classList.toggle('canh', s.baoTruoc); the.classList.toggle('qua', s.quaGio);
+    if (s.doan !== S.doanTruoc) {
+      if (S.doanTruoc >= 0) { baoBang(t('denLuot')(D.VAI[s.vai][lang]), ''); bip(520, 0.18, 2); }
+      S.doanTruoc = s.doan; $('nut-chuyen').disabled = s.doan === D.DOAN.length - 1;
+    }
+    if (s.baoTruoc && !S.daBao10[s.doan]) { S.daBao10[s.doan] = true; baoBang(t('con10'), 'canh'); bip(880, 0.1); }
+    if (s.quaGio && !S.daBaoQua) { S.daBaoQua = true; baoBang(t('quaGio'), 'do'); bip(440, 0.3); }
+    if (s.phat) ketThucPitch(true);
+  }
+
+  function baoBang(chu, kieu) { const b = $('bao'); b.textContent = chu; b.className = 'bao' + (kieu ? ' ' + kieu : ''); }
+
+  function chuyenVai() { const g = dh.giay(); if (C.trangThai(g, S.som, D.DOAN, L).doan < D.DOAN.length - 1) { S.som.push(g); veDongHo(); } }
+
+  function ketThucPitch(biPhat) {
+    if (S.phase !== 'pitch') return;
+    const g = biPhat ? L.hanPhatGiay : dh.giay();
+    dh.tamDung();
+    S.ket = { giay: g, phat: g >= L.hanPhatGiay, tungDoan: C.thoiGianTungDoan(g, S.som, D.DOAN, L) };
+    if (S.ket.phat) { baoBang(t('phat'), 'do'); bip(330, 0.9, 3); }
+    S.phase = 'hoi-dap'; S.iCau = 0;
+    setTimeout(() => { hien('man-hoi-dap'); batDauCau(); }, S.ket.phat ? 1800 : 0);
+  }
+
+  function batDauCau() { S.dhCau = C.taoDongHo(() => performance.now() + tua); S.dhCau.batDau(); S.daBaoCau = false; veCau(); $('nut-cau-tiep').focus(); }
+
+  function veCau() {
+    const c = S.cau[S.iCau]; if (!c) return;
+    const hd = $('hoi-dong'); hd.innerHTML = '';
+    D.HOI_DONG.forEach(h => {
+      const d = document.createElement('div'); d.className = 'tv' + (h.id === c.hoi ? ' hoi' : '');
+      d.innerHTML = '<img alt="" width="96" height="96" loading="lazy"><b></b><small></small>';
+      d.querySelector('img').src = h.anh; d.querySelector('b').textContent = ten(h); d.querySelector('small').textContent = ten(h.vaiTro); hd.appendChild(d);
+    });
+    const ng = D.HOI_DONG.find(h => h.id === c.hoi);
+    $('chip-cau').innerHTML = '';
+    [ten(ng) + ' ' + t('hoi'), c.p + ' · ' + ten(D.PASTOR[c.p]), tenVai(c.vai)].forEach(s => { const sp = document.createElement('span'); sp.className = 'chip'; sp.textContent = s; $('chip-cau').appendChild(sp); });
+    $('cau').textContent = ten(c);
+    $('thu-tu-cau').textContent = t('cauSo')(S.iCau + 1, S.cau.length);
+    $('nut-cau-tiep').textContent = S.iCau === S.cau.length - 1 ? t('cauCuoi') : t('cauTiep');
+    veGioCau();
+  }
+
+  function veGioCau() {
+    if (S.phase !== 'hoi-dap' || !S.dhCau) return;
+    const con = L.giayMoiCau - S.dhCau.giay();
+    $('so-cau-gio').textContent = C.mmss(con);
+    if (con <= 0 && !S.daBaoCau) { S.daBaoCau = true; $('bao-cau').textContent = t('hetGioCau'); bip(440, 0.25); }
+    if (con > 0) $('bao-cau').textContent = '';
+  }
+
+  function cauTiep() { S.iCau++; if (S.iCau >= S.cau.length) { S.phase = 'ket-thuc'; hien('man-ket-thuc'); veKetThuc(); $('nut-lai').focus(); } else batDauCau(); }
+
+  function veKetThuc() {
+    if (!S.ket) return;
+    $('tom-tat').textContent = t('tomTat')(S.doi || t('doiMacDinh'), C.mmss(S.ket.giay), S.ket.phat, S.ma);
+    const tb = $('bang-thoi-gian').querySelector('tbody'); tb.innerHTML = '';
+    D.DOAN.forEach((d, i) => {
+      const tr = document.createElement('tr'); const dung = S.ket.tungDoan[i];
+      [tenVai(d.vai), d.giay + ' ' + t('giay'), Math.round(dung) + ' ' + t('giay')].forEach(v => { const td = document.createElement('td'); td.textContent = v; tr.appendChild(td); });
+      tb.appendChild(tr);
+    });
+    const ol = $('ds-cau'); ol.innerHTML = '';
+    S.cau.forEach(c => { const li = document.createElement('li'); li.textContent = '[' + c.p + ' · ' + D.VAI[c.vai][lang] + '] ' + ten(c); ol.appendChild(li); });
+  }
+
+  $('nut-bat-dau').addEventListener('click', batDau);
+  $('nut-chuyen').addEventListener('click', chuyenVai);
+  $('nut-ket-thuc').addEventListener('click', () => ketThucPitch(false));
+  $('nut-dung').addEventListener('click', () => {
+    if (S.phase !== 'pitch') return;
+    if (dh.dangChay()) { dh.tamDung(); baoBang(t('daTamDung'), ''); $('nut-dung').textContent = t('tiepTuc'); }
+    else { dh.batDau(); baoBang('', ''); $('nut-dung').textContent = t('tamDung'); }
+  });
+  $('nut-cau-tiep').addEventListener('click', cauTiep);
+  $('nut-lai').addEventListener('click', () => { S.phase = 'chuan-bi'; hien('man-chuan-bi'); $('nut-bat-dau').focus(); });
+  $('nut-lang').addEventListener('click', () => { lang = lang === 'vi' ? 'en' : 'vi'; try { localStorage.setItem('bizon-lang', lang); } catch (e) {} apNgonNgu(); });
+  $('nut-am').addEventListener('click', () => { amBat = !amBat; $('nut-am').setAttribute('aria-pressed', String(amBat)); $('nut-am').textContent = amBat ? t('amBat') : t('amTat'); });
+
+  const maUrl = (location.search.match(/[?&]ma=([A-Za-z0-9-]{1,12})/) || [])[1];
+  if (maUrl) $('ma-luot').value = maUrl.toUpperCase();
+  apNgonNgu();
+  setInterval(() => { veDongHo(); veGioCau(); }, 200);
+  document.addEventListener('visibilitychange', () => { veDongHo(); veGioCau(); });
+
+  // Móc cho test: tua đồng hồ (giây) và đọc trạng thái. Không ảnh hưởng người dùng.
+  window.__pitchTest = { tua(g) { tua += g * 1000; veDongHo(); veGioCau(); }, trangThai: () => ({ phase: S.phase, giay: dh.giay(), som: S.som.slice(), ket: S.ket, cau: S.cau.map(c => c.id), iCau: S.iCau, ma: S.ma }) };
+})();
+</script>
+<script src="../js/thong-ke.js" defer></script>
+</body>
+</html>
