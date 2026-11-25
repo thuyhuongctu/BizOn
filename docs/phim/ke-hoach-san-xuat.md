@@ -18,13 +18,13 @@ Tệp này là **bảng điều hành sản xuất**: ai làm gì, khi nào, lư
 | Thời lượng | Tập dài 4–6 phút (khoảng 4:45); teaser 15 giây; 3 đoạn dọc 30–45 giây mỗi tập |
 | Ngôn ngữ | Tiếng Việt và tiếng Anh, mỗi tập hai video riêng, phụ đề `.vtt` hai thứ tiếng |
 | Phong cách | Đất nặn 3D, ánh sáng ấm, khung 16:9 (đoạn dọc 9:16) |
-| Người kể | Lumina, giọng chị Hương tự thu. Nhân vật khác nói bằng bong bóng chữ |
+| Người kể | Lumina, giọng Hương tự thu. Nhân vật khác nói bằng bong bóng chữ |
 | Phát hành | Kênh YouTube @jemappellehuong (playlist «Đưa trái ra biển»), Facebook, TikTok, LinkedIn, trang loạt phim trên bizonland.com |
 | Nhịp | Hai tuần một tập, Chủ nhật 20:00, nghỉ quanh Tết Đinh Mùi (6/2/2027) |
 
 ## 2. Đội ngũ và phân vai
 
-| Việc | Chị Hương | Em (Claude) | Thầy Tú |
+| Việc | Hương | Em (Claude) | Thầy Tú |
 |---|---|---|---|
 | Ý tưởng mùa, chọn quyết định từng tập | **Quyết** | Đề xuất | Góp ý |
 | Tra số liệu, ghi nguồn | Duyệt | **Làm** | Góp ý học thuật |
@@ -34,12 +34,12 @@ Tệp này là **bảng điều hành sản xuất**: ai làm gì, khi nào, lư
 | Dựng cảnh nhân vật (công cụ video) | **Làm** | Chọn bản, báo cảnh lỗi | – |
 | Dựng cảnh số liệu, bản đồ, chữ, bong bóng thoại | Xem | **Làm** | – |
 | Ghép, nhạc, phụ đề, chuẩn độ to | Duyệt (cổng 2, 3) | **Làm** | – |
-| Chiếu thử cho sinh viên | Làm (lớp của chị) | Tổng hợp phiếu | **Làm** (lớp của thầy) |
+| Chiếu thử cho sinh viên | Làm (lớp của Hương) | Tổng hợp phiếu | **Làm** (lớp của thầy) |
 | Teaser, đoạn dọc, ảnh bìa, mô tả video | Duyệt | **Làm** | – |
 | Đăng tải, hẹn giờ, thăm dò, trả lời bình luận | **Làm** | Soạn sẵn mẫu | – |
 | Trang loạt phim, màn chơi trên bizonland.com | Xem | **Làm** (PR) | – |
 | Số liệu người xem 7 và 30 ngày | Xuất số từ YouTube Studio và Meta | Ghi, phân tích | – |
-| Tài trợ, pháp nhân, bảng giá | **Quyết** | Soạn nháp | **Quyết** cùng chị |
+| Tài trợ, pháp nhân, bảng giá | **Quyết** | Soạn nháp | **Quyết** cùng Hương |
 
 ## 3. Dây chuyền một tập (mẫu 21 ngày, R là ngày phát hành)
 
@@ -48,23 +48,23 @@ Từ tập 2, mỗi tập chạy theo mẫu dưới đây. Hai tập liền nhau
 | Mốc | Bước | Ai | Đầu ra |
 |---|---|---|---|
 | R−21 → R−18 | Tra số liệu, viết kịch bản VI/EN, **viết sẵn hai nhánh mở đầu** theo hai lựa chọn của tập trước | Em | `docs/phim/tap-NN-kich-ban.md`, cập nhật `nguon-so-lieu.md` |
-| R−17 | **Cổng 1: duyệt kịch bản** | Chị | Góp ý hoặc «Duyệt» |
+| R−17 | **Cổng 1: duyệt kịch bản** | Hương | Góp ý hoặc «Duyệt» |
 | R−16 → R−15 | Bảng phân cảnh, mô tả cảnh, lời thu giọng | Em | `tap-NN-phan-canh.md`, `tap-NN-loi-thu-giong.md` |
-| R−14 → R−10 | Thu giọng (khoảng 1 giờ); dựng cảnh nhân vật, kể cả cảnh của hai nhánh (khoảng 3–5 giờ) | Chị | Thư mục Drive `02-giong/`, `03-canh-nv/` |
+| R−14 → R−10 | Thu giọng (khoảng 1 giờ); dựng cảnh nhân vật, kể cả cảnh của hai nhánh (khoảng 3–5 giờ) | Hương | Thư mục Drive `02-giong/`, `03-canh-nv/` |
 | R−14 → R−9 | Dựng cảnh số liệu, tệp ghép, bản nháp (thẻ chữ thay cảnh còn thiếu) | Em | `scripts/video/dua-trai-ra-bien/tap-NN.ghep.json` |
 | R−8 | Cắt giọng theo câu, soát Whisper, ghép bản nháp có giọng và cảnh thật | Em | `04-ban-nhap/` |
 | R−7 | **Bình chọn tập trước đóng**; ghép nhánh mở đầu đúng lựa chọn số đông, chèn tỷ lệ phiếu thật | Em | Bản nháp hoàn chỉnh |
-| R−6 | **Cổng 2: duyệt nhịp**; chiếu thử nếu có lớp | Chị, thầy Tú | Góp ý |
-| R−5 → R−4 | Chỉnh; chị dựng lại cảnh lỗi nếu có; bản cuối VI/EN, kiểm chất lượng (mục 7) | Em, chị | `05-ban-cuoi/` |
-| R−4 | **Cổng 3: duyệt bản cuối** | Chị | «Duyệt» |
+| R−6 | **Cổng 2: duyệt nhịp**; chiếu thử nếu có lớp | Hương, thầy Tú | Góp ý |
+| R−5 → R−4 | Chỉnh; Hương dựng lại cảnh lỗi nếu có; bản cuối VI/EN, kiểm chất lượng (mục 7) | Em, Hương | `05-ban-cuoi/` |
+| R−4 | **Cổng 3: duyệt bản cuối** | Hương | «Duyệt» |
 | R−4 → R−3 | Teaser 15 giây, 3 đoạn dọc, ảnh bìa, mô tả video, mẫu thăm dò | Em | `06-doc-teaser/`, `07-anh-bia/` |
-| R−3 (Thứ 5) | Đăng teaser (Shorts, Reels, TikTok) | Chị | – |
-| R−2 → R−1 | **Cổng 4: kiểm trước khi đăng**; tải lên YouTube ở chế độ hẹn giờ, phụ đề, màn hình kết thúc, playlist, «không dành cho trẻ em»; cập nhật trang loạt phim | Chị, em | Mã YouTube trong `js/phim-data.js` |
-| R (CN 20:00) | Phát hành; mở thăm dò 7 ngày; đăng Facebook | Chị | – |
-| R+1, R+3, R+5 | Đăng 3 đoạn dọc | Chị | – |
-| R+2 | Bài LinkedIn «số liệu thật đằng sau tập phim» | Chị (em soạn) | – |
-| R+7 | Đóng thăm dò, ghi kết quả; lấy số liệu 7 ngày | Chị, em | `docs/phim/so-lieu-phat-hanh.md` |
-| R+30 | Lấy số liệu 30 ngày | Chị, em | Như trên |
+| R−3 (Thứ 5) | Đăng teaser (Shorts, Reels, TikTok) | Hương | – |
+| R−2 → R−1 | **Cổng 4: kiểm trước khi đăng**; tải lên YouTube ở chế độ hẹn giờ, phụ đề, màn hình kết thúc, playlist, «không dành cho trẻ em»; cập nhật trang loạt phim | Hương, em | Mã YouTube trong `js/phim-data.js` |
+| R (CN 20:00) | Phát hành; mở thăm dò 7 ngày; đăng Facebook | Hương | – |
+| R+1, R+3, R+5 | Đăng 3 đoạn dọc | Hương | – |
+| R+2 | Bài LinkedIn «số liệu thật đằng sau tập phim» | Hương (em soạn) | – |
+| R+7 | Đóng thăm dò, ghi kết quả; lấy số liệu 7 ngày | Hương, em | `docs/phim/so-lieu-phat-hanh.md` |
+| R+30 | Lấy số liệu 30 ngày | Hương, em | Như trên |
 
 ## 4. Lịch mùa 1
 
@@ -75,18 +75,18 @@ Tập 1 làm theo lịch rút gọn vì bắt đầu ngày 23/11/2026. Từ tậ
 | Ngày | Việc | Ai |
 |---|---|---|
 | 23/11 | Khung loạt phim, nguồn số liệu, kịch bản, phân cảnh, lời thu giọng (PR #1193) | Em – **xong** |
-| 23/11 | **Cổng 1: duyệt kịch bản** | Chị – **xong** |
-| 27–28/11 | Chỉnh theo góp ý; gộp PR 1 khi chị nói «Gộp» | Em |
-| 29/11–02/12 | Thu giọng VI + EN; dựng 13 cảnh nhân vật | Chị |
+| 23/11 | **Cổng 1: duyệt kịch bản** | Hương – **xong** |
+| 27–28/11 | Chỉnh theo góp ý; gộp PR 1 khi Hương nói «Gộp» | Em |
+| 29/11–02/12 | Thu giọng VI + EN; dựng 13 cảnh nhân vật | Hương |
 | 29/11–03/12 | Trang cảnh số liệu, script dựng (PR 2); trang loạt phim (PR 3) | Em |
-| 04/12 | **Cổng 2: duyệt nhịp**; chiếu thử | Chị, thầy Tú |
-| 05–07/12 | Chỉnh; quy trình đăng và công cụ cắt đoạn dọc (PR 5); màn chơi chọn tuyến (PR 4) | Em, chị |
-| 08/12 | **Cổng 3: duyệt bản cuối** | Chị |
+| 04/12 | **Cổng 2: duyệt nhịp**; chiếu thử | Hương, thầy Tú |
+| 05–07/12 | Chỉnh; quy trình đăng và công cụ cắt đoạn dọc (PR 5); màn chơi chọn tuyến (PR 4) | Em, Hương |
+| 08/12 | **Cổng 3: duyệt bản cuối** | Hương |
 | 09/12 | Teaser, 3 đoạn dọc, ảnh bìa, mô tả | Em |
-| Th 5 10/12 | Đăng teaser | Chị |
-| 11–12/12 | **Cổng 4**; hẹn giờ tập 1 | Chị, em |
-| CN 13/12 20:00 | **Phát hành tập 1**; mở thăm dò | Chị |
-| CN 20/12 | Đóng thăm dò tập 1 | Chị |
+| Th 5 10/12 | Đăng teaser | Hương |
+| 11–12/12 | **Cổng 4**; hẹn giờ tập 1 | Hương, em |
+| CN 13/12 20:00 | **Phát hành tập 1**; mở thăm dò | Hương |
+| CN 20/12 | Đóng thăm dò tập 1 | Hương |
 
 ### Tập 2–6
 
@@ -100,15 +100,15 @@ Tập 1 làm theo lịch rút gọn vì bắt đầu ngày 23/11/2026. Từ tậ
 | 6 · Tới bến | 14–17/02 | Th 5 18/02 | 21–25/02 | CN 28/02 | Th 2 01/03 | Th 4 03/03 | Th 5 04/03 | **CN 07/03/2027** |
 
 Ghi chú:
-- **Tập 5:** nghỉ Tết từ 05/02 đến 13/02 (từ 28 tháng Chạp đến mùng 7). Mọi việc của chị cho tập 5 làm xong trước 04/02; em dựng lại sau Tết, từ 14/02.
-- **Tuần nặng nhất:** 06–13/12, khi tập 1 sắp phát hành mà tập 2 đã phải viết kịch bản. Em làm kịch bản tập 2 song song để chị chỉ phải duyệt.
-- **Mốc tài trợ (5A):** chị và thầy Tú chốt pháp nhân nhận tiền và bảng giá trước 10/01/2027 (tập 3).
+- **Tập 5:** nghỉ Tết từ 05/02 đến 13/02 (từ 28 tháng Chạp đến mùng 7). Mọi việc của Hương cho tập 5 làm xong trước 04/02; em dựng lại sau Tết, từ 14/02.
+- **Tuần nặng nhất:** 06–13/12, khi tập 1 sắp phát hành mà tập 2 đã phải viết kịch bản. Em làm kịch bản tập 2 song song để Hương chỉ phải duyệt.
+- **Mốc tài trợ (5A):** Hương và thầy Tú chốt pháp nhân nhận tiền và bảng giá trước 10/01/2027 (tập 3).
 
 ## 5. Lưu trữ tệp
 
 ### Trên Drive (tệp nặng, tệp gốc)
 
-Chị tạo một thư mục chung và chia quyền cho em đọc:
+Hương tạo một thư mục chung và chia quyền cho em đọc:
 
 ```
 BizOnland Phim/
@@ -116,7 +116,7 @@ BizOnland Phim/
     ├── 00-chung/            ảnh tham chiếu nhân vật, nhạc nền, logo kênh (của BizOnland)
     ├── Tap-01/
     │   ├── 01-kich-ban/     bản PDF kịch bản đã duyệt (xuất từ kho)
-    │   ├── 02-giong/vi/     01.wav, 02.wav… (giọng chị, tệp gốc)
+    │   ├── 02-giong/vi/     01.wav, 02.wav… (giọng Hương, tệp gốc)
     │   ├── 02-giong/en/
     │   ├── 03-canh-nv/      C01.mp4, C03.mp4… (cảnh nhân vật, kể cả bản dựng lại C01-b.mp4)
     │   ├── 04-ban-nhap/     tap-01-nhap-vi.mp4, tap-01-nhap-en.mp4
@@ -149,7 +149,7 @@ BizOnland Phim/
 
 ## 6. Cổng duyệt
 
-| Cổng | Khi nào | Chị xem gì | Đạt khi |
+| Cổng | Khi nào | Hương xem gì | Đạt khi |
 |---|---|---|---|
 | 1. Kịch bản | R−17 | `tap-NN-kich-ban.md` | Câu chuyện hay, đúng tinh thần BizOnland; số liệu có nguồn; Lumina không chọn giúp |
 | 2. Nhịp | R−6 | Bản nháp có giọng và cảnh | 10 giây đầu giữ được người xem; không đoạn nào lê thê; cảnh nhân vật đúng dáng |
@@ -176,8 +176,8 @@ BizOnland Phim/
 
 | Việc | Công cụ | Ghi chú |
 |---|---|---|
-| Dựng cảnh nhân vật | Công cụ video chị đang dùng cho MV 3D | Chị kiểm điều khoản dùng thương mại, ghi vào `khung-loat-phim.md` mục 10 |
-| Thu giọng | Mic hoặc điện thoại của chị, phòng yên | WAV 48 kHz |
+| Dựng cảnh nhân vật | Công cụ video Hương đang dùng cho MV 3D | Hương kiểm điều khoản dùng thương mại, ghi vào `khung-loat-phim.md` mục 10 |
+| Thu giọng | Mic hoặc điện thoại của Hương, phòng yên | WAV 48 kHz |
 | Soát giọng | faster-whisper (đã cài trên máy của em) | Phát hiện sai dấu tên riêng |
 | Cảnh số liệu | Trang HTML vẽ theo khung + Playwright | Giống video Cảng Cái Mép |
 | Ghép, phụ đề, độ to | ffmpeg qua `scripts/video/dung-phim.mjs` | Có chế độ nháp `--nhap` |
@@ -188,10 +188,10 @@ BizOnland Phim/
 
 | Hạng mục | Mỗi tập | Ghi chú |
 |---|---|---|
-| Công của chị | Khoảng 6–8 giờ | Duyệt 3 cổng (khoảng 1 giờ), thu giọng (1 giờ), dựng cảnh nhân vật (3–5 giờ), đăng tải (30 phút), bình luận (15 phút mỗi ngày trong tuần phát hành) |
+| Công của Hương | Khoảng 6–8 giờ | Duyệt 3 cổng (khoảng 1 giờ), thu giọng (1 giờ), dựng cảnh nhân vật (3–5 giờ), đăng tải (30 phút), bình luận (15 phút mỗi ngày trong tuần phát hành) |
 | Công của thầy Tú | Khoảng 1 giờ | Góp ý kịch bản, chiếu thử |
 | Công của em | Phần còn lại | Kịch bản, số liệu, dựng, hậu kỳ, đoạn dọc, trang web |
-| Gói công cụ video | *(chị ghi)* | Gói chị đang dùng; ghi thêm nếu phải nâng gói vì số cảnh nhiều hơn |
+| Gói công cụ video | *(Hương ghi)* | Gói Hương đang dùng; ghi thêm nếu phải nâng gói vì số cảnh nhiều hơn |
 | Giọng máy | 0 đồng | Không dùng; bản nháp dùng thẻ chữ |
 | Nhạc | 0 đồng | Nhạc gốc BizOn |
 | Quảng cáo trả tiền | 0 đồng ở tập 1–2 | Cân nhắc sau khi có số liệu 30 ngày |
@@ -200,7 +200,7 @@ BizOnland Phim/
 
 | Nếu | Thì |
 |---|---|
-| Chị chưa kịp thu giọng hay dựng cảnh trước R−10 | Dời tập đó một tuần (vẫn Chủ nhật 20:00), giữ khoảng cách hai tuần cho các tập sau; báo trên kênh bằng một đoạn dọc «Tập N lùi một tuần» |
+| Hương chưa kịp thu giọng hay dựng cảnh trước R−10 | Dời tập đó một tuần (vẫn Chủ nhật 20:00), giữ khoảng cách hai tuần cho các tập sau; báo trên kênh bằng một đoạn dọc «Tập N lùi một tuần» |
 | Một cảnh nhân vật không dựng được | Thay bằng ảnh tĩnh của nhân vật có chuyển động máy quay nhẹ, hoặc cảnh số liệu |
 | Bình chọn hòa hoặc dưới 30 phiếu | Cộng phiếu của lớp học gần nhất, nói rõ nguồn trong cảnh mở đầu |
 | Một số liệu mất nguồn hoặc nguồn bị gỡ | Bỏ số, nói định tính; sửa `nguon-so-lieu.md` |
@@ -208,7 +208,7 @@ BizOnland Phim/
 
 ## 11. Bảng theo dõi tiến độ
 
-Em đánh dấu sau mỗi bước; chị xem nhanh ở đây.
+Em đánh dấu sau mỗi bước; Hương xem nhanh ở đây.
 
 | Tập | Kịch bản | Cổng 1 | Giọng | Cảnh NV | Bản nháp | Cổng 2 | Bản cuối | Cổng 3 | Teaser | Phát hành | Bình chọn |
 |---|---|---|---|---|---|---|---|---|---|---|---|

@@ -1,6 +1,6 @@
 # Tập 1 · «Sà lan hay xe tải?» – lời thu giọng Lumina
 
-Người đọc: chị Hương, giọng Lumina, VI và EN. Kịch bản đầy đủ: `docs/phim/tap-01-kich-ban.md`.
+Người đọc: Hương, giọng Lumina, VI và EN. Kịch bản đầy đủ: `docs/phim/tap-01-kich-ban.md`.
 
 ## Cách thu
 
@@ -46,7 +46,7 @@ Người đọc: chị Hương, giọng Lumina, VI và EN. Kịch bản đầy �
 | 24 | Đồng hồ còn **bốn mươi ba** tiếng. // Cả đội nhìn nhau. // Phải chốt / **ngay bây giờ**. | Hồi hộp |
 | 25 | Đi sông: / rẻ hơn nhiều, / nhưng phải **đánh cược** với con nước. // Đi đường: / nhanh, / nhưng tốn kém, / và chưa chắc đủ xe. | |
 | 26 | Còn đội bạn: / **sông hay đường?** // Bình chọn ngay dưới video nhé. // Nếu bạn nghĩ ra **cách thứ ba**, / kể cho mình nghe trong bình luận. | Quay sang khán giả, tinh nghịch |
-| 27 | Muốn tự thử từng đường đi? // Vào **bizonland chấm com**, / mục Đưa trái ra biển. | «bizonland» đọc «bai-dần-len» hay «bi-dôn-len» tùy chị, giữ một cách cho cả loạt |
+| 27 | Muốn tự thử từng đường đi? // Vào **bizonland chấm com**, / mục Đưa trái ra biển. | «bizonland» đọc «bai-dần-len» hay «bi-dôn-len» tùy Hương, giữ một cách cho cả loạt |
 | 29 | Tập sau: / **Tươi hay cấp đông?** | Thì thầm, bí ẩn |
 
 Câu 28 là chữ chạy, không có lời.
@@ -90,5 +90,5 @@ Line 28 is the credits roll, no voice.
 
 ## Sau khi thu
 
-1. Chị tải cả thư mục `vi/` và `en/` lên Drive, gửi em đường dẫn.
+1. Hương tải cả thư mục `vi/` và `en/` lên Drive, gửi em đường dẫn.
 2. Em cắt và nghe soát bằng Whisper, báo lại câu nào cần đọc lại. Thường chỉ cần đọc lại vài câu.

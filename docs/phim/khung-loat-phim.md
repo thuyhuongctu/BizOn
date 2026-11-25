@@ -1,7 +1,7 @@
 # Khung loạt phim «Đưa trái ra biển» / «Fruit to the Sea» – Mùa 1
 
 Phim hoạt hình đất nặn, câu chuyện thương hiệu BizOnland. Đặc tả: `specs/008-phim-dua-trai-ra-bien/`.
-Bản 23/11/2026, chờ chị duyệt cùng kịch bản tập 1.
+Bản 23/11/2026, chờ Hương duyệt cùng kịch bản tập 1.
 
 ## 1. Một câu cho cả mùa
 
@@ -22,11 +22,11 @@ Hợp tác xã nhỏ của Bác Ba ở miền Tây đưa lô sầu riêng đầu
 
 ## 4. Nhân vật
 
-Chỉ dùng nhân vật có sẵn trong ảnh game (hiến chương). Ảnh tham chiếu là ảnh chị đưa vào công cụ video để giữ đúng dáng nhân vật.
+Chỉ dùng nhân vật có sẵn trong ảnh game (hiến chương). Ảnh tham chiếu là ảnh Hương đưa vào công cụ video để giữ đúng dáng nhân vật.
 
 | Nhân vật | Vai trong phim | Tính cách, câu cửa miệng | Ảnh tham chiếu |
 |---|---|---|---|
-| **Lumina** | Người kể chuyện, cố vấn của nhóm. Bày số liệu, đặt câu hỏi, **không chọn giúp**. Giọng chị Hương | Ấm, rõ, hơi tinh nghịch. «Mình không chọn giúp ai cả. Mình chỉ đặt số liệu lên bàn.» | `assets/character/advisors/lumina-vest-cut.webp`, `assets/character/advisors/lumina-y-tuong-cut.webp` |
+| **Lumina** | Người kể chuyện, cố vấn của nhóm. Bày số liệu, đặt câu hỏi, **không chọn giúp**. Giọng Hương | Ấm, rõ, hơi tinh nghịch. «Mình không chọn giúp ai cả. Mình chỉ đặt số liệu lên bàn.» | `assets/character/advisors/lumina-vest-cut.webp`, `assets/character/advisors/lumina-y-tuong-cut.webp` |
 | **Bác Ba** | Chủ nhiệm hợp tác xã vườn sầu riêng, chủ lô hàng | Chân chất, ít lời, thương vườn. «Trái này tui chăm cả năm đó nghen.» | `assets/hc/cast/bac-ba-v4-cut.webp` |
 | **Bà Sáu Lành** | Người giữ hồn nghề, hiểu sông nước; thường là người nhìn ra điều cả nhóm bỏ sót | Điềm tĩnh, hỏi một câu là trúng. «Con nước đêm nay ra sao?» | `assets/hc/cast/ba-sau-lanh-v4-cut.webp`, `assets/character/advisors/ba-sau-lanh-cut.webp` |
 | **Minh Khang** | Giám đốc tài chính, giữ túi tiền; thường nghiêng về phương án rẻ. Đứng ra đại diện hợp tác xã ở lễ ra mắt và lễ ký hợp đồng (tập 6) | Nhanh nhảu, mê con số. «Đi sông cho rẻ!» | `assets/character/advisors/minh-khang-cut.webp` |
@@ -55,7 +55,7 @@ Chỉ dùng nhân vật có sẵn trong ảnh game (hiến chương). Ảnh tham
 
 ## 5. Giọng và lời thoại
 
-- **Chỉ Lumina có giọng đọc** (chị thu, VI và EN). Lumina kể và thuật lại lời nhân vật.
+- **Chỉ Lumina có giọng đọc** (Hương thu, VI và EN). Lumina kể và thuật lại lời nhân vật.
 - **Nhân vật khác nói bằng bong bóng chữ** ngắn (≤ 8 chữ), em chèn ở hậu kỳ, kèm tiếng động nhẹ, không lời. Cách này hợp với hoạt hình đất nặn, không cần khớp môi, và một giọng là đủ.
 - Tèo Soi có tiếng kêu riêng (tiếng «ư?» khi hỏi, tiếng reo khi vui), lấy từ thư viện âm thanh không bản quyền hoặc em tự tạo.
 - Nếu sau này muốn nhân vật có giọng riêng (ví dụ thầy Tú lồng tiếng Minh Khang), chỉ cần thay bong bóng chữ bằng giọng; kịch bản không phải viết lại.
@@ -100,21 +100,21 @@ Lumina bày ba cột (chi phí, thời gian, rủi ro), hỏi «còn đội bạ
 
 ## 10. Điều khoản công cụ video
 
-*(Chị ghi vào đây sau khi kiểm)*:
+*(Hương ghi vào đây sau khi kiểm)*:
 - tên công cụ và gói đang dùng;
 - gói ấy có cho phép dùng thương mại không (cần biết trước khi nhận tài trợ);
 - có yêu cầu ghi nguồn không.
 
 ## 11. Khung hình tham chiếu (Stitch)
 
-Ngày 23/11/2026 chị dựng 21 khung hình bằng Google Stitch. Em tách và đặt tên theo cảnh sẽ dùng, lưu ở Drive `13. BizOnland Phim/Mua-1/00-chung/khung-hinh-stitch/`. Khung hình dùng để **tham chiếu bố cục, bối cảnh và ánh sáng**, chưa dùng thẳng làm khung đầu cho công cụ video được, vì:
+Ngày 23/11/2026 Hương dựng 21 khung hình bằng Google Stitch. Em tách và đặt tên theo cảnh sẽ dùng, lưu ở Drive `13. BizOnland Phim/Mua-1/00-chung/khung-hinh-stitch/`. Khung hình dùng để **tham chiếu bố cục, bối cảnh và ánh sáng**, chưa dùng thẳng làm khung đầu cho công cụ video được, vì:
 - khung nào cũng in chữ «DURIAN EXPRESS» (trên tàu, xe, thùng, biển hiệu) và chữ tiếng Anh, tiếng Việt bị méo;
 - hai áp phích có logo «Dolby Cinema» và dòng chữ chạy giả;
 - Kim Long (áo đỏ) đứng ở vị trí của hợp tác xã trong lễ ra mắt, ký hợp đồng và nếm thử;
 - có nhân vật mới rõ mặt (trẻ em, tài xế, khách nước ngoài);
 - phong cách là 3D bóng, chưa phải đất nặn.
 
-Khi dựng lại một khung, chị thêm vào cuối lời nhắc: `claymation stop-motion style, no text, no letters, no logos, no signage, no brand names, no flags, no maps`.
+Khi dựng lại một khung, Hương thêm vào cuối lời nhắc: `claymation stop-motion style, no text, no letters, no logos, no signage, no brand names, no flags, no maps`.
 
 | Tệp | Nội dung | Dùng cho | Sửa trước khi dùng |
 |---|---|---|---|
@@ -176,7 +176,7 @@ Ghi chú Stitch tự viết kèm bộ ảnh (tệp `.md` trong zip) **không the
 
 ## 13. Khung hình Stitch đợt 3 (23/11/2026, tối)
 
-Lưu ở Drive `00-chung/khung-hinh-stitch/dot-3-23-11/`. Chị tạo theo «Tập 1 – Ảnh khung còn thiếu»: cùng một bến đêm (khung 0), không chữ, nhân vật đúng ảnh tham chiếu. Đây là khung chính của tập 1; bản nháp dùng chúng làm ảnh tĩnh (máy quay đẩy nhẹ) cho tới khi có video cảnh.
+Lưu ở Drive `00-chung/khung-hinh-stitch/dot-3-23-11/`. Hương tạo theo «Tập 1 – Ảnh khung còn thiếu»: cùng một bến đêm (khung 0), không chữ, nhân vật đúng ảnh tham chiếu. Đây là khung chính của tập 1; bản nháp dùng chúng làm ảnh tĩnh (máy quay đẩy nhẹ) cho tới khi có video cảnh.
 
 | Tệp | Nội dung | Dùng cho | Sửa trước khi dùng |
 |---|---|---|---|
@@ -190,7 +190,7 @@ Lưu ở Drive `00-chung/khung-hinh-stitch/dot-3-23-11/`. Chị tạo theo «T�
 | `tap01-C13-minh-khang-lina-teo.png` | Minh Khang, Lina Park, Tèo Soi quanh bàn | Tập 1: C13 | – |
 | `tap01-C14-ba-sau-lanh.png` | Bà Sáu Lành bên mép bến | Tập 1: C14 | – |
 | `tap01-C16-sa-lan-nuoc-rong.png` | Sà lan neo giữa kênh hẹp lúc nước ròng | Tập 1: C16 | – |
-| `tap01-C17-ca-nhom-quanh-ban.png` | Sáu nhân vật quanh bàn, đồng hồ phía sau, chưa ai chốt | Tập 1: C17 | Bác Ba đứng ngoài mép bến, chân trên mặt nước (chị phát hiện 24/11). Chị chốt 24/11: giữ bản cắt khung (cắt 80 % khung, bỏ phần đáy che chân: `crop=iw*0.8:ih*0.8:iw*0.08:0`), không tạo lại |
+| `tap01-C17-ca-nhom-quanh-ban.png` | Sáu nhân vật quanh bàn, đồng hồ phía sau, chưa ai chốt | Tập 1: C17 | Bác Ba đứng ngoài mép bến, chân trên mặt nước (Hương phát hiện 24/11). Hương chốt 24/11: giữ bản cắt khung (cắt 80 % khung, bỏ phần đáy che chân: `crop=iw*0.8:ih*0.8:iw*0.08:0`), không tạo lại |
 | `khac-ca-nhom-bat-tay-1.png` | Cả nhóm quanh bàn, Minh Khang bắt tay Lina Park | Dự phòng (cảnh đã chốt, hợp tập 2 hơn tập 1) | – |
 | `khac-ca-nhom-bat-tay-2.png` | Như trên, góc khác | Dự phòng | – |
 | `khac-teo-soi-tren-sa-lan.png` | Tèo Soi đứng mũi sà lan trên sông ban ngày | Tập 2 (nếu khán giả chọn «sông») | – |
@@ -204,4 +204,4 @@ Lưu ở Drive `00-chung/khung-hinh-stitch/dot-3-23-11/`. Chị tạo theo «T�
 | `tap01-khung0-ben-dem-v2-nho.png` | Bến đêm dây đèn lồng, ấm trà trên bàn, đồng hồ trên cột | Tập 1: bối cảnh chung, phương án 2 | Bản 688×384 |
 | `tap06-mui-tau-teo-lina-v2-nho.png` | Tèo Soi đội mũ thuyền trưởng và Lina Park ở mũi tàu ra biển | Tập 6 (thay khung buồng lái có thuyền trưởng) | Bản 688×384 |
 
-Bốn khung cuối chị gửi qua trò chuyện tối 23/11 nên chỉ có bản nhỏ 688×384 (tên có đuôi `-nho`); khi dựng video cảnh cần bản gốc đủ độ phân giải. Còn thiếu, nếu muốn: **C20** (Tèo Soi ôm trái phủ sương giá; tạm dùng `tap01-C20-teo-soi-kinh-lup.png` của đợt 2).
+Bốn khung cuối Hương gửi qua trò chuyện tối 23/11 nên chỉ có bản nhỏ 688×384 (tên có đuôi `-nho`); khi dựng video cảnh cần bản gốc đủ độ phân giải. Còn thiếu, nếu muốn: **C20** (Tèo Soi ôm trái phủ sương giá; tạm dùng `tap01-C20-teo-soi-kinh-lup.png` của đợt 2).
