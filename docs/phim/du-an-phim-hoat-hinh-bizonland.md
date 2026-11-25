@@ -1,6 +1,6 @@
 # Dự án phim hoạt hình BizOnland «Đưa trái ra biển» / «Fruit to the Sea»
 
-**Hồ sơ dự án, mùa 1** · Bản 24/11/2026
+**Hồ sơ dự án, mùa 1** · Bản 25/11/2026
 **Chủ nhiệm:** NCS. Đỗ Thùy Hương · **Đồng chủ nhiệm:** PGS.TS. Phan Anh Tú
 **Thuộc:** BizOnland (bizonland.com), trò chơi mô phỏng học kinh doanh quốc tế, Trường Kinh tế, Đại học Cần Thơ
 
@@ -18,7 +18,7 @@
 | Người xem | Sinh viên kinh tế, kinh doanh quốc tế; giảng viên; người làm nông sản và logistics Đồng bằng sông Cửu Long |
 | Kênh phát | YouTube @jemappellehuong (playlist «Đưa trái ra biển»), Facebook, TikTok; trang loạt phim trên bizonland.com |
 | Người kể chuyện | Lumina, cố vấn của nhóm trong game BizOnland, do Hương lồng tiếng |
-| Tình trạng (24/11/2026) | Tập 1 đã có kịch bản, bảng phân cảnh, 69 khung hình, giọng Lumina tiếng Anh và bản dựng tiếng Anh 3:59 có giọng và phụ đề |
+| Tình trạng (25/11/2026) | Tập 1 đã có kịch bản, bảng phân cảnh, 69 khung hình, giọng Lumina tiếng Việt và tiếng Anh, bản dựng có giọng: tiếng Việt 3:49, tiếng Anh 3:59 (có phụ đề) |
 
 ## 2. Vì sao làm phim
 
@@ -88,17 +88,17 @@
 
 **Phân vai:**
 
-| Việc | Hương | Thầy Tú | Trợ lý AI (Claude Code) |
+| Việc | Hương | Thầy Tú | Ghi chú |
 |---|---|---|---|
-| Ý tưởng mùa, chọn quyết định từng tập | Quyết | Góp ý | Đề xuất |
-| Số liệu, nguồn | Duyệt | Góp ý học thuật | Tra và ghi nguồn |
-| Kịch bản VI/EN, câu hỏi thảo luận | Duyệt | Góp ý | Viết |
-| Khung hình nhân vật (Google Stitch) và cảnh nhân vật (công cụ video) | Làm | – | Viết lời nhắc, soát lỗi từng khung |
-| Giọng Lumina | Thu | – | Cắt câu, soát bằng Whisper |
-| Cảnh số liệu, chữ, bong bóng, phụ đề, nhạc, ghép | Duyệt | – | Làm |
-| Chiếu thử cho sinh viên | Lớp của Hương | Lớp của thầy | Tổng hợp phiếu |
-| Đăng tải, bình chọn, bình luận | Làm | – | Soạn sẵn |
-| Tài trợ, pháp nhân, bảng giá | Quyết | Quyết cùng Hương | Soạn nháp |
+| Ý tưởng mùa, chọn quyết định từng tập | Quyết | Góp ý | |
+| Số liệu, nguồn | Duyệt | Góp ý học thuật | |
+| Kịch bản VI/EN, câu hỏi thảo luận | Duyệt | Góp ý | |
+| Khung hình nhân vật (Google Stitch) và cảnh nhân vật (công cụ video) | Làm | – | |
+| Giọng Lumina | Thu | – | |
+| Cảnh số liệu, chữ, bong bóng, phụ đề, nhạc, ghép | Duyệt | – | |
+| Chiếu thử cho sinh viên | Lớp của Hương nếu có | Lớp của thầy | |
+| Đăng tải, bình chọn, bình luận | Làm | – | |
+| Tài trợ, pháp nhân, bảng giá | Quyết | Quyết | |
 
 **Dây chuyền một tập (khoảng 3 tuần):**
 1. Kịch bản theo câu, có mốc giờ, nguồn và cảnh → **cổng duyệt 1** (kịch bản).
@@ -123,18 +123,18 @@
 
 **Lưu trữ:** tệp nặng (khung hình, giọng gốc, video cảnh, bản nháp, bản cuối) trên Google Drive, thư mục «13. BizOnland Phim/Mua-1». Kịch bản, phân cảnh, nguồn số liệu, mã dựng phim và giọng đã cắt theo câu nằm trong kho mã nguồn của BizOnland. Nhờ vậy dựng lại được bất kỳ lúc nào.
 
-## 7. Tiến độ (24/11/2026)
+## 7. Tiến độ (25/11/2026)
 
 | Hạng mục | Tình trạng |
 |---|---|
 | Đặc tả, kế hoạch sản xuất, khung loạt phim | Xong |
 | Tập 1: kịch bản VI/EN (29 câu), 8 nguồn số liệu, bảng phân cảnh, lời thu giọng | Xong |
-| Khung hình Google Stitch | 69 khung qua ba đợt; đợt 3 dùng chung một bến đêm, nhân vật đúng ảnh gốc. Khung C17 cần tạo lại (Bác Ba đứng trên mặt nước) |
+| Khung hình Google Stitch | 69 khung qua ba đợt; đợt 3 dùng chung một bến đêm, nhân vật đúng ảnh gốc. Khung C17 (Bác Ba đứng ngoài mép bến) giữ bản đã cắt khung, không tạo lại |
 | Giọng Lumina tiếng Anh | 28 câu, đã soát bằng Whisper |
-| Giọng Lumina tiếng Việt | Chờ thu (29/11–02/12) |
+| Giọng Lumina tiếng Việt | 28 câu, đã soát bằng Whisper |
 | Video cảnh nhân vật | Chờ dựng (29/11–02/12); hiện dùng khung tĩnh |
 | Khung dựng phim (cảnh số liệu, bong bóng thoại, đồng hồ, phụ đề, bản quyền) | Xong, có kiểm thử tự động |
-| Bản dựng | Bản nháp tiếng Việt (4:45, chưa giọng); bản tiếng Anh có giọng và phụ đề (3:59) |
+| Bản dựng | Bản tiếng Việt có giọng (3:49) và bản tiếng Anh có giọng, phụ đề (3:59); cảnh nhân vật tạm dùng khung tĩnh |
 | Trang loạt phim, màn chơi chọn tuyến | Làm trong tháng 12 |
 | Duyệt nhịp / bản cuối / phát hành tập 1 | 04/12 / 08/12 / CN 13/12/2026, 20:00 |
 
@@ -150,14 +150,14 @@
 ## 9. Kinh phí và nguồn thu
 
 **Chi phí mỗi tập:**
-- Công của Hương khoảng 6–8 giờ; công của thầy Tú khoảng 1 giờ.
+- Công việc cần Hương làm khoảng 6–8 giờ; thầy Tú khoảng 1 giờ.
 - Phí gói công cụ video, nếu có.
 - Nhạc, giọng và các công cụ dựng phim: 0 đồng (nhạc gốc, giọng tự thu, công cụ mã nguồn mở).
 - Không chạy quảng cáo trả tiền ở tập 1–2.
 
 **Nguồn thu (theo thứ tự ưu tiên):**
 1. **Giấy phép lớp học trọn gói** (game + phim + câu hỏi thảo luận), chào từ học kỳ 2 năm học 2026–2027.
-2. **Tài trợ từng tập** (vận tải thủy, logistics, xuất khẩu trái cây, hiệp hội), sớm nhất từ tập 3. Điều khoản giữ độc lập nội dung; tên nhà tài trợ chỉ ở chữ chạy, không logo trong cảnh.
+2. **Tài trợ từng tập** (vận tải thủy, logistics, xuất khẩu trái cây, hiệp hội), sớm nhất từ tập 3. Điều khoản giữ độc lập nội dung; tên nhà tài trợ chỉ ở chữ chạy, không logo trong cảnh. (Nếu có)
 3. **Đặt hàng phim câu chuyện thương hiệu** cho đặc sản và sản phẩm OCOP, sau mùa 1.
 4. **Quỹ và tài trợ giáo dục, đổi mới sáng tạo**, nộp khi có số liệu 30 ngày của tập 1 (từ khoảng 12/01/2027).
 5. **Doanh thu nền tảng** khi kênh đủ điều kiện: khoản nhỏ, không dựa vào.
@@ -190,12 +190,12 @@ Tập 1 và tập 2 chưa nhận tài trợ, dùng làm hồ sơ chào. Bảng g
 ## 13. Kính đề nghị thầy góp ý
 
 1. Kịch bản tập 1 và bộ câu hỏi thảo luận: góc nhìn học thuật về logistics và quyết định.
-2. Pháp nhân nhận tài trợ và cách chia doanh thu, cần chốt trước tập 3 (10/01/2027).
+2. Pháp nhân nhận tài trợ và cách chia doanh thu, cần chốt trước tập 3 (10/01/2027), nếu có.
 3. Thầy có muốn lồng tiếng một nhân vật (ví dụ Minh Khang) khi phim chuyển sang cho nhân vật nói không.
-4. Chiếu thử tập 1 cho lớp của thầy trong tuần 14–20/12/2026.
+4. Chiếu thử tập 1 cho lớp của thầy trong học kỳ mới, nếu có lớp.
 
 ## Tài liệu kèm theo
 
 - Thư mục Google Drive «13. BizOnland Phim/Mua-1»: kịch bản, phân cảnh, lời thu giọng, khung hình ba đợt, bản nháp.
-- Bản dựng tập 1: bản tiếng Việt (nháp, 4:45) và bản tiếng Anh có giọng và phụ đề (3:59), trong thư mục `Tap-01/04-ban-nhap`.
+- Bản dựng tập 1: bản tiếng Việt có giọng (3:49) và bản tiếng Anh có giọng và phụ đề (3:59), trong thư mục `Tap-01/04-ban-nhap`.
 - Trong kho mã nguồn BizOnland: `docs/phim/` (khung loạt phim, kế hoạch sản xuất, nguồn số liệu, kịch bản, phân cảnh) và `specs/008-phim-dua-trai-ra-bien/` (đặc tả, kế hoạch).
