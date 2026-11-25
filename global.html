@@ -154,6 +154,17 @@
     <div class="clay-card p-3 sm:p-5 overflow-hidden">
       <div id="world-map"></div>
       <div id="market-cards" class="grid sm:grid-cols-5 gap-2.5 mt-4"></div>
+      <!-- Đặc tả 009 (Câu chuyện 1): hồ sơ khí hậu ND-GAIN của nước trung tâm; chỉ để tham khảo, không đổi điểm -->
+      <details id="kh-giai-thich" class="clay-sunken rounded-2xl p-3 mt-4 text-xs text-deep-teal/70 leading-relaxed" hidden>
+        <summary class="font-bold text-deep-teal" data-en="🌡️ Climate risk of each market – what is the ND-GAIN index?">🌡️ Rủi ro khí hậu của thị trường – chỉ số ND-GAIN là gì?</summary>
+        <div class="space-y-2 mt-2">
+          <p data-en="ND-GAIN (University of Notre Dame) measures two sides of each country: vulnerability to climate change (0–1, higher means more vulnerable) and readiness to adapt in economic, governance and social terms (0–1, higher is better). The ND-GAIN score combines both on a 0–100 scale: the higher the score, the more resilient the country.">ND-GAIN (Đại học Notre Dame) đo hai mặt của mỗi quốc gia: mức dễ tổn thương trước biến đổi khí hậu (0–1, càng cao càng dễ tổn thương) và mức sẵn sàng thích ứng về kinh tế, quản trị, xã hội (0–1, càng cao càng tốt). Điểm ND-GAIN gộp hai mặt này trên thang 0–100: điểm càng cao, quốc gia càng chống chịu tốt.</p>
+          <p data-en="Each card uses the figures of the market's hub country: Singapore for Southeast Asia, Japan for East Asia, Germany for Europe, the United States for North America, the United Arab Emirates for the Middle East, South Korea, and Kenya for Africa. One country does not represent a whole region: resilience can differ widely between countries in the same region.">Mỗi thẻ dùng số của nước trung tâm của thị trường: Singapore cho Đông Nam Á, Nhật Bản cho Đông Á, Đức cho châu Âu, Hoa Kỳ cho Bắc Mỹ, Các Tiểu vương quốc Ả Rập Thống nhất cho Trung Đông, Hàn Quốc, và Kenya cho châu Phi. Một nước không đại diện cho cả vùng: mức chống chịu của các nước trong cùng một vùng có thể chênh nhau nhiều.</p>
+          <p data-en="Why investors care: a study of 400 Fortune Global 500 firms over 2003–2017 found that multinationals set up more wholly owned subsidiaries in countries that are more resilient to climate change, and that this pattern is stronger for firms with high ESG capability (Oh, Rivera &amp; Oetzel, 2026). The study is about very large multinationals; applying it to the small firm in this game is an extension for discussion, not a conclusion.">Vì sao nhà đầu tư quan tâm: nghiên cứu trên 400 doanh nghiệp Fortune Global 500 giai đoạn 2003–2017 cho thấy các tập đoàn lập nhiều công ty con 100% vốn hơn ở những nước chống chịu khí hậu tốt, và xu hướng này mạnh hơn ở doanh nghiệp có năng lực ESG cao (Oh, Rivera &amp; Oetzel, 2026). Nghiên cứu nói về tập đoàn rất lớn; áp vào doanh nghiệp nhỏ trong game là suy rộng để thảo luận, không phải kết luận.</p>
+          <p data-en="In normal play the index is for reference only and does not change any score.">Ở chế độ chơi thường, chỉ số chỉ để tham khảo, không làm thay đổi điểm số nào.</p>
+          <p id="kh-nguon" class="text-[10px] text-deep-teal/60"></p>
+        </div>
+      </details>
       <button type="button" onclick="gAnnual()" class="clay-btn w-full bg-surface-bright text-deep-teal/75 font-bold py-3 text-sm mt-4" data-en="🗓️ Year-end report – every campaign the team has run">🗓️ Báo cáo Tổng kết Năm – thành tích mọi chiến dịch của đội</button>
     </div>
   </section>
@@ -262,6 +273,7 @@
 
 <script src="js/site-ui.js" defer></script>
 <script src="js/site-vnmap.js" defer></script>
+<script src="js/go-global-khi-hau.js"></script>
 <script>
 /* ================= WORLD MARKET LIVE ================= */
 const WM_SAMPLE = [
@@ -533,8 +545,28 @@ function renderWorldMap() {
     <button type="button" onclick="pickMarket('${m.id}')" class="clay-sunken rounded-2xl p-3 text-left transition-all ${sel && sel.id === m.id ? 'ring-2 ring-clay-orange' : ''}">
       <p class="text-lg">${m.flag} ${gFlags.includes(m.id) ? '🚩' : ''}</p>
       <p class="font-display font-extrabold text-deep-teal text-xs mt-0.5">${mName(m)}</p>
-      <p class="text-[9px] text-deep-teal/50">${L('Quy mô', 'Size')} ${(m.size / 1000).toFixed(0)}k ${L('sp', 'units')} · ${L('Thuế', 'Tariff')} ${(m.tariff * 100).toFixed(0)}% · ${L('Số hóa', 'Digital readiness')} ${(m.digital * 100).toFixed(0)}%</p>
+      <p class="text-[9px] text-deep-teal/50">${L('Quy mô', 'Size')} ${(m.size / 1000).toFixed(0)}k ${L('sp', 'units')} · ${L('Thuế', 'Tariff')} ${(m.tariff * 100).toFixed(0)}% · ${L('Số hóa', 'Digital readiness')} ${(m.digital * 100).toFixed(0)}%</p>${khDongThe(m)}
     </button>`).join('');
+  khNguon();
+}
+
+/* Đặc tả 009 · Câu chuyện 1: hồ sơ khí hậu ND-GAIN (js/go-global-khi-hau.js). Chỉ hiển thị, không vào gCalc. */
+const KH = window.GoGlobalKhiHau || null;
+const khSo = (x, d) => GEN ? x.toFixed(d) : x.toFixed(d).replace('.', ',');
+function khDongThe(m) {
+  const h = KH && KH.coSoLieu() ? KH.hoSo(m.id) : null;
+  if (!h) return '';
+  return `<p class="text-[9px] text-deep-teal/60 mt-1">🌡️ ND-GAIN ${khSo(h.gain, 1)} · ${L('hạng', 'rank')} ${h.hang}/${KH.TONG_SO_NUOC} · ${L(h.vi, h.en)} (${h.nam})</p>`;
+}
+function khNguon() {
+  const box = document.getElementById('kh-giai-thich'), src = document.getElementById('kh-nguon');
+  if (!box || !src) return;
+  const co = !!(KH && KH.coSoLieu());
+  box.hidden = !co;
+  if (!co) return;
+  src.innerHTML = L(`Nguồn: ND-GAIN Country Index, bản 2026, số liệu năm ${KH.NAM}; xếp hạng trên ${KH.TONG_SO_NUOC} quốc gia có điểm năm đó.`,
+    `Source: ND-GAIN Country Index, 2026 edition, ${KH.NAM} data; ranks among the ${KH.TONG_SO_NUOC} countries scored that year.`)
+    + `<br>${KH.TRICH.ndgain}<br>${KH.TRICH.oh}`;
 }
 
 function pickMarket(id) {

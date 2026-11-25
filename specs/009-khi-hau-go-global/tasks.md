@@ -9,32 +9,32 @@
 
 ## Giai đoạn 1: Chuẩn bị
 
-- [ ] T001 Chị tải `ndgain_countryindex_2026.zip` từ trang ND-GAIN (Download Data) và gửi em. Trang chặn tải tự động.
-- [ ] T002 Đọc điều khoản dùng dữ liệu trên trang ND-GAIN; ghi cách trích dẫn vào `plan.md` và `THIRD-PARTY-NOTICES.md`.
-- [ ] T003 Trích 7 nước (SGP, JPN, DEU, USA, ARE, KOR, KEN) từ tệp gốc: năm mới nhất có số, ND-GAIN, vulnerability, readiness, thứ hạng. Ghi vào `docs/research/du-lieu/nd-gain-2026-nuoc-trung-tam.csv`, kèm tên tệp gốc và ngày tải.
+- [X] T001 (25/11/2026: tệp nhận được là `nd_gain_country_index_2026_release_data_v2.zip`, bản 2026, số liệu đến 2024) Chị tải `ndgain_countryindex_2026.zip` từ trang ND-GAIN (Download Data) và gửi em. Trang chặn tải tự động.
+- [X] T002 Đọc điều khoản dùng dữ liệu trên trang ND-GAIN; ghi cách trích dẫn vào `plan.md` và `THIRD-PARTY-NOTICES.md`.
+- [X] T003 Trích 7 nước (SGP, JPN, DEU, USA, ARE, KOR, KEN) từ tệp gốc: năm mới nhất có số, ND-GAIN, vulnerability, readiness, thứ hạng. Ghi vào `docs/research/du-lieu/nd-gain-2026-nuoc-trung-tam.csv`, kèm tên tệp gốc và ngày tải.
 
 ## Giai đoạn 2: Nền dùng chung (chặn mọi câu chuyện)
 
-- [ ] T004 Viết test `test/go-global-khi-hau.test.js` phần dữ liệu:
+- [X] T004 Viết test `test/go-global-khi-hau.test.js` phần dữ liệu:
   - mọi số trong `js/go-global-khi-hau.js` khớp CSV trích (SC-004);
   - đủ 7 thị trường;
   - hàm `s` giữ thứ tự dễ tổn thương;
   - `m(35) = 1`, `m(100) = 0,6`.
   Chạy thấy hỏng.
-- [ ] T005 Tạo `js/go-global-khi-hau.js`: dữ liệu, ánh xạ thị trường → nước, hệ số minh họa, các hàm thuần `s`, `a`, `m`, `chiPhiQuy`, `thienTai`. Dùng được cả trên trình duyệt và Node.
-- [ ] T006 Thêm `./js/go-global-khi-hau.js` vào precache trong `sw.js`; nâng `CACHE`.
+- [X] T005 Tạo `js/go-global-khi-hau.js`: dữ liệu, ánh xạ thị trường → nước, hệ số minh họa, các hàm thuần `s`, `a`, `m`, `chiPhiQuy`, `thienTai`. Dùng được cả trên trình duyệt và Node.
+- [X] T006 Thêm `./js/go-global-khi-hau.js` vào precache trong `sw.js`; nâng `CACHE`.
 
 ## Giai đoạn 3: Câu chuyện 1 – Hồ sơ khí hậu trên thẻ thị trường (P1)
 
 **Mục tiêu:** sinh viên thấy số ND-GAIN thật trước khi chọn; điểm không đổi.
 **Cách thử độc lập:** mở `global.html` ở 360 px và 1366 px, VI và EN; so kết quả ván trước và sau.
 
-- [ ] T007 [US1] Thêm vào test:
+- [X] T007 [US1] (mẫu `test/fixtures/go-global-gcalc-mau.json` ghi từ `global.html` trên main, 392 ô) Thêm vào test:
   - ảnh chụp kết quả `gCalc` của bản hiện tại (7 thị trường × 7 phương thức × 2 bộ quyết định × 4 quý) làm mốc; sau PR phải trùng khít (FR-003, SC-002);
   - Playwright: 7 thẻ có số, năm, nguồn, VI/EN, 360 px không tràn (SC-001).
   Chạy thấy hỏng ở phần thẻ.
-- [ ] T008 [US1] `global.html`: nạp `js/go-global-khi-hau.js`; thẻ thị trường thêm một dòng «🌡️ ND-GAIN xx,x · hạng n», ghi tên nước trung tâm. Chỉ dùng lớp CSS sẵn có.
-- [ ] T009 [US1] `global.html`: đoạn giải thích mở bằng `<details>` dưới lưới thẻ, VI/EN (`data-en`):
+- [X] T008 [US1] `global.html`: nạp `js/go-global-khi-hau.js`; thẻ thị trường thêm một dòng «🌡️ ND-GAIN xx,x · hạng n», ghi tên nước trung tâm. Chỉ dùng lớp CSS sẵn có.
+- [X] T009 [US1] `global.html`: đoạn giải thích mở bằng `<details>` dưới lưới thẻ, VI/EN (`data-en`):
   - chỉ số đo gì, hai thành phần;
   - số là của nước trung tâm, Singapore không đại diện cả Đông Nam Á;
   - Oh et al. (2026) và giới hạn suy rộng sang doanh nghiệp nhỏ;
