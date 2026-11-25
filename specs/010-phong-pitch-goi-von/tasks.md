@@ -1,7 +1,7 @@
 # Danh sách việc: Phòng luyện pitch gọi vốn
 
 ## Nền và Câu chuyện 1 (P1, PR 1)
-- [X] T001 (40 câu, bảng duyệt ở `bo-cau-hoi.md`, chờ Hương duyệt) Soạn bộ câu hỏi khoảng 40 câu VI/EN, phủ 6 chữ PASTOR × 5 vai, gắn người hỏi (Tu Phan: P, R; Victor Lâm: A, S; Minh Khang: T, O); chị duyệt.
+- [X] T001 (40 câu, bảng duyệt ở `bo-cau-hoi.md`, Hương duyệt ngày 25/11/2026) Soạn bộ câu hỏi khoảng 40 câu VI/EN, phủ 6 chữ PASTOR × 5 vai, gắn người hỏi (Tu Phan: P, R; Victor Lâm: A, S; Minh Khang: T, O); chị duyệt.
 - [X] T002 Test hàm thuần (hỏng trước): đồng hồ đổi vai đúng mốc; phạt khi > 7:30; rút câu tất định theo mã, không lặp, đúng người hỏi; phủ đủ ô PASTOR × vai.
 - [X] T003 `lab/pitch-goi-von-core.js`, `lab/pitch-goi-von-data.js`.
 - [X] T004 `lab/pitch-goi-von.html`: màn luật (Lumina), đồng hồ theo vai, phần hỏi đáp có giờ từng câu; VI/EN; 360 px.

@@ -1,10 +1,10 @@
-# Bộ câu hỏi Hội đồng (bản pq-v1, chờ Hương duyệt)
+# Bộ câu hỏi Hội đồng (bản pq-v1, Hương duyệt ngày 25/11/2026)
 
 Sinh từ `lab/pitch-goi-von-data.js`. 40 câu, phủ đủ 6 chữ PASTOR × 5 vai. Câu hỏi không kèm đáp án; Hội đồng không chấm nội dung trả lời.
 
 Người hỏi theo chữ: thầy Tu Phan hỏi P, R; Victor Lâm hỏi A, S; Minh Khang hỏi T, O.
 
-Muốn sửa câu nào, Hương ghi mã câu và câu mới; em sửa trong tệp dữ liệu và đổi phiên bản.
+Sửa câu về sau: ghi mã câu và câu mới, sửa trong tệp dữ liệu và đổi phiên bản (pq-v2…).
 
 ## P – nỗi đau (Problem) · Thầy Tu Phan
 
