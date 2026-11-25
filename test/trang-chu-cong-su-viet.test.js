@@ -8,7 +8,7 @@ const assert = require('node:assert/strict');
 const BASE = process.env.BIZON_URL || 'http://127.0.0.1:8899';
 let chromium; try { chromium = require('playwright').chromium; } catch (e) { console.error('Cần cài playwright.'); process.exit(2); }
 const ROOT = path.join(__dirname, '..');
-const URL_CONG = 'https://thuyhuongctu.github.io/Vietnamese-History-Games/';
+const URL_CONG = 'https://games.jemappellehuong.com/';
 const read = f => fs.readFileSync(path.join(ROOT, f), 'utf8');
 
 assert.ok(+(read('sw.js').match(/bizon-v(\d+)/) || [])[1] >= 877);
@@ -17,7 +17,7 @@ assert.ok(fs.existsSync(path.join(ROOT, 'assets/covers/cong-tro-choi-su-viet.web
 for (const f of ['index.html', 'academia3d-v2.html']) {
   const html = read(f);
   assert.equal((html.match(/id="hp-su-viet"/g) || []).length, 1, f + ': phải có đúng một thẻ cổng game sử Việt');
-  assert.match(html, /href="https:\/\/thuyhuongctu\.github\.io\/Vietnamese-History-Games\/" target="_blank" rel="noopener"/, f);
+  assert.match(html, /href="https:\/\/games\.jemappellehuong\.com\/" target="_blank" rel="noopener"/, f);
 }
 
 (async () => {

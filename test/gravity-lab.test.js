@@ -105,7 +105,7 @@ test('Đọc CSV dấu chấm phẩy và dấu thập phân phẩy', () => {
 });
 
 test('URL cũ chuyển hướng sang bản gốc ở kho Gravity-Lab (có DOI) và giữ ghi công tác giả', () => {
-  const U = 'https://thuyhuongctu.github.io/Gravity-Lab/';
+  const U = 'https://gravity.bizonland.com/';
   for (const rel of ['../lab/gravity-lab.html', '../gravity-lab/index.html']) {
     const html = fs.readFileSync(path.join(__dirname, rel), 'utf8');
     assert.ok(html.includes('url=' + U) && html.includes("location.replace('" + U + "'"), rel + ' chuyển hướng sang bản gốc');
