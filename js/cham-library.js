@@ -25,6 +25,13 @@
     { id: 'srp', t: L('Hộ Chiếu Sầu Riêng', 'Durian Passport'), d: L('Đưa sầu riêng Việt ra thế giới: mã số vùng trồng, nghị định thư kiểm dịch, chính ngạch và tiểu ngạch.', 'Taking Vietnamese durian global: growing-area codes, quarantine protocols, formal and informal export.'),
       disc: ['Quốc tế hóa', 'Chuỗi cung ứng'], region: 'Việt Nam', tier: 3, kind: 'sim', bg: 'leaf', sims: 1, dur: L('6 mùa', '6 seasons'), href: 'ho-chieu-sau-rieng.html' }
   ];
+  /* Tình huống giả định (đặc tả 011): nội dung thật để dạy, nhưng câu chuyện và số liệu là giả định, ghi rõ trên thẻ (nhãn «Giả định»).
+     Không nằm trong CASES (case thật); luôn hiện cùng case thật; chơi trên trang riêng, không chấm điểm. */
+  const GIA_DINH = [
+    { id: 'khoi-nghiep', gia: true, t: L('Kiểm định ý tưởng khởi nghiệp', 'Validating a startup idea'),
+      d: L('Tình huống giả định: đội «Rổ Rau Xanh» đi từ một ý tưởng đến lần thử đầu tiên với khách thật. Chọn, ghi lý do, xem hệ quả và vì sao.', 'Fictional case: team «Green Basket» goes from an idea to its first test with real customers. Choose, give a reason, see what happens and why.'),
+      disc: ['Khởi nghiệp', 'Marketing'], region: 'ĐBSCL', tier: 1, kind: 'sim', bg: 'lilac', sims: 1, dur: L('30 phút', '30 min'), href: 'lab/khoi-nghiep-tinh-huong.html' }
+  ];
   /* Thẻ minh họa của bản thiết kế (KHÔNG phải case thật): chỉ hiện với ?mau=1 */
   const SAMPLES = [
     ['Gạo ST25 ra thế giới', 'ST25 rice goes global', 'Hợp tác xã chọn giữa bán lúa tươi cho thương lái và tự xây thương hiệu gạo.', 'A cooperative chooses between selling fresh paddy to traders and building its own rice brand.', ['Marketing', 'Quốc tế hóa'], 'Sóc Trăng', 3],
@@ -82,6 +89,8 @@
     gvGo: L('Mở ghi chú giảng dạy ↗', 'Open teaching notes ↗'), gvLocks: [L('Kế hoạch hai buổi', 'Two-session plan'), L('Đáp án gợi ý', 'Suggested answers'), L('Rubric 100 điểm', '100-point rubric')],
     sameTier: L('Cùng bậc', 'Same tier'), others: L('Case khác', 'Other cases'),
     draftNote: L('Case mẫu: nội dung đang được biên soạn. Thẻ này chỉ để minh họa quy mô thư viện.', 'Sample case: content is still being written. This card only illustrates the library at scale.'),
+    gia: L('Giả định', 'Fictional'), giaNote: L('Tình huống giả định, dựng từ các mẫu thường gặp ở ĐBSCL; số liệu là số minh họa. Chơi trên trang riêng, không chấm điểm.', 'A fictional case built from patterns common in the Mekong Delta; figures are illustrative. Played on its own page, with no score.'),
+    playSet: L('Mở bộ tình huống →', 'Open the case set →'),
     simNote: L('Case đang biên soạn. Mô phỏng đã chơi được trên BizOn.', 'Case in preparation. The simulation is already playable on BizOn.'), playSim: L('Chơi mô phỏng →', 'Play simulation →'),
     sampleBanner: L('Đang xem kèm 12 «Case mẫu» minh họa quy mô thư viện. Đây không phải case thật.', 'Showing 12 illustrative “Sample” cards to preview the library at scale. They are not real cases.')
   };
@@ -90,7 +99,7 @@
   const discName = (d, lang) => (lang === 'en' ? DISC_EN[d] || d : d);
   const regionName = (r, lang) => (lang === 'en' ? REGION_EN[r] || r : r);
   const fold = s => String(s).normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D').toLowerCase();
-  const casesFor = withSamples => (withSamples ? CASES.concat(SAMPLES) : CASES.slice());
+  const casesFor = withSamples => (withSamples ? CASES.concat(GIA_DINH, SAMPLES) : CASES.concat(GIA_DINH));
   const countWord = (n, lang) => (lang === 'en' ? n + (n === 1 ? ' case' : ' cases') : n + ' case');
   const simWord = (n, lang) => (lang === 'en' ? n + (n === 1 ? ' simulation' : ' simulations') : n + ' mô phỏng');
 
@@ -128,7 +137,7 @@
     const s = p.toString(); return s ? '?' + s : '';
   }
 
-  const API = { CASES, SAMPLES, SIMS, GOALS, STATS, LINKS, TIERS, TX, DISC_EN, REGION_EN, tr, fold, casesFor, matches, filterCases, shelves, activeCount, related, parseUrl, buildUrl };
+  const API = { CASES, GIA_DINH, SAMPLES, SIMS, GOALS, STATS, LINKS, TIERS, TX, DISC_EN, REGION_EN, tr, fold, casesFor, matches, filterCases, shelves, activeCount, related, parseUrl, buildUrl };
   root.BizOnCaseLibrary = API;
   if (typeof document === 'undefined' || !root.ChamKit) return;
 
@@ -143,7 +152,7 @@
   const all = () => casesFor(S.mau);
   const lang = () => K.lang();
   const tierLine = c => t(TX.tier) + ' ' + c.tier + ' · ' + regionName(c.region, lang());
-  const kindBadge = c => '<span class="tv-kind k-' + c.kind + '">' + esc(t(TX.kinds[c.kind])) + '</span>';
+  const kindBadge = c => '<span class="tv-kind k-' + c.kind + '">' + esc(t(TX.kinds[c.kind])) + '</span>' + (c.gia ? '<span class="tv-kind k-gia">' + esc(t(TX.gia)) + '</span>' : '');
   const pressed = on => ' aria-pressed="' + (on ? 'true' : 'false') + '"';
 
   function cardHtml(c, cls) {
@@ -231,7 +240,7 @@
           '<p class="tv-small">' + esc(t(TX.gvLocked)) + '</p><a class="tv-gvgo" href="' + LINKS.notes + '" target="_blank" rel="noopener">' + esc(t(TX.gvGo)) + '</a></div></aside>' : '') + '</div>';
     } else {
       body = '<section class="tv-panel tv-panel-sm">' + (c.kind === 'draft' ? '<p class="tv-note">' + esc(t(TX.draftNote)) + '</p>' :
-        '<p class="tv-alert">' + esc(t(TX.simNote)) + '</p><a class="tv-btn primary" href="' + c.href + '" target="_blank" rel="noopener">' + esc(t(TX.playSim)) + '</a>') +
+        '<p class="tv-alert">' + esc(t(c.gia ? TX.giaNote : TX.simNote)) + '</p><a class="tv-btn primary" href="' + c.href + '" target="_blank" rel="noopener">' + esc(t(c.gia ? TX.playSet : TX.playSim)) + '</a>') +
         '<button type="button" class="tv-btn outline" data-act="lib">' + esc(t(TX.back)) + '</button></section>';
     }
     const rel = related(list, c);

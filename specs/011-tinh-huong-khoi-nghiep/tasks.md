@@ -1,17 +1,17 @@
 # Danh sách việc: Tình huống khởi nghiệp
 
 ## Nền và Câu chuyện 1 – «Kiểm định ý tưởng» (P1, PR 1)
-- [ ] T001 Soạn 4 tình huống «Kiểm định ý tưởng» VI/EN: bối cảnh giả định ĐBSCL, 3–4 phương án; mỗi phương án có hệ quả, «Vì sao?», câu hỏi phản biện, nhãn logic. Thêm danh mục nguồn APA; Hương duyệt nội dung trong PR 1.
-- [ ] T002 Test (hỏng trước), gồm hàm thuần và Playwright:
+- [X] T001 (bộ kn-v1, chờ Hương duyệt nội dung) Soạn 4 tình huống «Kiểm định ý tưởng» VI/EN: bối cảnh giả định ĐBSCL, 3–4 phương án; mỗi phương án có hệ quả, «Vì sao?», câu hỏi phản biện, nhãn logic. Thêm danh mục nguồn APA; Hương duyệt nội dung trong PR 1.
+- [X] T002 Test (hỏng trước), gồm hàm thuần và Playwright:
   - đủ trường VI/EN cho mọi phương án;
   - không trùng bề mặt câu chuyện `ct-v1`; `js/case-task-data.js` không đổi;
   - lý do dưới 10 ký tự thì không mở hệ quả;
   - tổng kết đủ lựa chọn và lý do; CSV đúng cột;
   - tiến độ còn sau khi tải lại; trích dẫn qua `kiem-trich-dan.mjs` không lỗi;
   - 360 px, VI/EN, không lỗi JS, không gọi mạng ngoài.
-- [ ] T003 `lab/khoi-nghiep-tinh-huong-data.js`, `lab/khoi-nghiep-tinh-huong-core.js`.
-- [ ] T004 `lab/khoi-nghiep-tinh-huong.html`: chọn bộ, tình huống, ô lý do, hệ quả, tổng kết, in, CSV, làm lại; dòng «tình huống giả định».
-- [ ] T005 Thẻ trong thư viện (`js/cham-library.js`); `sw.js`, `sitemap.xml`, canonical.
+- [X] T003 `lab/khoi-nghiep-tinh-huong-data.js`, `lab/khoi-nghiep-tinh-huong-core.js`.
+- [X] T004 `lab/khoi-nghiep-tinh-huong.html`: chọn bộ, tình huống, ô lý do, hệ quả, tổng kết, in, CSV, làm lại; dòng «tình huống giả định».
+- [X] T005 Thẻ trong thư viện (`js/cham-library.js`); `sw.js`, `sitemap.xml`, canonical.
 
 ## Câu chuyện 2 – «Ra thị trường» (P2, PR 2)
 - [ ] T006 Soạn 4 tình huống «Ra thị trường» VI/EN, có liên kết sang CMR Lab, CVP Lab, `global.html` và Hộ Chiếu Sầu Riêng ở phần «Vì sao?». Hương duyệt.
