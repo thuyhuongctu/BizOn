@@ -48,7 +48,7 @@ for (const f of ['js/games-clay.js', 'games.html', 'index.html', 'universe.html'
     // nên không nói ngoại thương «bắt đầu» ở Vân Đồn, và «đầu tiên» phải kèm «thường được coi là».
     assert.doesNotMatch(r.title, /bắt đầu/);
     assert.match(r.text, /thường được coi là thương cảng quốc tế đầu tiên/);
-    assert.match(r.text, /18 tuổi/, 'game không dành cho trẻ em: từ 18 tuổi, khớp khai báo trên Google Play (25/11/2026)');
+    assert.match(r.text, /18 tuổi trở lên/, 'game không dành cho trẻ em: từ 18 tuổi, khớp khai báo trên Google Play (25/11/2026)');
     assert.ok(r.afterMini, 'mục mở rộng nằm sau mục trò chơi nhỏ');
     await pg.close();
     pg = await open('en', 360);
