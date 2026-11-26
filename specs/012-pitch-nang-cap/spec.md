@@ -140,7 +140,7 @@ Giọng đọc câu hỏi: Hương đồng ý tạm dùng giọng sẵn của tr
 **Cách thử độc lập:** cho một lượt pitch quá giờ ở đoạn «Tài chính» và lệch điểm hòa vốn. Lumina nêu đúng hai điều đó và gợi ý ba câu thuộc nhóm tài chính. Bật nhánh ẩn thì không còn góp ý cụ thể.
 
 **Kịch bản nghiệm thu:**
-1. **Cho** lượt pitch quá giờ 40 giây ở đoạn Tài chính và lệch điểm hòa vốn 12 %, **Khi** mở tổng kết, **Thì** Lumina nêu đúng hai điểm đó và gợi ý 3 câu trong nhóm tài chính.
+1. **Cho** lượt pitch có câu hỏi tài chính trả lời quá giờ 40 giây và lệch điểm hòa vốn 12 % (sửa ở PR 4: đồng hồ pitch tự chuyển vai khi hết giờ nên «quá giờ ở phần tài chính» đo ở phần hỏi đáp), **Khi** mở tổng kết, **Thì** Lumina nêu đúng hai điểm đó và gợi ý 3 câu trong nhóm tài chính.
 2. **Cho** lớp bật nhánh ẩn, **Khi** mở tổng kết, **Thì** Lumina không đưa góp ý cụ thể, và CSV ghi `lumina=an`.
 
 ### Trường hợp biên
