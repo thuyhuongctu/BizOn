@@ -30,6 +30,7 @@ let chromium; try { chromium = require('playwright').chromium; } catch (e) { con
   const ngoai = [];
   await ctx.route('**/*', r => { const u = r.request().url(); if (!u.startsWith(BASE) && !u.startsWith('data:') && !u.startsWith('blob:')) { ngoai.push(u); return r.abort(); } return r.continue(); });
   const pg = await ctx.newPage(); const errs = []; pg.on('pageerror', e => errs.push(e.message));
+  if (process.env.BIZON_CPU) { const c = await ctx.newCDPSession(pg); await c.send('Emulation.setCPUThrottlingRate', { rate: +process.env.BIZON_CPU }); }   // BIZON_CPU=14: giả lập máy CI chậm
   const until = async (fn, ms = 60000) => { const t = Date.now(); while (Date.now() - t < ms) { if (await pg.evaluate(fn).catch(() => false)) return true; await pg.waitForTimeout(250); } return false; };
   const am = () => pg.evaluate(() => window.__benBizon.amThanh());
   const di = async (ms) => { await pg.keyboard.down('KeyW'); await pg.waitForTimeout(ms); await pg.keyboard.up('KeyW'); await pg.waitForTimeout(300); };
@@ -41,10 +42,15 @@ let chromium; try { chromium = require('playwright').chromium; } catch (e) { con
   ok(t.coHoTro && t.bat, 'mặc định bật tiếng bến sông');
   ok(await until(() => window.__benBizon.amThanh().chay, 8000), 'âm thanh chạy sau khi chọn vai');
   ok(await pg.getAttribute('#bb-am', 'aria-pressed') === 'true', 'nút 🔊 ở trạng thái bật');
-  const b0 = (await am()).soBuoc;
-  await di(5000);   // trình duyệt không màn hình chạy ít khung hình (dt tối đa 0,05 s): ~0,55 m mỗi giây thật
-  const b1 = (await am()).soBuoc;
-  ok(b1 - b0 >= 2, 'đi bộ có tiếng bước chân (' + (b1 - b0) + ' bước)');
+  // Đi tới khi có ít nhất 2 bước (tối đa 30 s), rồi đối chiếu số bước với quãng đường thật (sải 0,72 m, chạy 1,15 m).
+  // Không đi theo thời gian cố định: máy CI vẽ ít khung hình (dt tối đa 0,05 s) nên mỗi giây thật đi được rất ít.
+  const b0 = (await am()).soBuoc, p0 = await pg.evaluate(() => window.__benBizon.state());
+  await pg.evaluate(b => { window.__b0 = b; }, b0); await pg.keyboard.down('KeyW');
+  const coBuoc = await until(() => window.__benBizon.amThanh().soBuoc >= window.__b0 + 2, 30000);
+  await pg.keyboard.up('KeyW'); await pg.waitForTimeout(300);
+  const b1 = (await am()).soBuoc, p1 = await pg.evaluate(() => window.__benBizon.state()), quang = Math.hypot(p1.x - p0.x, p1.z - p0.z);
+  ok(coBuoc && b1 - b0 >= 2, 'đi bộ có tiếng bước chân (' + (b1 - b0) + ' bước, ' + quang.toFixed(2) + ' m)');
+  ok(b1 - b0 <= Math.floor(quang / 0.72) + 1 && b1 - b0 >= Math.floor(quang / 1.15) - 1, 'số bước khớp quãng đường đi (sải 0,72–1,15 m)');
   await pg.waitForTimeout(1500);
   ok((await am()).soBuoc === b1, 'đứng yên thì không thêm bước');
   await pg.click('#bb-am');
