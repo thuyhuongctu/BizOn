@@ -60,6 +60,23 @@ let chromium; try { chromium = require('playwright').chromium; } catch (e) { con
   ok(await until(() => window.__benBizon.amThanh().chay, 8000), 'bật lại: âm thanh chạy');
   await pg.click('#bb-exit');
   ok(await until(() => !window.__benBizon.amThanh().chay, 5000), 'thoát: ngừng phát');
+  // bố cục: 🔊 cùng hàng với 🎥, không chồng nút hay bảng nào, không tràn ngang (cột nút phải giữ hai nút như cũ)
+  for (const [w, h] of [[360, 740], [390, 664], [412, 839], [740, 360]]) {
+    const m = await b.newPage({ viewport: { width: w, height: h }, hasTouch: true, isMobile: true });
+    await m.goto(BASE + '/hub-3d.html', { waitUntil: 'load' }); await m.click('#bb-pick [data-vai="ceo"]');
+    await m.waitForFunction(() => window.__benBizon && window.__benBizon.state().ready, null, { timeout: 90000 }); await m.waitForTimeout(600);
+    const r = await m.evaluate(() => {
+      const box = e => { const q = e.getBoundingClientRect(); return { l: q.left, t: q.top, r: q.right, b: q.bottom, w: q.width }; };
+      const am = box(document.getElementById('bb-am')), goc = box(document.getElementById('bb-goc'));
+      const khac = ['#bb-chay', '#bb-goc', '#bb-exit', '.dc-joy', '.dc-goto-btn', '#bb-nv', '#bb-the'].flatMap(s => [...document.querySelectorAll(s)])
+        .filter(e => e.getBoundingClientRect().width > 0 && getComputedStyle(e).visibility !== 'hidden');
+      const chong = khac.filter(e => { const q = box(e); return q.l < am.r && q.r > am.l && q.t < am.b && q.b > am.t; }).map(e => e.id || e.className);
+      return { am, goc, chong, sw: document.documentElement.scrollWidth, nut: document.querySelectorAll('#bb-nut-phai > button').length };
+    });
+    ok(r.am.w >= 44 && r.am.r <= w && r.am.b <= h && Math.abs(r.am.b - r.goc.b) < 2 && r.am.r < r.goc.l, w + '×' + h + ': 🔊 cùng hàng, bên trái 🎥, ≥ 44 px, trong màn hình');
+    ok(!r.chong.length && r.sw <= w && r.nut === 2, w + '×' + h + ': không chồng nút khác, không tràn ngang' + (r.chong.length ? ' (chồng ' + r.chong.join(', ') + ')' : ''));
+    await m.close();
+  }
   ok(!errs.length, 'không lỗi JS' + (errs.length ? ': ' + errs[0] : ''));
   ok(!ngoai.length, 'không gọi mạng ra ngoài' + (ngoai.length ? ': ' + ngoai[0] : ''));
   await b.close();
