@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#006687">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="../assets/brand/bizon-favicon.svg" type="image/svg+xml">
+<script src="../js/bizon-lang.js"></script>
+<title>Quỹ đầu tư · Phòng pitch · BizOn</title>
+<meta name="description" content="Trang quỹ của Hội đồng nhà đầu tư cả lớp trong Phòng luyện pitch BizOn: mỗi đội có 1 tỷ đồng vốn ảo để rót cho đội đang pitch. Cần mã phòng do giảng viên chiếu.">
+<!-- Đặc tả: specs/012-pitch-nang-cap (PR 1). Sổ góp vốn và luật: pitch-goi-von-lop.js; màn chiếu giữ sổ, trang này chỉ gửi lượt rót.
+     Không đưa vào sitemap: trang cần mã phòng. -->
+<style>
+@font-face{font-family:'Plus Jakarta Sans';font-weight:400 800;font-display:swap;src:url(../assets/fonts/PlusJakartaSans-var-vietnamese.woff2) format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+1EA0-1EF9,U+20AB}
+@font-face{font-family:'Plus Jakarta Sans';font-weight:400 800;font-display:swap;src:url(../assets/fonts/PlusJakartaSans-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+2000-206F,U+20AC,U+2122,U+2212}
+:root{--ink:#1F2A44;--page:#F4F1EA;--card:#FBF9F4;--field:#ECE7DC;--track:#E9E4D8;--muted:#4F5768;--burg:#8C2F39;--gold:#C9A24A;--blue:#3E5C8A;--green:#3F6E52;--warn:#9A5B12;--clay:0 22px 34px -20px rgba(31,42,68,.4),inset 0 -6px 12px rgba(0,0,0,.05),inset 0 6px 12px rgba(255,255,255,.9)}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--page);color:var(--ink);font-family:'Plus Jakarta Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+a{color:var(--burg);font-weight:700}
+[hidden]{display:none!important}
+.num{font-variant-numeric:tabular-nums}
+.wrap{max-width:560px;margin:0 auto;padding:16px 16px 40px}
+header.top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+header.top h1{font-size:20px;margin:0;line-height:1.2}
+header.top .sub{font-size:13px;color:var(--muted);font-weight:700;margin:2px 0 0}
+.btn{min-height:44px;min-width:44px;border:0;border-radius:14px;padding:10px 16px;font-weight:800;background:var(--track);box-shadow:0 6px 12px -8px rgba(31,42,68,.5)}
+.btn.chinh{background:var(--burg);color:#fff}
+.btn.phu{background:var(--blue);color:#fff}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.the{background:var(--card);border-radius:22px;padding:16px;box-shadow:var(--clay);margin-bottom:14px}
+.the h2{font-size:16px;margin:0 0 8px}
+label{display:block;font-weight:800;font-size:14px;margin-bottom:4px}
+input[type=text]{width:100%;min-height:44px;border:0;border-radius:12px;background:var(--field);padding:8px 12px}
+.hang{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:10px}
+.hang input{flex:1 1 160px}
+.goi-y{font-size:13px;color:var(--muted);line-height:1.5}
+.trang-thai{font-weight:800;margin:0 0 12px}
+.so-lon{font-size:40px;font-weight:800;line-height:1.1;margin:2px 0}
+.cua-so{font-size:15px;font-weight:700;line-height:1.5;margin:0 0 10px}
+.the.mo{box-shadow:0 0 0 3px var(--green),var(--clay)}
+.buoc{display:grid;grid-template-columns:56px 1fr 56px;gap:10px;align-items:center;text-align:center}
+.buoc .btn{font-size:24px;padding:0}
+.buoc output{font-size:24px;font-weight:800}
+#nut-rot{width:100%;margin-top:12px;font-size:17px}
+.bao{min-height:22px;font-weight:800;margin:10px 0 0;font-size:14px}
+.bao.do{color:var(--burg)}
+.bao.ok{color:var(--green)}
+.danh-muc{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.danh-muc li{display:flex;justify-content:space-between;gap:10px;background:var(--field);border-radius:12px;padding:8px 12px;font-weight:700}
+.danh-muc li.goi-y{background:none;padding:0;font-weight:400}
+.chan{font-size:12px;color:var(--muted);line-height:1.5;margin-top:16px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header class="top">
+    <div>
+      <h1 data-k="tieuDe">Quỹ đầu tư</h1>
+      <p class="sub"><span data-k="phong">Phòng</span> <span class="num" id="quy-phong"></span></p>
+    </div>
+    <button type="button" class="btn" id="nut-lang" aria-label="Đổi ngôn ngữ / Switch language">EN</button>
+  </header>
+
+  <section id="quy-nhap-ma" class="the" hidden aria-labelledby="h-ma">
+    <h2 id="h-ma" data-k="nhapMaTieuDe">Nhập mã phòng</h2>
+    <p class="goi-y" data-k="nhapMaGoiY">Mã gồm 6 ký tự, hiện trên màn chiếu của giảng viên.</p>
+    <div class="hang"><label for="quy-ma" class="goi-y" style="flex-basis:100%;margin:0" data-k="maPhong">Mã phòng</label><input type="text" id="quy-ma" maxlength="6" autocomplete="off" spellcheck="false" autocapitalize="characters"><button type="button" class="btn phu" id="nut-ma" data-k="vaoPhong">Vào phòng</button></div>
+    <p class="bao do" id="quy-ma-loi" role="status" aria-live="polite"></p>
+  </section>
+
+  <section id="quy-vao" class="the" hidden aria-labelledby="h-vao">
+    <h2 id="h-vao" data-k="vaoTieuDe">Đội bạn là một quỹ 1 tỷ đồng</h2>
+    <p class="goi-y" data-k="vaoGoiY">Nhập tên đội như đã đăng ký với lớp. Giảng viên duyệt xong thì quỹ được rót vốn cho các đội khác khi họ pitch.</p>
+    <div class="hang"><label for="quy-ten" class="goi-y" style="flex-basis:100%;margin:0" data-k="tenDoi">Tên đội</label><input type="text" id="quy-ten" maxlength="40" autocomplete="off"><button type="button" class="btn chinh" id="nut-vao" data-k="vaoPhong">Vào phòng</button></div>
+    <p class="bao do" id="quy-vao-loi" role="status" aria-live="polite"></p>
+  </section>
+
+  <section id="quy-chinh" hidden aria-labelledby="quy-ten-hien">
+    <p class="trang-thai" id="quy-trang-thai" role="status" aria-live="polite"></p>
+    <div class="the">
+      <h2 id="quy-ten-hien" data-k="quyCuaDoi">Quỹ của đội</h2>
+      <div class="goi-y" data-k="vonCon">Vốn còn lại</div>
+      <div class="so-lon num" id="quy-von"></div>
+      <div class="goi-y" data-k="luatNgan">Rót theo bậc 50 triệu, tối đa 500 triệu cho một đội, không rót cho chính đội mình.</div>
+    </div>
+    <div class="the" id="the-rot">
+      <h2 data-k="rotTieuDe">Rót vốn</h2>
+      <p class="cua-so" id="quy-cua-so"></p>
+      <div class="buoc">
+        <button type="button" class="btn" id="nut-bot" aria-label="Bớt 50 triệu">−</button>
+        <output id="quy-so" class="num" aria-live="polite"></output>
+        <button type="button" class="btn" id="nut-them" aria-label="Thêm 50 triệu">+</button>
+      </div>
+      <button type="button" class="btn chinh" id="nut-rot" data-k="rot">Rót vốn</button>
+      <p class="bao" id="quy-bao" role="status" aria-live="polite"></p>
+    </div>
+    <div class="the">
+      <h2 data-k="danhMucTieuDe">Danh mục của quỹ</h2>
+      <ul class="danh-muc" id="quy-danh-muc"></ul>
+    </div>
+  </section>
+
+  <p class="chan" data-k="chan">Trang gửi qua mạng chỉ mã phòng, tên đội do lớp đặt, số vốn rót và thời điểm; không tên thật, không âm thanh, không hình ảnh. Máy chủ chỉ chuyển tin, không lưu. Giảng viên có thể dùng bảng góp vốn đã ẩn danh cho nghiên cứu về dạy học.</p>
+  <p class="chan"><a href="pitch-goi-von.html" data-k="vePitch">← Phòng luyện pitch</a></p>
+</main>
+
+<script src="../js/backend-config.js"></script>
+<script src="pitch-goi-von-lop.js"></script>
+<script>
+(function () {
+  'use strict';
+  const P = window.PitchLop, L = P.LUAT;
+  const $ = id => document.getElementById(id);
+  const qs = new URLSearchParams(location.search);
+  const T = {
+    vi: {
+      tieuDe: 'Quỹ đầu tư', phong: 'Phòng', quyCuaDoi: 'Quỹ của đội', nhapMaTieuDe: 'Nhập mã phòng', nhapMaGoiY: 'Mã gồm 6 ký tự, hiện trên màn chiếu của giảng viên.', maPhong: 'Mã phòng', vaoPhong: 'Vào phòng', maSai: 'Mã phòng chưa đúng: 6 ký tự, chữ và số.',
+      vaoTieuDe: 'Đội bạn là một quỹ 1 tỷ đồng', vaoGoiY: 'Nhập tên đội như đã đăng ký với lớp. Giảng viên duyệt xong thì quỹ được rót vốn cho các đội khác khi họ pitch.', tenDoi: 'Tên đội', thieuTen: 'Nhập tên đội trước đã.',
+      vonCon: 'Vốn còn lại', luatNgan: 'Rót theo bậc 50 triệu, tối đa 500 triệu cho một đội, không rót cho chính đội mình.', rotTieuDe: 'Rót vốn', rot: 'Rót vốn', danhMucTieuDe: 'Danh mục của quỹ', chuaRot: 'Quỹ chưa rót cho đội nào.',
+      ttGui: 'Đang chờ màn chiếu của giảng viên nhận…', ttCho: 'Chờ giảng viên duyệt quỹ.', ttDuyet: 'Quỹ đã được duyệt.', ttBiLoai: 'Giảng viên chưa nhận quỹ này. Kiểm tra tên đội rồi vào lại.', ttMat: 'Mất kết nối, đang nối lại…', ttKhong: 'Không kết nối được máy chủ. Kiểm tra mạng rồi tải lại trang.',
+      csChua: 'Chờ giảng viên mở cửa sổ rót vốn.', csMo: (d, c, g) => 'Đang gọi vốn: ' + d + ' · còn ' + c + ' · đã gọi được ' + g + '.', csDong: d => 'Cửa sổ rót vốn cho ' + d + ' đã đóng.',
+      baoCuaMinh: 'Đội bạn đang pitch: không rót cho chính đội mình.', baoTran: 'Quỹ đã rót đủ 500 triệu cho đội này.', baoHet: 'Quỹ đã hết vốn.', baoGui: 'Đang gửi lượt rót…', baoNhan: s => 'Màn chiếu đã nhận ' + s + '.',
+      baoBo: ly => 'Lượt rót bị bỏ: ' + ({ 'het-gio': 'cửa sổ đã đóng', 'vuot-tran': 'vượt 500 triệu cho đội này', 'het-von': 'quỹ không đủ vốn', 'sai-doi': 'đội đã đổi', 'cua-minh': 'không rót cho chính đội mình', 'quy-chua-duyet': 'quỹ chưa được duyệt', 'chua-mo': 'chưa mở cửa sổ', 'sai-bac': 'sai bậc 50 triệu' }[ly] || ly) + '.',
+      bot: 'Bớt 50 triệu', them: 'Thêm 50 triệu', dangGui: 'đang gửi',
+      chan: 'Trang gửi qua mạng chỉ mã phòng, tên đội do lớp đặt, số vốn rót và thời điểm; không tên thật, không âm thanh, không hình ảnh. Máy chủ chỉ chuyển tin, không lưu. Giảng viên có thể dùng bảng góp vốn đã ẩn danh cho nghiên cứu về dạy học.', vePitch: '← Phòng luyện pitch',
+    },
+    en: {
+      tieuDe: 'Investment fund', phong: 'Room', quyCuaDoi: 'Team fund', nhapMaTieuDe: 'Enter the room code', nhapMaGoiY: 'Six characters, shown on the instructor\'s screen.', maPhong: 'Room code', vaoPhong: 'Join', maSai: 'That room code is not valid: 6 letters and digits.',
+      vaoTieuDe: 'Your team is a fund with 1 billion VND', vaoGoiY: 'Enter your team name as registered with the class. Once the instructor approves, your fund can invest in other teams when they pitch.', tenDoi: 'Team name', thieuTen: 'Enter your team name first.',
+      vonCon: 'Capital left', luatNgan: 'Invest in steps of 50 million, at most 500 million per team, never in your own team.', rotTieuDe: 'Invest', rot: 'Invest', danhMucTieuDe: 'Fund portfolio', chuaRot: 'The fund has not invested yet.',
+      ttGui: 'Waiting for the instructor\'s screen…', ttCho: 'Waiting for the instructor to approve the fund.', ttDuyet: 'The fund is approved.', ttBiLoai: 'The instructor did not accept this fund. Check the team name and join again.', ttMat: 'Connection lost, reconnecting…', ttKhong: 'Could not reach the server. Check the network and reload the page.',
+      csChua: 'Waiting for the instructor to open an investment window.', csMo: (d, c, g) => 'Now raising: ' + d + ' · ' + c + ' left · raised ' + g + '.', csDong: d => 'The investment window for ' + d + ' is closed.',
+      baoCuaMinh: 'Your team is pitching: you cannot invest in your own team.', baoTran: 'The fund has invested the 500 million limit in this team.', baoHet: 'The fund has no capital left.', baoGui: 'Sending the investment…', baoNhan: s => 'The main screen received ' + s + '.',
+      baoBo: ly => 'Investment rejected: ' + ({ 'het-gio': 'the window had closed', 'vuot-tran': 'over 500 million for this team', 'het-von': 'not enough capital', 'sai-doi': 'the team changed', 'cua-minh': 'not in your own team', 'quy-chua-duyet': 'the fund is not approved', 'chua-mo': 'no window open', 'sai-bac': 'not a 50 million step' }[ly] || ly) + '.',
+      bot: 'Remove 50 million', them: 'Add 50 million', dangGui: 'sending',
+      chan: 'The page sends over the network only the room code, team names chosen by the class, amounts invested and times; no real names, no audio, no images. The server only relays messages and stores nothing. The instructor may use the anonymised investment table for teaching research.', vePitch: '← Pitch practice room',
+    },
+  };
+  let lang = 'vi'; try { lang = localStorage.getItem('bizon-lang') === 'en' ? 'en' : 'vi'; } catch (e) {}
+  const t = k => T[lang][k];
+  const tien = v => P.dinhTien(v, lang);
+  const mmss = s => { s = Math.max(0, Math.ceil(s)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); };
+  const ngauNhien = () => Math.random().toString(36).slice(2, 10);
+
+  const phong = (qs.get('p') || '').toUpperCase();
+  const KHOA = 'bizon-pitch-quy-' + phong;
+  let me = { id: '', ten: '' }, kenh = null, ban = null, lech = 0, so = L.bac, cho = [], dem = 0, daThayMinh = false, ketNoi = '', bao = { chu: () => '', kieu: '' };   // chu là hàm để đổi ngôn ngữ vẫn đúng
+  try { const o = JSON.parse(sessionStorage.getItem(KHOA) || 'null'); if (o && o.id) me = o; } catch (e) {}
+  if (!me.id) me.id = 'quy-' + ngauNhien();
+  const luu = () => { try { sessionStorage.setItem(KHOA, JSON.stringify(me)); } catch (e) {} };
+
+  // Tính từ bản tin mới nhất của màn chiếu, cộng các lượt đang gửi chưa được xét.
+  function tinh() {
+    const s = P.tuBanTin(ban), x = s.quy[me.id], dp = ban && ban.dangPitch;
+    const conMs = dp ? dp.hetHan - (Date.now() - lech) : 0;
+    const choSo = cho.reduce((a, c) => a + c.so, 0);
+    const daRot = dp ? s.gop.filter(g => g.quy === me.id && g.doi === dp.doi).reduce((a, g) => a + g.so, 0) + cho.filter(c => c.doi === dp.doi).reduce((a, c) => a + c.so, 0) : 0;
+    const vonCon = x ? P.vonCon(s, me.id) - choSo : L.vonQuy;
+    const toiDa = Math.max(0, Math.floor(Math.min(L.tran - daRot, vonCon) / L.bac) * L.bac);
+    return { s, x, dp, conMs, mo: !!(dp && conMs > 0), vonCon, toiDa, duyet: !!(x && x.trangThai === 'duyet') };
+  }
+
+  function apNgonNgu() {
+    document.documentElement.lang = lang;
+    document.title = (lang === 'en' ? 'Investment fund · Pitch room · BizOn' : 'Quỹ đầu tư · Phòng pitch · BizOn');
+    document.querySelectorAll('[data-k]').forEach(el => { const v = T[lang][el.dataset.k]; if (typeof v === 'string') el.textContent = v; });
+    $('nut-lang').textContent = lang === 'vi' ? 'EN' : 'VI';
+    $('nut-bot').setAttribute('aria-label', t('bot')); $('nut-them').setAttribute('aria-label', t('them'));
+    ve();
+  }
+
+  function ve() {
+    if (!me.ten) return;
+    const k = tinh();
+    $('quy-ten-hien').textContent = me.ten;
+    $('quy-trang-thai').textContent = ketNoi === 'khong' ? t('ttKhong') : ketNoi === 'mat' ? t('ttMat') : !k.x ? t('ttGui') : k.duyet ? t('ttDuyet') : t('ttCho');
+    $('quy-von').textContent = tien(k.vonCon);
+    const tenDoi = k.dp ? (k.s.quy[k.dp.doi] ? k.s.quy[k.dp.doi].ten : '') : '';
+    $('quy-cua-so').textContent = !k.dp ? t('csChua') : k.mo ? t('csMo')(tenDoi, mmss(k.conMs / 1000), tien(P.tongDoi(k.s, k.dp.doi).tong)) : t('csDong')(tenDoi);
+    $('the-rot').classList.toggle('mo', k.mo && k.duyet && k.dp.doi !== me.id);
+    if (k.toiDa >= L.bac) so = Math.min(Math.max(so, L.bac), k.toiDa);
+    $('quy-so').textContent = tien(k.toiDa >= L.bac ? so : 0);
+    const coThe = k.duyet && k.mo && k.dp.doi !== me.id && k.toiDa >= L.bac;
+    $('nut-rot').disabled = !coThe;
+    $('nut-them').disabled = !coThe || so + L.bac > k.toiDa;
+    $('nut-bot').disabled = !coThe || so - L.bac < L.bac;
+    let b = bao;
+    if (k.duyet && k.mo) {
+      if (k.dp.doi === me.id) b = { chu: () => t('baoCuaMinh'), kieu: '' };
+      else if (k.vonCon < L.bac) b = { chu: () => t('baoHet'), kieu: '' };
+      else if (k.toiDa < L.bac) b = { chu: () => t('baoTran'), kieu: '' };
+    }
+    if (cho.length) b = { chu: () => t('baoGui'), kieu: '' };
+    $('quy-bao').textContent = b.chu(); $('quy-bao').className = 'bao' + (b.kieu ? ' ' + b.kieu : '');
+    const ul = $('quy-danh-muc'); ul.innerHTML = '';
+    const dm = P.danhMuc(k.s, me.id).khoan;
+    dm.forEach(x => { const li = document.createElement('li'), a = document.createElement('span'), c = document.createElement('span'); a.textContent = x.ten; c.className = 'num'; c.textContent = tien(x.so); li.appendChild(a); li.appendChild(c); ul.appendChild(li); });
+    cho.forEach(x => { const li = document.createElement('li'), a = document.createElement('span'), c = document.createElement('span'); a.textContent = (k.s.quy[x.doi] ? k.s.quy[x.doi].ten : '') + ' (' + t('dangGui') + ')'; c.className = 'num'; c.textContent = tien(x.so); li.appendChild(a); li.appendChild(c); ul.appendChild(li); });
+    if (!dm.length && !cho.length) { const li = document.createElement('li'); li.className = 'goi-y'; li.textContent = t('chuaRot'); ul.appendChild(li); }
+  }
+
+  function onTin(loai, du) {
+    if (loai !== 'ban' || !du || !du.ban || du.ban.phong !== phong) return;
+    ban = du.ban; lech = Date.now() - ban.luc;
+    const xet = new Map(ban.daXet || []);
+    cho = cho.filter(c => {
+      if (!xet.has(c.ma)) return true;
+      const v = xet.get(c.ma);
+      bao = v === 'nhan' ? { chu: () => t('baoNhan')(tien(c.so)), kieu: 'ok' } : { chu: () => t('baoBo')(String(v).replace(/^bo:/, '')), kieu: 'do' };
+      return false;
+    });
+    const coMinh = (ban.quy || []).some(x => x.id === me.id);
+    if (coMinh) daThayMinh = true;
+    else if (daThayMinh && me.ten) { daThayMinh = false; me.ten = ''; luu(); $('quy-chinh').hidden = true; $('quy-vao').hidden = false; $('quy-vao-loi').textContent = t('ttBiLoai'); return; }
+    ve();
+  }
+
+  function gui(loai, du) { if (kenh) try { kenh.gui(loai, du); } catch (e) {} }
+  function xinVao() { gui('xin', { quy: me.id, ten: me.ten }); }
+
+  function vao() {
+    const ten = $('quy-ten').value.replace(/\s+/g, ' ').trim().slice(0, 40);
+    if (!ten) { $('quy-vao-loi').textContent = t('thieuTen'); return; }
+    me.ten = ten; luu(); $('quy-vao-loi').textContent = '';
+    $('quy-vao').hidden = true; $('quy-chinh').hidden = false; xinVao(); ve();
+  }
+
+  function rot() {
+    const k = tinh();
+    if (!(k.duyet && k.mo && k.dp.doi !== me.id && so >= L.bac && so <= k.toiDa)) return;
+    const tin = { ma: me.id + '-' + Date.now().toString(36) + '-' + (++dem), quy: me.id, doi: k.dp.doi, so };
+    cho.push(tin); gui('rot', tin); bao = { chu: () => '', kieu: '' }; ve();
+  }
+
+  // Gửi lại: xin vào cho đến khi có tên trong bản tin; lượt rót cho đến khi màn chiếu báo đã xét (màn chiếu bỏ tin trùng theo mã).
+  setInterval(() => {
+    if (!me.ten || !kenh) return;
+    if (!ban || !(ban.quy || []).some(x => x.id === me.id)) xinVao();
+    cho.forEach(c => gui('rot', c));
+  }, 1500);
+  setInterval(ve, 250);
+
+  $('nut-lang').addEventListener('click', () => { lang = lang === 'vi' ? 'en' : 'vi'; try { localStorage.setItem('bizon-lang', lang); } catch (e) {} apNgonNgu(); });
+  $('nut-vao').addEventListener('click', vao);
+  $('quy-ten').addEventListener('keydown', e => { if (e.key === 'Enter') vao(); });
+  $('nut-rot').addEventListener('click', rot);
+  $('nut-them').addEventListener('click', () => { so += L.bac; ve(); });
+  $('nut-bot').addEventListener('click', () => { so = Math.max(L.bac, so - L.bac); ve(); });
+  const diMa = () => { const m = $('quy-ma').value.trim().toUpperCase(); if (!P.maPhongHopLe(m)) { $('quy-ma-loi').textContent = t('maSai'); return; } const u = new URL(location.href); u.searchParams.set('p', m); location.href = u.href; };
+  $('nut-ma').addEventListener('click', diMa);
+  $('quy-ma').addEventListener('keydown', e => { if (e.key === 'Enter') diMa(); });
+
+  apNgonNgu();
+  if (!P.maPhongHopLe(phong)) { $('quy-nhap-ma').hidden = false; return; }
+  $('quy-phong').textContent = phong;
+  if (me.ten) { $('quy-chinh').hidden = false; ve(); } else { $('quy-vao').hidden = false; $('quy-ten').focus(); }
+  const muon = qs.get('kenh') === 'local' ? 'local' : 'realtime';
+  const moKenh = kieu => P.taoKenh({ kieu, phong, id: me.id, vai: 'quy', onTin, onTrangThai: s => { ketNoi = s === 'da-vao' ? '' : s === 'mat-ket-noi' ? 'mat' : ketNoi; ve(); } });
+  moKenh(muon).catch(() => { ketNoi = 'khong'; return moKenh('local'); }).then(k => { kenh = k; gui('hoi', { id: me.id }); if (me.ten) xinVao(); ve(); });
+
+  // Móc cho test: đọc trạng thái, gửi tin thô lên kênh (thử tin trùng, tin sai luật).
+  window.__quy = { trangThai: () => { const k = tinh(); return { id: me.id, ten: me.ten, duyet: k.duyet, dangMo: k.mo, vonCon: k.vonCon, choGui: cho.length }; }, guiTho: (loai, du) => gui(loai, du) };
+})();
+</script>
+</body>
+</html>

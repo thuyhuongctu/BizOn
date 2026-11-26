@@ -1,16 +1,16 @@
 # Danh sách việc: Nâng cấp Phòng luyện pitch gọi vốn
 
 ## Nền và Câu chuyện 1 – Hội đồng nhà đầu tư cả lớp (P1, PR 1)
-- [ ] T001 Test, viết trước và thấy hỏng:
+- [x] T001 Test, viết trước và thấy hỏng:
   - **hàm thuần sổ góp vốn:** 1 tỷ đồng mỗi quỹ, bậc 50 triệu, trần 500 triệu cho một đội, không rót cho mình, bỏ tin trùng theo mã lượt, bảng xếp hạng, CSV; giả lập 12 quỹ rót liên tục và gửi trùng, tổng vẫn đúng (SC-001);
   - **chủ phòng duy nhất:** máy thứ hai mở màn chiếu cùng mã phòng thì chỉ được xem;
   - **Ra Khơi 3D:** tên kênh mặc định không đổi;
   - **Playwright** (màn chiếu và 3 quỹ trên các thẻ trình duyệt, chuyển tin `local` qua `BroadcastChannel`): duyệt quỹ vào phòng, rót vốn, màn chiếu cập nhật, quỹ của đội đang pitch bị khóa, xuất CSV;
   - **trang:** 360 px, VI/EN, không gọi mạng ngoài.
-- [ ] T002 `js/phong-realtime.js`: thêm tham số tiền tố kênh, giá trị mặc định giữ nguyên.
-- [ ] T003 `lab/pitch-goi-von-lop.js`: sổ góp vốn, kiểm luật, xếp hạng, CSV; lớp chuyển tin (`realtime` / `local`); nhận chủ phòng qua presence (một chủ, máy sau chỉ xem).
-- [ ] T004 `lab/pitch-goi-von.html`: nút «Chế độ lớp»; màn chiếu có mã phòng, QR (`js/vendor/qrcode.js`), danh sách quỹ chờ duyệt, cửa sổ rót 60 giây, bảng góp vốn trực tiếp, bảng xếp hạng cuối buổi; sửa câu chân trang.
-- [ ] T005 `lab/pitch-quy.html`: trang quỹ trên điện thoại (vào phòng, vốn còn lại, rót theo bậc, danh mục, dòng về dữ liệu); `sw.js`, `sitemap.xml` (không đưa trang quỹ vào sitemap vì cần mã phòng; trang có `noindex`).
+- [x] T002 `js/phong-realtime.js`: thêm tham số tiền tố kênh, giá trị mặc định giữ nguyên.
+- [x] T003 `lab/pitch-goi-von-lop.js`: sổ góp vốn, kiểm luật, xếp hạng, CSV; lớp chuyển tin (`realtime` / `local`); nhận chủ phòng qua nhịp bản tin mỗi giây (một chủ, máy sau nghe thấy nhịp thì chỉ xem).
+- [x] T004 `lab/pitch-goi-von.html`: nút «Chế độ lớp»; bật bằng nút hoặc `?hoidong=1` (không dùng `?lop=`, tham số đó là mã lớp); màn chiếu có mã phòng, QR (`js/vendor/qrcode.js`), danh sách quỹ chờ duyệt, cửa sổ rót 60 giây, bảng góp vốn trực tiếp, bảng xếp hạng cuối buổi; sửa câu chân trang.
+- [x] T005 `lab/pitch-quy.html`: trang quỹ trên điện thoại (vào phòng, vốn còn lại, rót theo bậc, danh mục, dòng về dữ liệu); `sw.js`, `sitemap.xml` (không đưa trang quỹ vào sitemap vì cần mã phòng; trang có `noindex`).
 
 ## Câu chuyện 2 – Rubric nghiên cứu và chấm cặp (P2, PR 2)
 - [ ] T006 Test, viết trước: rubric đủ 6 tiêu chí VI/EN và câu «ý định đầu tư», mô tả neo 1–5, trích dẫn qua `kiem-trich-dan.mjs`; chấm mù (không lộ điểm trước khi đủ người nộp); ICC(2,1), ICC(2,k) khớp số liệu mẫu của Shrout và Fleiss (1979), sai số dưới 0,01; α Krippendorff khớp ví dụ mẫu; cảnh báo khi dưới 30 lượt.
