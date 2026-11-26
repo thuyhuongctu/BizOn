@@ -1,4 +1,5 @@
-// Trang chủ, mục «Công cụ bổ trợ»: thẻ «Học qua tình huống» đưa tới Thư viện tình huống và Tình huống khởi nghiệp
+// Trang chủ, mục «Công cụ bổ trợ»: thẻ «Học qua tình huống» đưa tới Thư viện tình huống và Tình huống khởi nghiệp;
+// thẻ «Lab thực hành» thêm Phòng luyện pitch gọi vốn
 // (trước đó thư viện chỉ vào được qua Giảng viên → Dự án CHAM; lab khởi nghiệp không có lối vào từ trang chủ).
 'use strict';
 const fs = require('node:fs'), path = require('node:path'), assert = require('node:assert/strict');
@@ -9,7 +10,10 @@ const home = R('index.html');
 assert.equal(home, R('academia3d-v2.html'), 'index.html phải giống hệt academia3d-v2.html');
 const i = home.indexOf('<li class="hp-tool" id="hp-tinh-huong">');
 assert.ok(i > 0, 'có thẻ «Học qua tình huống»');
-const lab = home.indexOf('href="lab/nha-may-fdi.html">FDI Lab</a>'), arcade = home.indexOf('assets/character/arcade-rong-bay-sau-rieng-cut.webp');
+// Thẻ «Lab thực hành» có thêm Phòng luyện pitch (đặc tả 010), mô tả «Năm lab»
+assert.match(home, /Năm lab, mỗi lab gọn trong một buổi học/); assert.match(home, /data-en="Five labs, each fits in one class session:"/);
+assert.ok(home.includes('<a href="lab/pitch-goi-von.html" data-en="Pitch room">Phòng luyện pitch</a>') && fs.existsSync(path.join(ROOT, 'lab/pitch-goi-von.html')), 'thẻ Lab thực hành có Phòng luyện pitch');
+const lab = home.indexOf('href="lab/pitch-goi-von.html" data-en="Pitch room">Phòng luyện pitch</a>'), arcade = home.indexOf('assets/character/arcade-rong-bay-sau-rieng-cut.webp');
 assert.ok(lab > 0 && lab < i && i < arcade, 'thẻ nằm ngay sau «Lab thực hành», trước Arcade');
 const the = home.slice(i, home.indexOf('</li>\n      <li class="hp-tool">', i));
 for (const h of ['thu-vien-tinh-huong.html', 'lab/khoi-nghiep-tinh-huong.html']) {
