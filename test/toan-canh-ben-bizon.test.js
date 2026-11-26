@@ -45,6 +45,10 @@ const { chromium } = require('playwright');
 
   for (const [w, h, ten] of [[390, 844, 'điện thoại'], [1100, 700, 'máy tính']]) {
     const { ctx, pg } = await moTrang(w, h);
+    await pg.click('.dc-goto-btn');
+    const che = await pg.evaluate(() => [...document.querySelectorAll('.dc-goto [data-id]')].filter(e => { const q = e.getBoundingClientRect(), t = document.elementFromPoint(q.left + q.width * 0.85, q.top + q.height / 2); return !e.contains(t); }).map(e => e.getAttribute('data-id')));
+    ok(!che.length, ten + ': danh sách «Đi tới…» mở thì không nút nào che các dòng' + (che.length ? ' (bị che: ' + che.join(', ') + ')' : ''));
+    await pg.click('.dc-goto-btn');
     const y0 = (await tc(pg)).cam[1];
     await pg.click('#bb-toan');
     ok(await choMuc(pg, 1), ten + ': máy quay chuyển hẳn sang toàn cảnh');

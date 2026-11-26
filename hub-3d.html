@@ -62,6 +62,8 @@
   #bb-toan[aria-pressed="true"] { background:#006687; color:#fff; }
   #bb-toan:focus-visible { outline:3px solid #fda127; outline-offset:2px; }
   #bb-stage.bb-toan-canh .dc-card, #bb-stage.bb-toan-canh .dc-joy, #bb-stage.bb-toan-canh .dc-goto-btn, #bb-stage.bb-toan-canh #bb-mh-chip, #bb-stage.bb-toan-canh #bb-nv { display:none !important; }
+  /* danh sách «Đi tới…» đang mở thì các nút tròn góc phải dưới nhường chỗ, không che dòng cuối của danh sách */
+  #bb-stage:has(.dc-goto-btn[aria-expanded="true"]) :is(#bb-am, #bb-toan, #bb-nut-phai, #bb-mh-chip) { visibility:hidden; }
   @media (max-width:600px) { #bb-stage.bb-toan-canh .bb-lb, #bb-stage.bb-toan-canh #bb-tag { font-size:9.5px; padding:2px 6px; } }   /* toàn cảnh trên điện thoại: nhãn nhỏ lại cho đỡ chồng */
   #bb-am[aria-pressed="false"] { background:#e9eef0; color:#5b6b70; }
   #bb-hint, #bb-note { position:absolute; z-index:3; left:50%; transform:translateX(-50%); width:max-content; max-width:calc(100% - 24px); margin:0; padding:7px 14px; border-radius:999px; font-size:12px; font-weight:700; text-align:center; pointer-events:none; }
