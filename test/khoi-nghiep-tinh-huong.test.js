@@ -13,12 +13,14 @@ const VIET = /[ăâđêôơưạảấầẩẫậắằẳẵặẹẻẽếề
 // Tên riêng và đơn vị tiền được giữ nguyên tiếng Việt trong bản EN
 const enSach = s => !VIET.test(String(s).replace(/Ninh Kiều|Cần Thơ|Rổ Rau Xanh|đồng|\d[\d,.]* đ(?!\p{L})/gu, ''));
 
-// 1. Dữ liệu đủ trường, đủ hai thứ tiếng
-const bo = D.BO.find(b => b.id === 'kiem-dinh');
-assert.ok(bo, 'có bộ «Kiểm định ý tưởng»');
-assert.equal(bo.tinhHuong.length, 4);
+// 1. Dữ liệu đủ trường, đủ hai thứ tiếng (PR 2: thêm bộ «Ra thị trường»)
+const bo = D.BO.find(b => b.id === 'kiem-dinh'), rt = D.BO.find(b => b.id === 'ra-thi-truong');
+assert.ok(bo, 'có bộ «Kiểm định ý tưởng»'); assert.ok(rt, 'có bộ «Ra thị trường»');
+assert.deepEqual(D.BO.map(b => b.id), ['kiem-dinh', 'ra-thi-truong']);
+assert.equal(bo.tinhHuong.length, 4); assert.equal(rt.tinhHuong.length, 4);
+for (const b of D.BO) for (const k of ['ten', 'moTa', 'nhanVat']) assert.ok(b[k].vi && b[k].en && enSach(b[k].en), b.id + ' thiếu ' + k + ' hoặc EN còn chữ Việt');
 const ids = new Set();
-for (const th of bo.tinhHuong) {
+for (const th of D.BO.flatMap(b => b.tinhHuong)) {
   assert.ok(!ids.has(th.id), 'mã tình huống trùng ' + th.id); ids.add(th.id);
   for (const k of ['tieuDe', 'boiCanh', 'cauHoi']) assert.ok(th[k].vi && th[k].en && enSach(th[k].en), th.id + ' thiếu ' + k + ' hoặc bản EN còn chữ Việt: ' + th[k].en);
   assert.ok(th.phuongAn.length >= 3 && th.phuongAn.length <= 4, th.id + ' cần 3–4 phương án');
@@ -29,6 +31,26 @@ for (const th of bo.tinhHuong) {
   }
   for (const p of th.phuongAn) assert.ok(!/đáp án đúng|correct answer|điểm số|\bscore\b/i.test(p.nhan.vi + p.nhan.en), 'không gắn đáp án hay điểm vào phương án');
   (th.nguon || []).forEach(k => assert.ok(D.NGUON[k], th.id + ' trích nguồn không có: ' + k));
+  for (const lk of th.lienKet || []) {
+    assert.ok(lk.nhan.vi && lk.nhan.en && enSach(lk.nhan.en), th.id + ' liên kết thiếu nhãn');
+    assert.match(lk.href, /^(\.\.\/)?[a-z0-9-]+\.html$/, th.id + ' liên kết phải là trang trong kho: ' + lk.href);
+    assert.ok(fs.existsSync(path.join(ROOT, 'lab', lk.href)), th.id + ' liên kết tới trang không có: ' + lk.href);
+  }
+}
+// Nghiệm thu US2: giá dưới biến phí → hệ quả có công thức biên đóng góp, «càng bán càng lỗ»
+{
+  const gia = rt.tinhHuong.find(t => t.id === 'rt3'), duoi = gia.phuongAn.find(p => p.logic === 'below-variable-cost');
+  assert.ok(duoi, 'rt3 có phương án giá dưới biến phí');
+  assert.match(duoi.heQua.vi, /Biên đóng góp = giá − biến phí = 29\.000 − 32\.000 = −3\.000 đ/);
+  assert.match(duoi.heQua.vi, /càng bán nhiều càng lỗ/); assert.match(duoi.heQua.en, /Contribution margin = price − variable cost/);
+  const ra = rt.tinhHuong.find(t => t.id === 'rt4');
+  assert.ok(ra.lienKet.some(l => l.href === '../global.html'), 'tình huống thị trường nước ngoài nối sang Go Global');
+  assert.ok(ra.lienKet.some(l => l.href === '../ho-chieu-sau-rieng.html'), 'nối sang Hộ Chiếu Sầu Riêng');
+  assert.ok(ra.phuongAn.every(p => /Johanson & Vahlne, 1977/.test(p.viSao.vi + p.viSao.en)), 'giải thích khoảng cách tâm lý, cam kết theo bước');
+  assert.ok(rt.tinhHuong.find(t => t.id === 'rt2').lienKet.some(l => l.href === 'cmr-lab.html'), 'chọn kênh nối sang CMR Lab');
+  assert.ok(gia.lienKet.some(l => l.href === 'cvp-studio.html'), 'định giá nối sang CVP Lab');
+  // Số liệu biên đóng góp trong bối cảnh khớp nhau: 60.000 − 32.000 = 28.000
+  assert.match(rt.tinhHuong[1].boiCanh.vi, /60\.000 đ, biến phí 32\.000 đ, nên biên đóng góp là 28\.000 đ/);
 }
 assert.equal(D.LUAT.lyDoToiThieu, 10);
 
@@ -36,9 +58,10 @@ assert.equal(D.LUAT.lyDoToiThieu, 10);
 const ct = R('js/case-task-data.js');
 const tieuDeCt = [...ct.matchAll(/title: '([^']+)'/g)].map(m => m[1].toLowerCase());
 const chuKn = JSON.stringify(D).toLowerCase();
-for (const tu of ['cá tra', 'pangasius', 'gốm', 'ceramic', 'móc khóa', 'keychain', 'mứt', 'bưởi', 'pomelo', 'bánh phồng', 'cracker', 'kho lạnh', 'cold store', 'nhà hàng nhật', 'siêu thị hàn', 'korean supermarket', 'thị trường x', 'market x', 'đại lý độc quyền'])
+for (const tu of ['cá tra', 'pangasius', 'gốm', 'ceramic', 'móc khóa', 'keychain', 'mứt', 'bưởi', 'pomelo', 'bánh phồng', 'cracker', 'kho lạnh', 'cold store', 'nhà hàng nhật', 'siêu thị hàn', 'korean supermarket', 'thị trường x', 'market x', 'đại lý độc quyền',
+  'xoài', 'mango', 'nhật bản', 'japan', 'hàn quốc', 'korea', 'australia', 'nhà phân phối', 'distributor', 'độc quyền', 'exclusive'])
   assert.ok(!chuKn.includes(tu), 'trùng bề mặt câu chuyện ct-v1: ' + tu);
-for (const th of bo.tinhHuong) assert.ok(!tieuDeCt.includes(th.tieuDe.vi.toLowerCase()) && !tieuDeCt.includes(th.tieuDe.en.toLowerCase()), 'trùng tiêu đề ct-v1');
+for (const th of D.BO.flatMap(b => b.tinhHuong)) assert.ok(!tieuDeCt.includes(th.tieuDe.vi.toLowerCase()) && !tieuDeCt.includes(th.tieuDe.en.toLowerCase()), 'trùng tiêu đề ct-v1');
 try { execFileSync('git', ['diff', '--quiet', 'origin/main', '--', 'js/case-task-data.js'], { cwd: ROOT, stdio: 'ignore' }); }
 catch (e) { if (e.status === 1) assert.fail('js/case-task-data.js (ct-v1) bị sửa'); }
 
@@ -94,7 +117,7 @@ assert.deepEqual(C.tienDo(bo, { kd1: { pa: 'z', lyDo: 'phương án cũ đã b�
   assert.match(R('js/cham-library.js'), /href: 'lab\/khoi-nghiep-tinh-huong\.html'/);
   assert.match(R('specs/011-tinh-huong-khoi-nghiep/tasks.md'), /- \[X\] T001[\s\S]*- \[X\] T005/);
   const v = +R('sw.js').match(/bizon-v(\d+)/)[1];
-  assert.ok(v >= 1002, 'sw.js phải ≥ bizon-v1002, đang ' + v);
+  assert.ok(v >= 1005, 'sw.js phải ≥ bizon-v1005, đang ' + v);
 
   const b = await chromium.launch();
   let fail = 0; const check = (ok, msg) => { console.log((ok ? '  ✓ ' : '  ✗ ') + msg); if (!ok) fail++; };
@@ -152,7 +175,7 @@ assert.deepEqual(C.tienDo(bo, { kd1: { pa: 'z', lyDo: 'phương án cũ đã b�
     await p.addInitScript(() => { try { if (!sessionStorage.getItem('kn-init')) { sessionStorage.setItem('kn-init', '1'); localStorage.setItem('bizon-lang', 'vi');
       localStorage.setItem('bizon-khoi-nghiep-v1', JSON.stringify({ doi: '', bo: { 'kiem-dinh': { phienBan: 'kn-v0', chon: { kd1: { pa: 'a', lyDo: 'lựa chọn của bản cũ', luc: '' } } } } })); } } catch (e) {} });
     await p.goto(BASE + '/lab/khoi-nghiep-tinh-huong.html');
-    check(/0\/4/.test(await p.textContent('#ds-bo')), 'lựa chọn khác PHIEN_BAN không được tính');
+    check(/0\/4/.test(await p.$eval('[data-bo="kiem-dinh"]', n => n.closest('.the').textContent)), 'lựa chọn khác PHIEN_BAN không được tính');
     // Rời tình huống giữa chừng (đổi ngôn ngữ, mở lại bộ) rồi quay lại: giữ phương án đã chọn và lý do
     await p.click('[data-bo="kiem-dinh"]');
     await p.check('#th-pa .pa:nth-of-type(2) input'); await p.fill('#ly-do', 'Hỏi thêm khách trước khi làm');
@@ -170,6 +193,43 @@ assert.deepEqual(C.tienDo(bo, { kd1: { pa: 'z', lyDo: 'phương án cũ đã b�
     const l = await p.evaluate(() => JSON.parse(localStorage.getItem('bizon-khoi-nghiep-v1')).bo['kiem-dinh']);
     check(l.phienBan === 'kn-v1' && ['kd1', 'kd2', 'kd3'].every(k => l.chon[k]), 'lưu đủ 3 lựa chọn của hai thẻ, kèm phiên bản: ' + Object.keys(l.chon).join(','));
     check(errs.length === 0, 'không lỗi JS ' + errs.join(' | '));
+    await ctx.close();
+  }
+  // PR 2: chọn bộ «Ra thị trường», giá dưới biến phí, liên kết sang lab và game; hai bộ giữ tiến độ riêng
+  {
+    const ctx = await b.newContext({ viewport: { width: 360, height: 760 } }); const p = await ctx.newPage(); const errs = [], ngoai = [];
+    p.on('pageerror', e => errs.push(e.message));
+    p.on('request', r => { const u = r.url(); if (!u.startsWith(BASE) && !u.startsWith('data:') && !u.startsWith('blob:')) ngoai.push(u); });
+    await p.addInitScript(() => { try { if (!sessionStorage.getItem('rt-init')) { sessionStorage.setItem('rt-init', '1'); localStorage.clear(); localStorage.setItem('bizon-lang', 'vi'); } } catch (e) {} });
+    await p.goto(BASE + '/lab/khoi-nghiep-tinh-huong.html');
+    check(await p.$$eval('#ds-bo .the', l => l.length) === 2, 'có hai bộ để chọn');
+    await p.click('[data-bo="ra-thi-truong"]');
+    check(/Bán cho ai trước/.test(await p.textContent('#th-tieu-de')), 'mở bộ «Ra thị trường» ở tình huống 1');
+    check(await p.isHidden('#kq-lien-ket-khoi'), 'chưa xem hệ quả thì chưa hiện liên kết');
+    await p.check('#th-pa .pa:nth-of-type(2) input'); await p.fill('#ly-do', 'Nhóm này đang mua lại đều'); await p.click('#nut-xem');
+    check(await p.isHidden('#kq-lien-ket-khoi'), 'tình huống không có liên kết thì ẩn khối liên kết');
+    await p.click('#nut-tiep');
+    await p.check('#th-pa .pa:nth-of-type(2) input'); await p.fill('#ly-do', 'Chi phí có khách thấp hơn'); await p.click('#nut-xem');
+    check(await p.$$eval('#kq-lien-ket a', l => l.map(a => a.getAttribute('href')).join(' ')) === 'cmr-lab.html cvp-studio.html', 'chọn kênh: liên kết CMR Lab và CVP Lab');
+    await p.click('#nut-tiep');
+    await p.check('#th-pa .pa:nth-of-type(1) input'); await p.fill('#ly-do', 'Rẻ nhất để chiếm thị phần'); await p.click('#nut-xem');
+    check(/−3\.000 đ/.test(await p.textContent('#kq-he-qua')) && /càng bán nhiều càng lỗ/.test(await p.textContent('#kq-he-qua')), 'giá dưới biến phí: hệ quả có biên đóng góp âm, càng bán càng lỗ');
+    await p.click('#nut-tiep');
+    await p.check('#th-pa .pa:nth-of-type(1) input'); await p.fill('#ly-do', 'Gần về tâm lý, đơn nhỏ để học'); await p.click('#nut-xem');
+    const lk = await p.$$eval('#kq-lien-ket a', l => l.map(a => a.getAttribute('href')));
+    check(lk.includes('../global.html') && lk.includes('../ho-chieu-sau-rieng.html'), 'thị trường nước ngoài: liên kết Go Global và Hộ Chiếu Sầu Riêng');
+    const tg = await p.$eval('#kq-lien-ket a', a => a.getBoundingClientRect().height);
+    check(tg >= 44, 'liên kết cao ≥ 44 px');
+    check(await p.evaluate(() => document.documentElement.scrollWidth - innerWidth) <= 0, '360 px không tràn ngang (bộ 2)');
+    await p.click('#nut-tiep');
+    check(await p.$$eval('#bang-tk tbody tr', r => r.length) === 4, 'tổng kết bộ 2 có 4 dòng');
+    await p.click('#nut-ve-bo-2');
+    const the = await p.$$eval('#ds-bo .the .tien-do', l => l.map(x => x.textContent));
+    check(/0\/4/.test(the[0]) && /4\/4/.test(the[1]), 'hai bộ giữ tiến độ riêng: ' + the.join(' | '));
+    await p.click('#nut-lang');
+    check(await p.$eval('[data-bo="ra-thi-truong"]', n => /Going to market/.test(n.closest('.the').textContent)), 'en: tên bộ 2');
+    check(errs.length === 0, 'bộ 2: không lỗi JS ' + errs.join(' | '));
+    check(ngoai.length === 0, 'bộ 2: không gọi mạng ngoài ' + ngoai.join(' '));
     await ctx.close();
   }
   await b.close();
