@@ -63,7 +63,7 @@
 
 ## Giai đoạn 3 – Trang loạt phim (US1 phát hành, US2 lịch) · PR 3 · hạn 09/12/2026
 
-- [ ] T018 [US2] Viết `test/phim-dua-trai-ra-bien-trang.test.js`, chạy và thấy hỏng. Test kiểm, ở 360 VI, 390 EN và 1280 VI:
+- [X] T018 [US2] (làm sớm 26/11/2026: Hương muốn giới thiệu phim trên web trước khi phát hành) Viết `test/phim-dua-trai-ra-bien-trang.test.js`, chạy và thấy hỏng. Test kiểm, ở 360 VI, 390 EN và 1280 VI:
   - trang có lịch 6 tập;
   - có đếm ngược tới tập sắp phát, tính từ giờ máy, giả lập ngày bằng `page.clock`;
   - tập đã phát có nút phát `data-yt`; bấm mới tải `youtube-nocookie`;
@@ -71,10 +71,10 @@
   - có `canonical`, có trong `sitemap.xml`;
   - không tràn ngang, không lỗi JS;
   - ngoại tuyến vẫn mở được trang.
-- [ ] T019 [US2] `js/phim-data.js`: các tập (số, tên VI/EN, quyết định, mã YouTube VI/EN để trống tới khi đăng, ngày giờ phát theo giờ Việt Nam), kết quả bình chọn (để trống).
-- [ ] T020 [US1] `phim-dua-trai-ra-bien.html`: phần đầu, tập mới nhất, lịch, đếm ngược, khung chờ màn chơi, nguồn số liệu, `js/am-mv.js`. Trang cùng phong cách đất nặn với các trang khác.
-- [ ] T021 [P] [US1] Liên kết vào trang: `sitemap.xml`, `huong-dan.html` (cạnh video Cảng Cái Mép), `js/thu-vien-clay.js` (mục MV 3D), chân trang (`js/site-footer.js`, `js/bizon-clay-footer.js`).
-- [ ] T022 [US1] `sw.js`: thêm trang và `js/phim-data.js` vào SHELL, nâng `CACHE`. html-validate 0 lỗi. Chạy test mới cùng `kenh-youtube`, `thu-vien-*`, `huong-dan*`, `chan-trang*`. Mở PR nháp.
+- [X] T019 [US2] `js/phim-data.js`: các tập (số, tên VI/EN, quyết định, mã YouTube VI/EN để trống tới khi đăng, ngày giờ phát theo giờ Việt Nam), kết quả bình chọn (để trống).
+- [X] T020 [US1] `phim-dua-trai-ra-bien.html`: phần đầu, tập mới nhất, lịch, đếm ngược, khung chờ màn chơi, nguồn số liệu, `js/am-mv.js`. Trang cùng phong cách đất nặn với các trang khác.
+- [ ] T021 [P] [US1] (26/11: đã có `sitemap.xml` và chân trang; còn `huong-dan.html`, `js/thu-vien-clay.js`, làm khi có tập 1) Liên kết vào trang: `sitemap.xml`, `huong-dan.html` (cạnh video Cảng Cái Mép), `js/thu-vien-clay.js` (mục MV 3D), chân trang (`js/site-footer.js`, `js/bizon-clay-footer.js`).
+- [X] T022 [US1] `sw.js`: thêm trang và `js/phim-data.js` vào SHELL, nâng `CACHE`. html-validate 0 lỗi. Chạy test mới cùng `kenh-youtube`, `thu-vien-*`, `huong-dan*`, `chan-trang*`. Mở PR nháp.
 
 ## Giai đoạn 4 – Màn chơi chọn tuyến (US3, P3) · PR 4 · hạn 13/12/2026 (muộn nhất trước tập 2)
 
