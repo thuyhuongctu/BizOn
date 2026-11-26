@@ -19,6 +19,7 @@ import { taoTranhDong, BO_TRANH, diDuoc as coTranhDi } from './ben-bizon-tranh-d
 import { taoNhiemVu } from './ben-bizon-nhiem-vu.js';
 import { CAU_HOI, CHU_CAU_HOI } from './ben-bizon-cau-hoi.js';
 import { taoAmThanh } from './ben-bizon-am-thanh.js';
+import { taoMayHat } from './ben-bizon-may-hat.js';
 
 window.BIZON_CHAR_GLB = true;   // bật mô hình có xương cho riêng trang này (mặc định của kho vẫn tắt, PR #1024)
 
@@ -56,8 +57,8 @@ const NOI = [
     ten: { vi: 'Lumina', en: 'Lumina' }, moTa: { vi: 'Cố vấn học tập của BizOn: hỏi đường trên bến.', en: 'BizOn’s learning advisor: ask for directions.' } },
   { id: 'thay-tu', bieuTuong: '📚', x: 2.6, z: -5.0, tam: 1.6, mx: 3.5, mz: -5.0, my: 1.8, thoai: 'tu', nut: HOI,
     ten: { vi: 'Thầy Tu Phan', en: 'Tu Phan' }, moTa: { vi: 'Cố vấn học thuật: game dựng trên mô hình nào.', en: 'Academic advisor: the models behind the games.' } },
-  { id: 'may-hat', bieuTuong: '🎵', x: 6.2, z: -2.6, tam: 1.4, mx: 7.3, mz: -2.1, my: 2.0, viec: 'nhac', nut: { vi: 'Bật / tắt', en: 'Play / stop' },
-    ten: { vi: 'Máy hát', en: 'Jukebox' }, moTa: { vi: 'Bật nhạc nền BizOn Theme khi đi trên bến.', en: 'Play the BizOn Theme while you walk.' } },
+  { id: 'may-hat', bieuTuong: '🎵', x: 6.2, z: -2.6, tam: 1.4, mx: 7.3, mz: -2.1, my: 2.0, viec: 'nhac', nut: { vi: 'Chọn bài', en: 'Pick a track' },
+    ten: { vi: 'Máy hát', en: 'Jukebox' }, moTa: { vi: 'Bài có lời, nhạc không lời hay âm thanh thư giãn.', en: 'Songs, instrumentals or relaxing sounds.' } },
   { id: 'bang-tin', bieuTuong: '📋', x: -5.6, z: -2.4, tam: 1.4, mx: -6.5, mz: -1.6, my: 2.3, thoai: 'bang', nut: { vi: 'Đọc', en: 'Read' },
     ten: { vi: 'Bảng tin', en: 'Notice board' }, moTa: { vi: 'Bến BizOn có gì và đi thế nào.', en: 'What is here and how to get around.' } },
   { id: 'thanh-tich', bieuTuong: '🏆', x: 15.5, z: -2.8, tam: 1.5, mx: 16.7, mz: -2.2, my: 2.4, viec: 'thanh-tich', nut: { vi: 'Xem', en: 'View' },
@@ -90,7 +91,6 @@ const CHU = {
   tai: { vi: 'Đang tải nhân vật…', en: 'Loading your character…' },
   tranh: { vi: 'Chưa tải được mô hình 3D, đang dùng tranh nhân vật.', en: 'The 3D model has not loaded; using the character art instead.' },
   mang: { vi: 'Đang mất mạng: dùng tranh nhân vật cho tới khi có mạng lại.', en: 'You are offline: using the character art until you are back online.' },
-  nhacBat: { vi: '🎵 Đang phát BizOn Theme', en: '🎵 Playing the BizOn Theme' }, nhacTat: { vi: 'Đã tắt nhạc', en: 'Music stopped' },
   amBat: { vi: '🔊 Bật tiếng bến sông: bước chân, gió, chim, nước', en: '🔊 River sounds on: footsteps, wind, birds, water' }, amTat: { vi: '🔇 Đã tắt tiếng bến sông', en: '🔇 River sounds off' },
   tiep: { vi: 'Tiếp tục ▸', en: 'Continue ▸' }, dong: { vi: 'Đóng', en: 'Close' },
   daGhe: { vi: 'Bạn đã ghé {n}/{m} điểm game trên bến.', en: 'You have visited {n} of {m} game spots on the wharf.' },
@@ -376,7 +376,7 @@ function dungCanh() {
 const stage = $('bb-stage'), canvas = $('bb-canvas'), note = $('bb-note'), tag = $('bb-tag'), labels = $('bb-labels'), hint = $('bb-hint');
 const dlg = $('bb-dlg'), fade = $('bb-fade');
 const nho = Math.min(window.innerWidth, window.innerHeight) < 700;
-let noteGiu = '', noteT = 0, nhac = null, nhacBat = false, tLoad = 0, tBatDau = 0, daDi = false;
+let noteGiu = '', noteT = 0, tLoad = 0, tBatDau = 0, daDi = false;
 let nv = null, ganTruoc = null;   // bảng nhiệm vụ (specs/003, câu chuyện 1) và điểm gần ở khung trước (để báo «đã tới thẻ»)
 const nhanNoi = [];
 
@@ -458,15 +458,10 @@ function veThanhTich() {
   return { anh: 'assets/icons/icon-192.png', ten: { vi: '🏆 Bảng thành tích', en: '🏆 Achievement board' }, cta: null,
     cau: [L(CHU.daGhe).replace('{n}', n).replace('{m}', GAME.length), GAME.map(p => (xong(p) ? '✅ ' : '⬜ ') + L(p.ten)).join('  ·  ')] };
 }
-function batNhac() {
-  if (!nhac) { nhac = new Audio('assets/audio/bizon-theme.mp3'); nhac.loop = true; nhac.volume = 0.45; }
-  if (nhacBat) nhac.pause(); else nhac.play().catch(() => {});
-  nhacBat = !nhacBat; datNote(L(nhacBat ? CHU.nhacBat : CHU.nhacTat), 2600); am.nhac(nhacBat);
-}
 function vaoNoi(p) {
   baoNv({ loai: p.thoai ? 'thoai' : p.viec === 'thanh-tich' ? 'xem' : 'vao', noi: p.id });
   if (p.thoai) return moThoai(THOAI[p.thoai], p.thoai === 'lumina' ? luminaObj : p.thoai === 'tu' ? tuObj : null);
-  if (p.viec === 'nhac') return batNhac();
+  if (p.viec === 'nhac') return mayHat.mo();
   if (p.viec === 'thanh-tich') return moThoai(veThanhTich());
   if (p.url) { ghiGhe(p.url); dc.dung(true); fade.classList.add('on'); setTimeout(() => { window.location.href = p.url; }, giam ? 0 : 430); }
 }
@@ -550,6 +545,8 @@ if (nutChay) { datNhip(nhip); nutChay.addEventListener('click', () => datNhip(nh
 
 // Âm thanh bến sông (26/11/2026): bước chân, gió, chim hót, nước vỗ bến – tổng hợp bằng Web Audio (js/ben-bizon-am-thanh.js). Nút 🔊 bật/tắt, nhớ lựa chọn.
 const am = taoAmThanh({ dangTat: () => !document.documentElement.classList.contains('bb-play') });
+// Máy hát: chọn bài có lời, không lời hay âm thanh thư giãn; có nhạc thì tiếng bến sông nhỏ lại, bảng mở thì đứng yên
+const mayHat = taoMayHat({ L, khiDoi: dang => am.nhac(dang), khiMo: mo => { if (dc) dc.dung(mo); }, bao: chu => datNote(chu, 2600) });
 const nutAm = $('bb-am');
 function veNutAm() {
   if (!nutAm) return; const t = am.trangThai();
@@ -586,7 +583,7 @@ function khoaNen(khoa) {
 }
 function thoat() {
   cancelAnimationFrame(raf); raf = 0; if (thoai) dongThoai();
-  if (nhac && nhacBat) { nhac.pause(); nhacBat = false; am.nhac(false); }
+  mayHat.dong(); mayHat.dung();
   am.tamDung();
   if (dc) { dc.dispose(); dc = null; }   // trả phím mũi tên, WASD lại cho trang
   document.documentElement.classList.remove('bb-play'); sanSang = false; khoaNen(false);
@@ -595,15 +592,15 @@ function thoat() {
 
 document.querySelectorAll('#bb-pick [data-vai]').forEach(b => b.addEventListener('click', () => batDau(b.getAttribute('data-vai'))));
 $('bb-exit').addEventListener('click', thoat);
-window.addEventListener('bizon:langchange', () => { if (!dc) return; dc.lamMoiChu(); veNhan(); if (nv) nv.lamMoiChu(); if (thoai) veThoai(); if (noteGiu) datNote(L(tLoad === 99 ? CHU.tranh : CHU.tai)); });
+window.addEventListener('bizon:langchange', () => { if (!dc) return; dc.lamMoiChu(); veNhan(); if (nv) nv.lamMoiChu(); if (thoai) veThoai(); mayHat.ve(); if (noteGiu) datNote(L(tLoad === 99 ? CHU.tranh : CHU.tai)); });
 window.addEventListener('pageshow', e => { if (e.persisted) { fade.classList.remove('on'); if (dc) dc.dung(false); } });
-document.addEventListener('visibilitychange', () => { if (document.hidden) { cancelAnimationFrame(raf); raf = 0; am.tamDung(); } else if (dc && document.documentElement.classList.contains('bb-play') && !raf) { tLast = 0; raf = requestAnimationFrame(ve); am.batDau(); } });
+document.addEventListener('visibilitychange', () => { if (document.hidden) { cancelAnimationFrame(raf); raf = 0; am.tamDung(); mayHat.tamDung(); } else if (dc && document.documentElement.classList.contains('bb-play') && !raf) { tLast = 0; raf = requestAnimationFrame(ve); am.batDau(); mayHat.tiepTuc(); } });
 try { const cu = localStorage.getItem('bizon-ben-vai'); const b = cu && document.querySelector('#bb-pick [data-vai="' + cu + '"]'); if (b) b.classList.add('da-chon'); } catch (e) {}
 
 // cửa đọc trạng thái cho test (Playwright) và để gỡ lỗi
 window.__benBizon = {
   state() { const s = dc ? dc.state() : {}, rig = ((tranhLui || player || {}).userData || {}).rig || {}; return Object.assign(s, { ready: !!(dc && sanSang), goc, dang: dangDi && dangDi.sanSang ? dangDi.thongSo().dang : null, tranh: tranh ? Object.assign({ sanSang: tranh.sanSang, hong: tranh.hong }, tranh.thongSo()) : null, coVanTranh: tranhCoVan.map(t => t ? Object.assign({ sanSang: t.sanSang, hong: t.hong }, t.thongSo()) : null), char: vai, glb: !!rig.glb, clip: rig.glb ? rig.cur : s.mode, nhiemVu: nv ? nv.state() : null }); },
   info: () => ({ canh: 'ben-song', nuoc: true, cauTau: true, diaDiem: NOI.map(p => p.id), chiTiet, goc, dangDi: dangDi && dangDi.sanSang ? Object.assign({ coChay: dangDi.coChay, khoHong: dangDi.khoHong }, dangDi.thongSo()) : null, veMoiKhung: renderer ? renderer.info.render.calls : 0 }),
-  datGoc, datNhip, goTo: id => dc && dc.goTo(id), amThanh: () => am.trangThai(),
+  datGoc, datNhip, goTo: id => dc && dc.goTo(id), amThanh: () => am.trangThai(), mayHat: () => mayHat.trangThai(), __audio: () => mayHat.__audio(),
   laBo, dat: (x, z, yaw) => dc && dc.dat(x, z, yaw),
 };
