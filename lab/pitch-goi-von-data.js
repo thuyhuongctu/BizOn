@@ -114,7 +114,45 @@
     { id: 'khac', vi: 'Ngành khác', en: 'Other' },
   ];
 
-  const DATA = { PHIEN_BAN, DOAN, LUAT, VAI, PASTOR, HOI_DONG, CAU_HOI, TIEU_CHI, NGANH };
+  /* ---------- Hội đồng phản ứng theo luật (đặc tả 012, PR 3) ----------
+   * Chỉ dựa trên tín hiệu trang đo được: thời gian, nút đội tự bấm, kết quả kiểm ba con số, nhóm PASTOR của câu hỏi.
+   * Trang không ghi âm, không dùng AI, không hiểu nội dung câu trả lời. 'nguoi-hoi' = thành viên đang hỏi câu hiện tại. */
+  const TINH_CACH = {
+    'tu-phan': { vi: 'Học thuật, hay hỏi «vì sao», soi lập luận và chiến lược.', en: 'Academic; keeps asking «why»; tests the reasoning and the strategy.' },
+    'victor-lam': { vi: 'Thị trường và khách hàng: ai mua, vì sao đổi sang, đi xa được không.', en: 'Markets and customers: who buys, why they switch, how far it can go.' },
+    'minh-khang': { vi: 'Tài chính: soi ba con số, hòa vốn và số vốn xin.', en: 'Finance: checks the three numbers, break-even and the funding ask.' },
+  };
+  const DONG_TAC = {
+    gat: { vi: 'gật đầu', en: 'nods', icon: '👍' },
+    'cau-may': { vi: 'cau mày', en: 'frowns', icon: '🤨' },
+    nghieng: { vi: 'nghiêng người tới', en: 'leans in', icon: '👀' },
+    'ghi-chep': { vi: 'ghi chép', en: 'takes notes', icon: '📝' },
+    chuong: { vi: 'gõ chuông', en: 'rings the bell', icon: '🔔' },
+  };
+  const PHAN_UNG = [
+    { tinHieu: 'bat-dau-cau', ai: 'nguoi-hoi', dongTac: 'nghieng', loi: {
+      'tu-phan': { vi: 'Tôi muốn hiểu vì sao đội chọn cách này.', en: 'I want to understand why you chose this path.' },
+      'victor-lam': { vi: 'Khách hàng sẽ nghĩ gì về điều này?', en: 'What will the customer think about this?' },
+      'minh-khang': { vi: 'Nói chuyện con số nhé.', en: "Let's talk numbers." } } },
+    { tinHieu: 'lech-so', ai: 'minh-khang', dongTac: 'cau-may', loi: { vi: 'Ba con số chưa khớp nhau. Tôi hỏi thêm một câu tài chính.', en: "Your three numbers don't fit together. One more finance question." } },
+    { tinHieu: 'con-10', ai: 'nguoi-hoi', dongTac: 'nghieng', loi: { vi: 'Còn 10 giây, đội chốt ý chính đi.', en: 'Ten seconds left: give me the main point.' } },
+    { tinHieu: 'qua-gio', ai: 'lumina', dongTac: 'chuong', loi: { vi: 'Hết một phút cho câu này.', en: 'One minute is up for this question.' } },
+    { tinHieu: 'qua-gio', ai: 'nguoi-hoi', dongTac: 'ghi-chep', loi: { vi: 'Tôi ghi lại để hỏi tiếp sau.', en: "I'll note that and come back to it." } },
+    { tinHieu: 'tra-loi-som', ai: 'nguoi-hoi', dongTac: 'gat', loi: { vi: 'Gọn gàng. Cảm ơn đội.', en: 'Concise. Thank you.' } },
+    { tinHieu: 'tu-tin', ai: 'nguoi-hoi', dongTac: 'nghieng', loi: { vi: 'Vậy cho tôi một con số cụ thể.', en: 'Then give me one specific number.' } },
+    { tinHieu: 'chua-chac', ai: 'nguoi-hoi', dongTac: 'gat', loi: { vi: 'Nhận chỗ chưa biết là tốt. Đội sẽ kiểm chứng bằng cách nào?', en: "Admitting what you don't know is good. How will you test it?" } },
+  ];
+  /** Trả lời xong khi còn ít nhất chừng này giây thì tính là «trả lời gọn». */
+  const GIAY_TRA_LOI_SOM = 20;
+  /** Câu hỏi vặn của Minh Khang (tài chính) khi kiểm ba con số báo lệch; chèn lên đầu phần hỏi đáp. */
+  const CAU_VAN = {
+    bep: { p: 'T', vi: 'Điểm hòa vốn đội khai lệch với cách tính từ giá, biến phí và định phí. Đội tính lại giúp tôi: mỗi tháng cần bán bao nhiêu sản phẩm?', en: 'Your stated break-even does not match the price, variable cost and fixed cost. Walk me through it again: how many units a month?' },
+    von: { p: 'O', vi: 'Số vốn xin chưa đủ trang trải đến điểm hòa vốn. Thiếu thì đội lấy tiền ở đâu, và cầm cự được bao lâu?', en: 'The ask does not cover the months until break-even. Where does the gap come from, and how long can you last?' },
+    ln: { p: 'T', vi: 'Lợi nhuận mục tiêu cao hơn mức sản lượng dự kiến cho phép. Đội sẽ hạ mục tiêu hay tăng sản lượng, và dựa vào đâu?', en: 'Your target profit is higher than the expected volume allows. Will you lower the target or raise volume, and on what basis?' },
+  };
+  const GHI_CHU_PHAN_UNG = { vi: 'Hội đồng phản ứng theo thời gian, nút đội tự bấm và kết quả kiểm ba con số; không nghe, không chấm nội dung câu trả lời.', en: 'The board reacts to time, the buttons the team presses and the three-number check; it does not listen to or grade the answers.' };
+
+  const DATA = { PHIEN_BAN, DOAN, LUAT, VAI, PASTOR, HOI_DONG, CAU_HOI, TIEU_CHI, NGANH, TINH_CACH, DONG_TAC, PHAN_UNG, GIAY_TRA_LOI_SOM, CAU_VAN, GHI_CHU_PHAN_UNG };
   if (typeof module === 'object' && module.exports) module.exports = DATA;
   else root.PitchData = DATA;
 })(typeof self !== 'undefined' ? self : this);
