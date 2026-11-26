@@ -131,7 +131,7 @@ th,td{text-align:left;padding:8px;border-bottom:1px solid var(--field);vertical-
   </section>
 
   <section class="nguon" aria-labelledby="h-nguon"><h2 id="h-nguon" style="font-size:14px" data-k="nguon">Nguồn trích trong phần «Vì sao?»</h2><ul id="ds-nguon"></ul></section>
-  <p class="chan" data-k="chan">Tình huống giả định, dựng từ các mẫu thường gặp ở Đồng bằng sông Cửu Long; số liệu là số minh họa, không gắn doanh nghiệp có thật. Trang không chấm điểm, không dùng AI và không gửi dữ liệu đi đâu.</p>
+  <p class="chan" data-k="chan">Tình huống giả định, dựng từ các mẫu thường gặp ở Đồng bằng sông Cửu Long; số liệu là số minh họa, không gắn doanh nghiệp có thật. Trang không chấm điểm, không dùng AI; lựa chọn và lý do chỉ lưu trên máy bạn, không gửi đi đâu (trang chỉ đếm lượt xem ẩn danh).</p>
   <p class="chan"><a href="../thu-vien-tinh-huong.html" data-k="veThuVien">← Thư viện tình huống</a></p>
 </main>
 
@@ -152,7 +152,7 @@ th,td{text-align:left;padding:8px;border-bottom:1px solid var(--field);vertical-
       tinhTiep: 'Tình huống tiếp', xemTongKet: 'Xem tổng kết', veBo: 'Về danh sách bộ', tongKet: ten => 'Tổng kết: ' + ten,
       tkGoiY: 'Không có điểm: đem bảng này ra thảo luận với đội và giảng viên.', cotTinhHuong: 'Tình huống', cotLuaChon: 'Lựa chọn', cotLyDo: 'Lý do',
       inBang: 'In bảng', xuatCsv: 'Xuất CSV', lamLai: 'Làm lại bộ này', xacNhanLamLai: 'Xóa các lựa chọn của bộ này để làm lại?', luuGoiY: 'Kết quả chỉ lưu trong trình duyệt của máy này. Muốn nộp cho giảng viên thì in bảng hoặc xuất CSV.',
-      nguon: 'Nguồn trích trong phần «Vì sao?»', chan: 'Tình huống giả định, dựng từ các mẫu thường gặp ở Đồng bằng sông Cửu Long; số liệu là số minh họa, không gắn doanh nghiệp có thật. Trang không chấm điểm, không dùng AI và không gửi dữ liệu đi đâu.', veThuVien: '← Thư viện tình huống', banChon: 'Bạn chọn',
+      tab: 'Tình huống khởi nghiệp · BizOn', nguon: 'Nguồn trích trong phần «Vì sao?»', chan: 'Tình huống giả định, dựng từ các mẫu thường gặp ở Đồng bằng sông Cửu Long; số liệu là số minh họa, không gắn doanh nghiệp có thật. Trang không chấm điểm, không dùng AI; lựa chọn và lý do chỉ lưu trên máy bạn, không gửi đi đâu (trang chỉ đếm lượt xem ẩn danh).', veThuVien: '← Thư viện tình huống', banChon: 'Bạn chọn',
     },
     en: {
       tieuDe: 'Startup cases', phuDe: 'Choose an option, give a reason, see what happens and why', giaDinh: 'Fictional cases · illustrative figures',
@@ -163,7 +163,7 @@ th,td{text-align:left;padding:8px;border-bottom:1px solid var(--field);vertical-
       tinhTiep: 'Next case', xemTongKet: 'See summary', veBo: 'Back to case sets', tongKet: ten => 'Summary: ' + ten,
       tkGoiY: 'No score: bring this table to your team and your lecturer for discussion.', cotTinhHuong: 'Case', cotLuaChon: 'Choice', cotLyDo: 'Reason',
       inBang: 'Print', xuatCsv: 'Export CSV', lamLai: 'Redo this set', xacNhanLamLai: 'Clear your choices in this set and start again?', luuGoiY: 'Results are stored only in this browser. To hand them in, print the summary or export a CSV.',
-      nguon: 'Sources cited in the «Why?» sections', chan: 'Fictional cases built from patterns common in the Mekong Delta; figures are illustrative and refer to no real company. The page gives no score, uses no AI and sends no data anywhere.', veThuVien: '← Case library', banChon: 'You chose',
+      tab: 'Startup cases · BizOn', nguon: 'Sources cited in the «Why?» sections', chan: 'Fictional cases built from patterns common in the Mekong Delta; figures are illustrative and refer to no real company. The page gives no score and uses no AI; your choices and reasons stay on this device and are never sent anywhere (the page only counts anonymous visits).', veThuVien: '← Case library', banChon: 'You chose',
     },
   };
   let lang = 'vi';
@@ -171,14 +171,21 @@ th,td{text-align:left;padding:8px;border-bottom:1px solid var(--field);vertical-
   const t = k => T[lang][k];
   const ten = o => o[lang];
 
-  // Lưu trên máy: { doi, bo: { [id]: { chon: { [thId]: { pa, lyDo, luc } } } } }
+  // Lưu trên máy: { doi, bo: { [id]: { phienBan, chon: { [thId]: { pa, lyDo, luc } } } } }
+  // Lựa chọn gắn với PHIEN_BAN của dữ liệu: đổi nội dung (đổi PHIEN_BAN) thì lựa chọn cũ không được tính nữa.
   const KHOA = 'bizon-khoi-nghiep-v1';
-  let luu = { doi: '', bo: {} };
-  try { const x = JSON.parse(localStorage.getItem(KHOA) || 'null'); if (x && typeof x === 'object' && x.bo) luu = x; } catch (e) {}
-  const ghi = () => { try { localStorage.setItem(KHOA, JSON.stringify(luu)); } catch (e) {} };
-  const chonCua = id => (luu.bo[id] && luu.bo[id].chon) || {};
+  function docLuu() {
+    try { const x = JSON.parse(localStorage.getItem(KHOA) || 'null'); if (x && typeof x === 'object' && x.bo && typeof x.bo === 'object') return x; } catch (e) {}
+    return { doi: '', bo: {} };
+  }
+  let luu = docLuu();
+  // Đọc lại trước khi ghi để hai thẻ trình duyệt mở cùng lúc không đè mất lựa chọn của nhau.
+  function capNhat(f) { luu = docLuu(); f(luu); try { localStorage.setItem(KHOA, JSON.stringify(luu)); } catch (e) {} }
+  const chonCua = id => { const b = luu.bo[id]; return (b && b.phienBan === D.PHIEN_BAN && b.chon) || {}; };
 
-  const S = { man: 'bo', bo: null, i: 0, tam: null };
+  // tam: phương án đang chọn nhưng chưa xem hệ quả, theo mã tình huống
+  const S = { man: 'bo', bo: null, i: 0, tam: {} };
+  const tamCua = () => S.tam[boTheoId(S.bo).tinhHuong[S.i].id] || null;
   function hien(id) { ['man-bo', 'man-th', 'man-tk'].forEach(m => { $(m).hidden = m !== id; }); S.man = id.replace('man-', ''); }
   const boTheoId = id => D.BO.find(b => b.id === id);
 
@@ -198,7 +205,7 @@ th,td{text-align:left;padding:8px;border-bottom:1px solid var(--field);vertical-
   function moBo(id) {
     const b = boTheoId(id), td = C.tienDo(b, chonCua(id)); S.bo = id;
     if (td.tiep < 0) { veTongKet(); return; }
-    S.i = td.tiep; S.tam = null; veTinhHuong(); hien('man-th'); $('th-tieu-de').focus();
+    S.i = td.tiep; veTinhHuong(); hien('man-th'); $('th-tieu-de').focus();
   }
 
   function veTinhHuong() {
@@ -207,13 +214,13 @@ th,td{text-align:left;padding:8px;border-bottom:1px solid var(--field);vertical-
     $('th-tieu-de').textContent = ten(th.tieuDe); $('th-nhan-vat').textContent = ten(b.nhanVat);
     $('th-boi-canh').textContent = ten(th.boiCanh); $('th-cau-hoi').textContent = ten(th.cauHoi);
     const fs = $('th-pa'); fs.querySelectorAll('.pa').forEach(x => x.remove());
-    const paHienTai = daChon ? daChon.pa : S.tam;
+    const paHienTai = daChon ? daChon.pa : S.tam[th.id] || null;
     th.phuongAn.forEach(p => {
       const lb = document.createElement('label'); lb.className = 'pa' + (p.id === paHienTai ? ' chon' : '');
       lb.innerHTML = '<input type="radio" name="pa"><span></span>';
       const r = lb.querySelector('input'); r.value = p.id; r.checked = p.id === paHienTai; r.disabled = !!daChon;
       lb.querySelector('span').textContent = ten(p.nhan);
-      r.addEventListener('change', () => { S.tam = p.id; fs.querySelectorAll('.pa').forEach(x => x.classList.toggle('chon', x.contains(r))); kiemNut(); });
+      r.addEventListener('change', () => { S.tam[th.id] = p.id; fs.querySelectorAll('.pa').forEach(x => x.classList.toggle('chon', x.contains(r))); kiemNut(); });
       fs.appendChild(lb);
     });
     $('ly-do').value = daChon ? daChon.lyDo : ($('ly-do').dataset.th === th.id ? $('ly-do').value : '');
@@ -223,9 +230,9 @@ th,td{text-align:left;padding:8px;border-bottom:1px solid var(--field);vertical-
   }
 
   function kiemNut() {
-    const ok = !!S.tam && C.lyDoHopLe($('ly-do').value, MIN);
+    const tam = tamCua(), ok = !!tam && C.lyDoHopLe($('ly-do').value, MIN);
     $('nut-xem').disabled = !ok;
-    $('ly-do-goi-y').textContent = !S.tam ? t('chuaChon') : ok ? '' : t('lyDoThieu')(MIN);
+    $('ly-do-goi-y').textContent = !tam ? t('chuaChon') : ok ? '' : t('lyDoThieu')(MIN);
   }
 
   function veKetQua(th, paId) {
@@ -241,15 +248,17 @@ th,td{text-align:left;padding:8px;border-bottom:1px solid var(--field);vertical-
   function xemHeQua() {
     const b = boTheoId(S.bo), th = b.tinhHuong[S.i];
     try {
-      const moi = C.ghiChon(chonCua(S.bo), th, S.tam, $('ly-do').value, MIN);
-      luu.bo[S.bo] = { chon: moi }; luu.doi = $('ten-doi').value.trim(); ghi();
+      luu = docLuu();
+      const moi = C.ghiChon(chonCua(S.bo), th, S.tam[th.id], $('ly-do').value, MIN);
+      capNhat(l => { l.bo[S.bo] = { phienBan: D.PHIEN_BAN, chon: moi }; l.doi = $('ten-doi').value.trim(); });
+      delete S.tam[th.id];
     } catch (e) { kiemNut(); return; }
     veTinhHuong(); $('ket-qua').scrollIntoView({ block: 'nearest' });
   }
 
   function tiep() {
     const b = boTheoId(S.bo);
-    if (S.i < b.tinhHuong.length - 1) { S.i++; S.tam = null; veTinhHuong(); $('th-tieu-de').focus(); window.scrollTo(0, 0); }
+    if (S.i < b.tinhHuong.length - 1) { S.i++; veTinhHuong(); $('th-tieu-de').focus(); window.scrollTo(0, 0); }
     else veTongKet();
   }
 
@@ -283,7 +292,7 @@ th,td{text-align:left;padding:8px;border-bottom:1px solid var(--field);vertical-
   }
 
   function apNgonNgu() {
-    document.documentElement.lang = lang;
+    document.documentElement.lang = lang; document.title = t('tab');
     document.querySelectorAll('[data-k]').forEach(el => { const v = T[lang][el.dataset.k]; if (typeof v === 'string') el.textContent = v; });
     $('nut-lang').textContent = lang === 'vi' ? 'EN' : 'VI';
     veBo(); veNguon();
@@ -297,8 +306,19 @@ th,td{text-align:left;padding:8px;border-bottom:1px solid var(--field);vertical-
   $('nut-ve-bo-2').addEventListener('click', () => { veBo(); hien('man-bo'); });
   $('nut-in').addEventListener('click', () => window.print());
   $('nut-csv').addEventListener('click', xuatCsv);
-  $('nut-lam-lai').addEventListener('click', () => { if (confirm(t('xacNhanLamLai'))) { delete luu.bo[S.bo]; ghi(); moBo(S.bo); } });
-  $('ten-doi').addEventListener('change', () => { luu.doi = $('ten-doi').value.trim(); ghi(); });
+  $('nut-lam-lai').addEventListener('click', () => {
+    if (!confirm(t('xacNhanLamLai'))) return;
+    capNhat(l => { delete l.bo[S.bo]; });
+    boTheoId(S.bo).tinhHuong.forEach(th => { delete S.tam[th.id]; });
+    $('ly-do').value = ''; moBo(S.bo);
+  });
+  $('ten-doi').addEventListener('change', () => { const v = $('ten-doi').value.trim(); capNhat(l => { l.doi = v; }); });
+  // Thẻ trình duyệt khác vừa ghi: nạp lại và vẽ lại màn đang mở
+  window.addEventListener('storage', e => {
+    if (e.key !== KHOA) return;
+    luu = docLuu();
+    if (S.man === 'bo') veBo(); else if (S.man === 'th') veTinhHuong(); else if (S.man === 'tk') veTongKet();
+  });
   $('nut-lang').addEventListener('click', () => { lang = lang === 'vi' ? 'en' : 'vi'; try { localStorage.setItem('bizon-lang', lang); } catch (e) {} apNgonNgu(); });
 
   $('ten-doi').value = luu.doi || '';

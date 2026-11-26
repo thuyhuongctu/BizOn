@@ -9,11 +9,14 @@
     return String(s || '').replace(/\s+/g, ' ').trim().length >= toiThieu;
   }
 
+  /** Lựa chọn đã lưu còn hợp lệ: có mã phương án và mã đó vẫn có trong tình huống. */
+  const daLam = (t, c) => !!(c[t.id] && c[t.id].pa && t.phuongAn.some(p => p.id === c[t.id].pa));
+
   /** Tiến độ một bộ: { xong, tong, tiep (chỉ số tình huống chưa làm đầu tiên, −1 nếu xong hết) } */
   function tienDo(bo, chon) {
     const c = chon || {};
-    const xong = bo.tinhHuong.filter(t => c[t.id] && c[t.id].pa).length;
-    const tiep = bo.tinhHuong.findIndex(t => !(c[t.id] && c[t.id].pa));
+    const xong = bo.tinhHuong.filter(t => daLam(t, c)).length;
+    const tiep = bo.tinhHuong.findIndex(t => !daLam(t, c));
     return { xong, tong: bo.tinhHuong.length, tiep };
   }
 
@@ -33,9 +36,17 @@
   }
 
   const COT_CSV = ['bo', 'phien_ban', 'tinh_huong', 'phuong_an', 'logic', 'ly_do', 'thoi_diem', 'doi'];
+  /** Một ô CSV. Ô bắt đầu bằng = + - @ tab hay CR được thêm dấu ' phía trước để Excel không chạy như công thức
+   *  (lý do và tên đội do sinh viên gõ). Ô có dấu phẩy, nháy kép hay xuống dòng được bọc nháy kép. */
+  function oCsv(v) {
+    let s = v == null ? '' : String(v);
+    if (/^[=+\-@\t\r]/.test(s)) s = "'" + s;
+    return /[",\r\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+  }
+
   /** CSV một dòng mỗi tình huống đã làm; BOM để Excel đọc đúng tiếng Việt; CRLF. */
   function taoCsv(bo, chon, phienBan, doi) {
-    const o = v => { const s = v == null ? '' : String(v); return /[",\r\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
+    const o = oCsv;
     const dong = tongKet(bo, chon).filter(d => d.logic).map(d => {
       const c = chon[d.id];
       return [bo.id, phienBan, d.id, c.pa, d.logic, d.lyDo, d.luc, doi || ''].map(o).join(',');
@@ -51,7 +62,7 @@
       '\n\n## ' + (l === 'vi' ? 'Tài liệu tham khảo' : 'References') + '\n\n' + [...dung].sort().map(k => D.NGUON[k]).join('\n\n') + '\n';
   }
 
-  const CORE = { lyDoHopLe, tienDo, ghiChon, tongKet, COT_CSV, taoCsv, vanBanTrichDan };
+  const CORE = { lyDoHopLe, tienDo, ghiChon, tongKet, COT_CSV, oCsv, taoCsv, vanBanTrichDan };
   if (typeof module === 'object' && module.exports) module.exports = CORE;
   else root.KhoiNghiepCore = CORE;
 })(typeof self !== 'undefined' ? self : this);

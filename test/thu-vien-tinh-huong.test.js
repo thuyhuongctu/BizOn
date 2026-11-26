@@ -23,7 +23,8 @@ assert.ok(A.SAMPLES.every(c => c.kind === 'draft' && c.sims === 0), 'thẻ mẫu
 assert.ok(A.CASES.every(c => c.kind !== 'draft'), 'case thật không mang nhãn mẫu');
 // Đặc tả 011: một bộ tình huống giả định (nhãn «Giả định»), không nằm trong danh sách case thật
 deq(A.GIA_DINH.map(c => c.id), ['khoi-nghiep'], 'bộ tình huống giả định');
-assert.ok(A.GIA_DINH.every(c => c.gia === true && c.kind === 'sim' && c.tier === 1 && c.href === 'lab/khoi-nghiep-tinh-huong.html'), 'thẻ giả định: có mô phỏng, bậc 1, trỏ sang trang riêng');
+assert.ok(A.GIA_DINH.every(c => c.gia === true && c.kind === 'set' && c.sims === 0 && c.soTh === 4 && c.tier === 1 && c.href === 'lab/khoi-nghiep-tinh-huong.html'), 'thẻ giả định: bộ tình huống (không phải mô phỏng), bậc 1, trỏ sang trang riêng');
+assert.ok(A.TX.kinds.set, 'có nhãn trạng thái «Bộ tình huống»');
 assert.ok(A.GIA_DINH.every(c => /giả định/i.test(c.d.vi) && /fictional/i.test(c.d.en)), 'mô tả ghi rõ giả định');
 assert.ok(A.TX.gia && A.TX.giaNote, 'có nhãn và ghi chú «Giả định»');
 assert.equal(A.casesFor(false).length, 4); assert.equal(A.casesFor(true).length, 16);
@@ -34,7 +35,9 @@ deq(A.filterCases(all, { ...F0, q: 'durian' }).map(c => c.id), ['srp'], 'tìm b�
 assert.ok(A.filterCases(all, { ...F0, q: 'mekong delta' }).some(c => c.id === 'bps'), 'tìm theo vùng tiếng Anh');
 assert.ok(A.filterCases(all, { ...F0, disc: 'Tài chính' }).every(c => c.disc.includes('Tài chính')));
 deq(A.filterCases(all, { ...F0, kind: 'full' }).map(c => c.id), ['cham']);
-assert.ok(A.filterCases(all, { ...F0, kind: 'sim' }).every(c => c.kind !== 'draft'), '«Có mô phỏng» gồm cả case đầy đủ');
+assert.ok(A.filterCases(all, { ...F0, kind: 'sim' }).every(c => c.kind !== 'draft' && c.sims > 0), '«Có mô phỏng» gồm cả case đầy đủ');
+deq(A.filterCases(all, { ...F0, kind: 'sim' }).map(c => c.id), ['cham', 'bps', 'srp'], '«Có mô phỏng» không gồm bộ tình huống');
+deq(A.filterCases(all, { ...F0, kind: 'set' }).map(c => c.id), ['khoi-nghiep'], 'lọc «Bộ tình huống»');
 assert.ok(A.filterCases(all, { ...F0, tier: 2, region: 'Cần Thơ' }).every(c => c.tier === 2 && c.region === 'Cần Thơ'));
 assert.equal(A.activeCount(F0), 0); assert.equal(A.activeCount({ q: ' x ', tier: 3, kind: 'sim', disc: 'Marketing', region: '' }), 4);
 const sh = A.shelves(all);
@@ -77,6 +80,9 @@ assert.ok(+(read('sw.js').match(/bizon-v(\d+)/) || [])[1] >= 743);
     assert.equal(await pg.$$eval('.tv-card', l => l.length), 4, 'mặc định: 3 case thật + 1 bộ tình huống giả định, không thẻ mẫu');
     assert.equal(await pg.$$eval('.tv-card[data-open="khoi-nghiep"] .k-gia', l => l.length), 1, 'thẻ giả định có nhãn «Giả định»');
     assert.equal(await pg.$$eval('.tv-card:not([data-open="khoi-nghiep"]) .k-gia', l => l.length), 0, 'case thật không mang nhãn «Giả định»');
+    for (const sel of ['.tv-card[data-open="khoi-nghiep"] .k-gia', '.tv-card[data-open="khoi-nghiep"] .k-set'])
+      assert.notEqual(await pg.$eval(sel, e => getComputedStyle(e).backgroundColor), 'rgba(0, 0, 0, 0)', sel + ' có màu nền');
+    assert.ok(!/mô phỏng/i.test(await pg.textContent('.tv-card[data-open="khoi-nghiep"]')), 'thẻ bộ tình huống không ghi «mô phỏng»');
     assert.equal(await pg.$$eval('.tv-shelf', l => l.length), 3);
     assert.equal(await pg.$$eval('[data-g="kind"][data-v="draft"]', l => l.length), 0, 'không có chip Case mẫu khi ẩn thẻ mẫu');
     assert.equal(await pg.textContent('#tv-count'), '4 / 4 case');

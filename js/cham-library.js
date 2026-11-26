@@ -30,7 +30,7 @@
   const GIA_DINH = [
     { id: 'khoi-nghiep', gia: true, t: L('Kiểm định ý tưởng khởi nghiệp', 'Validating a startup idea'),
       d: L('Tình huống giả định: đội «Rổ Rau Xanh» đi từ một ý tưởng đến lần thử đầu tiên với khách thật. Chọn, ghi lý do, xem hệ quả và vì sao.', 'Fictional case: team «Green Basket» goes from an idea to its first test with real customers. Choose, give a reason, see what happens and why.'),
-      disc: ['Khởi nghiệp', 'Marketing'], region: 'ĐBSCL', tier: 1, kind: 'sim', bg: 'lilac', sims: 1, dur: L('30 phút', '30 min'), href: 'lab/khoi-nghiep-tinh-huong.html' }
+      disc: ['Khởi nghiệp', 'Marketing'], region: 'ĐBSCL', tier: 1, kind: 'set', bg: 'lilac', sims: 0, soTh: 4, dur: L('30 phút', '30 min'), href: 'lab/khoi-nghiep-tinh-huong.html' }
   ];
   /* Thẻ minh họa của bản thiết kế (KHÔNG phải case thật): chỉ hiện với ?mau=1 */
   const SAMPLES = [
@@ -65,7 +65,7 @@
   const TX = {
     viewAs: L('XEM VỚI TƯ CÁCH', 'VIEWING AS'), sv: L('Sinh viên', 'Student'), gv: L('Giảng viên', 'Instructor'),
     allTiers: L('Mọi bậc', 'All tiers'), tier: L('Bậc', 'Tier'), all: L('Tất cả', 'All'),
-    kinds: { all: L('Tất cả', 'All'), full: L('Đầy đủ', 'Complete'), sim: L('Có mô phỏng', 'Simulation ready'), draft: L('Case mẫu', 'Sample') },
+    kinds: { all: L('Tất cả', 'All'), full: L('Đầy đủ', 'Complete'), sim: L('Có mô phỏng', 'Simulation ready'), set: L('Bộ tình huống', 'Case set'), draft: L('Case mẫu', 'Sample') },
     noteSv: L('Bắt đầu từ Bậc 1. Bấm vào case để mở.', 'Start at Tier 1. Click a case to open it.'), noteGv: L('Thẻ hiện thêm thời lượng và số mô phỏng.', 'Cards also show duration and number of simulations.'),
     noSim: L('Chưa có mô phỏng', 'No simulation yet'), lib: L('Thư viện', 'Library'), back: L('← Thư viện', '← Library'),
     steps: [L('Đọc case', 'Read the case'), L('Soát số liệu', 'Check the numbers'), L('Chơi mô phỏng', 'Play a simulation'), L('Phản tư', 'Reflect')],
@@ -102,13 +102,14 @@
   const casesFor = withSamples => (withSamples ? CASES.concat(GIA_DINH, SAMPLES) : CASES.concat(GIA_DINH));
   const countWord = (n, lang) => (lang === 'en' ? n + (n === 1 ? ' case' : ' cases') : n + ' case');
   const simWord = (n, lang) => (lang === 'en' ? n + (n === 1 ? ' simulation' : ' simulations') : n + ' mô phỏng');
+  const thWord = (n, lang) => (lang === 'en' ? n + (n === 1 ? ' case' : ' cases') + ' to decide' : n + ' tình huống quyết định');
 
-  /* F = { q, tier (0 = mọi bậc), kind ('all'|'full'|'sim'|'draft'), disc ('' = tất cả), region ('' = tất cả) } */
+  /* F = { q, tier (0 = mọi bậc), kind ('all'|'full'|'sim'|'set'|'draft'), disc ('' = tất cả), region ('' = tất cả) } */
   function matches(c, F) {
     const q = fold((F.q || '').trim());
     const hay = fold([c.t.vi, c.t.en, c.d.vi, c.d.en, c.region, REGION_EN[c.region] || ''].join(' '));
     return (!q || hay.includes(q)) && (!F.disc || c.disc.includes(F.disc)) && (!F.region || c.region === F.region) &&
-      (!F.tier || c.tier === F.tier) && (!F.kind || F.kind === 'all' || (F.kind === 'sim' ? c.kind !== 'draft' : c.kind === F.kind));
+      (!F.tier || c.tier === F.tier) && (!F.kind || F.kind === 'all' || (F.kind === 'sim' ? c.sims > 0 : c.kind === F.kind));
   }
   function filterCases(list, F) { return list.filter(c => matches(c, F)); }
   /* Kệ theo bậc: chỉ bậc có kết quả; trong một kệ, case thật đứng trước Case mẫu */
@@ -161,7 +162,7 @@
       '<span class="tv-card-top"><span class="tv-reg">' + esc(tierLine(c)) + '</span>' + kindBadge(c) + '</span>' +
       '<b>' + esc(t(c.t)) + '</b><span class="tv-d">' + esc(t(c.d)) + '</span>' +
       '<span class="tv-disc">' + esc(c.disc.map(d => discName(d, lang())).join(' · ')) + '</span>' +
-      (gv ? '<span class="tv-gvstrip"><span>⏱ ' + esc(t(c.dur)) + '</span><span>' + esc(c.sims ? simWord(c.sims, lang()) : t(TX.noSim)) + '</span></span>' : '') +
+      (gv ? '<span class="tv-gvstrip"><span>⏱ ' + esc(t(c.dur)) + '</span><span>' + esc(c.sims ? simWord(c.sims, lang()) : c.soTh ? thWord(c.soTh, lang()) : t(TX.noSim)) + '</span></span>' : '') +
       '</button>';
   }
   function chip(group, val, label, on, extra) {
@@ -183,7 +184,7 @@
     const F = { q: S.q, tier: S.tier, kind: S.kind, disc: S.disc, region: S.region };
     $('#tv-roles').innerHTML = rolesHtml();
     $('#tv-tiers').innerHTML = [0, 1, 2, 3].map(x => chip('tier', String(x), x ? t(TX.tier) + ' ' + x : t(TX.allTiers), S.tier === x)).join('');
-    $('#tv-kinds').innerHTML = ['all', 'full', 'sim'].concat(S.mau ? ['draft'] : []).map(k => chip('kind', k, t(TX.kinds[k]), S.kind === k)).join('');
+    $('#tv-kinds').innerHTML = ['all', 'full', 'sim', 'set'].concat(S.mau ? ['draft'] : []).map(k => chip('kind', k, t(TX.kinds[k]), S.kind === k)).join('');
     const discs = Array.from(new Set(list.flatMap(c => c.disc))), regions = Array.from(new Set(list.map(c => c.region)));
     $('#tv-discs').innerHTML = chip('disc', '', t(TX.all), !S.disc, list.length) + discs.map(d => chip('disc', d, discName(d, lang()), S.disc === d, n(c => c.disc.includes(d)))).join('');
     $('#tv-regions').innerHTML = chip('region', '', t(TX.all), !S.region, list.length) + regions.map(r => chip('region', r, regionName(r, lang()), S.region === r, n(c => c.region === r))).join('');
@@ -221,7 +222,7 @@
   function renderCase() {
     const list = all(), c = list.find(x => x.id === S.caseId) || CASES[0], en = lang() === 'en', gv = S.role === 'gv';
     const crumb = t(TX.tier) + ' ' + c.tier + ' · ' + t(TIERS[c.tier]);
-    const meta = [tierLine(c), c.year, c.sims ? simWord(c.sims, lang()) : t(TX.noSim)].filter(Boolean).join(' · ');
+    const meta = [tierLine(c), c.year, c.sims ? simWord(c.sims, lang()) : c.soTh ? thWord(c.soTh, lang()) : t(TX.noSim)].filter(Boolean).join(' · ');
     document.title = t(c.t) + ' · ' + (en ? 'Case library · BizOn' : 'Thư viện tình huống · BizOn');
     let body = '';
     if (c.id === 'cham') {

