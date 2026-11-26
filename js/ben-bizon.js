@@ -18,6 +18,7 @@ import { taoDangDi } from './ben-bizon-dang-di.js';
 import { taoTranhDong, BO_TRANH, diDuoc as coTranhDi } from './ben-bizon-tranh-dong.js';
 import { taoNhiemVu } from './ben-bizon-nhiem-vu.js';
 import { CAU_HOI, CHU_CAU_HOI } from './ben-bizon-cau-hoi.js';
+import { taoAmThanh } from './ben-bizon-am-thanh.js';
 
 window.BIZON_CHAR_GLB = true;   // bật mô hình có xương cho riêng trang này (mặc định của kho vẫn tắt, PR #1024)
 
@@ -90,6 +91,7 @@ const CHU = {
   tranh: { vi: 'Chưa tải được mô hình 3D, đang dùng tranh nhân vật.', en: 'The 3D model has not loaded; using the character art instead.' },
   mang: { vi: 'Đang mất mạng: dùng tranh nhân vật cho tới khi có mạng lại.', en: 'You are offline: using the character art until you are back online.' },
   nhacBat: { vi: '🎵 Đang phát BizOn Theme', en: '🎵 Playing the BizOn Theme' }, nhacTat: { vi: 'Đã tắt nhạc', en: 'Music stopped' },
+  amBat: { vi: '🔊 Bật tiếng bến sông: bước chân, gió, chim, nước', en: '🔊 River sounds on: footsteps, wind, birds, water' }, amTat: { vi: '🔇 Đã tắt tiếng bến sông', en: '🔇 River sounds off' },
   tiep: { vi: 'Tiếp tục ▸', en: 'Continue ▸' }, dong: { vi: 'Đóng', en: 'Close' },
   daGhe: { vi: 'Bạn đã ghé {n}/{m} điểm game trên bến.', en: 'You have visited {n} of {m} game spots on the wharf.' },
 };
@@ -459,7 +461,7 @@ function veThanhTich() {
 function batNhac() {
   if (!nhac) { nhac = new Audio('assets/audio/bizon-theme.mp3'); nhac.loop = true; nhac.volume = 0.45; }
   if (nhacBat) nhac.pause(); else nhac.play().catch(() => {});
-  nhacBat = !nhacBat; datNote(L(nhacBat ? CHU.nhacBat : CHU.nhacTat), 2600);
+  nhacBat = !nhacBat; datNote(L(nhacBat ? CHU.nhacBat : CHU.nhacTat), 2600); am.nhac(nhacBat);
 }
 function vaoNoi(p) {
   baoNv({ loai: p.thoai ? 'thoai' : p.viec === 'thanh-tich' ? 'xem' : 'vao', noi: p.id });
@@ -481,6 +483,7 @@ function ve(ms) {
   // tờ sprite của tranh động tải hỏng: đặt mô hình thường vào đúng chỗ đó để người chơi không bị «tàng hình»
   if (tranh && tranh.hong && !tranhLui) { tranhLui = chars.build(vai); player.add(tranhLui); dangDi = taoDangDi(tranhLui, { giam }); tBatDau = performance.now(); dc.tocDo({ chay: TOC_CHAY }); }
   const s = dc.state(), than = tranhLui || player, rig = than.userData.rig || {}, laTranh = tranh && !tranhLui;
+  am.capNhat(dt, s.speed);   // tiếng bước chân theo quãng đường đi
   // dáng đi khớp tốc độ (ben-bizon-dang-di.js); mô hình có xương chưa tải xong thì vẫn dùng tranh dựng đứng như cũ
   if (laTranh) tranh.capNhat(dt, s.speed, s.yaw, camera.position.x, camera.position.z);
   else if (!dangDi || !dangDi.capNhat(dt, s.speed, s.yaw)) chars.animate(than, dongHo, s.mode === 'walk' ? 'walk' : 'idle');
@@ -545,6 +548,16 @@ function datNhip(m) {
 }
 if (nutChay) { datNhip(nhip); nutChay.addEventListener('click', () => datNhip(nhip === 'chay' ? 'tu-dong' : 'chay')); }
 
+// Âm thanh bến sông (26/11/2026): bước chân, gió, chim hót, nước vỗ bến – tổng hợp bằng Web Audio (js/ben-bizon-am-thanh.js). Nút 🔊 bật/tắt, nhớ lựa chọn.
+const am = taoAmThanh({ dangTat: () => !document.documentElement.classList.contains('bb-play') });
+const nutAm = $('bb-am');
+function veNutAm() {
+  if (!nutAm) return; const t = am.trangThai();
+  if (!t.coHoTro) { nutAm.hidden = true; return; }
+  nutAm.setAttribute('aria-pressed', t.bat ? 'true' : 'false'); const i = nutAm.querySelector('span'); if (i) i.textContent = t.bat ? '🔊' : '🔇';
+}
+if (nutAm) { veNutAm(); nutAm.addEventListener('click', () => { const b = am.doi(); veNutAm(); datNote(L(b ? CHU.amBat : CHU.amTat), 2600); }); }
+
 function batDau(v) {
   if (!VAI[v]) return;
   if (!khoiTao()) { $('bb-fallback').hidden = false; $('bb-links').scrollIntoView({ block: 'nearest' }); return; }
@@ -564,6 +577,7 @@ function batDau(v) {
   nv = taoNhiemVu({ host: $('bb-nv'), L, goTo: id => dc && dc.goTo(id), daGhe });
   hint.hidden = true;
   khoaNen(true); try { stage.focus({ preventScroll: true }); } catch (e) {}
+  am.batDau();   // bấm chọn vai là thao tác của người chơi: trình duyệt cho phép bật âm thanh
   cancelAnimationFrame(raf); tLast = 0; raf = requestAnimationFrame(ve);
 }
 // Khi cảnh phủ toàn màn hình, phần trang bên dưới không được nhận tiêu điểm bàn phím hay trình đọc màn hình
@@ -572,7 +586,8 @@ function khoaNen(khoa) {
 }
 function thoat() {
   cancelAnimationFrame(raf); raf = 0; if (thoai) dongThoai();
-  if (nhac && nhacBat) { nhac.pause(); nhacBat = false; }
+  if (nhac && nhacBat) { nhac.pause(); nhacBat = false; am.nhac(false); }
+  am.tamDung();
   if (dc) { dc.dispose(); dc = null; }   // trả phím mũi tên, WASD lại cho trang
   document.documentElement.classList.remove('bb-play'); sanSang = false; khoaNen(false);
   const b = document.querySelector('#bb-pick [data-vai="' + vai + '"]'); if (b) b.focus();
@@ -582,13 +597,13 @@ document.querySelectorAll('#bb-pick [data-vai]').forEach(b => b.addEventListener
 $('bb-exit').addEventListener('click', thoat);
 window.addEventListener('bizon:langchange', () => { if (!dc) return; dc.lamMoiChu(); veNhan(); if (nv) nv.lamMoiChu(); if (thoai) veThoai(); if (noteGiu) datNote(L(tLoad === 99 ? CHU.tranh : CHU.tai)); });
 window.addEventListener('pageshow', e => { if (e.persisted) { fade.classList.remove('on'); if (dc) dc.dung(false); } });
-document.addEventListener('visibilitychange', () => { if (document.hidden) { cancelAnimationFrame(raf); raf = 0; } else if (dc && document.documentElement.classList.contains('bb-play') && !raf) { tLast = 0; raf = requestAnimationFrame(ve); } });
+document.addEventListener('visibilitychange', () => { if (document.hidden) { cancelAnimationFrame(raf); raf = 0; am.tamDung(); } else if (dc && document.documentElement.classList.contains('bb-play') && !raf) { tLast = 0; raf = requestAnimationFrame(ve); am.batDau(); } });
 try { const cu = localStorage.getItem('bizon-ben-vai'); const b = cu && document.querySelector('#bb-pick [data-vai="' + cu + '"]'); if (b) b.classList.add('da-chon'); } catch (e) {}
 
 // cửa đọc trạng thái cho test (Playwright) và để gỡ lỗi
 window.__benBizon = {
   state() { const s = dc ? dc.state() : {}, rig = ((tranhLui || player || {}).userData || {}).rig || {}; return Object.assign(s, { ready: !!(dc && sanSang), goc, dang: dangDi && dangDi.sanSang ? dangDi.thongSo().dang : null, tranh: tranh ? Object.assign({ sanSang: tranh.sanSang, hong: tranh.hong }, tranh.thongSo()) : null, coVanTranh: tranhCoVan.map(t => t ? Object.assign({ sanSang: t.sanSang, hong: t.hong }, t.thongSo()) : null), char: vai, glb: !!rig.glb, clip: rig.glb ? rig.cur : s.mode, nhiemVu: nv ? nv.state() : null }); },
   info: () => ({ canh: 'ben-song', nuoc: true, cauTau: true, diaDiem: NOI.map(p => p.id), chiTiet, goc, dangDi: dangDi && dangDi.sanSang ? Object.assign({ coChay: dangDi.coChay, khoHong: dangDi.khoHong }, dangDi.thongSo()) : null, veMoiKhung: renderer ? renderer.info.render.calls : 0 }),
-  datGoc, datNhip, goTo: id => dc && dc.goTo(id),
+  datGoc, datNhip, goTo: id => dc && dc.goTo(id), amThanh: () => am.trangThai(),
   laBo, dat: (x, z, yaw) => dc && dc.dat(x, z, yaw),
 };
