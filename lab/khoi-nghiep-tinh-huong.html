@@ -20,7 +20,8 @@
 <title>Tình huống khởi nghiệp · BizOn</title>
 <link rel="icon" href="../assets/brand/bizon-favicon.svg" type="image/svg+xml">
 <meta name="description" content="Tình huống khởi nghiệp của BizOn: kiểm định ý tưởng qua bốn quyết định, chọn phương án, ghi lý do, xem hệ quả và phần «Vì sao?» có trích nguồn. Tình huống giả định, không chấm điểm, không dùng AI.">
-<!-- Đặc tả: specs/011-tinh-huong-khoi-nghiep (PR 1: bộ «Kiểm định ý tưởng»; PR 2: bộ «Ra thị trường», liên kết sang lab và game).
+<!-- Đặc tả: specs/011-tinh-huong-khoi-nghiep (PR 1: bộ «Kiểm định ý tưởng»; PR 2: bộ «Ra thị trường», liên kết sang lab và game;
+     PR 3: màn giảng viên ?gv=1, gộp CSV của lớp trên máy, ghi chú giảng dạy).
      Nội dung: khoi-nghiep-tinh-huong-data.js; tiến độ, tổng kết, CSV: khoi-nghiep-tinh-huong-core.js (hàm thuần, có test). -->
 <style>
 @font-face{font-family:'Plus Jakarta Sans';font-weight:400 800;font-display:swap;src:url(../assets/fonts/PlusJakartaSans-var-vietnamese.woff2) format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+1EA0-1EF9,U+20AB}
@@ -73,7 +74,18 @@ th,td{text-align:left;padding:8px;border-bottom:1px solid var(--field);vertical-
 .nguon{font-size:12px;color:var(--muted);line-height:1.5}
 .nguon li{margin-bottom:6px;overflow-wrap:anywhere}
 .chan{font-size:12px;color:var(--muted);line-height:1.5;margin-top:18px}
-@media print{header.top .btn,.hang-nut,.chan,#man-bo,#man-th{display:none!important}body{background:#fff}.the{box-shadow:none;border:1px solid #ccc}}
+.gv-nap{display:inline-flex;align-items:center;min-height:44px;padding:10px 16px;border-radius:14px;background:var(--blue);color:#fff;font-weight:800;cursor:pointer}
+.gv-nap input{position:absolute;opacity:0;width:1px;height:1px}
+.gv-nap:focus-within{outline:3px solid var(--blue);outline-offset:3px}
+.gv-loi{color:var(--burg);font-weight:700}
+.gv-th{margin-top:14px}
+.gv-th h4{margin:0 0 4px;font-size:15px}
+.gv-bang{overflow-x:auto}
+.gv-bang th:nth-child(n+2),.gv-bang td:nth-child(n+2){white-space:nowrap;width:1%}
+.thanh{height:8px;border-radius:6px;background:var(--blue);min-width:2px}
+.logic{font-size:11px;color:var(--muted);font-weight:700;overflow-wrap:anywhere}
+.ghi-chu{font-size:13px;line-height:1.5;color:var(--muted)}
+@media print{header.top .btn,.hang-nut,.chan,.gv-nap,#man-bo,#man-th{display:none!important}body{background:#fff}.the{box-shadow:none;border:1px solid #ccc}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -133,6 +145,22 @@ th,td{text-align:left;padding:8px;border-bottom:1px solid var(--field);vertical-
     </div>
   </section>
 
+  <!-- Màn giảng viên (?gv=1): gộp CSV các đội nộp, đọc ngay trên máy này, không tải lên đâu -->
+  <section id="man-gv" hidden aria-labelledby="gv-tieu-de">
+    <div class="the">
+      <h2 id="gv-tieu-de" style="margin:0 0 6px;font-size:18px" data-k="gvTieuDe">Giảng viên: kết quả lớp</h2>
+      <p class="goi-y" data-k="gvGoiY">Chọn các tệp CSV các đội đã xuất. Tệp chỉ được đọc trên máy này, không gửi đi đâu.</p>
+      <div class="hang-nut">
+        <label class="gv-nap"><span data-k="gvNap">Chọn tệp CSV</span><input type="file" id="gv-tep" accept=".csv,text/csv" multiple></label>
+        <button type="button" class="btn" id="gv-in" data-k="inBang">In bảng</button>
+      </div>
+      <p id="gv-tom-tat" aria-live="polite"></p>
+      <ul id="gv-loi" class="gv-loi"></ul>
+    </div>
+    <div id="gv-bo"></div>
+    <p class="chan"><a href="khoi-nghiep-tinh-huong.html" data-k="gvVeSV">← Về trang sinh viên</a></p>
+  </section>
+
   <section class="nguon" aria-labelledby="h-nguon"><h2 id="h-nguon" style="font-size:14px" data-k="nguon">Nguồn trích trong phần «Vì sao?»</h2><ul id="ds-nguon"></ul></section>
   <p class="chan" data-k="chan">Tình huống giả định, dựng từ các mẫu thường gặp ở Đồng bằng sông Cửu Long; số liệu là số minh họa, không gắn doanh nghiệp có thật. Trang không chấm điểm, không dùng AI; lựa chọn và lý do chỉ lưu trên máy bạn, không gửi đi đâu (trang chỉ đếm lượt xem ẩn danh).</p>
   <p class="chan"><a href="../thu-vien-tinh-huong.html" data-k="veThuVien">← Thư viện tình huống</a></p>
@@ -155,7 +183,11 @@ th,td{text-align:left;padding:8px;border-bottom:1px solid var(--field);vertical-
       tinhTiep: 'Tình huống tiếp', xemTongKet: 'Xem tổng kết', veBo: 'Về danh sách bộ', tongKet: ten => 'Tổng kết: ' + ten,
       tkGoiY: 'Không có điểm: đem bảng này ra thảo luận với đội và giảng viên.', cotTinhHuong: 'Tình huống', cotLuaChon: 'Lựa chọn', cotLyDo: 'Lý do',
       inBang: 'In bảng', xuatCsv: 'Xuất CSV', lamLai: 'Làm lại bộ này', xacNhanLamLai: 'Xóa các lựa chọn của bộ này để làm lại?', luuGoiY: 'Kết quả chỉ lưu trong trình duyệt của máy này. Muốn nộp cho giảng viên thì in bảng hoặc xuất CSV.',
-      tab: 'Tình huống khởi nghiệp · BizOn', thuTiep: 'Thử tiếp trong BizOn', nguon: 'Nguồn trích trong phần «Vì sao?»', chan: 'Tình huống giả định, dựng từ các mẫu thường gặp ở Đồng bằng sông Cửu Long; số liệu là số minh họa, không gắn doanh nghiệp có thật. Trang không chấm điểm, không dùng AI; lựa chọn và lý do chỉ lưu trên máy bạn, không gửi đi đâu (trang chỉ đếm lượt xem ẩn danh).', veThuVien: '← Thư viện tình huống', banChon: 'Bạn chọn',
+      tab: 'Tình huống khởi nghiệp · BizOn', thuTiep: 'Thử tiếp trong BizOn',
+      gvTieuDe: 'Giảng viên: kết quả lớp', gvGoiY: 'Chọn các tệp CSV các đội đã xuất. Tệp chỉ được đọc trên máy này, không gửi đi đâu.', gvNap: 'Chọn tệp CSV',
+      gvChuaCo: 'Chưa có tệp nào. Bảng dưới đây sẽ đếm lựa chọn của lớp khi chị/anh chọn tệp.', gvTomTat: (f, n, k) => 'Đã gộp ' + f + ' tệp, ' + n + ' lựa chọn' + (k ? '; ' + k + ' lượt nộp trùng (giữ lần mới nhất)' : '') + '.',
+      gvLoiTep: (f, ly) => f + ': ' + ly, gvMucTieu: 'Mục tiêu', gvThoiLuong: 'Thời lượng', gvLuuY: 'Lưu ý đợt đo', gvHayChon: 'Thường gặp (dự đoán của người soạn)', gvCauHoi: 'Câu hỏi thảo luận',
+      gvCotPA: 'Phương án', gvCotSo: 'Số lượt', gvCotTiLe: 'Tỉ lệ', gvTong: n => n + ' lượt chọn', gvKhac: n => n + ' dòng khác phiên bản hoặc mã lạ, không đếm', gvVeSV: '← Về trang sinh viên', nguon: 'Nguồn trích trong phần «Vì sao?»', chan: 'Tình huống giả định, dựng từ các mẫu thường gặp ở Đồng bằng sông Cửu Long; số liệu là số minh họa, không gắn doanh nghiệp có thật. Trang không chấm điểm, không dùng AI; lựa chọn và lý do chỉ lưu trên máy bạn, không gửi đi đâu (trang chỉ đếm lượt xem ẩn danh).', veThuVien: '← Thư viện tình huống', banChon: 'Bạn chọn',
     },
     en: {
       tieuDe: 'Startup cases', phuDe: 'Choose an option, give a reason, see what happens and why', giaDinh: 'Fictional cases · illustrative figures',
@@ -166,7 +198,11 @@ th,td{text-align:left;padding:8px;border-bottom:1px solid var(--field);vertical-
       tinhTiep: 'Next case', xemTongKet: 'See summary', veBo: 'Back to case sets', tongKet: ten => 'Summary: ' + ten,
       tkGoiY: 'No score: bring this table to your team and your lecturer for discussion.', cotTinhHuong: 'Case', cotLuaChon: 'Choice', cotLyDo: 'Reason',
       inBang: 'Print', xuatCsv: 'Export CSV', lamLai: 'Redo this set', xacNhanLamLai: 'Clear your choices in this set and start again?', luuGoiY: 'Results are stored only in this browser. To hand them in, print the summary or export a CSV.',
-      tab: 'Startup cases · BizOn', thuTiep: 'Try it next in BizOn', nguon: 'Sources cited in the «Why?» sections', chan: 'Fictional cases built from patterns common in the Mekong Delta; figures are illustrative and refer to no real company. The page gives no score and uses no AI; your choices and reasons stay on this device and are never sent anywhere (the page only counts anonymous visits).', veThuVien: '← Case library', banChon: 'You chose',
+      tab: 'Startup cases · BizOn', thuTiep: 'Try it next in BizOn',
+      gvTieuDe: 'Lecturer: class results', gvGoiY: 'Choose the CSV files the teams exported. Files are read on this device only and never sent anywhere.', gvNap: 'Choose CSV files',
+      gvChuaCo: 'No files yet. The tables below will count the class choices once you choose files.', gvTomTat: (f, n, k) => 'Merged ' + f + (f === 1 ? ' file, ' : ' files, ') + n + ' choices' + (k ? '; ' + k + ' duplicate submissions (latest kept)' : '') + '.',
+      gvLoiTep: (f, ly) => f + ': ' + ly, gvMucTieu: 'Goal', gvThoiLuong: 'Time', gvLuuY: 'Measurement note', gvHayChon: 'Common choice (author’s expectation)', gvCauHoi: 'Discussion questions',
+      gvCotPA: 'Option', gvCotSo: 'Count', gvCotTiLe: 'Share', gvTong: n => n + ' choices', gvKhac: n => n + ' rows from another version or with unknown codes, not counted', gvVeSV: '← Back to the student page', nguon: 'Sources cited in the «Why?» sections', chan: 'Fictional cases built from patterns common in the Mekong Delta; figures are illustrative and refer to no real company. The page gives no score and uses no AI; your choices and reasons stay on this device and are never sent anywhere (the page only counts anonymous visits).', veThuVien: '← Case library', banChon: 'You chose',
     },
   };
   let lang = 'vi';
@@ -189,7 +225,7 @@ th,td{text-align:left;padding:8px;border-bottom:1px solid var(--field);vertical-
   // tam: phương án đang chọn nhưng chưa xem hệ quả, theo mã tình huống
   const S = { man: 'bo', bo: null, i: 0, tam: {} };
   const tamCua = () => S.tam[boTheoId(S.bo).tinhHuong[S.i].id] || null;
-  function hien(id) { ['man-bo', 'man-th', 'man-tk'].forEach(m => { $(m).hidden = m !== id; }); S.man = id.replace('man-', ''); }
+  function hien(id) { ['man-bo', 'man-th', 'man-tk', 'man-gv'].forEach(m => { $(m).hidden = m !== id; }); S.man = id.replace('man-', ''); }
   const boTheoId = id => D.BO.find(b => b.id === id);
 
   function veBo() {
@@ -303,8 +339,60 @@ th,td{text-align:left;padding:8px;border-bottom:1px solid var(--field);vertical-
     document.querySelectorAll('[data-k]').forEach(el => { const v = T[lang][el.dataset.k]; if (typeof v === 'string') el.textContent = v; });
     $('nut-lang').textContent = lang === 'vi' ? 'EN' : 'VI';
     veBo(); veNguon();
-    if (S.man === 'th') veTinhHuong(); if (S.man === 'tk') veTongKet();
+    if (S.man === 'th') veTinhHuong(); if (S.man === 'tk') veTongKet(); if (S.man === 'gv') veGv();
   }
+
+  // ---- Màn giảng viên (?gv=1) ----
+  const GVS = { tep: 0, kq: null };
+  const LOI_VI_EN = { 'Tệp trống': 'Empty file', 'Thiếu cột': 'Missing columns' };
+  const dichLoi = ly => (lang === 'en' ? ly.replace(/^(Tệp trống|Thiếu cột)/, m => LOI_VI_EN[m]) : ly);
+  function phanTu(tag, cls, chu) { const e = document.createElement(tag); if (cls) e.className = cls; if (chu != null) e.textContent = chu; return e; }
+  function veGv() {
+    const kq = GVS.kq, pb = C.phanBo(D, kq ? kq.dong : []);
+    $('gv-tom-tat').textContent = kq ? t('gvTomTat')(GVS.tep, kq.dong.length, kq.trung) : t('gvChuaCo');
+    const ul = $('gv-loi'); ul.innerHTML = '';
+    (kq ? kq.loi : []).forEach(x => ul.appendChild(phanTu('li', '', t('gvLoiTep')(x.tep, dichLoi(x.ly)))));
+    const goc = $('gv-bo'); goc.innerHTML = '';
+    pb.forEach(pbBo => {
+      const b = boTheoId(pbBo.bo), g = (D.GV || {})[b.id] || { tinhHuong: {} }, the = phanTu('section', 'the');
+      the.setAttribute('aria-label', ten(b.ten));
+      the.appendChild(phanTu('h3', '', ten(b.ten)));
+      if (g.mucTieu) the.appendChild(phanTu('p', 'ghi-chu', t('gvMucTieu') + ': ' + ten(g.mucTieu)));
+      if (g.thoiLuong) the.appendChild(phanTu('p', 'ghi-chu', t('gvThoiLuong') + ': ' + ten(g.thoiLuong)));
+      if (g.luuYDoDo) the.appendChild(phanTu('p', 'ghi-chu gv-luu-y', t('gvLuuY') + ': ' + ten(g.luuYDoDo)));
+      pbBo.tinhHuong.forEach(x => {
+        const khoi = phanTu('div', 'gv-th'); khoi.dataset.th = x.id;
+        khoi.appendChild(phanTu('h4', '', ten(x.tieuDe) + ' · ' + t('gvTong')(x.tong)));
+        const bang = phanTu('div', 'gv-bang'), tb = document.createElement('table');
+        const dau = document.createElement('tr');
+        [t('gvCotPA'), t('gvCotSo'), t('gvCotTiLe')].forEach(c => { const th = phanTu('th', '', c); th.scope = 'col'; dau.appendChild(th); });
+        const thead = document.createElement('thead'); thead.appendChild(dau); tb.appendChild(thead);
+        const tbody = document.createElement('tbody');
+        x.pa.forEach(p => {
+          const tr = document.createElement('tr'); tr.dataset.pa = p.id;
+          const c1 = phanTu('td', '', ten(p.nhan)); c1.appendChild(phanTu('div', 'logic', p.logic));
+          const c3 = phanTu('td', '', p.tiLe + ' %'), thanh = phanTu('div', 'thanh'); thanh.style.width = p.tiLe + '%'; c3.appendChild(thanh);
+          tr.append(c1, phanTu('td', 'gv-so', String(p.n)), c3); tbody.appendChild(tr);
+        });
+        tb.appendChild(tbody); bang.appendChild(tb); khoi.appendChild(bang);
+        if (x.khac) khoi.appendChild(phanTu('p', 'goi-y', t('gvKhac')(x.khac)));
+        const gt = g.tinhHuong[x.id];
+        if (gt) {
+          khoi.appendChild(phanTu('p', 'ghi-chu', t('gvHayChon') + ': ' + ten(gt.hayChon)));
+          khoi.appendChild(phanTu('p', 'ghi-chu', t('gvCauHoi') + ':'));
+          const ol = phanTu('ol', 'ghi-chu'); gt.cauHoi.forEach(q => ol.appendChild(phanTu('li', '', ten(q)))); khoi.appendChild(ol);
+        }
+        the.appendChild(khoi);
+      });
+      goc.appendChild(the);
+    });
+  }
+  $('gv-tep').addEventListener('change', e => {
+    const ds = Array.from(e.target.files || []);
+    Promise.all(ds.map(f => f.text().then(noiDung => ({ ten: f.name, noiDung }), () => ({ ten: f.name, noiDung: '' }))))
+      .then(tep => { GVS.tep = tep.length; GVS.kq = C.gopCsv(tep); veGv(); });
+  });
+  $('gv-in').addEventListener('click', () => window.print());
 
   $('ly-do').addEventListener('input', kiemNut);
   $('nut-xem').addEventListener('click', xemHeQua);
@@ -331,9 +419,10 @@ th,td{text-align:left;padding:8px;border-bottom:1px solid var(--field);vertical-
   $('ten-doi').value = luu.doi || '';
   apNgonNgu();
   const boUrl = (location.search.match(/[?&]bo=([a-z-]{2,30})/) || [])[1];
-  if (boUrl && boTheoId(boUrl)) moBo(boUrl);
+  if (/[?&]gv=1(&|$)/.test(location.search)) { hien('man-gv'); veGv(); }
+  else if (boUrl && boTheoId(boUrl)) moBo(boUrl);
 
-  window.__knTest = { trangThai: () => ({ man: S.man, bo: S.bo, i: S.i, luu: JSON.parse(JSON.stringify(luu)) }) };
+  window.__knTest = { trangThai: () => ({ man: S.man, bo: S.bo, i: S.i, luu: JSON.parse(JSON.stringify(luu)), gv: GVS.kq && { dong: GVS.kq.dong.length, trung: GVS.kq.trung, loi: GVS.kq.loi.length } }) };
 })();
 </script>
 <script src="../js/thong-ke.js" defer></script>

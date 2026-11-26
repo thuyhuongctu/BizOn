@@ -102,6 +102,12 @@ Bộ phiếu khảo sát trước–sau in được trên khổ A4 (kèm đáp �
 
 Dữ liệu trước–sau từ 2–3 lớp (~100 sinh viên) chính là bằng chứng hiệu quả học tập quan trọng nhất của dự án.
 
+### Tình huống khởi nghiệp (lab/khoi-nghiep-tinh-huong.html) và đợt đo
+
+- Trang có hai bộ tình huống giả định, mỗi bộ 4 tình huống, khoảng 30 phút: «Kiểm định ý tưởng» và «Ra thị trường». Sinh viên chọn phương án, ghi một câu lý do, xem hệ quả, «Vì sao?» và câu hỏi phản biện. Trang không chấm điểm, không dùng AI.
+- **Thu kết quả lớp:** mỗi đội bấm «Xuất CSV» ở màn tổng kết và nộp tệp (qua LMS, Zalo hay email). Giảng viên mở `lab/khoi-nghiep-tinh-huong.html?gv=1`, bấm «Chọn tệp CSV» và chọn cùng lúc nhiều tệp. Trang đếm lựa chọn của lớp theo từng tình huống và hiện ghi chú giảng dạy (mục tiêu, thời lượng, câu hỏi thảo luận). Tệp chỉ được đọc trên máy giảng viên, không tải lên máy chủ. Một đội nộp hai lần thì trang giữ lần mới nhất.
+- **Lưu ý đợt đo trước – sau:** bộ «Ra thị trường» dạy khoảng cách tâm lý và cam kết theo bước, cùng nhóm cơ chế quốc tế hóa với bộ đo `ct-v1`. Nếu lớp đang ở giữa hai lần đo mà dùng bộ này, **ghi ngày dùng vào nhật ký lớp** để khi phân tích còn tách được. Bộ «Kiểm định ý tưởng» không đụng các cơ chế đó.
+
 ## 9. Liên hệ & mã nguồn
 
 - Mã nguồn: https://github.com/thuyhuongctu/BizOn
