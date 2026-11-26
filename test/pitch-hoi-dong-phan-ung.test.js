@@ -65,7 +65,8 @@ const GIONG = () => {
   const vaoHoiDap = async (p, so) => {
     if (so) { await p.click('#so-truoc summary'); for (const [id, val] of Object.entries(so)) await p.fill('#' + id, String(val)); }
     await p.click('#nut-bat-dau'); await p.evaluate(() => __pitchTest.tua(400)); await p.click('#nut-ket-thuc');
-    await p.waitForFunction(() => __pitchTest.trangThai().phase === 'hoi-dap');
+    // Trang dựng câu đầu ở nhịp kế tiếp (setTimeout) sau khi chuyển sang hỏi đáp: chờ câu và thẻ Hội đồng hiện ra.
+    await p.waitForFunction(() => __pitchTest.trangThai().phase === 'hoi-dap' && document.querySelector('#hoi-dong .tv') && document.getElementById('cau').textContent && __pitchTest.phanUng().length > 0);
   };
 
   // A. Ba con số lệch, bản phẳng, VI
