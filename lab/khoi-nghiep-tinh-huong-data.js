@@ -252,9 +252,46 @@
     ],
   };
 
+  /* Ghi chú giảng viên (đặc tả 011, PR 3): chỉ hiện ở màn ?gv=1. «hayChon» là dự đoán của người soạn từ các mẫu
+     thường gặp, không phải số liệu đo; gộp CSV của lớp để thấy lớp mình thật sự chọn gì. */
+  const GV = {
+    'kiem-dinh': {
+      mucTieu: L('Sinh viên phân biệt được giả thuyết với niềm tin, bằng chứng hành vi với lời khen, và biết đặt ngưỡng trước khi đọc kết quả (CLO-A, mức Phân tích).',
+        'Students distinguish hypotheses from beliefs and behavioural evidence from compliments, and set thresholds before reading results (CLO-A, Analysis level).'),
+      thoiLuong: L('30 phút: 20 phút đội làm 4 tình huống, 10 phút thảo luận bảng phân bố của lớp.', '30 minutes: 20 for teams to work through the 4 cases, 10 to discuss the class distribution.'),
+      tinhHuong: {
+        kd1: { hayChon: L('Nhiều đội chọn «khảo sát online» vì thấy nhanh và «có số liệu».', 'Many teams pick the online survey because it feels quick and "has data".'),
+          cauHoi: [L('Bằng chứng nào trong bốn phương án tốn một cái giá thật của khách?', 'Which evidence in the four options costs the customer something real?'), L('Ai trong đội nên giữ ngưỡng đặt trước, và vì sao?', 'Who on the team should guard the pre-set threshold, and why?')] },
+        kd2: { hayChon: L('Câu hỏi «bạn có mua không?» rất phổ biến; hãy cho lớp đếm xem bao nhiêu đội chọn nó.', '"Would you buy it?" is very common; have the class count how many teams chose it.'),
+          cauHoi: [L('Viết lại một câu hỏi về ý định thành câu hỏi về việc đã xảy ra.', 'Rewrite an intention question as a question about something that already happened.'), L('Khi nào lời khen vẫn có ích?', 'When is a compliment still useful?')] },
+        kd3: { hayChon: L('Các đội ít vốn thường chọn bán thử ở chợ; đội nhiều tự tin hay chọn làm lớn ngay.', 'Low-budget teams often choose the market stall; confident teams often scale at once.'),
+          cauHoi: [L('Tổn thất chấp nhận được của đội là bao nhiêu tiền và bao nhiêu tuần?', 'What is the team’s affordable loss in money and in weeks?'), L('Thử nghiệm rẻ nhất trả lời được câu hỏi nào, và không trả lời được câu hỏi nào?', 'Which question can the cheapest test answer, and which can it not?')] },
+        kd4: { hayChon: L('Sinh viên hay chọn «cố thêm» vì đã bỏ nhiều công; đây là chỗ nói về chi phí chìm.', 'Students often choose to "push on" because of the effort already spent; a good moment to discuss sunk costs.'),
+          cauHoi: [L('Tín hiệu nào đủ để đổi hướng, tín hiệu nào chỉ là nhiễu?', 'Which signal is enough to pivot, and which is only noise?'), L('Đội tự lừa mình bằng cách nào khi đọc số liệu?', 'How might the team fool itself when reading the data?')] },
+      },
+    },
+    'ra-thi-truong': {
+      mucTieu: L('Sinh viên chọn nhóm khách đầu tiên, so chi phí có khách với biên đóng góp, định giá từ biến phí và giá trị, và lý giải thị trường nước ngoài đầu tiên (CLO-A; CLO-D, mức Đánh giá).',
+        'Students choose a first customer group, compare acquisition cost with contribution margin, price from variable cost and value, and justify a first foreign market (CLO-A; CLO-D, Evaluation level).'),
+      thoiLuong: L('30 phút; nếu có thêm 15 phút, cho đội kiểm con số trong CMR Lab hoặc CVP Lab.', '30 minutes; with 15 more, let teams check the figures in CMR Lab or CVP Lab.'),
+      luuYDoDo: L('Bộ này dạy khoảng cách tâm lý và cam kết theo bước, cùng nhóm cơ chế quốc tế hóa với bộ đo trước – sau ct-v1. Nếu lớp đang trong đợt đo, ghi ngày dùng bộ này vào nhật ký lớp để khi phân tích còn tách được.',
+        'This set teaches psychic distance and stepwise commitment, the same family of internationalisation mechanisms as the ct-v1 pre/post measure. If the class is in a measurement period, record the date the set was used in the class log so it can be separated in the analysis.'),
+      tinhHuong: {
+        rt1: { hayChon: L('Lời khuyên «ai cũng uống» kéo nhiều đội về phương án phủ rộng.', 'The "everybody drinks it" advice pulls many teams towards advertising widely.'),
+          cauHoi: [L('Ba tiêu chí của một nhóm khách đầu cầu tốt là gì?', 'What are three criteria for a good beachhead group?'), L('Nhóm kế bên nhóm đầu cầu nên là ai?', 'Who should the group next to the beachhead be?')] },
+        rt2: { hayChon: L('Quảng cáo mạng xã hội là lựa chọn quen thuộc nhất; hãy để đội tự tính giá trị vòng đời trước khi cãi.', 'Social media ads are the most familiar choice; let teams compute lifetime value before they argue.'),
+          cauHoi: [L('Viết công thức so chi phí có khách với biên đóng góp vòng đời cho kênh đội chọn.', 'Write the formula comparing acquisition cost with lifetime contribution for the chosen channel.'), L('Hoa hồng tăng đến mức nào thì kênh gửi bán hết lời?', 'At what commission does the partner channel stop paying?')] },
+        rt3: { hayChon: L('Giá dưới biến phí «để chiếm thị phần» xuất hiện thường xuyên; dùng CVP Lab để cả lớp nhìn đường lợi nhuận đi xuống.', 'Pricing below variable cost "to grab share" comes up often; use CVP Lab so the class sees the profit line fall.'),
+          cauHoi: [L('Tính điểm hòa vốn cho bốn mức giá và xếp hạng.', 'Compute break-even for all four prices and rank them.'), L('Gói dùng thử cần giới hạn gì để không thành giảm giá đại trà?', 'What limits keep a trial pack from becoming a general discount?')] },
+        rt4: { hayChon: L('Hội chợ châu Âu hấp dẫn các đội thích «làm lớn»; tiểu ngạch hấp dẫn các đội thích nhanh.', 'The European fair attracts teams that like to go big; informal trade attracts teams that like speed.'),
+          cauHoi: [L('Khoảng cách tâm lý giữa đội với từng thị trường gồm những gì?', 'What makes up the psychic distance between the team and each market?'), L('Bước thứ hai sau Singapore nên là gì, và đội cần học gì trước?', 'What should the step after Singapore be, and what must the team learn first?')] },
+      },
+    },
+  };
+
   const BO = [KIEM_DINH, RA_THI_TRUONG];
   const LUAT = { lyDoToiThieu: 10 };
-  const DATA = { PHIEN_BAN, NGUON, BO, LUAT };
+  const DATA = { PHIEN_BAN, NGUON, BO, LUAT, GV };
   if (typeof module === 'object' && module.exports) module.exports = DATA;
   else root.KhoiNghiepData = DATA;
 })(typeof self !== 'undefined' ? self : this);

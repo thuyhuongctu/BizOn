@@ -19,8 +19,8 @@
 - [X] T008 Thêm bộ vào dữ liệu và giao diện chọn bộ.
 
 ## Câu chuyện 3 – Ghi chú giảng viên và kết quả lớp (P3, PR 3)
-- [ ] T009 Test: gộp 3 tệp CSV mẫu ra bảng phân bố lựa chọn đúng; ghi chú giảng viên có mục tiêu, thời lượng, câu hỏi thảo luận, lưu ý đợt đo.
-- [ ] T010 Màn «Giảng viên» trong trang (mở bằng `?gv=1`): nạp nhiều CSV (đọc trên máy, không tải lên), bảng phân bố theo tình huống; ghi chú giảng dạy; mục mới trong `docs/huong-dan-giang-vien.md`.
+- [X] T009 Test: gộp 3 tệp CSV mẫu ra bảng phân bố lựa chọn đúng; ghi chú giảng viên có mục tiêu, thời lượng, câu hỏi thảo luận, lưu ý đợt đo.
+- [X] T010 Màn «Giảng viên» trong trang (mở bằng `?gv=1`): nạp nhiều CSV (đọc trên máy, không tải lên), bảng phân bố theo tình huống; ghi chú giảng dạy; mục mới trong `docs/huong-dan-giang-vien.md`.
 
 ## Kế hoạch PR
 
