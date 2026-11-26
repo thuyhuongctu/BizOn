@@ -1,6 +1,7 @@
 // 26/11/2026: mục «Lớp học qua Zoom» (trang Bằng chứng, lớp quốc tế UM Kendari) thêm ảnh buổi 1 môn KT330H (17/11/2026)
 // chị gửi. Như hai ảnh Zoom trước: cắt bỏ khung danh sách người tham gia (toàn tên sinh viên), thanh tiêu đề và thanh công cụ Zoom;
 // làm mờ nhãn tên ở dải ảnh nhỏ phía trên (che tên, giữ mặt); giữ tên thầy Tú. Tệp mới, không ghi đè ảnh cũ.
+// Chị dặn ghi số người tham gia: Zoom báo 98, ghi vào chú thích và alt (khung danh sách đã cắt vì toàn họ tên).
 'use strict';
 const fs = require('fs'), path = require('path'), assert = require('assert');
 const BASE = process.env.BIZON_URL || 'http://127.0.0.1:8899';
@@ -16,6 +17,8 @@ assert.ok(vt > s.indexOf('id="lop-zoom-umk"') && vt < s.indexOf('umk-zoom-2026-1
 assert.ok(new RegExp('<img src="' + IMG.replace(/[.]/g, '\\.') + '" width="1200" height="754" loading="lazy" alt="[^"]+" data-en-alt="[^"]+">').test(s), 'có kích thước, alt VI/EN');
 assert.ok(s.includes('Buổi 1 môn KT330H Khởi nghiệp (17/11/2026)') && s.includes('Day 1 of KT330H Entrepreneurship (17 November 2026)'), 'chú thích VI/EN');
 assert.ok(/KT330H[^<]*đã làm mờ họ tên/.test(s) && /KT330H[^<]*names blurred/.test(s), 'chú thích nói rõ đã làm mờ họ tên');
+assert.ok(/KT330H[^<]*98 người tham gia trên Zoom/.test(s) && /KT330H[^<]*with 98 participants on Zoom/.test(s), 'chú thích ghi số người tham gia (98, theo Zoom) VI/EN');
+assert.ok(/buổi học có 98 người tham gia/.test(s) && /98 participants joined/.test(s), 'alt ghi số người tham gia VI/EN');
 assert.ok(+(read('sw.js').match(/bizon-v(\d+)/) || [])[1] >= 1014, 'sw.js ≥ v1014');
 
 (async () => {
