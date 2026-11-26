@@ -63,7 +63,8 @@ const SO = { 'so-bep': 336, 'so-gia': 150, 'so-bienPhi': 90, 'so-dinhPhi': 18 };
     await p.fill('#ten-doi', 'Đội Sen');
     await p.click('#so-truoc summary'); for (const [id, v] of Object.entries(SO)) await p.fill('#' + id, String(v));
     await p.click('#nut-bat-dau'); await p.evaluate(() => __pitchTest.tua(400)); await p.click('#nut-ket-thuc');
-    await p.waitForFunction(() => __pitchTest.trangThai().phase === 'hoi-dap');
+    // Trang dựng câu đầu ở nhịp kế tiếp (setTimeout) sau khi chuyển sang hỏi đáp: chờ câu hiện ra rồi mới tua giờ trả lời.
+    await p.waitForFunction(() => __pitchTest.trangThai().phase === 'hoi-dap' && document.getElementById('cau').textContent);
     await p.evaluate(() => __pitchTest.tua(100)); await p.click('#nut-cau-tiep');   // câu vặn tài chính: 100 giây
     await p.click('#nut-cau-tiep'); await p.click('#nut-cau-tiep');
     await p.click('#nut-tong-ket');
