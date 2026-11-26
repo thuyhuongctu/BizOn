@@ -34,10 +34,10 @@ assert.ok(+(read('sw.js').match(/bizon-v(\d+)/) || [])[1] >= 948, 'sw.js ≥ v94
       const r = await p.evaluate(() => { const imgs = [...document.querySelectorAll('#lop-zoom-umk + .bc-photos.bc-zoom img')];
         return { n: imgs.length, ok: imgs.every(i => i.complete && i.naturalWidth > 0), alts: imgs.map(i => i.alt), h: document.getElementById('lop-zoom-umk').textContent.trim(), sw: document.documentElement.scrollWidth }; });
       const tag = w + ' ' + lang;
-      assert.equal(r.n, 2, tag + ': ảnh lớp và màn Quiz');
+      assert.equal(r.n, 3, tag + ': ảnh buổi 1 (17/11), ảnh lớp và màn Quiz');
       assert.ok(r.ok, tag + ': ảnh tải được');
       assert.equal(r.h, lang === 'en' ? 'The class on Zoom · 17–19 November 2026' : 'Lớp học qua Zoom · 17–19/11/2026', tag + ': tiêu đề đúng ngôn ngữ');
-      assert.ok(lang === 'en' ? /^UM Kendari students/.test(r.alts[0]) : /^Sinh viên và giảng viên UM Kendari/.test(r.alts[0]), tag + ': alt đúng ngôn ngữ');
+      assert.ok(lang === 'en' ? /^UM Kendari students/.test(r.alts[1]) : /^Sinh viên và giảng viên UM Kendari/.test(r.alts[1]), tag + ': alt đúng ngôn ngữ');
       assert.ok(r.sw <= w, tag + ': không tràn ngang');
       assert.deepEqual(errs, [], tag + ': không lỗi JS');
       await ctx.close();
