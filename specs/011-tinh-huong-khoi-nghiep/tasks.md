@@ -1,7 +1,7 @@
 # Danh sách việc: Tình huống khởi nghiệp
 
 ## Nền và Câu chuyện 1 – «Kiểm định ý tưởng» (P1, PR 1)
-- [X] T001 (bộ kn-v1, chờ Hương duyệt nội dung) Soạn 4 tình huống «Kiểm định ý tưởng» VI/EN: bối cảnh giả định ĐBSCL, 3–4 phương án; mỗi phương án có hệ quả, «Vì sao?», câu hỏi phản biện, nhãn logic. Thêm danh mục nguồn APA; Hương duyệt nội dung trong PR 1.
+- [X] T001 (bộ kn-v1, Hương duyệt nội dung 26/11/2026) Soạn 4 tình huống «Kiểm định ý tưởng» VI/EN: bối cảnh giả định ĐBSCL, 3–4 phương án; mỗi phương án có hệ quả, «Vì sao?», câu hỏi phản biện, nhãn logic. Thêm danh mục nguồn APA; Hương duyệt nội dung trong PR 1.
 - [X] T002 Test (hỏng trước), gồm hàm thuần và Playwright:
   - đủ trường VI/EN cho mọi phương án;
   - không trùng bề mặt câu chuyện `ct-v1`; `js/case-task-data.js` không đổi;
@@ -14,13 +14,13 @@
 - [X] T005 Thẻ trong thư viện (`js/cham-library.js`); `sw.js`, `sitemap.xml`, canonical.
 
 ## Câu chuyện 2 – «Ra thị trường» (P2, PR 2)
-- [ ] T006 Soạn 4 tình huống «Ra thị trường» VI/EN, có liên kết sang CMR Lab, CVP Lab, `global.html` và Hộ Chiếu Sầu Riêng ở phần «Vì sao?». Hương duyệt.
-- [ ] T007 Test: bộ thứ hai đủ trường; nghiệm thu «giá dưới biến phí» có công thức biên đóng góp; liên kết đúng; chọn giữa hai bộ.
-- [ ] T008 Thêm bộ vào dữ liệu và giao diện chọn bộ.
+- [X] T006 (bộ «Ra thị trường», Hương duyệt nội dung 26/11/2026) Soạn 4 tình huống «Ra thị trường» VI/EN, có liên kết sang CMR Lab, CVP Lab, `global.html` và Hộ Chiếu Sầu Riêng ở phần «Vì sao?». Hương duyệt.
+- [X] T007 Test: bộ thứ hai đủ trường; nghiệm thu «giá dưới biến phí» có công thức biên đóng góp; liên kết đúng; chọn giữa hai bộ.
+- [X] T008 Thêm bộ vào dữ liệu và giao diện chọn bộ.
 
 ## Câu chuyện 3 – Ghi chú giảng viên và kết quả lớp (P3, PR 3)
-- [ ] T009 Test: gộp 3 tệp CSV mẫu ra bảng phân bố lựa chọn đúng; ghi chú giảng viên có mục tiêu, thời lượng, câu hỏi thảo luận, lưu ý đợt đo.
-- [ ] T010 Màn «Giảng viên» trong trang (mở bằng `?gv=1`): nạp nhiều CSV (đọc trên máy, không tải lên), bảng phân bố theo tình huống; ghi chú giảng dạy; mục mới trong `docs/huong-dan-giang-vien.md`.
+- [X] T009 Test: gộp 3 tệp CSV mẫu ra bảng phân bố lựa chọn đúng; ghi chú giảng viên có mục tiêu, thời lượng, câu hỏi thảo luận, lưu ý đợt đo.
+- [X] T010 Màn «Giảng viên» trong trang (mở bằng `?gv=1`): nạp nhiều CSV (đọc trên máy, không tải lên), bảng phân bố theo tình huống; ghi chú giảng dạy; mục mới trong `docs/huong-dan-giang-vien.md`.
 
 ## Kế hoạch PR
 
