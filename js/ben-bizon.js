@@ -568,7 +568,7 @@ function datKhungToanCanh() {
 }
 function veToanCanh(dt) {
   const muc = toanCanh ? 1 : 0; if (tcMuc === muc && !muc) return;
-  tcMuc = muc > tcMuc ? Math.min(1, tcMuc + dt / 0.9) : Math.max(0, tcMuc - dt / 0.7);
+  if (muc > tcMuc) tcMuc = Math.min(1, tcMuc + dt / 0.9); else if (muc < tcMuc) tcMuc = Math.max(0, tcMuc - dt / 0.7);   // tới đích thì đứng yên, không rung
   const e = tcMuc * tcMuc * (3 - 2 * tcMuc), s = dc.state();
   datKhungToanCanh();
   tcGoc.copy(camera.position); tcNhinGoc.set(s.x, 1, s.z);
