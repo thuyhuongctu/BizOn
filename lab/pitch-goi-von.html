@@ -96,6 +96,22 @@ legend{font-weight:800;font-size:16px;padding:0;margin-bottom:4px}
 .kq-kiem p{margin:6px 0;line-height:1.5}
 .kq-kiem .lech{color:var(--warn)}
 .diem-lon{font-size:28px;font-weight:800;margin:6px 0}
+.lop-dau{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center}
+.lop-ma{font-size:44px;font-weight:800;letter-spacing:.12em;margin:2px 0;font-variant-numeric:tabular-nums}
+#lop-qr img{display:block;width:196px;height:196px;border-radius:12px;background:#fff;image-rendering:pixelated}
+#lop-link{word-break:break-all}
+.lop-ds{list-style:none;margin:8px 0 0;padding:0;display:grid;gap:8px}
+.lop-ds li{display:flex;flex-wrap:wrap;align-items:center;gap:8px;background:var(--field);border-radius:14px;padding:8px 12px}
+.lop-ds li b{flex:1 1 120px}
+.lop-ds li.goi-y{background:none;padding:0}
+#the-lop-bang.dang-mo{box-shadow:0 0 0 3px var(--green),var(--clay)}
+.lop-so{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;text-align:center;margin:10px 0}
+.lop-so div{background:var(--field);border-radius:14px;padding:10px 6px}
+.lop-so small{display:block;font-size:12px;font-weight:800;color:var(--muted)}
+.lop-so b{display:block;font-size:30px;line-height:1.15}
+.lop-thanh{height:14px;border-radius:8px;background:var(--track);overflow:hidden}
+.lop-thanh div{height:100%;width:0;background:var(--green);transition:width .4s}
+@media (max-width:520px){.lop-dau{grid-template-columns:1fr}.lop-ma{font-size:34px}#lop-qr img{width:168px;height:168px}.lop-so b{font-size:24px}}
 @media print{header.top .tools,.hang-nut,.chan,#man-chuan-bi,#man-pitch,#man-hoi-dap,#man-tu-cham{display:none!important}body{background:#fff}.the{box-shadow:none;border:1px solid #ccc}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
@@ -131,7 +147,7 @@ legend{font-weight:800;font-size:16px;padding:0;margin-bottom:4px}
         <div><label for="so-cau" data-k="soCau">Số câu Hội đồng hỏi</label><select id="so-cau"><option>3</option><option>4</option><option>5</option></select></div>
       </div>
       <label class="chon-3d"><input type="checkbox" id="chk-3d"> <span data-k="chon3d">Phòng Hội đồng 3D (máy yếu nên tắt)</span></label>
-      <div class="hang-nut"><button type="button" class="btn chinh" id="nut-bat-dau" data-k="batDau">Bắt đầu pitch 7 phút</button></div>
+      <div class="hang-nut"><button type="button" class="btn chinh" id="nut-bat-dau" data-k="batDau">Bắt đầu pitch 7 phút</button><button type="button" class="btn" id="nut-che-do-lop" data-kl="cheDoLop">👥 Chế độ lớp</button></div>
     </div>
   </section>
 
@@ -223,7 +239,55 @@ legend{font-weight:800;font-size:16px;padding:0;margin-bottom:4px}
     </div>
   </section>
 
-  <p class="chan" data-k="chan">Câu hỏi của Hội đồng soạn sẵn theo khung PASTOR, rút theo mã lượt. Trang không dùng AI, không ghi âm, không ghi hình và không gửi dữ liệu đi đâu. Lumina và Hội đồng là cố vấn chạy theo luật: chỉ giữ giờ và đặt câu hỏi, không chấm nội dung câu trả lời.</p>
+  <section id="man-lop" hidden aria-labelledby="h-lop">
+    <div class="the lop-dau">
+      <div>
+        <h2 id="h-lop" style="margin:0 0 6px;font-size:18px" data-kl="lopTieuDe">Hội đồng nhà đầu tư cả lớp</h2>
+        <div class="goi-y" data-kl="maPhong">Mã phòng</div>
+        <div class="lop-ma" id="lop-ma"></div>
+        <p style="margin:6px 0"><a id="lop-link" href="pitch-quy.html"></a></p>
+        <p class="goi-y" data-kl="lopGoiY">Mỗi đội là một quỹ 1 tỷ đồng.</p>
+        <p class="goi-y" id="lop-vai" role="status" aria-live="polite"></p>
+        <p class="goi-y" id="lop-ket-noi"></p>
+      </div>
+      <div id="lop-qr"></div>
+    </div>
+    <div class="the">
+      <h2 style="margin:0;font-size:17px" data-kl="quyTieuDe">Các quỹ trong phòng</h2>
+      <ul class="lop-ds" id="lop-ds-quy"></ul>
+    </div>
+    <div class="the" id="the-lop-bang">
+      <h2 style="margin:0;font-size:17px" data-kl="rotTieuDe">Rót vốn</h2>
+      <div id="lop-dieu-khien">
+        <div class="lua-chon">
+          <div><label for="lop-doi" data-kl="doiPitch">Đội đang pitch</label><select id="lop-doi"></select></div>
+          <div><label for="lop-muc-tieu" data-kl="mucTieu">Vốn đội xin (triệu đồng)</label><input type="number" id="lop-muc-tieu" inputmode="numeric" min="0" step="50"></div>
+        </div>
+        <div class="hang-nut"><button type="button" class="btn chinh" id="nut-mo-rot" data-kl="moRot">Mở rót vốn 60 giây</button><button type="button" class="btn" id="nut-dong-rot" data-kl="dongRot">Đóng sớm</button></div>
+      </div>
+      <p class="goi-y" id="lop-chua-mo" data-kl="chuaMo">Chưa mở cửa sổ rót vốn.</p>
+      <div id="lop-bang" hidden>
+        <p style="margin:12px 0 0;font-size:22px;font-weight:800"><span id="lop-ten-doi"></span> · <span id="lop-trang-thai" class="goi-y" style="font-size:15px"></span></p>
+        <div class="lop-so">
+          <div><small data-kl="goiDuoc">Gọi được</small><b class="num" id="lop-tong"></b></div>
+          <div><small data-kl="soQuy">Số quỹ đã rót</small><b class="num" id="lop-so-quy"></b></div>
+          <div><small data-kl="conLai">Còn lại</small><b class="num" id="lop-dem" aria-hidden="true"></b></div>
+        </div>
+        <div class="lop-thanh" id="lop-tien-do"><div id="lop-tien-do-day"></div></div>
+        <p class="goi-y num" id="lop-phan-tram"></p>
+      </div>
+    </div>
+    <div class="the">
+      <h2 style="margin:0 0 8px;font-size:17px" data-kl="xhTieuDe">Bảng xếp hạng gọi vốn</h2>
+      <table id="lop-xep-hang"><thead><tr><th scope="col" data-kl="cotHang">Hạng</th><th scope="col" data-kl="cotDoi">Đội</th><th scope="col" data-kl="cotTong">Gọi được</th><th scope="col" data-kl="cotSoQuy">Số quỹ</th></tr></thead><tbody></tbody></table>
+      <p class="goi-y" id="lop-xh-trong" data-kl="chuaCoXh">Chưa có đội nào gọi vốn.</p>
+      <p class="goi-y" id="lop-bo"></p>
+      <div class="hang-nut"><button type="button" class="btn phu" id="nut-lop-csv" data-kl="xuatCsv">Xuất CSV của buổi</button><button type="button" class="btn" id="nut-roi-lop" data-kl="roiLop">Rời chế độ lớp</button></div>
+    </div>
+  </section>
+
+  <p class="chan" id="chan-mot-may" data-k="chan">Câu hỏi của Hội đồng soạn sẵn theo khung PASTOR, rút theo mã lượt. Trang không dùng AI, không ghi âm, không ghi hình và không gửi dữ liệu đi đâu. Lumina và Hội đồng là cố vấn chạy theo luật: chỉ giữ giờ và đặt câu hỏi, không chấm nội dung câu trả lời.</p>
+  <p class="chan" id="chan-lop" hidden data-kl="chanLop"></p>
   <p class="chan"><a href="../lop-hoc.html" data-k="veLopHoc">← Về trang Lớp học</a></p>
 </main>
 
@@ -528,6 +592,11 @@ legend{font-weight:800;font-size:16px;padding:0;margin-bottom:4px}
   window.__pitchTest = { tua(g) { tua += g * 1000; veDongHo(); veGioCau(); }, p3: () => (p3 ? p3.trangThai() : { tat: true, hong: p3Hong }), trangThai: () => ({ phase: S.phase, giay: dh.giay(), som: S.som.slice(), ket: S.ket, cau: S.cau.map(c => c.id), iCau: S.iCau, ma: S.ma }) };
 })();
 </script>
+<!-- Chế độ lớp (đặc tả 012, PR 1): sổ góp vốn và màn chiếu. -->
+<script src="../js/backend-config.js"></script>
+<script src="../js/vendor/qrcode.js"></script>
+<script src="pitch-goi-von-lop.js"></script>
+<script src="pitch-goi-von-lop-ui.js"></script>
 <script src="../js/thong-ke.js" defer></script>
 </body>
 </html>

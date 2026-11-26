@@ -3,9 +3,10 @@
  * Viết thẳng giao thức Phoenix trên WebSocket (khỏi nạp supabase-js 100 KB cho một tính năng).
  * Kênh là kênh công khai: chỉ chuyển tiếp tin giữa những người đang mở cùng phòng, máy chủ không lưu gì.
  * Khoá dùng là khoá công khai (publishable) đã khai ở js/backend-config.js. */
-export function moPhong({ url, key, phong, id, trangThai, onTin, onDanhSach, onTrangThai }) {
+export function moPhong({ url, key, phong, id, trangThai, onTin, onDanhSach, onTrangThai, tienTo }) {
   const wsUrl = url.replace(/^http/, 'ws').replace(/\/$/, '') + '/realtime/v1/websocket?apikey=' + encodeURIComponent(key) + '&vsn=1.0.0';
-  const topic = 'realtime:bizon-ra-khoi-' + phong;
+  // tienTo: tiền tố tên kênh; mặc định của Ra Khơi 3D (không đổi). Phòng pitch dùng 'bizon-pitch-' (đặc tả 012).
+  const topic = 'realtime:' + (tienTo || 'bizon-ra-khoi-') + phong;
   let ws = null, ref = 0, joinRef = null, nhip = null, lanThu = 0, dong = false, daVao = false;
   const presence = {};   // id → meta mới nhất
   const gui = (event, payload) => { if (ws && ws.readyState === 1) ws.send(JSON.stringify({ topic, event, payload, ref: String(++ref), join_ref: joinRef })); };
