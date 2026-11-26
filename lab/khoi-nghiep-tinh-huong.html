@@ -20,7 +20,7 @@
 <title>Tình huống khởi nghiệp · BizOn</title>
 <link rel="icon" href="../assets/brand/bizon-favicon.svg" type="image/svg+xml">
 <meta name="description" content="Tình huống khởi nghiệp của BizOn: kiểm định ý tưởng qua bốn quyết định, chọn phương án, ghi lý do, xem hệ quả và phần «Vì sao?» có trích nguồn. Tình huống giả định, không chấm điểm, không dùng AI.">
-<!-- Đặc tả: specs/011-tinh-huong-khoi-nghiep (PR 1: bộ «Kiểm định ý tưởng»).
+<!-- Đặc tả: specs/011-tinh-huong-khoi-nghiep (PR 1: bộ «Kiểm định ý tưởng»; PR 2: bộ «Ra thị trường», liên kết sang lab và game).
      Nội dung: khoi-nghiep-tinh-huong-data.js; tiến độ, tổng kết, CSV: khoi-nghiep-tinh-huong-core.js (hàm thuần, có test). -->
 <style>
 @font-face{font-family:'Plus Jakarta Sans';font-weight:400 800;font-display:swap;src:url(../assets/fonts/PlusJakartaSans-var-vietnamese.woff2) format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+1EA0-1EF9,U+20AB}
@@ -55,6 +55,8 @@ legend{font-weight:800;font-size:16px;margin-bottom:8px;padding:0}
 .pa{display:flex;gap:10px;align-items:flex-start;background:var(--field);border-radius:14px;padding:10px 12px;margin-bottom:8px;min-height:44px;cursor:pointer;line-height:1.45}
 .pa input{width:22px;height:22px;margin:2px 0 0;flex:none}
 .pa.chon{outline:3px solid var(--blue)}
+.lien-ket{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 10px}
+.lien-ket a{display:inline-flex;align-items:center;min-height:44px;padding:8px 14px;border-radius:14px;background:var(--field);text-decoration:none;line-height:1.35;max-width:100%}
 .ly-do label{display:block;font-weight:800;margin-bottom:4px}
 .ly-do textarea{width:100%;min-height:76px;border:0;border-radius:12px;background:var(--field);padding:10px 12px;line-height:1.45}
 .goi-y{font-size:12px;color:var(--muted);margin:4px 0 0}
@@ -108,6 +110,7 @@ th,td{text-align:left;padding:8px;border-bottom:1px solid var(--field);vertical-
         <h3 data-k="heQua">Điều xảy ra</h3><p id="kq-he-qua"></p>
         <h3 data-k="viSao">Vì sao?</h3><p id="kq-vi-sao"></p>
         <h3 data-k="phanBien">Câu hỏi phản biện</h3><p class="phan-bien" id="kq-phan-bien"></p>
+        <div id="kq-lien-ket-khoi" hidden><h3 data-k="thuTiep">Thử tiếp trong BizOn</h3><div class="lien-ket" id="kq-lien-ket"></div></div>
         <details id="kq-khac"><summary data-k="phuongAnKhac">Nếu chọn phương án khác thì sao?</summary><ul id="kq-khac-ds"></ul></details>
         <div class="hang-nut"><button type="button" class="btn chinh" id="nut-tiep"></button><button type="button" class="btn" id="nut-ve-bo" data-k="veBo">Về danh sách bộ</button></div>
       </div>
@@ -152,7 +155,7 @@ th,td{text-align:left;padding:8px;border-bottom:1px solid var(--field);vertical-
       tinhTiep: 'Tình huống tiếp', xemTongKet: 'Xem tổng kết', veBo: 'Về danh sách bộ', tongKet: ten => 'Tổng kết: ' + ten,
       tkGoiY: 'Không có điểm: đem bảng này ra thảo luận với đội và giảng viên.', cotTinhHuong: 'Tình huống', cotLuaChon: 'Lựa chọn', cotLyDo: 'Lý do',
       inBang: 'In bảng', xuatCsv: 'Xuất CSV', lamLai: 'Làm lại bộ này', xacNhanLamLai: 'Xóa các lựa chọn của bộ này để làm lại?', luuGoiY: 'Kết quả chỉ lưu trong trình duyệt của máy này. Muốn nộp cho giảng viên thì in bảng hoặc xuất CSV.',
-      tab: 'Tình huống khởi nghiệp · BizOn', nguon: 'Nguồn trích trong phần «Vì sao?»', chan: 'Tình huống giả định, dựng từ các mẫu thường gặp ở Đồng bằng sông Cửu Long; số liệu là số minh họa, không gắn doanh nghiệp có thật. Trang không chấm điểm, không dùng AI; lựa chọn và lý do chỉ lưu trên máy bạn, không gửi đi đâu (trang chỉ đếm lượt xem ẩn danh).', veThuVien: '← Thư viện tình huống', banChon: 'Bạn chọn',
+      tab: 'Tình huống khởi nghiệp · BizOn', thuTiep: 'Thử tiếp trong BizOn', nguon: 'Nguồn trích trong phần «Vì sao?»', chan: 'Tình huống giả định, dựng từ các mẫu thường gặp ở Đồng bằng sông Cửu Long; số liệu là số minh họa, không gắn doanh nghiệp có thật. Trang không chấm điểm, không dùng AI; lựa chọn và lý do chỉ lưu trên máy bạn, không gửi đi đâu (trang chỉ đếm lượt xem ẩn danh).', veThuVien: '← Thư viện tình huống', banChon: 'Bạn chọn',
     },
     en: {
       tieuDe: 'Startup cases', phuDe: 'Choose an option, give a reason, see what happens and why', giaDinh: 'Fictional cases · illustrative figures',
@@ -163,7 +166,7 @@ th,td{text-align:left;padding:8px;border-bottom:1px solid var(--field);vertical-
       tinhTiep: 'Next case', xemTongKet: 'See summary', veBo: 'Back to case sets', tongKet: ten => 'Summary: ' + ten,
       tkGoiY: 'No score: bring this table to your team and your lecturer for discussion.', cotTinhHuong: 'Case', cotLuaChon: 'Choice', cotLyDo: 'Reason',
       inBang: 'Print', xuatCsv: 'Export CSV', lamLai: 'Redo this set', xacNhanLamLai: 'Clear your choices in this set and start again?', luuGoiY: 'Results are stored only in this browser. To hand them in, print the summary or export a CSV.',
-      tab: 'Startup cases · BizOn', nguon: 'Sources cited in the «Why?» sections', chan: 'Fictional cases built from patterns common in the Mekong Delta; figures are illustrative and refer to no real company. The page gives no score and uses no AI; your choices and reasons stay on this device and are never sent anywhere (the page only counts anonymous visits).', veThuVien: '← Case library', banChon: 'You chose',
+      tab: 'Startup cases · BizOn', thuTiep: 'Try it next in BizOn', nguon: 'Sources cited in the «Why?» sections', chan: 'Fictional cases built from patterns common in the Mekong Delta; figures are illustrative and refer to no real company. The page gives no score and uses no AI; your choices and reasons stay on this device and are never sent anywhere (the page only counts anonymous visits).', veThuVien: '← Case library', banChon: 'You chose',
     },
   };
   let lang = 'vi';
@@ -238,6 +241,10 @@ th,td{text-align:left;padding:8px;border-bottom:1px solid var(--field);vertical-
   function veKetQua(th, paId) {
     const p = th.phuongAn.find(x => x.id === paId);
     $('kq-he-qua').textContent = ten(p.heQua); $('kq-vi-sao').textContent = ten(p.viSao); $('kq-phan-bien').textContent = ten(p.phanBien);
+    // Liên kết sang lab và game (đường dẫn cố định trong tệp dữ liệu, chữ dựng bằng textContent)
+    const lk = $('kq-lien-ket'); lk.innerHTML = '';
+    (th.lienKet || []).forEach(x => { const a = document.createElement('a'); a.href = x.href; a.textContent = ten(x.nhan) + ' →'; lk.appendChild(a); });
+    $('kq-lien-ket-khoi').hidden = !(th.lienKet && th.lienKet.length);
     const ul = $('kq-khac-ds'); ul.innerHTML = '';
     th.phuongAn.filter(x => x.id !== paId).forEach(x => { const li = document.createElement('li'); li.innerHTML = '<b></b> '; li.querySelector('b').textContent = ten(x.nhan); li.appendChild(document.createTextNode(ten(x.heQua))); ul.appendChild(li); });
     const b = boTheoId(S.bo), cuoi = S.i === b.tinhHuong.length - 1;
