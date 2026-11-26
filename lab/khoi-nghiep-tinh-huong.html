@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<link rel="canonical" href="https://bizonland.com/lab/khoi-nghiep-tinh-huong.html">
+<link rel="alternate" hreflang="vi" href="https://bizonland.com/lab/khoi-nghiep-tinh-huong.html?lang=vi">
+<link rel="alternate" hreflang="en" href="https://bizonland.com/lab/khoi-nghiep-tinh-huong.html?lang=en">
+<link rel="alternate" hreflang="x-default" href="https://bizonland.com/lab/khoi-nghiep-tinh-huong.html">
+<meta property="og:url" content="https://bizonland.com/lab/khoi-nghiep-tinh-huong.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Tình huống khởi nghiệp · BizOn">
+<meta property="og:image" content="https://bizonland.com/assets/og/og-cover.jpg">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:locale" content="vi_VN"><meta property="og:locale:alternate" content="en_US">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#006687">
+<link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+<script src="../js/bizon-lang.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tình huống khởi nghiệp · BizOn</title>
+<link rel="icon" href="../assets/brand/bizon-favicon.svg" type="image/svg+xml">
+<meta name="description" content="Tình huống khởi nghiệp của BizOn: kiểm định ý tưởng qua bốn quyết định, chọn phương án, ghi lý do, xem hệ quả và phần «Vì sao?» có trích nguồn. Tình huống giả định, không chấm điểm, không dùng AI.">
+<!-- Đặc tả: specs/011-tinh-huong-khoi-nghiep (PR 1: bộ «Kiểm định ý tưởng»).
+     Nội dung: khoi-nghiep-tinh-huong-data.js; tiến độ, tổng kết, CSV: khoi-nghiep-tinh-huong-core.js (hàm thuần, có test). -->
+<style>
+@font-face{font-family:'Plus Jakarta Sans';font-weight:400 800;font-display:swap;src:url(../assets/fonts/PlusJakartaSans-var-vietnamese.woff2) format('woff2');unicode-range:U+0102-0103,U+0110-0111,U+0128-0129,U+0168-0169,U+01A0-01A1,U+01AF-01B0,U+1EA0-1EF9,U+20AB}
+@font-face{font-family:'Plus Jakarta Sans';font-weight:400 800;font-display:swap;src:url(../assets/fonts/PlusJakartaSans-var-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+2000-206F,U+20AC,U+2122,U+2212}
+:root{--ink:#1F2A44;--page:#F4F1EA;--card:#FBF9F4;--field:#ECE7DC;--track:#E9E4D8;--muted:#4F5768;--burg:#8C2F39;--gold:#C9A24A;--blue:#3E5C8A;--green:#3F6E52;--warn:#9A5B12;--clay:0 22px 34px -20px rgba(31,42,68,.4),inset 0 -6px 12px rgba(0,0,0,.05),inset 0 6px 12px rgba(255,255,255,.9)}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--page);color:var(--ink);font-family:'Plus Jakarta Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+button,input,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--blue);outline-offset:3px}
+a{color:var(--burg);font-weight:700}
+[hidden]{display:none!important}
+.wrap{max-width:860px;margin:0 auto;padding:18px 16px 40px}
+header.top{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+header.top h1{font-size:22px;margin:0;line-height:1.2}
+header.top .sub{font-size:13px;color:var(--muted);font-weight:700;margin:2px 0 0}
+.gia-dinh{display:inline-block;background:#F3E3C3;border-radius:999px;padding:4px 12px;font-size:12px;font-weight:800;margin:6px 0 0}
+.btn{min-height:44px;min-width:44px;border:0;border-radius:14px;padding:10px 16px;font-weight:800;background:var(--track);box-shadow:0 6px 12px -8px rgba(31,42,68,.5)}
+.btn.chinh{background:var(--burg);color:#fff}
+.btn.phu{background:var(--blue);color:#fff}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.the{background:var(--card);border-radius:22px;padding:18px;box-shadow:var(--clay);margin-bottom:16px}
+.bo{display:grid;gap:12px}
+.bo .the h2{margin:0 0 6px;font-size:18px}
+.bo .the p{margin:0 0 10px;line-height:1.5}
+.tien-do{font-size:13px;font-weight:800;color:var(--muted)}
+.o-doi label{display:block;font-weight:800;font-size:14px;margin-bottom:4px}
+.o-doi input{width:100%;max-width:360px;min-height:44px;border:0;border-radius:12px;background:var(--field);padding:8px 12px}
+.boi-canh{line-height:1.6;margin:8px 0 12px}
+fieldset{border:0;padding:0;margin:0 0 12px}
+legend{font-weight:800;font-size:16px;margin-bottom:8px;padding:0}
+.pa{display:flex;gap:10px;align-items:flex-start;background:var(--field);border-radius:14px;padding:10px 12px;margin-bottom:8px;min-height:44px;cursor:pointer;line-height:1.45}
+.pa input{width:22px;height:22px;margin:2px 0 0;flex:none}
+.pa.chon{outline:3px solid var(--blue)}
+.ly-do label{display:block;font-weight:800;margin-bottom:4px}
+.ly-do textarea{width:100%;min-height:76px;border:0;border-radius:12px;background:var(--field);padding:10px 12px;line-height:1.45}
+.goi-y{font-size:12px;color:var(--muted);margin:4px 0 0}
+.ket-qua{border-top:2px dashed var(--track);margin-top:14px;padding-top:12px}
+.ket-qua h3{font-size:15px;margin:12px 0 4px}
+.ket-qua p{margin:0;line-height:1.6}
+.phan-bien{background:#E4E8F1;border-radius:12px;padding:10px 12px}
+details{margin-top:12px}
+summary{font-weight:800;cursor:pointer;min-height:44px;display:flex;align-items:center}
+details li{margin-bottom:8px;line-height:1.5}
+.hang-nut{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:8px;border-bottom:1px solid var(--field);vertical-align:top}
+.nguon{font-size:12px;color:var(--muted);line-height:1.5}
+.nguon li{margin-bottom:6px;overflow-wrap:anywhere}
+.chan{font-size:12px;color:var(--muted);line-height:1.5;margin-top:18px}
+@media print{header.top .btn,.hang-nut,.chan,#man-bo,#man-th{display:none!important}body{background:#fff}.the{box-shadow:none;border:1px solid #ccc}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header class="top">
+    <div>
+      <h1 data-k="tieuDe">Tình huống khởi nghiệp</h1>
+      <p class="sub" data-k="phuDe">Chọn phương án, ghi lý do, xem điều xảy ra và vì sao</p>
+      <span class="gia-dinh" data-k="giaDinh">Tình huống giả định · số liệu minh họa</span>
+    </div>
+    <button type="button" class="btn" id="nut-lang" aria-label="Đổi ngôn ngữ / Switch language">EN</button>
+  </header>
+
+  <!-- Màn 1: chọn bộ -->
+  <section id="man-bo" aria-labelledby="h-bo">
+    <h2 id="h-bo" style="font-size:18px;margin:6px 0 10px" data-k="chonBo">Chọn bộ tình huống</h2>
+    <div class="the o-doi"><label for="ten-doi" data-k="tenDoi">Tên đội hoặc người chơi (không bắt buộc)</label><input type="text" id="ten-doi" maxlength="40" autocomplete="off"></div>
+    <div class="bo" id="ds-bo"></div>
+  </section>
+
+  <!-- Màn 2: một tình huống -->
+  <section id="man-th" hidden aria-labelledby="th-tieu-de">
+    <div class="the">
+      <p class="tien-do" id="th-tien-do"></p>
+      <h2 id="th-tieu-de" style="margin:4px 0 0;font-size:20px" tabindex="-1">Tình huống</h2>
+      <p class="goi-y" id="th-nhan-vat"></p>
+      <p class="boi-canh" id="th-boi-canh"></p>
+      <fieldset id="th-pa"><legend id="th-cau-hoi"></legend></fieldset>
+      <div class="ly-do"><label for="ly-do" data-k="lyDoNhan">Vì sao bạn chọn phương án này? (một câu)</label><textarea id="ly-do" maxlength="400"></textarea>
+        <p class="goi-y" id="ly-do-goi-y" aria-live="polite"></p></div>
+      <div class="hang-nut"><button type="button" class="btn phu" id="nut-xem" data-k="xemHeQua">Xem điều xảy ra</button></div>
+      <div class="ket-qua" id="ket-qua" hidden aria-live="polite">
+        <h3 data-k="heQua">Điều xảy ra</h3><p id="kq-he-qua"></p>
+        <h3 data-k="viSao">Vì sao?</h3><p id="kq-vi-sao"></p>
+        <h3 data-k="phanBien">Câu hỏi phản biện</h3><p class="phan-bien" id="kq-phan-bien"></p>
+        <details id="kq-khac"><summary data-k="phuongAnKhac">Nếu chọn phương án khác thì sao?</summary><ul id="kq-khac-ds"></ul></details>
+        <div class="hang-nut"><button type="button" class="btn chinh" id="nut-tiep"></button><button type="button" class="btn" id="nut-ve-bo" data-k="veBo">Về danh sách bộ</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Màn 3: tổng kết -->
+  <section id="man-tk" hidden aria-labelledby="tk-tieu-de">
+    <div class="the">
+      <h2 id="tk-tieu-de" style="margin:0 0 8px;font-size:18px" tabindex="-1">Tổng kết</h2>
+      <p class="goi-y" data-k="tkGoiY">Không có điểm: đem bảng này ra thảo luận với đội và giảng viên.</p>
+      <table id="bang-tk"><thead><tr><th scope="col" data-k="cotTinhHuong">Tình huống</th><th scope="col" data-k="cotLuaChon">Lựa chọn</th><th scope="col" data-k="cotLyDo">Lý do</th></tr></thead><tbody></tbody></table>
+      <div class="hang-nut">
+        <button type="button" class="btn phu" id="nut-in" data-k="inBang">In bảng</button>
+        <button type="button" class="btn" id="nut-csv" data-k="xuatCsv">Xuất CSV</button>
+        <button type="button" class="btn" id="nut-lam-lai" data-k="lamLai">Làm lại bộ này</button>
+        <button type="button" class="btn" id="nut-ve-bo-2" data-k="veBo">Về danh sách bộ</button>
+      </div>
+      <p class="goi-y" data-k="luuGoiY">Kết quả chỉ lưu trong trình duyệt của máy này. Muốn nộp cho giảng viên thì in bảng hoặc xuất CSV.</p>
+    </div>
+  </section>
+
+  <section class="nguon" aria-labelledby="h-nguon"><h2 id="h-nguon" style="font-size:14px" data-k="nguon">Nguồn trích trong phần «Vì sao?»</h2><ul id="ds-nguon"></ul></section>
+  <p class="chan" data-k="chan">Tình huống giả định, dựng từ các mẫu thường gặp ở Đồng bằng sông Cửu Long; số liệu là số minh họa, không gắn doanh nghiệp có thật. Trang không chấm điểm, không dùng AI; lựa chọn và lý do chỉ lưu trên máy bạn, không gửi đi đâu (trang chỉ đếm lượt xem ẩn danh).</p>
+  <p class="chan"><a href="../thu-vien-tinh-huong.html" data-k="veThuVien">← Thư viện tình huống</a></p>
+</main>
+
+<script src="khoi-nghiep-tinh-huong-data.js"></script>
+<script src="khoi-nghiep-tinh-huong-core.js"></script>
+<script>
+(function () {
+  'use strict';
+  const D = window.KhoiNghiepData, C = window.KhoiNghiepCore, MIN = D.LUAT.lyDoToiThieu;
+  const $ = id => document.getElementById(id);
+  const T = {
+    vi: {
+      tieuDe: 'Tình huống khởi nghiệp', phuDe: 'Chọn phương án, ghi lý do, xem điều xảy ra và vì sao', giaDinh: 'Tình huống giả định · số liệu minh họa',
+      chonBo: 'Chọn bộ tình huống', tenDoi: 'Tên đội hoặc người chơi (không bắt buộc)', batDau: 'Bắt đầu', tiepTuc: 'Tiếp tục', xemLai: 'Xem tổng kết',
+      tienDoBo: (x, n) => 'Đã làm ' + x + '/' + n + ' tình huống', tienDoTh: (i, n) => 'Tình huống ' + i + '/' + n,
+      lyDoNhan: 'Vì sao bạn chọn phương án này? (một câu)', lyDoThieu: n => 'Ghi lý do ít nhất ' + n + ' ký tự rồi mới xem được điều xảy ra.', chuaChon: 'Chọn một phương án trước.',
+      xemHeQua: 'Xem điều xảy ra', heQua: 'Điều xảy ra', viSao: 'Vì sao?', phanBien: 'Câu hỏi phản biện', phuongAnKhac: 'Nếu chọn phương án khác thì sao?',
+      tinhTiep: 'Tình huống tiếp', xemTongKet: 'Xem tổng kết', veBo: 'Về danh sách bộ', tongKet: ten => 'Tổng kết: ' + ten,
+      tkGoiY: 'Không có điểm: đem bảng này ra thảo luận với đội và giảng viên.', cotTinhHuong: 'Tình huống', cotLuaChon: 'Lựa chọn', cotLyDo: 'Lý do',
+      inBang: 'In bảng', xuatCsv: 'Xuất CSV', lamLai: 'Làm lại bộ này', xacNhanLamLai: 'Xóa các lựa chọn của bộ này để làm lại?', luuGoiY: 'Kết quả chỉ lưu trong trình duyệt của máy này. Muốn nộp cho giảng viên thì in bảng hoặc xuất CSV.',
+      tab: 'Tình huống khởi nghiệp · BizOn', nguon: 'Nguồn trích trong phần «Vì sao?»', chan: 'Tình huống giả định, dựng từ các mẫu thường gặp ở Đồng bằng sông Cửu Long; số liệu là số minh họa, không gắn doanh nghiệp có thật. Trang không chấm điểm, không dùng AI; lựa chọn và lý do chỉ lưu trên máy bạn, không gửi đi đâu (trang chỉ đếm lượt xem ẩn danh).', veThuVien: '← Thư viện tình huống', banChon: 'Bạn chọn',
+    },
+    en: {
+      tieuDe: 'Startup cases', phuDe: 'Choose an option, give a reason, see what happens and why', giaDinh: 'Fictional cases · illustrative figures',
+      chonBo: 'Choose a case set', tenDoi: 'Team or player name (optional)', batDau: 'Start', tiepTuc: 'Continue', xemLai: 'See summary',
+      tienDoBo: (x, n) => x + ' of ' + n + ' cases done', tienDoTh: (i, n) => 'Case ' + i + ' of ' + n,
+      lyDoNhan: 'Why did you choose this option? (one sentence)', lyDoThieu: n => 'Write a reason of at least ' + n + ' characters to see what happens.', chuaChon: 'Choose an option first.',
+      xemHeQua: 'See what happens', heQua: 'What happens', viSao: 'Why?', phanBien: 'Question to argue about', phuongAnKhac: 'What if you had chosen differently?',
+      tinhTiep: 'Next case', xemTongKet: 'See summary', veBo: 'Back to case sets', tongKet: ten => 'Summary: ' + ten,
+      tkGoiY: 'No score: bring this table to your team and your lecturer for discussion.', cotTinhHuong: 'Case', cotLuaChon: 'Choice', cotLyDo: 'Reason',
+      inBang: 'Print', xuatCsv: 'Export CSV', lamLai: 'Redo this set', xacNhanLamLai: 'Clear your choices in this set and start again?', luuGoiY: 'Results are stored only in this browser. To hand them in, print the summary or export a CSV.',
+      tab: 'Startup cases · BizOn', nguon: 'Sources cited in the «Why?» sections', chan: 'Fictional cases built from patterns common in the Mekong Delta; figures are illustrative and refer to no real company. The page gives no score and uses no AI; your choices and reasons stay on this device and are never sent anywhere (the page only counts anonymous visits).', veThuVien: '← Case library', banChon: 'You chose',
+    },
+  };
+  let lang = 'vi';
+  try { lang = localStorage.getItem('bizon-lang') === 'en' ? 'en' : 'vi'; } catch (e) {}
+  const t = k => T[lang][k];
+  const ten = o => o[lang];
+
+  // Lưu trên máy: { doi, bo: { [id]: { phienBan, chon: { [thId]: { pa, lyDo, luc } } } } }
+  // Lựa chọn gắn với PHIEN_BAN của dữ liệu: đổi nội dung (đổi PHIEN_BAN) thì lựa chọn cũ không được tính nữa.
+  const KHOA = 'bizon-khoi-nghiep-v1';
+  function docLuu() {
+    try { const x = JSON.parse(localStorage.getItem(KHOA) || 'null'); if (x && typeof x === 'object' && x.bo && typeof x.bo === 'object') return x; } catch (e) {}
+    return { doi: '', bo: {} };
+  }
+  let luu = docLuu();
+  // Đọc lại trước khi ghi để hai thẻ trình duyệt mở cùng lúc không đè mất lựa chọn của nhau.
+  function capNhat(f) { luu = docLuu(); f(luu); try { localStorage.setItem(KHOA, JSON.stringify(luu)); } catch (e) {} }
+  const chonCua = id => { const b = luu.bo[id]; return (b && b.phienBan === D.PHIEN_BAN && b.chon) || {}; };
+
+  // tam: phương án đang chọn nhưng chưa xem hệ quả, theo mã tình huống
+  const S = { man: 'bo', bo: null, i: 0, tam: {} };
+  const tamCua = () => S.tam[boTheoId(S.bo).tinhHuong[S.i].id] || null;
+  function hien(id) { ['man-bo', 'man-th', 'man-tk'].forEach(m => { $(m).hidden = m !== id; }); S.man = id.replace('man-', ''); }
+  const boTheoId = id => D.BO.find(b => b.id === id);
+
+  function veBo() {
+    const ds = $('ds-bo'); ds.innerHTML = '';
+    D.BO.forEach(b => {
+      const td = C.tienDo(b, chonCua(b.id)), d = document.createElement('div'); d.className = 'the';
+      d.innerHTML = '<h2></h2><p></p><p class="tien-do"></p><button type="button" class="btn chinh"></button>';
+      d.querySelector('h2').textContent = ten(b.ten); d.querySelector('p').textContent = ten(b.moTa) + ' ' + ten(b.nhanVat);
+      d.querySelector('.tien-do').textContent = t('tienDoBo')(td.xong, td.tong);
+      const nut = d.querySelector('button'); nut.dataset.bo = b.id;
+      nut.textContent = td.tiep < 0 ? t('xemLai') : td.xong ? t('tiepTuc') : t('batDau');
+      nut.addEventListener('click', () => moBo(b.id)); ds.appendChild(d);
+    });
+  }
+
+  function moBo(id) {
+    const b = boTheoId(id), td = C.tienDo(b, chonCua(id)); S.bo = id;
+    if (td.tiep < 0) { veTongKet(); return; }
+    S.i = td.tiep; veTinhHuong(); hien('man-th'); $('th-tieu-de').focus();
+  }
+
+  function veTinhHuong() {
+    const b = boTheoId(S.bo), th = b.tinhHuong[S.i], daChon = chonCua(S.bo)[th.id];
+    $('th-tien-do').textContent = ten(b.ten) + ' · ' + t('tienDoTh')(S.i + 1, b.tinhHuong.length);
+    $('th-tieu-de').textContent = ten(th.tieuDe); $('th-nhan-vat').textContent = ten(b.nhanVat);
+    $('th-boi-canh').textContent = ten(th.boiCanh); $('th-cau-hoi').textContent = ten(th.cauHoi);
+    const fs = $('th-pa'); fs.querySelectorAll('.pa').forEach(x => x.remove());
+    const paHienTai = daChon ? daChon.pa : S.tam[th.id] || null;
+    th.phuongAn.forEach(p => {
+      const lb = document.createElement('label'); lb.className = 'pa' + (p.id === paHienTai ? ' chon' : '');
+      lb.innerHTML = '<input type="radio" name="pa"><span></span>';
+      const r = lb.querySelector('input'); r.value = p.id; r.checked = p.id === paHienTai; r.disabled = !!daChon;
+      lb.querySelector('span').textContent = ten(p.nhan);
+      r.addEventListener('change', () => { S.tam[th.id] = p.id; fs.querySelectorAll('.pa').forEach(x => x.classList.toggle('chon', x.contains(r))); kiemNut(); });
+      fs.appendChild(lb);
+    });
+    $('ly-do').value = daChon ? daChon.lyDo : ($('ly-do').dataset.th === th.id ? $('ly-do').value : '');
+    $('ly-do').dataset.th = th.id; $('ly-do').readOnly = !!daChon;
+    $('nut-xem').hidden = !!daChon;
+    if (daChon) veKetQua(th, daChon.pa); else { $('ket-qua').hidden = true; kiemNut(); }
+  }
+
+  function kiemNut() {
+    const tam = tamCua(), ok = !!tam && C.lyDoHopLe($('ly-do').value, MIN);
+    $('nut-xem').disabled = !ok;
+    $('ly-do-goi-y').textContent = !tam ? t('chuaChon') : ok ? '' : t('lyDoThieu')(MIN);
+  }
+
+  function veKetQua(th, paId) {
+    const p = th.phuongAn.find(x => x.id === paId);
+    $('kq-he-qua').textContent = ten(p.heQua); $('kq-vi-sao').textContent = ten(p.viSao); $('kq-phan-bien').textContent = ten(p.phanBien);
+    const ul = $('kq-khac-ds'); ul.innerHTML = '';
+    th.phuongAn.filter(x => x.id !== paId).forEach(x => { const li = document.createElement('li'); li.innerHTML = '<b></b> '; li.querySelector('b').textContent = ten(x.nhan); li.appendChild(document.createTextNode(ten(x.heQua))); ul.appendChild(li); });
+    const b = boTheoId(S.bo), cuoi = S.i === b.tinhHuong.length - 1;
+    $('nut-tiep').textContent = cuoi ? t('xemTongKet') : t('tinhTiep');
+    $('ket-qua').hidden = false;
+  }
+
+  function xemHeQua() {
+    const b = boTheoId(S.bo), th = b.tinhHuong[S.i];
+    try {
+      luu = docLuu();
+      const moi = C.ghiChon(chonCua(S.bo), th, S.tam[th.id], $('ly-do').value, MIN);
+      capNhat(l => { l.bo[S.bo] = { phienBan: D.PHIEN_BAN, chon: moi }; l.doi = $('ten-doi').value.trim(); });
+      delete S.tam[th.id];
+    } catch (e) { kiemNut(); return; }
+    veTinhHuong(); $('ket-qua').scrollIntoView({ block: 'nearest' });
+  }
+
+  function tiep() {
+    const b = boTheoId(S.bo);
+    if (S.i < b.tinhHuong.length - 1) { S.i++; veTinhHuong(); $('th-tieu-de').focus(); window.scrollTo(0, 0); }
+    else veTongKet();
+  }
+
+  function veTongKet() {
+    const b = boTheoId(S.bo);
+    $('tk-tieu-de').textContent = t('tongKet')(ten(b.ten));
+    const tb = $('bang-tk').querySelector('tbody'); tb.innerHTML = '';
+    C.tongKet(b, chonCua(S.bo)).forEach(d => {
+      const tr = document.createElement('tr');
+      [ten(d.tieuDe), d.phuongAn ? ten(d.phuongAn) : '—', d.lyDo || '—'].forEach(v => { const td = document.createElement('td'); td.textContent = v; tr.appendChild(td); });
+      tb.appendChild(tr);
+    });
+    hien('man-tk'); $('tk-tieu-de').focus();
+  }
+
+  function xuatCsv() {
+    const b = boTheoId(S.bo), doi = $('ten-doi').value.trim() || luu.doi || '';
+    const blob = new Blob([C.taoCsv(b, chonCua(S.bo), D.PHIEN_BAN, doi)], { type: 'text/csv;charset=utf-8' }), a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = 'khoi-nghiep-' + b.id + '-' + new Date().toISOString().slice(0, 10) + '.csv';
+    document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+  }
+
+  function veNguon() {
+    const ul = $('ds-nguon'); ul.innerHTML = '';
+    Object.keys(D.NGUON).sort().forEach(k => {
+      const li = document.createElement('li');
+      // *chữ nghiêng* trong APA → <em>; nội dung là chuỗi tĩnh của kho, vẫn dựng bằng textContent cho an toàn
+      D.NGUON[k].split(/(\*[^*]+\*)/).forEach(phan => { if (/^\*[^*]+\*$/.test(phan)) { const em = document.createElement('em'); em.textContent = phan.slice(1, -1); li.appendChild(em); } else li.appendChild(document.createTextNode(phan)); });
+      ul.appendChild(li);
+    });
+  }
+
+  function apNgonNgu() {
+    document.documentElement.lang = lang; document.title = t('tab');
+    document.querySelectorAll('[data-k]').forEach(el => { const v = T[lang][el.dataset.k]; if (typeof v === 'string') el.textContent = v; });
+    $('nut-lang').textContent = lang === 'vi' ? 'EN' : 'VI';
+    veBo(); veNguon();
+    if (S.man === 'th') veTinhHuong(); if (S.man === 'tk') veTongKet();
+  }
+
+  $('ly-do').addEventListener('input', kiemNut);
+  $('nut-xem').addEventListener('click', xemHeQua);
+  $('nut-tiep').addEventListener('click', tiep);
+  $('nut-ve-bo').addEventListener('click', () => { veBo(); hien('man-bo'); });
+  $('nut-ve-bo-2').addEventListener('click', () => { veBo(); hien('man-bo'); });
+  $('nut-in').addEventListener('click', () => window.print());
+  $('nut-csv').addEventListener('click', xuatCsv);
+  $('nut-lam-lai').addEventListener('click', () => {
+    if (!confirm(t('xacNhanLamLai'))) return;
+    capNhat(l => { delete l.bo[S.bo]; });
+    boTheoId(S.bo).tinhHuong.forEach(th => { delete S.tam[th.id]; });
+    $('ly-do').value = ''; moBo(S.bo);
+  });
+  $('ten-doi').addEventListener('change', () => { const v = $('ten-doi').value.trim(); capNhat(l => { l.doi = v; }); });
+  // Thẻ trình duyệt khác vừa ghi: nạp lại và vẽ lại màn đang mở
+  window.addEventListener('storage', e => {
+    if (e.key !== KHOA) return;
+    luu = docLuu();
+    if (S.man === 'bo') veBo(); else if (S.man === 'th') veTinhHuong(); else if (S.man === 'tk') veTongKet();
+  });
+  $('nut-lang').addEventListener('click', () => { lang = lang === 'vi' ? 'en' : 'vi'; try { localStorage.setItem('bizon-lang', lang); } catch (e) {} apNgonNgu(); });
+
+  $('ten-doi').value = luu.doi || '';
+  apNgonNgu();
+  const boUrl = (location.search.match(/[?&]bo=([a-z-]{2,30})/) || [])[1];
+  if (boUrl && boTheoId(boUrl)) moBo(boUrl);
+
+  window.__knTest = { trangThai: () => ({ man: S.man, bo: S.bo, i: S.i, luu: JSON.parse(JSON.stringify(luu)) }) };
+})();
+</script>
+<script src="../js/thong-ke.js" defer></script>
+</body>
+</html>
