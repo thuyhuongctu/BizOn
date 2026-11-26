@@ -13,9 +13,9 @@
 - [x] T005 `lab/pitch-quy.html`: trang quỹ trên điện thoại (vào phòng, vốn còn lại, rót theo bậc, danh mục, dòng về dữ liệu); `sw.js`, `sitemap.xml` (không đưa trang quỹ vào sitemap vì cần mã phòng; trang có `noindex`).
 
 ## Câu chuyện 2 – Rubric nghiên cứu và chấm cặp (P2, PR 2)
-- [ ] T006 Test, viết trước: rubric đủ 6 tiêu chí VI/EN và câu «ý định đầu tư», mô tả neo 1–5, trích dẫn qua `kiem-trich-dan.mjs`; chấm mù (không lộ điểm trước khi đủ người nộp); ICC(2,1), ICC(2,k) khớp số liệu mẫu của Shrout và Fleiss (1979), sai số dưới 0,01; α Krippendorff khớp ví dụ mẫu; cảnh báo khi dưới 30 lượt.
-- [ ] T007 `lab/pitch-goi-von-rubric.js` cùng màn chấm trên trang quỹ và màn chấm giảng viên (`?gv=1`); trung bình theo tiêu chí hiện sau khi mở; CSV dạng dài (một dòng một người chấm, một tiêu chí). Hương duyệt mô tả neo.
-- [ ] T008 `scripts/research/do-tin-cay-pitch.mjs`, hướng dẫn `docs/research/DO-TIN-CAY-PITCH.md`; nối «trang chấm mù» trong `docs/research/ISAGA-2027-DAN-Y-BAI.md`.
+- [x] T006 Test, viết trước: rubric đủ 6 tiêu chí VI/EN và câu «ý định đầu tư», mô tả neo 1–5, trích dẫn qua `kiem-trich-dan.mjs`; chấm mù (không lộ điểm trước khi đủ người nộp); ICC(2,1), ICC(2,k) khớp số liệu mẫu của Shrout và Fleiss (1979), sai số dưới 0,01; α Krippendorff khớp ví dụ mẫu; cảnh báo khi dưới 30 lượt.
+- [x] T007 `lab/pitch-goi-von-rubric.js` cùng màn chấm trên trang quỹ và màn chấm giảng viên (`?gv=1`); trung bình theo tiêu chí hiện sau khi mở; CSV dạng dài (một dòng một người chấm, một tiêu chí). Hương duyệt mô tả neo.
+- [x] T008 `scripts/research/do-tin-cay-pitch.mjs`, hướng dẫn `docs/research/DO-TIN-CAY-PITCH.md`; nối «trang chấm mù» trong `docs/research/ISAGA-2027-DAN-Y-BAI.md`.
 
 ## Câu chuyện 3 – Hội đồng 3D sống động hơn (P3, PR 3)
 - [ ] T009 Test, viết trước: bảng luật phản ứng đủ VI/EN; tín hiệu «ba con số lệch» làm Victor Lâm cau mày và hỏi câu tài chính; quá giờ thì Lumina gõ chuông và người hỏi ghi chép; giảm chuyển động thì không chạy hoạt ảnh; giọng đọc tắt/mở được, máy không có giọng thì không lỗi.

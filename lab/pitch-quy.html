@@ -53,6 +53,16 @@ input[type=text]{width:100%;min-height:44px;border:0;border-radius:12px;backgrou
 .danh-muc{list-style:none;margin:0;padding:0;display:grid;gap:6px}
 .danh-muc li{display:flex;justify-content:space-between;gap:10px;background:var(--field);border-radius:12px;padding:8px 12px;font-weight:700}
 .danh-muc li.goi-y{background:none;padding:0;font-weight:400}
+.tc{border:0;padding:0;margin:14px 0 0;min-width:0}
+.tc legend{font-weight:800;font-size:15px;padding:0}
+.tc .hoi{font-size:13px;color:var(--muted);margin:2px 0 6px;line-height:1.45}
+.muc{position:relative;display:grid;grid-template-columns:repeat(5,minmax(44px,1fr));gap:6px}
+.muc input{position:absolute;opacity:0;width:1px;height:1px;margin:0}
+.muc label{display:flex;align-items:center;justify-content:center;min-height:44px;border-radius:12px;background:var(--field);font-weight:800;cursor:pointer;margin:0;font-size:16px}
+.muc input:checked+label{background:var(--blue);color:#fff}
+.muc input:focus-visible+label{outline:3px solid var(--blue);outline-offset:2px}
+.neo{font-size:13px;line-height:1.45;min-height:19px;margin:6px 0 0}
+#nut-nop-cham{width:100%;margin-top:14px}
 .chan{font-size:12px;color:var(--muted);line-height:1.5;margin-top:16px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
@@ -83,7 +93,7 @@ input[type=text]{width:100%;min-height:44px;border:0;border-radius:12px;backgrou
 
   <section id="quy-chinh" hidden aria-labelledby="quy-ten-hien">
     <p class="trang-thai" id="quy-trang-thai" role="status" aria-live="polite"></p>
-    <div class="the">
+    <div class="the" id="the-von">
       <h2 id="quy-ten-hien" data-k="quyCuaDoi">Quỹ của đội</h2>
       <div class="goi-y" data-k="vonCon">Vốn còn lại</div>
       <div class="so-lon num" id="quy-von"></div>
@@ -100,24 +110,33 @@ input[type=text]{width:100%;min-height:44px;border:0;border-radius:12px;backgrou
       <button type="button" class="btn chinh" id="nut-rot" data-k="rot">Rót vốn</button>
       <p class="bao" id="quy-bao" role="status" aria-live="polite"></p>
     </div>
-    <div class="the">
+    <div class="the" id="the-cham" hidden>
+      <h2 id="cham-tieu-de">Phiếu chấm nghiên cứu</h2>
+      <p class="goi-y" id="cham-goi-y" data-k="chamGoiY">Không ai thấy điểm của bạn trước khi mọi người nộp xong.</p>
+      <div id="cham-form"></div>
+      <button type="button" class="btn chinh" id="nut-nop-cham" data-k="nopCham">Nộp phiếu</button>
+      <p class="bao" id="cham-bao" role="status" aria-live="polite"></p>
+    </div>
+    <div class="the" id="the-danh-muc">
       <h2 data-k="danhMucTieuDe">Danh mục của quỹ</h2>
       <ul class="danh-muc" id="quy-danh-muc"></ul>
     </div>
   </section>
 
-  <p class="chan" data-k="chan">Trang gửi qua mạng chỉ mã phòng, tên đội do lớp đặt, số vốn rót và thời điểm; không tên thật, không âm thanh, không hình ảnh. Máy chủ chỉ chuyển tin, không lưu. Giảng viên có thể dùng bảng góp vốn đã ẩn danh cho nghiên cứu về dạy học.</p>
+  <p class="chan" data-k="chan">Trang gửi qua mạng chỉ mã phòng, tên đội do lớp đặt, số vốn rót, điểm chấm và thời điểm; không tên thật, không âm thanh, không hình ảnh. Máy chủ chỉ chuyển tin, không lưu. Giảng viên có thể dùng bảng góp vốn đã ẩn danh cho nghiên cứu về dạy học.</p>
   <p class="chan"><a href="pitch-goi-von.html" data-k="vePitch">← Phòng luyện pitch</a></p>
 </main>
 
 <script src="../js/backend-config.js"></script>
 <script src="pitch-goi-von-lop.js"></script>
+<script src="pitch-goi-von-rubric.js"></script>
 <script>
 (function () {
   'use strict';
-  const P = window.PitchLop, L = P.LUAT;
+  const P = window.PitchLop, L = P.LUAT, RB = window.PitchRubric;
   const $ = id => document.getElementById(id);
   const qs = new URLSearchParams(location.search);
+  const GV = qs.get('gv') === '1';   // giảng viên chấm: không phải quỹ, không rót vốn
   const T = {
     vi: {
       tieuDe: 'Quỹ đầu tư', phong: 'Phòng', quyCuaDoi: 'Quỹ của đội', nhapMaTieuDe: 'Nhập mã phòng', nhapMaGoiY: 'Mã gồm 6 ký tự, hiện trên màn chiếu của giảng viên.', maPhong: 'Mã phòng', vaoPhong: 'Vào phòng', maSai: 'Mã phòng chưa đúng: 6 ký tự, chữ và số.',
@@ -128,7 +147,10 @@ input[type=text]{width:100%;min-height:44px;border:0;border-radius:12px;backgrou
       baoCuaMinh: 'Đội bạn đang pitch: không rót cho chính đội mình.', baoTran: 'Quỹ đã rót đủ 500 triệu cho đội này.', baoHet: 'Quỹ đã hết vốn.', baoGui: 'Đang gửi lượt rót…', baoNhan: s => 'Màn chiếu đã nhận ' + s + '.',
       baoBo: ly => 'Lượt rót bị bỏ: ' + ({ 'het-gio': 'cửa sổ đã đóng', 'vuot-tran': 'vượt 500 triệu cho đội này', 'het-von': 'quỹ không đủ vốn', 'sai-doi': 'đội đã đổi', 'cua-minh': 'không rót cho chính đội mình', 'quy-chua-duyet': 'quỹ chưa được duyệt', 'chua-mo': 'chưa mở cửa sổ', 'sai-bac': 'sai bậc 50 triệu' }[ly] || ly) + '.',
       bot: 'Bớt 50 triệu', them: 'Thêm 50 triệu', dangGui: 'đang gửi',
-      chan: 'Trang gửi qua mạng chỉ mã phòng, tên đội do lớp đặt, số vốn rót và thời điểm; không tên thật, không âm thanh, không hình ảnh. Máy chủ chỉ chuyển tin, không lưu. Giảng viên có thể dùng bảng góp vốn đã ẩn danh cho nghiên cứu về dạy học.', vePitch: '← Phòng luyện pitch',
+      tieuDeGv: 'Giảng viên chấm', vaoTieuDeGv: 'Giảng viên chấm điểm', vaoGoiYGv: 'Nhập tên hiển thị (ví dụ «GV 1»). Màn chiếu duyệt xong thì bạn chấm từng đội; giảng viên không rót vốn.', tenGv: 'Tên hiển thị', ttChoGv: 'Chờ màn chiếu duyệt người chấm.', ttDuyetGv: 'Đã được duyệt làm người chấm.',
+      chamTieuDe: ten => 'Chấm đội ' + ten + ' (chấm mù)', chamTieuDeCho: 'Phiếu chấm nghiên cứu', chamGoiY: 'Không ai thấy điểm của bạn trước khi mọi người nộp xong. Điểm này dùng cho nghiên cứu, không tính vào điểm lớp.', nopCham: 'Nộp phiếu',
+      chamThieu: 'Chọn đủ 6 tiêu chí và ý định đầu tư rồi hãy nộp.', chamGui: 'Đang gửi phiếu…', chamXong: ten => 'Đã nộp phiếu cho ' + ten + '. Điểm hiện trên màn chiếu khi mọi người nộp xong.', chamCho: 'Khi giảng viên mở rót vốn cho một đội, phiếu chấm đội đó hiện ở đây.', chamCuaMinh: 'Đội bạn đang pitch: không chấm chính đội mình.', mucLa: v => 'Mức ' + v,
+      chan: 'Trang gửi qua mạng chỉ mã phòng, tên đội do lớp đặt, số vốn rót, điểm chấm và thời điểm; không tên thật, không âm thanh, không hình ảnh. Máy chủ chỉ chuyển tin, không lưu. Giảng viên có thể dùng bảng góp vốn đã ẩn danh cho nghiên cứu về dạy học.', vePitch: '← Phòng luyện pitch',
     },
     en: {
       tieuDe: 'Investment fund', phong: 'Room', quyCuaDoi: 'Team fund', nhapMaTieuDe: 'Enter the room code', nhapMaGoiY: 'Six characters, shown on the instructor\'s screen.', maPhong: 'Room code', vaoPhong: 'Join', maSai: 'That room code is not valid: 6 letters and digits.',
@@ -139,7 +161,10 @@ input[type=text]{width:100%;min-height:44px;border:0;border-radius:12px;backgrou
       baoCuaMinh: 'Your team is pitching: you cannot invest in your own team.', baoTran: 'The fund has invested the 500 million limit in this team.', baoHet: 'The fund has no capital left.', baoGui: 'Sending the investment…', baoNhan: s => 'The main screen received ' + s + '.',
       baoBo: ly => 'Investment rejected: ' + ({ 'het-gio': 'the window had closed', 'vuot-tran': 'over 500 million for this team', 'het-von': 'not enough capital', 'sai-doi': 'the team changed', 'cua-minh': 'not in your own team', 'quy-chua-duyet': 'the fund is not approved', 'chua-mo': 'no window open', 'sai-bac': 'not a 50 million step' }[ly] || ly) + '.',
       bot: 'Remove 50 million', them: 'Add 50 million', dangGui: 'sending',
-      chan: 'The page sends over the network only the room code, team names chosen by the class, amounts invested and times; no real names, no audio, no images. The server only relays messages and stores nothing. The instructor may use the anonymised investment table for teaching research.', vePitch: '← Pitch practice room',
+      tieuDeGv: 'Instructor rater', vaoTieuDeGv: 'Instructor scoring', vaoGoiYGv: 'Enter a display name (for example «Instructor 1»). Once the main screen approves you, you rate each team; instructors do not invest.', tenGv: 'Display name', ttChoGv: 'Waiting for the main screen to approve the rater.', ttDuyetGv: 'Approved as a rater.',
+      chamTieuDe: ten => 'Rate team ' + ten + ' (blind)', chamTieuDeCho: 'Research score sheet', chamGoiY: 'Nobody sees your scores until everyone has submitted. These scores are for research and do not count towards the class grade.', nopCham: 'Submit score sheet',
+      chamThieu: 'Choose all 6 criteria and the intention to invest before submitting.', chamGui: 'Sending the score sheet…', chamXong: ten => 'Score sheet for ' + ten + ' submitted. Scores appear on the main screen once everyone has submitted.', chamCho: 'When the instructor opens an investment window for a team, its score sheet appears here.', chamCuaMinh: 'Your team is pitching: you do not rate your own team.', mucLa: v => 'Level ' + v,
+      chan: 'The page sends over the network only the room code, team names chosen by the class, amounts invested, scores and times; no real names, no audio, no images. The server only relays messages and stores nothing. The instructor may use the anonymised investment table for teaching research.', vePitch: '← Pitch practice room',
     },
   };
   let lang = 'vi'; try { lang = localStorage.getItem('bizon-lang') === 'en' ? 'en' : 'vi'; } catch (e) {}
@@ -149,10 +174,10 @@ input[type=text]{width:100%;min-height:44px;border:0;border-radius:12px;backgrou
   const ngauNhien = () => Math.random().toString(36).slice(2, 10);
 
   const phong = (qs.get('p') || '').toUpperCase();
-  const KHOA = 'bizon-pitch-quy-' + phong;
-  let me = { id: '', ten: '' }, kenh = null, ban = null, lech = 0, so = L.bac, cho = [], dem = 0, daThayMinh = false, ketNoi = '', bao = { chu: () => '', kieu: '' };   // chu là hàm để đổi ngôn ngữ vẫn đúng
+  const KHOA = 'bizon-pitch-' + (GV ? 'gv-' : 'quy-') + phong;
+  let me = { id: '', ten: '' }, kenh = null, ban = null, lech = 0, so = L.bac, cho = [], dem = 0, daThayMinh = false, cham = null, phieu = null, choCham = null, formLang = '', ketNoi = '', bao = { chu: () => '', kieu: '' };   // chu là hàm để đổi ngôn ngữ vẫn đúng
   try { const o = JSON.parse(sessionStorage.getItem(KHOA) || 'null'); if (o && o.id) me = o; } catch (e) {}
-  if (!me.id) me.id = 'quy-' + ngauNhien();
+  if (!me.id) me.id = (GV ? 'gv-' : 'quy-') + ngauNhien();
   const luu = () => { try { sessionStorage.setItem(KHOA, JSON.stringify(me)); } catch (e) {} };
 
   // Tính từ bản tin mới nhất của màn chiếu, cộng các lượt đang gửi chưa được xét.
@@ -172,12 +197,15 @@ input[type=text]{width:100%;min-height:44px;border:0;border-radius:12px;backgrou
     document.querySelectorAll('[data-k]').forEach(el => { const v = T[lang][el.dataset.k]; if (typeof v === 'string') el.textContent = v; });
     $('nut-lang').textContent = lang === 'vi' ? 'EN' : 'VI';
     $('nut-bot').setAttribute('aria-label', t('bot')); $('nut-them').setAttribute('aria-label', t('them'));
-    ve();
+    if (GV) { $('h-vao').textContent = t('vaoTieuDeGv'); $('quy-vao').querySelector('.goi-y').textContent = t('vaoGoiYGv'); document.querySelector('label[for="quy-ten"]').textContent = t('tenGv'); document.querySelector('h1').textContent = t('tieuDeGv'); }
+    formLang = ''; ve();
   }
 
   function ve() {
     if (!me.ten) return;
     const k = tinh();
+    veCham(k);
+    if (GV) { const g = gvMinh(); $('quy-trang-thai').textContent = ketNoi === 'khong' ? t('ttKhong') : ketNoi === 'mat' ? t('ttMat') : !g ? t('ttGui') : g.trangThai === 'duyet' ? t('ttDuyetGv') : t('ttChoGv'); return; }
     $('quy-ten-hien').textContent = me.ten;
     $('quy-trang-thai').textContent = ketNoi === 'khong' ? t('ttKhong') : ketNoi === 'mat' ? t('ttMat') : !k.x ? t('ttGui') : k.duyet ? t('ttDuyet') : t('ttCho');
     $('quy-von').textContent = tien(k.vonCon);
@@ -205,9 +233,61 @@ input[type=text]{width:100%;min-height:44px;border:0;border-radius:12px;backgrou
     if (!dm.length && !cho.length) { const li = document.createElement('li'); li.className = 'goi-y'; li.textContent = t('chuaRot'); ul.appendChild(li); }
   }
 
+  /* ---------- Phiếu chấm mù (PR 2) ---------- */
+  const gvMinh = () => (cham && cham.gv || []).find(g => g.id === me.id) || null;
+  const daNop = doi => !!(cham && (cham.daCham || []).some(([n, d]) => n === me.id && d === doi));
+  function dungForm() {
+    const f = $('cham-form'); f.innerHTML = '';
+    RB.TIEU_CHI.concat([RB.Y_DINH]).forEach((tc, i) => {
+      const fs = document.createElement('fieldset'), lg = document.createElement('legend'), hoi = document.createElement('p'), muc = document.createElement('div'), neo = document.createElement('p');
+      fs.className = 'tc'; lg.textContent = tc[lang]; hoi.className = 'hoi'; hoi.textContent = tc.hoi[lang]; muc.className = 'muc'; neo.className = 'neo'; neo.id = 'neo-' + tc.id;
+      for (let v = 1; v <= 5; v++) {
+        const ip = document.createElement('input'), lb = document.createElement('label');
+        ip.type = 'radio'; ip.name = 'tc-' + tc.id; ip.id = 'tc-' + tc.id + '-' + v; ip.value = String(v);
+        lb.htmlFor = ip.id; lb.textContent = String(v); lb.title = tc.neo[v][lang];
+        const chon = i < RB.TIEU_CHI.length ? phieu.diem[i] : phieu.yDinh;
+        if (chon === v) ip.checked = true;
+        ip.addEventListener('change', () => { if (i < RB.TIEU_CHI.length) phieu.diem[i] = v; else phieu.yDinh = v; neo.textContent = t('mucLa')(v) + ': ' + tc.neo[v][lang]; $('cham-bao').textContent = ''; });
+        muc.appendChild(ip); muc.appendChild(lb);
+      }
+      const chon = i < RB.TIEU_CHI.length ? phieu.diem[i] : phieu.yDinh;
+      neo.textContent = chon ? t('mucLa')(chon) + ': ' + tc.neo[chon][lang] : '';
+      fs.appendChild(lg); fs.appendChild(hoi); fs.appendChild(muc); fs.appendChild(neo); f.appendChild(fs);
+    });
+    formLang = lang;
+  }
+  function veCham(k) {
+    const duocCham = GV ? !!(gvMinh() && gvMinh().trangThai === 'duyet') : k.duyet;
+    $('the-cham').hidden = !duocCham;
+    if (!duocCham) return;
+    const dp = k.dp, tenDoi = dp && k.s.quy[dp.doi] ? k.s.quy[dp.doi].ten : '';
+    const coForm = !!(dp && dp.doi !== me.id && !daNop(dp.doi));
+    $('cham-tieu-de').textContent = dp && dp.doi !== me.id ? t('chamTieuDe')(tenDoi) : t('chamTieuDeCho');
+    $('cham-form').hidden = !coForm; $('nut-nop-cham').hidden = !coForm; $('cham-goi-y').hidden = !coForm;
+    if (coForm && (!phieu || phieu.doi !== dp.doi)) { phieu = { doi: dp.doi, diem: RB.TIEU_CHI.map(() => null), yDinh: null }; formLang = ''; }
+    if (coForm && formLang !== lang) dungForm();
+    $('nut-nop-cham').disabled = !!choCham;
+    const bao = $('cham-bao');
+    if (!dp) { bao.textContent = t('chamCho'); bao.className = 'bao'; }
+    else if (dp.doi === me.id) { bao.textContent = t('chamCuaMinh'); bao.className = 'bao'; }
+    else if (daNop(dp.doi)) { bao.textContent = t('chamXong')(tenDoi); bao.className = 'bao ok'; }
+    else if (choCham) { bao.textContent = t('chamGui'); bao.className = 'bao'; }
+    else if (bao.dataset.loi) { bao.textContent = t('chamThieu'); bao.className = 'bao do'; }
+    else { bao.textContent = ''; bao.className = 'bao'; }
+  }
+  function nopCham() {
+    if (!phieu || choCham) return;
+    if (phieu.diem.some(v => !v) || !phieu.yDinh) { $('cham-bao').dataset.loi = '1'; ve(); return; }
+    delete $('cham-bao').dataset.loi;
+    choCham = { nguoi: me.id, doi: phieu.doi, diem: phieu.diem.slice(), yDinh: phieu.yDinh };
+    gui('cham', choCham); ve();
+  }
+
   function onTin(loai, du) {
     if (loai !== 'ban' || !du || !du.ban || du.ban.phong !== phong) return;
-    ban = du.ban; lech = Date.now() - ban.luc;
+    ban = du.ban; lech = Date.now() - ban.luc; cham = du.cham || null;
+    if (choCham && daNop(choCham.doi)) choCham = null;
+    if (GV) { const g = gvMinh(); if (g) daThayMinh = true; else if (daThayMinh && me.ten) { daThayMinh = false; me.ten = ''; luu(); $('quy-chinh').hidden = true; $('quy-vao').hidden = false; $('quy-vao-loi').textContent = t('ttBiLoai'); return; } ve(); return; }
     const xet = new Map(ban.daXet || []);
     cho = cho.filter(c => {
       if (!xet.has(c.ma)) return true;
@@ -222,7 +302,7 @@ input[type=text]{width:100%;min-height:44px;border:0;border-radius:12px;backgrou
   }
 
   function gui(loai, du) { if (kenh) try { kenh.gui(loai, du); } catch (e) {} }
-  function xinVao() { gui('xin', { quy: me.id, ten: me.ten }); }
+  function xinVao() { if (GV) gui('gv-xin', { id: me.id, ten: me.ten }); else gui('xin', { quy: me.id, ten: me.ten }); }
 
   function vao() {
     const ten = $('quy-ten').value.replace(/\s+/g, ' ').trim().slice(0, 40);
@@ -241,8 +321,9 @@ input[type=text]{width:100%;min-height:44px;border:0;border-radius:12px;backgrou
   // Gửi lại: xin vào cho đến khi có tên trong bản tin; lượt rót cho đến khi màn chiếu báo đã xét (màn chiếu bỏ tin trùng theo mã).
   setInterval(() => {
     if (!me.ten || !kenh) return;
-    if (!ban || !(ban.quy || []).some(x => x.id === me.id)) xinVao();
+    if (GV ? !gvMinh() : (!ban || !(ban.quy || []).some(x => x.id === me.id))) xinVao();
     cho.forEach(c => gui('rot', c));
+    if (choCham) gui('cham', choCham);
   }, 1500);
   setInterval(ve, 250);
 
@@ -250,6 +331,7 @@ input[type=text]{width:100%;min-height:44px;border:0;border-radius:12px;backgrou
   $('nut-vao').addEventListener('click', vao);
   $('quy-ten').addEventListener('keydown', e => { if (e.key === 'Enter') vao(); });
   $('nut-rot').addEventListener('click', rot);
+  $('nut-nop-cham').addEventListener('click', nopCham);
   $('nut-them').addEventListener('click', () => { so += L.bac; ve(); });
   $('nut-bot').addEventListener('click', () => { so = Math.max(L.bac, so - L.bac); ve(); });
   const diMa = () => { const m = $('quy-ma').value.trim().toUpperCase(); if (!P.maPhongHopLe(m)) { $('quy-ma-loi').textContent = t('maSai'); return; } const u = new URL(location.href); u.searchParams.set('p', m); location.href = u.href; };
@@ -259,13 +341,14 @@ input[type=text]{width:100%;min-height:44px;border:0;border-radius:12px;backgrou
   apNgonNgu();
   if (!P.maPhongHopLe(phong)) { $('quy-nhap-ma').hidden = false; return; }
   $('quy-phong').textContent = phong;
+  if (GV) ['the-von', 'the-rot', 'the-danh-muc'].forEach(id => { $(id).hidden = true; });
   if (me.ten) { $('quy-chinh').hidden = false; ve(); } else { $('quy-vao').hidden = false; $('quy-ten').focus(); }
   const muon = qs.get('kenh') === 'local' ? 'local' : 'realtime';
   const moKenh = kieu => P.taoKenh({ kieu, phong, id: me.id, vai: 'quy', onTin, onTrangThai: s => { ketNoi = s === 'da-vao' ? '' : s === 'mat-ket-noi' ? 'mat' : ketNoi; ve(); } });
   moKenh(muon).catch(() => { ketNoi = 'khong'; return moKenh('local'); }).then(k => { kenh = k; gui('hoi', { id: me.id }); if (me.ten) xinVao(); ve(); });
 
   // Móc cho test: đọc trạng thái, gửi tin thô lên kênh (thử tin trùng, tin sai luật).
-  window.__quy = { trangThai: () => { const k = tinh(); return { id: me.id, ten: me.ten, duyet: k.duyet, dangMo: k.mo, vonCon: k.vonCon, choGui: cho.length }; }, guiTho: (loai, du) => gui(loai, du) };
+  window.__quy = { trangThai: () => { const k = tinh(); return { id: me.id, ten: me.ten, duyet: k.duyet, dangMo: k.mo, vonCon: k.vonCon, choGui: cho.length }; }, guiTho: (loai, du) => gui(loai, du), chamTin: () => cham, phieu: () => (phieu ? JSON.parse(JSON.stringify(phieu)) : null) };
 })();
 </script>
 </body>
