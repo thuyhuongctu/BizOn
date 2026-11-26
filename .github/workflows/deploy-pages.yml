@@ -25,7 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ steps.deployment.outputs.page_url || steps.deployment2.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
 
@@ -66,6 +66,19 @@ jobs:
         with:
           path: .
 
+      # 25–26/11/2026: deploy hỏng 3 lần liền vì «Found 0 artifact(s)» ngay sau khi gói đã tải lên xong
+      # (API chưa kịp thấy gói; githubstatus vẫn báo bình thường). Lần đầu hỏng thì chờ 60 giây rồi deploy lại;
+      # lần sau không continue-on-error nên lỗi thật vẫn làm workflow đỏ.
       - name: Deploy qua GitHub Actions
         id: deployment
+        continue-on-error: true
+        uses: actions/deploy-pages@v4
+
+      - name: Chờ trước khi deploy lại
+        if: steps.deployment.outcome == 'failure'
+        run: sleep 60
+
+      - name: Deploy lại (lần 2)
+        id: deployment2
+        if: steps.deployment.outcome == 'failure'
         uses: actions/deploy-pages@v4
