@@ -116,6 +116,35 @@
   #bb-dlg .row a:focus-visible, #bb-dlg button:focus-visible { outline:3px solid #fda127; outline-offset:2px; }
   #bb-fade { position:absolute; inset:0; z-index:7; background:#033337; opacity:0; pointer-events:none; transition:opacity .42s ease; }
   #bb-fade.on { opacity:1; }
+  /* Máy hát (26/11/2026): bảng chọn bài, viên «đang phát» bấm để dừng ở góc trái dưới, trên cần điều khiển */
+  #bb-mh { position:absolute; inset:0; z-index:6; display:flex; align-items:flex-end; justify-content:center; background:rgba(2,20,24,.35); padding:18px; }
+  #bb-mh[hidden] { display:none; }
+  #bb-mh-box { width:100%; max-width:520px; max-height:calc(100% - 8px); overflow-y:auto; overscroll-behavior:contain; background:#fff; color:#033337; border-radius:22px; padding:16px 18px; box-shadow:0 20px 50px -15px rgba(0,0,0,.5); position:relative; }
+  #bb-mh-dong { position:absolute; top:4px; right:6px; width:44px; height:44px; border:0; background:transparent; font-weight:800; font-size:16px; color:#2c4a50; cursor:pointer; }
+  #bb-mh-ten { margin:0 44px 0 0; font-weight:800; font-size:17px; color:#006687; }
+  #bb-mh-dang { margin:6px 0 0; font-size:13px; font-weight:700; color:#4a3210; }
+  #bb-mh .row { display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
+  #bb-mh .row button { min-height:44px; padding:8px 14px; border:0; border-radius:14px; font:inherit; font-weight:800; font-size:13px; cursor:pointer; background:#e3f0f4; color:#033337; }
+  #bb-mh .row #bb-mh-dung { background:#006687; color:#fff; }
+  #bb-mh .row button:disabled { opacity:.45; cursor:default; }
+  .bb-mh-nhom h3 { margin:14px 0 6px; font-size:14px; font-weight:800; color:#006687; }
+  .bb-mh-nhom ul { list-style:none; margin:0; padding:0; display:grid; gap:6px; }
+  .bb-mh-nhom li button { width:100%; min-height:44px; padding:7px 12px; border:2px solid #cfe3e8; border-radius:14px; background:#fff; color:#033337; font:inherit; text-align:left; cursor:pointer; }
+  .bb-mh-nhom li button[aria-pressed="true"] { border-color:#fda127; background:#fff3da; }
+  .bb-mh-t { display:block; font-weight:800; font-size:13.5px; }
+  .bb-mh-m { display:block; font-size:12px; color:#2c4a50; }
+  .bb-mh-ghi { margin:8px 0 0; font-size:11.5px; line-height:1.45; color:#4d5f63; }
+  #bb-mh-dong:focus-visible, #bb-mh button:focus-visible, #bb-mh-chip:focus-visible { outline:3px solid #fda127; outline-offset:2px; }
+  #bb-mh-chip { position:absolute; z-index:5; left:max(18px,env(safe-area-inset-left,0px)); bottom:calc(146px + env(safe-area-inset-bottom,0px)); max-width:min(300px,calc(100% - 36px)); min-height:44px; padding:8px 14px; border:0; border-radius:999px; background:#fff3da; color:#4a3210; font:inherit; font-size:12.5px; font-weight:800; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; cursor:pointer; box-shadow:0 4px 12px -5px rgba(0,40,50,.5); }
+  #bb-mh-chip[hidden] { display:none; }
+  #bb-stage:has(.dc-card.on) #bb-mh-chip, #bb-stage:has(#bb-mh:not([hidden])) #bb-mh-chip { display:none; }   /* thẻ địa điểm hay bảng máy hát đang hiện thì nhường chỗ */
+  @media (hover:hover) and (pointer:fine) and (min-width:900px) { #bb-mh-chip { bottom:calc(18px + env(safe-area-inset-bottom,0px)); } }
+  html[data-theme="dark"] #bb-mh-box { background:#0e2a33; color:#d6ecf0; }
+  html[data-theme="dark"] #bb-mh-ten, html[data-theme="dark"] .bb-mh-nhom h3 { color:#9fe0ee; } html[data-theme="dark"] #bb-mh-dong { color:#b5d3d9; }
+  html[data-theme="dark"] #bb-mh-dang { color:#ffd08a; } html[data-theme="dark"] .bb-mh-m, html[data-theme="dark"] .bb-mh-ghi { color:#b5d3d9; }
+  html[data-theme="dark"] .bb-mh-nhom li button { background:#0e2a33; color:#d6ecf0; border-color:#2a5563; }
+  html[data-theme="dark"] .bb-mh-nhom li button[aria-pressed="true"] { background:#3a2a10; border-color:#fda127; }
+  html[data-theme="dark"] #bb-mh .row button { background:#143a45; color:#d6ecf0; } html[data-theme="dark"] #bb-mh .row #bb-mh-dung { background:#006687; color:#fff; }
   @media (prefers-reduced-motion: reduce) { #bb-fade, #bb-pick button { transition:none; } }
 
   html[data-theme="dark"] { background:#081a20; color-scheme:dark; }
@@ -200,6 +229,7 @@
       <button type="button" id="bb-goc" aria-pressed="false" aria-label="Nhìn từ trên" data-en-aria="Top view" title="Nhìn từ trên" data-en-title="Top view"><span aria-hidden="true">🎥</span></button>
     </div>
     <button type="button" id="bb-am" aria-pressed="true" aria-label="Tiếng bến sông" data-en-aria="River sounds" title="Tiếng bến sông: bước chân, gió, chim hót" data-en-title="River sounds: footsteps, wind, birdsong"><span aria-hidden="true">🔊</span></button>
+    <button type="button" id="bb-mh-chip" hidden>🎵</button>
     <p id="bb-hint" data-en="Drag to walk · go close, press “Enter”">Kéo cần để đi · tới gần rồi bấm «Vào»</p>
     <div id="bb-cot">
       <section id="bb-nv" aria-label="Nhiệm vụ" data-en-aria="Quest"></section>
@@ -217,6 +247,15 @@
           <a id="bb-dlg-cta" href="hanh-trinh.html" hidden>🧭</a>
           <button type="button" id="bb-dlg-next">Tiếp tục ▸</button>
         </div>
+      </div>
+    </div>
+    <div id="bb-mh" role="dialog" aria-modal="true" aria-labelledby="bb-mh-ten" hidden>
+      <div id="bb-mh-box">
+        <button type="button" id="bb-mh-dong" aria-label="Đóng">✕</button>
+        <h2 id="bb-mh-ten">🎵 Máy hát</h2>
+        <p id="bb-mh-dang" aria-live="polite"></p>
+        <div class="row"><button type="button" id="bb-mh-ke">⏭ Bài kế</button><button type="button" id="bb-mh-dung">⏹ Dừng nhạc</button></div>
+        <div id="bb-mh-ds"></div>
       </div>
     </div>
     <div id="bb-fade"></div>
