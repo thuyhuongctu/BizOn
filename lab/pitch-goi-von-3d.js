@@ -8,7 +8,9 @@
  * trang dùng bản phẳng (Câu chuyện 1), không báo lỗi.
  * prefers-reduced-motion: máy quay đứng yên, nhân vật không nhún; chỉ vẽ lại khi đổi người hỏi.
  * Chỉ vẽ khi khung đang hiện trên màn hình và thẻ trình duyệt đang mở.
- * Dùng: PitchPhong3D.mount(canvas, { hoiDong, lumina, lang }) → { hoi(id), ngonNgu(l), trangThai(), dispose() } */
+ * Đặc tả 012, PR 3: phanUng([{ ai, dongTac }]) cho động tác theo bảng luật (gật, cau mày, nghiêng tới, ghi chép, chuông của Lumina),
+ * chạy 1,6 giây. Giảm chuyển động: chỉ đổi trạng thái tĩnh (cau mày = ảnh ngả đỏ, ghi chép = nghiêng ảnh), không nhún, không lắc.
+ * Dùng: PitchPhong3D.mount(canvas, { hoiDong, lumina, lang }) → { hoi(id), phanUng(ds), ngonNgu(l), trangThai(), dispose() } */
 (function (root) {
   'use strict';
 
@@ -116,12 +118,41 @@
       const ten = bangTen(h); ten.position.set(X[i], 1.25, 1.57); scene.add(ten);
       thanhVien.push({ id: h.id, sp, vong, den, ten, quang, goc: 5.2 });
     });
-    if (lumina) { const sp = anh(lumina, 4.2); sp.position.set(-9.6, 2.1, 0.6); scene.add(sp); }
+    let luminaSp = null;
+    if (lumina) { const sp = anh(lumina, 4.2); sp.position.set(-9.6, 2.1, 0.6); scene.add(sp); luminaSp = { id: 'lumina', sp, goc: 4.2, x: -9.6, y: 2.1 }; }
+    thanhVien.forEach((t, i) => { t.x = X[i]; t.y = 3.1; });
+    const DAI = 1600;   // ms một động tác
+    let dangPU = [];      // [{ m, dongTac, t }]
 
+    function mauGoc(t) { return t.id === 'lumina' ? 0xFFFFFF : t.id === hoiId ? 0xFFFFFF : 0x8E8A84; }
+    /** Động tác theo bảng luật. ds: [{ ai, dongTac }]. */
+    function phanUng(ds) {
+      const now = performance.now();
+      dangPU = (ds || []).map(x => ({ m: x.ai === 'lumina' ? luminaSp : thanhVien.find(t => t.id === x.ai), dongTac: x.dongTac, t: now })).filter(x => x.m);
+      if (tinh) dangPU.forEach(x => { if (x.dongTac === 'cau-may') x.m.sp.material.color.setHex(0xF0B8B0); if (x.dongTac === 'ghi-chep') x.m.sp.material.rotation = 0.12; });
+      veLai();
+    }
+    function apDongTac(now) {
+      [luminaSp].concat(thanhVien).forEach(m => { if (!m) return; m.sp.position.x = m.x; m.sp.position.y = m.y; if (!tinh) { m.sp.material.rotation = 0; } });
+      if (tinh) return false;
+      let con = false;
+      dangPU.forEach(x => {
+        const k = (now - x.t) / DAI; if (k >= 1) { x.m.sp.material.color.setHex(mauGoc(x.m)); return; }
+        con = true; const m = x.m, sin = Math.sin(k * Math.PI * 4), tat = 1 - k;
+        if (x.dongTac === 'gat') m.sp.position.y = m.y - Math.abs(sin) * 0.25 * tat;
+        else if (x.dongTac === 'cau-may') { m.sp.position.x = m.x + sin * 0.12 * tat; m.sp.material.color.setHex(0xF0B8B0); }
+        else if (x.dongTac === 'nghieng') { m.sp.position.y = m.y - 0.2 * Math.sin(k * Math.PI); m.sp.material.rotation = -0.06 * Math.sin(k * Math.PI); }
+        else if (x.dongTac === 'ghi-chep') { m.sp.position.y = m.y - 0.3 * Math.sin(k * Math.PI); m.sp.material.rotation = 0.1 * Math.sin(k * Math.PI); }
+        else if (x.dongTac === 'chuong') m.sp.material.rotation = sin * 0.12 * tat;
+      });
+      return con;
+    }
     function hoi(id) {
-      hoiId = id;
+      hoiId = id; dangPU = [];
+      if (luminaSp) { luminaSp.sp.material.color.setHex(0xFFFFFF); luminaSp.sp.material.rotation = 0; }
       thanhVien.forEach(t => {
         const on = t.id === id;
+        t.sp.material.rotation = 0;
         t.sp.material.color.setHex(on ? 0xFFFFFF : 0x8E8A84);
         t.vong.visible = on; t.quang.visible = on; t.den.intensity = on ? 140 : 0;
         t.ten.userData.ve(on);
@@ -156,6 +187,7 @@
         cam.position.x = Math.sin(t * 0.25) * 1.2; cam.lookAt(0, 3.2, -1);
         thanhVien.forEach(m => { const on = m.id === hoiId, s = on ? 1.08 + Math.sin(t * 2.2) * 0.015 : 1; const r = m.sp.scale.x / m.sp.scale.y; m.sp.scale.set(m.goc * s * r, m.goc * s, 1); });
       } else thanhVien.forEach(m => { const on = m.id === hoiId, s = on ? 1.08 : 1; const r = m.sp.scale.x / m.sp.scale.y; m.sp.scale.set(m.goc * s * r, m.goc * s, 1); });
+      apDongTac(performance.now());
       renderer.render(scene, cam); khung++;
       if (!tinh) tiep();
     }
@@ -164,8 +196,8 @@
     tiep();
 
     return {
-      hoi, ngonNgu,
-      trangThai: () => ({ hoi: hoiId, sanSang: tong > 0 && daTai >= tong, khung, nhanVat: thanhVien.length, tinh }),
+      hoi, phanUng, ngonNgu,
+      trangThai: () => ({ hoi: hoiId, sanSang: tong > 0 && daTai >= tong, khung, nhanVat: thanhVien.length, tinh, phanUng: dangPU.map(x => ({ ai: x.m.id, dongTac: x.dongTac })) }),
       dispose() {
         chay = false; if (raf) cancelAnimationFrame(raf); if (io) io.disconnect();
         document.removeEventListener('visibilitychange', visib);

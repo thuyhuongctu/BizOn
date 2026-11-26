@@ -103,13 +103,15 @@ Giọng đọc câu hỏi: Hương đồng ý tạm dùng giọng sẵn của tr
 **Hành trình:**
 - Mỗi nhà đầu tư có một tính cách riêng, ghi trong tệp dữ liệu:
   - **Thầy Tu Phan:** học thuật, hay hỏi «vì sao», chú ý lập luận.
-  - **Victor Lâm:** tài chính, chú ý ba con số.
-  - **Minh Khang:** thị trường và khách hàng.
+  - **Victor Lâm:** thị trường và khách hàng.
+  - **Minh Khang:** tài chính, chú ý ba con số.
+
+  (Sửa ở PR 3 cho khớp dữ liệu đang chạy của đặc tả 010: Minh Khang hỏi nhóm T, O về tài chính; Victor Lâm hỏi nhóm A, S về thị trường.)
 - Hội đồng phản ứng **theo luật**, chỉ dựa trên tín hiệu trang đo được. Trang không ghi âm, không dùng AI, không hiểu nội dung câu trả lời. Các tín hiệu gồm:
   - thời gian còn lại trong đoạn;
   - đội bấm «Trả lời xong» sớm hay quá giờ;
   - nút «tự tin / chưa chắc» đội tự bấm;
-  - kết quả kiểm ba con số: lệch thì Victor Lâm cau mày và hỏi vặn câu tài chính;
+  - kết quả kiểm ba con số: lệch thì Minh Khang cau mày và hỏi vặn câu tài chính;
   - nhóm PASTOR của câu hỏi.
 - Phản ứng hiện ra bằng động tác: gật đầu, cau mày, nghiêng người, ghi chép. Kèm một câu nói ngắn soạn sẵn, VI/EN.
 - Câu hỏi của Hội đồng có thể được đọc to bằng giọng VI/EN của trình duyệt (Web Speech API), như Hộ Chiếu Thương Hiệu. Có nút bật/tắt; máy không có giọng thì im lặng, không lỗi.
@@ -117,7 +119,7 @@ Giọng đọc câu hỏi: Hương đồng ý tạm dùng giọng sẵn của tr
 **Cách thử độc lập:** chạy kịch bản tín hiệu định sẵn, ví dụ «ba con số lệch» và «quá giờ 20 giây». Hội đồng phản ứng đúng như bảng luật; chế độ giảm chuyển động thì không chạy hoạt ảnh.
 
 **Kịch bản nghiệm thu:**
-1. **Cho** kiểm ba con số báo lệch điểm hòa vốn, **Khi** tới phần hỏi đáp, **Thì** Victor Lâm cau mày và hỏi một câu thuộc nhóm tài chính.
+1. **Cho** kiểm ba con số báo lệch điểm hòa vốn, **Khi** tới phần hỏi đáp, **Thì** Minh Khang cau mày và hỏi một câu thuộc nhóm tài chính.
 2. **Cho** đội trả lời quá giờ, **Khi** hết giờ, **Thì** Lumina gõ chuông, người hỏi ghi chép, và dòng chữ nói rõ phản ứng dựa trên thời gian chứ không dựa trên nội dung.
 
 ---

@@ -164,7 +164,25 @@
     return '\uFEFF' + [COT_CSV.join(',')].concat(dong).join('\r\n') + '\r\n';
   }
 
-  const CORE = { trangThai, thoiGianTungDoan, taoDongHo, bam, mulberry32, rutCauHoi, maNgauNhien, mmss, tinhDiem, kiemBaCon, COT_CSV, taoCsv };
+  /** Phản ứng của Hội đồng cho một tín hiệu (đặc tả 012, PR 3). Trả danh sách { ai, dongTac, vi, en } theo bảng luật;
+   *  'nguoi-hoi' đổi thành thành viên đang hỏi. Tín hiệu lạ thì trả mảng rỗng. Không đọc nội dung câu trả lời. */
+  function phanUng(tinHieu, nguoiHoi, bang) {
+    return (bang || []).filter(r => r.tinHieu === tinHieu).map(r => {
+      const ai = r.ai === 'nguoi-hoi' ? nguoiHoi : r.ai;
+      const loi = r.loi && r.loi.vi ? r.loi : (r.loi && r.loi[ai]) || { vi: '', en: '' };
+      return { tinHieu, ai, dongTac: r.dongTac, vi: loi.vi, en: loi.en };
+    }).filter(x => x.ai);
+  }
+  /** Câu hỏi vặn tài chính khi kiểm ba con số báo lệch: ưu tiên hòa vốn, rồi vốn xin, rồi lợi nhuận. Không lệch thì null. */
+  function cauVan(kq, bangVan) {
+    const lech = (kq || []).filter(x => !x.ok).map(x => x.ma);
+    const ma = ['bep', 'von', 'ln'].find(m => lech.includes(m));
+    if (!ma || !bangVan || !bangVan[ma]) return null;
+    const c = bangVan[ma];
+    return { id: 'van-' + ma, p: c.p, vai: 'cfo', hoi: 'minh-khang', vi: c.vi, en: c.en, van: ma };
+  }
+
+  const CORE = { phanUng, cauVan, trangThai, thoiGianTungDoan, taoDongHo, bam, mulberry32, rutCauHoi, maNgauNhien, mmss, tinhDiem, kiemBaCon, COT_CSV, taoCsv };
   if (typeof module === 'object' && module.exports) module.exports = CORE;
   else root.PitchCore = CORE;
 })(typeof self !== 'undefined' ? self : this);

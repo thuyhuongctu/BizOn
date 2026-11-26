@@ -96,6 +96,19 @@ legend{font-weight:800;font-size:16px;padding:0;margin-bottom:4px}
 .kq-kiem p{margin:6px 0;line-height:1.5}
 .kq-kiem .lech{color:var(--warn)}
 .diem-lon{font-size:28px;font-weight:800;margin:6px 0}
+.loi-hd{min-height:24px;margin:0 0 10px}
+.loi-hd p{margin:4px 0;background:#fff;border-radius:14px;padding:8px 12px;font-weight:700;line-height:1.45;box-shadow:0 0 0 2px var(--field)}
+.so-truoc{margin:10px 0;background:var(--field);border-radius:14px;padding:8px 12px}
+.so-truoc summary{min-height:44px;display:flex;align-items:center;font-weight:800;cursor:pointer}
+.tv .dt{display:block;font-size:22px;line-height:1;min-height:22px}
+.tv.dt-gat img{animation:pu-gat .8s ease-in-out 2}
+.tv.dt-cau-may img{animation:pu-lac .4s ease-in-out 3;filter:sepia(.4) saturate(1.6) hue-rotate(-20deg)}
+.tv.dt-nghieng img{animation:pu-nghieng 1.6s ease-in-out 1}
+.tv.dt-ghi-chep img{animation:pu-ghi 1.6s ease-in-out 1}
+@keyframes pu-gat{50%{transform:translateY(8px)}}
+@keyframes pu-lac{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+@keyframes pu-nghieng{50%{transform:scale(1.1) translateY(4px)}}
+@keyframes pu-ghi{50%{transform:rotate(6deg) translateY(6px)}}
 .lop-dau{display:grid;grid-template-columns:1fr auto;gap:16px;align-items:center}
 .lop-ma{font-size:44px;font-weight:800;letter-spacing:.12em;margin:2px 0;font-variant-numeric:tabular-nums}
 #lop-qr img{display:block;width:196px;height:196px;border-radius:12px;background:#fff;image-rendering:pixelated}
@@ -146,6 +159,7 @@ legend{font-weight:800;font-size:16px;padding:0;margin-bottom:4px}
         <div><label for="ma-luot" data-k="maLuot">Mã lượt</label><input type="text" id="ma-luot" maxlength="12" autocomplete="off" spellcheck="false"><div class="goi-y" data-k="maGoiY">Cùng mã thì cùng bộ câu hỏi. Giảng viên đặt chung một mã để các đội gặp câu hỏi công bằng.</div></div>
         <div><label for="so-cau" data-k="soCau">Số câu Hội đồng hỏi</label><select id="so-cau"><option>3</option><option>4</option><option>5</option></select></div>
       </div>
+      <details class="so-truoc" id="so-truoc"><summary data-k="soTruocTieuDe">Ba con số (không bắt buộc): nhập trước để Hội đồng soi khi hỏi đáp</summary><div id="noi-so-truoc"></div></details>
       <label class="chon-3d"><input type="checkbox" id="chk-3d"> <span data-k="chon3d">Phòng Hội đồng 3D (máy yếu nên tắt)</span></label>
       <div class="hang-nut"><button type="button" class="btn chinh" id="nut-bat-dau" data-k="batDau">Bắt đầu pitch 7 phút</button><button type="button" class="btn" id="nut-che-do-lop" data-kl="cheDoLop">👥 Chế độ lớp</button></div>
     </div>
@@ -176,13 +190,16 @@ legend{font-weight:800;font-size:16px;padding:0;margin-bottom:4px}
       <canvas id="phong-3d" hidden role="img" aria-label=""></canvas>
       <p class="goi-y" id="note-3d" role="status" aria-live="polite"></p>
       <div class="hoi-dong" id="hoi-dong"></div>
+      <div class="loi-hd" id="loi-hoi-dong" role="status" aria-live="polite"></div>
       <div id="the-cau">
         <div id="chip-cau"></div>
         <p class="cau" id="cau" aria-live="polite"></p>
         <div class="tong"><span data-k="gioTraLoi">Giờ trả lời:</span> <span class="num" id="so-cau-gio">1:00</span></div>
         <div class="bao" id="bao-cau" role="status" aria-live="polite"></div>
       </div>
+      <div class="hang-nut"><button type="button" class="btn" id="nut-tu-tin" data-k="tuTin">💪 Tự tin</button><button type="button" class="btn" id="nut-chua-chac" data-k="chuaChac">🤔 Chưa chắc</button><button type="button" class="btn" id="nut-giong" aria-pressed="false" hidden>🔇 Đọc câu hỏi</button></div>
       <div class="hang-nut"><button type="button" class="btn phu" id="nut-cau-tiep" data-k="cauTiep">Câu tiếp theo</button></div>
+      <p class="goi-y" data-k="ghiChuPhanUng">Hội đồng phản ứng theo thời gian, nút đội tự bấm và kết quả kiểm ba con số; không nghe, không chấm nội dung câu trả lời.</p>
     </div>
   </section>
 
@@ -192,6 +209,8 @@ legend{font-weight:800;font-size:16px;padding:0;margin-bottom:4px}
       <h2 id="h-tu-cham" style="margin:0 0 4px;font-size:18px" data-k="tuChamTieuDe">Đội tự chấm</h2>
       <p class="goi-y" data-k="tuChamGoiY">Chấm nóng khi cảm xúc còn tươi: 4 tiêu chí, mỗi tiêu chí tối đa 2,5 điểm. Điểm phạt quá giờ trừ tự động.</p>
       <div class="lua-chon" id="o-diem"></div>
+      <div id="cho-khoi-so"></div>
+      <div id="khoi-so">
       <fieldset>
         <legend data-k="baConTieuDe">Ba con số mỗi thành viên phải thuộc</legend>
         <div class="lua-chon">
@@ -211,6 +230,7 @@ legend{font-weight:800;font-size:16px;padding:0;margin-bottom:4px}
           <div><label for="so-thangHoaVon" data-k="soThang">Số tháng đến khi hòa vốn</label><input type="number" id="so-thangHoaVon" inputmode="decimal" min="0" step="any"></div>
         </div>
       </fieldset>
+      </div>
       <div class="hang-nut"><button type="button" class="btn phu" id="nut-kiem" data-k="kiemBaCon">Kiểm ba con số</button></div>
       <div class="kq-kiem" id="ket-qua-kiem" role="status" aria-live="polite"></div>
       <div class="hang-nut"><button type="button" class="btn chinh" id="nut-tong-ket" data-k="xemTongKet">Xem bảng tổng kết</button></div>
@@ -332,6 +352,8 @@ legend{font-weight:800;font-size:16px;padding:0;margin-bottom:4px}
       luuGoiY: 'Kết quả chỉ lưu trong trình duyệt của máy này. Muốn nộp cho giảng viên thì in bảng hoặc xuất CSV.',
       ketThucTieuDe: 'Kết thúc lượt', bangVaiCap: 'Thời gian từng đoạn', cotVai: 'Vai', cotDinhMuc: 'Định mức', cotThucTe: 'Thực tế', cauDaGap: 'Câu hỏi đội đã gặp', tapLai: 'Tập lại',
       tomTat: (doi, tong, phat, ma) => doi + ': pitch ' + tong + (phat ? ', quá 30 giây nên bị trừ 5 điểm' : ', không bị trừ điểm') + '. Mã lượt ' + ma + '.', doiMacDinh: 'Đội chưa đặt tên', giay: 'giây',
+      tuTin: '💪 Tự tin', chuaChac: '🤔 Chưa chắc', giongBat: '🔈 Đọc câu hỏi: bật', giongTat: '🔇 Đọc câu hỏi: tắt', ghiChuPhanUng: D.GHI_CHU_PHAN_UNG.vi,
+      soTruocTieuDe: 'Ba con số (không bắt buộc): nhập trước để Hội đồng soi khi hỏi đáp',
       chan: 'Câu hỏi của Hội đồng soạn sẵn theo khung PASTOR, rút theo mã lượt. Trang không dùng AI, không ghi âm, không ghi hình và không gửi dữ liệu đi đâu. Lumina và Hội đồng là cố vấn chạy theo luật: chỉ giữ giờ và đặt câu hỏi, không chấm nội dung câu trả lời.', veLopHoc: '← Về trang Lớp học',
     },
     en: {
@@ -359,6 +381,8 @@ legend{font-weight:800;font-size:16px;padding:0;margin-bottom:4px}
       luuGoiY: 'Results are stored only in this browser. To hand them in, print the summary or export a CSV.',
       ketThucTieuDe: 'Round finished', bangVaiCap: 'Time per segment', cotVai: 'Role', cotDinhMuc: 'Allowed', cotThucTe: 'Used', cauDaGap: 'Questions the team faced', tapLai: 'Practise again',
       tomTat: (doi, tong, phat, ma) => doi + ': pitch took ' + tong + (phat ? ', more than 30 seconds over, so minus 5 points' : ', no penalty') + '. Round code ' + ma + '.', doiMacDinh: 'Unnamed team', giay: 's',
+      tuTin: '💪 Confident', chuaChac: '🤔 Not sure', giongBat: '🔈 Read questions aloud: on', giongTat: '🔇 Read questions aloud: off', ghiChuPhanUng: D.GHI_CHU_PHAN_UNG.en,
+      soTruocTieuDe: 'The three numbers (optional): enter them now so the board can check them in Q&A',
       chan: 'Board questions are pre-written on the PASTOR frame and drawn by round code. This page uses no AI, records no audio or video, and sends no data anywhere. Lumina and the board are rule-based advisors: they keep time and ask questions; they do not grade the answers.', veLopHoc: '← Back to Classroom',
     },
   };
@@ -387,7 +411,7 @@ legend{font-weight:800;font-size:16px;padding:0;margin-bottom:4px}
   // Đồng hồ: giờ thật + phần tua (chỉ test dùng __pitchTest.tua).
   let tua = 0;
   const dh = C.taoDongHo(() => performance.now() + tua);
-  const S = { phase: 'chuan-bi', som: [], doanTruoc: -1, daBao10: {}, daBaoQua: false, ket: null, cau: [], iCau: 0, dhCau: null, daBaoCau: false, ma: '', doi: '' };
+  const S = { phase: 'chuan-bi', som: [], doanTruoc: -1, daBao10: {}, daBaoQua: false, ket: null, cau: [], iCau: 0, dhCau: null, daBaoCau: false, da10Cau: false, ma: '', doi: '', pu: [], daDoc: [], giongBoQua: 0 };
 
   function hien(id) { ['man-chuan-bi', 'man-pitch', 'man-hoi-dap', 'man-tu-cham', 'man-ket-thuc'].forEach(m => { $(m).hidden = m !== id; }); }
   function tenVai(v) { const x = D.VAI[v]; return x.icon + ' ' + x[lang]; }
@@ -403,6 +427,7 @@ legend{font-weight:800;font-size:16px;padding:0;margin-bottom:4px}
     if (chon) $('nganh').value = chon;
     veDai(); if (S.phase === 'pitch') veDongHo(); if (S.phase === 'hoi-dap') veCau(); if (S.phase === 'tu-cham') { veODiem(); if (S.daKiem) veKiem($('ket-qua-kiem')); } if (S.phase === 'ket-thuc') veKetThuc();
     $('nut-dung').textContent = dh.dangChay() || S.phase !== 'pitch' ? t('tamDung') : t('tiepTuc');
+    veNutGiong(); vePU();
   }
 
   function veDai() {
@@ -451,6 +476,8 @@ legend{font-weight:800;font-size:16px;padding:0;margin-bottom:4px}
     dh.tamDung();
     S.ket = { giay: g, phat: g >= L.hanPhatGiay, tungDoan: C.thoiGianTungDoan(g, S.som, D.DOAN, L) };
     if (S.ket.phat) { baoBang(t('phat'), 'do'); bip(330, 0.9, 3); }
+    // Kiểm ba con số (nếu đội đã nhập trước): lệch thì câu đầu tiên đổi thành câu vặn của Minh Khang (tài chính); số câu giữ nguyên (đặc tả 012, PR 3).
+    const van = C.cauVan(C.kiemBaCon(docSo()), D.CAU_VAN); if (van && S.cau.length && !S.cau.some(c => c.van)) S.cau[0] = van;
     S.phase = 'hoi-dap'; S.iCau = 0;
     setTimeout(() => { hien('man-hoi-dap'); moPhong3d(); batDauCau(); }, S.ket.phat ? 1800 : 0);
   }
@@ -472,14 +499,60 @@ legend{font-weight:800;font-size:16px;padding:0;margin-bottom:4px}
     }).catch(() => { p3Hong = true; p3 = null; phang(true); });
   }
 
-  function batDauCau() { S.dhCau = C.taoDongHo(() => performance.now() + tua); S.dhCau.batDau(); S.daBaoCau = false; veCau(); $('nut-cau-tiep').focus(); }
+  function batDauCau(truoc) {
+    S.dhCau = C.taoDongHo(() => performance.now() + tua); S.dhCau.batDau(); S.daBaoCau = false; S.da10Cau = false; veCau();
+    const c = S.cau[S.iCau];
+    phat(c.van ? 'lech-so' : 'bat-dau-cau', truoc);
+    docCau(ten(c)); $('nut-cau-tiep').focus();
+  }
+
+  /* ---------- Hội đồng phản ứng theo luật (đặc tả 012, PR 3) ---------- */
+  function phat(tinHieu, truoc) {
+    const c = S.cau[S.iCau]; if (!c) return;
+    S.pu = (truoc || []).concat(C.phanUng(tinHieu, c.hoi, D.PHAN_UNG));
+    vePU();
+    if (p3) { try { p3.phanUng(S.pu); } catch (e) {} }
+  }
+  function tenAi(id) { if (id === 'lumina') return 'Lumina'; const h = D.HOI_DONG.find(x => x.id === id); return h ? ten(h) : id; }
+  function vePU() {
+    const box = $('loi-hoi-dong'); if (!box) return; box.innerHTML = '';
+    S.pu.forEach(x => { const p = document.createElement('p'), dt = D.DONG_TAC[x.dongTac]; p.textContent = dt.icon + ' ' + tenAi(x.ai) + ' ' + dt[lang] + (x[lang] ? ': «' + x[lang] + '»' : '.'); box.appendChild(p); });
+    apPhang();
+  }
+  // Bản phẳng: thẻ thành viên mang lớp động tác (CSS chạy hoạt ảnh; giảm chuyển động thì chỉ còn biểu tượng).
+  function apPhang() {
+    document.querySelectorAll('#hoi-dong .tv').forEach(el => {
+      el.className = el.className.replace(/\s*dt-[a-z-]+/g, '');
+      const x = S.pu.slice().reverse().find(y => y.ai === el.dataset.id), dt = el.querySelector('.dt');
+      if (x) { void el.offsetWidth; el.classList.add('dt-' + x.dongTac); }
+      if (dt) dt.textContent = x ? D.DONG_TAC[x.dongTac].icon : '';
+    });
+  }
+
+  // Giọng đọc của trình duyệt (Web Speech API): mặc định bật trên màn rộng khi có giọng đúng ngôn ngữ; máy không có giọng thì im lặng.
+  const coGiong = (() => { try { return !!window.speechSynthesis && typeof window.SpeechSynthesisUtterance === 'function'; } catch (e) { return false; } })();
+  let giongBat = false, giongDaChon = null;
+  try { giongDaChon = localStorage.getItem('bizon-pitch-giong'); } catch (e) {}
+  function chonGiong() { if (!coGiong) return null; try { return (speechSynthesis.getVoices() || []).find(v => String(v.lang || '').toLowerCase().startsWith(lang)) || null; } catch (e) { return null; } }
+  function macDinhGiong() { if (giongDaChon) giongBat = giongDaChon === '1'; else giongBat = innerWidth >= 900 && !!chonGiong(); veNutGiong(); }
+  function veNutGiong() { const b = $('nut-giong'); if (!b) return; b.hidden = !coGiong; b.setAttribute('aria-pressed', String(giongBat)); b.textContent = giongBat ? t('giongBat') : t('giongTat'); }
+  function docCau(chu) {
+    if (!coGiong || !giongBat) return;
+    const v = chonGiong(); if (!v) { S.giongBoQua++; return; }
+    try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(chu); u.voice = v; u.lang = v.lang; u.rate = 1; speechSynthesis.speak(u); S.daDoc.push(chu); } catch (e) {}
+  }
+  function imGiong() { if (coGiong) try { speechSynthesis.cancel(); } catch (e) {} }
+  if (coGiong) { macDinhGiong(); try { speechSynthesis.addEventListener('voiceschanged', () => { if (!giongDaChon) macDinhGiong(); }); } catch (e) {} }
+
+  // Khối ba con số: nằm ở màn chuẩn bị (mở thêm) để Hội đồng soi khi hỏi đáp; sang màn tự chấm thì chuyển về đó, giữ nguyên số đã nhập.
+  function duaKhoiSo(veTuCham) { const k = $('khoi-so'); if (veTuCham) $('cho-khoi-so').after(k); else $('noi-so-truoc').appendChild(k); }
 
   function veCau() {
     const c = S.cau[S.iCau]; if (!c) return;
     const hd = $('hoi-dong'); hd.innerHTML = '';
     D.HOI_DONG.forEach(h => {
-      const d = document.createElement('div'); d.className = 'tv' + (h.id === c.hoi ? ' hoi' : '');
-      d.innerHTML = '<img alt="" width="96" height="96" loading="lazy"><b></b><small></small>';
+      const d = document.createElement('div'); d.className = 'tv' + (h.id === c.hoi ? ' hoi' : ''); d.dataset.id = h.id;
+      d.innerHTML = '<img alt="" width="96" height="96" loading="lazy"><b></b><small></small><span class="dt" aria-hidden="true"></span>';
       d.querySelector('img').src = h.anh; d.querySelector('b').textContent = ten(h); d.querySelector('small').textContent = ten(h.vaiTro); hd.appendChild(d);
     });
     const ng = D.HOI_DONG.find(h => h.id === c.hoi);
@@ -489,18 +562,24 @@ legend{font-weight:800;font-size:16px;padding:0;margin-bottom:4px}
     $('cau').textContent = ten(c);
     $('thu-tu-cau').textContent = t('cauSo')(S.iCau + 1, S.cau.length);
     $('nut-cau-tiep').textContent = S.iCau === S.cau.length - 1 ? t('cauCuoi') : t('cauTiep');
-    veGioCau();
+    apPhang(); veGioCau();
   }
 
   function veGioCau() {
     if (S.phase !== 'hoi-dap' || !S.dhCau) return;
     const con = L.giayMoiCau - S.dhCau.giay();
     $('so-cau-gio').textContent = C.mmss(con);
-    if (con <= 0 && !S.daBaoCau) { S.daBaoCau = true; $('bao-cau').textContent = t('hetGioCau'); bip(440, 0.25); }
+    if (con <= 10 && con > 0 && !S.da10Cau) { S.da10Cau = true; phat('con-10'); }
+    if (con <= 0 && !S.daBaoCau) { S.daBaoCau = true; $('bao-cau').textContent = t('hetGioCau'); bip(440, 0.25); phat('qua-gio'); }
     if (con > 0) $('bao-cau').textContent = '';
   }
 
-  function cauTiep() { S.iCau++; if (S.iCau >= S.cau.length) { S.phase = 'tu-cham'; S.daKiem = false; $('ket-qua-kiem').innerHTML = ''; veODiem(); hien('man-tu-cham'); $('diem-0').focus(); } else batDauCau(); }
+  function cauTiep() {
+    const cu = S.cau[S.iCau], som = S.dhCau && L.giayMoiCau - S.dhCau.giay() >= D.GIAY_TRA_LOI_SOM ? C.phanUng('tra-loi-som', cu && cu.hoi, D.PHAN_UNG) : [];
+    S.iCau++;
+    if (S.iCau >= S.cau.length) { imGiong(); S.pu = []; S.phase = 'tu-cham'; S.daKiem = false; $('ket-qua-kiem').innerHTML = ''; duaKhoiSo(true); veODiem(); hien('man-tu-cham'); $('diem-0').focus(); }
+    else batDauCau(som);
+  }
 
   // Tự chấm và kiểm ba con số
   const KHOA = 'bizon-pitch-v1', SO = ['vonXin', 'bep', 'lnMucTieu', 'gia', 'bienPhi', 'dinhPhi', 'sanLuong', 'dauTu', 'thangHoaVon'];
@@ -580,7 +659,10 @@ legend{font-weight:800;font-size:16px;padding:0;margin-bottom:4px}
     else { dh.batDau(); baoBang('', ''); $('nut-dung').textContent = t('tamDung'); }
   });
   $('nut-cau-tiep').addEventListener('click', cauTiep);
-  $('nut-lai').addEventListener('click', () => { S.phase = 'chuan-bi'; hien('man-chuan-bi'); $('nut-bat-dau').focus(); });
+  $('nut-tu-tin').addEventListener('click', () => phat('tu-tin'));
+  $('nut-chua-chac').addEventListener('click', () => phat('chua-chac'));
+  $('nut-giong').addEventListener('click', () => { giongBat = !giongBat; giongDaChon = giongBat ? '1' : '0'; try { localStorage.setItem('bizon-pitch-giong', giongDaChon); } catch (e) {} veNutGiong(); if (giongBat && S.phase === 'hoi-dap' && S.cau[S.iCau]) docCau(ten(S.cau[S.iCau])); else imGiong(); });
+  $('nut-lai').addEventListener('click', () => { S.phase = 'chuan-bi'; duaKhoiSo(false); hien('man-chuan-bi'); $('nut-bat-dau').focus(); });
   $('nut-lang').addEventListener('click', () => { lang = lang === 'vi' ? 'en' : 'vi'; try { localStorage.setItem('bizon-lang', lang); } catch (e) {} apNgonNgu(); });
   $('nut-am').addEventListener('click', () => { amBat = !amBat; $('nut-am').setAttribute('aria-pressed', String(amBat)); $('nut-am').textContent = amBat ? t('amBat') : t('amTat'); });
 
@@ -591,12 +673,14 @@ legend{font-weight:800;font-size:16px;padding:0;margin-bottom:4px}
   $('chk-3d').addEventListener('change', () => { try { localStorage.setItem('bizon-pitch-3d', $('chk-3d').checked ? '1' : '0'); } catch (e) {} });
   const maUrl = (location.search.match(/[?&]ma=([A-Za-z0-9-]{1,12})/) || [])[1];
   if (maUrl) $('ma-luot').value = maUrl.toUpperCase();
+  duaKhoiSo(false);
   apNgonNgu();
   setInterval(() => { veDongHo(); veGioCau(); }, 200);
   document.addEventListener('visibilitychange', () => { veDongHo(); veGioCau(); });
 
   // Móc cho test: tua đồng hồ (giây) và đọc trạng thái. Không ảnh hưởng người dùng.
-  window.__pitchTest = { tua(g) { tua += g * 1000; veDongHo(); veGioCau(); }, p3: () => (p3 ? p3.trangThai() : { tat: true, hong: p3Hong }), trangThai: () => ({ phase: S.phase, giay: dh.giay(), som: S.som.slice(), ket: S.ket, cau: S.cau.map(c => c.id), iCau: S.iCau, ma: S.ma }) };
+  window.__pitchTest = { tua(g) { tua += g * 1000; veDongHo(); veGioCau(); }, p3: () => (p3 ? p3.trangThai() : { tat: true, hong: p3Hong }), trangThai: () => ({ phase: S.phase, giay: dh.giay(), som: S.som.slice(), ket: S.ket, cau: S.cau.map(c => c.id), iCau: S.iCau, ma: S.ma }),
+    phanUng: () => S.pu.map(x => ({ tinHieu: x.tinHieu, ai: x.ai, dongTac: x.dongTac })), giong: () => ({ hoTro: coGiong, bat: giongBat, daDoc: S.daDoc.slice(), boQua: S.giongBoQua }) };
 })();
 </script>
 <!-- Chế độ lớp (đặc tả 012): sổ góp vốn và màn chiếu (PR 1), rubric nghiên cứu và chấm mù (PR 2). -->
