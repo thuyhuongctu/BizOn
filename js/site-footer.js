@@ -27,6 +27,7 @@
     ['🎨 Kho sáng tạo · Creative', '🎨 Creative', [
       ['Kho Âm nhạc', 'am-nhac.html', 'Music library'],
       ['Thư viện Sáng tạo', 'thu-vien.html', 'Creative Library'],
+      ['Phim «Đưa trái ra biển»', 'phim-dua-trai-ra-bien.html', 'Series “Fruit to the Sea”'],
       ['Hậu trường sản xuất nhạc', 'hau-truong.html', 'Behind the Scenes: Music Production'],
     ]],
     ['🎓 Giảng dạy · Educators', '🎓 Educators', [
