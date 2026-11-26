@@ -42,6 +42,7 @@
     + col('Sáng tạo','Creative',[
       { href:'am-nhac.html', vi:'Kho Âm nhạc', en:'Music library' },
       { href:'thu-vien.html', vi:'Thư viện Sáng tạo', en:'Creative library' },
+      { href:'phim-dua-trai-ra-bien.html', vi:'Phim «Đưa trái ra biển»', en:'Series “Fruit to the Sea”' },   // loạt phim hoạt hình (đặc tả 008)
       { href:'games.html', vi:'BizOn Arcade', en:'BizOn Arcade' }   // trò chơi nhỏ 2D: chuyển từ cột «Trò chơi» sang đây
     ])
     + col('Liên hệ','Contact',[

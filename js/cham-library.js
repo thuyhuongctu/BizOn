@@ -28,9 +28,9 @@
   /* Tình huống giả định (đặc tả 011): nội dung thật để dạy, nhưng câu chuyện và số liệu là giả định, ghi rõ trên thẻ (nhãn «Giả định»).
      Không nằm trong CASES (case thật); luôn hiện cùng case thật; chơi trên trang riêng, không chấm điểm. */
   const GIA_DINH = [
-    { id: 'khoi-nghiep', gia: true, t: L('Kiểm định ý tưởng khởi nghiệp', 'Validating a startup idea'),
-      d: L('Tình huống giả định: đội «Rổ Rau Xanh» đi từ một ý tưởng đến lần thử đầu tiên với khách thật. Chọn, ghi lý do, xem hệ quả và vì sao.', 'Fictional case: team «Green Basket» goes from an idea to its first test with real customers. Choose, give a reason, see what happens and why.'),
-      disc: ['Khởi nghiệp', 'Marketing'], region: 'ĐBSCL', tier: 1, kind: 'set', bg: 'lilac', sims: 0, soTh: 4, dur: L('30 phút', '30 min'), href: 'lab/khoi-nghiep-tinh-huong.html' }
+    { id: 'khoi-nghiep', gia: true, t: L('Khởi nghiệp: kiểm định ý tưởng và ra thị trường', 'Startup: validating an idea and going to market'),
+      d: L('Tình huống giả định, hai bộ: đội «Rổ Rau Xanh» kiểm định ý tưởng với khách thật; đội «Lá Mát» chọn khách đầu tiên, kênh, giá ra mắt và thị trường nước ngoài đầu tiên. Chọn, ghi lý do, xem hệ quả và vì sao.', 'Fictional cases, two sets: team «Green Basket» tests its idea with real customers; team «Cool Leaf» chooses its first customers, channel, launch price and first foreign market. Choose, give a reason, see what happens and why.'),
+      disc: ['Khởi nghiệp', 'Marketing'], region: 'ĐBSCL', tier: 1, kind: 'set', bg: 'lilac', sims: 0, soTh: 8, dur: L('2 × 30 phút', '2 × 30 min'), href: 'lab/khoi-nghiep-tinh-huong.html' }
   ];
   /* Thẻ minh họa của bản thiết kế (KHÔNG phải case thật): chỉ hiện với ?mau=1 */
   const SAMPLES = [

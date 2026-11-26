@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<!-- Loạt phim hoạt hình «Đưa trái ra biển» – trang loạt phim (đặc tả specs/008-phim-dua-trai-ra-bien, PR 3, làm sớm để giới thiệu trước).
+     Dữ liệu tập và lịch phát: js/phim-data.js. Trình phát YouTube chỉ tải khi người xem bấm (js/am-mv.js, youtube-nocookie).
+     © 2026 NCS. Đỗ Thùy Hương & PGS.TS. Phan Anh Tú. Nhân vật là nhân vật có sẵn của BizOnland. -->
+<html lang="vi" data-default-lang="vi">
+<head>
+<meta charset="UTF-8">
+<link rel="canonical" href="https://bizonland.com/phim-dua-trai-ra-bien.html">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="theme-color" content="#006687">
+<link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png">
+<script src="js/bizon-lang.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title data-en="Fruit to the Sea · animated series · BizOnland">Đưa trái ra biển · phim hoạt hình · BizOnland</title>
+<meta name="description" data-en-content="A claymation series from BizOnland: a small Mekong Delta cooperative ships its first durian to the world. Each episode stops at a real logistics decision, and viewers vote on the route." content="Loạt phim hoạt hình đất nặn của BizOnland: hợp tác xã nhỏ ở miền Tây đưa lô sầu riêng đầu tiên ra thế giới. Mỗi tập dừng ở một quyết định logistics có thật, người xem bình chọn đường đi.">
+<meta property="og:url" content="https://bizonland.com/phim-dua-trai-ra-bien.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Đưa trái ra biển · phim hoạt hình BizOnland">
+<meta property="og:image" content="https://bizonland.com/assets/og/og-cover.jpg">
+<link rel="icon" type="image/png" href="assets/icons/icon-192.png">
+<script src="js/bizon-boot.js"></script>
+<link rel="stylesheet" href="css/bizon-clay-fonts.css">
+<link rel="stylesheet" href="css/bizon-clay.css">
+<style>
+  .ph{--ink:#033337;--teal:#006687;--sun:#F3B23A;--river:#cfe7e9;--card:#FFFBF4;--muted:#4A5A5C;max-width:1200px;margin:0 auto;padding:24px clamp(16px,3vw,24px) 48px;color:var(--ink)}
+  .ph :focus-visible{outline:3px solid var(--teal);outline-offset:3px}
+  .ph-hero{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:28px;align-items:center;padding:28px;border-radius:36px;background:linear-gradient(160deg,#dff0f1,#FBF4E8 70%);box-shadow:0 22px 34px -20px rgba(31,42,68,.35),inset 0 -6px 12px rgba(0,0,0,.04),inset 0 6px 12px rgba(255,255,255,.9)}
+  .ph-eyebrow{display:inline-block;font:800 12px/1.2 'Be Vietnam Pro',sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#8C4A00;background:#FFE6B0;padding:6px 12px;border-radius:999px}
+  .ph h1{margin:12px 0 8px;font-size:clamp(38px,6vw,64px);line-height:.98;letter-spacing:-.03em;text-wrap:balance}
+  .ph-lede{margin:0 0 16px;font-size:18px;line-height:1.6;max-width:34em;text-wrap:pretty}
+  .ph-dem{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 16px}
+  .ph-o{min-width:72px;padding:10px 12px;border-radius:18px;background:var(--card);text-align:center;box-shadow:0 10px 18px -12px rgba(31,42,68,.45)}
+  .ph-o b{display:block;font-size:30px;line-height:1;font-variant-numeric:tabular-nums}
+  .ph-o span{font-size:12px;color:var(--muted);font-weight:700}
+  .ph-moc{font-weight:800;margin:0 0 6px}
+  .ph-nut{display:flex;flex-wrap:wrap;gap:10px}
+  .ph-btn{display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:12px 20px;border-radius:999px;font-weight:800;text-decoration:none;box-shadow:0 10px 18px -10px rgba(31,42,68,.5)}
+  .ph-btn.chinh{background:#C4302B;color:#fff}
+  .ph-btn.phu{background:var(--card);color:var(--ink)}
+  .ph-hinh{position:relative;height:340px;overflow:hidden}
+  .ph-hinh img{position:absolute;bottom:0;width:auto;object-fit:contain;filter:drop-shadow(0 14px 16px rgba(31,42,68,.25))}
+  .ph-hinh .h1{left:0;height:96%;max-width:48%}
+  .ph-hinh .h2{right:0;height:96%;max-width:48%}
+  .ph-hinh .h3{left:50%;transform:translateX(-50%);height:46%;max-width:40%}
+  .ph h2{font-size:clamp(26px,3.6vw,36px);margin:40px 0 6px;letter-spacing:-.02em}
+  .ph-phu{margin:0 0 16px;color:var(--muted);line-height:1.6;max-width:44em}
+  .ph-cach{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;list-style:none;padding:0;margin:0}
+  .ph-cach li{padding:18px;border-radius:24px;background:var(--card);box-shadow:0 12px 20px -14px rgba(31,42,68,.45);line-height:1.55}
+  .ph-cach b{display:block;font-size:30px;color:var(--teal)}
+  .ph-dan{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;list-style:none;padding:0;margin:0}
+  .ph-dan li{padding:14px;border-radius:24px;background:var(--card);text-align:center;box-shadow:0 12px 20px -14px rgba(31,42,68,.45)}
+  .ph-dan img{width:100%;height:150px;object-fit:contain}
+  .ph-dan h3{margin:6px 0 2px;font-size:17px}
+  .ph-dan p{margin:0;font-size:13.5px;line-height:1.45;color:var(--muted)}
+  .ph-lich{list-style:none;padding:0;margin:0;display:grid;gap:12px}
+  .ph-tap{display:grid;grid-template-columns:64px minmax(0,1fr) auto;gap:14px;align-items:center;padding:14px 18px;border-radius:24px;background:var(--card);box-shadow:0 12px 20px -14px rgba(31,42,68,.45)}
+  .ph-tap .so{font-size:28px;font-weight:800;color:var(--teal);text-align:center}
+  .ph-tap h3{margin:0;font-size:18px}
+  .ph-tap p{margin:2px 0 0;font-size:14px;line-height:1.45;color:var(--muted)}
+  .ph-tap .ngay{font-weight:800;font-size:14px;text-align:right}
+  .ph-tap .nhan{display:inline-block;margin-top:4px;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:800;background:#FFE6B0;color:#6b4d00}
+  .ph-tap.ke-tiep{outline:3px solid var(--sun)}
+  .ph-xem{position:relative;width:100%;aspect-ratio:16/9;margin-top:10px;border-radius:18px;overflow:hidden;background:#0B4A4F}
+  .ph-xem button{position:absolute;inset:0;width:100%;border:0;cursor:pointer;background:#0B4A4F;color:#fff;font:800 18px 'Be Vietnam Pro',sans-serif;min-height:44px}
+  .ph-chu{font-size:13px;color:var(--muted);line-height:1.6;margin-top:28px}
+  @media (max-width:760px){.ph-hero{grid-template-columns:1fr;padding:20px}.ph-hinh{height:240px}.ph-cach{grid-template-columns:1fr}.ph-tap{grid-template-columns:48px minmax(0,1fr)}.ph-tap .ngay{grid-column:2;text-align:left}}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body class="clay">
+<main class="ph" id="ph-root">
+  <section class="ph-hero" aria-labelledby="ph-tieu-de">
+    <div>
+      <span class="ph-eyebrow" data-en="Animated series · Season 1 · Coming soon">Phim hoạt hình · Mùa 1 · Sắp ra mắt</span>
+      <h1 id="ph-tieu-de" data-en="Fruit to the Sea">Đưa trái ra biển</h1>
+      <p class="ph-lede" data-en="A small Mekong Delta cooperative ships its first durian to the world. Every episode stops at a real logistics crossroads, and you vote on the route. The majority choice becomes what really happens next.">Hợp tác xã nhỏ của Bác Ba ở miền Tây đưa lô sầu riêng đầu tiên ra thế giới. Mỗi tập dừng ở một ngã rẽ logistics có thật, và bạn bình chọn đường đi. Lựa chọn của số đông thành chuyện thật ở tập sau.</p>
+      <p class="ph-moc" id="ph-moc"></p>
+      <div class="ph-dem" id="ph-dem" role="timer" aria-live="off">
+        <div class="ph-o"><b id="dem-ngay">0</b><span data-en="days">ngày</span></div>
+        <div class="ph-o"><b id="dem-gio">0</b><span data-en="hours">giờ</span></div>
+        <div class="ph-o"><b id="dem-phut">0</b><span data-en="minutes">phút</span></div>
+      </div>
+      <div class="ph-nut">
+        <a class="ph-btn chinh" id="ph-kenh" href="https://www.youtube.com/@jemappellehuong" target="_blank" rel="noopener" data-en="▶ Follow on YouTube">▶ Theo dõi trên YouTube</a>
+        <a class="ph-btn phu" href="lab/ho-chieu-sau-rieng-3d.html" data-en="Play Durian Passport">Chơi Hộ Chiếu Sầu Riêng</a>
+      </div>
+    </div>
+    <div class="ph-hinh" aria-hidden="true">
+      <img class="h1" src="assets/hc/cast/bac-ba-v4-cut.webp" alt="" width="420" height="560">
+      <img class="h3" src="assets/dragon/teo-soi/countdown.webp" alt="" width="320" height="320">
+      <img class="h2" src="assets/character/advisors/lumina-vest-cut.webp" alt="" width="420" height="560">
+    </div>
+  </section>
+
+  <h2 data-en="How it works">Xem thế nào</h2>
+  <ol class="ph-cach">
+    <li><b>1</b><span data-en="Each 4–6 minute episode follows one real decision: river or road, fresh or frozen, lock the rate or wait.">Mỗi tập 4–6 phút theo một quyết định có thật: sông hay đường, tươi hay cấp đông, chốt cước hay chờ.</span></li>
+    <li><b>2</b><span data-en="Lumina lays out cost, time and risk with sourced figures, and never picks for you. The episode stops just before the choice.">Lumina bày chi phí, thời gian, rủi ro bằng số liệu có nguồn, không chọn giúp ai. Phim dừng ngay trước lúc chốt.</span></li>
+    <li><b>3</b><span data-en="You vote. The majority choice opens the next episode, and the other route is shown briefly: what if?">Bạn bình chọn. Lựa chọn của số đông mở đầu tập sau; đường còn lại cũng được kể ngắn: nếu đi đường kia thì sao?</span></li>
+  </ol>
+
+  <h2 data-en="The crew">Nhân vật</h2>
+  <p class="ph-phu" data-en="All characters come from the BizOnland games.">Toàn bộ nhân vật đều đến từ các trò chơi BizOnland.</p>
+  <ul class="ph-dan">
+    <li><img src="assets/character/advisors/lumina-vest-cut.webp" alt="Lumina" width="200" height="200" loading="lazy"><h3>Lumina</h3><p data-en="Narrator and advisor. Puts the numbers on the table, never chooses for you.">Người kể chuyện, cố vấn. Bày số liệu, không chọn giúp ai.</p></li>
+    <li><img src="assets/hc/cast/bac-ba-v4-cut.webp" alt="Bác Ba" width="200" height="200" loading="lazy"><h3>Bác Ba</h3><p data-en="Head of the durian cooperative and owner of the shipment.">Chủ nhiệm hợp tác xã vườn sầu riêng, chủ lô hàng.</p></li>
+    <li><img src="assets/hc/cast/ba-sau-lanh-v4-cut.webp" alt="Bà Sáu Lành" width="200" height="200" loading="lazy"><h3>Bà Sáu Lành</h3><p data-en="Knows the river; asks the one question everyone missed.">Hiểu sông nước; hỏi một câu là trúng điều cả nhóm bỏ sót.</p></li>
+    <li><img src="assets/character/advisors/minh-khang-cut.webp" alt="Minh Khang" width="200" height="200" loading="lazy"><h3>Minh Khang</h3><p data-en="Finance director who loves the cheaper option.">Giám đốc tài chính, mê phương án rẻ.</p></li>
+    <li><img src="assets/hc/cast/lina-park-cut-v3.webp" alt="Lina Park" width="200" height="200" loading="lazy"><h3>Lina Park</h3><p data-en="Draws the routes; thinks about time and risk.">Người vẽ tuyến phân phối; nghĩ về thời gian và rủi ro.</p></li>
+    <li><img src="assets/hc/cast/an-nhien-cut-v3.webp" alt="An Nhiên" width="200" height="200" loading="lazy"><h3>An Nhiên</h3><p data-en="Guards fruit quality: sweetness, freshness, cold chain.">Lo chất lượng trái: độ ngọt, độ tươi, đi lạnh.</p></li>
+    <li><img src="assets/hc/cast/kim-long-ceo.png" alt="Kim Long" width="200" height="200" loading="lazy"><h3>Kim Long</h3><p data-en="CEO of Kim Long Exports, the rival who is always one step ahead.">CEO Kim Long Exports, đối thủ luôn đi trước một bước.</p></li>
+    <li><img src="assets/dragon/teo-soi/countdown.webp" alt="Tèo Soi" width="200" height="200" loading="lazy"><h3>Tèo Soi</h3><p data-en="Baby dragon riding on the container, asking the questions that land.">Rồng con ngồi trên nóc container, hay hỏi câu ngây thơ mà trúng.</p></li>
+  </ul>
+
+  <h2 data-en="Season 1 schedule">Lịch phát mùa 1</h2>
+  <p class="ph-phu" data-en="Every other Sunday at 8 pm (Vietnam time), with a break around Tết. Vietnamese and English versions, with subtitles in both languages.">Hai tuần một tập, Chủ nhật 20:00 (giờ Việt Nam), nghỉ quanh Tết. Có bản tiếng Việt và tiếng Anh, phụ đề hai thứ tiếng.</p>
+  <ol class="ph-lich" id="ph-lich"></ol>
+
+  <p class="ph-chu" data-en="Figures in the series come from published sources such as the Vietnam Logistics Report 2024 and are cited on screen. The cooperative and the shipment are fictional; the places, the river routes and the port are real.">Số liệu trong phim lấy từ nguồn đã công bố như Báo cáo Logistics Việt Nam 2024 và được ghi nguồn trên hình. Hợp tác xã và lô hàng là giả định; nơi chốn, tuyến sông và cảng là có thật.</p>
+</main>
+
+<script src="js/phim-data.js"></script>
+<script>
+(function () {
+  'use strict';
+  const P = window.PhimData, $ = id => document.getElementById(id);
+  const lang = () => (typeof window.clayCurrentLang === 'function' ? window.clayCurrentLang() : (document.documentElement.lang === 'en' ? 'en' : 'vi'));
+  const T = {
+    vi: { tap: 'Tập', sapPhat: 'Sắp phát hành', keTiep: 'Tập kế tiếp', daPhat: 'Đã phát', choDang: 'Đang chờ đăng', xem: '▶ Xem tập', moc: (n, ten, d) => 'Tập ' + n + ' «' + ten + '» ra mắt ' + d, xong: 'Mùa 1 đã phát trọn 6 tập.', banVi: 'Bản tiếng Việt', banEn: 'Bản tiếng Anh' },
+    en: { tap: 'Episode', sapPhat: 'Coming soon', keTiep: 'Next episode', daPhat: 'Out now', choDang: 'Upload pending', xem: '▶ Watch episode', moc: (n, ten, d) => 'Episode ' + n + ', “' + ten + '”, premieres ' + d, xong: 'All 6 episodes of Season 1 are out.', banVi: 'Vietnamese version', banEn: 'English version' },
+  };
+  function ngayGio(iso, l) {
+    const d = new Date(iso);
+    return d.toLocaleString(l === 'en' ? 'en-GB' : 'vi-VN', { timeZone: 'Asia/Ho_Chi_Minh', weekday: 'short', day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+  }
+  function veLich(D) {
+    const l = lang(), t = T[l], ol = $('ph-lich'), now = Date.now(), ke = keTiep(D, now);
+    ol.innerHTML = '';
+    D.tap.forEach(x => {
+      const li = document.createElement('li'); li.className = 'ph-tap' + (ke && ke.so === x.so ? ' ke-tiep' : ''); li.dataset.tap = x.so;
+      const daToi = Date.parse(x.phat) <= now, yt = x.yt[l] || x.yt.vi || x.yt.en;
+      const so = document.createElement('div'); so.className = 'so'; so.textContent = x.so;
+      const giua = document.createElement('div');
+      const h = document.createElement('h3'); h.textContent = x.ten[l];
+      const p = document.createElement('p'); p.textContent = x.quyetDinh[l];
+      const nhan = document.createElement('span'); nhan.className = 'nhan';
+      nhan.textContent = daToi ? (yt ? t.daPhat : t.choDang) : (ke && ke.so === x.so ? t.keTiep : t.sapPhat);
+      giua.append(h, p, nhan);
+      if (daToi && yt) {
+        const k = document.createElement('div'); k.className = 'ph-xem';
+        const b = document.createElement('button'); b.type = 'button'; b.dataset.yt = yt; b.textContent = t.xem; b.setAttribute('aria-label', t.tap + ' ' + x.so + ': ' + x.ten[l]);
+        b.addEventListener('click', () => {
+          const f = document.createElement('iframe');
+          f.src = 'https://www.youtube-nocookie.com/embed/' + encodeURIComponent(yt) + '?autoplay=1&rel=0&playsinline=1';
+          f.title = b.getAttribute('aria-label'); f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen'; f.allowFullscreen = true;
+          f.referrerPolicy = 'strict-origin-when-cross-origin'; f.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border:0';
+          b.replaceWith(f);
+        }, { once: true });
+        k.appendChild(b); giua.appendChild(k);
+      }
+      const ngay = document.createElement('div'); ngay.className = 'ngay'; ngay.textContent = ngayGio(x.phat, l);
+      li.append(so, giua, ngay); ol.appendChild(li);
+    });
+  }
+  function veDem(D) {
+    const l = lang(), t = T[l], ke = keTiep(D, Date.now());
+    if (!ke) { $('ph-moc').textContent = t.xong; $('ph-dem').hidden = true; return; }
+    $('ph-moc').textContent = t.moc(ke.so, ke.ten[l], ngayGio(ke.phat, l));
+    const c = D.conLai(ke.phat, Date.now());
+    $('dem-ngay').textContent = c.ngay; $('dem-gio').textContent = c.gio; $('dem-phut').textContent = c.phut;
+  }
+  const keTiep = (D, now) => D.tap.find(x => Date.parse(x.phat) > now) || null;
+  function ve(D) { veLich(D); veDem(D); }
+  ve(P);
+  setInterval(() => veDem(P), 30000);
+  window.addEventListener('bizon:langchange', () => ve(P));
+  window.__phimTest = { ve: D => ve(Object.assign({}, P, D)) };
+})();
+</script>
+<script src="js/bizon-clay-i18n.js" defer></script>
+<script src="js/bizon-clay-nav.js" defer></script>
+<script src="js/bizon-clay-footer.js" defer></script>
+<script src="js/thong-ke.js" defer></script>
+</body>
+</html>

@@ -23,7 +23,7 @@ assert.ok(A.SAMPLES.every(c => c.kind === 'draft' && c.sims === 0), 'thẻ mẫu
 assert.ok(A.CASES.every(c => c.kind !== 'draft'), 'case thật không mang nhãn mẫu');
 // Đặc tả 011: một bộ tình huống giả định (nhãn «Giả định»), không nằm trong danh sách case thật
 deq(A.GIA_DINH.map(c => c.id), ['khoi-nghiep'], 'bộ tình huống giả định');
-assert.ok(A.GIA_DINH.every(c => c.gia === true && c.kind === 'set' && c.sims === 0 && c.soTh === 4 && c.tier === 1 && c.href === 'lab/khoi-nghiep-tinh-huong.html'), 'thẻ giả định: bộ tình huống (không phải mô phỏng), bậc 1, trỏ sang trang riêng');
+assert.ok(A.GIA_DINH.every(c => c.gia === true && c.kind === 'set' && c.sims === 0 && c.soTh === 8 && c.tier === 1 && c.href === 'lab/khoi-nghiep-tinh-huong.html'), 'thẻ giả định: bộ tình huống (không phải mô phỏng), bậc 1, trỏ sang trang riêng');
 assert.ok(A.TX.kinds.set, 'có nhãn trạng thái «Bộ tình huống»');
 assert.ok(A.GIA_DINH.every(c => /giả định/i.test(c.d.vi) && /fictional/i.test(c.d.en)), 'mô tả ghi rõ giả định');
 assert.ok(A.TX.gia && A.TX.giaNote, 'có nhãn và ghi chú «Giả định»');

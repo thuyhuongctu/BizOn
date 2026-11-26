@@ -62,6 +62,8 @@ const SHELL = [
   './lab/pitch-goi-von-lop-ui.js',
   './lab/pitch-quy.html',
   './js/vendor/qrcode.js',
+  './phim-dua-trai-ra-bien.html',
+  './js/phim-data.js',
   './lab/khoi-nghiep-tinh-huong.html',
   './lab/khoi-nghiep-tinh-huong-data.js',
   './lab/khoi-nghiep-tinh-huong-core.js',
