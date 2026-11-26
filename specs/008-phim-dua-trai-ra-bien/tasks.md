@@ -37,7 +37,7 @@
 ## Giai đoạn 2 – Dựng tập 1 (US1, P1) · PR 2 · hạn 08/12/2026
 
 - [ ] T009 (chị) Thu giọng Lumina VI và EN theo `tap-01-loi-thu-giong.md`. Gửi tệp qua Drive (29/11–02/12).
-- [ ] T010 (chị) Dựng 10–14 cảnh nhân vật theo `tap-01-phan-canh.md`, mỗi cảnh 4–8 giây, không chữ. Gửi mp4 qua Drive (29/11–02/12).
+- [ ] T010 (chị) Dựng 10–14 cảnh nhân vật theo `tap-01-phan-canh.md`, mỗi cảnh 4–8 giây, không chữ. Gửi mp4 qua Drive (29/11–02/12). Nếu dùng OpenCreator: làm theo `docs/phim/huong-dan-opencreator-tap-01.md` (thử C03, C05 trước; ghi điều khoản dùng thương mại).
 - [X] T011 [US1] Viết `test/phim-dua-trai-ra-bien-dung.test.js`, chạy và thấy hỏng. Test kiểm:
   - `canh.html` chạy được, mỗi cảnh số liệu hiện đúng lượt, không lỗi JS, chữ đúng ngôn ngữ;
   - bản đồ có nhãn Hoàng Sa và Trường Sa nếu vẽ toàn quốc;
