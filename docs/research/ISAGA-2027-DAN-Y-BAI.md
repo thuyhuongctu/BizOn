@@ -101,6 +101,7 @@ Keywords: business simulation; explainability; debriefing; learning analytics; i
   - Anonymised keys (FNV-1a hashes) link participants, teams, rounds, decisions, case tasks and surveys.
   - The case task has two parallel forms, A and B.
   - A blind scoring page computes Cohen's κ and ICC.
+  - For pitch rubrics the blind scoring page is built (spec 012, PR 2): funds and instructors rate 6 criteria on their own devices, scores stay hidden until all sheets are in, and `scripts/research/do-tin-cay-pitch.mjs` reports ICC(2,1), ICC(2,k) and Krippendorff's α with 95 % intervals (see `docs/research/DO-TIN-CAY-PITCH.md`).
   - **Fig. 1** shows the data flow from game to analysis.
 
 ## 4. Pilot study (October 2026)

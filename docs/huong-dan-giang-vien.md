@@ -108,6 +108,14 @@ Dữ liệu trước–sau từ 2–3 lớp (~100 sinh viên) chính là bằng 
 - **Thu kết quả lớp:** mỗi đội bấm «Xuất CSV» ở màn tổng kết và nộp tệp (qua LMS, Zalo hay email). Giảng viên mở `lab/khoi-nghiep-tinh-huong.html?gv=1`, bấm «Chọn tệp CSV» và chọn cùng lúc nhiều tệp. Trang đếm lựa chọn của lớp theo từng tình huống và hiện ghi chú giảng dạy (mục tiêu, thời lượng, câu hỏi thảo luận). Tệp chỉ được đọc trên máy giảng viên, không tải lên máy chủ. Một đội nộp hai lần thì trang giữ lần mới nhất.
 - **Lưu ý đợt đo trước – sau:** bộ «Ra thị trường» dạy khoảng cách tâm lý và cam kết theo bước, cùng nhóm cơ chế quốc tế hóa với bộ đo `ct-v1`. Nếu lớp đang ở giữa hai lần đo mà dùng bộ này, **ghi ngày dùng vào nhật ký lớp** để khi phân tích còn tách được. Bộ «Kiểm định ý tưởng» không đụng các cơ chế đó.
 
+### Phòng luyện pitch: chế độ lớp và chấm mù (lab/pitch-goi-von.html)
+
+- **Bật chế độ lớp:** trên máy chiếu, mở Phòng luyện pitch và bấm «👥 Chế độ lớp». Màn chiếu hiện mã phòng 6 ký tự và mã QR. Mỗi đội quét QR bằng một điện thoại, nhập tên đội, rồi giảng viên bấm «Duyệt». Mỗi đội là một quỹ 1 tỷ đồng ảo.
+- **Rót vốn:** sau phần pitch của một đội, chọn đội đó và bấm «Mở rót vốn 60 giây». Các quỹ khác rót theo bậc 50 triệu, tối đa 500 triệu cho một đội, không rót cho chính mình. Bảng góp vốn và bảng xếp hạng cập nhật ngay trên màn chiếu.
+- **Chấm mù (nghiên cứu):** mở rót vốn cho đội nào thì vòng chấm của đội đó cũng bắt đầu. Các quỹ khác chấm 6 tiêu chí, thang 1–5, cùng câu «ý định đầu tư». Giảng viên chấm trên máy riêng: mở đường dẫn trang quỹ, thêm `&gv=1`, nhập tên hiển thị như «GV 1». Màn chiếu chỉ hiện số phiếu đã nộp; đủ phiếu thì tự hiện trung bình, còn muốn xem sớm thì bấm «Mở điểm sớm». Rubric này chạy song song, không thay điểm lớp 4 × 2,5.
+- **Cuối buổi:** bấm «Xuất CSV của buổi» (sổ góp vốn) và «Xuất CSV chấm điểm» trước khi đóng tab, vì máy chủ không lưu gì. Tính độ tin cậy giữa giảng viên và bạn học bằng `node scripts/research/do-tin-cay-pitch.mjs <tệp CSV chấm>`; cách đọc kết quả xem `docs/research/DO-TIN-CAY-PITCH.md`.
+- **Thử trước trên một máy:** mở `lab/pitch-goi-von.html?hoidong=1&kenh=local`, rồi mở đường dẫn trang quỹ (đã có sẵn `&kenh=local`) ở vài thẻ trình duyệt khác. Cách này không cần mạng.
+
 ## 9. Liên hệ & mã nguồn
 
 - Mã nguồn: https://github.com/thuyhuongctu/BizOn

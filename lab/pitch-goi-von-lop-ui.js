@@ -6,7 +6,7 @@
  * Máy mở sau cùng mã phòng nghe thấy nhịp của chủ phòng thì chỉ xem. Sổ lưu trong sessionStorage của tab để tải lại không mất. */
 (function () {
   'use strict';
-  const P = window.PitchLop; if (!P) return;
+  const P = window.PitchLop, RB = window.PitchRubric; if (!P || !RB) return;
   const $ = id => document.getElementById(id);
   const qs = new URLSearchParams(location.search);
   const CHO_CHU_MS = 2500, NHIP_MS = 1000;
@@ -24,6 +24,9 @@
       chuVang: 'Chưa nghe thấy màn chiếu chính trong vài giây.', boTin: n => n + ' lượt rót bị bỏ vì sai luật (xem trong CSV).',
       chanLop: 'Chế độ lớp: trang gửi qua mạng (Supabase Realtime) chỉ mã phòng, tên đội do lớp đặt, số vốn rót và thời điểm. Máy chủ chỉ chuyển tin, không lưu; màn chiếu giữ sổ góp vốn và xuất CSV. Không dùng AI, không ghi âm, không ghi hình.',
       qrAlt: ma => 'Mã QR mở trang quỹ của phòng ' + ma,
+      gvCham: 'giảng viên chấm', chamTieuDe: 'Chấm điểm nghiên cứu (chấm mù)', chamGoiY: 'Song song với điểm lớp 4 × 2,5. Các quỹ và giảng viên chấm 6 tiêu chí trên máy riêng; không ai thấy điểm của người khác trước khi mọi người nộp xong. Giảng viên mở trang chấm bằng đường dẫn có thêm &gv=1.',
+      chamChua: 'Mở rót vốn cho một đội thì vòng chấm của đội đó bắt đầu.', chamTien: (ten, a, b) => 'Đội ' + ten + ': đã nộp ' + a + '/' + b + ' phiếu. Điểm còn ẩn cho tới khi đủ phiếu.', chamMo: (ten, a) => 'Đội ' + ten + ': điểm đã mở (' + a + ' phiếu).',
+      moDiem: 'Mở điểm sớm', xuatCham: 'Xuất CSV chấm điểm', cotTieuChi: 'Tiêu chí', cotCaLop: 'Cả lớp', cotGv: 'Giảng viên', cotBan: 'Bạn học',
     },
     en: {
       cheDoLop: '👥 Class mode', roiLop: 'Leave class mode', lopTieuDe: 'Whole-class investor board', maPhong: 'Room code',
@@ -37,6 +40,9 @@
       chuVang: 'The main screen has not been heard for a few seconds.', boTin: n => n + ' investments rejected for breaking the rules (see the CSV).',
       chanLop: 'Class mode: the page sends over the network (Supabase Realtime) only the room code, team names chosen by the class, amounts invested and times. The server only relays messages and stores nothing; the main screen keeps the ledger and exports a CSV. No AI, no audio or video recording.',
       qrAlt: ma => 'QR code to open the fund page for room ' + ma,
+      gvCham: 'instructor rater', chamTieuDe: 'Research scoring (blind)', chamGoiY: 'Runs alongside the 4 × 2.5 class score. Funds and instructors rate 6 criteria on their own devices; nobody sees anyone else\'s scores until everyone has submitted. Instructors open the rating page with &gv=1 added to the link.',
+      chamChua: 'Opening an investment window for a team starts that team\'s scoring round.', chamTien: (ten, a, b) => 'Team ' + ten + ': ' + a + '/' + b + ' score sheets in. Scores stay hidden until all are in.', chamMo: (ten, a) => 'Team ' + ten + ': scores revealed (' + a + ' sheets).',
+      moDiem: 'Reveal scores now', xuatCham: 'Export scoring CSV', cotTieuChi: 'Criterion', cotCaLop: 'Whole class', cotGv: 'Instructor', cotBan: 'Peers',
     },
   };
   const lang = () => (document.documentElement.lang === 'en' ? 'en' : 'vi');
@@ -45,10 +51,10 @@
   const mmss = s => { s = Math.max(0, Math.ceil(s)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); };
   const ngauNhien = () => Math.random().toString(36).slice(2, 10) + Date.now().toString(36).slice(-4);
 
-  let phong = null, kenh = null, vai = 'cho', st = null, tu = 0, myId = '', ban = null, lechGio = 0, nghe = 0, henChu = null, nhip = null, hen = null, ketNoi = '';
+  let phong = null, kenh = null, vai = 'cho', st = null, sc = null, chamXem = null, tu = 0, myId = '', ban = null, lechGio = 0, nghe = 0, henChu = null, nhip = null, hen = null, ketNoi = '';
   const khoa = () => 'bizon-pitch-lop-' + phong;
 
-  function luu() { try { sessionStorage.setItem(khoa(), JSON.stringify({ st, tu, id: myId })); } catch (e) {} }
+  function luu() { try { sessionStorage.setItem(khoa(), JSON.stringify({ st, sc, tu, id: myId })); } catch (e) {} }
   function docLuu(p) { try { const o = JSON.parse(sessionStorage.getItem('bizon-pitch-lop-' + p) || 'null'); return o && o.st && o.st.phong === p ? o : null; } catch (e) { return null; } }
 
   function dichChu() {
@@ -65,7 +71,7 @@
     $('lop-vai').textContent = vai === 'chu' ? t('vaiChu') : vai === 'xem' ? t('vaiXem') : t('vaiCho');
     $('lop-ket-noi').textContent = ketNoi ? t(ketNoi) : '';
     $('lop-dieu-khien').hidden = vai !== 'chu';
-    $('nut-lop-csv').hidden = vai !== 'chu';
+    $('nut-lop-csv').hidden = vai !== 'chu'; $('nut-cham-csv').hidden = vai !== 'chu';
     const bt = banHien(), s = P.tuBanTin(bt);
     // Danh sách quỹ
     const ds = $('lop-ds-quy'); ds.innerHTML = '';
@@ -82,6 +88,21 @@
       }
       ds.appendChild(li);
     });
+    // Giảng viên chấm (vào bằng &gv=1)
+    const gvDs = vai === 'chu' ? Object.values(sc.gv) : (chamXem ? chamXem.gv : []);
+    gvDs.forEach(g => {
+      const li = document.createElement('li'), ten = document.createElement('b'), tt = document.createElement('span');
+      ten.textContent = g.ten; tt.className = 'chip'; tt.textContent = t('gvCham') + ' · ' + (g.trangThai === 'duyet' ? t('daDuyet') : t('choDuyet'));
+      li.appendChild(ten); li.appendChild(tt);
+      if (vai === 'chu' && g.trangThai === 'cho') {
+        const ok = document.createElement('button'), no = document.createElement('button');
+        ok.type = no.type = 'button'; ok.className = 'btn phu'; no.className = 'btn';
+        ok.textContent = t('duyet'); no.textContent = t('tuChoi'); ok.dataset.duyetGv = g.id; no.dataset.tuChoiGv = g.id;
+        li.appendChild(ok); li.appendChild(no);
+      }
+      ds.appendChild(li);
+    });
+    if (gvDs.length && ds.firstChild && ds.firstChild.className === 'goi-y') ds.removeChild(ds.firstChild);
     // Chọn đội (giữ lựa chọn cũ)
     if (vai === 'chu') {
       const se = $('lop-doi'), cu = se.value; se.innerHTML = '';
@@ -97,6 +118,31 @@
     $('lop-xh-trong').hidden = xh.length > 0;
     const soBo = vai === 'chu' ? st.bo.length : 0;
     $('lop-bo').textContent = soBo ? t('boTin')(soBo) : '';
+    veCham(s);
+  }
+
+  // Bản tin chấm: chỉ có số phiếu và ai đã nộp; điểm trung bình chỉ có khi vòng đã mở (chấm mù).
+  function chamTin() {
+    const dp = st.dangPitch, daCham = [];
+    Object.keys(sc.vong).forEach(d => Object.keys(sc.vong[d].phieu).forEach(n => daCham.push([n, d])));
+    return { gv: Object.values(sc.gv).map(g => ({ id: g.id, ten: g.ten, trangThai: g.trangThai })), tt: dp ? RB.tomTat(sc, st, dp.doi) : null, daCham };
+  }
+  const so2 = v => (v == null ? '–' : (Math.round(v * 100) / 100).toFixed(2).replace('.', lang() === 'vi' ? ',' : '.'));
+  function veCham(s) {
+    const c = vai === 'chu' ? chamTin() : chamXem, tt = c && c.tt;
+    const ten = tt && s.quy[tt.doi] ? s.quy[tt.doi].ten : '';
+    $('lop-cham-tien').textContent = !tt ? t('chamChua') : tt.mo ? t('chamMo')(ten, tt.soNop) : t('chamTien')(ten, tt.soNop, tt.soCan);
+    $('nut-mo-diem').hidden = !(vai === 'chu' && tt && !tt.mo);
+    const coBang = !!(tt && tt.mo && tt.tb);
+    $('lop-cham-bang').hidden = !coBang;
+    if (!coBang) return;
+    const tb = $('lop-cham-bang').querySelector('tbody'); tb.innerHTML = '';
+    RB.TIEU_CHI.concat([RB.Y_DINH]).forEach((tc, i) => {
+      const tr = document.createElement('tr'), th = document.createElement('th'); th.scope = 'row'; th.textContent = tc[lang()]; tr.appendChild(th);
+      const hang = i < RB.TIEU_CHI.length ? [tt.tb[i], tt.tbGv[i], tt.tbBan[i]] : [tt.yDinh, null, null];
+      hang.forEach(v => { const td = document.createElement('td'); td.className = 'num'; td.textContent = so2(v); tr.appendChild(td); });
+      tb.appendChild(tr);
+    });
   }
 
   // Bảng trực tiếp: phần đổi theo giây, vẽ riêng cho nhẹ.
@@ -119,9 +165,10 @@
   }
 
   // Phát bản tin (gom nhiều thay đổi trong 200 ms thành một tin).
-  function phatNgay() { if (vai !== 'chu' || !kenh) return; kenh.gui('ban', { chu: myId, tu, ban: P.banTin(st, Date.now()) }); }
+  function phatNgay() { if (vai !== 'chu' || !kenh) return; kenh.gui('ban', { chu: myId, tu, ban: P.banTin(st, Date.now()), cham: chamTin() }); }
   function henPhat() { if (hen) return; hen = setTimeout(() => { hen = null; phatNgay(); }, 200); }
   function doi(r) { st = r.st; luu(); ve(); henPhat(); }
+  function doiCham(r) { sc = r.s; luu(); ve(); henPhat(); }
 
   function lamChu() {
     if (vai === 'xem') return;
@@ -134,13 +181,15 @@
     if (loai === 'ban' && du.chu && du.chu !== myId) {
       const hoThang = du.tu < tu || (du.tu === tu && String(du.chu) < myId);
       if (vai !== 'xem' && hoThang) lamXem();
-      if (vai === 'xem' && du.ban && du.ban.phong === phong) { ban = du.ban; lechGio = Date.now() - du.ban.luc; nghe = Date.now(); ve(); }
+      if (vai === 'xem' && du.ban && du.ban.phong === phong) { ban = du.ban; chamXem = du.cham || null; lechGio = Date.now() - du.ban.luc; nghe = Date.now(); ve(); }
       return;
     }
     if (vai !== 'chu') return;
     if (loai === 'hoi') { henPhat(); return; }
     if (loai === 'xin') { doi(P.xinVao(st, String(du.quy || ''), du.ten, new Date().toISOString())); return; }
-    if (loai === 'rot') { doi(P.rot(st, { ma: du.ma, quy: du.quy, doi: du.doi, so: du.so }, Date.now())); }
+    if (loai === 'rot') { doi(P.rot(st, { ma: du.ma, quy: du.quy, doi: du.doi, so: du.so }, Date.now())); return; }
+    if (loai === 'gv-xin') { doiCham(RB.gvXin(sc, String(du.id || ''), du.ten)); return; }
+    if (loai === 'cham') { doiCham(RB.nop(sc, st, { nguoi: du.nguoi, doi: du.doi, diem: du.diem, yDinh: du.yDinh }, Date.now())); }
   }
 
   function veQr() {
@@ -155,7 +204,7 @@
     if (phong) return;
     phong = P.maPhongHopLe(maMuon) ? maMuon : P.maPhongMoi();
     const cu = docLuu(phong);
-    st = cu ? cu.st : P.taoPhong(phong); tu = cu ? cu.tu : Date.now(); myId = cu ? cu.id : 'chieu-' + ngauNhien(); luu();
+    st = cu ? cu.st : P.taoPhong(phong); sc = cu && cu.sc ? cu.sc : RB.taoSoCham(); tu = cu ? cu.tu : Date.now(); myId = cu ? cu.id : 'chieu-' + ngauNhien(); luu();
     const u = new URL(location.href); u.searchParams.set('hoidong', '1'); u.searchParams.set('p', phong);
     try { history.replaceState(null, '', u.href); } catch (e) {}
     $('man-lop').hidden = false; $('chan-lop').hidden = false; $('chan-mot-may').hidden = true; $('nut-che-do-lop').hidden = true;
@@ -187,10 +236,19 @@
   $('nut-che-do-lop').addEventListener('click', () => vao(null));
   $('nut-roi-lop').addEventListener('click', roi);
   $('nut-lop-csv').addEventListener('click', xuatCsv);
+  $('nut-cham-csv').addEventListener('click', () => {
+    if (vai !== 'chu') return;
+    const blob = new Blob([RB.taoCsv(sc, st)], { type: 'text/csv;charset=utf-8' }), a = document.createElement('a');
+    a.href = URL.createObjectURL(blob); a.download = 'pitch-cham-' + phong + '-' + new Date().toISOString().slice(0, 10) + '.csv';
+    document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500);
+  });
+  $('nut-mo-diem').addEventListener('click', () => { if (vai === 'chu' && st.dangPitch) doiCham(RB.moDiem(sc, st.dangPitch.doi)); });
   $('lop-ds-quy').addEventListener('click', e => {
     const b = e.target.closest('button'); if (!b || vai !== 'chu') return;
     if (b.dataset.duyet) doi(P.duyet(st, b.dataset.duyet));
     else if (b.dataset.tuChoi) doi(P.tuChoi(st, b.dataset.tuChoi));
+    else if (b.dataset.duyetGv) doiCham(RB.gvDuyet(sc, b.dataset.duyetGv));
+    else if (b.dataset.tuChoiGv) doiCham(RB.gvTuChoi(sc, b.dataset.tuChoiGv));
   });
   $('nut-mo-rot').addEventListener('click', () => {
     const doiId = $('lop-doi').value, muc = Math.max(0, Number($('lop-muc-tieu').value) || 0) * 1e6;
@@ -207,5 +265,5 @@
   dichChu();
   if (qs.get('hoidong') === '1') vao((qs.get('p') || '').toUpperCase());
 
-  window.__pitchLop = { vai: () => vai, st: () => (vai === 'chu' ? JSON.parse(JSON.stringify(st)) : P.tuBanTin(ban)), phong: () => phong };
+  window.__pitchLop = { vai: () => vai, st: () => (vai === 'chu' ? JSON.parse(JSON.stringify(st)) : P.tuBanTin(ban)), phong: () => phong, sc: () => (vai === 'chu' ? JSON.parse(JSON.stringify(sc)) : null), cham: () => (vai === 'chu' ? chamTin() : chamXem) };
 })();

@@ -1,7 +1,7 @@
 /* BizOn Bật Nghiệp 2026 – Service Worker (offline app shell)
  * © 2026 Đỗ Thùy Hương & Phan Anh Tú. Bảo lưu mọi quyền. */
 
-const CACHE = 'bizon-v1010';
+const CACHE = 'bizon-v1011';
 const SHELL = [
   './',
   './index.html',
@@ -60,6 +60,7 @@ const SHELL = [
   './lab/pitch-goi-von-3d.js',
   './lab/pitch-goi-von-lop.js',
   './lab/pitch-goi-von-lop-ui.js',
+  './lab/pitch-goi-von-rubric.js',
   './lab/pitch-quy.html',
   './js/vendor/qrcode.js',
   './phim-dua-trai-ra-bien.html',

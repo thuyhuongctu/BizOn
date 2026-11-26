@@ -277,6 +277,13 @@ legend{font-weight:800;font-size:16px;padding:0;margin-bottom:4px}
         <p class="goi-y num" id="lop-phan-tram"></p>
       </div>
     </div>
+    <div class="the" id="the-lop-cham">
+      <h2 style="margin:0 0 6px;font-size:17px" data-kl="chamTieuDe">Chấm điểm nghiên cứu (chấm mù)</h2>
+      <p class="goi-y" data-kl="chamGoiY">Song song với điểm lớp 4 × 2,5.</p>
+      <p style="font-weight:800;margin:8px 0" id="lop-cham-tien" role="status" aria-live="polite"></p>
+      <table id="lop-cham-bang" hidden><thead><tr><th scope="col" data-kl="cotTieuChi">Tiêu chí</th><th scope="col" data-kl="cotCaLop">Cả lớp</th><th scope="col" data-kl="cotGv">Giảng viên</th><th scope="col" data-kl="cotBan">Bạn học</th></tr></thead><tbody></tbody></table>
+      <div class="hang-nut"><button type="button" class="btn" id="nut-mo-diem" data-kl="moDiem" hidden>Mở điểm sớm</button><button type="button" class="btn phu" id="nut-cham-csv" data-kl="xuatCham">Xuất CSV chấm điểm</button></div>
+    </div>
     <div class="the">
       <h2 style="margin:0 0 8px;font-size:17px" data-kl="xhTieuDe">Bảng xếp hạng gọi vốn</h2>
       <table id="lop-xep-hang"><thead><tr><th scope="col" data-kl="cotHang">Hạng</th><th scope="col" data-kl="cotDoi">Đội</th><th scope="col" data-kl="cotTong">Gọi được</th><th scope="col" data-kl="cotSoQuy">Số quỹ</th></tr></thead><tbody></tbody></table>
@@ -592,10 +599,11 @@ legend{font-weight:800;font-size:16px;padding:0;margin-bottom:4px}
   window.__pitchTest = { tua(g) { tua += g * 1000; veDongHo(); veGioCau(); }, p3: () => (p3 ? p3.trangThai() : { tat: true, hong: p3Hong }), trangThai: () => ({ phase: S.phase, giay: dh.giay(), som: S.som.slice(), ket: S.ket, cau: S.cau.map(c => c.id), iCau: S.iCau, ma: S.ma }) };
 })();
 </script>
-<!-- Chế độ lớp (đặc tả 012, PR 1): sổ góp vốn và màn chiếu. -->
+<!-- Chế độ lớp (đặc tả 012): sổ góp vốn và màn chiếu (PR 1), rubric nghiên cứu và chấm mù (PR 2). -->
 <script src="../js/backend-config.js"></script>
 <script src="../js/vendor/qrcode.js"></script>
 <script src="pitch-goi-von-lop.js"></script>
+<script src="pitch-goi-von-rubric.js"></script>
 <script src="pitch-goi-von-lop-ui.js"></script>
 <script src="../js/thong-ke.js" defer></script>
 </body>
