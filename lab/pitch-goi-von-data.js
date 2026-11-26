@@ -152,7 +152,20 @@
   };
   const GHI_CHU_PHAN_UNG = { vi: 'Hội đồng phản ứng theo thời gian, nút đội tự bấm và kết quả kiểm ba con số; không nghe, không chấm nội dung câu trả lời.', en: 'The board reacts to time, the buttons the team presses and the three-number check; it does not listen to or grade the answers.' };
 
-  const DATA = { PHIEN_BAN, DOAN, LUAT, VAI, PASTOR, HOI_DONG, CAU_HOI, TIEU_CHI, NGANH, TINH_CACH, DONG_TAC, PHAN_UNG, GIAY_TRA_LOI_SOM, CAU_VAN, GHI_CHU_PHAN_UNG };
+  /* ---------- Lumina góp ý sau pitch (đặc tả 012, PR 4) ----------
+   * Tối đa 3 ý theo luật, dựa trên: con số lệch, câu trả lời quá 1 phút (theo nhóm PASTOR / vai), pitch quá 7 phút.
+   * Chữ {…} được thay bằng số thật. Nhánh nghiên cứu «ẩn giải thích» (cờ lớp explain_hidden): chỉ nói KET_CHUNG. */
+  const GOP_Y = {
+    bep: { vi: 'Điểm hòa vốn đội khai ({khai} sản phẩm/tháng) lệch {lech} % so với cách tính ({tinh}). CFO nên tính lại trước mặt Hội đồng trong 20 giây: định phí × 1000 ÷ (giá − biến phí).', en: 'Your stated break-even ({khai} units/month) is {lech} % off the calculation ({tinh}). The CFO should be able to redo it in front of the board in 20 seconds: fixed cost × 1000 ÷ (price − variable cost).' },
+    von: { vi: 'Vốn xin ({khai} triệu) chưa đủ trang trải đến điểm hòa vốn ({tinh} triệu). Chuẩn bị sẵn câu trả lời «phần thiếu lấy ở đâu».', en: 'The ask ({khai} million) does not cover the months to break-even ({tinh} million). Prepare an answer to «where does the gap come from».' },
+    ln: { vi: 'Lợi nhuận mục tiêu ({khai} triệu/tháng) cao hơn mức sản lượng dự kiến cho phép ({tinh} triệu). Hạ mục tiêu hoặc nói rõ vì sao sản lượng sẽ tăng.', en: 'The target profit ({khai} million/month) is higher than the expected volume allows ({tinh} million). Lower the target or explain why volume will grow.' },
+    cham: { vi: 'Đội trả lời chậm nhóm {nhom}: {giay} giây cho một câu, quá {qua} giây. Luyện trả lời theo khung con số – lý do – bước tiếp, dưới 1 phút.', en: 'You answered slowly in {nhom}: {giay} seconds for one question, {qua} seconds over. Practise answering as number – reason – next step, under one minute.' },
+    'qua-gio': { vi: 'Phần pitch quá {qua} giây so với 7 phút, dồn vào lời chốt của CEO. Cắt bớt một ý ở đoạn dài nhất.', en: 'The pitch ran {qua} seconds over 7 minutes, squeezing the CEO\'s close. Cut one point from the longest segment.' },
+    tot: { vi: 'Đội giữ giờ tốt và ba con số không có chỗ lệch. Lần sau thử trả lời mỗi câu dưới 40 giây.', en: 'You kept to time and the three numbers showed no gaps. Next time, try to answer each question in under 40 seconds.' },
+  };
+  const KET_CHUNG = { vi: 'Cảm ơn đội đã pitch. Hãy xem lại bảng tổng kết cùng giảng viên.', en: 'Thank you for your pitch. Go through the summary with your instructor.' };
+
+  const DATA = { GOP_Y, KET_CHUNG, PHIEN_BAN, DOAN, LUAT, VAI, PASTOR, HOI_DONG, CAU_HOI, TIEU_CHI, NGANH, TINH_CACH, DONG_TAC, PHAN_UNG, GIAY_TRA_LOI_SOM, CAU_VAN, GHI_CHU_PHAN_UNG };
   if (typeof module === 'object' && module.exports) module.exports = DATA;
   else root.PitchData = DATA;
 })(typeof self !== 'undefined' ? self : this);

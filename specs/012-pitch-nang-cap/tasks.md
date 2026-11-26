@@ -22,8 +22,8 @@
 - [x] T010 Tính cách và bảng luật trong `lab/pitch-goi-von-data.js`; tín hiệu trong `-core.js`; biểu cảm và bong bóng lời trong `-3d.js`; bản phẳng hiện cùng câu nói; nút giọng đọc (Web Speech API).
 
 ## Câu chuyện 4 – Lumina góp ý sau pitch (P4, PR 4)
-- [ ] T011 Test, viết trước: quá giờ ở đoạn Tài chính và lệch điểm hòa vốn thì Lumina nêu đúng hai điểm và gợi ý 3 câu nhóm tài chính; nút «Luyện lại ba câu này»; cờ `explain_hidden` (qua `?lop=`) ẩn góp ý cụ thể; CSV có cột `lumina`.
-- [ ] T012 Luật góp ý trong `-data.js`, hàm chọn góp ý trong `-core.js`, khối Lumina trong trang; đọc cờ qua `js/explain-mode.js`; mục mới trong `docs/huong-dan-giang-vien.md` (chế độ lớp, đồng thuận nghiên cứu, nhánh Lumina).
+- [x] T011 Test, viết trước: câu hỏi tài chính trả lời quá giờ và lệch điểm hòa vốn thì Lumina nêu đúng hai điểm và gợi ý 3 câu nhóm tài chính; nút «Luyện lại ba câu này»; cờ `explain_hidden` (qua `?lop=`) ẩn góp ý cụ thể; CSV có cột `lumina`.
+- [x] T012 Luật góp ý trong `-data.js`, hàm chọn góp ý trong `-core.js`, khối Lumina trong trang; đọc cờ qua `js/explain-mode.js`; mục mới trong `docs/huong-dan-giang-vien.md` (chế độ lớp, đồng thuận nghiên cứu, nhánh Lumina).
 
 ## Kế hoạch PR
 

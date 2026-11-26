@@ -249,6 +249,20 @@ legend{font-weight:800;font-size:16px;padding:0;margin-bottom:4px}
       <table id="bang-thoi-gian"><caption class="goi-y" style="text-align:left" data-k="bangVaiCap">Thời gian từng đoạn</caption><thead><tr><th scope="col" data-k="cotVai">Vai</th><th scope="col" data-k="cotDinhMuc">Định mức</th><th scope="col" data-k="cotThucTe">Thực tế</th></tr></thead><tbody></tbody></table>
       <h3 style="font-size:15px;margin:16px 0 6px" data-k="cauDaGap">Câu hỏi đội đã gặp</h3>
       <ol id="ds-cau"></ol>
+      <div class="lumina gop-y" id="the-lumina-gop-y" hidden>
+        <img src="../assets/character/advisors/lumina-vest-cut.webp" alt="" width="72" height="72">
+        <div>
+          <h3 style="margin:0 0 4px;font-size:16px" data-k="luminaGopYTieuDe">Lumina góp ý</h3>
+          <div class="nhan" data-k="luminaGopYNhan">Theo luật: thời gian, ba con số, câu trả lời quá giờ. Lumina không chấm nội dung câu trả lời.</div>
+          <ul id="gop-y"></ul>
+          <p id="ket-chung" hidden></p>
+          <div id="khoi-luyen">
+            <h4 style="margin:10px 0 4px;font-size:15px" data-k="luyenTieuDe">Ba câu nên luyện lại</h4>
+            <ol id="cau-luyen"></ol>
+            <button type="button" class="btn phu" id="nut-luyen-lai" data-k="luyenLai">Luyện lại ba câu này</button>
+          </div>
+        </div>
+      </div>
       <div class="hang-nut">
         <button type="button" class="btn chinh" id="nut-lai" data-k="tapLai">Tập lại</button>
         <button type="button" class="btn phu" id="nut-in" data-k="inBang">In bảng</button>
@@ -352,6 +366,7 @@ legend{font-weight:800;font-size:16px;padding:0;margin-bottom:4px}
       luuGoiY: 'Kết quả chỉ lưu trong trình duyệt của máy này. Muốn nộp cho giảng viên thì in bảng hoặc xuất CSV.',
       ketThucTieuDe: 'Kết thúc lượt', bangVaiCap: 'Thời gian từng đoạn', cotVai: 'Vai', cotDinhMuc: 'Định mức', cotThucTe: 'Thực tế', cauDaGap: 'Câu hỏi đội đã gặp', tapLai: 'Tập lại',
       tomTat: (doi, tong, phat, ma) => doi + ': pitch ' + tong + (phat ? ', quá 30 giây nên bị trừ 5 điểm' : ', không bị trừ điểm') + '. Mã lượt ' + ma + '.', doiMacDinh: 'Đội chưa đặt tên', giay: 'giây',
+      luminaGopYTieuDe: 'Lumina góp ý', luminaGopYNhan: 'Theo luật: thời gian, ba con số, câu trả lời quá giờ. Lumina không chấm nội dung câu trả lời.', luyenTieuDe: 'Ba câu nên luyện lại', luyenLai: 'Luyện lại ba câu này',
       tuTin: '💪 Tự tin', chuaChac: '🤔 Chưa chắc', giongBat: '🔈 Đọc câu hỏi: bật', giongTat: '🔇 Đọc câu hỏi: tắt', ghiChuPhanUng: D.GHI_CHU_PHAN_UNG.vi,
       soTruocTieuDe: 'Ba con số (không bắt buộc): nhập trước để Hội đồng soi khi hỏi đáp',
       chan: 'Câu hỏi của Hội đồng soạn sẵn theo khung PASTOR, rút theo mã lượt. Trang không dùng AI, không ghi âm, không ghi hình và không gửi dữ liệu đi đâu. Lumina và Hội đồng là cố vấn chạy theo luật: chỉ giữ giờ và đặt câu hỏi, không chấm nội dung câu trả lời.', veLopHoc: '← Về trang Lớp học',
@@ -381,6 +396,7 @@ legend{font-weight:800;font-size:16px;padding:0;margin-bottom:4px}
       luuGoiY: 'Results are stored only in this browser. To hand them in, print the summary or export a CSV.',
       ketThucTieuDe: 'Round finished', bangVaiCap: 'Time per segment', cotVai: 'Role', cotDinhMuc: 'Allowed', cotThucTe: 'Used', cauDaGap: 'Questions the team faced', tapLai: 'Practise again',
       tomTat: (doi, tong, phat, ma) => doi + ': pitch took ' + tong + (phat ? ', more than 30 seconds over, so minus 5 points' : ', no penalty') + '. Round code ' + ma + '.', doiMacDinh: 'Unnamed team', giay: 's',
+      luminaGopYTieuDe: 'Feedback from Lumina', luminaGopYNhan: 'Rule-based: time, the three numbers, answers that ran over. Lumina does not grade what you said.', luyenTieuDe: 'Three questions to practise again', luyenLai: 'Practise these three',
       tuTin: '💪 Confident', chuaChac: '🤔 Not sure', giongBat: '🔈 Read questions aloud: on', giongTat: '🔇 Read questions aloud: off', ghiChuPhanUng: D.GHI_CHU_PHAN_UNG.en,
       soTruocTieuDe: 'The three numbers (optional): enter them now so the board can check them in Q&A',
       chan: 'Board questions are pre-written on the PASTOR frame and drawn by round code. This page uses no AI, records no audio or video, and sends no data anywhere. Lumina and the board are rule-based advisors: they keep time and ask questions; they do not grade the answers.', veLopHoc: '← Back to Classroom',
@@ -411,7 +427,7 @@ legend{font-weight:800;font-size:16px;padding:0;margin-bottom:4px}
   // Đồng hồ: giờ thật + phần tua (chỉ test dùng __pitchTest.tua).
   let tua = 0;
   const dh = C.taoDongHo(() => performance.now() + tua);
-  const S = { phase: 'chuan-bi', som: [], doanTruoc: -1, daBao10: {}, daBaoQua: false, ket: null, cau: [], iCau: 0, dhCau: null, daBaoCau: false, da10Cau: false, ma: '', doi: '', pu: [], daDoc: [], giongBoQua: 0 };
+  const S = { phase: 'chuan-bi', som: [], doanTruoc: -1, daBao10: {}, daBaoQua: false, ket: null, cau: [], iCau: 0, dhCau: null, daBaoCau: false, da10Cau: false, ma: '', doi: '', pu: [], traLoi: [], luyen: false, gop: null, luyenDs: [], daDoc: [], giongBoQua: 0 };
 
   function hien(id) { ['man-chuan-bi', 'man-pitch', 'man-hoi-dap', 'man-tu-cham', 'man-ket-thuc'].forEach(m => { $(m).hidden = m !== id; }); }
   function tenVai(v) { const x = D.VAI[v]; return x.icon + ' ' + x[lang]; }
@@ -442,7 +458,7 @@ legend{font-weight:800;font-size:16px;padding:0;margin-bottom:4px}
   function batDau() {
     S.doi = $('ten-doi').value.trim(); S.ma = ($('ma-luot').value.trim() || C.maNgauNhien()).toUpperCase(); $('ma-luot').value = S.ma;
     S.cau = C.rutCauHoi(D.CAU_HOI, D.HOI_DONG, S.ma, $('so-cau').value, L);
-    S.som = []; S.doanTruoc = -1; S.daBao10 = {}; S.daBaoQua = false; S.ket = null; S.phase = 'pitch';
+    S.som = []; S.doanTruoc = -1; S.daBao10 = {}; S.daBaoQua = false; S.ket = null; S.phase = 'pitch'; S.traLoi = []; S.luyen = false;
     dh.datLai(); dh.batDau(); hien('man-pitch'); bip(660, 0.15); veDongHo(); $('nut-chuyen').focus();
   }
 
@@ -576,7 +592,9 @@ legend{font-weight:800;font-size:16px;padding:0;margin-bottom:4px}
 
   function cauTiep() {
     const cu = S.cau[S.iCau], som = S.dhCau && L.giayMoiCau - S.dhCau.giay() >= D.GIAY_TRA_LOI_SOM ? C.phanUng('tra-loi-som', cu && cu.hoi, D.PHAN_UNG) : [];
+    if (cu && S.dhCau) S.traLoi.push({ id: cu.id, p: cu.p, vai: cu.vai, giay: Math.round(S.dhCau.giay()) });
     S.iCau++;
+    if (S.iCau >= S.cau.length && S.luyen) { imGiong(); S.pu = []; S.luyen = false; S.cau = S.cauLuot; S.phase = 'ket-thuc'; hien('man-ket-thuc'); veKetThuc(); $('nut-lai').focus(); return; }
     if (S.iCau >= S.cau.length) { imGiong(); S.pu = []; S.phase = 'tu-cham'; S.daKiem = false; $('ket-qua-kiem').innerHTML = ''; duaKhoiSo(true); veODiem(); hien('man-tu-cham'); $('diem-0').focus(); }
     else batDauCau(som);
   }
@@ -607,7 +625,11 @@ legend{font-weight:800;font-size:16px;padding:0;margin-bottom:4px}
   function tongKet() {
     const diem = C.tinhDiem([0, 1, 2, 3].map(i => $('diem-' + i).value), S.ket.phat, L), so = docSo(), kq = C.kiemBaCon(so);
     S.luot = { thoiDiem: new Date().toISOString(), doi: S.doi || t('doiMacDinh'), nganh: $('nganh').value, ma: S.ma, giay: S.ket.giay, phat: S.ket.phat, tungDoan: S.ket.tungDoan,
-      cau: S.cau.map(c => c.id), diem: diem.diem, tong100: diem.tong100, tong10: diem.tong10, phat100: diem.phat100, so, soLech: kq.filter(x => !x.ok).length, phienBan: D.PHIEN_BAN };
+      cau: S.cau.map(c => c.id), diem: diem.diem, tong100: diem.tong100, tong10: diem.tong10, phat100: diem.phat100, so, soLech: kq.filter(x => !x.ok).length, phienBan: D.PHIEN_BAN,
+      traLoi: S.traLoi.slice(), lumina: nhanhLumina() };
+    // Lumina góp ý theo luật (đặc tả 012, PR 4): tính một lần lúc tổng kết.
+    S.gop = C.gopY({ kq, traLoi: S.traLoi, giayPitch: S.ket.giay }, D);
+    S.luyenDs = C.luyenLai(D.CAU_HOI, S.gop.nhom, S.cau.map(c => c.id), S.ma);
     const a = docLuu(); S.luotTruoc = a.filter(l => (l.doi || '').toLowerCase() === S.luot.doi.toLowerCase()).pop() || null;
     a.push(S.luot); ghiLuu(a);
     S.phase = 'ket-thuc'; hien('man-ket-thuc'); veKetThuc(); $('nut-lai').focus();
@@ -632,7 +654,33 @@ legend{font-weight:800;font-size:16px;padding:0;margin-bottom:4px}
     }
     const ol = $('ds-cau'); ol.innerHTML = '';
     S.cau.forEach(c => { const li = document.createElement('li'); li.textContent = '[' + c.p + ' · ' + D.VAI[c.vai][lang] + '] ' + ten(c); ol.appendChild(li); });
+    veLumina();
   }
+
+  /* ---------- Lumina góp ý sau pitch (đặc tả 012, PR 4) ----------
+   * Nhánh nghiên cứu: cờ lớp explain_hidden (đọc qua ?lop= bằng js/explain-mode.js; ?explain=hidden để xem trước) thì chỉ nói lời kết chung. */
+  function nhanhLumina() { return window.BizOnExplain && window.BizOnExplain.hidden ? 'an' : 'hien'; }
+  function veLumina() {
+    const box = $('the-lumina-gop-y'); if (!box) return;
+    box.hidden = !(S.luot && S.gop); if (box.hidden) return;
+    const an = S.luot.lumina === 'an'; box.dataset.nhanh = S.luot.lumina;
+    const ul = $('gop-y'); ul.innerHTML = ''; ul.hidden = an; $('khoi-luyen').hidden = an;
+    $('ket-chung').hidden = !an; $('ket-chung').textContent = an ? D.KET_CHUNG[lang] : '';
+    if (an) return;
+    S.gop.y.forEach(x => { const li = document.createElement('li'); li.dataset.ma = x.ma; li.textContent = x[lang]; ul.appendChild(li); });
+    const ol = $('cau-luyen'); ol.innerHTML = '';
+    S.luyenDs.forEach(c => { const li = document.createElement('li'); li.textContent = '[' + c.p + ' · ' + D.VAI[c.vai][lang] + '] ' + ten(c); ol.appendChild(li); });
+    $('nut-luyen-lai').disabled = !S.luyenDs.length;
+  }
+  function luyenLai() {
+    if (!S.luyenDs.length) return;
+    S.cauLuot = S.cau; S.cau = S.luyenDs.slice(); S.luyen = true; S.iCau = 0; S.phase = 'hoi-dap';
+    hien('man-hoi-dap'); moPhong3d(); batDauCau();
+  }
+  window.addEventListener('DOMContentLoaded', () => {
+    const lop = (location.search.match(/[?&]lop=([A-Za-z0-9_-]{2,30})/) || [])[1];
+    if (lop && window.BizOnExplain) window.BizOnExplain.init({ classCode: lop });
+  });
 
   function veKiemTomTat() {
     const tk = $('tk-kiem'); tk.innerHTML = '';
@@ -660,6 +708,7 @@ legend{font-weight:800;font-size:16px;padding:0;margin-bottom:4px}
   });
   $('nut-cau-tiep').addEventListener('click', cauTiep);
   $('nut-tu-tin').addEventListener('click', () => phat('tu-tin'));
+  $('nut-luyen-lai').addEventListener('click', luyenLai);
   $('nut-chua-chac').addEventListener('click', () => phat('chua-chac'));
   $('nut-giong').addEventListener('click', () => { giongBat = !giongBat; giongDaChon = giongBat ? '1' : '0'; try { localStorage.setItem('bizon-pitch-giong', giongDaChon); } catch (e) {} veNutGiong(); if (giongBat && S.phase === 'hoi-dap' && S.cau[S.iCau]) docCau(ten(S.cau[S.iCau])); else imGiong(); });
   $('nut-lai').addEventListener('click', () => { S.phase = 'chuan-bi'; duaKhoiSo(false); hien('man-chuan-bi'); $('nut-bat-dau').focus(); });
@@ -680,11 +729,13 @@ legend{font-weight:800;font-size:16px;padding:0;margin-bottom:4px}
 
   // Móc cho test: tua đồng hồ (giây) và đọc trạng thái. Không ảnh hưởng người dùng.
   window.__pitchTest = { tua(g) { tua += g * 1000; veDongHo(); veGioCau(); }, p3: () => (p3 ? p3.trangThai() : { tat: true, hong: p3Hong }), trangThai: () => ({ phase: S.phase, giay: dh.giay(), som: S.som.slice(), ket: S.ket, cau: S.cau.map(c => c.id), iCau: S.iCau, ma: S.ma }),
+    gopY: () => (S.gop ? { y: S.gop.y.map(x => x.ma), nhom: S.gop.nhom, luyen: S.luyenDs.map(c => c.id), nhanh: S.luot && S.luot.lumina } : null),
     phanUng: () => S.pu.map(x => ({ tinHieu: x.tinHieu, ai: x.ai, dongTac: x.dongTac })), giong: () => ({ hoTro: coGiong, bat: giongBat, daDoc: S.daDoc.slice(), boQua: S.giongBoQua }) };
 })();
 </script>
 <!-- Chế độ lớp (đặc tả 012): sổ góp vốn và màn chiếu (PR 1), rubric nghiên cứu và chấm mù (PR 2). -->
 <script src="../js/backend-config.js"></script>
+<script src="../js/explain-mode.js"></script>
 <script src="../js/vendor/qrcode.js"></script>
 <script src="pitch-goi-von-lop.js"></script>
 <script src="pitch-goi-von-rubric.js"></script>
