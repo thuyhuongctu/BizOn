@@ -52,11 +52,17 @@
   #bb-exit:focus-visible, #bb-goc:focus-visible, #bb-am:focus-visible { outline:3px solid #fda127; outline-offset:2px; }
   /* Hai nút cho tay phải ở góc phải dưới (specs/003, câu chuyện 2): chạy/đi và góc nhìn */
   #bb-nut-phai { position:absolute; z-index:5; right:max(16px,env(safe-area-inset-right,0px)); bottom:calc(18px + env(safe-area-inset-bottom,0px)); display:flex; flex-direction:column; gap:10px; }
-  #bb-chay, #bb-goc, #bb-am { width:52px; height:52px; padding:0; border:0; border-radius:50%; background:#fff; color:#033337; font-size:22px; line-height:52px; text-align:center; cursor:pointer; box-shadow:0 6px 16px -6px rgba(0,40,50,.55); }
+  #bb-chay, #bb-goc, #bb-am, #bb-toan { width:52px; height:52px; padding:0; border:0; border-radius:50%; background:#fff; color:#033337; font-size:22px; line-height:52px; text-align:center; cursor:pointer; box-shadow:0 6px 16px -6px rgba(0,40,50,.55); }
   #bb-chay:focus-visible { outline:3px solid #fda127; outline-offset:2px; }
   #bb-chay[aria-pressed="true"] { background:#fda127; color:#033337; }
   #bb-goc[aria-pressed="true"] { background:#006687; color:#fff; }
   #bb-am { position:absolute; z-index:5; right:calc(max(16px,env(safe-area-inset-right,0px)) + 62px); bottom:calc(18px + env(safe-area-inset-bottom,0px)); }   /* cùng hàng với 🎥, bên trái: cột nút phải giữ hai nút như cũ */
+  /* Toàn cảnh (26/11/2026): cùng hàng, bên trái 🔊; đang bật thì tô xanh, ẩn thẻ địa điểm, cần điều khiển, nút «Đi tới» */
+  #bb-toan { position:absolute; z-index:5; right:calc(max(16px,env(safe-area-inset-right,0px)) + 124px); bottom:calc(18px + env(safe-area-inset-bottom,0px)); }
+  #bb-toan[aria-pressed="true"] { background:#006687; color:#fff; }
+  #bb-toan:focus-visible { outline:3px solid #fda127; outline-offset:2px; }
+  #bb-stage.bb-toan-canh .dc-card, #bb-stage.bb-toan-canh .dc-joy, #bb-stage.bb-toan-canh .dc-goto-btn, #bb-stage.bb-toan-canh #bb-mh-chip, #bb-stage.bb-toan-canh #bb-nv { display:none !important; }
+  @media (max-width:600px) { #bb-stage.bb-toan-canh .bb-lb, #bb-stage.bb-toan-canh #bb-tag { font-size:9.5px; padding:2px 6px; } }   /* toàn cảnh trên điện thoại: nhãn nhỏ lại cho đỡ chồng */
   #bb-am[aria-pressed="false"] { background:#e9eef0; color:#5b6b70; }
   #bb-hint, #bb-note { position:absolute; z-index:3; left:50%; transform:translateX(-50%); width:max-content; max-width:calc(100% - 24px); margin:0; padding:7px 14px; border-radius:999px; font-size:12px; font-weight:700; text-align:center; pointer-events:none; }
   #bb-hint { top:calc(70px + env(safe-area-inset-top,0px)); background:rgba(3,51,55,.78); color:#fff; }
@@ -230,6 +236,7 @@
     </div>
     <button type="button" id="bb-am" aria-pressed="true" aria-label="Tiếng bến sông" data-en-aria="River sounds" title="Tiếng bến sông: bước chân, gió, chim hót" data-en-title="River sounds: footsteps, wind, birdsong"><span aria-hidden="true">🔊</span></button>
     <button type="button" id="bb-mh-chip" hidden>🎵</button>
+    <button type="button" id="bb-toan" aria-pressed="false" aria-label="Toàn cảnh" data-en-aria="Overview" title="Toàn cảnh: nhìn cả bến từ trên cao" data-en-title="Overview: see the whole wharf from above"><span aria-hidden="true">🗺️</span></button>
     <p id="bb-hint" data-en="Drag to walk · go close, press “Enter”">Kéo cần để đi · tới gần rồi bấm «Vào»</p>
     <div id="bb-cot">
       <section id="bb-nv" aria-label="Nhiệm vụ" data-en-aria="Quest"></section>
