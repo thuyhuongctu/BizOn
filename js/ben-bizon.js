@@ -18,6 +18,8 @@ import { taoDangDi } from './ben-bizon-dang-di.js';
 import { taoTranhDong, BO_TRANH, diDuoc as coTranhDi } from './ben-bizon-tranh-dong.js';
 import { taoNhiemVu } from './ben-bizon-nhiem-vu.js';
 import { CAU_HOI, CHU_CAU_HOI } from './ben-bizon-cau-hoi.js';
+import { taoAmThanh } from './ben-bizon-am-thanh.js';
+import { taoMayHat } from './ben-bizon-may-hat.js';
 
 window.BIZON_CHAR_GLB = true;   // bật mô hình có xương cho riêng trang này (mặc định của kho vẫn tắt, PR #1024)
 
@@ -55,8 +57,8 @@ const NOI = [
     ten: { vi: 'Lumina', en: 'Lumina' }, moTa: { vi: 'Cố vấn học tập của BizOn: hỏi đường trên bến.', en: 'BizOn’s learning advisor: ask for directions.' } },
   { id: 'thay-tu', bieuTuong: '📚', x: 2.6, z: -5.0, tam: 1.6, mx: 3.5, mz: -5.0, my: 1.8, thoai: 'tu', nut: HOI,
     ten: { vi: 'Thầy Tu Phan', en: 'Tu Phan' }, moTa: { vi: 'Cố vấn học thuật: game dựng trên mô hình nào.', en: 'Academic advisor: the models behind the games.' } },
-  { id: 'may-hat', bieuTuong: '🎵', x: 6.2, z: -2.6, tam: 1.4, mx: 7.3, mz: -2.1, my: 2.0, viec: 'nhac', nut: { vi: 'Bật / tắt', en: 'Play / stop' },
-    ten: { vi: 'Máy hát', en: 'Jukebox' }, moTa: { vi: 'Bật nhạc nền BizOn Theme khi đi trên bến.', en: 'Play the BizOn Theme while you walk.' } },
+  { id: 'may-hat', bieuTuong: '🎵', x: 6.2, z: -2.6, tam: 1.4, mx: 7.3, mz: -2.1, my: 2.0, viec: 'nhac', nut: { vi: 'Chọn bài', en: 'Pick a track' },
+    ten: { vi: 'Máy hát', en: 'Jukebox' }, moTa: { vi: 'Bài có lời, nhạc không lời hay âm thanh thư giãn.', en: 'Songs, instrumentals or relaxing sounds.' } },
   { id: 'bang-tin', bieuTuong: '📋', x: -5.6, z: -2.4, tam: 1.4, mx: -6.5, mz: -1.6, my: 2.3, thoai: 'bang', nut: { vi: 'Đọc', en: 'Read' },
     ten: { vi: 'Bảng tin', en: 'Notice board' }, moTa: { vi: 'Bến BizOn có gì và đi thế nào.', en: 'What is here and how to get around.' } },
   { id: 'thanh-tich', bieuTuong: '🏆', x: 15.5, z: -2.8, tam: 1.5, mx: 16.7, mz: -2.2, my: 2.4, viec: 'thanh-tich', nut: { vi: 'Xem', en: 'View' },
@@ -89,7 +91,8 @@ const CHU = {
   tai: { vi: 'Đang tải nhân vật…', en: 'Loading your character…' },
   tranh: { vi: 'Chưa tải được mô hình 3D, đang dùng tranh nhân vật.', en: 'The 3D model has not loaded; using the character art instead.' },
   mang: { vi: 'Đang mất mạng: dùng tranh nhân vật cho tới khi có mạng lại.', en: 'You are offline: using the character art until you are back online.' },
-  nhacBat: { vi: '🎵 Đang phát BizOn Theme', en: '🎵 Playing the BizOn Theme' }, nhacTat: { vi: 'Đã tắt nhạc', en: 'Music stopped' },
+  toanBat: { vi: '🗺️ Toàn cảnh Bến BizOn · bấm 🗺️ lần nữa để quay lại', en: '🗺️ BizOn Wharf overview · press 🗺️ again to go back' }, toanTat: { vi: 'Đã về góc máy cũ', en: 'Back to your view' },
+  amBat: { vi: '🔊 Bật tiếng bến sông: bước chân, gió, chim, nước', en: '🔊 River sounds on: footsteps, wind, birds, water' }, amTat: { vi: '🔇 Đã tắt tiếng bến sông', en: '🔇 River sounds off' },
   tiep: { vi: 'Tiếp tục ▸', en: 'Continue ▸' }, dong: { vi: 'Đóng', en: 'Close' },
   daGhe: { vi: 'Bạn đã ghé {n}/{m} điểm game trên bến.', en: 'You have visited {n} of {m} game spots on the wharf.' },
 };
@@ -374,7 +377,7 @@ function dungCanh() {
 const stage = $('bb-stage'), canvas = $('bb-canvas'), note = $('bb-note'), tag = $('bb-tag'), labels = $('bb-labels'), hint = $('bb-hint');
 const dlg = $('bb-dlg'), fade = $('bb-fade');
 const nho = Math.min(window.innerWidth, window.innerHeight) < 700;
-let noteGiu = '', noteT = 0, nhac = null, nhacBat = false, tLoad = 0, tBatDau = 0, daDi = false;
+let noteGiu = '', noteT = 0, tLoad = 0, tBatDau = 0, daDi = false;
 let nv = null, ganTruoc = null;   // bảng nhiệm vụ (specs/003, câu chuyện 1) và điểm gần ở khung trước (để báo «đã tới thẻ»)
 const nhanNoi = [];
 
@@ -456,15 +459,10 @@ function veThanhTich() {
   return { anh: 'assets/icons/icon-192.png', ten: { vi: '🏆 Bảng thành tích', en: '🏆 Achievement board' }, cta: null,
     cau: [L(CHU.daGhe).replace('{n}', n).replace('{m}', GAME.length), GAME.map(p => (xong(p) ? '✅ ' : '⬜ ') + L(p.ten)).join('  ·  ')] };
 }
-function batNhac() {
-  if (!nhac) { nhac = new Audio('assets/audio/bizon-theme.mp3'); nhac.loop = true; nhac.volume = 0.45; }
-  if (nhacBat) nhac.pause(); else nhac.play().catch(() => {});
-  nhacBat = !nhacBat; datNote(L(nhacBat ? CHU.nhacBat : CHU.nhacTat), 2600);
-}
 function vaoNoi(p) {
   baoNv({ loai: p.thoai ? 'thoai' : p.viec === 'thanh-tich' ? 'xem' : 'vao', noi: p.id });
   if (p.thoai) return moThoai(THOAI[p.thoai], p.thoai === 'lumina' ? luminaObj : p.thoai === 'tu' ? tuObj : null);
-  if (p.viec === 'nhac') return batNhac();
+  if (p.viec === 'nhac') return mayHat.mo();
   if (p.viec === 'thanh-tich') return moThoai(veThanhTich());
   if (p.url) { ghiGhe(p.url); dc.dung(true); fade.classList.add('on'); setTimeout(() => { window.location.href = p.url; }, giam ? 0 : 430); }
 }
@@ -478,9 +476,11 @@ function ve(ms) {
   raf = requestAnimationFrame(ve);
   const t = ms / 1000, dt = Math.min(0.05, Math.max(0, t - (tLast || t))); tLast = t; dongHo += dt;
   dc.update(dt);
+  veToanCanh(dt);   // nút 🗺️: máy quay bay lên nhìn cả bến (trộn dần với góc máy thường)
   // tờ sprite của tranh động tải hỏng: đặt mô hình thường vào đúng chỗ đó để người chơi không bị «tàng hình»
   if (tranh && tranh.hong && !tranhLui) { tranhLui = chars.build(vai); player.add(tranhLui); dangDi = taoDangDi(tranhLui, { giam }); tBatDau = performance.now(); dc.tocDo({ chay: TOC_CHAY }); }
   const s = dc.state(), than = tranhLui || player, rig = than.userData.rig || {}, laTranh = tranh && !tranhLui;
+  am.capNhat(dt, s.speed);   // tiếng bước chân theo quãng đường đi
   // dáng đi khớp tốc độ (ben-bizon-dang-di.js); mô hình có xương chưa tải xong thì vẫn dùng tranh dựng đứng như cũ
   if (laTranh) tranh.capNhat(dt, s.speed, s.yaw, camera.position.x, camera.position.z);
   else if (!dangDi || !dangDi.capNhat(dt, s.speed, s.yaw)) chars.animate(than, dongHo, s.mode === 'walk' ? 'walk' : 'idle');
@@ -496,7 +496,8 @@ function ve(ms) {
   sun.target.position.set(s.x, 0, s.z); sun.position.set(s.x - 10, 15, s.z + 4);
   renderer.render(scene, camera);
   datLen(tag, s.x, 1.36, s.z, 99, s.x, s.z);
-  for (let i = 0; i < nhanNoi.length; i++) { const n = nhanNoi[i]; datLen(n.e, n.p.mx, n.p.my, n.p.mz, 26, s.x, s.z); }
+  const xaNhan = tcMuc > 0.5 ? 99 : 26;   // toàn cảnh: hiện tên mọi địa điểm
+  for (let i = 0; i < nhanNoi.length; i++) { const n = nhanNoi[i]; datLen(n.e, n.p.mx, n.p.my, n.p.mz, xaNhan, s.x, s.z); }
   if (!daDi && s.speed > 0.5) { daDi = true; hint.hidden = true; }
   if (s.near !== ganTruoc) { ganTruoc = s.near; if (s.near) baoNv({ loai: 'gan', noi: s.near }); }
   // trạng thái tải mô hình: quá 10 giây (theo đồng hồ, không theo số khung hình) chưa có thì báo đang dùng tranh; có rồi thì gỡ dòng báo
@@ -535,6 +536,49 @@ function datGoc(g) {
 }
 if (nutGoc) { nutGoc.setAttribute('aria-pressed', goc === 'cao' ? 'true' : 'false'); nutGoc.addEventListener('click', () => datGoc(goc === 'cao' ? 'sau' : 'cao')); }
 
+// Toàn cảnh (26/11/2026, chị yêu cầu): máy quay bay lên cao, nghiêng 58°, khung vừa mọi địa điểm trên bến; người chơi đứng yên,
+// thẻ địa điểm và cần điều khiển ẩn, tên mọi địa điểm hiện. Bấm 🗺️ lần nữa hoặc Esc để về góc máy cũ. Giảm chuyển động: chuyển ngay.
+const nutToan = $('bb-toan');
+const KHUNG = (() => { const xs = NOI.flatMap(p => [p.x, p.mx]), zs = NOI.flatMap(p => [p.z, p.mz]), le = 2;   // cả chỗ đứng lẫn chỗ đặt nhãn
+  return { x0: Math.min(...xs) - le, x1: Math.max(...xs) + le, z0: Math.min(...zs) - le, z1: Math.max(...zs) + le }; })();
+let toanCanh = false, tcMuc = 0;
+const tcViTri = new THREE.Vector3(), tcNhin = new THREE.Vector3(), tcGoc = new THREE.Vector3(), tcNhinGoc = new THREE.Vector3();
+function datToanCanh(bat) {
+  if (!dc) return;
+  toanCanh = !!bat; if (giam) tcMuc = toanCanh ? 1 : 0;
+  if (nutToan) nutToan.setAttribute('aria-pressed', String(toanCanh));
+  stage.classList.toggle('bb-toan-canh', toanCanh);
+  if (toanCanh) { dc.dung(true); datNote(L(CHU.toanBat), 4000); }
+  else { if (!thoai && !mayHat.moi()) dc.dung(false); datNote(L(CHU.toanTat), 1800); }
+}
+// Tìm khoảng cách nhỏ nhất để bốn góc khung (mặt đất và độ cao nhãn) lọt trong màn hình; tính lại khi đổi tỉ lệ khung hình
+const camThu = new THREE.PerspectiveCamera(), gocKhung = [], ndc = new THREE.Vector3(); let tcTiLe = 0;
+function datKhungToanCanh() {
+  const tiLe = camera.aspect.toFixed(3) + '|' + camera.fov; if (tiLe === tcTiLe) return; tcTiLe = tiLe;
+  const cx = (KHUNG.x0 + KHUNG.x1) / 2, cz = (KHUNG.z0 + KHUNG.z1) / 2, nghieng = 58 * Math.PI / 180;
+  if (!gocKhung.length) for (const x of [KHUNG.x0, KHUNG.x1]) for (const z of [KHUNG.z0, KHUNG.z1]) for (const y of [0, 2.4]) gocKhung.push(new THREE.Vector3(x, y, z));
+  camThu.fov = camera.fov; camThu.aspect = camera.aspect; camThu.near = 0.1; camThu.far = 400; camThu.updateProjectionMatrix();
+  // giữ hướng như lúc đi (sông ở phía trên màn hình); màn hình hẹp thì chừa thêm chỗ cho nhãn tên ở hai mép
+  const gioiX = camera.aspect < 0.8 ? 0.8 : 0.86;
+  const dat = (c, d) => c.position.set(cx, d * Math.sin(nghieng), cz - d * Math.cos(nghieng));
+  const vua = d => { dat(camThu, d); camThu.lookAt(cx, 0, cz); camThu.updateMatrixWorld(true);
+    return gocKhung.every(g => { ndc.copy(g).project(camThu); return Math.abs(ndc.x) <= gioiX && Math.abs(ndc.y) <= 0.8 && ndc.z < 1; }); };
+  let lo = 8, hi = 200; for (let i = 0; i < 22; i++) { const m = (lo + hi) / 2; if (vua(m)) hi = m; else lo = m; }
+  dat({ position: tcViTri }, hi); tcNhin.set(cx, 0, cz);
+}
+function veToanCanh(dt) {
+  const muc = toanCanh ? 1 : 0; if (tcMuc === muc && !muc) return;
+  if (muc > tcMuc) tcMuc = Math.min(1, tcMuc + dt / 0.9); else if (muc < tcMuc) tcMuc = Math.max(0, tcMuc - dt / 0.7);   // tới đích thì đứng yên, không rung
+  const e = tcMuc * tcMuc * (3 - 2 * tcMuc), s = dc.state();
+  datKhungToanCanh();
+  tcGoc.copy(camera.position); tcNhinGoc.set(s.x, 1, s.z);
+  camera.position.lerpVectors(tcGoc, tcViTri, e); camera.lookAt(tcNhinGoc.lerp(tcNhin, e));
+  if (scene.fog) { scene.fog.near = 38 + 140 * e; scene.fog.far = 110 + 200 * e; }
+  if (camera.far < 300) { camera.far = 400; camera.updateProjectionMatrix(); }
+}
+if (nutToan) nutToan.addEventListener('click', () => datToanCanh(!toanCanh));
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && toanCanh && !thoai && !mayHat.moi()) { datToanCanh(false); e.stopPropagation(); } });
+
 // Nhịp chạy/đi của cần điều khiển (specs/003, câu chuyện 2): «tự động» như cũ (đẩy nhẹ đi, đẩy hết chạy) hoặc «luôn chạy». Nhớ trong localStorage.
 let nhip = (() => { try { return localStorage.getItem('bizon-ben-nhip') === 'chay' ? 'chay' : 'tu-dong'; } catch (e) { return 'tu-dong'; } })();
 const nutChay = $('bb-chay');
@@ -544,6 +588,18 @@ function datNhip(m) {
   if (dc && dc.nhip) dc.nhip(nhip);
 }
 if (nutChay) { datNhip(nhip); nutChay.addEventListener('click', () => datNhip(nhip === 'chay' ? 'tu-dong' : 'chay')); }
+
+// Âm thanh bến sông (26/11/2026): bước chân, gió, chim hót, nước vỗ bến – tổng hợp bằng Web Audio (js/ben-bizon-am-thanh.js). Nút 🔊 bật/tắt, nhớ lựa chọn.
+const am = taoAmThanh({ dangTat: () => !document.documentElement.classList.contains('bb-play') });
+// Máy hát: chọn bài có lời, không lời hay âm thanh thư giãn; có nhạc thì tiếng bến sông nhỏ lại, bảng mở thì đứng yên
+const mayHat = taoMayHat({ L, khiDoi: dang => am.nhac(dang), khiMo: mo => { if (dc) dc.dung(mo); }, bao: chu => datNote(chu, 2600) });
+const nutAm = $('bb-am');
+function veNutAm() {
+  if (!nutAm) return; const t = am.trangThai();
+  if (!t.coHoTro) { nutAm.hidden = true; return; }
+  nutAm.setAttribute('aria-pressed', t.bat ? 'true' : 'false'); const i = nutAm.querySelector('span'); if (i) i.textContent = t.bat ? '🔊' : '🔇';
+}
+if (nutAm) { veNutAm(); nutAm.addEventListener('click', () => { const b = am.doi(); veNutAm(); datNote(L(b ? CHU.amBat : CHU.amTat), 2600); }); }
 
 function batDau(v) {
   if (!VAI[v]) return;
@@ -561,9 +617,10 @@ function batDau(v) {
   if (dc.nhip) dc.nhip(nhip);
   // bảng nhiệm vụ thay cho dòng nhắc «Kéo cần để đi»: bảng đã nói việc tiếp theo
   if (nv) nv.dispose();
-  nv = taoNhiemVu({ host: $('bb-nv'), L, goTo: id => dc && dc.goTo(id), daGhe });
+  nv = taoNhiemVu({ host: $('bb-nv'), L, goTo: id => { if (toanCanh) datToanCanh(false); return dc && dc.goTo(id); }, daGhe });
   hint.hidden = true;
   khoaNen(true); try { stage.focus({ preventScroll: true }); } catch (e) {}
+  am.batDau();   // bấm chọn vai là thao tác của người chơi: trình duyệt cho phép bật âm thanh
   cancelAnimationFrame(raf); tLast = 0; raf = requestAnimationFrame(ve);
 }
 // Khi cảnh phủ toàn màn hình, phần trang bên dưới không được nhận tiêu điểm bàn phím hay trình đọc màn hình
@@ -572,7 +629,9 @@ function khoaNen(khoa) {
 }
 function thoat() {
   cancelAnimationFrame(raf); raf = 0; if (thoai) dongThoai();
-  if (nhac && nhacBat) { nhac.pause(); nhacBat = false; }
+  mayHat.dong(); mayHat.dung();
+  toanCanh = false; tcMuc = 0; stage.classList.remove('bb-toan-canh'); if (nutToan) nutToan.setAttribute('aria-pressed', 'false'); if (scene && scene.fog) { scene.fog.near = 38; scene.fog.far = 110; }
+  am.tamDung();
   if (dc) { dc.dispose(); dc = null; }   // trả phím mũi tên, WASD lại cho trang
   document.documentElement.classList.remove('bb-play'); sanSang = false; khoaNen(false);
   const b = document.querySelector('#bb-pick [data-vai="' + vai + '"]'); if (b) b.focus();
@@ -580,15 +639,15 @@ function thoat() {
 
 document.querySelectorAll('#bb-pick [data-vai]').forEach(b => b.addEventListener('click', () => batDau(b.getAttribute('data-vai'))));
 $('bb-exit').addEventListener('click', thoat);
-window.addEventListener('bizon:langchange', () => { if (!dc) return; dc.lamMoiChu(); veNhan(); if (nv) nv.lamMoiChu(); if (thoai) veThoai(); if (noteGiu) datNote(L(tLoad === 99 ? CHU.tranh : CHU.tai)); });
+window.addEventListener('bizon:langchange', () => { if (!dc) return; dc.lamMoiChu(); veNhan(); if (nv) nv.lamMoiChu(); if (thoai) veThoai(); mayHat.ve(); if (noteGiu) datNote(L(tLoad === 99 ? CHU.tranh : CHU.tai)); });
 window.addEventListener('pageshow', e => { if (e.persisted) { fade.classList.remove('on'); if (dc) dc.dung(false); } });
-document.addEventListener('visibilitychange', () => { if (document.hidden) { cancelAnimationFrame(raf); raf = 0; } else if (dc && document.documentElement.classList.contains('bb-play') && !raf) { tLast = 0; raf = requestAnimationFrame(ve); } });
+document.addEventListener('visibilitychange', () => { if (document.hidden) { cancelAnimationFrame(raf); raf = 0; am.tamDung(); mayHat.tamDung(); } else if (dc && document.documentElement.classList.contains('bb-play') && !raf) { tLast = 0; raf = requestAnimationFrame(ve); am.batDau(); mayHat.tiepTuc(); } });
 try { const cu = localStorage.getItem('bizon-ben-vai'); const b = cu && document.querySelector('#bb-pick [data-vai="' + cu + '"]'); if (b) b.classList.add('da-chon'); } catch (e) {}
 
 // cửa đọc trạng thái cho test (Playwright) và để gỡ lỗi
 window.__benBizon = {
   state() { const s = dc ? dc.state() : {}, rig = ((tranhLui || player || {}).userData || {}).rig || {}; return Object.assign(s, { ready: !!(dc && sanSang), goc, dang: dangDi && dangDi.sanSang ? dangDi.thongSo().dang : null, tranh: tranh ? Object.assign({ sanSang: tranh.sanSang, hong: tranh.hong }, tranh.thongSo()) : null, coVanTranh: tranhCoVan.map(t => t ? Object.assign({ sanSang: t.sanSang, hong: t.hong }, t.thongSo()) : null), char: vai, glb: !!rig.glb, clip: rig.glb ? rig.cur : s.mode, nhiemVu: nv ? nv.state() : null }); },
   info: () => ({ canh: 'ben-song', nuoc: true, cauTau: true, diaDiem: NOI.map(p => p.id), chiTiet, goc, dangDi: dangDi && dangDi.sanSang ? Object.assign({ coChay: dangDi.coChay, khoHong: dangDi.khoHong }, dangDi.thongSo()) : null, veMoiKhung: renderer ? renderer.info.render.calls : 0 }),
-  datGoc, datNhip, goTo: id => dc && dc.goTo(id),
+  datGoc, datNhip, goTo: id => dc && dc.goTo(id), amThanh: () => am.trangThai(), toanCanh: () => ({ bat: toanCanh, muc: tcMuc, cam: camera ? [camera.position.x, camera.position.y, camera.position.z] : null }), datToanCanh, mayHat: () => mayHat.trangThai(), __audio: () => mayHat.__audio(),
   laBo, dat: (x, z, yaw) => dc && dc.dat(x, z, yaw),
 };

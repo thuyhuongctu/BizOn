@@ -34,6 +34,10 @@
     '@media (hover:hover) and (pointer:fine) and (min-width:900px){.dc-joy{display:none}}',
     '.dc-card{position:absolute;left:12px;right:12px;bottom:calc(150px + env(safe-area-inset-bottom,0px));max-width:430px;margin:0 auto;display:none;gap:12px;align-items:center;background:#fff;border-radius:22px;padding:12px 12px 12px 14px;box-shadow:0 14px 34px -10px rgba(0,40,50,.5),inset 0 -4px 0 rgba(0,0,0,.06);pointer-events:auto}',
     '.dc-card.on{display:flex}',
+    /* nút ✕ ẩn thẻ (26/11/2026): thẻ ẩn tới khi người chơi rời chỗ này hoặc tới chỗ khác */
+    '.dc-an{position:absolute;top:-14px;right:-8px;width:44px;height:44px;padding:0;border:0;background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center}',
+    '.dc-an span{width:28px;height:28px;border-radius:50%;background:#033337;color:#fff;font-size:13px;font-weight:800;line-height:28px;text-align:center;box-shadow:0 3px 8px rgba(0,0,0,.3)}',
+    '.dc-an:focus-visible{outline:3px solid #fda127;outline-offset:-4px;border-radius:50%}',
     '@media (hover:hover) and (pointer:fine) and (min-width:900px){.dc-card{bottom:28px}}',
     '.dc-card .dc-ic{flex:0 0 auto;width:48px;height:48px;border-radius:16px;background:#fff3da;display:flex;align-items:center;justify-content:center;font-size:26px}',
     '.dc-card .dc-tx{flex:1 1 auto;min-width:0}',
@@ -59,7 +63,7 @@
   ].join('\n');
   var CHU = {
     vao: { vi: 'Vào', en: 'Enter' }, diToi: { vi: '🧭 Đi tới…', en: '🧭 Go to…' }, chonNoi: { vi: 'Chọn nơi muốn tới', en: 'Choose where to go' },
-    can: { vi: 'Cần điều khiển: kéo để đi', en: 'Joystick: drag to walk' }
+    can: { vi: 'Cần điều khiển: kéo để đi', en: 'Joystick: drag to walk' }, an: { vi: 'Ẩn thẻ này', en: 'Hide this card' }
   };
 
   function create(o) {
@@ -93,17 +97,19 @@
     // nút phụ cạnh «Vào» (tùy chọn nutPhu(place) → { nhan: {vi, en}, fn } | null), ví dụ «Câu hỏi nhanh»
     var nutBo = el('div', 'dc-nut'), phu = el('button', 'dc-phu', { type: 'button' }), phuFn = null; phu.hidden = true;
     nutBo.appendChild(phu); nutBo.appendChild(vao);
-    tx.appendChild(nhan); tx.appendChild(ten); tx.appendChild(mo); card.appendChild(ic); card.appendChild(tx); card.appendChild(nutBo);
+    var anBtn = el('button', 'dc-an', { type: 'button' }), anX = el('span', null, { 'aria-hidden': 'true' }), anCho = null; anX.textContent = '✕'; anBtn.appendChild(anX);
+    tx.appendChild(nhan); tx.appendChild(ten); tx.appendChild(mo); card.appendChild(ic); card.appendChild(tx); card.appendChild(nutBo); card.appendChild(anBtn);
     var gbtn = el('button', 'dc-goto-btn', { type: 'button', 'aria-expanded': 'false', 'aria-controls': 'dc-goto' });
     var glist = el('div', 'dc-goto', { id: 'dc-goto', role: 'dialog' });
     ui.appendChild(card); ui.appendChild(joyEl); ui.appendChild(gbtn); ui.appendChild(glist); host.appendChild(ui);
 
     function veThe() {
-      if (!near) { card.classList.remove('on'); return; }
+      if (!near || near === anCho) { card.classList.remove('on'); return; }
       ic.textContent = near.bieuTuong || '📍'; ten.textContent = L(near.ten); mo.textContent = L(near.moTa);
       var n = L(near.nhan); nhan.textContent = n; nhan.hidden = !n;
       vao.textContent = near.nut ? L(near.nut) : T('vao');
       var np = o.nutPhu ? o.nutPhu(near) : null; phuFn = np ? np.fn : null; phu.hidden = !np; if (np) phu.textContent = L(np.nhan);
+      anBtn.setAttribute('aria-label', T('an') + ': ' + L(near.ten));
       card.setAttribute('aria-label', L(near.ten)); card.classList.add('on');
     }
     function veDanhSach() {
@@ -129,7 +135,7 @@
         var p = places[i], d = Math.hypot(p.x - px, p.z - pz);
         if (d < (p.tam || 2) && d < bd2) { best = p; bd2 = d; }
       }
-      if (best !== near) { near = best; veThe(); }
+      if (best !== near) { near = best; anCho = null; veThe(); }
     }
     function vaoNoi() { if (near && o.onEnter) { xoaPhim(); o.onEnter(near); } }
 
@@ -142,7 +148,7 @@
       var p = null; for (var i = 0; i < places.length; i++) if (places[i].id === id) p = places[i];
       if (!p) return false;
       dat(p.x, p.z, p.huong != null ? p.huong : yaw);
-      moDanhSach(false); near = p; veThe();
+      moDanhSach(false); near = p; anCho = null; veThe();
       try { vao.focus({ preventScroll: true }); } catch (e) { vao.focus(); }
       return true;
     }
@@ -247,6 +253,7 @@
     if (cv) { cv.addEventListener('pointerdown', lookDown); cv.addEventListener('pointermove', lookMove); cv.addEventListener('pointerup', lookUp); cv.addEventListener('pointercancel', lookUp); }
 
     vao.addEventListener('click', vaoNoi);
+    anBtn.addEventListener('click', function () { anCho = near; veThe(); try { host.focus({ preventScroll: true }); } catch (e) {} });
     phu.addEventListener('click', function () { if (near && phuFn) { xoaPhim(); phuFn(near); } });
     gbtn.addEventListener('click', function () { moDanhSach(!dangMo()); });
     glist.addEventListener('click', function (e) { var b = e.target.closest ? e.target.closest('button[data-id]') : null; if (b) goTo(b.getAttribute('data-id')); });
@@ -267,7 +274,7 @@
       nhip: function (m) { if (m) NHIP = m === 'chay' ? 'chay' : 'tu-dong'; return NHIP; },
       state: function () {
         return { x: px, z: pz, yaw: yaw, camYaw: camYaw, camX: cam.position.x, camY: cam.position.y, camZ: cam.position.z,
-          mode: mode, chay: chay && mode === 'walk', nhip: NHIP, speed: Math.hypot(vx, vz), near: near ? near.id : null, giamChuyenDong: giam, dangDung: dungLai };
+          mode: mode, chay: chay && mode === 'walk', nhip: NHIP, speed: Math.hypot(vx, vz), near: near ? near.id : null, theAn: !!near && near === anCho, giamChuyenDong: giam, dangDung: dungLai };
       },
       dispose: function () {
         disposed = true;
