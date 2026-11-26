@@ -150,16 +150,17 @@
 
   const COT_CSV = ['thoi_diem', 'doi', 'nganh', 'ma_luot', 'tong_giay', 'bi_phat', 'giay_ceo_mo', 'giay_cmo', 'giay_cfo', 'giay_coo', 'giay_sec', 'giay_ceo_chot',
     'cau_hoi', 'diem_kha_thi', 'diem_doc_dao', 'diem_doi_ngu', 'diem_trinh_bay', 'diem_100', 'diem_10',
-    'von_xin', 'bep_thang', 'ln_muc_tieu', 'gia', 'bien_phi', 'dinh_phi', 'san_luong', 'dau_tu', 'thang_hoa_von', 'so_canh_bao', 'phien_ban_cau_hoi'];
+    'von_xin', 'bep_thang', 'ln_muc_tieu', 'gia', 'bien_phi', 'dinh_phi', 'san_luong', 'dau_tu', 'thang_hoa_von', 'so_canh_bao', 'phien_ban_cau_hoi', 'giay_tra_loi', 'lumina'];
 
   /** CSV một dòng mỗi lượt; có BOM để Excel đọc đúng tiếng Việt; dòng kết thúc CRLF. */
   function taoCsv(luot) {
-    const o = v => { const s = v === null || v === undefined ? '' : String(v); return /[",\r\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
+    const o = v => { let s = v === null || v === undefined ? '' : String(v); if (/^[=+\-@\t\r]/.test(s)) s = "'" + s; return /[",\r\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; };
     const dong = luot.map(l => {
       const s = l.so || {}, td = l.tungDoan || [];
       return [l.thoiDiem, l.doi, l.nganh, l.ma, Math.round(l.giay), l.phat ? 1 : 0, ...[0, 1, 2, 3, 4, 5].map(i => Math.round(td[i] || 0)),
         (l.cau || []).join(';'), ...(l.diem || []), l.tong100, l.tong10,
-        s.vonXin, s.bep, s.lnMucTieu, s.gia, s.bienPhi, s.dinhPhi, s.sanLuong, s.dauTu, s.thangHoaVon, l.soLech, l.phienBan].map(o).join(',');
+        s.vonXin, s.bep, s.lnMucTieu, s.gia, s.bienPhi, s.dinhPhi, s.sanLuong, s.dauTu, s.thangHoaVon, l.soLech, l.phienBan,
+        (l.traLoi || []).map(x => x.id + ':' + Math.round(x.giay)).join(';'), l.lumina || ''].map(o).join(',');
     });
     return '\uFEFF' + [COT_CSV.join(',')].concat(dong).join('\r\n') + '\r\n';
   }
@@ -182,7 +183,35 @@
     return { id: 'van-' + ma, p: c.p, vai: 'cfo', hoi: 'minh-khang', vi: c.vi, en: c.en, van: ma };
   }
 
-  const CORE = { phanUng, cauVan, trangThai, thoiGianTungDoan, taoDongHo, bam, mulberry32, rutCauHoi, maNgauNhien, mmss, tinhDiem, kiemBaCon, COT_CSV, taoCsv };
+  /** Lumina góp ý theo luật (đặc tả 012, PR 4). ctx = { kq (kiemBaCon), traLoi: [{ id, p, vai, giay }], giayPitch }.
+   *  Trả { y: [{ ma, vi, en }] (tối đa 3), nhom: { vai } | { p } | null } để chọn câu luyện lại. Không đọc nội dung trả lời. */
+  function gopY(ctx, D) {
+    const thay = (mau, v) => ({ vi: mau.vi.replace(/\{(\w+)\}/g, (_, k) => v[k] !== undefined ? (typeof v[k] === 'object' ? v[k].vi : String(v[k]).replace('.', ',')) : ''), en: mau.en.replace(/\{(\w+)\}/g, (_, k) => v[k] !== undefined ? (typeof v[k] === 'object' ? v[k].en : String(v[k]).replace(',', '.')) : '') });
+    const y = []; let nhom = null;
+    (ctx.kq || []).filter(x => !x.ok).forEach(x => {
+      const v = { khai: x.khai, tinh: x.tinh === null ? '–' : x.tinh, lech: x.lech === null || x.lech === undefined ? '–' : Math.round(Math.abs(x.lech) * 100) };
+      if (D.GOP_Y[x.ma]) y.push(Object.assign({ ma: x.ma }, thay(D.GOP_Y[x.ma], v)));
+    });
+    if (y.length) nhom = { vai: 'cfo' };
+    const cham = (ctx.traLoi || []).filter(x => x.giay > D.LUAT.giayMoiCau).sort((a, b) => b.giay - a.giay)[0];
+    if (cham) {
+      const ten = l => (D.PASTOR[cham.p] ? cham.p + ' · ' + D.PASTOR[cham.p][l].split(' – ')[0] : cham.p) + ' (' + (D.VAI[cham.vai] ? D.VAI[cham.vai][l] : cham.vai) + ')';
+      y.push(Object.assign({ ma: 'cham' }, thay(D.GOP_Y.cham, { nhom: { vi: ten('vi'), en: ten('en') }, giay: Math.round(cham.giay), qua: Math.round(cham.giay - D.LUAT.giayMoiCau) })));
+      if (!nhom) nhom = cham.vai === 'cfo' ? { vai: 'cfo' } : { p: cham.p };
+    }
+    if (ctx.giayPitch > D.LUAT.tongGiay) y.push(Object.assign({ ma: 'qua-gio' }, thay(D.GOP_Y['qua-gio'], { qua: Math.round(ctx.giayPitch - D.LUAT.tongGiay) })));
+    if (!y.length) y.push(Object.assign({ ma: 'tot' }, D.GOP_Y.tot));
+    return { y: y.slice(0, 3), nhom };
+  }
+  /** Ba câu nên luyện lại: cùng nhóm (vai hoặc chữ PASTOR), chưa hỏi trong lượt; thiếu thì lấy thêm câu khác. Tất định theo mã lượt. */
+  function luyenLai(cauHoi, nhom, daHoi, ma, n) {
+    const so = n || 3, da = new Set(daHoi || []), rnd = mulberry32(bam('luyen|' + (ma || '')));
+    const hop = c => !nhom || (nhom.vai ? c.vai === nhom.vai : c.p === nhom.p);
+    const uu = tron(cauHoi.filter(c => hop(c) && !da.has(c.id)), rnd), them = tron(cauHoi.filter(c => !hop(c) && !da.has(c.id)), rnd);
+    return uu.concat(them).slice(0, so);
+  }
+
+  const CORE = { gopY, luyenLai, phanUng, cauVan, trangThai, thoiGianTungDoan, taoDongHo, bam, mulberry32, rutCauHoi, maNgauNhien, mmss, tinhDiem, kiemBaCon, COT_CSV, taoCsv };
   if (typeof module === 'object' && module.exports) module.exports = CORE;
   else root.PitchCore = CORE;
 })(typeof self !== 'undefined' ? self : this);
