@@ -18,8 +18,8 @@
 - [x] T008 `scripts/research/do-tin-cay-pitch.mjs`, hướng dẫn `docs/research/DO-TIN-CAY-PITCH.md`; nối «trang chấm mù» trong `docs/research/ISAGA-2027-DAN-Y-BAI.md`.
 
 ## Câu chuyện 3 – Hội đồng 3D sống động hơn (P3, PR 3)
-- [ ] T009 Test, viết trước: bảng luật phản ứng đủ VI/EN; tín hiệu «ba con số lệch» làm Victor Lâm cau mày và hỏi câu tài chính; quá giờ thì Lumina gõ chuông và người hỏi ghi chép; giảm chuyển động thì không chạy hoạt ảnh; giọng đọc tắt/mở được, máy không có giọng thì không lỗi.
-- [ ] T010 Tính cách và bảng luật trong `lab/pitch-goi-von-data.js`; tín hiệu trong `-core.js`; biểu cảm và bong bóng lời trong `-3d.js`; bản phẳng hiện cùng câu nói; nút giọng đọc (Web Speech API).
+- [x] T009 Test, viết trước: bảng luật phản ứng đủ VI/EN; tín hiệu «ba con số lệch» làm Minh Khang (tài chính) cau mày và hỏi câu tài chính; quá giờ thì Lumina gõ chuông và người hỏi ghi chép; giảm chuyển động thì không chạy hoạt ảnh; giọng đọc tắt/mở được, máy không có giọng thì không lỗi.
+- [x] T010 Tính cách và bảng luật trong `lab/pitch-goi-von-data.js`; tín hiệu trong `-core.js`; biểu cảm và bong bóng lời trong `-3d.js`; bản phẳng hiện cùng câu nói; nút giọng đọc (Web Speech API).
 
 ## Câu chuyện 4 – Lumina góp ý sau pitch (P4, PR 4)
 - [ ] T011 Test, viết trước: quá giờ ở đoạn Tài chính và lệch điểm hòa vốn thì Lumina nêu đúng hai điểm và gợi ý 3 câu nhóm tài chính; nút «Luyện lại ba câu này»; cờ `explain_hidden` (qua `?lop=`) ẩn góp ý cụ thể; CSV có cột `lumina`.
