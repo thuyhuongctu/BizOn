@@ -65,8 +65,10 @@
   .vao .hoi p{opacity:1;transform:none}.vao .hoi p.lu{transition-delay:.7s}.vao .hoi p.lu+p.lu{transition-delay:1.3s}
   /* Gặp cả đội */
   .doi-hinh{display:flex;align-items:flex-end;justify-content:center;gap:clamp(4px,1.4vw,18px);margin-top:26px;padding:24px 12px 0;border-radius:40px;background:linear-gradient(180deg,var(--clay-card),var(--clay-tray))}
-  .doi-hinh figure{margin:0;text-align:center;flex:1 1 0;min-width:0}
-  .doi-hinh img{display:block;height:clamp(150px,24vw,300px);width:auto;max-width:100%;object-fit:contain;object-position:50% 100%;margin:0 auto;transition:filter .25s ease;filter:drop-shadow(0 12px 10px rgba(110,70,30,.25))}
+  .doi-hinh figure{margin:0;text-align:center;flex:1 1 0;min-width:0;position:relative}
+  /* Mọi nhân vật cao bằng nhau (28/11/2026): trước đây ảnh bị ép vừa bề ngang ô (max-width:100%) nên ảnh rộng vì đạo cụ,
+     tay giang (Lam Việt, Mekong Digital) nhỏ hẳn đi. Nay giữ chiều cao chung, ảnh rộng tràn nhẹ sang hai bên, căn giữa ô. */
+  .doi-hinh img{display:block;height:clamp(150px,18.5vw,236px);width:auto;max-width:none;position:relative;left:50%;transform:translateX(-50%);margin:0;transition:filter .25s ease;filter:drop-shadow(0 12px 10px rgba(110,70,30,.25))}
   .doi-hinh figure:hover img,.doi-hinh figure:focus-within img{filter:drop-shadow(0 12px 10px rgba(110,70,30,.25)) brightness(1.06)}
   .doi-hinh figcaption{margin:8px 0 14px;font-size:12.5px;font-weight:800;line-height:1.25;overflow-wrap:anywhere}
   .doi-hinh figcaption span{display:block;font-weight:600;color:var(--clay-sub)}
