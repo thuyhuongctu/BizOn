@@ -37,7 +37,8 @@ const doVung = (sel, chiDoc) => [...document.querySelectorAll(sel)].filter(e => 
   }
   try {
     for (const w of [360, 390]) {
-      await trang('index.html', w, ['#clay-nav .cn-theme', '#clay-nav .cn-lang button', '.hp-tool-links a', '.hp-alt a']);
+      // ≤ 440 px (28/11/2026): nút sáng/tối chuyển vào bảng ☰ (đo trong test/menu-dien-thoai.test.js); trên thanh là nút ☰
+      await trang('index.html', w, ['#clay-nav .cn-menu', '#clay-nav .cn-lang button', '.hp-tool-links a', '.hp-alt a']);
       await trang('truong-hoc-thuat.html', w, ['.af-copy', '.af-codes button', '.af-tabs button']);
     }
     // Chân trang: logo và nút Google Play cao ≥ 44 px

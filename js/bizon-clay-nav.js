@@ -31,6 +31,7 @@
   var THEME_ARIA = { vi:'Chế độ tối', en:'Dark mode' };
   /* Menu điện thoại một tầng (28/11/2026, rà UX trang chủ): ≤ 820 px bỏ hàng menu thứ hai, thay bằng nút ☰ mở bảng danh sách trang */
   var MENU_ARIA = { vi:'Mở menu', en:'Open menu' }, MENU_DONG = { vi:'Đóng menu', en:'Close menu' };
+  var PANEL_RELOAD = { vi:'⟳ Làm mới trang', en:'⟳ Reload page' };
   var PANEL_THEME = { vi:'🌙 Sáng / tối', en:'🌙 Light / dark' }, PANEL_APP = { vi:'Tải app BizOn', en:'Get the BizOn app' };
   var hasTheme = typeof window.clayToggleTheme === 'function';
   var DL_OPTIONS = [
@@ -90,6 +91,7 @@
     + '<div class="cn-panel" id="cn-panel" hidden>'
       + '<div class="cn-plinks">' + linksHtml() + '</div>'
       + '<div class="cn-pextra">'
+        + '<button type="button" class="cn-preload" hidden data-en="'+esc(PANEL_RELOAD.en)+'">'+esc(PANEL_RELOAD.vi)+'</button>'
         + (hasTheme ? '<button type="button" class="cn-ptheme" data-en="'+esc(PANEL_THEME.en)+'">'+esc(PANEL_THEME.vi)+'</button>' : '')
         + '<p class="cn-papp" data-en="'+esc(PANEL_APP.en)+'">'+esc(PANEL_APP.vi)+'</p>' + dlMenuHtml()
       + '</div>'
@@ -121,6 +123,7 @@
   var menuBtn = nav.querySelector('.cn-menu'), panel = nav.querySelector('.cn-panel');
   function moMenu(mo, traTieuDiem){
     panel.hidden = !mo; menuBtn.setAttribute('aria-expanded', String(mo));
+    pReload.hidden = !nav.querySelector('.cn-refresh');   /* nút ⟳ chỉ trang chủ gắn thêm vào thanh */
     var l = (window.clayCurrentLang && window.clayCurrentLang()) === 'en' ? 'en' : 'vi';
     menuBtn.setAttribute('aria-label', (mo ? MENU_DONG : MENU_ARIA)[l]); menuBtn.setAttribute('data-en-aria', (mo ? MENU_DONG : MENU_ARIA).en);
     menuBtn.firstChild.textContent = mo ? '✕' : '☰';
@@ -129,9 +132,11 @@
   menuBtn.addEventListener('click', function(e){ e.stopPropagation(); moMenu(panel.hidden); });
   panel.addEventListener('click', function(e){ if (e.target.closest && e.target.closest('a')) moMenu(false); });
   /* .cn-theme: nút «Sáng / tối» trong bảng bấm hộ nút 🌙 đang ẩn; cú bấm đó nổi lên document, không được coi là bấm ra ngoài */
-  document.addEventListener('click', function(e){ if (!panel.hidden && !panel.contains(e.target) && !menuBtn.contains(e.target) && !(e.target.closest && e.target.closest('.cn-theme'))) moMenu(false); });
+  document.addEventListener('click', function(e){ if (!panel.hidden && !panel.contains(e.target) && !menuBtn.contains(e.target) && !(e.target.closest && e.target.closest('.cn-theme,.cn-refresh'))) moMenu(false); });
   document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && !panel.hidden) moMenu(false, true); });
   window.addEventListener('resize', function(){ if (!panel.hidden && window.innerWidth > 820) moMenu(false); });
+  var pReload = panel.querySelector('.cn-preload');
+  pReload.addEventListener('click', function(){ var r = nav.querySelector('.cn-refresh'); if (r) r.click(); });
   var pTheme = panel.querySelector('.cn-ptheme');
   if (pTheme) pTheme.addEventListener('click', function(){ var t = nav.querySelector('.cn-theme'); if (t) t.click(); });
 

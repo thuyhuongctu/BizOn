@@ -33,8 +33,10 @@ const { chromium } = require('playwright');
   }
   const doc = pg => pg.evaluate(() => {
     const n = document.getElementById('clay-nav'), bar = n.querySelector('.cn-bar'), m = n.querySelector('.cn-menu'), r2 = n.querySelector('.cn-row2');
-    const mr = m.getBoundingClientRect();
-    return { navH: n.getBoundingClientRect().height, barTran: bar.scrollWidth - bar.clientWidth, sw: document.documentElement.scrollWidth - innerWidth,
+    const mr = m.getBoundingClientRect(), rr = n.querySelector('.cn-right'), con = [...rr.children].filter(e => getComputedStyle(e).display !== 'none');
+    const can = con.reduce((a, e) => a + e.getBoundingClientRect().width, 0) + (parseFloat(getComputedStyle(rr).columnGap) || 0) * (con.length - 1);
+    const du = rr.getBoundingClientRect().right - n.querySelector('.cn-brand').getBoundingClientRect().right - (parseFloat(getComputedStyle(bar).columnGap) || 0) - can;   // chỗ dư thật trên thanh
+    return { du, navH: n.getBoundingClientRect().height, barTran: bar.scrollWidth - bar.clientWidth, sw: document.documentElement.scrollWidth - innerWidth,
       menu: getComputedStyle(m).display !== 'none' ? Math.min(mr.width, mr.height) : 0, row2: getComputedStyle(r2).display !== 'none',
       links: getComputedStyle(n.querySelector('.cn-links')).display !== 'none', theme: (n.querySelector('.cn-theme') && getComputedStyle(n.querySelector('.cn-theme')).display !== 'none') };
   });
@@ -46,20 +48,22 @@ const { chromium } = require('playwright');
       chu: a.map(x => x.textContent.trim()), theme: (() => { const t = p.querySelector('.cn-ptheme'); return t && getComputedStyle(t).display !== 'none' ? t.textContent.trim() : null; })(), app: p.querySelectorAll('.cn-pextra a').length };
   });
 
-  for (const [w, h, url] of [[320, 700, 'index.html'], [360, 760, 'index.html'], [390, 844, 'games.html'], [390, 844, 'lab/ie-lab.html'], [768, 1000, 'index.html']]) {
+  for (const [w, h, url] of [[320, 700, 'index.html'], [360, 760, 'index.html'], [390, 844, 'games.html'], [390, 844, 'lab/ie-lab.html'], [441, 800, 'index.html'], [501, 800, 'index.html'], [768, 1000, 'index.html']]) {
     const tag = w + ' ' + url;
     const { ctx, pg } = await mo(w, h, url);
     const d = await doc(pg);
     ok(!d.row2 && d.menu >= 40 && d.navH <= 100, tag + ': một tầng (cao ' + Math.round(d.navH) + ' px), hàng 2 ẩn, nút ☰ ' + Math.round(d.menu) + ' px');
     ok(d.barTran <= 1 && d.sw <= 1, tag + ': thanh menu và trang không tràn ngang');
+    ok(d.du >= 8, tag + ': thanh còn dư ' + Math.round(d.du) + ' px (≥ 8 px, phòng phông chữ máy CI rộng hơn)');
     await pg.click('#clay-nav .cn-menu'); await pg.waitForTimeout(150);
     const p = await bang(pg);
     ok(p.mo && p.n === 10 && p.exp === 'true' && p.dau, tag + ': bấm ☰: bảng mở, đủ 10 mục, aria-expanded = true, tiêu điểm vào mục đầu');
     ok(!p.nho && p.trong, tag + ': mọi nút trong bảng ≥ 44 px, bảng nằm trong màn hình');
     if (url === 'games.html') ok(p.cur === 'Trò chơi', tag + ': đánh dấu trang hiện tại («' + p.cur + '»)');
     ok(p.app >= 2, tag + ': bảng có lối tải app (Android, iPhone)');
-    if (w <= 440 && url !== 'lab/ie-lab.html') {
-      ok(!d.theme && p.theme, tag + ': ≤ 440 px: nút sáng/tối chuyển vào bảng («' + p.theme + '»)');
+    if (url === 'index.html' || url === 'games.html') ok(url === 'index.html' ? (w <= 500) === await pg.isVisible('#clay-nav .cn-preload') : !(await pg.isVisible('#clay-nav .cn-preload')), tag + ': nút «⟳ Làm mới trang» trong bảng chỉ có ở trang chủ ≤ 500 px');
+    if (w <= 500 && url !== 'lab/ie-lab.html') {
+      ok(!d.theme && p.theme, tag + ': ≤ 500 px: nút sáng/tối chuyển vào bảng («' + p.theme + '»)');
       const t0 = await pg.evaluate(() => document.documentElement.getAttribute('data-theme'));
       await pg.click('#clay-nav .cn-ptheme'); await pg.waitForTimeout(200);
       const t1 = await pg.evaluate(() => document.documentElement.getAttribute('data-theme'));
