@@ -6,8 +6,9 @@ const fs = require('node:fs'), path = require('node:path'), assert = require('no
 const R = f => fs.readFileSync(path.join(__dirname, '..', f), 'utf8');
 for (const p of ['index.html', 'academia3d-v2.html']) {
   const s = R(p);
-  assert.ok(s.includes('href="ben-phu-sa-3d.html" data-en="Bến Phù Sa →"'), p + ': lối vào Sinh viên phải dẫn tới ben-phu-sa-3d.html');
-  assert.ok(!s.includes('href="ben-phu-sa-v8.html" data-en="Bến Phù Sa →"'), p + ': lối vào Sinh viên không còn trỏ v8');
+  // 28/11/2026 (chị duyệt «gộp thu gọn»): thẻ «Sinh viên» trong mục vai trò được bỏ vì trùng ba cửa ở màn đầu và thẻ game ngay dưới;
+  // ý của kiểm tra giữ nguyên: lối «Bến Phù Sa →» không trỏ bản v8 (v8 chỉ còn ở «Bản khác: 3D · chơi nhóm»), thẻ game lấy bản 3D làm chính.
+  assert.ok(!s.includes('href="ben-phu-sa-v8.html" data-en="Bến Phù Sa →"'), p + ': lối «Bến Phù Sa →» không trỏ v8');
   assert.ok(s.includes('class="hp-play" href="ben-phu-sa-3d.html"'), p + ': thẻ game Bến Phù Sa vẫn lấy bản 3D làm chính');
 }
 assert.equal(R('index.html'), R('academia3d-v2.html'), 'index.html phải giống hệt academia3d-v2.html');
