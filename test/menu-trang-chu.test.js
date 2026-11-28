@@ -1,5 +1,5 @@
 /* Menu đất sét có mục chữ «Trang chủ / Home» đứng đầu (20/11/2026): trước đây chỉ logo BizOn dẫn về trang chủ,
- * nhiều người không biết bấm logo. Kiểm: mục có ở cả hàng máy tính và hàng cuộn của điện thoại, đúng đích (kể cả
+ * nhiều người không biết bấm logo. Kiểm: mục có ở cả hàng máy tính và bảng ☰ của điện thoại (từ 28/11/2026), đúng đích (kể cả
  * trang ở thư mục con), được đánh dấu khi đang ở trang chủ, song ngữ, không làm tràn ngang ở 360/390/1280 px. */
 'use strict';
 const assert = require('assert');
@@ -40,7 +40,12 @@ assert.ok(+(read('sw.js').match(/bizon-v(\d+)/) || [])[1] >= 925, 'sw.js ≥ v92
         return { links: pick('#clay-nav .cn-links a'), row2: pick('#clay-nav .cn-row2 a'), sw: document.documentElement.scrollWidth,
           bar: (() => { const b = document.querySelector('#clay-nav .cn-bar'); return b ? b.scrollWidth - b.clientWidth : 0; })() };
       });
-      const shown = [st.links, st.row2].filter(x => x && x.vis);
+      // Điện thoại (≤ 820 px, 28/11/2026): menu một tầng, mục trang nằm trong bảng mở bằng nút ☰
+      if (!(st.links && st.links.vis) && !(st.row2 && st.row2.vis) && await p.isVisible('#clay-nav .cn-menu')) {
+        await p.click('#clay-nav .cn-menu');
+        st.panel = await p.evaluate(() => { const a = document.querySelector('#clay-nav .cn-plinks a'); return a && { text: a.textContent.trim(), href: a.getAttribute('href'), cur: a.getAttribute('aria-current'), vis: a.getClientRects().length > 0, r: a.getBoundingClientRect().right }; });
+      }
+      const shown = [st.links, st.row2, st.panel].filter(x => x && x.vis);
       assert.ok(shown.length >= 1, tag + ': thấy mục Trang chủ trên menu');
       for (const x of shown) {
         assert.equal(x.text, lang === 'en' ? 'Home' : 'Trang chủ', tag + ': chữ của mục');

@@ -16,15 +16,17 @@ check(+(/CACHE = 'bizon-v(\d+)'/.exec(R('sw.js')) || [])[1] >= 797, 'sw.js ≥ b
     for (const w of [360, 390]) {
       const ctx = await b.newContext({ viewport: { width: w, height: 800 } }); const p = await ctx.newPage(); const loi = []; p.on('pageerror', e => loi.push(e.message));
       for (const u of ['index.html', 'games.html', 'giang-vien.html', 'lab/day-chuyen-sau-rieng.html']) {
-        await p.goto(BASE + '/' + u, { timeout: 60000 }); await p.waitForSelector('#clay-nav .cn-row2 a'); await p.waitForTimeout(400);
+        await p.goto(BASE + '/' + u, { timeout: 60000 }); await p.waitForSelector('#clay-nav .cn-menu'); await p.waitForTimeout(400);
+        await p.click('#clay-nav .cn-menu'); await p.waitForTimeout(150);   // menu điện thoại một tầng (28/11/2026): mục trang trong bảng ☰
         const r = await p.evaluate(() => {
           const h = sel => [...document.querySelectorAll(sel)].filter(e => e.getBoundingClientRect().width > 0).map(e => Math.round(e.getBoundingClientRect().height));
-          return { sw: document.documentElement.scrollWidth, row2: h('#clay-nav .cn-row2 a'), lang: h('#clay-nav .cn-lang button'), tron: h('#clay-nav .cn-dl,#clay-nav .cn-theme,#clay-nav .cn-refresh'), cta: h('#clay-nav .cn-cta'), foot: h('#clay-footer .cf-cols a,#clay-footer .cf-legal a'), pill: h('.hp-pill') };
+          return { sw: document.documentElement.scrollWidth, row2: h('#clay-nav .cn-plinks a'), lang: h('#clay-nav .cn-lang button'), tron: h('#clay-nav .cn-dl,#clay-nav .cn-theme,#clay-nav .cn-refresh,#clay-nav .cn-menu'), cta: h('#clay-nav .cn-cta'), foot: h('#clay-footer .cf-cols a,#clay-footer .cf-legal a'), pill: h('.hp-pill') };
         });
         check(r.sw <= w, w + 'px ' + u + ': không tràn ngang (' + r.sw + ')');
-        check(r.row2.length && r.row2.every(x => x >= 44) && r.cta.every(x => x >= 44), w + 'px ' + u + ': mục menu hàng 2 và nút Bắt đầu ≥ 44 px (' + Math.min(...r.row2) + ')');
+        check(r.row2.length && r.row2.every(x => x >= 44) && r.cta.every(x => x >= 44), w + 'px ' + u + ': mục menu (bảng ☰) và nút Bắt đầu ≥ 44 px (' + Math.min(...r.row2) + ')');
         check(r.lang.every(x => x >= 40) && r.tron.every(x => x >= (w <= 360 ? 36 : 40)), w + 'px ' + u + ': nút VI/EN và nút tròn ≥ 40 px (36 px ở ≤ 360)');
         check(r.foot.length && r.foot.every(x => x >= 44), w + 'px ' + u + ': liên kết chân trang ≥ 44 px (' + Math.min(...r.foot) + ')');
+        await p.keyboard.press('Escape');
         if (u === 'index.html') check(r.pill.length && r.pill.every(x => x >= 44), w + 'px: pill lối vào trang chủ ≥ 44 px');
       }
       check(!loi.length, w + 'px: không lỗi JS ' + loi.join(' / '));

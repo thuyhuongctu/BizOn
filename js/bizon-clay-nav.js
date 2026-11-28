@@ -29,6 +29,9 @@
   var CTA = { href:'ben-phu-sa.html', vi:'Bắt đầu', en:'Launch' };
   var DL_ARIA = { vi:'Tải app BizOn', en:'Get the BizOn app' };
   var THEME_ARIA = { vi:'Chế độ tối', en:'Dark mode' };
+  /* Menu điện thoại một tầng (28/11/2026, rà UX trang chủ): ≤ 820 px bỏ hàng menu thứ hai, thay bằng nút ☰ mở bảng danh sách trang */
+  var MENU_ARIA = { vi:'Mở menu', en:'Open menu' }, MENU_DONG = { vi:'Đóng menu', en:'Close menu' };
+  var PANEL_THEME = { vi:'🌙 Sáng / tối', en:'🌙 Light / dark' }, PANEL_APP = { vi:'Tải app BizOn', en:'Get the BizOn app' };
   var hasTheme = typeof window.clayToggleTheme === 'function';
   var DL_OPTIONS = [
     { href:'https://play.google.com/store/apps/details?id=io.github.thuyhuongctu.bizon', ext:true,
@@ -80,9 +83,17 @@
         + '<div class="cn-dlmenu" hidden>' + dlMenuHtml() + '</div>'
       + '</div>'
       + '<a class="cn-cta" href="'+u(CTA.href)+'" data-en="'+esc(CTA.en)+'">'+esc(CTA.vi)+'</a>'
+      + '<button type="button" class="cn-menu" aria-expanded="false" aria-controls="cn-panel" aria-label="'+esc(MENU_ARIA.vi)+'" data-en-aria="'+esc(MENU_ARIA.en)+'"><span aria-hidden="true">☰</span></button>'
     + '</div>'
     + '</div>'
-    + '<div class="cn-row2">' + linksHtml() + '</div>';
+    + '<div class="cn-row2">' + linksHtml() + '</div>'
+    + '<div class="cn-panel" id="cn-panel" hidden>'
+      + '<div class="cn-plinks">' + linksHtml() + '</div>'
+      + '<div class="cn-pextra">'
+        + (hasTheme ? '<button type="button" class="cn-ptheme" data-en="'+esc(PANEL_THEME.en)+'">'+esc(PANEL_THEME.vi)+'</button>' : '')
+        + '<p class="cn-papp" data-en="'+esc(PANEL_APP.en)+'">'+esc(PANEL_APP.vi)+'</p>' + dlMenuHtml()
+      + '</div>'
+    + '</div>';
 
   document.body.insertBefore(nav, document.body.firstChild);
 
@@ -105,6 +116,24 @@
   window.addEventListener('resize', syncMore);
   window.addEventListener('bizon:langchange', syncMore);
   syncMore();
+
+  /* Nút ☰ (màn ≤ 820 px): mở/đóng bảng danh sách trang. Esc hoặc bấm ra ngoài thì đóng, trả tiêu điểm về nút */
+  var menuBtn = nav.querySelector('.cn-menu'), panel = nav.querySelector('.cn-panel');
+  function moMenu(mo, traTieuDiem){
+    panel.hidden = !mo; menuBtn.setAttribute('aria-expanded', String(mo));
+    var l = (window.clayCurrentLang && window.clayCurrentLang()) === 'en' ? 'en' : 'vi';
+    menuBtn.setAttribute('aria-label', (mo ? MENU_DONG : MENU_ARIA)[l]); menuBtn.setAttribute('data-en-aria', (mo ? MENU_DONG : MENU_ARIA).en);
+    menuBtn.firstChild.textContent = mo ? '✕' : '☰';
+    if (mo) { var a = panel.querySelector('a'); if (a) a.focus(); } else if (traTieuDiem) menuBtn.focus();
+  }
+  menuBtn.addEventListener('click', function(e){ e.stopPropagation(); moMenu(panel.hidden); });
+  panel.addEventListener('click', function(e){ if (e.target.closest && e.target.closest('a')) moMenu(false); });
+  /* .cn-theme: nút «Sáng / tối» trong bảng bấm hộ nút 🌙 đang ẩn; cú bấm đó nổi lên document, không được coi là bấm ra ngoài */
+  document.addEventListener('click', function(e){ if (!panel.hidden && !panel.contains(e.target) && !menuBtn.contains(e.target) && !(e.target.closest && e.target.closest('.cn-theme'))) moMenu(false); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape' && !panel.hidden) moMenu(false, true); });
+  window.addEventListener('resize', function(){ if (!panel.hidden && window.innerWidth > 820) moMenu(false); });
+  var pTheme = panel.querySelector('.cn-ptheme');
+  if (pTheme) pTheme.addEventListener('click', function(){ var t = nav.querySelector('.cn-theme'); if (t) t.click(); });
 
   /* Nút tải app: mở menu chọn Android / iPhone */
   var dlBtn = nav.querySelector('.cn-dl');
