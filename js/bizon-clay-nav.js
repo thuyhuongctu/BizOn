@@ -25,7 +25,8 @@
     { href:'giai-phap.html',        vi:'Pilot',     en:'Pilot' },
     { href:'doi-ngu.html',          vi:'Đội ngũ',   en:'About' }
   ];
-  var CTA = { href:'game.html', vi:'Bắt đầu', en:'Launch' };
+  /* Nút «Bắt đầu» (28/11/2026, rà UX trang chủ): đưa người mới vào Bậc 1 – Bến Phù Sa, như cửa «Tôi tự học»; trước đây vào Bật Nghiệp (Bậc 2) */
+  var CTA = { href:'ben-phu-sa.html', vi:'Bắt đầu', en:'Launch' };
   var DL_ARIA = { vi:'Tải app BizOn', en:'Get the BizOn app' };
   var THEME_ARIA = { vi:'Chế độ tối', en:'Dark mode' };
   var hasTheme = typeof window.clayToggleTheme === 'function';
